@@ -1,13 +1,7 @@
 package com.actas.ems.Service;
 
-import com.actas.ems.DTO.TBXa012VO;
-import com.actas.ems.Mapper.TBXa012Mapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service("Appcom01Service")

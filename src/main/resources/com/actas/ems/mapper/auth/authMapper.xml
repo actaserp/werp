@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.auth.AuthDBMapper">
+    <insert id="TBXUSERS_Insert" parameterType="com.actas.ems.DTO.UserFormDto" keyProperty="username">
+        INSERT INTO TB_XUSERS(userid, rnum, passwd1, passwd2, custnm, pernm, useyn, password, role, custcd, spjangcd,
+                              username, actcd, actnm, saupnum, flag, phone )
+        VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
+                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone})
+    </insert>
+</mapper>

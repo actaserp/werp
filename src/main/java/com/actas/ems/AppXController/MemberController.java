@@ -26,10 +26,15 @@ public class MemberController {
     private final PrincipalDetailsService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping(value="/new")
+    @GetMapping(value="/cltcdnew")
     public String memberForm(Model model){
         model.addAttribute("userFormDto", new UserFormDto());
         return "register";
+    }
+    @GetMapping(value="/actcdnew")
+    public String memberActcdForm(Model model){
+        model.addAttribute("userFormDto", new UserFormDto());
+        return "registeractcd";
     }
 
     @PostMapping(value="/new")
@@ -51,22 +56,22 @@ public class MemberController {
         return "loginForm";
     }
 
-    @GetMapping("/user")
-    public  String user(){
-        return "memberframe";
-    }
-
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/admin")
-    public  String admin(){
-        return "adminframe";
-    }
-
-    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN') ")
-    @GetMapping("/manager")
-    public   String member(){
-        return "memberframe";
-    }
+//    @GetMapping("/user")
+//    public  String user(){
+//        return "memberframe";
+//    }
+//
+//    @Secured("ROLE_ADMIN")
+//    @GetMapping("/admin")
+//    public  String admin(){
+//        return "adminframe";
+//    }
+//
+//    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN') ")
+//    @GetMapping("/manager")
+//    public   String member(){
+//        return "memberframe";
+//    }
 
 
     @GetMapping(value="/loginForm")

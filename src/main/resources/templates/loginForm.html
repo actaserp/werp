@@ -23,17 +23,15 @@
 
                     <div class="z-index-1 position-relative"><a
                         class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder" th:href="@{/}">Actas
-                        ERP</a>
-                      <p class="opacity-75 text-white">With the power of Actas, you can now focus only on functionaries
-                        for your digital source, while leaving the data service on us!</p>
+                        ERP</a> 
                     </div>
                   </div>
                   <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
                     <p class="text-white">계정이 없으신가요?<br><a class="text-decoration-underline link-light"
-                        th:href="@{/members/new}">사용자등록</a></p>
-                    <p class="mb-0 mt-4 mt-md-5 fs--1 fw-semi-bold text-white opacity-75">Read our <a
-                        class="text-decoration-underline text-white" href="#!">terms</a> and <a
-                        class="text-decoration-underline text-white" href="#!">conditions </a></p>
+                        th:href="@{/auth/cltcdnew}">보수업체사용자등록</a>
+                        <a class="text-decoration-underline link-light"
+                        th:href="@{/auth/actcdnew}">고객사용자등록</a>                        
+                    </p>                           
                   </div>
                 </div>
                 <div class="col-md-7 d-flex flex-center">
@@ -61,8 +59,8 @@
                             <label class="form-check-label mb-0" for="card-checkbox">Remember me</label>
                           </div>
                         </div>
-                        <div class="col-auto"><a class="fs--1"
-                            href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div>
+                        <!-- <div class="col-auto"><a class="fs--1"
+                            href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div> -->
                       </div>
                       <div class="mb-3">
                         <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>

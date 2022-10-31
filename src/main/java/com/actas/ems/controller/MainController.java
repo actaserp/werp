@@ -22,6 +22,9 @@ public class MainController {
         return "index";
     }
 
+
+
+
     @GetMapping(value = "/mainframe")
     public  String main(){
         return "mainframe";
