@@ -2,11 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
-<mapper namespace="com.actas.ems.Mapper.auth.AuthDBMapper">
+<mapper namespace="com.actas.ems.Mapper.master.AuthDBMapper">
     <insert id="TBXUSERS_Insert" parameterType="com.actas.ems.DTO.UserFormDto" keyProperty="username">
         INSERT INTO TB_XUSERS(userid, rnum, passwd1, passwd2, custnm, pernm, useyn, password, role, custcd, spjangcd,
                               username, actcd, actnm, saupnum, flag, phone )
         VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
                 #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone})
     </insert>
+    <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
+        select userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
+    </select>
+    <select id="GetClientInfo" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        SELECT dbo.uf_client_info(#{saupnum})
+    </select>
+    <update id="UpdateDbInfo" parameterType="com.actas.ems.DTO.UserFormDto"  >
+        UPDATE TB_XUSERS SET  dbnm=#{dbnm}, cltcd=#{cltcd}
+        from TB_XUSERS  where userid=#{userid} and passwd1=#{passwd1}
+    </update>
 </mapper>

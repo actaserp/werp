@@ -7,6 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    login ok main page
+    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
+        Actas Elevator 유지보수센터 <br>
+        <p>
+        아이디<input type="text"  name="userid" th:value="${userFormDto.userid}" >
+        사용자명<input type="text" name="username" th:value="${userFormDto.username}" > 
+        거래처코드<input type="text"  name="cltcd" th:value="${userFormDto.cltcd}" >
+        DBNAME<input type="text" name="dbnm" th:value="${userFormDto.dbnm}" > 
+        구분<input type="text" name="flag" th:value="${userFormDto.flag}" > 
+        </p>
+    </form>
 </body>
 </html>

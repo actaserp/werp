@@ -66,4 +66,9 @@ public class UserFormDto {
     private String cltnm;
     /** 보수업체  AA  고객 CC  */
     private String flag;
+    /**  사용자명칭  */
+    private String custnm;
+    /**  db name  */
+    private String dbnm;
+
 }

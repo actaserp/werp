@@ -44,13 +44,13 @@
                     <form  action="/login" method="POST">
                       <div class="mb-3">
                         <label class="form-label" for="card-email">User ID</label>
-                        <input class="form-control" name="username" id="username" type="text" />
+                        <input class="form-control" name="loginid" id="loginid" type="text" />
                       </div>
                       <div class="mb-3">
                         <div class="d-flex justify-content-between">
                           <label class="form-label" for="card-password">Password</label>
                         </div>
-                        <input class="form-control" name="password" id="password" type="password" />
+                        <input class="form-control" name="logpass" id="logpass" type="password" />
                       </div>
                       <div class="row flex-between-center">
                         <div class="col-auto">
@@ -63,7 +63,7 @@
                             href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div> -->
                       </div>
                       <div class="mb-3">
-                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
+                        <button class="btn btn-primary d-block w-100 mt-3" type="button" name="login_btn" id="login_btn" >로그인</button>   
                       </div>
                       <div class="mb-3">
                         <div th:if="${loginErrorMsg}" class="alert alert-warning border-2 d-flex align-items-center"
@@ -101,6 +101,55 @@
         </div>
       </div>
     </div>
+
+
+
+    <script>
+      var btn_obj = document.getElementById('login_btn');
+      btn_obj.addEventListener("click",function(){ 
+        alert("login");
+          //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
+          var ls_loginid   = document.getElementById('loginid').value; 
+          var ls_logpass = document.getElementById('logpass').value;  
+          
+          $.ajax({
+              url: '/authcrud/login',   
+              type:"POST", 
+              data: {
+                  "loginid"    : ls_loginid ,
+                  "logpass"  : ls_logpass, 
+              },
+              async:false,
+              success:function(userFormDto){ 
+                
+                var ListDto = userFormDto;   
+                var ls_userid = userFormDto["userid"]
+                var ls_username = userFormDto["username"]
+                var ls_cltcd= userFormDto["cltcd"]
+                var ls_dbnm = userFormDto["dbnm"] 
+                var ls_flag = userFormDto["flag"]  
+                var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;  
+                window.location.href = '/auth/emmsdashboard?' + ls_url;                          
+                  // if(data == "success"){
+                  //     alert("등록 되었습니다.");
+                  //     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";                                        
+                  // }else{
+                  //     alert("등록오류");
+                  //     var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";                                        
+                  // } 
+                  // statusdis_div.innerHTML  = ls_text;   
+
+                
+              },error:function(e){
+                  console.log('error',e);
+              }
+          }).done(function(fragment){           
+
+          }) 
+
+     })
+     
+</script>    
   </main>
   <!-- ===============================================-->
   <!--    End of Main Content-->

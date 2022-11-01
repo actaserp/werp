@@ -54,16 +54,40 @@
                       <form th:action="@{/auth/save}" role="form" method="post"  th:object="${userFormDto}" >
                         <div class="mb-3">
                           <label class="form-label" for="split-name">고객아이디</label>
-                          <input class="form-control" type="text" autocomplete="on" id="username" name="username"  th:field="*{username}" />
+                          <input class="form-control" type="text" autocomplete="on" id="userid" name="userid"  th:field="*{userid}" />
                           <input class="form-control" type="text" id="flag" name="flag"  th:field="*{flag}" th:value="${flag}"/>
-                          <div th:if="${#fields.hasErrors('username')}"  th:errors="*{username}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                          <div th:if="${#fields.hasErrors('userid')}"  th:errors="*{userid}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                             <p class="mb-0 flex-1">Incorrent data</p> 
                           </div> 
                         <div class="mb-3">
                           <label class="form-label" for="split-name">고객명</label>
-                          <input class="form-control" type="text" autocomplete="on" id="pernm" name="pernm"   th:field="*{pernm}"  /> 
-                          <div th:if="${#fields.hasErrors('pernm')}"  th:errors="*{pernm}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                          <input class="form-control" type="text" autocomplete="on" id="username" name="username"   th:field="*{username}"  /> 
+                          <div th:if="${#fields.hasErrors('username')}"  th:errors="*{username}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                            <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+                            <p class="mb-0 flex-1">Incorrent data</p> 
+                          </div>                           
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label" for="split-name">보수업체사업자코드</label>
+                          <input class="form-control" type="text" autocomplete="on" id="saupnum" name="saupnum"   th:field="*{saupnum}"  /> 
+                          <div th:if="${#fields.hasErrors('saupnum')}"  th:errors="*{saupnum}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                            <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+                            <p class="mb-0 flex-1">Incorrent data</p> 
+                          </div>                           
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label" for="split-name">고객현장코드</label>
+                          <input class="form-control" type="text" autocomplete="on" id="actcd" name="actcd"   th:field="*{actcd}"  /> 
+                          <div th:if="${#fields.hasErrors('actcd')}"  th:errors="*{actcd}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                            <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+                            <p class="mb-0 flex-1">Incorrent data</p> 
+                          </div>                           
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label" for="split-name">고객현장명</label>
+                          <input class="form-control" type="text" autocomplete="on" id="actnm" name="actnm"   th:field="*{actnm}"  /> 
+                          <div th:if="${#fields.hasErrors('actnm')}"  th:errors="*{actnm}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                             <p class="mb-0 flex-1">Incorrent data</p> 
                           </div>                           
@@ -71,7 +95,7 @@
                         <div class="row gx-2">
                           <div class="mb-3 col-sm-6">
                             <label class="form-label" for="split-password">Password</label>
-                            <input class="form-control" type="password" autocomplete="on" id="password" name="password"  th:field="*{password}"  />
+                            <input class="form-control" type="password" autocomplete="on" id="passwd1" name="passwd1"  th:field="*{passwd1}"  />
                           </div>
                           <div class="mb-3 col-sm-6">
                             <label class="form-label" for="split-confirm-password">Confirm Password</label>
@@ -91,8 +115,11 @@
                           <label class="form-label" for="cover-register-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
                         </div> -->
                         <div class="mb-3">
-                          <button class="btn btn-primary d-block w-100 mt-3" type="button" onclick=save_btn() >사용자등록</button>                          
+                          <button class="btn btn-primary d-block w-100 mt-3" type="button" name="save_btn" id="save_btn" >사용자등록</button>                             
                         </div>
+                        <div class="col-auto">
+                          <div id="statusdis01"></div>
+                      </div> 
                         <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"></input> -->
                       </form>
                       <!-- <div class="position-relative mt-4">
@@ -110,6 +137,60 @@
             </div>
           </div>
         </div>
+
+
+
+        <script>
+          var btn_obj = document.getElementById('save_btn');
+          btn_obj.addEventListener("click",function(){ 
+            alert("save");
+              //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
+              var ls_saupnum   = document.getElementById('saupnum').value; 
+              var ls_userid = document.getElementById('userid').value; 
+              var ls_username = document.getElementById('username').value; 
+              var ls_flag   = document.getElementById('flag').value;  
+              var ls_passwd1   = document.getElementById('passwd1').value; 
+              var ls_passwd2   = document.getElementById('passwd2').value; 
+              var ls_actcd   = document.getElementById('actcd').value; 
+              var ls_actnm   = document.getElementById('actnm').value; 
+              
+              $.ajax({
+                  url: '/authcrud/save',   
+                  type:"POST", 
+                  data: {
+                      "saupnum"    : ls_saupnum ,
+                      "userid"  : ls_userid,
+                      "username"  : ls_username,
+                      "flag"      : ls_flag , 
+                      "passwd1"   : ls_passwd1   ,
+                      "passwd2"   : ls_passwd2 , 
+                      "phone"   : '' , 
+                      "actcd"    : ls_actcd, 
+                      "actnm"    : ls_actnm
+                  },
+                  async:false,
+                  success:function(data){
+                      console.log("등록OK", data); 
+                      const statusdis_div = document.getElementById('statusdis01'); 
+                      if(data == "success"){
+                          alert("등록 되었습니다.");
+                          var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";                                        
+                      }else{
+                          alert("등록오류");
+                          var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";                                        
+                      } 
+                      statusdis_div.innerHTML  = ls_text;   
+
+                    
+                  },error:function(e){
+                      console.log('error',e);
+                  }
+              }).done(function(fragment){           
+
+              }) 
+
+         })
+        </script>
       </main>
       <!-- ===============================================-->
       <!--    End of Main Content-->
@@ -119,65 +200,8 @@
 </body>
 
 
-
 <script  type="text/javascript" th:inline="javascript">  
-  function save_btn(arg1){ 
-      //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
-      var ls_custcd   = document.getElementById('incustcd').value; 
-      var ls_spjangcd = document.getElementById('inspjangcd').value; 
-      var startDate   = document.getElementById('startDate').value; 
-      var endDate   = document.getElementById('endDate').value;
-      var ls_plan_no   = document.getElementById('inplan_no').value; 
-      var ls_inwrmc   = document.getElementById('inwrmc').value;
-      var ll_inwinqt  = document.getElementById('inwinqt').value;         //투입
-      var ll_inwbdqt  = document.getElementById('inwbdqt').value;         //불량
-      var ll_inwokqt = document.getElementById('inwokqt').value;          //생산     
-      var ll_inwotqt = document.getElementById('inwotqt').value;          //완료
-      var ls_inwflag  = document.getElementById('inwflag').value;   
-      var ls_inwremark  = document.getElementById('inwremark').value;  
-      var ls_inwseq  = document.getElementById('inwseq').value;   
-      $.ajax({
-          url: '/auth/save',   
-          type:"POST", 
-          data: {
-              "custcd"    : ls_custcd ,
-              "spjangcd"  : ls_spjangcd,
-              "wseq"      : ls_inwseq ,
-              "startDate" : startDate ,
-              "endDate"   : endDate   ,
-              "plan_no"   : ls_plan_no,
-              "wrmc"      : ls_inwrmc      ,
-              "winqt"     : ll_inwinqt     ,
-              "wbdqt"     : ll_inwbdqt     ,
-              "wokqt"     : ll_inwokqt     ,
-              "wotqt"     : ll_inwotqt     ,
-              "wsyul"     : ll_wsyul       ,
-              "wflag"     : ls_inwflag     ,
-              "wremark"   : ls_inwremark   ,
-              "decision"  : ls_decision 
-          },
-          async:false,
-          success:function(data){
-              // console.log("등록OK", data); 
-              // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
-              const statusdis_div = document.getElementById('statusdis01'); 
-              if(arg1 == "0"){
-                  alert("완료 처리 되었습니다.");
-                  var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>";                                        
-              }else{
-                  alert("저장되었습니다.");
-                  var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";                                        
-              } 
-              statusdis_div.innerHTML  = ls_text;   
-
-             
-          },error:function(e){
-              console.log('error',e);
-          }
-      }).done(function(fragment){           
-
-      }) 
-  } 
+ 
 </script>
 
 </html>

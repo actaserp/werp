@@ -6,17 +6,7 @@
       color: #bd2130;
     }
   </style>
-</th:block>
-<th:block layout:fragment="script">
-  <script th:inline="javascript">
-    $(document).ready(function(){
-        var errorMessage = [[${errorMessage}]];
-      if(errorMessage != null){
-        alert(errorMessage);
-      }
-    })
-  </script>
-</th:block>
+</th:block> 
 
 <body>
     
@@ -26,14 +16,7 @@
     <!-- ===============================================-->
     <main class="main" id="top">
         <div class="container-fluid">
-          <script>
-            var isFluid = JSON.parse(localStorage.getItem('isFluid'));
-            if (isFluid) {
-              var container = document.querySelector('[data-layout]');
-              container.classList.remove('container');
-              container.classList.add('container-fluid');
-            }
-          </script>
+          
           <div class="row min-vh-100 bg-100">
             <div class="col-6 d-none d-lg-block position-relative"> 
               <!--/.bg-holder-->
@@ -69,7 +52,7 @@
                             <p class="mb-0 flex-1">Incorrent data</p> 
                           </div> 
                         <div class="mb-3">
-                          <label class="form-label" for="split-name">사용자명</label>
+                          <label class="form-label" for="split-name">사용자명*</label>
                           <input class="form-control" type="text" autocomplete="on" id="username" name="username"   th:field="*{username}"  /> 
                           <div th:if="${#fields.hasErrors('username')}"  th:errors="*{username}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
@@ -106,7 +89,7 @@
                           <label class="form-label" for="cover-register-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
                         </div> -->
                         <div class="mb-3">
-                          <button class="btn btn-primary d-block w-100 mt-3" type="button" onclick='save_btn()' >사용자등록</button>                          
+                          <button class="btn btn-primary d-block w-100 mt-3" type="button" name="save_btn" id="save_btn" >사용자등록</button>                          
                         </div>
                         
                         <div class="col-auto">
@@ -129,6 +112,59 @@
             </div>
           </div>
         </div>
+
+
+        <script>
+          var btn_obj = document.getElementById('save_btn');
+          btn_obj.addEventListener("click",function(){ 
+            alert("save");
+              //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
+              var ls_saupnum   = document.getElementById('saupnum').value; 
+              var ls_userid = document.getElementById('userid').value; 
+              var ls_username = document.getElementById('username').value; 
+              var ls_flag   = document.getElementById('flag').value;  
+              var ls_passwd1   = document.getElementById('passwd1').value; 
+              var ls_passwd2   = document.getElementById('passwd2').value; 
+              var ls_phone   = document.getElementById('phone').value; 
+              
+              $.ajax({
+                  url: '/authcrud/save',   
+                  type:"POST", 
+                  data: {
+                      "saupnum"    : ls_saupnum ,
+                      "userid"  : ls_userid,
+                      "username"  : ls_username,
+                      "flag"      : ls_flag , 
+                      "passwd1"   : ls_passwd1   ,
+                      "passwd2"   : ls_passwd2 ,
+                      "phone"    : ls_phone, 
+                      "actcd"    : '', 
+                      "actnm"    : ''
+                  },
+                  async:false,
+                  success:function(data){
+                      console.log("등록OK", data); 
+                      const statusdis_div = document.getElementById('statusdis01'); 
+                      if(data == "success"){
+                          alert("등록 되었습니다.");
+                          var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";                                        
+                      }else{
+                          alert("등록오류");
+                          var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";                                        
+                      } 
+                      statusdis_div.innerHTML  = ls_text;   
+
+                    
+                  },error:function(e){
+                      console.log('error',e);
+                  }
+              }).done(function(fragment){           
+
+              }) 
+
+         })
+         
+    </script>
       </main>
       <!-- ===============================================-->
       <!--    End of Main Content-->
@@ -139,49 +175,7 @@
 
 
 <script  type="text/javascript" th:inline="javascript">  
-  function save_btn(){ 
-      //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
-      var ls_saupnum   = document.getElementById('saupnum').value; 
-      var ls_userid = document.getElementById('userid').value; 
-      var ls_username = document.getElementById('username').value; 
-      var ls_flag   = document.getElementById('flag').value;  
-      var ls_passwd1   = document.getElementById('passwd1').value; 
-      var ls_passwd2   = document.getElementById('passwd2').value; 
-      var ls_phone   = document.getElementById('phone').value; 
-      
-      $.ajax({
-          url: '/authcrud/save',   
-          type:"POST", 
-          data: {
-              "saupnum"    : ls_saupnum ,
-              "userid"  : ls_userid,
-              "username"  : ls_username,
-              "flag"      : ls_flag , 
-              "passwd1"   : ls_passwd1   ,
-              "passwd2"   : ls_passwd2 ,
-              "phone"    : ls_phone
-          },
-          async:false,
-          success:function(data){
-               console.log("등록OK", data); 
-              const statusdis_div = document.getElementById('statusdis01'); 
-              if(arg1 == "success"){
-                  alert("등록 되었습니다.");
-                  var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";                                        
-              }else{
-                  alert("등록오류");
-                  var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";                                        
-              } 
-              statusdis_div.innerHTML  = ls_text;   
-
-             
-          },error:function(e){
-              console.log('error',e);
-          }
-      }).done(function(fragment){           
-
-      }) 
-  } 
+ 
 </script>
 
 </html>
