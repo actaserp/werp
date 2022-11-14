@@ -8,4 +8,6 @@ import lombok.NonNull;
 public class ElvlrtModel {private int id;
     @NonNull @Builder.Default private String name = "NULL NAME";
     @NonNull @Builder.Default private String email = "NULL EMAIL";
+
+
 }

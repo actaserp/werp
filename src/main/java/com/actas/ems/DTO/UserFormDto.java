@@ -70,5 +70,11 @@ public class UserFormDto {
     private String custnm;
     /**  db name  */
     private String dbnm;
+    /** callflag  */
+    private String callflag;
+    /** 콜 아이디  */
+    private String calluserid;
+    /** 콜 패스워드  */
+    private String calluserpw;
 
 }

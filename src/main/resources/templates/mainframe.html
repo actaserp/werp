@@ -1,21 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+     
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>유지보수센터</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    
+    <!-- <script> 
+function chk(){ 
+            var btn_obj = document.getElementById('menu01_btn');
+            btn_obj.addEventListener("click",function(){  
+                //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
+                var ls_actuseridz   = document.getElementById('actuseridz').value; 
+                var ls_actusernamez = document.getElementById('actusernamez').value;  
+                var ls_actcltcdz = document.getElementById('actcltcdz').value;  
+                var ls_actdbnmz = document.getElementById('actdbnmz').value;    
+                var ls_actflagz = document.getElementById('actflagz').value;  
+                var ls_uri = "actuseridz=" + ls_actuseridz +"&actusernamez=" + ls_actusernamez + "&actcltcdz=" + ls_actcltcdz + "&actdbnmz=" + ls_actdbnmz + "&actflagz=" + ls_actflagz;
+                var win = window.open("/app01/ktcall?" + ls_uri, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400"); 
+    
+        }) 
+       
+  </script>       -->
+     
 </head>
+ 
 <body>
     <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
         Actas Elevator 유지보수센터 <br>
         <p>
-        아이디<input type="text"  name="userid" th:value="${userFormDto.userid}" >
-        사용자명<input type="text" name="username" th:value="${userFormDto.username}" > 
-        거래처코드<input type="text"  name="cltcd" th:value="${userFormDto.cltcd}" >
-        DBNAME<input type="text" name="dbnm" th:value="${userFormDto.dbnm}" > 
-        구분<input type="text" name="flag" th:value="${userFormDto.flag}" > 
+        아이디<input type="text"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
+        사용자명<input type="text" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" > 
+        거래처코드<input type="text"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
+        DBNAME<input type="text" name="actdbnmz" id="actdbnmz" th:value="${userFormDto.dbnm}" > 
+        구분<input type="text" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" > 
+        call id<input type="text" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" > 
+        call pw<input type="text" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" > 
+        </p>
+        <p>
+
+            <nav class="navbar navbar-expand-lg">
+
+                <ul class="navbar-nav">
+                    <li class="active">
+                        <button type="button" class="btn btn-outline-primary" onclick="menu01_btn()" name="menu01_btn">고객상단괸리KT</button>
+                    </li>
+                    <li class="active">
+                        <a href="#" class="nav-link">고객상단괸리LG</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">고장접수관제현황</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">고장처리등록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">부품별/부위별고장현황</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">부품별/부위별수리현황</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">고장처리등록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">고장처리등록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href = "@{/members/loginForm}" class="nav-link">공지사항</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         </p>
     </form>
-</body>
+
+
+</body> 
+    <script> 
+        function menu01_btn(){ 
+                    var ls_actuseridz   =  jQuery('#actuseridz').val(); //document.getElementById('actuseridz').value; 
+                    var ls_actusernamez =  jQuery('#actusernamez').val(); //document.getElementById('actusernamez').value;  
+                    var ls_actcltcdz =   jQuery('#actcltcdz').val();  //document.getElementById('actcltcdz').value;  
+                    ls_actcltcdz =    ls_actcltcdz + "";
+                    var ls_actdbnmz =  jQuery('#actdbnmz').val();   //document.getElementById('actdbnmz').value;    
+                    var ls_actflagz =  jQuery('#actflagz').val();   //document.getElementById('actflagz').value;  
+                    var ls_actcalluseridz =  jQuery('#actcalluseridz').val();   
+                    var ls_actcalluserpwz =  jQuery('#actcalluserpwz').val();   
+
+                    var ls_uri          = "actuseridz=" + ls_actuseridz +"&actusernamez=" + ls_actusernamez + "&actcltcdz=" + ls_actcltcdz ;
+                        ls_uri = ls_uri +  "&actdbnmz=" + ls_actdbnmz + "&actflagz=" + ls_actflagz + "&actcalluseridz=" + ls_actcalluseridz;
+                        ls_uri = ls_uri +  "&actcalluserpwz=" + ls_actcalluserpwz;
+                    var win = window.open("/app01/ktcall?" + ls_uri,   "fullscreen=yes"); 
+            } 
+    </script>   
 </html>
