@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/XRegister/head :: headFragment" />
+<body>
+공지사항 게시판
+<table align="center">
+    <tr>
+        <td>num</td>
+        <td>제목</td>
+        <td>작성자</td>
+        <td>날짜</td>
+    </tr>
+
+    <tr th:each="list : ${list}">
+        <td th:text="${list.nseq}"></td>
+        <td><a th:text="${list.nsubject}" th:href="@{/app05/mnoticeView(nseq=${list.nseq})}"></a></td>
+        <td th:text="${list.custcd}"></td>
+        <td th:text="${list.ninputdate}"></td>
+    </tr>
+</table>
+<button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeWrite}'|">글 작성하기</button>
+</body>
+<footer th:replace="layouts/XRegister/footer :: footerFragment"></footer>
+</html>

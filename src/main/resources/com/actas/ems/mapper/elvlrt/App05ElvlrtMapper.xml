@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper">
+    <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
+        from TB_MNOTICE
+    </select>
+
+    <select id="GetNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
+        from TB_MNOTICE where nseq = #{nseq}
+    </select>
+
+    <insert id="InsertNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        insert into TB_MNOTICE (custcd, spjangcd, nseq, ninputdate, nsubject, nmemo) values (#{custcd}, #{spjangcd}, NEXT VALUE FOR NOTICE_SEQ, getdate(), #{nsubject}, #{nmemo})
+    </insert>
+
+    <update id="UpdateNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        update TB_MNOTICE set
+        ngourpcd = #{ngourpcd},
+        nsubject = #{nsubject},
+        nfilename = #{nfilename},
+        npernm = #{npernm},
+        nmemo = #{nmemo},
+        nflag = #{nflag}
+        where nseq = #{nseq}
+    </update>
+
+    <delete id="DeleteNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        delete from TB_MNOTICE where nseq = #{nseq}
+    </delete>
+
+</mapper>
