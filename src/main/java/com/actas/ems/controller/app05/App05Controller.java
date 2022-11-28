@@ -1,9 +1,7 @@
 package com.actas.ems.controller.app05;
 
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
-import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +24,16 @@ public class App05Controller {
 
     @GetMapping(value="/mnotice")
     public String noticeList(/** @RequestParam("actuseridz") String userid
-                           , @RequestParam("actusernamez") String username
-                           , @RequestParam("actcltcdz") String cltcd
-                           , @RequestParam("actdbnmz") String dbnm
-                           , @RequestParam("actflagz") String flag
+                           , */@RequestParam(value = "actusernamez", required = false) String username
+                           , /**@RequestParam("actcltcdz") String cltcd
+                           , */@RequestParam(value = "actdbnmz", required = false) String dbnm
+                           , /**@RequestParam("actflagz") String flag
                            , @RequestParam("actcalluseridz") String calluserid
                            , @RequestParam("actcalluserpwz") String calluserpw
-                                  */ Model model ){
+                                  */
+                            @RequestParam(value = "searchType", required = false) String searchType
+                            ,@RequestParam(value = "Keyword", required = false) String Keyword
+                            ,Model model ){
         /**
         userformDto.setUserid(userid);
         userformDto.setUsername(username);
@@ -44,88 +45,156 @@ public class App05Controller {
 
         model.addAttribute("userFormDto", userformDto);
         */
+        try{
+            List<App05ElvlrtDto> noticeList = service.GetNoticeList(searchType, Keyword);
 
-        List<App05ElvlrtDto> noticeList = service.GetNoticeList();
+            model.addAttribute("list", noticeList);
+            model.addAttribute("username", username);
+            model.addAttribute("dbnm", dbnm);
 
-        model.addAttribute("list", noticeList);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+            return "noticelist";
+        }
 
-        return "noticelist";
     }
 
     @GetMapping(value="/mnoticeWrite")
-    public String noticeWrite(){
-        return "noticewrite";
+    public String noticeWrite(@RequestParam(value = "username", required = false) String username
+                             ,@RequestParam(value = "dbnm", required = false) String dbnm
+                             ,Model model){
+        try{
+            model.addAttribute("username", username);
+            model.addAttribute("dbnm", dbnm);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+            return "noticewrite";
+        }
+
     }
 
     @GetMapping(value="/mnoticeView")
-    public String noticeView(@RequestParam(value = "nseq") String nseq
+    public String noticeView(@RequestParam(value = "dbnm", required = false) String dbnm
+                             ,@RequestParam(value = "username", required = false) String username
+                             ,@RequestParam(value = "nseq") String nseq
                              ,Model model){
-        App05ElvlrtDto dto = service.GetNoticeView(nseq);
+        try {
+            App05ElvlrtDto dto = service.GetNoticeView(nseq);
 
-        model.addAttribute("subject", dto.getNsubject());
-        model.addAttribute("memo", dto.getNmemo());
-        model.addAttribute("nseq", dto.getNseq());
-
-        return "noticeview";
+            model.addAttribute("view", dto);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally {
+            return "noticeview";
+        }
     }
 
     @RequestMapping(value="/mnoticeRegist", method = RequestMethod.POST)
-    public String noticeRegist(@RequestParam("custcd") String custcd,
-                             @RequestParam("spjangcd") String spjangcd,
+    public String noticeRegist(@RequestParam("username") String custcd,
+                             @RequestParam("dbnm") String spjangcd,
                              @RequestParam("nsubject") String subject,
                              @RequestParam("nmemo") String memo,
                                Model model){
-        App05ElvlrtDto dto = new App05ElvlrtDto();
+        try {
+            String max = service.getMaxSeq();
+            String today = service.getDate();
 
-        dto.setCustcd(custcd);
-        dto.setSpjangcd(spjangcd);
-        dto.setNsubject(subject);
-        dto.setNmemo(memo);
+            System.out.println("=========");
+            System.out.println("맥스");
+            System.out.println(max);
+            System.out.println("오늘 날짜");
+            System.out.println(today);
+            System.out.println("=========");
 
-        service.InsertNotice(dto);
+            App05ElvlrtDto dto = new App05ElvlrtDto();
 
-        return noticeList(model);
+            dto.setCustcd(custcd);
+            dto.setSpjangcd(spjangcd);
+            dto.setNsubject(subject);
+            dto.setNmemo(memo);
+            dto.setDate(today);
+
+            if(max.equals(today)){
+                String seq = service.SeqNext();
+                if(Integer.parseInt(seq)<10){
+                    seq = 0 + seq;
+                }
+                dto.setNseq(max+seq);
+            }else{
+                service.ResetSeq();
+
+                String seq = service.SeqNext();
+                if(Integer.parseInt(seq)<10){
+                    seq = 0 + seq;
+                }
+                dto.setNseq(today+seq);
+            }
+
+            service.InsertNotice(dto);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally {
+            return noticeList(null, null, null, null, model);
+        }
     }
 
     @GetMapping(value="/mnoticeUpdate")
     public String noticeUpdate(@RequestParam("nseq") String nseq
                                , Model model){
-        App05ElvlrtDto dto = service.GetNoticeView(nseq);
+        try {
+            App05ElvlrtDto dto = service.GetNoticeView(nseq);
 
-        model.addAttribute("nseq", nseq);
-        model.addAttribute("subject", dto.getNsubject());
-        model.addAttribute("memo", dto.getNmemo());
-
-        return "/noticeupdate";
+            model.addAttribute("view", dto);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally {
+            return "/noticeupdate";
+        }
     }
 
     @RequestMapping(value="/mnoticeUpdateRegist", method = RequestMethod.POST)
-    public String noticeUpdateRegist(@RequestParam("nseq") String nseq,
+    public String noticeUpdateRegist(@RequestParam(value = "username", required = false) String username,
+                                     @RequestParam(value = "dbnm", required = false) String dbnm,
+                                     @RequestParam("nseq") String nseq,
                                      @RequestParam("custcd") String custcd,
                                      @RequestParam("spjangcd") String spjangcd,
                                      @RequestParam("nsubject") String subject,
                                      @RequestParam("nmemo") String memo,
                                      Model model){
+
         App05ElvlrtDto dto = new App05ElvlrtDto();
 
-        dto.setNseq(nseq);
-        dto.setCustcd(custcd);
-        dto.setSpjangcd(spjangcd);
-        dto.setNsubject(subject);
-        dto.setNmemo(memo);
+        try {
+            dto.setNseq(nseq);
+            dto.setCustcd(custcd);
+            dto.setSpjangcd(spjangcd);
+            dto.setNsubject(subject);
+            dto.setNmemo(memo);
 
-        service.UpdateNotice(dto);
-
-        return noticeView(nseq, model);
+            service.UpdateNotice(dto);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally {
+            return noticeView(username, dbnm, nseq, model);
+        }
     }
 
     @GetMapping(value="/mnoticeDelete")
     public String noticeDelete(@RequestParam("nseq") String nseq,
                                Model model){
+        try {
+            service.DeleteNotice(nseq);
+        }catch(Exception e){
+            System.out.println(e);
+        }finally {
+            return noticeList(null, null, null, null, model);
+        }
+    }
 
-        service.DeleteNotice(nseq);
-
-        return noticeList(model);
+    public String getDate(){
+        return service.getDate();
     }
 
 
