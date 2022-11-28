@@ -39,6 +39,17 @@ public class App05Controller {
         userformDto.setCalluserpw(calluserpw);
 
         model.addAttribute("userFormDto", userformDto);
+
+        switch (dbnm){
+            case "ELV_LRT":      //한국엘레텍
+                authService.UpdateDbInfo(userformDto);
+                break;
+            default:
+                break;
+        }
+
+
+
         return "app05/noticelist";
     }
 

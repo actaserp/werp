@@ -55,7 +55,7 @@
                         <div class="mb-3">
                           <label class="form-label" for="split-name">고객아이디</label>
                           <input class="form-control" type="text" autocomplete="on" id="userid" name="userid"  th:field="*{userid}" />
-                          <input class="form-control" type="text" id="flag" name="flag"  th:field="*{flag}" th:value="${flag}"/>
+                          <input class="form-control" type="hidden" id="flag" name="flag"  th:field="*{flag}" th:value="${flag}"/>
                           <div th:if="${#fields.hasErrors('userid')}"  th:errors="*{userid}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                             <p class="mb-0 flex-1">Incorrent data</p> 

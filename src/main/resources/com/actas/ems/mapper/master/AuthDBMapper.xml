@@ -20,4 +20,6 @@
         UPDATE TB_XUSERS SET  dbnm=#{dbnm}, cltcd=#{cltcd}
         from TB_XUSERS  where userid=#{userid} and passwd1=#{passwd1}
     </update>
+
+
 </mapper>
