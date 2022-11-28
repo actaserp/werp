@@ -5,12 +5,10 @@ import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.lang.reflect.Field;
 
 @RestController
@@ -19,6 +17,8 @@ import java.lang.reflect.Field;
 public class AuthCrudController {
     private final AuthService authService;
     UserFormDto userformDto = new UserFormDto();
+
+
 
 
     @RequestMapping(value="/save")
@@ -88,6 +88,39 @@ public class AuthCrudController {
                 break;
         }
         return userReturnDto;
+    }
+
+    @RequestMapping(value = "/useriddupchk", method = RequestMethod.POST)
+    public Object AppW016_index(@RequestParam("userid") String userid
+            ,Model model, HttpServletRequest request) throws Exception{
+
+        userformDto.setUserid(userid);
+
+        authService.TB_XUSER_DUPCHK(userformDto);
+        String ls_userid = authService.TB_XUSER_DUPCHK(userformDto);
+        if(ls_userid == null || ls_userid.equals("")){
+
+            return ls_userid;
+        }else{
+            ls_userid = "error";
+            return ls_userid;
+        }
+
+
+
+    }
+
+    @RequestMapping(value = "/searchnum", method = RequestMethod.POST)
+    public Object AppW015_index(@RequestParam("saupnum") String saupnum,
+                                Model model, HttpServletRequest request)throws  Exception{
+            userformDto.setSaupnum(saupnum);
+
+            authService.TB_XCLIENT_SELECT(userformDto);
+            String ls_cltnm = authService.TB_XCLIENT_SELECT(userformDto);
+            if(ls_cltnm == null || ls_cltnm.equals("")){
+                ls_cltnm = "error";
+            }
+            return ls_cltnm;
     }
 
 }

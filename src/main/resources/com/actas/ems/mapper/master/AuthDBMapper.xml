@@ -20,4 +20,24 @@
         UPDATE TB_XUSERS SET  dbnm=#{dbnm}, cltcd=#{cltcd}
         from TB_XUSERS  where userid=#{userid} and passwd1=#{passwd1}
     </update>
+
+    <select id="TB_XUSER_DUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        SELECT TOP 1 A.userid as userid
+        FROM tb_xusers A WITH(NOLOCK)
+        WHERE A.userid=#{userid}
+    </select>
+
+    <select id="TB_XCLIENT_SELECT" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        <!--SELECT DBO.UF_CLIENT_INFO(#{saupnum}) -->
+        <!--
+        SELECT TOP 1 A.cltnm as cltnmsa
+        FROM tb_xusers A WITH(NOLOCK)
+        WHERE A.saupnum=#{saupnum}
+        -->
+
+        SELECT dbo.uf_clientnm_info(#{saupnum}) as cltcd
+
+        <!--SELECT dbo.uf_clientnm_info(#{saupnum}) as cltnm -->
+
+    </select>
 </mapper>

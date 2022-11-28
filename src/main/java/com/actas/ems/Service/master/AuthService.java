@@ -17,5 +17,10 @@ public class AuthService {
     public String GetClientInfo(UserFormDto parm){return authMapper.GetClientInfo(parm);}
     public void UpdateDbInfo(UserFormDto parm){authMapper.UpdateDbInfo(parm);}
 
-
+    public String TB_XUSER_DUPCHK(UserFormDto parm){
+        return authMapper.TB_XUSER_DUPCHK(parm);
+    }
+    public String TB_XCLIENT_SELECT(UserFormDto parm){
+        return authMapper.TB_XCLIENT_SELECT(parm);
+    }
 }
