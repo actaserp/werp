@@ -3,7 +3,6 @@ package com.actas.ems.controller.app05;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
-import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/app05")
@@ -84,6 +82,8 @@ public class App05Controller {
             App05ElvlrtDto dto = service.GetNoticeView(nseq);
 
             model.addAttribute("view", dto);
+            model.addAttribute("username", username);
+            model.addAttribute("dbnm", dbnm);
         }catch(Exception e){
             System.out.println(e);
         }finally {
@@ -100,13 +100,6 @@ public class App05Controller {
         try {
             String max = service.getMaxSeq();
             String today = service.getDate();
-
-            System.out.println("=========");
-            System.out.println("맥스");
-            System.out.println(max);
-            System.out.println("오늘 날짜");
-            System.out.println(today);
-            System.out.println("=========");
 
             App05ElvlrtDto dto = new App05ElvlrtDto();
 

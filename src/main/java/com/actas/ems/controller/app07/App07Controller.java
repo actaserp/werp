@@ -4,10 +4,6 @@ import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App07ElvlrtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +24,7 @@ public class App07Controller {
 
         model.addAttribute("list", noticeList);
 
-        return "noticelist";
+        return "bnoticelist";
     }
     //글쓰기 페이지 이동
     @GetMapping("/bnoticeWrite")
