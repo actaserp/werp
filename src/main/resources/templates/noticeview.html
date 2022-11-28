@@ -7,14 +7,14 @@
 <table align="center">
     <tr>
         <td>제목</td>
-        <td th:text="${subject}"></td>
+        <td th:text="${view.nsubject}"></td>
     </tr>
     <tr>
         <td>내용</td>
-        <td th:text="${memo}"></td>
+        <td th:text="${view.nmemo}"></td>
     </tr>
     <tr>
-        <td><input type="hidden" id="custcd" name="custcd" value="ELV_LRT">
+        <td><input type="hidden" id="custcd" name="custcd" th:value="${}">
             <input type="hidden" id="spjangcd" name="spjangcd" value="ZZ"></td>
     </tr>
     <tr>

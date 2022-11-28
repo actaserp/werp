@@ -4,20 +4,24 @@
 <head th:replace="layouts/XRegister/head :: headFragment" />
 <body>
 공지사항 게시판
-<form action="/app05/mnoticeUpdateRegist" method="POST">
+<form action="/app05/mnoticeUpdateRegist" method="POST" enctype="multipart/form-data">
   <table align="center">
     <tr>
       <td>제목</td>
-      <td><input type="text" id="nsubject" name="nsubject" th:value="${subject}"></td>
+      <td><input type="text" id="nsubject" name="nsubject" th:value="${view.subject}"></td>
     </tr>
     <tr>
       <td>내용</td>
-      <td><textarea id="nmemo" name="nmemo" th:text="${memo}"></textarea></td>
+      <td><textarea id="nmemo" name="nmemo" th:text="${view.memo}"></textarea></td>
     </tr>
     <tr>
-      <td><input type="hidden" id="custcd" name="custcd" value="ELV_LRT">
-        <input type="hidden" id="spjangcd" name="spjangcd" value="ZZ">
-        <input type="hidden" id="nseq" name="nseq" th:value="${nseq}"></td>
+      <td><input type="hidden" id="username" name="username" value="ELV_LRT">
+        <input type="hidden" id="dbnm" name="dbnm" value="ZZ">
+        <input type="hidden" id="nseq" name="nseq" th:value="${view.nseq}"></td>
+    </tr>
+    <tr>
+      <td>첨부파일</td>
+      <td><input type="file" multiple="multiple" name="files"></td>
     </tr>
     <tr>
       <td colspan="2"><button type="submit">등록하기</button></td>

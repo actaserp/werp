@@ -6,6 +6,24 @@
     <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
         select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
         from TB_MNOTICE
+        <if test="searchType == 'nsubject' and Keyword != null">
+            where nsubject like '%'+#{Keyword}+'%'
+        </if>
+        <if test="searchType == 'nmemo' and Keyword != null">
+            where nsubject like '%'+#{Keyword}+'%'
+        </if>
+    </select>
+
+    <select id="getMaxSeq" resultType="java.lang.String">
+        select left(max(nseq),8) from tb_mnotice
+    </select>
+
+    <select id="getDate" resultType="java.lang.String">
+        select convert(varchar(8), getdate(), 112)
+    </select>
+
+    <select id="SeqNext" resultType="java.lang.String">
+        select next value for notice_seq
     </select>
 
     <select id="GetNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
@@ -14,7 +32,7 @@
     </select>
 
     <insert id="InsertNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        insert into TB_MNOTICE (custcd, spjangcd, nseq, ninputdate, nsubject, nmemo) values (#{custcd}, #{spjangcd}, NEXT VALUE FOR NOTICE_SEQ, getdate(), #{nsubject}, #{nmemo})
+        insert into TB_MNOTICE (custcd, spjangcd, nseq, ninputdate, nsubject, nmemo) values (#{custcd}, #{spjangcd}, #{nseq}, #{date}, #{nsubject}, #{nmemo})
     </insert>
 
     <update id="UpdateNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
@@ -27,6 +45,12 @@
         nflag = #{nflag}
         where nseq = #{nseq}
     </update>
+
+    <update id="ResetSeq">
+        alter sequence notice_seq RESTART with 1
+    </update>
+
+
 
     <delete id="DeleteNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
         delete from TB_MNOTICE where nseq = #{nseq}

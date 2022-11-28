@@ -14,12 +14,26 @@
 
     <tr th:each="list : ${list}">
         <td th:text="${list.nseq}"></td>
-        <td><a th:text="${list.nsubject}" th:href="@{/app05/mnoticeView(nseq=${list.nseq})}"></a></td>
+        <td><a th:text="${list.nsubject}" th:href="@{/app05/mnoticeView(nseq=${list.nseq},username=${username},dbnm=${dbnm})}"></a></td>
         <td th:text="${list.custcd}"></td>
         <td th:text="${list.ninputdate}"></td>
     </tr>
 </table>
-<button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeWrite}'|">글 작성하기</button>
+<form action="/app05/mnotice" method="get">
+    <table align="center">
+        <tr>
+            <td>
+                <select name="searchType">
+                    <option value="nsubject">제목</option>
+                    <option value="nmemo">내용</option>
+                </select>
+            </td>
+            <td><input type="text" id="Keyword" name="Keyword"></td>
+            <td><button type="button" class="btn btn-primary">검색</button></td>
+        </tr>
+    </table>
+</form>
+<button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeWrite(username=${username},dbnm=${dbnm})}'|">글 작성하기</button>
 </body>
 <footer th:replace="layouts/XRegister/footer :: footerFragment"></footer>
 </html>
