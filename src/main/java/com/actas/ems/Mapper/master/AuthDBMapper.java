@@ -14,4 +14,9 @@ public interface AuthDBMapper {
     public String GetClientInfo(UserFormDto userinfo);
     public void UpdateDbInfo(UserFormDto userinfo);
 
+    public String TB_XUSER_DUPCHK(UserFormDto PARM);
+
+    public String TB_XCLIENT_SELECT(UserFormDto PARM);
+
+
 }

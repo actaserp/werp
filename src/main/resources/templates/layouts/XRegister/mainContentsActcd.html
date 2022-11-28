@@ -27,12 +27,22 @@
     <main class="main" id="top">
         <div class="container-fluid">
           <script>
+
+            
+
+
+
+
             var isFluid = JSON.parse(localStorage.getItem('isFluid'));
             if (isFluid) {
               var container = document.querySelector('[data-layout]');
               container.classList.remove('container');
               container.classList.add('container-fluid');
             }
+
+
+
+
           </script>
           <div class="row min-vh-100 bg-100">
             <div class="col-6 d-none d-lg-block position-relative"> 
@@ -60,6 +70,18 @@
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                             <p class="mb-0 flex-1">Incorrent data</p> 
                           </div> 
+                          <div id="inchkid_div"></div>
+                        </div>
+                        
+                        <div class="mb-3">
+                          <button class="btn btn-primary me-1 mb-1" type="button" id="idchk_btn"  name="idchk_btn" >
+                            <span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block ms-1">아이디중복체크</span>
+                          </button><input type="hidden" value="N" id="idchk">
+                        </div> 
+						 
+
+
                         <div class="mb-3">
                           <label class="form-label" for="split-name">고객명</label>
                           <input class="form-control" type="text" autocomplete="on" id="username" name="username"   th:field="*{username}"  /> 
@@ -74,8 +96,18 @@
                           <div th:if="${#fields.hasErrors('saupnum')}"  th:errors="*{saupnum}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                             <p class="mb-0 flex-1">Incorrent data</p> 
-                          </div>                           
+                          </div>
+                          <div id="inwarnning_div"></div>                           
                         </div>
+
+                        <div class="mb-3">
+                          <button class="btn btn-primary me-1 mb-1" type="button" id="saupnum_btn"  name="saupnum_btn">
+                            <span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block ms-1">업체확인</span>
+                          </button><input type="hidden" value="N" id="squpnum_chk">
+                        </div>
+
+
                         <div class="mb-3">
                           <label class="form-label" for="split-name">고객현장코드</label>
                           <input class="form-control" type="text" autocomplete="on" id="actcd" name="actcd"   th:field="*{actcd}"  /> 
@@ -95,11 +127,11 @@
                         <div class="row gx-2">
                           <div class="mb-3 col-sm-6">
                             <label class="form-label" for="split-password">Password</label>
-                            <input class="form-control" type="password" autocomplete="on" id="passwd1" name="passwd1"  th:field="*{passwd1}"  />
+                            <input class="form-control" type="password" autocomplete="on" id="passwd1" name="passwd1" onchange="check_pw()"  th:field="*{passwd1}"/>
                           </div>
                           <div class="mb-3 col-sm-6">
                             <label class="form-label" for="split-confirm-password">Confirm Password</label>
-                            <input class="form-control" type="password" autocomplete="on" id="passwd2" name="passwd2"   th:field="*{passwd2}"  />
+                            <input class="form-control" type="password" autocomplete="on" id="passwd2" name="passwd2" onchange="check_pw()"  th:field="*{passwd2}"/>&nbsp;<span id="check"></span>
                             <!-- <p th:if="${#fields.hasErrors('passwd2')}" th:errors="*{passwd2}" class="fieldError">Incorrent data</p> -->
                           </div>
                         </div>
@@ -110,10 +142,10 @@
                             <p class="mb-0 flex-1">Incorrent data</p> 
                           </div>                                                       
                         </div>                        
-                        <!-- <div class="form-check">
+                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="cover-register-checkbox" />
                           <label class="form-label" for="cover-register-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
-                        </div> -->
+                        </div> 
                         <div class="mb-3">
                           <button class="btn btn-primary d-block w-100 mt-3" type="button" name="save_btn" id="save_btn" >사용자등록</button>                             
                         </div>
@@ -141,9 +173,10 @@
 
 
         <script>
+       
           var btn_obj = document.getElementById('save_btn');
           btn_obj.addEventListener("click",function(){ 
-            alert("save");
+            
               //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
               var ls_saupnum   = document.getElementById('saupnum').value; 
               var ls_userid = document.getElementById('userid').value; 
@@ -153,7 +186,16 @@
               var ls_passwd2   = document.getElementById('passwd2').value; 
               var ls_actcd   = document.getElementById('actcd').value; 
               var ls_actnm   = document.getElementById('actnm').value; 
+              var ls_idchk   = document.getElementById('idchk').value;
+              var ls_saupnumchk = document.getElementById('squpnum_chk').value;
               
+              if(ls_userid == null || ls_userid == undefined || ls_userid == ""){ alert('아이디를 입력하세요.'); return;}
+              if(ls_username == null || ls_username == undefined || ls_username == ""){alert('고객명을 기입하십시오.'); return;}
+              if(ls_passwd1 == null || ls_passwd1 == undefined || ls_passwd1 == ""){alert('비밀번호를 기입하십시오.'); return;}
+              if(ls_passwd2 == null || ls_passwd2 == undefined || ls_passwd2 == ""){alert('비밀번호를 기입하십시오.'); return;}
+              if(ls_idchk == "N"){alert('아이디중복확인을 완료하십시오.'); return;}
+              if(ls_saupnumchk == "N"){alert('사업자확인을 완료하십시오.'); return;}
+              if(ls_passwd1 != ls_passwd2){alert('비밀번호가 맞지 않습니다. 확인바랍니다.'); return;}
               $.ajax({
                   url: '/authcrud/save',   
                   type:"POST", 
@@ -170,6 +212,8 @@
                   },
                   async:false,
                   success:function(data){
+                    alert("save");
+            
                       console.log("등록OK", data); 
                       const statusdis_div = document.getElementById('statusdis01'); 
                       if(data == "success"){
@@ -180,7 +224,7 @@
                           var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";                                        
                       } 
                       statusdis_div.innerHTML  = ls_text;   
-
+                      history.go(0);
                     
                   },error:function(e){
                       console.log('error',e);
@@ -190,7 +234,117 @@
               }) 
 
          })
+           
+          
+          document.getElementById("idchk_btn").addEventListener("click", function(){
+
+                
+                const inchkid_div = document.getElementById('inchkid_div');
+                var ls_username = document.getElementById('userid').value;
+                if(ls_username == "" || ls_username == null){
+                  window.alert("빈 문자열입니다."); return;
+                }  //아이디중복체크시 공백문자열일 경우 리턴 
+
+                console.log(ls_username); //문제x, 로그 잘찍힘 
+                
+                $.ajax({
+                  url: '/authcrud/useriddupchk',
+                  type: "POST",
+                  
+                  data: {"userid" : ls_username},
+                  success:function(data){ 
+                                  console.log("su-->" + data);
+                                  if(data == "error"){
+                                    ls_text = "<div style='color:blue'><span class='badge rounded-pill bg-info'>아이디가 중복됩니다. 다시 입력하세요</span></div>";
+                                  }else{
+                                    ls_text = "<div style='color:blue'><span class='badge rounded-pill bg-info'>사용가능한 아이디입니다.<br>수정이 필요할 경우 페이지 새로고침을 해주세요.</span></div>";
+                                      
+                                    document.getElementById('idchk').value= "Y";
+                                    txtActive();
+
+                                  }         
+                                  inchkid_div.innerHTML  = ls_text;                          
+                                },error:function(e){
+                                  console.log("er-->");
+                                    ls_text = "<div style='color:red'><span class='badge rounded-pill bg-info'>아이디가 중복됩니다. 다시 입력하세요</span></div>";
+                                    inchkid_div.innerHTML  = ls_text; 
+                                    // alert(data.code);
+                                    // alert(e);
+                                    return false
+                                }
+                            }).done(function(fragment){           
+                              
+                            })
+              });
+              
+              
+            
+                function txtActive(){
+                  const target = document.getElementById('userid');
+                  target.disabled = true;
+                }
+                function saupActive(){
+                  const target = document.getElementById('saupnum');
+                  target.disabled = true;
+                }
+
+         document.getElementById("saupnum_btn").addEventListener("click", function(){
+
+              const warnning_div = document.getElementById('inwarnning_div');
+              var ls_saupnum   = document.getElementById('saupnum').value; 
+              console.log(ls_saupnum);
+              $.ajax({
+                url: '/authcrud/searchnum',
+                type: "POST",
+                data: {"saupnum" : ls_saupnum},
+                success:function(data){
+                  console.log("su -->"+data);
+                  if(data == "error"){
+                    ls_text = "<div style='color:red'><span class='badge rounded-pill bg-info'>올바르지 않은 사업자번호입니다.</span></div>"
+                    //document.getElementById('squpnum_chk').value = "N";
+                  }else{
+                    ls_text = "<div style='color:red'><span class='badge rounded-pill bg-info'>" + data + "</span></div>";
+                    document.getElementById('squpnum_chk').value = "Y";
+                    saupActive();
+                  }
+                  warnning_div.innerHTML = ls_text;
+                },error:function(e){
+                  console.log("er-->");
+                  ls_text = "<div style='color:red'><span class='badge rounded-pill bg-info'>정확한 사업자번호를 입력하세요</span></div>";
+                  warnning_div.innerHTML = ls_text;
+
+                  return false
+                }
+              }).done(function(fragment){})
+            })
+          
+           
+          
+
+   
         </script>
+        
+        <script>
+             function check_pw(){
+          var pw = document.getElementById('passwd1').value;
+          if(pw.length<4||pw.length>8){
+            window.alert('비밀번호는 4글자 이상, 8글자 이하만 가능합니다.');
+            document.getElementById('passwd1').value="";
+          }
+          if(document.getElementById('passwd1').value !="" && document.getElementById('passwd2').value != ""){
+            if(document.getElementById('passwd1').value==document.getElementById('passwd2').value){
+              document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+              document.getElementById('check').style.color='blue';
+            }
+            else{
+              document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+              document.getElementById('check').style.color='red';
+            }
+          }
+        }
+        </script>
+        
+        
       </main>
       <!-- ===============================================-->
       <!--    End of Main Content-->

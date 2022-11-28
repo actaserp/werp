@@ -2,18 +2,23 @@ package com.actas.ems.DTO;
 
 
 import com.actas.ems.constant.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserFormDto {
-    @Id
+
     @NotBlank(message="사용자아이디는 필수입니다.")
     private String userid;
 
