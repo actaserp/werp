@@ -84,6 +84,8 @@ public class App05Controller {
             App05ElvlrtDto dto = service.GetNoticeView(nseq);
 
             model.addAttribute("view", dto);
+            model.addAttribute("username", username);
+            model.addAttribute("dbnm", dbnm);
         }catch(Exception e){
             System.out.println(e);
         }finally {
@@ -100,13 +102,6 @@ public class App05Controller {
         try {
             String max = service.getMaxSeq();
             String today = service.getDate();
-
-            System.out.println("=========");
-            System.out.println("맥스");
-            System.out.println(max);
-            System.out.println("오늘 날짜");
-            System.out.println(today);
-            System.out.println("=========");
 
             App05ElvlrtDto dto = new App05ElvlrtDto();
 
