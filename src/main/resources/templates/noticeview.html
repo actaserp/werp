@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/XRegister/head :: headFragment" />
+<body>
+공지사항 게시판
+<table align="center">
+    <tr>
+        <td>제목</td>
+        <td th:text="${subject}"></td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td th:text="${memo}"></td>
+    </tr>
+    <tr>
+        <td><input type="hidden" id="custcd" name="custcd" value="ELV_LRT">
+            <input type="hidden" id="spjangcd" name="spjangcd" value="ZZ"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeUpdate(nseq=${nseq})}'|">수정</button>
+            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeDelete(nseq=${nseq})}'|">삭제</button></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnotice}'|">목록</button></td>
+    </tr>
+</table>
+</body>
+<footer th:replace="layouts/XRegister/footer :: footerFragment"></footer>
+</html>

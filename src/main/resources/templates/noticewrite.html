@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+공지사항 게시판
+<form action="/app05/mnoticeRegist" method="POST">
+<table align="center">
+    <tr>
+        <td>제목</td>
+        <td><input type="text" id="nsubject" name="nsubject"></td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td><textarea id="nmemo" name="nmemo"></textarea></td>
+    </tr>
+    <tr>
+        <td><input type="hidden" id="custcd" name="custcd" value="ELV_LRT">
+            <input type="hidden" id="spjangcd" name="spjangcd" value="ZZ"></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit">등록하기</button></td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

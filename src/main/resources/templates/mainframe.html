@@ -74,7 +74,9 @@ function chk(){
                         <a href="#" class="nav-link">고장처리등록</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href = "@{/members/loginForm}" class="nav-link">공지사항</a>
+                        <a th:href = "@{/app05/mnotice(actuseridz=${userFormDto.userid},actusernamez=${userFormDto.username}
+                        ,actcltcdz=${userFormDto.cltcd},actdbnmz=${userFormDto.dbnm},actflagz=${userFormDto.flag}
+                        ,actcalluseridz=${userFormDto.calluserid},actcalluserpwz=${userFormDto.calluserpw})}" class="nav-link">공지사항</a>
                     </li>
 
                     <li class="nav-item">
