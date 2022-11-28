@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="<http://www.thymeleaf.org>">
+<head>
+    <title>board</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css"></link>
+
+</head>
+<body>
+<div class="container">
+    <h2>점검조치현황</h2>
+    <table class="board_list">
+        <colgroup>
+            <col width="15%"/>
+            <col width="*"/>
+            <col width="15%"/>
+            <col width="25%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th scope="col">글번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
+            <td>
+                <a th:href="@{/app07/mnoticeView(fseq=${list.fseq})}">[[${list.fseq}]]</a>
+            </td>
+            <td>
+                <a th:href="@{/app07/mnoticeView(fseq=${list.fseq})}">[[${list.fnsubject}]]</a>
+            </td>
+            <td>
+                <a th:href="@{/app07/mnoticeView(fseq=${list.fseq})}">[[${list.fpernm}]]</a>
+            </td>
+            <td th:text="${list.finputdate}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app07/bnoticeWrite}'|" style="background-color: dodgerblue; color: white;" >글 작성하기</button>
+        </tfoot>
+    </table>
+</div>
+</body>
+<footer th:replace="layouts/XRegister/footer :: footerFragment"></footer>
+</html>

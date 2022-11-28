@@ -1,0 +1,18 @@
+<html lang="en" xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div class="container">
+    <form th:action="@{bnoticeWrite}" method="post">
+
+      <input type="text" class="form-control" name="fpernm" placeholder="글쓴이입력">
+      <input type="text" class="form-control" name="fnsubject" placeholder="제목입력">
+      <textarea class="form-control" name="fmemo" placeholder="내용 입력"></textarea>
+      <button type="submit">btn</button>
+    </form>
+  </div>
+</body>
+</html>
