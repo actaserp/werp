@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
      
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,6 +36,8 @@ function chk(){
     <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
         Actas Elevator 유지보수센터 <br>
         <p>
+        회사코드<input type="text"  name="actcustcdz" id="actcustcdz" th:value="${userFormDto.custcd}" >        
+        사업장코드<input type="text"  name="actspjangcdz" id="actspjangcdz" th:value="${userFormDto.spjangcd}" >
         아이디<input type="text"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
         사용자명<input type="text" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" > 
         거래처코드<input type="text"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
@@ -73,10 +75,16 @@ function chk(){
                     <li class="nav-item">
                         <a href="#" class="nav-link">고장처리등록</a>
                     </li>
+                    <!-- <li class="nav-item"> 
+                        <button type="button" class="btn btn-outline-primary" onclick="menu09_btn()" name="menu09_btn">도면자료실</button>
+                    </li> -->
                     <li class="nav-item">
                         <a th:href = "@{/app05/mnotice(actuseridz=${userFormDto.userid},actusernamez=${userFormDto.username}
                         ,actcltcdz=${userFormDto.cltcd},actdbnmz=${userFormDto.dbnm},actflagz=${userFormDto.flag}
                         ,actcalluseridz=${userFormDto.calluserid},actcalluserpwz=${userFormDto.calluserpw})}" class="nav-link">공지사항</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href = "@{/app04/index01}" class="nav-link">도면자료실</a>
                     </li>
 
                     <li class="nav-item">
@@ -107,5 +115,49 @@ function chk(){
                         ls_uri = ls_uri +  "&actcalluserpwz=" + ls_actcalluserpwz;
                     var win = window.open("/app01/ktcall?" + ls_uri,   "fullscreen=yes"); 
             } 
+
+
+
+        function menu09_btn(){
+            
+                //TB_FPLAN_WORK TB_FPLAN_W010  SAVE    
+                var ls_actuseridz  = document.getElementById('actuseridz').value; 
+                var ls_actusernamez = document.getElementById('actusernamez').value;  
+                var ls_actcltcdz = document.getElementById('actcltcdz').value;   
+                var ls_actdbnmz = document.getElementById('actdbnmz').value;  
+                var ls_actflagz = document.getElementById('actflagz').value;  
+                var ls_actcalluseridz = document.getElementById('actcalluseridz').value;  
+                var ls_actcalluserpwz = document.getElementById('actcalluserpwz').value;  
+                var ls_flag = "0";
+                var ls_search = "%";
+                
+                $.ajax({
+                    url: '/app04/index',   
+                    type:"POST", 
+                    data: {
+                        "actuseridz"    : ls_actuseridz ,
+                        "actusernamez"  : ls_actusernamez, 
+                        "actcltcdz"  : ls_actcltcdz, 
+                        "actdbnmz"  : ls_actdbnmz, 
+                        "actflagz"  : ls_actflagz, 
+                        "actcalluseridz"  : ls_actcalluseridz, 
+                        "actcalluserpwz"  : ls_actcalluserpwz, 
+                        "flag"  : ls_flag, 
+                        "search"  : ls_search, 
+                    },
+                    async:false,
+                    success:function(data){ 
+                         console.log(data);
+
+                        
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+                }).done(function(fragment){           
+
+                }) 
+
+            }
+
     </script>   
 </html>
