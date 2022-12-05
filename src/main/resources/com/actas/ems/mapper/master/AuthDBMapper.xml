@@ -10,7 +10,7 @@
                 #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone})
     </insert>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select userid, passwd1, username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+        select userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
          from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetClientInfo" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
@@ -39,5 +39,11 @@
 
         <!--SELECT dbo.uf_clientnm_info(#{saupnum}) as cltnm -->
 
+    </select>
+
+    <select id="TB_XUSER_PHDUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        SELECT TOP 1 A.phone as phone
+        FROM TB_XUSERS A WITH(NOLOCK)
+        WHERE A.phone=#{phone}
     </select>
 </mapper>
