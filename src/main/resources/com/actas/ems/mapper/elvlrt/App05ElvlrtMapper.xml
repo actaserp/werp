@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper">
+    <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
+        from TB_MNOTICE
+        <if test="searchType == 'nsubject' and Keyword != null">
+            where nsubject like '%'+#{Keyword}+'%'
+        </if>
+        <if test="searchType == 'nmemo' and Keyword != null">
+            where nsubject like '%'+#{Keyword}+'%'
+        </if>
+        order by nseq desc
+    </select>
+
+    <select id="getMaxSeq" resultType="java.lang.String">
+        select left(max(nseq),8) from tb_mnotice
+    </select>
+
+    <select id="getDate" resultType="java.lang.String">
+        select convert(varchar(8), getdate(), 112)
+    </select>
+
+    <select id="SeqNext" resultType="java.lang.String">
+        select next value for notice_seq
+    </select>
+
+    <select id="GetNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
+        from TB_MNOTICE where nseq = #{nseq}
+    </select>
+
+    <insert id="InsertNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        insert into TB_MNOTICE (custcd, spjangcd, nseq, ninputdate, nsubject, nmemo) values (#{custcd}, #{spjangcd}, #{nseq}, #{date}, #{nsubject}, #{nmemo})
+    </insert>
+
+    <update id="UpdateNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        update TB_MNOTICE set
+        ngourpcd = #{ngourpcd},
+        nsubject = #{nsubject},
+        nfilename = #{nfilename},
+        npernm = #{npernm},
+        nmemo = #{nmemo},
+        nflag = #{nflag}
+        where nseq = #{nseq}
+    </update>
+
+    <update id="ResetSeq">
+        alter sequence notice_seq RESTART with 1
+    </update>
+
+
+
+    <delete id="DeleteNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        delete from TB_MNOTICE where nseq = #{nseq}
+    </delete>
+
+</mapper>

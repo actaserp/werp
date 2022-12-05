@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+
+<script>
+    function noticeCheck(){
+        var sub = document.getElementById("nsubject");
+        var memo = document.getElementById("nmemo");
+
+        if(sub.value == ""){
+            alert("제목을 입력하세요.");
+            sub.focus();
+
+            return false;
+        }
+
+        if(memo.value == ""){
+            alert("내용을 입력하세요.");
+            memo.focus();
+
+            return false;
+        }
+
+    }
+</script>
+</head>
+<body>
+공지사항 게시판
+<form action="/app05/mnoticeRegist" method="POST">
+<table align="center">
+    <tr>
+        <td>제목</td>
+        <td><input type="text" id="nsubject" name="nsubject" style="width:500px;"></td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td><textarea id="nmemo" name="nmemo" style="width:500px; height:500px; resize: none"></textarea></td>
+    </tr>
+    <tr>
+        <td><!-- <input type="hidden" id="username" name="username" value="${username}">
+            <input type="hidden" id="dbnm" name="dbnm" value="${dbnm}"> -->
+            <input type="hidden" id="username" name="username" value="ELV_LRT">
+            <input type="hidden" id="dbnm" name="dbnm" value="ZZ"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><input type="file" multiple="multiple" name="files"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><button type="submit" id="btn" name="btn">등록하기</button></td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

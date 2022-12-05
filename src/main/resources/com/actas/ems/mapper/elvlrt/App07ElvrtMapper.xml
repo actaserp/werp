@@ -2,16 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper">
-
     <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto">
         select fseq,finputdate,fnsubject,fpernm,fmemo
         from TB_MFIXBBS order by fseq asc;
     </select>
-
     <!--게시글 작성-->
     <insert id="uploadBoard" parameterType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto">
         INSERT INTO TB_MFIXBBS (custcd, spjangcd, fseq, finputdate, fnsubject, ffilename, fpernm, fmemo) values
-            ('actas', 'aa', CONCAT(CONVERT(VARCHAR(8),GETDATE(), 112),next value for id_SEQ), CONVERT(VARCHAR(8), GETDATE(), 112), #{fnsubject}, #{ffilename}, #{fpernm}, #{fmemo})
+        ('actas', 'aa', next value for id_SEQ, CONVERT(VARCHAR(8), GETDATE(), 112), #{fnsubject}, #{ffilename}, #{fpernm}, #{fmemo})
     </insert>
 
     <!--게시글 상세조회-->
@@ -29,23 +27,7 @@
         UPDATE TB_MFIXBBS SET fnsubject =#{fnsubject}, fmemo = #{fmemo}
         WHERE fseq = #{fseq};
     </update>
-    <!--
-    <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.SearchDto" resultType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto">
-        SELECT *
 
-        FROM TB_MFIXBBS
-
-        ORDER BY fseq,finputdate,fnsubject,fpernm,fmemo
-
-        OFFSET #{offset} ROWS
-
-            FETCH NEXT #{recordSize} ROWS ONLY
-
-    </select>
-    -->
-    <select id="count" parameterType="com.actas.ems.DTO.Elvlrt.SearchDto" resultType="int">
-        select count(*) from TB_MFIXBBS
-    </select>
 
 
 </mapper>

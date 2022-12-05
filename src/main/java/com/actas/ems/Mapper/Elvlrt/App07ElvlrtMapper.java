@@ -1,7 +1,6 @@
 package com.actas.ems.Mapper.Elvlrt;
 
 import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.SearchDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +12,7 @@ import java.util.List;
 @Mapper
 public interface App07ElvlrtMapper {
 
-    public List<App07ElvlrtDto> GetNoticeList(SearchDto params);
-    public int count(SearchDto params);
+    public List<App07ElvlrtDto> GetNoticeList();
 
     public void uploadBoard(App07ElvlrtDto perm);
 

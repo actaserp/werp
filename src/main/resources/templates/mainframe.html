@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-     
 
+<head th:replace="layouts/XRegister/head :: headFragment" />
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,65 +31,449 @@ function chk(){
   </script>       -->
      
 </head>
- 
-<body>
-    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
-        Actas Elevator 유지보수센터 <br>
-        <p>
-        아이디<input type="text"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
-        사용자명<input type="text" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" > 
-        거래처코드<input type="text"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
-        DBNAME<input type="text" name="actdbnmz" id="actdbnmz" th:value="${userFormDto.dbnm}" > 
-        구분<input type="text" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" > 
-        call id<input type="text" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" > 
-        call pw<input type="text" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" > 
-        </p>
-        <p>
 
-            <nav class="navbar navbar-expand-lg">
+<form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
 
-                <ul class="navbar-nav">
-                    <li class="active">
-                        <button type="button" class="btn btn-outline-primary" onclick="menu01_btn()" name="menu01_btn">고객상단괸리KT</button>
-                    </li>
-                    <li class="active">
-                        <a href="#" class="nav-link">고객상단괸리LG</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">고장접수관제현황</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">고장처리등록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">부품별/부위별고장현황</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">부품별/부위별수리현황</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">고장처리등록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">고장처리등록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href = "@{/members/loginForm}" class="nav-link">공지사항</a>
-                    </li>
+<body style="background: #f5f9fa;">
+<input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
+<input type="hidden" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" >
+<input type="hidden"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
+<input type="hidden" name="actdbnmz" id="actdbnmz" th:value="${userFormDto.dbnm}" >
+<input type="hidden" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" >
+<input type="hidden" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" >
+<input type="hidden" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" >
+<header>
 
-                    <li class="nav-item">
-                        <a th:href ="@{/app07/bnotice}" class="nav-list">점검조치결과</a>
-                    </li>
-
-                </ul>
+</header>
+<div class="content flex">
+    <div class="header">
+        <div class="left">
+            <div class="ham">
+                <button type="button"><img src="/images/ham.png" alt=""></button>
             </div>
-        </nav>
-        </p>
-    </form>
+            <div class="nav_bg"></div>
+            <ul class="nav">
+                <li>
+                    <button type="button"><img src="/images/header_icon1.png" alt=""></button>
+                    <div class="depth2 on">
+                        <div class="dep_main">
+                            <a href="./center.html">
+                                <button type="button">
+                                    종합유지관리서비스
+                                </button>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><a href="./center.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고객상담센터</a></li>
+                            <li><a href="./control.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장접수관제현황</a></li>
+                            <li><a href="./registration"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장처리등록</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon2.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    통계관리
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon3.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="./reference.html">
+                                <button type="button">
+                                    기술자료실
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon4.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    수리노하우
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon5.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="./care_center.html">
+                                <button type="button">
+                                    고객케어센터
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon6.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a th:href = "@{/app05/mnotice(actuseridz=${userFormDto.userid},actusernamez=${userFormDto.username}
+                        ,actcltcdz=${userFormDto.cltcd},actdbnmz=${userFormDto.dbnm},actflagz=${userFormDto.flag}
+                        ,actcalluseridz=${userFormDto.calluserid},actcalluserpwz=${userFormDto.calluserpw})}">
+                                <button type="button">
+                                    공지사항
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img src="/images/header_icon7.png" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    고객지원
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+        </div>
+    </div>
+    <div class="con">
+        <div class="header_top">
+            <ul class="left">
+                <li>
+                    <div class="logo">
+                        <a href="">
+                            <img src="/images/logo.png" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="home on">
+                    <a><img src="/images/i_home.png" alt=""></a>
+                    <a><img src="/images/i_home_on.png" alt=""></a>
+                </li>
+                <li>
+                    고객상담센터
+                </li>
+                <li>
+                    고장접수관제현황
+                </li>
+            </ul>
+            <ul class="mid">
+                <li>
+                    <i><img src="/images/i_circle1.png" alt=""></i>
+                    <p>계약현장 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img src="/images/i_circle2.png" alt=""></i>
+                    <p>계약관리대수 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img src="/images/i_circle3.png" alt=""></i>
+                    <p>당월고장접수 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img src="/images/i_circle4.png" alt=""></i>
+                    <p>금일고장접수 <span>50</span></p>
+                </li>
+            </ul>
+            <ul class="right">
+                <li>
+                    <a href="">
+                        <img src="/images/i_call.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/i_bell.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/i_menu.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/i_que.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/images/i_user.png" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="section section1">
+
+            <div class="sec_con" style="width: 40%;">
+                <div class="calender box_wrap">
+                    <div class="cal_top">
+                        <div class="pager">
+                            <button type="button"><img src="/images/arrow_left.png" alt=""></button>
+                            <p>2022.10</p>
+                            <button type="button"><img src="/images/arrow_right.png" alt=""></button>
+                        </div>
+                        <div class="add_cal">
+                            <button>+일정추가</button>
+                        </div>
+                    </div>
+                    <div class="cal_bottom">
+                        <div class="cal_table_box">
+                            <table class="cal_table">
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Set</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><p>1</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>2</p></td>
+                                    <td><p>3</p></td>
+                                    <td><p>4</p></td>
+                                    <td><p>5</p></td>
+                                    <td class="on"><!-- 클래스 on 활성화 -->
+                                        <p>6</p>
+                                        <div class="todo">
+                                            <h5><i><img src="/images/i_dot.png" alt=""></i>10시 AM 일정</h5>
+                                            <h5><i><img src="/images/i_dot.png" alt=""></i>3시 PM 일정</h5>
+                                        </div>
+                                    </td>
+                                    <td><p>7</p></td>
+                                    <td><p>8</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>9</p></td>
+                                    <td><p>10</p></td>
+                                    <td><p>11</p></td>
+                                    <td>
+                                        <p>12</p>
+                                        <div class="todo">
+                                            <h5><i><img src="/images/i_dot.png" alt=""></i>10시 AM 일정</h5>
+                                            <h5><i><img src="/images/i_dot.png" alt=""></i>3시 PM 일정</h5>
+                                        </div>
+                                    </td>
+                                    <td><p>13</p></td>
+                                    <td><p>14</p></td>
+                                    <td><p>15</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>16</p></td>
+                                    <td><p>17</p></td>
+                                    <td><p>18</p></td>
+                                    <td><p>19</p></td>
+                                    <td><p>20</p></td>
+                                    <td><p>21</p></td>
+                                    <td><p>22</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>23</p></td>
+                                    <td><p>24</p></td>
+                                    <td><p>25</p></td>
+                                    <td><p>26</p></td>
+                                    <td><p>27</p></td>
+                                    <td><p>28</p></td>
+                                    <td><p>29</p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>30</p></td>
+                                    <td><p>31</p></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="sec_con" style="width: 20%;">
+                <div class="sec_con_tit">
+                    <span>11.7일</span> 계약 기간 만료 현장
+                </div>
+                <div class="box_wrap with_tit">
+                    그래프영역
+                </div>
+            </div>
+            <div class="sec_con" style="width: 20%;">
+                <div class="sec_con_tit">
+                    <span>11.7일</span> 계약 기간 예정 현장
+                </div>
+                <div class="box_wrap with_tit">
+                    그래프영역
+                </div>
+            </div>
+            <div class="sec_con" style="width: 20%;">
+                <div class="sec_con_tit">
+                    금일 점검 직원
+                </div>
+                <div class="box_wrap with_tit">
+                    <ul class="employee scrollbar" style="overflow-y: scroll; height: 360px;">
+                        <li>
+                            <div class="left">
+                                <div class="user_icon" style="background: url(/images/user1.png) no-repeat center center;">
+                                </div>
+                                <div class="txt">
+                                    <h5>홍길동</h5>
+                                    <p>금천 자이 아파트</p>
+                                </div>
+                            </div>
+                            <div class="state">
+                                점검
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left">
+                                <div class="user_icon" style="background: url(/images/user2.png) no-repeat center center;">
+                                </div>
+                                <div class="txt">
+                                    <h5>홍길동</h5>
+                                    <p>금천 자이 아파트</p>
+                                </div>
+                            </div>
+                            <div class="state">
+                                결근
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left">
+                                <div class="user_icon" style="background: url(/images/user3.png) no-repeat center center;">
+                                </div>
+                                <div class="txt">
+                                    <h5>홍길동</h5>
+                                    <p>금천 자이 아파트</p>
+                                </div>
+                            </div>
+                            <div class="state">
+                                이동
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left">
+                                <div class="user_icon" style="background: url(/images/user4.png) no-repeat center center;">
+                                </div>
+                                <div class="txt">
+                                    <h5>홍길동</h5>
+                                    <p>금천 자이 아파트금천 자이 아파트</p>
+                                </div>
+                            </div>
+                            <div class="state">
+                                접수
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left">
+                                <div class="user_icon" style="background: url(/images/user5.png) no-repeat center center;">
+                                </div>
+                                <div class="txt">
+                                    <h5>홍길동</h5>
+                                    <p>금천 자이 아파트</p>
+                                </div>
+                            </div>
+                            <div class="state">
+                                완료
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
 
-</body> 
-    <script> 
+
+        </div>
+        <div class="section section2">
+            <div class="sec_con" style="width: 33.3333%;">
+                <div class="sec_con_tit">
+                    <span>2022</span> 월별 신규계약 현황
+                </div>
+                <div class="box_wrap with_tit">
+                    그래프영역
+                </div>
+            </div>
+            <div class="sec_con" style="width: 33.3333%;">
+                <div class="sec_con_tit">
+                    <span>2022</span> 월별 관리대수 현황
+                </div>
+                <div class="box_wrap with_tit">
+                    그래프영역
+                </div>
+            </div>
+            <div class="sec_con" style="width: 33.3333%;">
+                <div class="sec_con_tit">
+                    <span>직전 1개월</span> 고장 다발 현장
+                </div>
+                <div class="box_wrap with_tit">
+                    그래프영역
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+
+</footer>
+
+<!-- modal -->
+<!-- class="modal_step_open" modal_step="1" -->
+
+<div class="modal modal modal_step modal_step1 hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="/images/modal_close.png" alt="모달 닫기버튼">
+                </div>                       -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    모든 정보를 입력하세요.
+                </div>
+
+            </div>
+            <div class="modal_btn">
+                <button class="cancerButton " type="button">확인</button>
+            </div>
+            <!-- <div class="modal_btn flex">
+                <button class="cancerButton " type="button">확인</button>
+                <button class="cancerButton " type="button">확인</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+</body>
+</form>
+<script>
         function menu01_btn(){ 
                     var ls_actuseridz   =  jQuery('#actuseridz').val(); //document.getElementById('actuseridz').value; 
                     var ls_actusernamez =  jQuery('#actusernamez').val(); //document.getElementById('actusernamez').value;  
@@ -105,5 +489,5 @@ function chk(){
                         ls_uri = ls_uri +  "&actcalluserpwz=" + ls_actcalluserpwz;
                     var win = window.open("/app01/ktcall?" + ls_uri,   "fullscreen=yes"); 
             } 
-    </script>   
+    </script>
 </html>

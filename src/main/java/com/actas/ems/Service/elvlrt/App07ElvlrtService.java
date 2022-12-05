@@ -1,9 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
 import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.Pagination;
-import com.actas.ems.DTO.Elvlrt.PagingResponse;
-import com.actas.ems.DTO.Elvlrt.SearchDto;
 import com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,9 +18,8 @@ public class App07ElvlrtService {
 
     @Autowired
     App07ElvlrtMapper appMapper;
-    public List<App07ElvlrtDto> GetNoticeList(final SearchDto params){
-
-        return appMapper.GetNoticeList(params);
+    public List<App07ElvlrtDto> GetNoticeList(){
+        return appMapper.GetNoticeList();
     }
 
     //글쓰기
