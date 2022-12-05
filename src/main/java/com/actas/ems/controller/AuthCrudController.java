@@ -83,12 +83,6 @@ public class AuthCrudController {
         model.addAttribute("UserInfo", userReturnDto );
         switch (ls_dbnm){
             case "ELV_LRT":      //한국엘레텍
-                userformDto.setCustcd("ELVLRT");
-                userformDto.setSpjangcd("ZZ");
-                break;
-            case "hanyangs":      //한양엘리베이터
-                userformDto.setCustcd("hanyangs");
-                userformDto.setSpjangcd("ZZ");
                 break;
             default:
                 break;
@@ -114,6 +108,21 @@ public class AuthCrudController {
 
 
 
+    }
+
+    @RequestMapping(value = "/userphdupchk", method = RequestMethod.POST)
+    public Object AppW014_index(@RequestParam("phone") String phone, Model model, HttpServletRequest request) throws Exception{
+
+        userformDto.setPhone(phone);
+
+        authService.TB_XUSER_PHDUPCHK(userformDto);
+        String ls_userphone = authService.TB_XUSER_PHDUPCHK(userformDto);
+        if(ls_userphone == null || ls_userphone.equals("")){
+            return ls_userphone;
+        }else{
+            ls_userphone = "error";
+            return ls_userphone;
+        }
     }
 
     @RequestMapping(value = "/searchnum", method = RequestMethod.POST)

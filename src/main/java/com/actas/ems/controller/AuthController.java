@@ -5,15 +5,11 @@ import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.apache.struts.mock.MockHttpServletRequest;
-import org.apache.struts.mock.MockHttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @RequestMapping("/auth")
 @Controller
@@ -21,8 +17,6 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
     private final AuthService authService;
     private final App01ElvlrtService app01ElvlrtService;
-    private final SessionManager sessionManager;
-
     UserFormDto userformDto = new UserFormDto();
     App01ElvlrtDto app01ElvlrtDto = new App01ElvlrtDto();
 
@@ -50,28 +44,12 @@ public class AuthController {
                                     , @RequestParam("cltcd") String cltcd
                                     , @RequestParam("dbnm") String dbnm
                                     , @RequestParam("flag") String flag
-                                    , Model model
-                                    , HttpServletRequest request){
+                                    , Model model){
         userformDto.setUserid(userid);
         userformDto.setUsername(username);
         userformDto.setCltcd(cltcd);
         userformDto.setDbnm(dbnm);
         userformDto.setFlag(flag);
-        HttpSession session = request.getSession();
-//        session.invalidate();
-//        session.setAttribute("userid", userid );
-        switch (dbnm){
-            case "ELV_LRT":      //한국엘레텍
-                userformDto.setCustcd("ELVLRT");
-                userformDto.setSpjangcd("ZZ");
-                break;
-            case "hanyangs":      //한양엘리베이터
-                userformDto.setCustcd("hanyangs");
-                userformDto.setSpjangcd("ZZ");
-                break;
-            default:
-                break;
-        }
         String ls_flag = flag.toString();
 
 
@@ -80,21 +58,12 @@ public class AuthController {
         userformDto.setCalluserid(app01data.getCalluserid());
         userformDto.setCalluserpw(app01data.getCalluserpw());
 
-        session.setAttribute("userformDto", userformDto );
         model.addAttribute("userFormDto", userformDto);
-
-
         if (ls_flag.equals("AA")){
             return "mainframe";
         }else{
             return "mainframcustom";
         }
     }
-
-
-
-
-
-
 
 }

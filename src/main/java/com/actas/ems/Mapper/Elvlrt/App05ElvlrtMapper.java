@@ -21,4 +21,5 @@ public interface App05ElvlrtMapper {
     public void ResetSeq();
     public String getMaxSeq();
     public String SeqNext();
+
 }

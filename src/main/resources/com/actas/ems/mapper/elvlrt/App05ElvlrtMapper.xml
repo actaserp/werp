@@ -12,6 +12,7 @@
         <if test="searchType == 'nmemo' and Keyword != null">
             where nsubject like '%'+#{Keyword}+'%'
         </if>
+        order by nseq desc
     </select>
 
     <select id="getMaxSeq" resultType="java.lang.String">

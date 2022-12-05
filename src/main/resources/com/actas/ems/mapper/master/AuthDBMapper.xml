@@ -40,4 +40,10 @@
         <!--SELECT dbo.uf_clientnm_info(#{saupnum}) as cltnm -->
 
     </select>
+
+    <select id="TB_XUSER_PHDUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        SELECT TOP 1 A.phone as phone
+        FROM TB_XUSERS A WITH(NOLOCK)
+        WHERE A.phone=#{phone}
+    </select>
 </mapper>
