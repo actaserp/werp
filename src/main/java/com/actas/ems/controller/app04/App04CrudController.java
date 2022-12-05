@@ -80,8 +80,8 @@ public class App04CrudController {
                     pyscFileName = uuId;
                     physicalPath = folderPath + getToDate() + "/";
 
-//                    syFileM = new SyFileM(fileId, orgnFileName, pyscFileName, multiFiles[i].getSize());
-//                    fileList.add(syFileM);
+                    syFileM = new SyFileM(fileId, orgnFileName, pyscFileName, multiFiles[i].getSize());
+                    fileList.add(syFileM);
 
                     // 파일에 저장하기
                     log.debug("dest :: {} =>" + physicalPath + pyscFileName);
