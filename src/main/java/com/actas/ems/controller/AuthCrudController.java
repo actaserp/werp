@@ -83,6 +83,12 @@ public class AuthCrudController {
         model.addAttribute("UserInfo", userReturnDto );
         switch (ls_dbnm){
             case "ELV_LRT":      //한국엘레텍
+                userformDto.setCustcd("ELVLRT");
+                userformDto.setSpjangcd("ZZ");
+                break;
+            case "hanyangs":      //한양엘리베이터
+                userformDto.setCustcd("hanyangs");
+                userformDto.setSpjangcd("ZZ");
                 break;
             default:
                 break;

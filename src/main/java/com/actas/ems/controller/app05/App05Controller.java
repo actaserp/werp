@@ -3,7 +3,6 @@ package com.actas.ems.controller.app05;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
-import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/app05")
