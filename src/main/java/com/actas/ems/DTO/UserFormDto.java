@@ -82,4 +82,7 @@ public class UserFormDto {
     /** 콜 패스워드  */
     private String calluserpw;
 
+    @NotBlank(message = "이메일은 필수입니다.")
+    private String email;
+
 }

@@ -3,7 +3,6 @@ package com.actas.ems.Service.elvlrt;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper;
-import javassist.compiler.ast.Keyword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +33,14 @@ public class App05ElvlrtService {
     public void ResetSeq(){appMapper.ResetSeq();}
     public String getMaxSeq(){ return appMapper.getMaxSeq();}
     public String SeqNext(){ return appMapper.SeqNext();}
+
+    /**
+     * 게시글 리스트 조회
+     * @param params - search conditions
+     * @return 게시글 리스트
+     */
+    public List<App05ElvlrtDto> findAllPost(final SearchDto params) {
+        return appMapper.findAll(params);
+    }
 
 }
