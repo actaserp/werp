@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+    <header>
+
+    </header>
+    <div class="content flex">
+        
+            <div class="header on">
+                <div class="left">
+                    <div class="ham">
+                        <button type="button"><img th:src="@{/assets/images/ham.png}"   alt=""></button>
+                    </div>
+                    <div class="nav_bg"></div>
+                    <ul class="nav">
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon1.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="./center.html">
+                                        <button type="button">
+                                            종합유지관리서비스
+                                        </button>
+                                    </a>
+                                </div>
+                                <ul>
+                                    <li><a href="./center.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고객상담센터</a></li>
+                                    <li><a href="./control.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장접수관제현황</a></li>
+                                    <li><a href="./registration"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장처리등록</a></li>
+                                </ul>
+                            </div>     
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="">
+                                        <button type="button">
+                                            통계관리
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon3.png}" alt=""></button>
+                            <div class="depth2 on">
+                                <div class="dep_main">
+                                    <a href="./reference.html">
+                                        <button type="button">
+                                            기술자료실
+                                        </button>
+                                    </a>
+                                </div>
+                                <ul>
+                                    <li><a th:href="@{/app04/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
+                                    <li><a th:href="@{/app04/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품자료실</a></li>
+                                    <li><a th:href="@{/app04/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기타자료실</a></li>
+                                </ul>
+                            </div>  
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon4.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="">
+                                        <button type="button">
+                                            수리노하우
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon5.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="./care_center.html">
+                                        <button type="button">
+                                            고객케어센터
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon6.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="">
+                                        <button type="button">
+                                            공지사항
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>                        
+                        </li>
+                        <li>
+                            <button type="button"><img th:src="@{/assets/images/header_icon7.png}" alt=""></button>
+                            <div class="depth2">
+                                <div class="dep_main">
+                                    <a href="">
+                                        <button type="button">
+                                            고객지원
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>                        
+                        </li>
+                    </ul>
+                </div>
+                <div class="right">           
+                </div>
+            </div>
+            <div class="con">
+                <div class="header_top">
+                    <ul class="left">
+                        <li>
+                            <div class="logo">
+                                <a href="">
+                                    <img th:src="@{/assets/images/logo.png}" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li class="home">
+                            <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                            <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+                        </li> 
+                        <li class="on">
+                            도면자료실
+                        </li>
+                        <!-- <li class="on">
+                            고장접수관제현황
+                        </li> -->
+                    </ul>
+                    <ul class="right">
+                        <li>
+                            <a href="">
+                                <img th:src="@{/assets/images/i_call.png}" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img th:src="@{/assets/images/i_bell.png}" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img th:src="@{/assets/images/i_menu.png}" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img th:src="@{/assets/images/i_que.png}" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img th:src="@{/assets/images/i_user.png}" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="infor_bar type2">
+                    <div class="left">
+                        도면자료실
+                    </div>
+                    <ul class="right">
+                        <li>
+                            <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn()" >자료등록 </button>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="section ">                
+                    <div class="sec_con" style="width: 100%;">
+                        <div class="box_wrap">
+                            <form action="">
+                                 
+                                <div class="container-fluid"> 
+                                    <div id="mGrid_div" ></div>
+                                    <div id="thePager01"></div>
+                                </div>   
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+                <!--------------------------------------------------------------------------------------->
+                <!-- ###########  자료등록 #############################################################-->
+                <!--------------------------------------------------------------------------------------->
+                
+                <form   id="form" name="form"  role="form"    method="post"  enctype="multipart/form-data">  
+                    <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
+                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                            style="max-width: 900px">
+                            <div class="modal-content border-0">
+                                <div class="modal-body p-0" >
+                                    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                        <h4 class="mb-1" id="staticBackdropLabel">도면등록</h4> 
+                                    </div>
+                                    <div class="section ">
+                        
+                                        <div class="sec_con" style="width: 100%;">
+                                            <div class="box_wrap">
+                                                <div class="reference_tit">
+                                                    <div class="title">
+                                                        제목
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <input type="text" name="actmsubjectz" id="actmsubjectz" >
+                                                        <input type="hidden" name="actmseqz" id="actmseqz" > 
+                                                    </div>
+                                                    <div class="title" >
+                                                        작성일자
+                                                    </div>
+                                                    <div class="input_wrap date" style="max-width: 235px">
+                                                        <input type="text"  class="form-control datetimepicker" id="actminputdatez" autocomplete="off"  placeholder="Y-m-d"     >
+                                                    </div>
+                                                </div> 
+                                                    <div class="table table_style3">
+                                                        <table>
+                                                            <tr>
+                                                                <th style="width: 7%;">분류</th>
+                                                                <td style="width: 24%">
+                                                                    <div class="input_wrap" style="max-width: 235px;">
+                                                                        <select th:field="*{com750Dto}" name="actmgroupcdz" id="actmgroupcdz">
+                                                                            <option value="">선택</option>
+                                                                            <option th:each="val : ${com750Dto}" th:value="${val.code}" th:text="${val.cnam}">
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <th style="width: 10%;">작성자</th>
+                                                                <td style="width: 23%"> 
+                                                                    <input type="text" name="actmpernmz" id="actmpernmz" > 
+                                                                </td>
+                                                                <th style="width: 13%;">회원사공유</th>
+                                                                <td style="width: 23%"> 
+                                                                    <input type="checkbox" id="actmflagz" value="Y" checked>
+                                                                    <label for="actmflagz" class="check_style1 no_txt"></label> 
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>내용</th>
+                                                                <td colspan="5">
+                                                                    <textarea  id="actmemoz"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>첨부파일</th>
+                                                                <td colspan="5">
+                                                                    <!-- <input type="file" id="file1"     multiple="multiple"    style="display: none;">
+                                                                    <div class="input_wrap file" style="max-width: 235px;">
+                                                                        <input type="text" class="fileName" id="actmfilenamez">
+                                                                        <label for="file1"><img th:src="@{/assets/images/i_plus.png}" alt=""></label>
+                                                                    </div>
+                                                                    <br/> -->
+                                                                    
+                                                                    <!-- <form id="form" name="form" method="post" enctype="multipart/form-data"> -->
+                                                                    <div class="input_wrap file" style="max-width: 235px;">
+                                                                        <input type="hidden"   id="actmfilenamez"   name="actmfilenamez"   value="" />
+                                                                        <label for="file1"><img th:src="@{/assets/images/i_plus.png}" alt=""></label>
+                                                                        <input type="file"   id="files"     name="files"     multiple="multiple" /> 
+                                                                    </div>
+                                                                    <br/>
+                                                                        <!-- <input type="button" id="btnSubmit" name="btnSubmit" value="업로드" /> -->
+                                                                    <!-- </form> -->
+                                                                    <!-- <a href="" download="">도면2.jpg</a><br/>
+                                                                    <a href="" download="">도면2.jpg</a><br/>
+                                                                    <a href="" download="">도면2.jpg</a><br/>
+                                                                    <a href="" download="">도면2.jpg</a><br/>
+                                                                    <a href="" download="">도면2.jpg</a><br/> -->
+                                                                </td>
+                                                            </tr>
+                                                            <!-- <tr>
+                                                                <th>미리보기</th>
+                                                                <td>
+                                                                    <textarea></textarea>
+                                                                </td>
+                                                            </tr> -->
+                                                        </table>  
+                                                        <div class="btn_wrap">                                                             
+                                                            <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='delete_btn()' >삭&nbsp;&nbsp;&nbsp;제</button>
+                                                            <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='save_btn()' >저&nbsp;&nbsp;&nbsp;장</button>
+                                                        </div>     
+                                                    </div> 
+                                            </div>
+                                        </div>
+                                    </div>   
+
+
+                                </div>  
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button" id="CloseBtn"  data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                        <!-- <div class="col-auto">
+                                            <button class="badge-soft-info dropdown-item rounded-1"
+                                                type="submit">저장 </button>
+                                        </div> -->
+                                    </div>
+                                </div>   
+
+                            </div>
+                        </div> 
+                    </div>         
+                </form>
+                <!--------------------------------------------------------------------------------------->
+        <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}"  method="post" enctype="multipart/form-data">
+            <!-- <input type="hidden"  name="actcustcdz" id="actcustcdz" th:value="${userFormDto.custcd}" >        
+            <input type="hidden"  name="actspjangcdz" id="actspjangcdz" th:value="${userFormDto.spjangcd}" > -->
+            <!-- <input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
+            <input type="hidden" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" > 
+            <input type="hidden"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
+            <input type="hidden" name="actdbnmz" id="actdbnmz" th:value="${userFormDto.dbnm}" > 
+            <input type="hidden" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" > 
+            <input type="hidden" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" > 
+            <input type="hidden" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" >  -->
+        </from>  
+    </div>
+
+
+    <script type="text/javascript" th:inline="javascript">
+        function clear_rtn(){
+            console.log("clear rtn");
+            document.getElementById('actmseqz').value= ""; 
+            document.getElementById('actmsubjectz').value= "";   
+            document.getElementById('actmpernmz').value= "";   
+            document.getElementById('actmfilenamez').value= "";    
+            document.getElementById('actminputdatez').value= "";   
+            document.getElementById('actmgroupcdz').value= "";   
+            document.getElementById('actmemoz').value= "";   
+            document.getElementById('actmflagz').value= ""; 
+            getToday()                      
+        }
+        function save_btn(){ 
+
+            
+            var form = $('#form')[0];
+            var formData = new FormData(form); 
+
+            //도면 자료 저장
+            const happyNewYear = new Date(2021, 0, 1);
+            const year = happyNewYear.getFullYear();
+            const month = happyNewYear.getMonth() + 1;
+            const date = happyNewYear.getDate();
+
+            ls_todate = `${year} + ${month >= 10 ? month : '0' + month} + ${date >= 10 ? date : '0' + date}`;
+
+            var ls_actmseqz   = document.getElementById('actmseqz').value; 
+            var ls_actminputdatez   = document.getElementById('actminputdatez').value; 
+            var ls_actmgroupcdz = document.getElementById('actmgroupcdz').value; 
+            var ls_actmsubjectz   = document.getElementById('actmsubjectz').value; 
+            var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
+            var ls_actmpernmz   =  document.getElementById('actmpernmz').value; 
+            var ls_actmemoz   = document.getElementById('actmemoz').value;
+            if(document.getElementById('actmflagz').checked){
+                ls_actmflagz = "Y"
+            }else{
+                ls_actmflagz = "N"
+            };   
+            if(!ls_actminputdatez){
+                ls_actminputdatez = ls_todate;
+            } 
+            if(!ls_actmsubjectz){
+                alert("제목을 입력하세요")
+                 return 
+            } 
+            if(!ls_actmemoz){
+                alert("본문을 입력하세요")
+                 return 
+            } 
+            if(!ls_actmflagz){
+                ls_actmflagz = "Y";
+            }   
+            $.ajax({
+                url: '/app04mod/save',
+                enctype: 'multipart/form-data',   
+                type:"POST", 
+                data: {
+                    "actmseqz"    : ls_actmseqz ,
+                    "actminputdatez"    : ls_actminputdatez ,
+                    "actmgroupcdz"  : ls_actmgroupcdz,
+                    "actmsubjectz"      : ls_actmsubjectz ,
+                    "actmfilenamez" : ls_actmfilenamez ,
+                    "actmpernmz"   : ls_actmpernmz   ,
+                    "actmemoz"   : ls_actmemoz, 
+                    "actmflagz"   : ls_actmflagz, 
+                    formData
+                },
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                async:false,
+                success:function(data){
+                    // console.log("등록OK", data); 
+                    if(data == "success"){  
+                        console.log("save", data);                     
+                        $("#CloseBtn").trigger("click");  
+                    }                     
+                    
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){           
+
+            })   
+                    
+            listUp();      
+
+
+        }
+        function delete_btn(){ 
+            
+            if (!confirm("삭제하시겠습니까?")) {
+                return ; 
+            }  
+
+            //도면 자료 삭제
+            var ls_actmseqz   = document.getElementById('actmseqz').value;  
+            if(!ls_actmseqz){
+                alert("삭제할 자료를 선택하세요")
+                 return 
+            }  
+            $.ajax({
+                url: '/app04mod/del',   
+                type:"POST", 
+                data: {
+                    "actmseqz"    : ls_actmseqz 
+                },
+                async:false,
+                success:function(data){
+                    // console.log("등록OK", data); 
+                    if(data == "success"){  
+                        console.log("delete", data);                     
+                        $("#CloseBtn").trigger("click");  
+                    }                     
+                    
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){           
+
+            })   
+                    
+            listUp();      
+
+
+        }
+
+        function listUp(){ 
+            window.location.href = '/app04/index01';          
+            }
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    window.onload = function() {  
+        //설치메뉴얼 list
+        var view_Mmanualpage = new wijmo.collections.CollectionView(getData_wlist(), {
+            pageSize: 10
+        });  
+        // 작업설비 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager01', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_Mmanualpage
+        });    
+        wapp04Grid = new wijmo.grid.FlexGrid('#mGrid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+
+                { binding: 'mseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true}, 
+                { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },    
+                { binding: 'msubject',width: '*', header: '제목', width: '*', align:"center", format: '*' ,
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.msubject}</b>',
+                        click: (e, ctx) => {
+                            viewPaage(ctx.item.mseq, ctx.item.cnam, ctx.item.msubject, ctx.item.mpernm, ctx.item.mfilename, ctx.item.minputdate , ctx.item.mgourpcd , ctx.item.memo, ctx.item.mflag );
+                        }
+                    })
+                },  
+                { binding: 'mpernm', header: '작성자', width: '*', format: 'n1', align:"center", isReadOnly: true } ,
+                { binding: 'mfilename', header: '첨부', width: '*', format: 'n1',  align:"center", isReadOnly: true } ,
+                { binding: 'minputdate', header: '등록일자', width: '*', format: 'n1', align:"center",  isReadOnly: true } 
+
+            ], 
+            itemsSource: view_Mmanualpage
+        });  
+        wapp04Grid.hostElement.addEventListener("click",function(e){
+            var ht = wapp04Grid.hitTest(e);
+            if(ht.cellType === wijmo.grid.CellType.Cell){
+                console.log(ht._p._rows );
+                //  data = ht.RowCollection(ht.row); // e.getCellData(ht.row, 0, false); 
+                console.log(data);
+
+            }
+        })
+        // 설비메뉴얼 데이터 수집
+        function getData_wlist(){
+
+            var mapp04Dto = [[${app04Dto}]]; 
+            var data01 = [];
+            var cnt = 1;
+
+
+            for (var i = 0; i < mapp04Dto.length; i++) {
+                data01.push({
+                    id: i, 
+                    index: cnt,
+                    mseq:     mapp04Dto[i]["mseq"],
+                    cnam:     mapp04Dto[i]["cnam"],
+                    msubject: mapp04Dto[i]["msubject"], 
+                    mpernm:   mapp04Dto[i]["mpernm"],
+                    mfilename : mapp04Dto[i]["mfilename"] ,
+                    minputdate : mapp04Dto[i]["minputdate"] ,
+                    mgourpcd : mapp04Dto[i]["mgourpcd"]     ,
+                    memo : mapp04Dto[i]["memo"]     ,
+                    mflag : mapp04Dto[i]["mflag"]         
+                });
+                cnt++;
+            }  
+            // console.log(data01);            
+            return data01                                          
+        }         
+    }
+
+        function viewPaage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
+                $("#listmodal_btn").trigger("click"); 
+                document.getElementById('actmseqz').value= arg1; 
+                document.getElementById('actmsubjectz').value= arg3;   
+                document.getElementById('actmpernmz').value= arg4;   
+                document.getElementById('actmfilenamez').value= arg5;   
+                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                document.getElementById('actminputdatez').value= arg6;   
+                document.getElementById('actmgroupcdz').value= arg7;   
+                document.getElementById('actmemoz').value= arg8;   
+                document.getElementById('actmflagz').value= arg9;     
+
+ 
+        }
+
+
+        $(document).ready(function() { 
+            getToday()
+            fn_egov_init_date()
+            $('datetimepicker').datetimepicker({
+                
+            }); 
+
+            $("#actminputdatez").change(function(e){ 
+                // console.log("달력클릭");
+                // console.log(convert_time(e.timestamp));
+            })
+
+        })
+
+
+        function getToday(){
+            let today = new Date();   
+
+            let year = today.getFullYear(); // 년도
+            let month = today.getMonth() + 1;  // 월
+            let date = today.getDate();  // 날짜
+            let day = today.getDay();  // 요일
+            if(date > 0 && date < 10) {date = "0" + date};
+            let ls_today = year + '-' + month + '-' + date 
+            document.getElementById('actminputdatez').value = ls_today;
+        }
+
+        function convert_time(timestamp){ 
+            //현재시간
+            var date = new Date(timestamp); 
+            var year = date.getFullYear();
+            var month = ("0" + (1 + date.getMonth())).slice(-2);
+            var day = ("0" + date.getDate()).slice(-2); 
+            var hh = date.getHours();  
+            var min = ('0' + date.getMinutes()).slice(-2) 
+            time = year +  month +  day   ;
+            return time;  
+        }
+
+        function fn_egov_init_date(){
+            var $inputdate = $('#actminputdatez');
+            var $endDate = $('#endDate');
+            $inputdate.datetimepicker({
+                timepicker: true,
+                lang: 'ko',
+                format: 'Y-m-d',
+                scrollMonth: false,
+                scrollInput: false,
+                onShow: function (ct) {                                    
+                    this.setOptions({
+                        maxDate: $endDate.val() ? $endDate.val() : false
+                    })
+                },
+            });
+
+            $endDate.datetimepicker({
+                timepicker: true,
+                lang: 'ko',
+                format: 'Y-m-d H:i',
+                scrollMonth: false,
+                scrollInput: false,
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $inputdate.val() ? $inputdate.val() : false
+                    })
+                }
+            });
+
+        }
+
+    </script>
+
+    <!------footer ------>
+    <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
+
+
+    <!-- modal -->
+    <!-- class="modal_step_open" modal_step="1" -->
+    
+    <div class="modal modal modal_step modal_step1 hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+                    </div>                       -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                      모든 정보를 입력하세요.                          
+                    </div>
+
+                </div>
+                <div class="modal_btn">
+                    <button class="cancerButton " type="button">확인</button>
+                </div>
+                <!-- <div class="modal_btn flex">
+                    <button class="cancerButton " type="button">확인</button>
+                    <button class="cancerButton " type="button">확인</button>                        
+                </div> -->
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
