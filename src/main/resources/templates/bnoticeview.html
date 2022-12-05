@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+  <div class="container">
+    <p>글번호: [[${view.fseq}]]</p>
+    <p id="fnsubject">제목: [[${view.fnsubject}]]</p>
+    <p>작성자: [[${view.fpernm}]]</p>
+    <div id="fmemo">
+    내용 :<textarea class="form-control" th:text="${view.fmemo}" readonly="readonly"></textarea>
+    </div>
+
+    <button type="button" id="btn-remove" class="btn btn-danger btn-sm float-right" th:onclick=del([[${view.fseq}]])>삭제</button>
+    <button id="updateBtn" class="btn btn-info btn-sm float-right" th:onclick="|location.href='@{/app07/up(fseq=${view.fseq})}'|"
+    >수정</button>
+    
+    <form id="form" th:action="@{/}" method="post">
+    </form>
+
+  </div>
+ 
+  <script>
+    function del(fseq){
+      console.log(fseq);
+      var chk = confirm("정말 삭제하시겠습니까?");
+      if (chk) {
+        location.href = '/app07/delete?fseq='+fseq;
+      }
+    }
+    /*
+    $(document).on('click','#updateBtn',function(e){
+      var subject = document.getElementById('fnsubject').value;
+      var str="<input class='form-control' width='250'" + "placeholder='제목입력' id='upfnsubject' name='upfnsubject'>";
+      $("#fnsubject").html(str);
+      str="<textarea class='form-control' placeholder='내용 입력'" + "id='upfmemo'</textarea>";
+      $("#fmemo").html(str);
+      $("#updateBtn").attr("id", "updateConfirmBtn");
+
+    })  */
+  </script>
+
+  </body>
+  </html>

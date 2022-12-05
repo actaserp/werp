@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml" :
+      th="http://www.thymeleaf.org">
+<head>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+<div class="container">
+
+  <form id="update" method="post" action="/app07/update">
+  <label style="display: block">글번호: [[${view.fseq}]]</label>
+  <input type="hidden" id="fseq" name="fseq" th:value="${view.fseq}">
+  제목 :<textarea class="form-control" th:text="${view.fnsubject}" style="height: 35px" id="fnsubject" name="fnsubject"></textarea>
+  <label style="display: block">작성자: [[${view.fpernm}]]</label>
+
+    내용 :<textarea class="form-control" th:text="${view.fmemo}" id="fmemo" name="fmemo"></textarea>
+
+
+  <input type="submit" id="submitBtn" class="btn btn-info btn-sm float-right" style="margin-top: 10px" value="수정하기"></input>
+  </form>
+</div>
+
+
+
+</body>
+</html>
