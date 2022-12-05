@@ -34,13 +34,4 @@ public class App05ElvlrtService {
     public String getMaxSeq(){ return appMapper.getMaxSeq();}
     public String SeqNext(){ return appMapper.SeqNext();}
 
-    /**
-     * 게시글 리스트 조회
-     * @param params - search conditions
-     * @return 게시글 리스트
-     */
-    public List<App05ElvlrtDto> findAllPost(final SearchDto params) {
-        return appMapper.findAll(params);
-    }
-
 }

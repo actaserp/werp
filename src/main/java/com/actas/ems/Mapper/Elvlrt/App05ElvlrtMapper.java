@@ -22,17 +22,4 @@ public interface App05ElvlrtMapper {
     public String getMaxSeq();
     public String SeqNext();
 
-    /**
-     * 게시글 리스트 조회
-     * @param params - search conditions
-     * @return 게시글 리스트
-     */
-    List<App05ElvlrtDto> findAll(SearchDto params);
-
-    /**
-     * 게시글 수 카운팅
-     * @param params - search conditions
-     * @return 게시글 수
-     */
-    int count(SearchDto params);
 }
