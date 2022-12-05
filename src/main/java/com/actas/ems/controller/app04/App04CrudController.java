@@ -7,14 +7,25 @@ import com.actas.ems.Service.elvlrt.App04ElvlrtService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import com.actas.ems.controller.SyFileM;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +37,9 @@ public class App04CrudController {
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
+    private static final Logger logger     = LoggerFactory.getLogger(App04CrudController.class);
+    private  String folderPath = "";
+
     @RequestMapping(value="/save")
     public String memberSave(@RequestParam("actmseqz") String mseq
             ,@RequestParam("actminputdatez") String minputdate
@@ -35,6 +49,7 @@ public class App04CrudController {
             , @RequestParam("actmpernmz") String mpernm
             , @RequestParam("actmemoz") String memo
             , @RequestParam("actmflagz") String mflag
+             ,@RequestParam("files") MultipartFile[] multiFiles
             , Model model, HttpServletRequest request){
 
         try {
@@ -48,6 +63,35 @@ public class App04CrudController {
             String ls_dd = minputdate.substring(8,10);
             minputdate =  ls_yeare + ls_mm + ls_dd;
 //        log.debug("minputdate==>" + minputdate);
+            folderPath = "c:/fileattatch/upload/mmanual/" + ls_custcd;
+
+            createDirIfNotExist();
+            SyFileM syFileM = null;
+            String  uuId, fileId, orgnFileName, pyscFileName, physicalPath;
+            List<SyFileM> fileList = new ArrayList<>();
+            for (int i = 0; i< multiFiles.length; i++){
+                if(!multiFiles[i].isEmpty()){
+                    log.debug("folderPath :: {} =>" + folderPath);
+                    log.debug("file.getOriginalFilename() :: {} =>" + multiFiles[i].getOriginalFilename());
+                    log.debug("file size :: {}=> " + multiFiles[i].getSize());
+                    uuId         = UUID.randomUUID().toString();
+                    fileId       = getToDate() + "_" + uuId;
+                    orgnFileName = multiFiles[i].getOriginalFilename();
+                    pyscFileName = uuId;
+                    physicalPath = folderPath + getToDate() + "/";
+
+//                    syFileM = new SyFileM(fileId, orgnFileName, pyscFileName, multiFiles[i].getSize());
+//                    fileList.add(syFileM);
+
+                    // 파일에 저장하기
+                    log.debug("dest :: {} =>" + physicalPath + pyscFileName);
+                    File dest = new File(physicalPath + pyscFileName);
+//                    multiFiles[i].transferTo(dest);
+                }
+
+            }
+
+
             app04Dto.setCustcd(ls_custcd);
             app04Dto.setSpjangcd(ls_spjangcd);
             if(mseq == null || mseq.equals("")){
@@ -78,7 +122,22 @@ public class App04CrudController {
         }
         return "success";
     }
+    /**
+     * Create directory to save files, if not exist
+     */
+    private void createDirIfNotExist() {
+        // create directory to save the files
+        File directory = new File(folderPath + "/" + getToDate());
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+    }
+    private String getToDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date      = new Date(System.currentTimeMillis());
 
+        return formatter.format(date);
+    }
 
     @RequestMapping(value="/del")
     public String memberSave(@RequestParam("actmseqz") String mseq
