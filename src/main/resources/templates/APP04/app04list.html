@@ -318,7 +318,7 @@
                     </div>         
                 </form>
                 <!--------------------------------------------------------------------------------------->
-        <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}"  method="post" enctype="multipart/form-data">
+        <!-- <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}"  method="post" enctype="multipart/form-data"> -->
             <!-- <input type="hidden"  name="actcustcdz" id="actcustcdz" th:value="${userFormDto.custcd}" >        
             <input type="hidden"  name="actspjangcdz" id="actspjangcdz" th:value="${userFormDto.spjangcd}" > -->
             <!-- <input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
@@ -328,7 +328,7 @@
             <input type="hidden" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" > 
             <input type="hidden" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" > 
             <input type="hidden" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" >  -->
-        </from>  
+        <!-- </from>   -->
     </div>
 
 
@@ -348,9 +348,6 @@
         function save_btn(){ 
 
             
-            var form = $('#form')[0];
-            var formData = new FormData(form); 
-
             //도면 자료 저장
             const happyNewYear = new Date(2021, 0, 1);
             const year = happyNewYear.getFullYear();
@@ -385,9 +382,10 @@
             if(!ls_actmflagz){
                 ls_actmflagz = "Y";
             }   
+            // console.log("actmseqz1", ls_actmseqz);
+ 
             $.ajax({
-                url: '/app04mod/save',
-                enctype: 'multipart/form-data',   
+                url: '/app04mod/save',   
                 type:"POST", 
                 data: {
                     "actmseqz"    : ls_actmseqz ,
@@ -397,29 +395,60 @@
                     "actmfilenamez" : ls_actmfilenamez ,
                     "actmpernmz"   : ls_actmpernmz   ,
                     "actmemoz"   : ls_actmemoz, 
-                    "actmflagz"   : ls_actmflagz, 
-                    formData
-                },
-                processData: false,
-                contentType: false,
-                cache: false,
-                timeout: 600000,
+                    "actmflagz"   : ls_actmflagz 
+                }, 
                 async:false,
                 success:function(data){
                     // console.log("등록OK", data); 
-                    if(data == "success"){  
-                        console.log("save", data);                     
-                        $("#CloseBtn").trigger("click");  
+                    if(data != "error"){ 
+                        ls_actmseqz = data 
+                        console.log("actmseqz2", data);                     
+                        // $("#CloseBtn").trigger("click"); 
+                        
+
+                         var form = $('#form')[0];
+                         var formData = new FormData(form); 
+                         console.log(form); 
+
+                        $.ajax({
+                            url: '/app04mod/upload',
+                            enctype: 'multipart/form-data',   
+                            type:"POST", 
+                            data: { 
+                                formData
+                            },
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            timeout: 600000,
+                            async:false,
+                            success:function(data){
+                                // console.log("등록OK", data); 
+                                if(data == "success"){  
+                                    console.log("save", data);                     
+                                    $("#CloseBtn").trigger("click");  
+                                }                     
+                                
+                            },error:function(e){
+                                console.log('error',e);
+                            }
+                        }).done(function(fragment){           
+
+                        })    
+                        
                     }                     
                     
                 },error:function(e){
                     console.log('error',e);
+                    return 
                 }
             }).done(function(fragment){           
 
-            })   
+            }) 
+             
+                     
                     
-            listUp();      
+        //    listUp();      
 
 
         }
@@ -504,7 +533,7 @@
             if(ht.cellType === wijmo.grid.CellType.Cell){
                 console.log(ht._p._rows );
                 //  data = ht.RowCollection(ht.row); // e.getCellData(ht.row, 0, false); 
-                console.log(data);
+                // console.log(data);
 
             }
         })
