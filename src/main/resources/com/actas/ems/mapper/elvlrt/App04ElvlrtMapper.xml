@@ -35,7 +35,7 @@
         from tb_mmanual where mseq = #{mseq}
     </select>
 
-    <insert id="InsertMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+    <insert id="InsertMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
         insert into tb_mmanual (custcd, spjangcd, mseq, minputdate, mgourpcd, msubject, memo, mpernm, mflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
     </insert>
 

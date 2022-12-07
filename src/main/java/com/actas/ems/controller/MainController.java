@@ -19,7 +19,7 @@ public class MainController {
     public  String index(){
         //머스테치 기본폴더 src/main/resources/
         //머스테치 뷰리졸버 기본설정 templates(prefix), .mustache(suffix)   생략가능
-        return "index";
+        return "/loginForm"; //"index";
     }
 
 

@@ -20,8 +20,8 @@ public interface App04ElvlrtMapper {
     public List<CommonDto> GetComm750BlankList();
 
     public App04ElvlrtDto GetMManulView(String mSeq);
-    public void InsertMManul(App04ElvlrtDto perm);
-    public void UpdateMManul(App04ElvlrtDto perm);
-    public void DeleteMManul(App04ElvlrtDto perm);
+    public Integer InsertMManul(App04ElvlrtDto perm);
+    public Integer UpdateMManul(App04ElvlrtDto perm);
+    public Integer DeleteMManul(App04ElvlrtDto perm);
     public String getMManualMaxSeq(String perm);
 }

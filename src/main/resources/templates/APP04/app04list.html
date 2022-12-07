@@ -198,7 +198,7 @@
                 <!-- ###########  자료등록 #############################################################-->
                 <!--------------------------------------------------------------------------------------->
                 
-                <form   id="form" name="form"  role="form"    method="post"  enctype="multipart/form-data">  
+                <form   id="form" name="form"  role="form"   method="post"  enctype="multipart/form-data">  
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
                     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                     aria-hidden="true">
@@ -256,32 +256,26 @@
                                                                     <textarea  id="actmemoz"></textarea>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <th>첨부파일</th>
-                                                                <td colspan="5">
-                                                                    <!-- <input type="file" id="file1"     multiple="multiple"    style="display: none;">
-                                                                    <div class="input_wrap file" style="max-width: 235px;">
-                                                                        <input type="text" class="fileName" id="actmfilenamez">
-                                                                        <label for="file1"><img th:src="@{/assets/images/i_plus.png}" alt=""></label>
-                                                                    </div>
-                                                                    <br/> -->
-                                                                    
-                                                                    <!-- <form id="form" name="form" method="post" enctype="multipart/form-data"> -->
-                                                                    <div class="input_wrap file" style="max-width: 235px;">
-                                                                        <input type="hidden"   id="actmfilenamez"   name="actmfilenamez"   value="" />
-                                                                        <label for="file1"><img th:src="@{/assets/images/i_plus.png}" alt=""></label>
-                                                                        <input type="file"   id="files"     name="files"     multiple="multiple" /> 
-                                                                    </div>
-                                                                    <br/>
-                                                                        <!-- <input type="button" id="btnSubmit" name="btnSubmit" value="업로드" /> -->
-                                                                    <!-- </form> -->
-                                                                    <!-- <a href="" download="">도면2.jpg</a><br/>
-                                                                    <a href="" download="">도면2.jpg</a><br/>
-                                                                    <a href="" download="">도면2.jpg</a><br/>
-                                                                    <a href="" download="">도면2.jpg</a><br/>
-                                                                    <a href="" download="">도면2.jpg</a><br/> -->
-                                                                </td>
-                                                            </tr>
+                                                            <div data-name="fileDiv" class="form-group filebox bs3-primary">                                                                                                                            
+                                                                <tr> 
+                                                                    <th>첨부파일</th>
+                                                                    <td colspan="5"> 
+                                                                            <!-- <label for="file_0" class="col-sm-2 control-label">파일1</label> -->
+                                                                            <div class="col-sm-15">
+                                                                                <input type="text" class="upload-name" value="파일 찾기" readonly />
+                                                                                <label for="file_0" class="control-label">찾아보기</label>
+                                                                                <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+                                                                            
+                                                                                <button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                                </button>
+                                                                                <button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                    </td>
+                                                                </tr>
+                                                             </div>
                                                             <!-- <tr>
                                                                 <th>미리보기</th>
                                                                 <td>
@@ -289,10 +283,10 @@
                                                                 </td>
                                                             </tr> -->
                                                         </table>  
-                                                        <div class="btn_wrap">                                                             
+                                                        <div id="btnDiv" class="btn_wrap">                                                             
                                                             <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='delete_btn()' >삭&nbsp;&nbsp;&nbsp;제</button>
                                                             <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='save_btn()' >저&nbsp;&nbsp;&nbsp;장</button>
-                                                        </div>     
+                                                        </div>                                                           
                                                     </div> 
                                             </div>
                                         </div>
@@ -317,34 +311,88 @@
                         </div> 
                     </div>         
                 </form>
-                <!--------------------------------------------------------------------------------------->
-        <!-- <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}"  method="post" enctype="multipart/form-data"> -->
-            <!-- <input type="hidden"  name="actcustcdz" id="actcustcdz" th:value="${userFormDto.custcd}" >        
-            <input type="hidden"  name="actspjangcdz" id="actspjangcdz" th:value="${userFormDto.spjangcd}" > -->
-            <!-- <input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
-            <input type="hidden" name="actusernamez"  id="actusernamez" th:value="${userFormDto.username}" > 
-            <input type="hidden"  name="actcltcdz" id="actcltcdz" th:value="${userFormDto.cltcd}" >
-            <input type="hidden" name="actdbnmz" id="actdbnmz" th:value="${userFormDto.dbnm}" > 
-            <input type="hidden" name="actflagz" id="actflagz" th:value="${userFormDto.flag}" > 
-            <input type="hidden" name="actcalluseridz"  id="actcalluseridz" th:value="${userFormDto.calluserid}" > 
-            <input type="hidden" name="actcalluserpwz"  id="actcalluserpwz" th:value="${userFormDto.calluserpw}" >  -->
-        <!-- </from>   -->
     </div>
 
 
     <script type="text/javascript" th:inline="javascript">
+        
+        let formData = new FormData(); 
         function clear_rtn(){
             console.log("clear rtn");
             document.getElementById('actmseqz').value= ""; 
             document.getElementById('actmsubjectz').value= "";   
             document.getElementById('actmpernmz').value= "";   
-            document.getElementById('actmfilenamez').value= "";    
+            // document.getElementById('actmfilenamez').value= "";    
             document.getElementById('actminputdatez').value= "";   
             document.getElementById('actmgroupcdz').value= "";   
             document.getElementById('actmemoz').value= "";   
             document.getElementById('actmflagz').value= ""; 
             getToday()                      
         }
+
+        let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+
+        function addFile() {
+
+            const fileDivs = $('div[data-name="fileDiv"]');
+            if (fileDivs.length > 2) {
+                alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+                return false;
+            }
+
+            fileIdx++;
+            const fileHtml = `
+            <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                <div class="table table_style3">
+                    <table>
+                        <tr>
+                            <th style="width: 7%;">첨부파일</th>
+                            <td colspan="5">
+                                <!-- <label for="file_${fileIdx}" class="col-sm-2 control-label">파일1</label> -->
+                                <div class="col-sm-15">
+                                    <input type="text" class="upload-name" value="파일 찾기" readonly />
+                                    <label for="file_${fileIdx}" class="control-label">찾아보기</label>
+                                    <input type="file" name="files_${fileIdx}" id="file_${fileIdx}" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+                                
+                                    <button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table> 
+                 </div>   
+            </div>
+            `;
+
+
+            $('#btnDiv').before(fileHtml);
+        }
+
+        function removeFile(elem) {
+
+            const prevTag = $(elem).prev().prop('tagName');
+            if (prevTag === 'BUTTON') {
+                const file = $(elem).prevAll('input[type="file"]');
+                const filename = $(elem).prevAll('input[type="text"]');
+                file.val('');
+                filename.val('파일 찾기');
+                return false;
+            }
+
+            const target = $(elem).parents('div[data-name="fileDiv"]');
+            fileIdx = fileIdx - 1;
+            target.remove();
+        }        
+
+        function changeFilename(file) {
+
+            file = $(file);
+            const filename = file[0].files[0].name;
+            const target = file.prevAll('input');
+            target.val(filename);
+        }
+
         function save_btn(){ 
 
             
@@ -360,7 +408,7 @@
             var ls_actminputdatez   = document.getElementById('actminputdatez').value; 
             var ls_actmgroupcdz = document.getElementById('actmgroupcdz').value; 
             var ls_actmsubjectz   = document.getElementById('actmsubjectz').value; 
-            var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
+            // var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
             var ls_actmpernmz   =  document.getElementById('actmpernmz').value; 
             var ls_actmemoz   = document.getElementById('actmemoz').value;
             if(document.getElementById('actmflagz').checked){
@@ -381,74 +429,88 @@
             } 
             if(!ls_actmflagz){
                 ls_actmflagz = "Y";
-            }   
-            // console.log("actmseqz1", ls_actmseqz);
- 
-            $.ajax({
-                url: '/app04mod/save',   
-                type:"POST", 
-                data: {
+            }    
+            for (h = 0; h <= fileIdx; h++ ){                
+                ls_fileid = 'file_' + h;
+                
+                const fileInput = document.getElementById(ls_fileid);
+                // const selectedFile = fileInput.files[0]; 
+                const selectedFile = [...fileInput.files]; 
+                for (s = 0; s <= selectedFile.length - 1; s++){
+                    formData.append("file", selectedFile[s]); 
+                    console.log(selectedFile[s]); 
+                }
+            
+            }
+            var inputdata = {   
                     "actmseqz"    : ls_actmseqz ,
                     "actminputdatez"    : ls_actminputdatez ,
                     "actmgroupcdz"  : ls_actmgroupcdz,
-                    "actmsubjectz"      : ls_actmsubjectz ,
-                    "actmfilenamez" : ls_actmfilenamez ,
+                    "actmsubjectz"      : ls_actmsubjectz , 
                     "actmpernmz"   : ls_actmpernmz   ,
                     "actmemoz"   : ls_actmemoz, 
                     "actmflagz"   : ls_actmflagz 
-                }, 
+                }
+             
+            formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
+                  
+            $.ajax({
+                url: '/app04mod/upload', 
+                processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+                contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 
+                enctype : 'multipart/form-data',       
+                type: "POST", 
+                data: formData,
                 async:false,
                 success:function(data){
                     // console.log("등록OK", data); 
-                    if(data != "error"){ 
-                        ls_actmseqz = data 
-                        console.log("actmseqz2", data);                     
-                        // $("#CloseBtn").trigger("click"); 
-                        
-
-                         var form = $('#form')[0];
-                         var formData = new FormData(form); 
-                         console.log(form); 
-
-                        $.ajax({
-                            url: '/app04mod/upload',
-                            enctype: 'multipart/form-data',   
-                            type:"POST", 
-                            data: { 
-                                formData
-                            },
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            timeout: 600000,
-                            async:false,
-                            success:function(data){
-                                // console.log("등록OK", data); 
-                                if(data == "success"){  
-                                    console.log("save", data);                     
-                                    $("#CloseBtn").trigger("click");  
-                                }                     
-                                
-                            },error:function(e){
-                                console.log('error',e);
-                            }
-                        }).done(function(fragment){           
-
-                        })    
-                        
+                    if(data == "success"){  
+                        console.log("save", data);                     
+                        $("#CloseBtn").trigger("click");  
                     }                     
                     
                 },error:function(e){
                     console.log('error',e);
-                    return 
                 }
             }).done(function(fragment){           
 
-            }) 
+            })    
+
+
+            // $.ajax({
+            //     url: '/app04mod/save',   
+            //     type:"POST", 
+            //     data: {
+            //         "actmseqz"    : ls_actmseqz ,
+            //         "actminputdatez"    : ls_actminputdatez ,
+            //         "actmgroupcdz"  : ls_actmgroupcdz,
+            //         "actmsubjectz"      : ls_actmsubjectz ,
+            //         "actmfilenamez" : ls_actmfilenamez ,
+            //         "actmpernmz"   : ls_actmpernmz   ,
+            //         "actmemoz"   : ls_actmemoz, 
+            //         "actmflagz"   : ls_actmflagz 
+            //     }, 
+            //     async:false,
+            //     success:function(data){
+            //         // console.log("등록OK", data); 
+            //         if(data != "error"){ 
+            //             ls_actmseqz = data 
+            //             console.log("actmseqz2", data);                     
+            //             // $("#CloseBtn").trigger("click");  
+                        
+            //         }                     
+                    
+            //     },error:function(e){
+            //         console.log('error',e);
+            //         return 
+            //     }
+            // }).done(function(fragment){           
+
+            // }) 
              
                      
                     
-        //    listUp();      
+            // listUp();      
 
 
         }
@@ -517,7 +579,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.msubject}</b>',
                         click: (e, ctx) => {
-                            viewPaage(ctx.item.mseq, ctx.item.cnam, ctx.item.msubject, ctx.item.mpernm, ctx.item.mfilename, ctx.item.minputdate , ctx.item.mgourpcd , ctx.item.memo, ctx.item.mflag );
+                            viewPage(ctx.item.mseq, ctx.item.cnam, ctx.item.msubject, ctx.item.mpernm, ctx.item.mfilename, ctx.item.minputdate , ctx.item.mgourpcd , ctx.item.memo, ctx.item.mflag );
                         }
                     })
                 },  
@@ -566,12 +628,12 @@
         }         
     }
 
-        function viewPaage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
+        function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
                 $("#listmodal_btn").trigger("click"); 
                 document.getElementById('actmseqz').value= arg1; 
                 document.getElementById('actmsubjectz').value= arg3;   
                 document.getElementById('actmpernmz').value= arg4;   
-                document.getElementById('actmfilenamez').value= arg5;   
+                // document.getElementById('actmfilenamez').value= arg5;   
                 arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
                 document.getElementById('actminputdatez').value= arg6;   
                 document.getElementById('actmgroupcdz').value= arg7;   

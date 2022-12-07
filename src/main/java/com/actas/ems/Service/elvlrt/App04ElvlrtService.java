@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service("App04ElvlrtService")
-public class App04ElvlrtService {
+public class  App04ElvlrtService {
 
     @Autowired
     App04ElvlrtMapper app04ElvMapper;
@@ -32,6 +32,8 @@ public class App04ElvlrtService {
     public void DeleteMManu(App04ElvlrtDto perm){app04ElvMapper.DeleteMManul(perm);}
 
     public String getMManualMaxSeq(String parm){ return app04ElvMapper.getMManualMaxSeq(parm);}
+
+
 
     public List<CommonDto> GetComm750List(){return app04ElvMapper.GetComm750List();}
     public List<CommonDto>  GetComm750BlankList(){return app04ElvMapper.GetComm750List();}

@@ -40,15 +40,6 @@ public class App04Controller {
     // 도면자료실 index
     @GetMapping(value="/index01")
     public String App04Form(Model model, HttpServletRequest request) throws  Exception{
-//        userformDto.setUserid(userid);
-//        userformDto.setUsername(username);
-//        userformDto.setCltcd(cltcd);
-//        userformDto.setDbnm(dbnm);
-//        userformDto.setFlag(flag);
-//        userformDto.setCalluserid(calluserid);
-//        userformDto.setCalluserpw(calluserpw);
-//        userformDto.setCustcd(custcd);
-//        userformDto.setSpjangcd(spjangcd);
 
         Date nowData = new Date();
         SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
@@ -69,16 +60,13 @@ public class App04Controller {
             log.debug("Exception =====>" + ex.toString() );
         }
         try {
-
             com750Dto = service.GetComm750List();
             model.addAttribute("com750Dto",com750Dto);
 
         } catch (Exception ex) {
-//                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );
         }
 
-//        log.debug("app04tDto =====>" + app04Dto.toString() );
         try {
 
             HttpSession session = request.getSession();

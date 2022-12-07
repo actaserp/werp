@@ -1,29 +1,31 @@
 package com.actas.ems.controller.app04;
 
 
+import com.actas.ems.DTO.AttachDTO;
 import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
+import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App04ElvlrtService;
+import com.actas.ems.Service.elvlrt.App04UploadService;
+import com.actas.ems.util.Method;
+import com.actas.ems.util.UiUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import org.apache.commons.io.FilenameUtils;
 
 import com.actas.ems.controller.SyFileM;
 
@@ -32,13 +34,15 @@ import com.actas.ems.controller.SyFileM;
 @RequestMapping(value = "/app04mod", method = RequestMethod.POST)
 public class App04CrudController {
     private final App04ElvlrtService appService;
+    private final App04UploadService appUploadService;
+    private final UiUtils utils;
 
     App04ElvlrtDto app04Dto = new App04ElvlrtDto();
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
     private static final Logger logger     = LoggerFactory.getLogger(App04CrudController.class);
-    private  String folderPath = "";
+    private final String uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
 
     @RequestMapping(value="/save")
     public String memberSave(@RequestParam("actmseqz") String mseq
@@ -94,73 +98,127 @@ public class App04CrudController {
         return ls_mseq;
     }
 
-    @RequestMapping(value="/upload")
-    public String memberUpload(@RequestParam("files") MultipartFile[] multiFiles
-            , Model model, HttpServletRequest request){
+    /**
+     * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환
+     * @return 랜덤 문자열
+     */
+    private final String getRandomString() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
 
+    @RequestMapping(value="/upload")
+    public List<AttachDTO> memberUpload ( @RequestPart(value = "key") Map<String, Object> param,
+                                          @RequestPart(value = "file",required = false) List<MultipartFile> file
+                                        , Model model
+                                        , HttpServletRequest request){
+        String ls_fileName = "";
+        /* 업로드 파일 정보를 담을 비어있는 리스트 */
+        List<AttachDTO> attachList = new ArrayList<>();
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        String ls_custcd = userformDto.getCustcd();
+        String ls_spjangcd = userformDto.getSpjangcd();
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "actmseqz":
+                    app04Dto.setMseq(values.toString());
+                    break;
+                case "actminputdatez":
+                    app04Dto.setMinputdate(values.toString());
+                    break;
+                case "actmgroupcdz":
+                    app04Dto.setMgourpcd(values.toString());
+                    break;
+                case "actmsubjectz":
+                    app04Dto.setMsubject(values.toString());
+                    break;
+                case "actmpernmz":
+                    app04Dto.setMpernm(values.toString());
+                    break;
+                case "actmemoz":
+                    app04Dto.setMemo(values.toString());
+                    break;
+                case "actmflagz":
+                    app04Dto.setMflag(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        String mseq = app04Dto.getMseq();
+        String today = getToDate();
+        app04Dto.setCustcd(ls_custcd);
+        app04Dto.setSpjangcd(ls_spjangcd);
+        app04Dto.setMpernm(userformDto.getUsername());
+        String minputdate = app04Dto.getMinputdate();
+        String ls_yeare = minputdate.substring(0,4);
+        String ls_mm = minputdate.substring(5,7);
+        String ls_dd = minputdate.substring(8,10);
+        minputdate =  ls_yeare + ls_mm + ls_dd;
+        app04Dto.setMinputdate(minputdate);
+        if(mseq == null || mseq.equals("")){
+            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm));
+        }else{
+            app04Dto.setMseq(mseq);
+        }
+        app04Dto.setYyyymm(ls_yeare + ls_mm);
+        if(mseq == null || mseq.equals("")){
+            appService.InsertMManu(app04Dto);
+        }else{
+            appService.UpdateMManu(app04Dto);
+        }
+        model.addAttribute("userformDto",userformDto);
+
+        /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
+        File dir = new File(uploadPath);
+        if (dir.exists() == false) {
+            dir.mkdirs();
+        }
         try {
 
-            HttpSession session = request.getSession();
-            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-            String ls_custcd = userformDto.getCustcd();
-            String ls_spjangcd = userformDto.getSpjangcd();
-            folderPath = "c:/fileattatch/upload/mmanual/" + ls_custcd;
-
-            createDirIfNotExist();
-            SyFileM syFileM = null;
-            String  uuId, fileId, orgnFileName, pyscFileName, physicalPath;
-            List<SyFileM> fileList = new ArrayList<>();
-            for (int i = 0; i< multiFiles.length; i++){
-                if(!multiFiles[i].isEmpty()){
-                    log.debug("folderPath :: {} =>" + folderPath);
-                    log.debug("file.getOriginalFilename() :: {} =>" + multiFiles[i].getOriginalFilename());
-                    log.debug("file size :: {}=> " + multiFiles[i].getSize());
-                    uuId         = UUID.randomUUID().toString();
-                    fileId       = getToDate() + "_" + uuId;
-                    orgnFileName = multiFiles[i].getOriginalFilename();
-                    pyscFileName = uuId;
-                    physicalPath = folderPath + getToDate() + "/";
-
-                    syFileM = new SyFileM(fileId, orgnFileName, pyscFileName, multiFiles[i].getSize());
-                    fileList.add(syFileM);
-
-                    // 파일에 저장하기
-                    log.debug("dest :: {} =>" + physicalPath + pyscFileName);
-                    File dest = new File(physicalPath + pyscFileName);
-//                    multiFiles[i].transferTo(dest);
+            for(MultipartFile multipartFile : file){
+//                log.info("================================================================");
+//                log.info("upload file name : " + multipartFile.getOriginalFilename());
+//                log.info("upload file name : " + multipartFile.getSize());
+                ls_fileName = multipartFile.getOriginalFilename();
+                /* 파일이 비어있으면 비어있는 리스트 반환 */
+                if (multipartFile.getSize() < 1) {
+                    return Collections.emptyList();
                 }
+                /* 파일 확장자 */
+                final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+                /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
+                final String saveName = getRandomString() + "." + extension;
 
+                /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
+                File target = new File(uploadPath, saveName);
+                multipartFile.transferTo(target);
+
+                /* 파일 정보 저장 */
+                AttachDTO attach = new AttachDTO();
+                attach.setBoardIdx(mseq);
+                attach.setOriginalName(multipartFile.getOriginalFilename());
+                attach.setSaveName(saveName);
+                attach.setSize(multipartFile.getSize());
+                /* 파일 정보 추가 */
+                attachList.add(attach);
             }
 
-
-//            app04Dto.setCustcd(ls_custcd);
-//            app04Dto.setSpjangcd(ls_spjangcd);
-//            app04Dto.setMseq(mseq);
-//            app04Dto.setMpernm(userformDto.getUsername());
-//            if(mseq == null || mseq.equals("")){
-//                appService.InsertMManu(app04Dto);
-//            }else{
-//                appService.UpdateMManu(app04Dto);
-//            }
-            model.addAttribute("userformDto",userformDto);
-
-        }catch (IllegalStateException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "error";
+        }catch (DataAccessException e){
+            throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        } catch (Exception  e){
+                throw new AttachFileException("[" + ls_fileName + "] failed to save");
+            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         }
 
-        return "success";
+        return attachList;
+        //utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app04/app04list/", Method.GET, model);
     }
-    /**
-     * Create directory to save files, if not exist
-     */
-    private void createDirIfNotExist() {
-        // create directory to save the files
-        File directory = new File(folderPath + "/" + getToDate());
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-    }
+
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date      = new Date(System.currentTimeMillis());
