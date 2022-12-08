@@ -14,7 +14,11 @@ public class AuthService {
 
     public void authInsert(UserFormDto parm){authMapper.TBXUSERS_Insert(parm);}
     public UserFormDto GetUserInfo(UserFormDto parm){return authMapper.GetUserInfo(parm);}
+    public UserFormDto GetUserInfoDto(UserFormDto parm){return authMapper.GetUserInfoDto(parm);}
+
     public String GetClientInfo(UserFormDto parm){return authMapper.GetClientInfo(parm);}
+    public String GetClientInfoName(UserFormDto parm){return authMapper.GetClientInfoName(parm);}
+
     public void UpdateDbInfo(UserFormDto parm){authMapper.UpdateDbInfo(parm);}
 
     public String TB_XUSER_DUPCHK(UserFormDto parm){

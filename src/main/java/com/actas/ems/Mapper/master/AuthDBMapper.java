@@ -11,7 +11,11 @@ import java.util.List;
 public interface AuthDBMapper {
     public void TBXUSERS_Insert(UserFormDto userinfo);
     public UserFormDto GetUserInfo(UserFormDto userinfo);
+    public UserFormDto GetUserInfoDto(UserFormDto userinfo);
+
     public String GetClientInfo(UserFormDto userinfo);
+    public String GetClientInfoName(UserFormDto userinfo);
+
     public void UpdateDbInfo(UserFormDto userinfo);
 
     public String TB_XUSER_DUPCHK(UserFormDto PARM);

@@ -45,22 +45,24 @@ public class AuthCrudController {
             userformDto.setPasswd1(passwd1);
             userformDto.setPasswd2(passwd2);
             userformDto.setPhone(phone);
-            userformDto.setActcd(actcd);
-            userformDto.setActnm(actnm);
-
-            authService.authInsert(userformDto);
 
             String ls_cltnmInfo = authService.GetClientInfo(userformDto);
+            userformDto.setCltcd(ls_cltnmInfo);
+            userformDto.setActcd(ls_cltnmInfo);
+            String ls_cltnmInfoName = authService.GetClientInfoName(userformDto);
+            userformDto.setActnm(ls_cltnmInfoName);
 
             switch (ls_cltnmInfo){
                 case "100534":      //한국엘레텍
                     userformDto.setDbnm("ELV_LRT");
-                    userformDto.setCltcd(ls_cltnmInfo);
-                    authService.UpdateDbInfo(userformDto);
+                    break;
+                case "100542":      //한국엘레텍
+                    userformDto.setDbnm("hanyangs");
                     break;
                 default:
                     break;
             }
+            authService.authInsert(userformDto);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "register";
@@ -105,9 +107,6 @@ public class AuthCrudController {
             ls_userid = "error";
             return ls_userid;
         }
-
-
-
     }
 
     @RequestMapping(value = "/userphdupchk", method = RequestMethod.POST)

@@ -41,18 +41,13 @@ public class AuthController {
     // 보수업체 대시보드
     @GetMapping(value="/emmsdashboard")
     public String memberEmmsBoardForm(@RequestParam("userid") String userid
-                                    , @RequestParam("username") String username
-                                    , @RequestParam("cltcd") String cltcd
-                                    , @RequestParam("dbnm") String dbnm
-                                    , @RequestParam("flag") String flag
                                     , Model model
                                     , HttpServletRequest request){
         userformDto.setUserid(userid);
-        userformDto.setUsername(username);
-        userformDto.setCltcd(cltcd);
-        userformDto.setDbnm(dbnm);
-        userformDto.setFlag(flag);
-        String ls_flag = flag.toString();
+        userformDto =  authService.GetUserInfoDto(userformDto);
+
+        String ls_flag = userformDto.getFlag();
+        String dbnm = userformDto.getDbnm();
         String ls_custcd = "";
         String ls_spjangcd = "";
         App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);

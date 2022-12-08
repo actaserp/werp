@@ -5,16 +5,23 @@
 <mapper namespace="com.actas.ems.Mapper.master.AuthDBMapper">
     <insert id="TBXUSERS_Insert" parameterType="com.actas.ems.DTO.UserFormDto" keyProperty="username">
         INSERT INTO TB_XUSERS(userid, rnum, passwd1, passwd2, custnm, pernm, useyn, password, role, custcd, spjangcd,
-                              username, actcd, actnm, saupnum, flag, phone )
+                              username, actcd, actnm, saupnum, flag, phone, dbnm )
         VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
-                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone})
+                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm})
     </insert>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
          from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
+    </select>
+    <select id="GetUserInfoDto" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+        from TB_XUSERS where userid=#{userid}
     </select>
     <select id="GetClientInfo" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
         SELECT dbo.uf_client_info(#{saupnum})
+    </select>
+    <select id="GetClientInfoName" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        SELECT dbo.uf_clientnm_info(#{actcd})
     </select>
     <update id="UpdateDbInfo" parameterType="com.actas.ems.DTO.UserFormDto"  >
         UPDATE TB_XUSERS SET  dbnm=#{dbnm}, cltcd=#{cltcd}
@@ -40,6 +47,7 @@
         <!--SELECT dbo.uf_clientnm_info(#{saupnum}) as cltnm -->
 
     </select>
+
 
     <select id="TB_XUSER_PHDUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
         SELECT TOP 1 A.phone as phone

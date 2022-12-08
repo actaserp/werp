@@ -29,6 +29,7 @@
           </div>
           <div class="input_wrap icon i_id">
             <input type="text" id="loginid" name="loginid">
+            <input type="hidden" id="ipaddr" name="ipaddr">
           </div>
           <div class="input_wrap icon i_pw">
             <input type="password" id="logpass" name="logpass">
@@ -74,19 +75,34 @@
 </div>
 
 <script>
+      window.onload = function() {  
+        getIpClient();
+      }
+
+      async function getIpClient() {
+        try {
+          const response = await axios.get('https://api.ipify.org?format=json');
+          document.getElementById('ipaddr').value = response.data.ip;
+          // console.log(response.data.ip);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
       var btn_obj = document.getElementById('login_btn');
       btn_obj.addEventListener("click",function(){
         
           //TB_FPLAN_WORK TB_FPLAN_W010  SAVE
           var ls_loginid   = document.getElementById('loginid').value;
-          var ls_logpass = document.getElementById('logpass').value;
-
+          var ls_logpass   = document.getElementById('logpass').value;
+          var ls_ipaddr    = document.getElementById('ipaddr').value;
           $.ajax({
               url: '/authcrud/login',
               type:"POST",
               data: {
                   "loginid"    : ls_loginid ,
                   "logpass"  : ls_logpass,
+                  "ipaddr"  : ls_ipaddr,
               },
               async:false,
               success:function(userFormDto){
@@ -97,7 +113,8 @@
                 var ls_cltcd= userFormDto["cltcd"]
                 var ls_dbnm = userFormDto["dbnm"]
                 var ls_flag = userFormDto["flag"]
-                var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
+                //var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
+                var ls_url = 'userid=' + ls_userid 
                 window.location.href = '/auth/emmsdashboard?' + ls_url;
                   // if(data == "success"){
                   //     alert("등록 되었습니다.");
