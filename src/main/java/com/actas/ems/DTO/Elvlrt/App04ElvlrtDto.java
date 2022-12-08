@@ -18,5 +18,6 @@ public class App04ElvlrtDto {
     private String mflag;
     private String yyyymm;
     private String cnam;
+    private int attcnt;
 
 }

@@ -7,6 +7,7 @@ import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App04ElvlrtService;
 import com.actas.ems.Service.elvlrt.App04UploadService;
+import com.actas.ems.Service.elvlrt.App04UploadServiceImpl;
 import com.actas.ems.util.Method;
 import com.actas.ems.util.UiUtils;
 import lombok.RequiredArgsConstructor;
@@ -34,17 +35,19 @@ import com.actas.ems.controller.SyFileM;
 @RequestMapping(value = "/app04mod", method = RequestMethod.POST)
 public class App04CrudController {
     private final App04ElvlrtService appService;
+    private final App04UploadServiceImpl appServiceImpl;
     private final App04UploadService appUploadService;
     private final UiUtils utils;
 
     App04ElvlrtDto app04Dto = new App04ElvlrtDto();
+    AttachDTO attachDTO = new AttachDTO();
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
     private static final Logger logger     = LoggerFactory.getLogger(App04CrudController.class);
     private final String uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
 
-    @RequestMapping(value="/save")
+    @RequestMapping(value="/saveboard")
     public String memberSave(@RequestParam("actmseqz") String mseq
             ,@RequestParam("actminputdatez") String minputdate
             , @RequestParam("actmgroupcdz") String mgroupcd
@@ -106,12 +109,13 @@ public class App04CrudController {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    @RequestMapping(value="/upload")
-    public List<AttachDTO> memberUpload ( @RequestPart(value = "key") Map<String, Object> param,
+    @RequestMapping(value="/save")
+    public String mmnualUpload ( @RequestPart(value = "key") Map<String, Object> param,
                                           @RequestPart(value = "file",required = false) List<MultipartFile> file
                                         , Model model
                                         , HttpServletRequest request){
         String ls_fileName = "";
+        String ls_errmsg = "";
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<AttachDTO> attachList = new ArrayList<>();
 
@@ -149,7 +153,6 @@ public class App04CrudController {
             }
         });
         String mseq = app04Dto.getMseq();
-        String today = getToDate();
         app04Dto.setCustcd(ls_custcd);
         app04Dto.setSpjangcd(ls_spjangcd);
         app04Dto.setMpernm(userformDto.getUsername());
@@ -166,9 +169,15 @@ public class App04CrudController {
         }
         app04Dto.setYyyymm(ls_yeare + ls_mm);
         if(mseq == null || mseq.equals("")){
-            appService.InsertMManu(app04Dto);
+            boolean result = appService.InsertMManu(app04Dto);
+            if(!result){
+                return  "error";
+            }
         }else{
-            appService.UpdateMManu(app04Dto);
+            boolean result = appService.UpdateMManu(app04Dto);
+            if(!result){
+                return  "error";
+            }
         }
         model.addAttribute("userformDto",userformDto);
 
@@ -186,7 +195,8 @@ public class App04CrudController {
                 ls_fileName = multipartFile.getOriginalFilename();
                 /* 파일이 비어있으면 비어있는 리스트 반환 */
                 if (multipartFile.getSize() < 1) {
-                    return Collections.emptyList();
+                    ls_errmsg = "success";
+                    return ls_errmsg;
                 }
                 /* 파일 확장자 */
                 final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
@@ -203,20 +213,30 @@ public class App04CrudController {
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
+                attach.setFlag("MM");
                 /* 파일 정보 추가 */
                 attachList.add(attach);
             }
+                boolean result  = appServiceImpl.registerMManu(app04Dto, attachList);
+                if(!result){
+                    return  "error";
+                }
 
         }catch (DataAccessException e){
+            log.info("memberUpload DataAccessException ================================================================");
+            log.info(e.toString());
             throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
             //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         } catch (Exception  e){
+                log.info("memberUpload Exception ================================================================");
+                log.info(e.toString());
+                ls_errmsg = "[" + ls_fileName + "] failed to save";
                 throw new AttachFileException("[" + ls_fileName + "] failed to save");
             //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         }
 
-        return attachList;
-        //utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app04/app04list/", Method.GET, model);
+        return "success";
+//        utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app04/app04list/", Method.GET, model);
     }
 
     private String getToDate() {
@@ -227,8 +247,9 @@ public class App04CrudController {
     }
 
     @RequestMapping(value="/del")
-    public String memberSave(@RequestParam("actmseqz") String mseq
-            , Model model, HttpServletRequest request){
+    public String mmnualDelete(@RequestParam("actmseqz") String mseq
+                              ,@RequestParam("actflagz") String mflag
+                              ,Model model, HttpServletRequest request){
 
         try {
 
@@ -237,7 +258,16 @@ public class App04CrudController {
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
             app04Dto.setMseq(mseq);
-            appService.DeleteMManu(app04Dto);
+            app04Dto.setMflag(mflag);
+
+            boolean result = appService.DeleteMManu(app04Dto);
+            if(!result){
+                return  "error";
+            }
+            result = appServiceImpl.registerMManuDel(app04Dto);
+            if(!result){
+                return  "error";
+            }
             model.addAttribute("userformDto",userformDto);
 
         }catch (IllegalStateException e){
@@ -245,6 +275,52 @@ public class App04CrudController {
             return "error";
         }
         return "success";
+    }
+
+
+    @RequestMapping(value="/filedel")
+    public String mmnualFileDelete(@RequestParam("actidxz") Long idx
+                                   ,@RequestParam("actmseqz") String mseq
+                                   ,@RequestParam("actflagz") String mflag
+                                   ,Model model, HttpServletRequest request){
+
+        try {
+            attachDTO.setIdx(idx);
+            attachDTO.setBoardIdx(mseq);
+            attachDTO.setFlag(mflag);
+
+            boolean result = appServiceImpl.MManuFileDel(attachDTO);
+            if(!result){
+                return  "error";
+            }
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return "success";
+    }
+
+
+    @RequestMapping(value="/flist")
+    public Object mmnualFilelist(@RequestParam("actmseqz") String mseq
+                                ,@RequestParam("actflagz") String mflag
+                                , Model model, HttpServletRequest request){
+        List<AttachDTO>  attach =new ArrayList<>();
+        try {
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+            app04Dto.setMseq(mseq);
+            app04Dto.setMflag(mflag);
+             attach = appServiceImpl.MManuFilelist(app04Dto);
+            model.addAttribute("userformDto",userformDto);
+            model.addAttribute("attachDto",attach);
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return attach;
     }
 
     public String CountSeq(String yyyymm){

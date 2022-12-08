@@ -22,4 +22,17 @@ public class AttachDTO extends CommonDto{
     /** 파일 크기 */
     private long size;
 
+    /** 테이블 구분 */
+    private String flag;
+
+
+    /** 삭제여부 */
+    private String deleteyn;
+
+    /** 등록일자  */
+    private String inserttime;
+
+    /** 삭제일자  */
+    private String deletetime;
+
 }

@@ -169,7 +169,8 @@
                     </div>
                     <ul class="right">
                         <li>
-                            <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn()" >자료등록 </button>
+                            <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn(this)" >자료등록 </button>
+                            <button  class="color4" type="button" visible="false" data-bs-toggle="modal" data-bs-target="#fileBackdrop" id="filemodal_btn" onclick="clear_rtn(this)" >미리보기 </button>
                         </li>
                     </ul>
 
@@ -311,13 +312,59 @@
                         </div> 
                     </div>         
                 </form>
+
+                <!--------------------------------------------------------------------------------------->
+                <!-- ###########  첨부파일 미리보기######################################################-->
+                <!--------------------------------------------------------------------------------------->
+                
+                <form   id="form" name="form"  role="form"   method="post"  enctype="multipart/form-data">  
+                    <div class="modal fade" id="fileBackdrop" data-bs-keyboard="false"
+                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                            style="max-width: 900px">
+                            <div class="modal-content border-0">
+                                <div class="modal-body p-0" >
+                                    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                        <h4 class="mb-1" id="staticBackdropLabel">파일다운로드</h4> 
+                                    </div>
+                                    <div class="section ">
+                        
+                                        <div class="sec_con" style="width: 100%;">
+                                            <div class="box_wrap">  
+                                                <table>
+                                                    <tr>
+                                                        <th style="width: 10%;">파일목록</th>
+                                                        <td style="width: 90%">
+                                                            <div data-name="filelistDiv" class="table table_style3"></div> 
+                                                        </td> 
+                                                    </tr> 
+                                                </table>  
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>  
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button" id="CloseFileBtn"  data-bs-dismiss="modal">Close</button>
+                                        </div> 
+                                    </div>
+                                </div>   
+
+                            </div>
+                        </div> 
+                    </div>         
+                </form>
+
     </div>
 
 
     <script type="text/javascript" th:inline="javascript">
         
         let formData = new FormData(); 
-        function clear_rtn(){
+        function clear_rtn(elem){
             console.log("clear rtn");
             document.getElementById('actmseqz').value= ""; 
             document.getElementById('actmsubjectz').value= "";   
@@ -327,6 +374,10 @@
             document.getElementById('actmgroupcdz').value= "";   
             document.getElementById('actmemoz').value= "";   
             document.getElementById('actmflagz').value= ""; 
+            const target = $(elem).parents('div[data-name="fileDiv"]');
+            fileIdx = 0;
+            const fileDivs = $('div[data-name="fileDiv"]');
+            fileDivs.remove();
             getToday()                      
         }
 
@@ -383,7 +434,42 @@
             const target = $(elem).parents('div[data-name="fileDiv"]');
             fileIdx = fileIdx - 1;
             target.remove();
-        }        
+        }     
+        
+        
+        function deleteFile(elem, arg1, arg2) {
+
+            if (!confirm("파일을 삭제하시겠습니까?")) {
+                return ; 
+            }  
+
+            //도면 파일 삭제 
+            $.ajax({
+                url: '/app04mod/filedel',   
+                type:"POST", 
+                data: {
+                    "actidxz"     : arg1 ,
+                    "actmseqz"    : arg2 ,
+                    "actflagz"    : "MM" 
+                },
+                async:false,
+                success:function(data){ 
+                    if(data == "success"){   
+                        console.log("deletefile", data); 
+                        const target = $(elem).parents('div[data-name="fileDiv"]'); 
+                        target.remove();
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
+                    }   
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){           
+
+            })  
+ 
+
+        }     
 
         function changeFilename(file) {
 
@@ -455,7 +541,7 @@
             formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
                   
             $.ajax({
-                url: '/app04mod/upload', 
+                url: '/app04mod/save', 
                 processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                 contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 
                 enctype : 'multipart/form-data',       
@@ -465,8 +551,12 @@
                 success:function(data){
                     // console.log("등록OK", data); 
                     if(data == "success"){  
+                        alert("저장되었습니다.")
                         console.log("save", data);                     
-                        $("#CloseBtn").trigger("click");  
+                        $("#CloseBtn").trigger("click"); 
+                        listUp();   
+                    }else{
+                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
                     }                     
                     
                 },error:function(e){
@@ -509,8 +599,7 @@
             // }) 
              
                      
-                    
-            // listUp();      
+                        
 
 
         }
@@ -530,16 +619,19 @@
                 url: '/app04mod/del',   
                 type:"POST", 
                 data: {
-                    "actmseqz"    : ls_actmseqz 
+                    "actmseqz"    : ls_actmseqz ,
+                    "actflagz"    : "MM" 
                 },
                 async:false,
-                success:function(data){
-                    // console.log("등록OK", data); 
+                success:function(data){ 
                     if(data == "success"){  
+                        alert("삭제되었습니다.")
                         console.log("delete", data);                     
-                        $("#CloseBtn").trigger("click");  
-                    }                     
-                    
+                        $("#CloseBtn").trigger("click"); 
+                        listUp();   
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
+                    }   
                 },error:function(e){
                     console.log('error',e);
                 }
@@ -556,7 +648,8 @@
             window.location.href = '/app04/index01';          
             }
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    window.onload = function() {  
+    window.onload = function() { 
+        document.getElementById("filemodal_btn").style.display="none"; 
         //설치메뉴얼 list
         var view_Mmanualpage = new wijmo.collections.CollectionView(getData_wlist(), {
             pageSize: 10
@@ -575,7 +668,7 @@
 
                 { binding: 'mseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true}, 
                 { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },    
-                { binding: 'msubject',width: '*', header: '제목', width: '*', align:"center", format: '*' ,
+                { binding: 'msubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.msubject}</b>',
                         click: (e, ctx) => {
@@ -583,9 +676,15 @@
                         }
                     })
                 },  
-                { binding: 'mpernm', header: '작성자', width: '*', format: 'n1', align:"center", isReadOnly: true } ,
-                { binding: 'mfilename', header: '첨부', width: '*', format: 'n1',  align:"center", isReadOnly: true } ,
-                { binding: 'minputdate', header: '등록일자', width: '*', format: 'n1', align:"center",  isReadOnly: true } 
+                { binding: 'mpernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
+                { binding: 'attcnt', header: '첨부파일건수', width: '*', format: 'n0',  align:"center", isReadOnly: true,
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.attcnt}건 보기</b>',
+                        click: (e, ctx) => {
+                            viewFilePage(ctx.item.mseq );
+                        }
+                    }) } ,
+                { binding: 'minputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true } 
 
             ], 
             itemsSource: view_Mmanualpage
@@ -615,7 +714,7 @@
                     cnam:     mapp04Dto[i]["cnam"],
                     msubject: mapp04Dto[i]["msubject"], 
                     mpernm:   mapp04Dto[i]["mpernm"],
-                    mfilename : mapp04Dto[i]["mfilename"] ,
+                    attcnt : mapp04Dto[i]["attcnt"] ,
                     minputdate : mapp04Dto[i]["minputdate"] ,
                     mgourpcd : mapp04Dto[i]["mgourpcd"]     ,
                     memo : mapp04Dto[i]["memo"]     ,
@@ -628,6 +727,51 @@
         }         
     }
 
+    
+        function viewFilePage(arg1 ){     
+                $("#filemodal_btn").trigger("click");
+                
+                var wfile_data = []; 
+                const fileHtml = '';
+                $.ajax({
+                    url: '/app04mod/flist',  
+                    type:"POST",
+                    data: {
+                        "actmseqz"     : arg1,
+                        "actflagz"     : "MM", 
+                    },
+                    async:false,
+                    success:function(data){ 
+                        var wfileDto  = data;   
+                        var cnt = 0; 
+                        if(wfileDto.length > 0){ 
+                            for (var i = 0; i < wfileDto.length; i++) { 
+                                    var  id = i; 
+                                    var  idx = wfileDto[i]["idx"];
+                                    var  boardIdx = wfileDto[i]["boardIdx"];
+                                    var  originalName = wfileDto[i]["originalName"];  
+                                 fileHtml = `
+                                    <a  href="/app04mod/download?idx=${idx}">
+                                        <i class="fa fa-file-o" aria-hidden="true"></i>
+                                        [[ ${originalName} ]]
+                                    </a>
+                                    `;  
+
+                                cnt++;                        
+                            }  
+                            document.getElementById('filelistDiv').innerHTML= fileHtml;
+                        } else{
+                            const fileHtml = `  `; 
+                            $('#filelistDiv').after(fileHtml);  
+                        }   
+                    },error:function(e){ 
+
+                    }
+                }).done(function(fragment){           
+
+                })  
+ 
+        }  
         function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
                 $("#listmodal_btn").trigger("click"); 
                 document.getElementById('actmseqz').value= arg1; 
@@ -638,10 +782,71 @@
                 document.getElementById('actminputdatez').value= arg6;   
                 document.getElementById('actmgroupcdz').value= arg7;   
                 document.getElementById('actmemoz').value= arg8;   
-                document.getElementById('actmflagz').value= arg9;     
+                document.getElementById('actmflagz').value= arg9;  
 
+                var wfile_data = []; 
+                $.ajax({
+                        url: '/app04mod/flist',  
+                        type:"POST",
+                        data: {
+                            "actmseqz"     : arg1,
+                            "actflagz"     : "MM", 
+                        },
+                        async:false,
+                        success:function(data){ 
+                            var wfileDto  = data;   
+                            var cnt = 0; 
+                            if(wfileDto.length > 0){ 
+                                for (var i = 0; i < wfileDto.length; i++) {
+                                    // wfile_data.push({
+                                    //     id: i, 
+                                    //     index: cnt,
+                                    //     idx: wfileDto[i]["idx"],
+                                    //     boardIdx: wfileDto[i]["boardIdx"], 
+                                    //     originalName: wfileDto[i]["originalName"], 
+                                    // });  
+                                     var  id = i; 
+                                     var  idx = wfileDto[i]["idx"];
+                                     var  boardIdx = wfileDto[i]["boardIdx"];
+                                     var  originalName = wfileDto[i]["originalName"]; 
+
+                                    const fileHtml = `
+                                    <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                                        <div class="table table_style3">
+                                            <table>
+                                                <tr>
+                                                    <th style="width: 7%;">첨부파일</th>
+                                                    <td colspan="5"> 
+                                                        <div class="col-sm-15">
+                                                            <input type="hidden" name="fileIdxs" value="${idx}" /> 
+                                                            <input type="text" class="upload-name" value="${originalName}" readonly />
+                                                             
+                                                            <button type="button" onclick="deleteFile(this, ${idx},  ${boardIdx})" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table> 
+                                        </div>   
+                                    </div>
+                                    `; 
+                                    $('#btnDiv').before(fileHtml);                                
+
+                                    cnt++;                        
+                                }  
+                            } else{
+                                const fileHtml = `  `; 
+                                $('#btnDiv').before(fileHtml);  
+                            }   
+                        },error:function(e){ 
+
+                        }
+                    }).done(function(fragment){           
+
+                    })  
  
-        }
+                }
 
 
         $(document).ready(function() { 
