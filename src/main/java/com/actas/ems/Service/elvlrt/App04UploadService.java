@@ -11,6 +11,4 @@ public interface App04UploadService {
     App04ElvlrtMapper app04ElvMapper = null;
     public boolean registerMManu(App04ElvlrtDto params, MultipartFile[] files);
 
-
-    public default String getMManualMaxSeq(String parm){ return app04ElvMapper.getMManualMaxSeq(parm);}
 }

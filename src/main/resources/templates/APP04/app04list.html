@@ -334,9 +334,11 @@
                                             <div class="box_wrap">  
                                                 <table>
                                                     <tr>
-                                                        <th style="width: 10%;">파일목록</th>
-                                                        <td style="width: 90%">
-                                                            <div data-name="filelistDiv" class="table table_style3"></div> 
+                                                        <!-- <th style="width: 10%;">파일목록</th> -->
+                                                        <td style="width: 100%"> 
+                                                            <div data-name="filelistDiv" class="form-group filebox bs3-primary"> </div> 
+                                                            
+                                                            <div id="btnDiv02" class="btn_wrap">  
                                                         </td> 
                                                     </tr> 
                                                 </table>  
@@ -362,10 +364,10 @@
 
 
     <script type="text/javascript" th:inline="javascript">
-        
+        // 폼 저장시  file data 와   string data 담을 변수 
         let formData = new FormData(); 
+        // 모달화면 컨트롤  Reset
         function clear_rtn(elem){
-            console.log("clear rtn");
             document.getElementById('actmseqz').value= ""; 
             document.getElementById('actmsubjectz').value= "";   
             document.getElementById('actmpernmz').value= "";   
@@ -373,7 +375,8 @@
             document.getElementById('actminputdatez').value= "";   
             document.getElementById('actmgroupcdz').value= "";   
             document.getElementById('actmemoz').value= "";   
-            document.getElementById('actmflagz').value= ""; 
+            document.getElementById('actmflagz').value= "";             
+            // 첨부파일 div 초기화
             const target = $(elem).parents('div[data-name="fileDiv"]');
             fileIdx = 0;
             const fileDivs = $('div[data-name="fileDiv"]');
@@ -382,15 +385,18 @@
         }
 
         let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
-
+            
+        // 첨부파일 div 추가
         function addFile() {
-
+         
+            // 화면 제약으로 인해 첨부 div는 세개까지 제한 but 파일선택은 다중선택이 되므로 갯수제한없음
             const fileDivs = $('div[data-name="fileDiv"]');
             if (fileDivs.length > 2) {
-                alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+                alert('첨부목록은 최대 세 개까지 추가 할 수 있습니다.');
                 return false;
             }
 
+            // 파일인덱스 카운트하고  div를 생성
             fileIdx++;
             const fileHtml = `
             <div data-name="fileDiv" class="form-group filebox bs3-primary">
@@ -420,6 +426,7 @@
             $('#btnDiv').before(fileHtml);
         }
 
+        // 첨부파일 div 삭제
         function removeFile(elem) {
 
             const prevTag = $(elem).prev().prop('tagName');
@@ -432,17 +439,17 @@
             }
 
             const target = $(elem).parents('div[data-name="fileDiv"]');
+            // 파일인덱스 차감
             fileIdx = fileIdx - 1;
             target.remove();
         }     
         
         
+        // 첨부파일 파일데이타 삭제
         function deleteFile(elem, arg1, arg2) {
-
             if (!confirm("파일을 삭제하시겠습니까?")) {
                 return ; 
             }  
-
             //도면 파일 삭제 
             $.ajax({
                 url: '/app04mod/filedel',   
@@ -467,8 +474,6 @@
             }).done(function(fragment){           
 
             })  
- 
-
         }     
 
         function changeFilename(file) {
@@ -528,6 +533,7 @@
                 }
             
             }
+            // 본문 data    
             var inputdata = {   
                     "actmseqz"    : ls_actmseqz ,
                     "actminputdatez"    : ls_actminputdatez ,
@@ -536,8 +542,8 @@
                     "actmpernmz"   : ls_actmpernmz   ,
                     "actmemoz"   : ls_actmemoz, 
                     "actmflagz"   : ls_actmflagz 
-                }
-             
+             } 
+            // 본문 data formdata 에 추가 
             formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
                   
             $.ajax({
@@ -567,42 +573,9 @@
             })    
 
 
-            // $.ajax({
-            //     url: '/app04mod/save',   
-            //     type:"POST", 
-            //     data: {
-            //         "actmseqz"    : ls_actmseqz ,
-            //         "actminputdatez"    : ls_actminputdatez ,
-            //         "actmgroupcdz"  : ls_actmgroupcdz,
-            //         "actmsubjectz"      : ls_actmsubjectz ,
-            //         "actmfilenamez" : ls_actmfilenamez ,
-            //         "actmpernmz"   : ls_actmpernmz   ,
-            //         "actmemoz"   : ls_actmemoz, 
-            //         "actmflagz"   : ls_actmflagz 
-            //     }, 
-            //     async:false,
-            //     success:function(data){
-            //         // console.log("등록OK", data); 
-            //         if(data != "error"){ 
-            //             ls_actmseqz = data 
-            //             console.log("actmseqz2", data);                     
-            //             // $("#CloseBtn").trigger("click");  
-                        
-            //         }                     
-                    
-            //     },error:function(e){
-            //         console.log('error',e);
-            //         return 
-            //     }
-            // }).done(function(fragment){           
-
-            // }) 
-             
-                     
-                        
-
-
         }
+
+        // 본문 삭제
         function delete_btn(){ 
             
             if (!confirm("삭제하시겠습니까?")) {
@@ -650,7 +623,7 @@
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     window.onload = function() { 
         document.getElementById("filemodal_btn").style.display="none"; 
-        //설치메뉴얼 list
+        //도면메뉴얼 list
         var view_Mmanualpage = new wijmo.collections.CollectionView(getData_wlist(), {
             pageSize: 10
         });  
@@ -727,7 +700,7 @@
         }         
     }
 
-    
+        // 첨부파일 보기 modal 호출
         function viewFilePage(arg1 ){     
                 $("#filemodal_btn").trigger("click");
                 
@@ -744,25 +717,29 @@
                     success:function(data){ 
                         var wfileDto  = data;   
                         var cnt = 0; 
-                        if(wfileDto.length > 0){ 
+                        
+                        const filelistDiv = $('div[data-name="filelistDiv"]');
+                        filelistDiv.remove();
+                        // console.log(data);
+                        if(wfileDto.length > 0){  
                             for (var i = 0; i < wfileDto.length; i++) { 
                                     var  id = i; 
                                     var  idx = wfileDto[i]["idx"];
                                     var  boardIdx = wfileDto[i]["boardIdx"];
                                     var  originalName = wfileDto[i]["originalName"];  
-                                 fileHtml = `
-                                    <a  href="/app04mod/download?idx=${idx}">
-                                        <i class="fa fa-file-o" aria-hidden="true"></i>
-                                        [[ ${originalName} ]]
-                                    </a>
-                                    `;  
+                                    
+                                    const fileHtml = `
+                                    <div data-name="filelistDiv" class="form-group filebox bs3-primary">                                         
+                                        <a href="/appx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=MM" target="_blank" > ${originalName} 다운로드 </a>                                        
+                                    </div>   
+                                    `; 
+                                    $('#btnDiv02').before(fileHtml);    
 
                                 cnt++;                        
-                            }  
-                            document.getElementById('filelistDiv').innerHTML= fileHtml;
+                            }   
                         } else{
-                            const fileHtml = `  `; 
-                            $('#filelistDiv').after(fileHtml);  
+                            // const fileHtml = `  `; 
+                            // $('#filelistDiv').after(fileHtml);  
                         }   
                     },error:function(e){ 
 
@@ -772,6 +749,30 @@
                 })  
  
         }  
+        // 첨부파일 다운로드 호출  get 방식으로만 가능함.
+        function fileDownload(arg1, arg2 ){      
+                $.ajax({
+                    url: '/appx/download',  
+                    type:"GET",
+                    data: {
+                        "actidxz"     : arg1,
+                        "actboardz"    : arg2,  
+                        "actflagz"     : "MM", 
+                    },
+                    async:false,
+                    success:function(data){  
+                        // console.log("result : " + data)
+                    },error:function(e){ 
+
+                    }
+                }).done(function(fragment){           
+
+                })  
+ 
+        }          
+
+        
+        // 본문내용 표시할 모달 호출
         function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
                 $("#listmodal_btn").trigger("click"); 
                 document.getElementById('actmseqz').value= arg1; 
@@ -784,6 +785,7 @@
                 document.getElementById('actmemoz').value= arg8;   
                 document.getElementById('actmflagz').value= arg9;  
 
+                // 첨부파일 리스트 호출
                 var wfile_data = []; 
                 $.ajax({
                         url: '/app04mod/flist',  

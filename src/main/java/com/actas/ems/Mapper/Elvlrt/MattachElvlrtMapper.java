@@ -14,6 +14,7 @@ public interface MattachElvlrtMapper {
 
     public int deleteAttach(App04ElvlrtDto perm);
     public int deleteAttachDetail(AttachDTO perm);
+    public AttachDTO selectAttachDeteil(AttachDTO perm);
 
     public List<AttachDTO> selectAttachList(App04ElvlrtDto perm);
 

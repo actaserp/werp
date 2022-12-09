@@ -71,6 +71,26 @@
         and flag  = #{mflag}
     </select>
 
+
+    <select id="selectAttachDeteil" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+            board_idx as boardIdx
+             , original_name as originalName
+             , save_name as saveName
+             , size
+             , flag
+             , delete_yn as deleteyn
+             , insert_time as inserttime
+             , delete_time as deletetime
+        FROM
+            tb_mattach with (nolock)
+        WHERE
+            delete_yn = 'N'
+          AND idx = #{idx}
+          AND board_idx = #{boardIdx}
+          and flag  = #{flag}
+    </select>
+
     <select id="selectAttachTotalCount" parameterType="long" resultType="int">
         SELECT
             COUNT(*)

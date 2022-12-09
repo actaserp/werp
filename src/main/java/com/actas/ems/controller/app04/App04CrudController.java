@@ -8,6 +8,7 @@ import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App04ElvlrtService;
 import com.actas.ems.Service.elvlrt.App04UploadService;
 import com.actas.ems.Service.elvlrt.App04UploadServiceImpl;
+import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.Method;
 import com.actas.ems.util.UiUtils;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,6 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.apache.commons.io.FilenameUtils;
-
-import com.actas.ems.controller.SyFileM;
 
 @RestController
 @RequiredArgsConstructor
@@ -239,12 +238,6 @@ public class App04CrudController {
 //        utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app04/app04list/", Method.GET, model);
     }
 
-    private String getToDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        Date date      = new Date(System.currentTimeMillis());
-
-        return formatter.format(date);
-    }
 
     @RequestMapping(value="/del")
     public String mmnualDelete(@RequestParam("actmseqz") String mseq
@@ -333,5 +326,13 @@ public class App04CrudController {
             ls_mseq = Integer.toString(ll_mseq + 1 );
         }
         return ls_mseq;
+    }
+
+
+    private String getToDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date      = new Date(System.currentTimeMillis());
+
+        return formatter.format(date);
     }
 }

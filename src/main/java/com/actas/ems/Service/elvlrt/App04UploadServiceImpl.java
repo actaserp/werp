@@ -62,6 +62,11 @@ public class App04UploadServiceImpl implements  App04UploadService {
         return attachDto;
     }
 
+    public AttachDTO selectAttachDeteil(AttachDTO perm){
+        AttachDTO attachDto = attachMapper.selectAttachDeteil(perm);
+        return attachDto;
+    }
+
     @Override
     public boolean registerMManu(App04ElvlrtDto params, MultipartFile[] files) {
         return false;
