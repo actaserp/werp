@@ -22,10 +22,15 @@
         <div class="tit">Login</div>
         <form action="/login" method="POST">
           <div class="input_wrap">
-            <select name="select" id="">
+
+            <select name="select" id="select" class="select">
               <option value="AA">보수업체사용자</option>
               <option value="CC">고객사용자</option>
+              <option value="CC" th:if="${select eq 'CC'}" selected hidden>고객사용자</option>
+
+
             </select>
+
           </div>
           <div class="input_wrap icon i_id">
             <input type="text" id="loginid" name="loginid">
@@ -128,6 +133,7 @@
 
               },error:function(e){
                   console.log('error',e);
+                  alert("아이디와 비밀번호를 확인하세요.")
               }
           }).done(function(fragment){
 

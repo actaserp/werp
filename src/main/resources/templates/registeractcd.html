@@ -19,7 +19,9 @@
     <div class="box_con_wrap">
         <div class="box_con">
             <div class="logo">
-                <img src="./assets/images/logo.png" alt="">
+                <a th:href="@{/}">
+                <img src="/images/logo.png" alt="">
+                </a>
             </div>
             <div class="form">
                 <div class="tit">
@@ -99,7 +101,7 @@
     btn_obj.addEventListener("click",function(){
 
         //TB_FPLAN_WORK TB_FPLAN_W010  SAVE
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");
         var ls_userid = document.getElementById('userid').value;
         var ls_passwd1   = document.getElementById('passwd1').value;
         var ls_passwd2   = document.getElementById('passwd2').value;
@@ -135,13 +137,27 @@
                 const statusdis_div = document.getElementById('statusdis01');
                 if(data == "success"){
                     alert("등록 되었습니다.");
+
+
+                   // const select = document.querySelector(".select");
+                   // const currentValue = select.option["CC"].value;
+                    //localStorage.setItem('key', 'CC');
+
+
+                    //load  *********
+
+                    //$("#selectop").val("CC").prop("selected", true);
+
+                    window.location.href = "/?select=CC";
+                    $('#selectop').val('CC').prop("selected",true);
+
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";
                 }else{
                     alert("등록오류");
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";
                 }
                 statusdis_div.innerHTML  = ls_text;
-                history.go(0);
+                //history.go(0);
 
             },error:function(e){
                 console.log('error',e);
@@ -208,7 +224,7 @@
     document.getElementById("saupnum_btn").addEventListener("click", function(){
 
         const warnning_div = document.getElementById('inwarnning_div');
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");
         console.log(ls_saupnum);
         $.ajax({
             url: '/authcrud/searchnum',

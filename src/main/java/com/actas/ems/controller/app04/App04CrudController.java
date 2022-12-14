@@ -8,9 +8,7 @@ import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App04ElvlrtService;
 import com.actas.ems.Service.elvlrt.App04UploadService;
 import com.actas.ems.Service.elvlrt.App04UploadServiceImpl;
-import com.actas.ems.util.FilsUtils;
-import com.actas.ems.util.Method;
-import com.actas.ems.util.UiUtils;
+import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,7 +34,7 @@ public class App04CrudController {
     private final App04ElvlrtService appService;
     private final App04UploadServiceImpl appServiceImpl;
     private final App04UploadService appUploadService;
-    private final UiUtils utils;
+    private final UIUtils utils;
 
     App04ElvlrtDto app04Dto = new App04ElvlrtDto();
     AttachDTO attachDTO = new AttachDTO();

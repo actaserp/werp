@@ -20,7 +20,9 @@
     <div class="box_con_wrap">
         <div class="box_con">
             <div class="logo">
+                <a th:href="@{/}">
                 <img src="/images/logo.png" alt="">
+                </a>
             </div>
             <div class="form">
                 <div class="tit">
@@ -90,7 +92,7 @@
 
                         <div class="input_wrap flex">
                             <p>핸드폰 번호</p>
-                            <input type="text" autocomplete="on" id="phone" name="phone" th:field="*{phone}" placeholder="010포함 11자리입니다. -는 제외" maxlength="11"/>
+                            <input type="text" autocomplete="on" id="phone" name="phone" th:field="*{phone}" placeholder="010포함 11자리입니다. -포함 시 13자리" maxlength="13"/>
                             <div th:if="${#fields.hasErrors('phone')}"  th:errors="*{phone}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                                 <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                                 <p class="mb-0 flex-1">Incorrent data</p>
@@ -129,11 +131,13 @@
 <script>
     var btn_obj = document.getElementById('save_btn');
     btn_obj.addEventListener("click",function(){
+        var ls_phonedel = document.getElementById('phone').value
+
         // alert("save");
         //TB_FPLAN_WORK TB_FPLAN_W010  SAVE
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");
         var ls_userid = document.getElementById('userid').value;
-        var ls_phone = document.getElementById('phone').value;
+        var ls_phone = document.getElementById('phone').value.replaceAll("-","");
         var ls_passwd1   = document.getElementById('passwd1').value;
         var ls_passwd2   = document.getElementById('passwd2').value;
         var ls_idchk = document.getElementById('idchk').value;
@@ -175,6 +179,8 @@
                 const statusdis_div = document.getElementById('statusdis01');
                 if(data == "success"){
                     alert("등록 되었습니다.");
+                        $("#selectop").val("")
+                        window.location.href = "/";
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";
                 }else{
                     alert("등록오류");
@@ -248,7 +254,7 @@
     document.getElementById("saupnum_btn").addEventListener("click", function(){
 
         const warnning_div = document.getElementById('inwarnning_div');
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");;
         console.log(ls_saupnum);
         $.ajax({
             url: '/authcrud/searchnum',
@@ -279,7 +285,7 @@
     document.getElementById("phone_chk").addEventListener("click", function(){
 
         const inchkphone_div = document.getElementById('inchkphone_div');
-        var ls_userphone = document.getElementById('phone').value;
+        var ls_userphone = document.getElementById('phone').value.replaceAll("-","");
         if(ls_userphone == "" || ls_userphone == null){
             window.alert("빈 문자열입니다."); return;
         }

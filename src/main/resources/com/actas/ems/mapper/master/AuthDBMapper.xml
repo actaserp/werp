@@ -54,4 +54,8 @@
         FROM TB_XUSERS A WITH(NOLOCK)
         WHERE A.phone=#{phone}
     </select>
+
+    <select id="TB_XUSER_ACDUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        select dbo.uf_clientnm_info
+    </select>
 </mapper>
