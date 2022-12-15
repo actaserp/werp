@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App04ElvlrtMapper">
     <select id="GetMManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select mseq, minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
+        select mseq, convert(varchar, minputdate, 111) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
                (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
         from tb_mmanual WITH (NOLOCK)
         Where 1 = 1

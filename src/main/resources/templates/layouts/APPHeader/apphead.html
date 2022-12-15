@@ -63,6 +63,7 @@
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
+    <link th:href="@{/vendors/prism/prism-okaidia.css}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
     <link th:href="@{/vendors/overlayscrollbars/OverlayScrollbars.min.css}" rel="stylesheet">
@@ -71,6 +72,7 @@
     <link th:href="@{/assetsfalcon/css/user-rtl.min.css}" rel="stylesheet" id="user-style-rtl">
     <link th:href="@{/assetsfalcon/css/user.min.css}" rel="stylesheet" id="user-style-default">
  
+    <link th:src="@{/vendors/dropzone/dropzone.min.css}" rel="stylesheet" />
     
 
      <!-- datetimepicker 스타일 적용 -->
@@ -97,6 +99,13 @@
     <script th:src="@{/wijimo/controls/wijmo.chart.min.js}"></script>
     <script th:src="@{/wijimo/controls/wijmo.input.min.js}"></script>
     <script th:src="@{/wijimo/controls/wijmo.gauge.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.grid.grouppanel.min.js}"></script> 
+    <script th:src="@{/wijimo/controls/wijmo.grid.xlsx.min.js}"></script> 
+    <script th:src="@{/wijimo/controls/wijmo.xlsx.min.js}"></script> 
+    <script th:src="@{/wijimo/controls/wijmo.grid.sheet.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.grid.cellmaker.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.grid.selector.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
 
     <!-- Wijmo custom culture (옵션, 원하는 문화권을 추가) -->
     <script th:src="@{/wijimo/controls/cultures/wijmo.culture.ko.min.js}"></script> 

@@ -55,7 +55,7 @@
                                     </a>
                                 </div>
                                 <ul>
-                                    <li><a th:href="@{/app04/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
+                                    <li  class="on"><a th:href="@{/app04/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
                                     <li><a th:href="@{/app04/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품자료실</a></li>
                                     <li><a th:href="@{/app04/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기타자료실</a></li>
                                 </ul>
@@ -556,13 +556,12 @@
                 async:false,
                 success:function(data){
                     // console.log("등록OK", data); 
-                    if(data == "success"){  
-                        alert("저장되었습니다.")
-                        console.log("save", data);                     
-                        $("#CloseBtn").trigger("click"); 
-                        listUp();   
+                    if(data == "error"){  
+                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.") 
                     }else{
-                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
+                        alert("저장되었습니다.")                      
+                        $("#CloseBtn").trigger("click"); 
+                        listUp();                             
                     }                     
                     
                 },error:function(e){
@@ -652,7 +651,7 @@
                 { binding: 'mpernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
                 { binding: 'attcnt', header: '첨부파일건수', width: '*', format: 'n0',  align:"center", isReadOnly: true,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.attcnt}건 보기</b>',
+                        text: "<b>${item.attcnt}건 보기</b>",
                         click: (e, ctx) => {
                             viewFilePage(ctx.item.mseq );
                         }

@@ -179,7 +179,6 @@ public class App04CrudController {
             }
         }
         model.addAttribute("userformDto",userformDto);
-
         /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
         File dir = new File(uploadPath);
         if (dir.exists() == false) {
@@ -187,6 +186,9 @@ public class App04CrudController {
         }
         try {
 
+            if (file == null) {
+                return "success";
+            }
             for(MultipartFile multipartFile : file){
 //                log.info("================================================================");
 //                log.info("upload file name : " + multipartFile.getOriginalFilename());

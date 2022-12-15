@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.AppPopElvlrtMapper">
+    <select id="GetActnmList"   parameterType="com.actas.ems.DTO.Popup.PopupDto"  resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.actcd    actcd  ,
+               a.actnm    actnm,
+               a.actpernm actpernm,
+               a.tel      telno,
+               a.hp       hpno,
+             isnull(a.address,'') + ' ' + isnull(a.address2, '')  addr,
+             cltnm  as cltnm
+           FROM TB_E601 a WITH(NOLOCK)
+           LEFT OUTER JOIN (SELECT distinct a.custcd, a.spjangcd, a.actcd, a.contg, dbo.df_nm_rtn('tb_xclient', a.custcd, a.cltcd, '', '') AS cltnm 
+                                      FROM tb_e101 a WITH(NOLOCK), (select custcd, spjangcd, actcd, max(contdate) as contdate from tb_e101 WITH(NOLOCK)
+                                      group by custcd, spjangcd, actcd) b 
+                                   WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate) b
+             ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+            WHERE 1 = 1
+            AND (   isnull(actnm , '') Like concat('%',#{actnm},'%') )
+            AND  isnull(b.contg, '01') <> '04'
+
+         ]]>
+    </select>
+
+
+    <select id="GetContnmList"   parameterType="com.actas.ems.DTO.Popup.PopupDto"  resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.contcd    contcd  ,
+               a.contnm    contnm
+        FROM TB_E010 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(contnm , '') Like concat('%',#{contnm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+</mapper>
