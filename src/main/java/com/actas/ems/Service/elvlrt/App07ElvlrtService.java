@@ -1,5 +1,7 @@
 package com.actas.ems.Service.elvlrt;
 
+import com.actas.ems.DTO.CommonDto;
+import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,24 +19,50 @@ import java.util.List;
 public class App07ElvlrtService {
 
     @Autowired
-    App07ElvlrtMapper appMapper;
-    public List<App07ElvlrtDto> GetNoticeList(){
-        return appMapper.GetNoticeList();
-    }
+    App07ElvlrtMapper app07ElvMapper;
+    int queryResult = 1;
+    public Object GetMManulList(App07ElvlrtDto perm){return app07ElvMapper.GetMManulList(perm);}
 
-    //글쓰기
-    public void uploadBoard(App07ElvlrtDto perm){appMapper.uploadBoard(perm);}
+    public List<App07ElvlrtDto> GetMManuBlankList(App07ElvlrtDto perm){return app07ElvMapper.GetMManulList(perm);}
+
 
     //상세조회
-    public App07ElvlrtDto GetNoticeView(@RequestParam("fseq") String fSeq){return appMapper.GetnoticeView(fSeq);}
+    public App07ElvlrtDto GetMManuView(@RequestParam("fseq") String fSeq){return app07ElvMapper.GetMManulView(fSeq);}
 
+    //글쓰기
+    public boolean InsertMManu(App07ElvlrtDto perm){
+        queryResult = app07ElvMapper.InsertMManul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 
-    //글삭제
-    @Transactional //오류시에 자동롤백
-    public void deleteBoard(@RequestParam("fseq") String fseq) {appMapper.deleteBoard(fseq);}
     //글수정
     @Transactional
-    public void updateBoard(App07ElvlrtDto dto){appMapper.updateBoard(dto);}
+    public boolean UpdateMManu(App07ElvlrtDto perm){
+        queryResult = app07ElvMapper.UpdateMManul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
+
+    //글삭제
+    public boolean DeleteMManu(App07ElvlrtDto perm){
+        queryResult = app07ElvMapper.DeleteMManul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 
 
+
+
+    public String getMManualMaxSeq(String parm){return app07ElvMapper.getMManualMaxSeq(parm);}
+
+    public List<CommonDto> GetComm750List(){ return app07ElvMapper.GetComm750List();}
+
+    public List<CommonDto> GetComm750BlankList() {return app07ElvMapper.GetComm750List();}
 }

@@ -19,7 +19,9 @@
     <div class="box_con_wrap">
         <div class="box_con">
             <div class="logo">
-                <img src="./assets/images/logo.png" alt="">
+                <a th:href="@{/}">
+                <img src="/images/logo.png" alt="">
+                </a>
             </div>
             <div class="form">
                 <div class="tit">
@@ -99,7 +101,7 @@
     btn_obj.addEventListener("click",function(){
 
         //TB_FPLAN_WORK TB_FPLAN_W010  SAVE
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");
         var ls_userid = document.getElementById('userid').value;
         var ls_passwd1   = document.getElementById('passwd1').value;
         var ls_passwd2   = document.getElementById('passwd2').value;
@@ -135,13 +137,27 @@
                 const statusdis_div = document.getElementById('statusdis01');
                 if(data == "success"){
                     alert("등록 되었습니다.");
+
+
+                   // const select = document.querySelector(".select");
+                   // const currentValue = select.option["CC"].value;
+                    //localStorage.setItem('key', 'CC');
+
+
+                    //load  *********
+
+                    //$("#selectop").val("CC").prop("selected", true);
+
+                    window.location.href = "/?select=CC";
+                    $('#selectop').val('CC').prop("selected",true);
+
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";
                 }else{
                     alert("등록오류");
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";
                 }
                 statusdis_div.innerHTML  = ls_text;
-                history.go(0);
+                //history.go(0);
 
             },error:function(e){
                 console.log('error',e);
@@ -158,6 +174,16 @@
 
         const inchkid_div = document.getElementById('inchkid_div');
         var ls_username = document.getElementById('userid').value;
+
+        const pattern_id = /^[a-zA-Z0-9_]{3,20}$/;
+
+        if(!(pattern_id.test(ls_username))){
+            window.alert('영문+숫자 조합으로 3자리 이상 아이디를 입력해주세요.');
+            document.getElementById('userid').value="";
+            document.getElementById('userid').focus();
+            return;
+        }
+
         if(ls_username == "" || ls_username == null){
             window.alert("빈 문자열입니다."); return;
         }  //아이디중복체크시 공백문자열일 경우 리턴
@@ -208,7 +234,7 @@
     document.getElementById("saupnum_btn").addEventListener("click", function(){
 
         const warnning_div = document.getElementById('inwarnning_div');
-        var ls_saupnum   = document.getElementById('saupnum').value;
+        var ls_saupnum   = document.getElementById('saupnum').value.replaceAll("-","");
         console.log(ls_saupnum);
         $.ajax({
             url: '/authcrud/searchnum',
@@ -239,9 +265,13 @@
 <script>
     function check_pw(){
         var pw = document.getElementById('passwd1').value;
-        if(pw.length<4||pw.length>8){
-            window.alert('비밀번호는 4글자 이상, 8글자 이하만 가능합니다.');
+
+        const pattern_pwd = /(?=.*\d{1,20})(?=.*[~`!@#$%\^&*()-+=]{1,20})(?=.*[a-zA-Z]{1,20}).{8,20}$/;
+
+        if(!(pattern_pwd.test(pw))){
+            window.alert('영문+숫자+특수문자 조합으로 8자리 이상 비밀번호를 입력해주세요.');
             document.getElementById('passwd1').value="";
+            document.getElementById('passwd1').focus();
         }
         if(document.getElementById('passwd1').value !="" && document.getElementById('passwd2').value != ""){
             if(document.getElementById('passwd1').value==document.getElementById('passwd2').value){
@@ -255,6 +285,7 @@
         }
     }
 </script>
+
 
 <!--
 <header th:replace="layouts/XRegister/mainContentsActcd :: mainContents"></header>  -->

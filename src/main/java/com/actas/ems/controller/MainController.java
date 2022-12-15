@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -15,11 +21,20 @@ public class MainController {
     protected Log log =  LogFactory.getLog(this.getClass());
     CommonDto CommDto = new CommonDto();
 
-    @GetMapping({"","/"})
-    public  String index(){
+    //@GetMapping({"","/"})
+    @RequestMapping(value = {"", "/"}, method = {RequestMethod.GET})
+    public  String index(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String select){
         //머스테치 기본폴더 src/main/resources/
         //머스테치 뷰리졸버 기본설정 templates(prefix), .mustache(suffix)   생략가능
+
+
+        req.setAttribute("select", select);
+
+
+
+
         return "/loginForm"; //"index";
+
     }
 
 

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.lang.reflect.Field;
@@ -17,6 +19,11 @@ import java.lang.reflect.Field;
 public class AuthCrudController {
     private final AuthService authService;
     UserFormDto userformDto = new UserFormDto();
+
+    EncryptionController enc = new EncryptionController();
+
+
+
 
 
 
@@ -46,6 +53,15 @@ public class AuthCrudController {
             userformDto.setPasswd2(passwd2);
             userformDto.setPhone(phone);
 
+
+            SecretKey key = enc.getKey();
+            IvParameterSpec ivParameterSpec = enc.getIv();
+            String specName = "AES/CBC/PKCS5Padding";
+
+            String ecdepw = enc.encrypt(specName, key, ivParameterSpec, userformDto.getPasswd1());
+
+            userformDto.setEncodepw(ecdepw);
+
             String ls_cltnmInfo = authService.GetClientInfo(userformDto);
             userformDto.setCltcd(ls_cltnmInfo);
             userformDto.setActcd(ls_cltnmInfo);
@@ -66,6 +82,8 @@ public class AuthCrudController {
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "register";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return "success";
     }

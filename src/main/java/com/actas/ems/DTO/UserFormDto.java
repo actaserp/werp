@@ -84,5 +84,7 @@ public class UserFormDto {
 
     @NotBlank(message = "이메일은 필수입니다.")
     private String email;
+    /** 암호화 pw */
+    private String encodepw;
 
 }

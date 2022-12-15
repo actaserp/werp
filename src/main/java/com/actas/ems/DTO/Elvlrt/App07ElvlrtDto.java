@@ -30,4 +30,8 @@ public class App07ElvlrtDto {
     private String fflag;
 
     private String actcd;
+    private String yyyymm;
+    private String cnam;
+    private int attcnt;
+
 }

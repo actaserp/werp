@@ -1,14 +1,15 @@
-package com.actas.ems.controller.app04;
+package com.actas.ems.controller.app05;
 
 
 import com.actas.ems.DTO.AttachDTO;
-import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
-import com.actas.ems.Service.elvlrt.App04ElvlrtService;
-import com.actas.ems.Service.elvlrt.App04UploadService;
-import com.actas.ems.Service.elvlrt.App04UploadServiceImpl;
-import com.actas.ems.util.UIUtils;
+import com.actas.ems.Service.elvlrt.App05ElvlrtService;
+import com.actas.ems.Service.elvlrt.App05UploadService;
+import com.actas.ems.Service.elvlrt.App05UploadServiceImpl;
+import com.actas.ems.util.FilsUtils;
+import com.actas.ems.util.Method;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,30 +30,29 @@ import org.apache.commons.io.FilenameUtils;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/app04mod", method = RequestMethod.POST)
-public class App04CrudController {
-    private final App04ElvlrtService appService;
-    private final App04UploadServiceImpl appServiceImpl;
-    private final App04UploadService appUploadService;
-    private final UIUtils utils;
+@RequestMapping(value = "/app05mod", method = RequestMethod.POST)
+public class App05CrudController {
+    private final App05ElvlrtService appService;
+    private final App05UploadServiceImpl appServiceImpl;
+    private final App05UploadService appUploadService;
 
-    App04ElvlrtDto app04Dto = new App04ElvlrtDto();
+    App05ElvlrtDto App05Dto = new App05ElvlrtDto();
     AttachDTO attachDTO = new AttachDTO();
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
-    private static final Logger logger     = LoggerFactory.getLogger(App04CrudController.class);
-    private final String uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
+    private static final Logger logger     = LoggerFactory.getLogger(App05CrudController.class);
+    private final String uploadPath = Paths.get("C:", "develop", "upload","mnotice", getToDate()).toString();
 
     @RequestMapping(value="/saveboard")
-    public String memberSave(@RequestParam("actmseqz") String mseq
-            ,@RequestParam("actminputdatez") String minputdate
-            , @RequestParam("actmgroupcdz") String mgroupcd
-            , @RequestParam("actmsubjectz") String msubject
-            , @RequestParam("actmfilenamez") String mfilename
-            , @RequestParam("actmpernmz") String mpernm
-            , @RequestParam("actmemoz") String memo
-            , @RequestParam("actmflagz") String mflag
+    public String memberSave(@RequestParam("actnseqz") String nseq
+            ,@RequestParam("actninputdatez") String ninputdate
+            , @RequestParam("actngroupcdz") String ngroupcd
+            , @RequestParam("actnsubjectz") String nsubject
+            , @RequestParam("actnfilenamez") String nfilename
+            , @RequestParam("actnpernmz") String npernm
+            , @RequestParam("actnmemoz") String memo
+            , @RequestParam("actnflagz") String nflag
             , Model model, HttpServletRequest request){
 
         try {
@@ -61,32 +61,32 @@ public class App04CrudController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String ls_yeare = minputdate.substring(0,4);
-            String ls_mm = minputdate.substring(5,7);
-            String ls_dd = minputdate.substring(8,10);
-            minputdate =  ls_yeare + ls_mm + ls_dd;
-//        log.debug("minputdate==>" + minputdate);
-            app04Dto.setCustcd(ls_custcd);
-            app04Dto.setSpjangcd(ls_spjangcd);
-            if(mseq == null || mseq.equals("")){
-                app04Dto.setMseq(CountSeq(ls_yeare + ls_mm));
+            String ls_yeare = ninputdate.substring(0,4);
+            String ls_mm = ninputdate.substring(5,7);
+            String ls_dd = ninputdate.substring(8,10);
+            ninputdate =  ls_yeare + ls_mm + ls_dd;
+//        log.debug("ninputdate==>" + ninputdate);
+            App05Dto.setCustcd(ls_custcd);
+            App05Dto.setSpjangcd(ls_spjangcd);
+            if(nseq == null || nseq.equals("")){
+                App05Dto.setNseq(CountSeq(ls_yeare + ls_mm));
             }else{
-                app04Dto.setMseq(mseq);
+                App05Dto.setNseq(nseq);
             }
 
-            app04Dto.setMinputdate(minputdate);
-            app04Dto.setMgourpcd(mgroupcd);
-            app04Dto.setMsubject(msubject);
-            app04Dto.setMfilename(mfilename);
-            app04Dto.setMpernm(mpernm);
-            app04Dto.setMemo(memo);
-            app04Dto.setMflag(mflag);
-            app04Dto.setYyyymm(ls_yeare + ls_mm);
-            app04Dto.setMpernm(userformDto.getUsername());
-            if(mseq == null || mseq.equals("")){
-                appService.InsertMManu(app04Dto);
+            App05Dto.setNinputdate(ninputdate);
+            App05Dto.setNgourpcd(ngroupcd);
+            App05Dto.setNsubject(nsubject);
+            App05Dto.setNfilename(nfilename);
+            App05Dto.setNpernm(npernm);
+            App05Dto.setNmemo(memo);
+            App05Dto.setNflag(nflag);
+            App05Dto.setYyyymm(ls_yeare + ls_mm);
+            App05Dto.setNpernm(userformDto.getUsername());
+            if(nseq == null || nseq.equals("")){
+                appService.InsertMNotice(App05Dto);
             }else{
-                appService.UpdateMManu(app04Dto);
+                appService.UpdateMNotice(App05Dto);
             }
             model.addAttribute("userformDto",userformDto);
 
@@ -94,8 +94,8 @@ public class App04CrudController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        String ls_mseq = app04Dto.getMseq();
-        return ls_mseq;
+        String ls_nseq = App05Dto.getNseq();
+        return ls_nseq;
     }
 
     /**
@@ -107,10 +107,10 @@ public class App04CrudController {
     }
 
     @RequestMapping(value="/save")
-    public String mmnualUpload ( @RequestPart(value = "key") Map<String, Object> param,
-                                          @RequestPart(value = "file",required = false) List<MultipartFile> file
-                                        , Model model
-                                        , HttpServletRequest request){
+    public String mnoticeUpload ( @RequestPart(value = "key") Map<String, Object> param,
+                                 @RequestPart(value = "file",required = false) List<MultipartFile> file
+            , Model model
+            , HttpServletRequest request){
         String ls_fileName = "";
         String ls_errmsg = "";
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
@@ -124,59 +124,60 @@ public class App04CrudController {
 
         param.forEach((key, values) -> {
             switch (key){
-                case "actmseqz":
-                    app04Dto.setMseq(values.toString());
+                case "actnseqz":
+                    App05Dto.setNseq(values.toString());
                     break;
-                case "actminputdatez":
-                    app04Dto.setMinputdate(values.toString());
+                case "actninputdatez":
+                    App05Dto.setNinputdate(values.toString());
                     break;
-                case "actmgroupcdz":
-                    app04Dto.setMgourpcd(values.toString());
+                case "actngroupcdz":
+                    App05Dto.setNgourpcd(values.toString());
                     break;
-                case "actmsubjectz":
-                    app04Dto.setMsubject(values.toString());
+                case "actnsubjectz":
+                    App05Dto.setNsubject(values.toString());
                     break;
-                case "actmpernmz":
-                    app04Dto.setMpernm(values.toString());
+                case "actnpernmz":
+                    App05Dto.setNpernm(values.toString());
                     break;
-                case "actmemoz":
-                    app04Dto.setMemo(values.toString());
+                case "actnmemoz":
+                    App05Dto.setNmemo(values.toString());
                     break;
-                case "actmflagz":
-                    app04Dto.setMflag(values.toString());
+                case "actnflagz":
+                    App05Dto.setNflag(values.toString());
                     break;
                 default:
                     break;
             }
         });
-        String mseq = app04Dto.getMseq();
-        app04Dto.setCustcd(ls_custcd);
-        app04Dto.setSpjangcd(ls_spjangcd);
-        app04Dto.setMpernm(userformDto.getUsername());
-        String minputdate = app04Dto.getMinputdate();
-        String ls_yeare = minputdate.substring(0,4);
-        String ls_mm = minputdate.substring(5,7);
-        String ls_dd = minputdate.substring(8,10);
-        minputdate =  ls_yeare + ls_mm + ls_dd;
-        app04Dto.setMinputdate(minputdate);
-        if(mseq == null || mseq.equals("")){
-            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm));
+        String nseq = App05Dto.getNseq();
+        App05Dto.setCustcd(ls_custcd);
+        App05Dto.setSpjangcd(ls_spjangcd);
+        App05Dto.setNpernm(userformDto.getUsername());
+        String ninputdate = App05Dto.getNinputdate();
+        String ls_yeare = ninputdate.substring(0,4);
+        String ls_mm = ninputdate.substring(5,7);
+        String ls_dd = ninputdate.substring(8,10);
+        ninputdate =  ls_yeare + ls_mm + ls_dd;
+        App05Dto.setNinputdate(ninputdate);
+        if(nseq == null || nseq.equals("")){
+            App05Dto.setNseq(CountSeq(ls_yeare + ls_mm));
         }else{
-            app04Dto.setMseq(mseq);
+            App05Dto.setNseq(nseq);
         }
-        app04Dto.setYyyymm(ls_yeare + ls_mm);
-        if(mseq == null || mseq.equals("")){
-            boolean result = appService.InsertMManu(app04Dto);
+        App05Dto.setYyyymm(ls_yeare + ls_mm);
+        if(nseq == null || nseq.equals("")){
+            boolean result = appService.InsertMNotice(App05Dto);
             if(!result){
                 return  "error";
             }
         }else{
-            boolean result = appService.UpdateMManu(app04Dto);
+            boolean result = appService.UpdateMNotice(App05Dto);
             if(!result){
                 return  "error";
             }
         }
         model.addAttribute("userformDto",userformDto);
+
         /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
         File dir = new File(uploadPath);
         if (dir.exists() == false) {
@@ -184,9 +185,6 @@ public class App04CrudController {
         }
         try {
 
-            if (file == null) {
-                return "success";
-            }
             for(MultipartFile multipartFile : file){
 //                log.info("================================================================");
 //                log.info("upload file name : " + multipartFile.getOriginalFilename());
@@ -208,41 +206,41 @@ public class App04CrudController {
 
                 /* 파일 정보 저장 */
                 AttachDTO attach = new AttachDTO();
-                attach.setBoardIdx(mseq);
+                attach.setBoardIdx(nseq);
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
-                attach.setFlag("MM");
+                attach.setFlag("NN");
                 /* 파일 정보 추가 */
                 attachList.add(attach);
             }
-                boolean result  = appServiceImpl.registerMManu(app04Dto, attachList);
-                if(!result){
-                    return  "error";
-                }
+            boolean result  = appServiceImpl.registerMNotice(App05Dto, attachList);
+            if(!result){
+                return  "error";
+            }
 
         }catch (DataAccessException e){
             log.info("memberUpload DataAccessException ================================================================");
             log.info(e.toString());
             throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
-            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/App05/App05list/", Method.GET, model);
         } catch (Exception  e){
-                log.info("memberUpload Exception ================================================================");
-                log.info(e.toString());
-                ls_errmsg = "[" + ls_fileName + "] failed to save";
-                throw new AttachFileException("[" + ls_fileName + "] failed to save");
-            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+            log.info("memberUpload Exception ================================================================");
+            log.info(e.toString());
+            ls_errmsg = "[" + ls_fileName + "] failed to save";
+            throw new AttachFileException("[" + ls_fileName + "] failed to save");
+            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app05/App05list/", Method.GET, model);
         }
 
         return "success";
-//        utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app04/app04list/", Method.GET, model);
+//        utils.showMessageWithRedirect("게시글 등록이 완료되었습니다", "/app05/App05list/", Method.GET, model);
     }
 
 
     @RequestMapping(value="/del")
-    public String mmnualDelete(@RequestParam("actmseqz") String mseq
-                              ,@RequestParam("actflagz") String mflag
-                              ,Model model, HttpServletRequest request){
+    public String mnoticeDelete(@RequestParam("actnseqz") String nseq
+            ,@RequestParam("actnflagz") String nflag
+            ,Model model, HttpServletRequest request){
 
         try {
 
@@ -250,14 +248,14 @@ public class App04CrudController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            app04Dto.setMseq(mseq);
-            app04Dto.setMflag(mflag);
+            App05Dto.setNseq(nseq);
+            App05Dto.setNflag(nflag);
 
-            boolean result = appService.DeleteMManu(app04Dto);
+            boolean result = appService.DeleteMNotice(App05Dto);
             if(!result){
                 return  "error";
             }
-            result = appServiceImpl.registerMManuDel(app04Dto);
+            result = appServiceImpl.registerMNoticeDel(App05Dto);
             if(!result){
                 return  "error";
             }
@@ -272,17 +270,17 @@ public class App04CrudController {
 
 
     @RequestMapping(value="/filedel")
-    public String mmnualFileDelete(@RequestParam("actidxz") Long idx
-                                   ,@RequestParam("actmseqz") String mseq
-                                   ,@RequestParam("actflagz") String mflag
-                                   ,Model model, HttpServletRequest request){
+    public String mnoticeFileDelete(@RequestParam("actidxz") Long idx
+            ,@RequestParam("actnseqz") String nseq
+            ,@RequestParam("actnflagz") String nflag
+            ,Model model, HttpServletRequest request){
 
         try {
             attachDTO.setIdx(idx);
-            attachDTO.setBoardIdx(mseq);
-            attachDTO.setFlag(mflag);
+            attachDTO.setBoardIdx(nseq);
+            attachDTO.setFlag(nflag);
 
-            boolean result = appServiceImpl.MManuFileDel(attachDTO);
+            boolean result = appServiceImpl.MNoticeFileDel(attachDTO);
             if(!result){
                 return  "error";
             }
@@ -295,17 +293,17 @@ public class App04CrudController {
 
 
     @RequestMapping(value="/flist")
-    public Object mmnualFilelist(@RequestParam("actmseqz") String mseq
-                                ,@RequestParam("actflagz") String mflag
-                                , Model model, HttpServletRequest request){
+    public Object mnoticeFilelist(@RequestParam("actnseqz") String nseq
+            ,@RequestParam("actnflagz") String nflag
+            , Model model, HttpServletRequest request){
         List<AttachDTO>  attach =new ArrayList<>();
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
-            app04Dto.setMseq(mseq);
-            app04Dto.setMflag(mflag);
-             attach = appServiceImpl.MManuFilelist(app04Dto);
+            App05Dto.setNseq(nseq);
+            App05Dto.setNflag(nflag);
+            attach = appServiceImpl.MNoticeFilelist(App05Dto);
             model.addAttribute("userformDto",userformDto);
             model.addAttribute("attachDto",attach);
 
@@ -317,15 +315,15 @@ public class App04CrudController {
     }
 
     public String CountSeq(String yyyymm){
-        String ls_mseq = appService.getMManualMaxSeq(yyyymm);
-        int ll_mseq = 0;
-        if(ls_mseq == null ){
-            ls_mseq = yyyymm + "001";
+        String ls_nseq = appService.getMNoticeMaxSeq(yyyymm);
+        int ll_nseq = 0;
+        if(ls_nseq == null ){
+            ls_nseq = yyyymm + "001";
         }else{
-            ll_mseq = Integer.parseInt(ls_mseq);
-            ls_mseq = Integer.toString(ll_mseq + 1 );
+            ll_nseq = Integer.parseInt(ls_nseq);
+            ls_nseq = Integer.toString(ll_nseq + 1 );
         }
-        return ls_mseq;
+        return ls_nseq;
     }
 
 
