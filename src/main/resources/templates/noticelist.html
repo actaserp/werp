@@ -729,6 +729,7 @@
     }
 
 
+        // 첨부파일 보기 modal 호출
         function viewFilePage(arg1 ){
                 $("#filemodal_btn").trigger("click");
 
@@ -745,26 +746,31 @@
                     success:function(data){
                         var wfileDto  = data;
                         var cnt = 0;
+
+                        const filelistDiv = $('div[data-name="filelistDiv"]');
+                        filelistDiv.remove();
+                        // console.log(data);
                         if(wfileDto.length > 0){
                             for (var i = 0; i < wfileDto.length; i++) {
                                     var  id = i;
                                     var  idx = wfileDto[i]["idx"];
                                     var  boardIdx = wfileDto[i]["boardIdx"];
                                     var  originalName = wfileDto[i]["originalName"];
-                                 fileHtml = `
-                                    <a  href="/app05mod/download?idx=${idx}">
-                                        <i class="fa fa-file-o" aria-hidden="true"></i>
-                                        [[ ${originalName} ]]
-                                    </a>
+                                    console.log(id, idx, boardIdx, originalName);
+
+                                    const fileHtml = `
+                                    <div data-name="filelistDiv" class="form-group filebox bs3-primary">
+                                        <a href="/nappx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=NN" target="_blank" > ${originalName} 다운로드 </a>
+                                    </div>
                                     `;
+                                    console.log(fileHtml);
+                                    $('#btnDiv02').before(fileHtml);
 
                                 cnt++;
-
                             }
-                            document.getElementById('filelistDiv').innerHTML= fileHtml;
                         } else{
-                            const fileHtml = `  `;
-                            $('#filelistDiv').after(fileHtml);
+                            // const fileHtml = `  `;
+                            // $('#filelistDiv').after(fileHtml);
                         }
                     },error:function(e){
 
@@ -774,6 +780,29 @@
                 })
 
         }
+
+        // 첨부파일 다운로드 호출  get 방식으로만 가능함.
+        function fileDownload(arg1, arg2 ){
+                $.ajax({
+                    url: '/nappx/download',
+                    type:"GET",
+                    data: {
+                        "actidxz"     : arg1,
+                        "actboardz"    : arg2,
+                        "actflagz"     : "NN",
+                    },
+                    async:false,
+                    success:function(data){
+                        // console.log("result : " + data)
+                    },error:function(e){
+
+                    }
+                }).done(function(fragment){
+
+                })
+
+        }
+
         function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){
                 $("#listmodal_btn").trigger("click");
                 document.getElementById('actnseqz').value= arg1;
