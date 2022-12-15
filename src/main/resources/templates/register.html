@@ -54,7 +54,7 @@
                         -->
                         <div class="input_wrap flex">
                             <p>아이디</p>
-                            <input type="text" autocomplete="on" id="userid" name="userid"  th:field="*{userid}" placeholder="아이디는 10자리까지입니다." maxlength="10"/>
+                            <input type="text" autocomplete="on" id="userid" name="userid" onchange="check_id()" th:field="*{userid}" placeholder="아이디는 10자리까지입니다." maxlength="10"/>
                             <!--
                             <div th:if="${#fields.hasErrors('userid')}"  th:errors="*{userid}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                                 <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
@@ -321,11 +321,28 @@
 </script>
 
 <script>
+    function check_id(){
+        var id = document.getElementById('userid').value;
+
+        const pattern_id = /^([a-z|A-Z|0-9]).{3,20}$;
+
+        if(!(pattern_id.test(id))){
+            window.alert('영문+숫자 조합으로 3자리 이상 아이디를 입력해주세요.');
+            document.getElementById('passwd1').value="";
+            document.getElementById('passwd1').focus();
+        }
+
+    }
+
     function check_pw(){
         var pw = document.getElementById('passwd1').value;
-        if(pw.length<4||pw.length>8){
-            window.alert('비밀번호는 4글자 이상, 8글자 이하만 가능합니다.');
+
+        const pattern_pwd = /(?=.*\d{1,20})(?=.*[~`!@#$%\^&*()-+=]{1,20})(?=.*[a-zA-Z]{1,20}).{8,20}$/;
+
+        if(!(pattern_pwd.test(pw))){
+            window.alert('영문+숫자+특수문자 조합으로 8자리 이상 비밀번호를 입력해주세요.');
             document.getElementById('passwd1').value="";
+            document.getElementById('passwd1').focus();
         }
         if(document.getElementById('passwd1').value !="" && document.getElementById('passwd2').value != ""){
             if(document.getElementById('passwd1').value==document.getElementById('passwd2').value){
@@ -337,7 +354,9 @@
                 document.getElementById('check').style.color='red';
             }
         }
+
     }
+
 </script>
 
 <!-- <div layout:fragment="content">contents</div> -->

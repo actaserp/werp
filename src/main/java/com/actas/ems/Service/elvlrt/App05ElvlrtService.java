@@ -1,7 +1,9 @@
 package com.actas.ems.Service.elvlrt;
 
+
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
+import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +16,45 @@ import java.util.List;
 @Service("App05ElvlrtService")
 public class App05ElvlrtService {
 
+
     @Autowired
-    App05ElvlrtMapper appMapper;
-
+    App05ElvlrtMapper app05ElvMapper;
+    int queryResult = 1;
     /** 글 목록 */
-    public List<App05ElvlrtDto> GetNoticeList(String searchType, String Keyword){return appMapper.GetNoticeList(searchType, Keyword);}
+    public List<App05ElvlrtDto> GetMNoticeList(App05ElvlrtDto perm){return app05ElvMapper.GetMNoticeList(perm);}
+    public List<App05ElvlrtDto> GetMNoticeBlankList(App05ElvlrtDto perm){return app05ElvMapper.GetMNoticeList(perm);}
+
     /** 글 조회 */
-    public App05ElvlrtDto GetNoticeView(@RequestParam("nseq") String nSeq){return appMapper.GetNoticeView(nSeq);}
+    public App05ElvlrtDto GetMNoticeView(@RequestParam("nseq") String mSeq){return app05ElvMapper.GetMNoticeView(mSeq);}
     /** 글 등록 */
-    public void InsertNotice(App05ElvlrtDto perm){appMapper.InsertNotice(perm);}
+    public boolean InsertMNotice(App05ElvlrtDto perm){
+        queryResult = app05ElvMapper.InsertMNotice(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
     /** 글 수정 */
-    public void UpdateNotice(App05ElvlrtDto perm){appMapper.UpdateNotice(perm);}
+    public boolean UpdateMNotice(App05ElvlrtDto perm){
+        queryResult = app05ElvMapper.UpdateMNotice(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
     /** 글 삭제 */
-    public void DeleteNotice(@RequestParam("nseq") String nSeq){appMapper.DeleteNotice(nSeq);}
+    public boolean DeleteMNotice(App05ElvlrtDto perm){
+        queryResult = app05ElvMapper.DeleteMNotice(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 
-    public String getDate(){ return appMapper.getDate();}
+    public String getMNoticeMaxSeq(String parm){ return app05ElvMapper.getMNoticeMaxSeq(parm);}
 
-    public void ResetSeq(){appMapper.ResetSeq();}
-    public String getMaxSeq(){ return appMapper.getMaxSeq();}
-    public String SeqNext(){ return appMapper.SeqNext();}
 
+
+    public List<CommonDto> GetComm751List(){return app05ElvMapper.GetComm751List();}
+    public List<CommonDto>  GetComm751BlankList(){return app05ElvMapper.GetComm751List();}
 }

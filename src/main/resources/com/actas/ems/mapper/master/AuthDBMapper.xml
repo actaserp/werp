@@ -5,9 +5,9 @@
 <mapper namespace="com.actas.ems.Mapper.master.AuthDBMapper">
     <insert id="TBXUSERS_Insert" parameterType="com.actas.ems.DTO.UserFormDto" keyProperty="username">
         INSERT INTO TB_XUSERS(userid, rnum, passwd1, passwd2, custnm, pernm, useyn, password, role, custcd, spjangcd,
-                              username, actcd, actnm, saupnum, flag, phone, dbnm )
+                              username, actcd, actnm, saupnum, flag, phone, dbnm, encodepw )
         VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
-                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm})
+                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm}, #{encodepw})
     </insert>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
         select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
@@ -55,7 +55,10 @@
         WHERE A.phone=#{phone}
     </select>
 
-    <select id="TB_XUSER_ACDUPCHK" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
-        select dbo.uf_clientnm_info
-    </select>
+    <insert id="TB_XLOGIN_INSERT" parameterType="com.actas.ems.DTO.UserFormDto">
+        INSERT INTO TB_XUSERS
+        (userid, ipaddr, onoffdt, cltnm, usernm, ondate, onoffdv)
+        VALUES
+        (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{usernm}, 	 CONVERT(CHAR(8), getDate(), 8), 'Y')
+    </insert>
 </mapper>

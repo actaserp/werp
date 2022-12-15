@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
 
-<head th:replace="layouts/XRegister/head :: headFragment" />
 <body style="background: #f5f9fa;">
 <header>
 
 </header>
 <div class="content flex">
-    <div class="header">
+
+    <div class="header on">
         <div class="left">
             <div class="ham">
-                <button type="button"><img src="/images/ham.png" alt=""></button>
+                <button type="button"><img th:src="@{/assets/images/ham.png}"   alt=""></button>
             </div>
             <div class="nav_bg"></div>
             <ul class="nav">
                 <li>
-                    <button type="button"><img src="/images/header_icon1.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon1.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="./center.html">
@@ -25,14 +26,14 @@
                             </a>
                         </div>
                         <ul>
-                            <li><a href="./center.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고객상담센터</a></li>
-                            <li><a href="./control.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장접수관제현황</a></li>
-                            <li><a href="./registration"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장처리등록</a></li>
+                            <li><a href="./center.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고객상담센터</a></li>
+                            <li><a href="./control.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장접수관제현황</a></li>
+                            <li><a href="./registration"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장처리등록</a></li>
                         </ul>
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon2.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="">
@@ -44,7 +45,7 @@
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon3.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon3.png}" alt=""></button>
                     <div class="depth2 on">
                         <div class="dep_main">
                             <a href="./reference.html">
@@ -52,11 +53,16 @@
                                     기술자료실
                                 </button>
                             </a>
-                        </div>
+                        </div>30
+                        <ul>
+                            <li><a th:href="@{/app05/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
+                            <li><a th:href="@{/app05/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품자료실</a></li>
+                            <li><a th:href="@{/app05/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기타자료실</a></li>
+                        </ul>
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon4.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon4.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="">
@@ -68,7 +74,7 @@
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon5.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon5.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="./care_center.html">
@@ -80,7 +86,7 @@
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon6.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon6.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="">
@@ -92,7 +98,7 @@
                     </div>
                 </li>
                 <li>
-                    <button type="button"><img src="/images/header_icon7.png" alt=""></button>
+                    <button type="button"><img th:src="@{/assets/images/header_icon7.png}" alt=""></button>
                     <div class="depth2">
                         <div class="dep_main">
                             <a href="">
@@ -114,16 +120,16 @@
                 <li>
                     <div class="logo">
                         <a href="">
-                            <img src="/images/logo.png" alt="">
+                            <img th:src="@{/assets/images/logo.png}" alt="">
                         </a>
                     </div>
                 </li>
                 <li class="home">
-                    <a><img src="/images/i_home.png" alt=""></a>
-                    <a><img src="/images/i_home_on.png" alt=""></a>
+                    <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                    <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
                 </li>
                 <li class="on">
-                    자료실
+                    공지사항
                 </li>
                 <!-- <li class="on">
                     고장접수관제현황
@@ -132,96 +138,51 @@
             <ul class="right">
                 <li>
                     <a href="">
-                        <img src="/images/i_call.png" alt="">
+                        <img th:src="@{/assets/images/i_call.png}" alt="">
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <img src="/images/i_bell.png" alt="">
+                        <img th:src="@{/assets/images/i_bell.png}" alt="">
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <img src="/images/i_menu.png" alt="">
+                        <img th:src="@{/assets/images/i_menu.png}" alt="">
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <img src="/images/i_que.png" alt="">
+                        <img th:src="@{/assets/images/i_que.png}" alt="">
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <img src="/images/i_user.png" alt="">
+                        <img th:src="@{/assets/images/i_user.png}" alt="">
                     </a>
                 </li>
             </ul>
         </div>
         <div class="infor_bar type2">
-            <div class=""></div>
             <div class="left">
-                자료실
+                공지사항
             </div>
-            <div class=""></div>
+            <ul class="right">
+                <li>
+                    <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn(this)" >공지등록 </button>
+                    <button  class="color4" type="button" visible="false" data-bs-toggle="modal" data-bs-target="#fileBackdrop" id="filemodal_btn" onclick="clear_rtn(this)" >미리보기 </button>
+                </li>
+            </ul>
 
         </div>
         <div class="section ">
-
             <div class="sec_con" style="width: 100%;">
                 <div class="box_wrap">
                     <form action="">
-                        <div class="table table_style2">
-                            <table>
-                                <tr>
-                                    <th style="width: 5%;">번호</th>
-                                    <th style="width: 5%;">분류</th>
-                                    <th style="width: 70%;">제목</th>
-                                    <th style="width: 5%;">첨부</th>
-                                    <th style="width: 10%;">작성자</th>
-                                    <th style="width: 10%;">일자</th>
-                                </tr>
-                                <tr th:each="list : ${list}">
-                                    <td th:text="${list.nseq}"></td>
-                                    <td>분류</td>
-                                    <td><a th:text="${list.nsubject}" th:href="@{/app05/mnoticeView(nseq=${list.nseq},username=${username},dbnm=${dbnm})}"></a></td>
-                                    <td>첨부</td>
-                                    <td th:text="${list.custcd}"></td>
-                                    <td th:text="${list.ninputdate}"></td>
-                                </tr>
 
-                            </table>
-                            <div class="boardPager">
-                                <ul>
-                                    <li class="pager end "><a href="#!"><img src="/images/pager_prev_end.png" alt=""></a></li>
-                                    <li class="pager prev"><a href="#!"><img src="/images/pager_prev.png" alt=""></a></li>
-                                    <li class="pagerNum on"><a href="#!">1</a></li>
-                                    <li class="pagerNum"><a href="#!">2</a></li>
-                                    <li class="pagerNum"><a href="#!">3</a></li>
-                                    <li class="pagerNum"><a href="#!">4</a></li>
-                                    <li class="pagerNum"><a href="#!">5</a></li>
-                                    <li class="pager next"><a href="#!"><img src="/images/pager_next.png" alt=""></a></li>
-                                    <li class="pager end"><a href="#!"><img src="/images/pager_next_end.png" alt=""></a></li>
-                                </ul>
-                            </div>
-                            <!-- (추가) 검색 부분 시작 -->
-                            <div>
-                                <form action="/app05/mnotice" method="get">
-                                    <table align="center">
-                                        <tr>
-                                            <td>
-                                                <select name="searchType">
-                                                    <option value="nsubject">제목</option>
-                                                    <option value="nmemo">내용</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="text" id="Keyword" name="Keyword"></td>
-                                            <td><button type="button" class="btn btn-primary">검색</button></td>
-                                        </tr>
-                                    </table>
-                                </form>
-                                <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/app05/mnoticeWrite(username=${username},dbnm=${dbnm})}'|">글 작성하기</button>
-                            </div>
-                            <!-- 검색 부분 끝 -->
+                        <div class="container-fluid">
+                            <div id="mGrid_div" ></div>
+                            <div id="thePager01"></div>
                         </div>
 
                     </form>
@@ -231,10 +192,740 @@
         </div>
     </div>
 
-</div>
-<footer>
 
-</footer>
+
+
+    <!--------------------------------------------------------------------------------------->
+    <!-- ###########  공지등록 #############################################################-->
+    <!--------------------------------------------------------------------------------------->
+
+    <form   id="form" name="form"  role="form"   method="post"  enctype="multipart/form-data">
+        <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
+             data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                 style="max-width: 900px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" >
+                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1" id="staticBackdropLabel">공지등록</h4>
+                        </div>
+                        <div class="section ">
+
+                            <div class="sec_con" style="width: 100%;">
+                                <div class="box_wrap">
+                                    <div class="reference_tit">
+                                        <div class="title">
+                                            제목
+                                        </div>
+                                        <div class="input_wrap">
+                                            <input type="text" name="actnsubjectz" id="actnsubjectz" >
+                                            <input type="hidden" name="actnseqz" id="actnseqz" >
+                                        </div>
+                                        <div class="title" >
+                                            작성일자
+                                        </div>
+                                        <div class="input_wrap date" style="max-width: 235px">
+                                            <input type="text"  class="form-control datetimepicker" id="actninputdatez" autocomplete="off"  placeholder="Y-m-d"     >
+                                        </div>
+                                    </div>
+                                    <div class="table table_style3">
+                                        <table>
+                                            <tr>
+                                                <th style="width: 7%;">분류</th>
+                                                <td style="width: 24%">
+                                                    <div class="input_wrap" style="max-width: 235px;">
+                                                        <select th:field="*{com750Dto}" name="actngroupcdz" id="actngroupcdz">
+                                                            <option value="">선택</option>
+                                                            <option th:each="val : ${com750Dto}" th:value="${val.code}" th:text="${val.cnam}">
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <th style="width: 10%;">작성자</th>
+                                                <td style="width: 23%">
+                                                    <input type="text" name="actnpernmz" id="actnpernmz" >
+                                                </td>
+                                                <th style="width: 13%;">회원사공유</th>
+                                                <td style="width: 23%">
+                                                    <input type="checkbox" id="actnflagz" value="Y" checked>
+                                                    <label for="actnflagz" class="check_style1 no_txt"></label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>내용</th>
+                                                <td colspan="5">
+                                                    <textarea  id="actnmemoz"></textarea>
+                                                </td>
+                                            </tr>
+                                            <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                                                <tr>
+                                                    <th>첨부파일</th>
+                                                    <td colspan="5">
+                                                        <!-- <label for="file_0" class="col-sm-2 control-label">파일1</label> -->
+                                                        <div class="col-sm-15">
+                                                            <input type="text" class="upload-name" value="파일 찾기" readonly />
+                                                            <label for="file_0" class="control-label">찾아보기</label>
+                                                            <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+
+                                                            <button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            </button>
+                                                            <button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            <!-- <tr>
+                                                <th>미리보기</th>
+                                                <td>
+                                                    <textarea></textarea>
+                                                </td>
+                                            </tr> -->
+                                        </table>
+                                        <div id="btnDiv" class="btn_wrap">
+                                            <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='delete_btn()' >삭&nbsp;&nbsp;&nbsp;제</button>
+                                            <button  class="btn btn-outline-danger me-1 mb-1" type="button"   onclick='save_btn()' >저&nbsp;&nbsp;&nbsp;장</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                        type="button" id="CloseBtn"  data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <!-- <div class="col-auto">
+                                <button class="badge-soft-info dropdown-item rounded-1"
+                                    type="submit">저장 </button>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--------------------------------------------------------------------------------------->
+    <!-- ###########  첨부파일 미리보기######################################################-->
+    <!--------------------------------------------------------------------------------------->
+
+    <form   id="form" name="form"  role="form"   method="post"  enctype="multipart/form-data">
+        <div class="modal fade" id="fileBackdrop" data-bs-keyboard="false"
+             data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm02"
+                 style="max-width: 900px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" >
+                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1" id="staticBackdropLabel">파일다운로드</h4>
+                        </div>
+                        <div class="section ">
+
+                            <div class="sec_con" style="width: 100%;">
+                                <div class="box_wrap">
+                                    <table>
+                                        <tr>
+                                            <th style="width: 10%;">파일목록</th>
+                                            <td style="width: 90%">
+                                                <div data-name="filelistDiv" class="table table_style3"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                        type="button" id="CloseFileBtn"  data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+        let formData = new FormData();
+        function clear_rtn(elem){
+            console.log("clear rtn");
+            document.getElementById('actnseqz').value= "";
+            document.getElementById('actnsubjectz').value= "";
+            document.getElementById('actnpernmz').value= "";
+            // document.getElementById('actnfilenamez').value= "";
+            document.getElementById('actninputdatez').value= "";
+            document.getElementById('actngroupcdz').value= "";
+            document.getElementById('actnmemoz').value= "";
+            document.getElementById('actnflagz').value= "";
+            const target = $(elem).parents('div[data-name="fileDiv"]');
+            fileIdx = 0;
+            const fileDivs = $('div[data-name="fileDiv"]');
+            fileDivs.remove();
+            getToday()
+        }
+
+        let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+
+        function addFile() {
+
+            const fileDivs = $('div[data-name="fileDiv"]');
+            if (fileDivs.length > 2) {
+                alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+                return false;
+            }
+
+            fileIdx++;
+            const fileHtml = `
+            <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                <div class="table table_style3">
+                    <table>
+                        <tr>
+                            <th style="width: 7%;">첨부파일</th>
+                            <td colspan="5">
+                                <!-- <label for="file_${fileIdx}" class="col-sm-2 control-label">파일1</label> -->
+                                <div class="col-sm-15">
+                                    <input type="text" class="upload-name" value="파일 찾기" readonly />
+                                    <label for="file_${fileIdx}" class="control-label">찾아보기</label>
+                                    <input type="file" name="files_${fileIdx}" id="file_${fileIdx}" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+
+                                    <button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                 </div>
+            </div>
+            `;
+
+
+            $('#btnDiv').before(fileHtml);
+        }
+
+        function removeFile(elem) {
+
+            const prevTag = $(elem).prev().prop('tagName');
+            if (prevTag === 'BUTTON') {
+                const file = $(elem).prevAll('input[type="file"]');
+                const filename = $(elem).prevAll('input[type="text"]');
+                file.val('');
+                filename.val('파일 찾기');
+                return false;
+            }
+
+            const target = $(elem).parents('div[data-name="fileDiv"]');
+            fileIdx = fileIdx - 1;
+            target.remove();
+        }
+
+
+        function deleteFile(elem, arg1, arg2) {
+
+            if (!confirm("파일을 삭제하시겠습니까?")) {
+                return ;
+            }
+
+            //도면 파일 삭제
+            $.ajax({
+                url: '/app05mod/filedel',
+                type:"POST",
+                data: {
+                    "actidxz"     : arg1 ,
+                    "actnseqz"    : arg2 ,
+                    "actnflagz"    : "NN"
+                },
+                async:false,
+                success:function(data){
+                    if(data == "success"){
+                        console.log("deletefile", data);
+                        const target = $(elem).parents('div[data-name="fileDiv"]');
+                        target.remove();
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+
+            })
+
+
+        }
+
+        function changeFilename(file) {
+
+            file = $(file);
+            const filename = file[0].files[0].name;
+            const target = file.prevAll('input');
+            target.val(filename);
+        }
+
+        function save_btn(){
+
+
+            //도면 자료 저장
+            const happyNewYear = new Date(2021, 0, 1);
+            const year = happyNewYear.getFullYear();
+            const month = happyNewYear.getMonth() + 1;
+            const date = happyNewYear.getDate();
+
+            ls_todate = `${year} + ${month >= 10 ? month : '0' + month} + ${date >= 10 ? date : '0' + date}`;
+
+            var ls_actnseqz   = document.getElementById('actnseqz').value;
+            var ls_actninputdatez   = document.getElementById('actninputdatez').value;
+            var ls_actngroupcdz = document.getElementById('actngroupcdz').value;
+            var ls_actnsubjectz   = document.getElementById('actnsubjectz').value;
+            // var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
+            var ls_actnpernmz   =  document.getElementById('actnpernmz').value;
+            var ls_actnmemoz   = document.getElementById('actnmemoz').value;
+            if(document.getElementById('actnflagz').checked){
+                ls_actnflagz = "Y"
+            }else{
+                ls_actnflagz = "N"
+            };
+            if(!ls_actninputdatez){
+                ls_actninputdatez = ls_todate;
+            }
+            if(!ls_actnsubjectz){
+                alert("제목을 입력하세요")
+                 return
+            }
+            if(!ls_actnmemoz){
+                alert("본문을 입력하세요")
+                 return
+            }
+            if(!ls_actnflagz){
+                ls_actnflagz = "Y";
+            }
+            for (h = 0; h <= fileIdx; h++ ){
+                ls_fileid = 'file_' + h;
+
+                const fileInput = document.getElementById(ls_fileid);
+                // const selectedFile = fileInput.files[0];
+                const selectedFile = [...fileInput.files];
+                for (s = 0; s <= selectedFile.length - 1; s++){
+                    formData.append("file", selectedFile[s]);
+                    console.log(selectedFile[s]);
+                }
+
+            }
+            var inputdata = {
+                    "actnseqz"    : ls_actnseqz ,
+                    "actninputdatez"    : ls_actninputdatez ,
+                    "actngroupcdz"  : ls_actngroupcdz,
+                    "actnsubjectz"      : ls_actnsubjectz ,
+                    "actnpernmz"   : ls_actnpernmz   ,
+                    "actnmemoz"   : ls_actnmemoz,
+                    "actnflagz"   : ls_actnflagz
+                }
+
+
+            formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+
+            $.ajax({
+                url: '/app05mod/save',
+                processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+                contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+                enctype : 'multipart/form-data',
+                type: "POST",
+                data: formData,
+                async:false,
+                success:function(data){
+                    // console.log("등록OK", data);
+                    if(data == "success"){
+                        alert("저장되었습니다.")
+                        console.log("save", data);
+                        $("#CloseBtn").trigger("click");
+                        listUp();
+                    }else{
+                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+
+            })
+
+
+            // $.ajax({
+            //     url: '/app05mod/save',
+            //     type:"POST",
+            //     data: {
+            //         "actnseqz"    : ls_actnseqz ,
+            //         "actninputdatez"    : ls_actninputdatez ,
+            //         "actngroupcdz"  : ls_actngroupcdz,
+            //         "actnsubjectz"      : ls_actnsubjectz ,
+            //         "actnfilenamez" : ls_actnfilenamez ,
+            //         "actnpernmz"   : ls_actnpernmz   ,
+            //         "actnmemoz"   : ls_actnmemoz,
+            //         "actnflagz"   : ls_actnflagz
+            //     },
+            //     async:false,
+            //     success:function(data){
+            //         // console.log("등록OK", data);
+            //         if(data != "error"){
+            //             ls_actnseqz = data
+            //             console.log("actnseqz2", data);
+            //             // $("#CloseBtn").trigger("click");
+
+            //         }
+
+            //     },error:function(e){
+            //         console.log('error',e);
+            //         return
+            //     }
+            // }).done(function(fragment){
+
+            // })
+
+
+
+
+
+        }
+        function delete_btn(){
+
+            if (!confirm("삭제하시겠습니까?")) {
+                return ;
+            }
+
+            //도면 자료 삭제
+            var ls_actnseqz   = document.getElementById('actnseqz').value;
+            if(!ls_actnseqz){
+                alert("삭제할 자료를 선택하세요")
+                 return
+            }
+            $.ajax({
+                url: '/app05mod/del',
+                type:"POST",
+                data: {
+                    "actnseqz"    : ls_actnseqz ,
+                    "actnflagz"    : "NN"
+                },
+                async:false,
+                success:function(data){
+                    if(data == "success"){
+                        alert("삭제되었습니다.")
+                        console.log("delete", data);
+                        $("#CloseBtn").trigger("click");
+                        listUp();
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+
+            })
+
+            listUp();
+
+
+        }
+
+        function listUp(){
+            window.location.href = '/app05/index01';
+            }
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    window.onload = function() {
+        document.getElementById("filemodal_btn").style.display="none";
+        //설치메뉴얼 list
+        var view_Mnoticepage = new wijmo.collections.CollectionView(getData_wlist(), {
+            pageSize: 10
+        });
+        // 작업설비 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager01', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_Mnoticepage
+        });
+        wapp05Grid = new wijmo.grid.FlexGrid('#mGrid_div', {
+            autoGenerateColumns: false,
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [
+
+                { binding: 'nseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
+                { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },
+                { binding: 'nsubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+                        text: '<b>${item.nsubject}</b>',
+                        click: (e, ctx) => {
+                            viewPage(ctx.item.nseq, ctx.item.cnam, ctx.item.nsubject, ctx.item.npernm, ctx.item.nfilename, ctx.item.ninputdate , ctx.item.ngourpcd , ctx.item.nmemo, ctx.item.nflag );
+                        }
+                    })
+                },
+                { binding: 'npernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
+                { binding: 'attcnt', header: '첨부파일건수', width: '*', format: 'n0',  align:"center", isReadOnly: true,
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+                        text: '<b>${item.attcnt}건 보기</b>',
+                        click: (e, ctx) => {
+                            viewFilePage(ctx.item.nseq );
+                        }
+                    }) } ,
+                { binding: 'ninputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
+
+            ],
+            itemsSource: view_Mnoticepage
+        });
+        wapp05Grid.hostElement.addEventListener("click",function(e){
+            var ht = wapp05Grid.hitTest(e);
+            if(ht.cellType === wijmo.grid.CellType.Cell){
+                console.log(ht._p._rows );
+                //  data = ht.RowCollection(ht.row); // e.getCellData(ht.row, 0, false);
+                // console.log(data);
+
+            }
+        })
+        // 설비메뉴얼 데이터 수집
+        function getData_wlist(){
+
+            var mapp05Dto = [[${App05Dto}]];
+            var data01 = [];
+            var cnt = 1;
+
+            console.log(mapp05Dto);
+            for (var i = 0; i < mapp05Dto.length; i++) {
+                data01.push({
+                    id: i,
+                    index: cnt,
+                    nseq:     mapp05Dto[i]["nseq"],
+                    cnam:     mapp05Dto[i]["cnam"],
+                    nsubject: mapp05Dto[i]["nsubject"],
+                    npernm:   mapp05Dto[i]["npernm"],
+                    attcnt : mapp05Dto[i]["attcnt"] ,
+                    ninputdate : mapp05Dto[i]["ninputdate"] ,
+                    ngourpcd : mapp05Dto[i]["ngourpcd"]     ,
+                    nmemo : mapp05Dto[i]["nmemo"]     ,
+                    nflag : mapp05Dto[i]["nflag"]
+                });
+                cnt++;
+            }
+            console.log(data01);
+            return data01
+        }
+    }
+
+
+        function viewFilePage(arg1 ){
+                $("#filemodal_btn").trigger("click");
+
+                var wfile_data = [];
+                const fileHtml = '';
+                $.ajax({
+                    url: '/app05mod/flist',
+                    type:"POST",
+                    data: {
+                        "actnseqz"     : arg1,
+                        "actnflagz"     : "NN",
+                    },
+                    async:false,
+                    success:function(data){
+                        var wfileDto  = data;
+                        var cnt = 0;
+                        if(wfileDto.length > 0){
+                            for (var i = 0; i < wfileDto.length; i++) {
+                                    var  id = i;
+                                    var  idx = wfileDto[i]["idx"];
+                                    var  boardIdx = wfileDto[i]["boardIdx"];
+                                    var  originalName = wfileDto[i]["originalName"];
+                                 fileHtml = `
+                                    <a  href="/app05mod/download?idx=${idx}">
+                                        <i class="fa fa-file-o" aria-hidden="true"></i>
+                                        [[ ${originalName} ]]
+                                    </a>
+                                    `;
+
+                                cnt++;
+
+                            }
+                            document.getElementById('filelistDiv').innerHTML= fileHtml;
+                        } else{
+                            const fileHtml = `  `;
+                            $('#filelistDiv').after(fileHtml);
+                        }
+                    },error:function(e){
+
+                    }
+                }).done(function(fragment){
+
+                })
+
+        }
+        function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){
+                $("#listmodal_btn").trigger("click");
+                document.getElementById('actnseqz').value= arg1;
+                document.getElementById('actnsubjectz').value= arg3;
+                document.getElementById('actnpernmz').value= arg4;
+                // document.getElementById('actnfilenamez').value= arg5;
+                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                document.getElementById('actninputdatez').value= arg6;
+                document.getElementById('actngroupcdz').value= arg7;
+                document.getElementById('actnmemoz').value= arg8;
+                document.getElementById('actnflagz').value= arg9;
+
+                var wfile_data = [];
+                $.ajax({
+                        url: '/app05mod/flist',
+                        type:"POST",
+                        data: {
+                            "actnseqz"     : arg1,
+                            "actnflagz"     : "NN",
+                        },
+                        async:false,
+                        success:function(data){
+                            var wfileDto  = data;
+                            var cnt = 0;
+                            if(wfileDto.length > 0){
+                                for (var i = 0; i < wfileDto.length; i++) {
+                                    // wfile_data.push({
+                                    //     id: i,
+                                    //     index: cnt,
+                                    //     idx: wfileDto[i]["idx"],
+                                    //     boardIdx: wfileDto[i]["boardIdx"],
+                                    //     originalName: wfileDto[i]["originalName"],
+                                    // });
+                                     var  id = i;
+                                     var  idx = wfileDto[i]["idx"];
+                                     var  boardIdx = wfileDto[i]["boardIdx"];
+                                     var  originalName = wfileDto[i]["originalName"];
+
+                                    const fileHtml = `
+                                    <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                                        <div class="table table_style3">
+                                            <table>
+                                                <tr>
+                                                    <th style="width: 7%;">첨부파일</th>
+                                                    <td colspan="5">
+                                                        <div class="col-sm-15">
+                                                            <input type="hidden" name="fileIdxs" value="${idx}" />
+                                                            <input type="text" class="upload-name" value="${originalName}" readonly />
+
+                                                            <button type="button" onclick="deleteFile(this, ${idx},  ${boardIdx})" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    `;
+                                    $('#btnDiv').before(fileHtml);
+
+                                    cnt++;
+                                }
+                            } else{
+                                const fileHtml = `  `;
+                                $('#btnDiv').before(fileHtml);
+                            }
+                        },error:function(e){
+
+                        }
+                    }).done(function(fragment){
+
+                    })
+
+                }
+
+
+        $(document).ready(function() {
+            getToday()
+            fn_egov_init_date()
+            $('datetimepicker').datetimepicker({
+
+            });
+
+            $("#actninputdatez").change(function(e){
+                // console.log("달력클릭");
+                // console.log(convert_time(e.timestamp));
+            })
+
+        })
+
+
+        function getToday(){
+            let today = new Date();
+
+            let year = today.getFullYear(); // 년도
+            let month = today.getMonth() + 1;  // 월
+            let date = today.getDate();  // 날짜
+            let day = today.getDay();  // 요일
+            if(date > 0 && date < 10) {date = "0" + date};
+            let ls_today = year + '-' + month + '-' + date
+            document.getElementById('actninputdatez').value = ls_today;
+        }
+
+        function convert_time(timestamp){
+            //현재시간
+            var date = new Date(timestamp);
+            var year = date.getFullYear();
+            var month = ("0" + (1 + date.getMonth())).slice(-2);
+            var day = ("0" + date.getDate()).slice(-2);
+            var hh = date.getHours();
+            var min = ('0' + date.getMinutes()).slice(-2)
+            time = year +  month +  day   ;
+            return time;
+        }
+
+        function fn_egov_init_date(){
+            var $inputdate = $('#actninputdatez');
+            var $endDate = $('#endDate');
+            $inputdate.datetimepicker({
+                timepicker: true,
+                lang: 'ko',
+                format: 'Y-m-d',
+                scrollMonth: false,
+                scrollInput: false,
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: $endDate.val() ? $endDate.val() : false
+                    })
+                },
+            });
+
+            $endDate.datetimepicker({
+                timepicker: true,
+                lang: 'ko',
+                format: 'Y-m-d H:i',
+                scrollMonth: false,
+                scrollInput: false,
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: $inputdate.val() ? $inputdate.val() : false
+                    })
+                }
+            });
+
+        }
+
+    </script>
+
+<!------footer ------>
+<footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+
 
 <!-- modal -->
 <!-- class="modal_step_open" modal_step="1" -->
@@ -246,7 +937,7 @@
         <div class="layoutCont">
             <div class="modalContWrap">
                 <!-- <div class="modal_close cancerButton">
-                  <img src="/images/modal_close.png" alt="모달 닫기버튼">
+                  <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
                 </div>                       -->
                 <div class="modal_head">
                 </div>

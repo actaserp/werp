@@ -3,58 +3,79 @@
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper">
-    <select id="GetNoticeList" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+    <select id="GetMNoticeList"  parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=ngourpcd) as cnam,
+        (select Count(*) from tb_mattach where flag='NN' and board_idx=nseq and delete_yn = 'N') as attcnt
+        from tb_mnotice WITH (NOLOCK)
+        Where 1 = 1
+        <!--        <if test="nsubject != null">-->
+        <!--            and nsubject like '%' + #{nsubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="nmemo != null">-->
+        <!--            and nmemo like '%' + #{nmemo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <select id="GetMNoticeBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        select '' as nseq, '' as ninputdate, '' as ngourpcd, '' as nsubject, '' as nfilename, '' as npernm, '' as nmemo, '' as nflag
+        from dual
+        <!--        <if test="nsubject != null">-->
+        <!--            and nsubject like '%' + #{nsubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="nmemo != null">-->
+        <!--            and nmemo like '%' + #{nmemo} + '%'-->
+        <!--        </if>-->
+    </select>
+    <select id="getMNoticeMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(nseq) from tb_mnotice  where Left(nseq,6) = #{nseq}
+    </select>
+
+
+    <select id="GetMNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
         select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
-        from TB_MNOTICE
-        <if test="searchType == 'nsubject' and Keyword != null">
-            where nsubject like '%'+#{Keyword}+'%'
-        </if>
-        <if test="searchType == 'nmemo' and Keyword != null">
-            where nsubject like '%'+#{Keyword}+'%'
-        </if>
-        order by nseq desc
+        from tb_mnotice where nseq = #{nseq}
     </select>
 
-    <select id="getMaxSeq" resultType="java.lang.String">
-        select left(max(nseq),8) from tb_mnotice
-    </select>
-
-    <select id="getDate" resultType="java.lang.String">
-        select convert(varchar(8), getdate(), 112)
-    </select>
-
-    <select id="SeqNext" resultType="java.lang.String">
-        select next value for notice_seq
-    </select>
-
-    <select id="GetNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
-        from TB_MNOTICE where nseq = #{nseq}
-    </select>
-
-    <insert id="InsertNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        insert into TB_MNOTICE (custcd, spjangcd, nseq, ninputdate, nsubject, nmemo) values (#{custcd}, #{spjangcd}, #{nseq}, #{date}, #{nsubject}, #{nmemo})
+    <insert id="InsertMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto" >
+        insert into tb_mnotice (custcd, spjangcd, nseq, ninputdate, ngourpcd, nsubject, nmemo, npernm, nflag) values (#{custcd}, #{spjangcd}, #{nseq}, #{ninputdate}, #{ngourpcd}, #{nsubject}, #{nmemo}, #{npernm}, #{nflag})
     </insert>
 
-    <update id="UpdateNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        update TB_MNOTICE set
-        ngourpcd = #{ngourpcd},
-        nsubject = #{nsubject},
-        nfilename = #{nfilename},
-        npernm = #{npernm},
-        nmemo = #{nmemo},
-        nflag = #{nflag}
+    <update id="UpdateMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        update tb_mnotice set
+        ngourpcd = #{ngourpcd}
+        <if test="nsubject != null ">,</if>
+        <if test="nsubject != null">nsubject=#{nsubject}</if>
+        <if test="nfilename != null ">,</if>
+        <if test="nfilename != null">nfilename=#{nfilename}</if>
+        <if test="nmemo != null ">,</if>
+        <if test="nmemo != null">nmemo=#{nmemo}</if>
+        <if test="ninputdate != null ">,</if>
+        <if test="ninputdate != null">ninputdate=#{ninputdate}</if>
+        <if test="npernm != null ">,</if>
+        <if test="npernm != null">npernm=#{npernm}</if>
+        <if test="nflag != null ">,</if>
+        <if test="nflag != null">nflag=#{nflag}</if>
         where nseq = #{nseq}
     </update>
 
-    <update id="ResetSeq">
-        alter sequence notice_seq RESTART with 1
-    </update>
 
-
-
-    <delete id="DeleteNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        delete from TB_MNOTICE where nseq = #{nseq}
+    <delete id="DeleteMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
+        delete from tb_mnotice where nseq = #{nseq}
     </delete>
+
+
+    <select id="GetComm751List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+            SELECT  com_code AS code, com_cnam AS cnam
+            FROM     dbo.tb_ca510 WITH (NOLOCK)
+            WHERE  (com_cls = '751') AND (com_code <> '00')
+         ]]>
+    </select>
+    <select id="GetComm751BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
 
 </mapper>

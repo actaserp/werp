@@ -16,6 +16,8 @@ public class App05ElvlrtDto {
     private String npernm;
     private String nmemo;
     private String nflag;
-    private String date;
+    private String yyyymm;
+    private String cnam;
+    private int attcnt;
 
 }

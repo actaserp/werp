@@ -255,9 +255,13 @@
 <script>
     function check_pw(){
         var pw = document.getElementById('passwd1').value;
-        if(pw.length<4||pw.length>8){
-            window.alert('비밀번호는 4글자 이상, 8글자 이하만 가능합니다.');
+
+        const pattern_pwd = /(?=.*\d{1,20})(?=.*[~`!@#$%\^&*()-+=]{1,20})(?=.*[a-zA-Z]{1,20}).{8,20}$/;
+
+        if(!(pattern_pwd.test(pw))){
+            window.alert('영문+숫자+특수문자 조합으로 8자리 이상 비밀번호를 입력해주세요.');
             document.getElementById('passwd1').value="";
+            document.getElementById('passwd1').focus();
         }
         if(document.getElementById('passwd1').value !="" && document.getElementById('passwd2').value != ""){
             if(document.getElementById('passwd1').value==document.getElementById('passwd2').value){
