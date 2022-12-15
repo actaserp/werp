@@ -335,8 +335,10 @@
                                     <table>
                                         <tr>
                                             <th style="width: 10%;">파일목록</th>
+                                        </tr>
+                                        <tr>
                                             <td style="width: 90%">
-                                                <div data-name="filelistDiv" class="table table_style3"></div>
+                                                <div data-name="filelistDiv" id="filelistDiv" class="table table_style3"></div>
                                             </td>
                                         </tr>
                                     </table>
@@ -748,8 +750,8 @@
                         var cnt = 0;
 
                         const filelistDiv = $('div[data-name="filelistDiv"]');
-                        filelistDiv.remove();
-                        // console.log(data);
+                        filelistDiv.empty();
+                        console.log(data);
                         if(wfileDto.length > 0){
                             for (var i = 0; i < wfileDto.length; i++) {
                                     var  id = i;
@@ -764,6 +766,7 @@
                                     </div>
                                     `;
                                     console.log(fileHtml);
+                                    $('#filelistDiv').after(fileHtml);
                                     $('#btnDiv02').before(fileHtml);
 
                                 cnt++;
