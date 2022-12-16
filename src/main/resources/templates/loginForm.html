@@ -80,6 +80,8 @@
 </div>
 
 <script>
+      var n = 0;
+
       window.onload = function() {  
         getIpClient();
       }
@@ -124,6 +126,8 @@
                 //var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
                 var ls_url = 'userid=' + ls_userid
                 insertLogin();
+                console.log("insert");
+                return;
                 window.location.href = '/auth/emmsdashboard?' + ls_url;
                   // if(data == "success"){
                   //     alert("등록 되었습니다.");
@@ -137,7 +141,12 @@
 
               },error:function(e){
                   console.log('error',e);
-                  alert("아이디와 비밀번호를 확인하세요. 틀린 횟수 : "+n+"회 입니다."<br>"3회 틀릴 시 차단됩니다.")
+                  if(n<3){
+                    alert("아이디와 비밀번호를 확인하세요. 틀린 횟수 : "+n+"회 입니다. 로그인 실패 3회 시 계정이 잠깁니다.");
+                  }
+                  if(n=3){
+                    alert("로그인 실패 3회 누적으로 계정이 잠깁니다. 관리자에게 문의하세요.");
+                  }
               }
           }).done(function(fragment){
 
@@ -146,10 +155,11 @@
      })
 
      function insertLogin(){
-
+      console.log("insertlogin start");
       var ls_loginid   = document.getElementById('loginid').value;
       var ls_logpass   = document.getElementById('logpass').value;
       var ls_ipaddr    = document.getElementById('ipaddr').value;
+      console.log(ls_loginid, ls_logpass, ls_ipaddr);
 
       $.ajax({
         url: '/authcrud/loginlog',

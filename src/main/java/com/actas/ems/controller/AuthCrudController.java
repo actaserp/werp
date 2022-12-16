@@ -159,13 +159,19 @@ public class AuthCrudController {
     public void Login_Log(@RequestParam("loginid") String loginid
             , @RequestParam("logpass") String logpass
             , @RequestParam("ipaddr") String ipaddr)throws Exception {
+            System.out.printf("--loginlog 진입");
 
             UserFormDto user = new UserFormDto();
-            UserFormDto userall = new UserFormDto();
-            user.setUserid(loginid);
 
-            userall = authService.GetUserInfo(user);
-            authService.TB_XLOGIN_INSERT(userall);
+            user.setUserid(loginid);
+            user.setPasswd1(logpass);
+            System.out.printf("--User 값 받아오기");
+            System.out.printf(user.getUsername() + user.getUserid());
+
+            user = authService.GetUserInfo(user);
+            user.setIpaddr(ipaddr);
+
+            authService.TB_XLOGIN_INSERT(user);
 
     }
 }

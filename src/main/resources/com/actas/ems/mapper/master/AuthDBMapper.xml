@@ -57,8 +57,8 @@
 
     <insert id="TB_XLOGIN_INSERT" parameterType="com.actas.ems.DTO.UserFormDto">
         INSERT INTO TB_XLOGIN
-        (userid, ipaddr, onoffdt, cltnm, usernm, ondate, onoffdv)
+        (userid, ipaddr, onoffdt, custnm, usernm, ondate, onoffdv)
         VALUES
-        (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{usernm}, 	 CONVERT(CHAR(8), getDate(), 8), 'Y')
+        (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{username}, getDate(), 'Y')
     </insert>
 </mapper>
