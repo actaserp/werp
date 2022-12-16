@@ -5,16 +5,16 @@
 <mapper namespace="com.actas.ems.Mapper.master.AuthDBMapper">
     <insert id="TBXUSERS_Insert" parameterType="com.actas.ems.DTO.UserFormDto" keyProperty="username">
         INSERT INTO TB_XUSERS(userid, rnum, passwd1, passwd2, custnm, pernm, useyn, password, role, custcd, spjangcd,
-                              username, actcd, actnm, saupnum, flag, phone, dbnm, encodepw )
+                              username, actcd, actnm, saupnum, flag, phone, dbnm, encodepw, wrongnum)
         VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
-                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm}, #{encodepw})
+                #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm}, #{encodepw}, 0)
     </insert>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum
          from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetUserInfoDto" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum
         from TB_XUSERS where userid=#{userid}
     </select>
     <select id="GetClientInfo" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
@@ -61,4 +61,16 @@
         VALUES
         (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{username}, getDate(), 'Y')
     </insert>
+
+    <update id="TB_XUSERS_LOGFAIL" parameterType="com.actas.ems.DTO.UserFormDto">
+        UPDATE TB_XUSERS SET
+        wrongnum = wrongnum + 1
+        WHERE userid = #{userid}
+    </update>
+
+    <update id="TB_XUSERS_LOGSUCC" parameterType="com.actas.ems.DTO.UserFormDto">
+        UPDATE TB_XUSERS SET
+        wrongnum = 0
+        WHERE userid = #{userid}
+    </update>
 </mapper>

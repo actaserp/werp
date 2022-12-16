@@ -99,6 +99,12 @@ public class AuthCrudController {
 
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
 
+        if(userReturnDto.getWrongnum().equals("3")){
+            return userReturnDto;
+        }
+
+        authService.TB_XUSERS_LOGSUCC(userReturnDto);
+
         String ls_dbnm = userReturnDto.getDbnm();
         model.addAttribute("UserInfo", userReturnDto );
         switch (ls_dbnm){
@@ -172,6 +178,29 @@ public class AuthCrudController {
             user.setIpaddr(ipaddr);
 
             authService.TB_XLOGIN_INSERT(user);
+
+    }
+
+    @RequestMapping(value = "/wrongpasswd", method = RequestMethod.POST)
+    public Object Login_fail(@RequestParam("loginid") String loginid
+                             , @RequestParam("logpass") String logpass)throws Exception {
+            System.out.printf("--loginfail 진입");
+
+            UserFormDto user = new UserFormDto();
+
+            user.setUserid(loginid);
+            user.setPasswd1(logpass);
+
+            user = authService.GetUserInfoDto(user);
+
+            if(user.getWrongnum().equals("3")){
+
+            }else{
+                authService.TB_XUSERS_LOGFAIL(user);
+                user = authService.GetUserInfo(user);
+            }
+
+            return user;
 
     }
 }

@@ -26,5 +26,9 @@ public interface AuthDBMapper {
 
     public void TB_XLOGIN_INSERT(UserFormDto PARM);
 
+    public void TB_XUSERS_LOGFAIL(UserFormDto Parm);
+
+    public void TB_XUSERS_LOGSUCC(UserFormDto Parm);
+
 
 }
