@@ -31,4 +31,6 @@ public class AuthService {
     public String TB_XCLIENT_SELECT(UserFormDto parm){
         return authMapper.TB_XCLIENT_SELECT(parm);
     }
+
+    public void TB_XLOGIN_INSERT(UserFormDto parm) { authMapper.TB_XLOGIN_INSERT(parm);}
 }

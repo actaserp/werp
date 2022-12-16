@@ -86,5 +86,6 @@ public class UserFormDto {
     private String email;
     /** 암호화 pw */
     private String encodepw;
+    private String ipaddr;
 
 }

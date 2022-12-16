@@ -94,6 +94,9 @@
         }
       }
 
+        
+
+
       var btn_obj = document.getElementById('login_btn');
       btn_obj.addEventListener("click",function(){
         
@@ -119,7 +122,8 @@
                 var ls_dbnm = userFormDto["dbnm"]
                 var ls_flag = userFormDto["flag"]
                 //var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
-                var ls_url = 'userid=' + ls_userid 
+                var ls_url = 'userid=' + ls_userid
+                insertLogin();
                 window.location.href = '/auth/emmsdashboard?' + ls_url;
                   // if(data == "success"){
                   //     alert("등록 되었습니다.");
@@ -133,13 +137,36 @@
 
               },error:function(e){
                   console.log('error',e);
-                  alert("아이디와 비밀번호를 확인하세요.")
+                  alert("아이디와 비밀번호를 확인하세요. 틀린 횟수 : "+n+"회 입니다."<br>"3회 틀릴 시 차단됩니다.")
               }
           }).done(function(fragment){
 
           })
 
      })
+
+     function insertLogin(){
+
+      var ls_loginid   = document.getElementById('loginid').value;
+      var ls_logpass   = document.getElementById('logpass').value;
+      var ls_ipaddr    = document.getElementById('ipaddr').value;
+
+      $.ajax({
+        url: '/authcrud/loginlog',
+        type:"POST",
+        data: {
+              "loginid" : ls_loginid ,
+              "logpass" : ls_logpass,
+              "ipaddr"  : ls_ipaddr,
+        },
+        async:false,
+        success:function(){
+          console.log('success');
+        }
+      });
+     }
+
+
 
 </script>
 </main>

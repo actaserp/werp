@@ -56,7 +56,7 @@
     </select>
 
     <insert id="TB_XLOGIN_INSERT" parameterType="com.actas.ems.DTO.UserFormDto">
-        INSERT INTO TB_XUSERS
+        INSERT INTO TB_XLOGIN
         (userid, ipaddr, onoffdt, cltnm, usernm, ondate, onoffdv)
         VALUES
         (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{usernm}, 	 CONVERT(CHAR(8), getDate(), 8), 'Y')

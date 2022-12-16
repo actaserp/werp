@@ -24,5 +24,7 @@ public interface AuthDBMapper {
 
     public String TB_XCLIENT_SELECT(UserFormDto PARM);
 
+    public void TB_XLOGIN_INSERT(UserFormDto PARM);
+
 
 }

@@ -155,4 +155,17 @@ public class AuthCrudController {
             return ls_cltnm;
     }
 
+    @RequestMapping(value = "/loginlog", method = RequestMethod.POST)
+    public void Login_Log(@RequestParam("loginid") String loginid
+            , @RequestParam("logpass") String logpass
+            , @RequestParam("ipaddr") String ipaddr)throws Exception {
+
+            UserFormDto user = new UserFormDto();
+            UserFormDto userall = new UserFormDto();
+            user.setUserid(loginid);
+
+            userall = authService.GetUserInfo(user);
+            authService.TB_XLOGIN_INSERT(userall);
+
+    }
 }
