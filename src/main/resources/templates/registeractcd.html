@@ -20,7 +20,7 @@
         <div class="box_con">
             <div class="logo">
                 <a th:href="@{/}">
-                <img src="/images/logo.png" alt="">
+                    <img src="/images/logo.png" alt="">
                 </a>
             </div>
             <div class="form">
@@ -43,19 +43,18 @@
                             <button type="button" id="saupnum_btn"  name="saupnum_btn">
                                 <span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span>
                                 <span class="d-none d-sm-inline-block ms-1">확인</span>
-                            </button><input type="hidden" value="N" id="squpnum_chk">
+
+                            </button><input type="hidden" value="N" id="squpnum_chk"><input type="hidden" id="dbnm" name="dbnm">
                         </div>
                         <!--
                         <div class="alert">사업자번호가 틀립니다.</div>-->
                         <div class="input_wrap flex">
                             <p>현장코드</p>
                             <input type="text" autocomplete="on" id="actcd" name="actcd" th:field="*{actcd}">
-                            <div th:if="${#fields.hasErrors('actcd')}"  th:errors="*{actcd}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
-                                <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
-                                <p class="mb-0 flex-1">Incorrent data</p>
-                            </div>
-                            <button type="button">확인</button>
+
+                            <button type="button" id="actcd_chk" name="actcd_chk">확인</button><input type="hidden" value="N" id="actcdnum_chk">
                         </div>
+                        <div id="inwarnning_div2" style="margin-left: 135px"></div>
                         <div class="input_wrap flex">
                             <p>아이디</p>
                             <input type="text" autocomplete="on" id="userid" name="userid" th:field="*{userid}" placeholder="아이디는 10자리까지입니다." maxlength="10">
@@ -139,8 +138,8 @@
                     alert("등록 되었습니다.");
 
 
-                   // const select = document.querySelector(".select");
-                   // const currentValue = select.option["CC"].value;
+                    // const select = document.querySelector(".select");
+                    // const currentValue = select.option["CC"].value;
                     //localStorage.setItem('key', 'CC');
 
 
@@ -259,6 +258,69 @@
                 return false
             }
         }).done(function(fragment){})
+    })
+
+
+
+
+
+    document.getElementById("saupnum_btn").addEventListener("click", function () {
+
+    var ls_saupnum = document.getElementById('saupnum').value.replaceAll("-","");
+    console.log(ls_saupnum + "doublecheck");
+    $.ajax({
+        url: '/authcrud/dbnm',
+        type: "POST",
+        data: {"saupnum" : ls_saupnum},
+        success: function (data) {
+            console.log("su double-->"+data);
+            if(data == "error"){
+                console.log("null")
+                let empty = null;
+                $('input[name=dbnm]').attr('value', empty);
+            }else{
+                console.log(data + "success1");
+                let exist = data
+                $('input[name=dbnm]').attr('value', exist);
+            }
+        },error:function (e) {
+            console.log("er1-->");
+            return false
+        }
+    }).done(function (fragment) {
+
+    })
+    })
+
+    document.getElementById('actcd_chk').addEventListener("click", function () {
+        const warnning_div = document.getElementById('inwarnning_div2');
+        var ls_actcd = document.getElementById('actcd').value.replaceAll("-","");
+        var dbnm = document.getElementById('dbnm').value
+        console.log(ls_actcd + "tester");
+        console.log(dbnm + "test2");
+        $.ajax({
+            url: '/authcrud/searchnum_actcd',
+            type: "POST",
+            data: { "actcd" : ls_actcd,
+                   "dbnm"  : dbnm  },
+            success:function (data) {
+                console.log("su --> actcdchk"+data);
+                if(data == "error"){
+                    ls_text = "<div style='color:red'><span class='badge rounded-pill' style='background-color: #d3e3e7'>올바르지 않은 현장코드입니다.</span></div>"
+                }else{
+                    ls_text =  "<div style='color:blue'><span class='badge rounded-pill' style='background-color: #d3e3e7'>" + data + "</span></div>";
+                }
+                warnning_div.innerHTML = ls_text;
+            },error:function (e) {
+                console.log("er--> actcdchk");
+                ls_text = "<div style='color:red'><span class='badge rounded-pill' style='background-color: #d3e3e7'>정확한 사업자번호를 입력하세요</span></div>";
+                warnning_div.innerHTML = ls_text;
+                return false;
+            }
+        }).done(function () {
+
+        })
+
     })
 
 </script>
