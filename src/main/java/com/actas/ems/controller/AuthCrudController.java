@@ -43,7 +43,7 @@ public class AuthCrudController {
         try {
             userformDto.setCustcd("actas");
             userformDto.setSpjangcd("ZZ");
-            userformDto.setUseyn("1");
+            userformDto.setUseyn("Y");
             userformDto.setRnum("0");
             userformDto.setFlag(flag);
             userformDto.setSaupnum(saupnum);
