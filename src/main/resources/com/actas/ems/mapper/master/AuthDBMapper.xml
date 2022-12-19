@@ -73,4 +73,8 @@
         wrongnum = 0
         WHERE userid = #{userid}
     </update>
+
+    <select id="TB_XUSER_DBNM" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
+        select top(1) dbnm from tb_xusers where saupnum=#{saupnum}
+    </select>
 </mapper>

@@ -3,6 +3,8 @@ package com.actas.ems.controller;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class AuthCrudController {
 
 
 
-
+    protected Log log =  LogFactory.getLog(this.getClass());
 
 
 
@@ -202,5 +204,42 @@ public class AuthCrudController {
 
             return user;
 
+    }
+
+    @RequestMapping(value = "/searchnum_actcd", method = RequestMethod.POST)
+    public Object TB_XCLIENT_ACTCD_SELECT(@RequestParam("actcd") String actcd, @RequestParam("dbnm") String dbnm,
+                                          Model model, HttpServletRequest request)throws Exception{
+        userformDto.setActcd(actcd);
+        userformDto.setDbnm(dbnm);
+
+
+
+
+        authService.TB_XCLIENT_ACTCD_SELECT(userformDto);
+
+
+
+
+        String ls_actcd_nm = authService.TB_XCLIENT_ACTCD_SELECT(userformDto);
+
+        if(ls_actcd_nm == null || ls_actcd_nm.equals("")){
+            ls_actcd_nm = "error";
+            log.info("에로사항발생");
+        }
+        log.info("success");
+        return ls_actcd_nm;
+    }
+
+    @RequestMapping(value = "/dbnm", method = RequestMethod.POST)
+    public Object AppW018_index(@RequestParam("saupnum") String saupnum, Model model, HttpServletRequest request){
+
+        userformDto.setSaupnum(saupnum);
+
+        authService.TB_XUSER_DBNM(userformDto);
+        String ls_dbnm = authService.TB_XUSER_DBNM(userformDto);
+        if(ls_dbnm == null || ls_dbnm.equals("")){
+            ls_dbnm = "error";
+        }
+        return ls_dbnm;
     }
 }
