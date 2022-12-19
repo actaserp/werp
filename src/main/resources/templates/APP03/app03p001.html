@@ -252,10 +252,19 @@
                                         </div>   
                                     </div>
                                     <div class="tab-pane fade" id="step02">
-                                      <p>현장별고장내용</p>
+                                        <div class="container-fluid">
+                                            <div id="chartTabB"></div>
+                                          </div>
                                     </div>
                                     <div class="tab-pane fade" id="step03">
-                                      <p>호기별고장내용</p>
+                                        <div class="container-fluid">
+                                            <select id="typeMenu">
+                                              <option value="0" selected="selected">사분면(Squarified)</option>
+                                              <option value="1">수평(Horizontal)</option>
+                                              <option value="2">수직(Vertical)</option>
+                                            </select>
+                                            <div id="chartTabC"></div>
+                                        </div>
                                     </div>
                                   </div>
                             </div>
@@ -370,8 +379,18 @@
          var view_contnmpage;
          var wtab01Grid;
          var wactnmGrid;
-         var wcontnmGrid  
+         var wcontnmGrid;
+         var typeMenu;  
+         var treemap;
+         let barchart;
+         let ani;
+        var wseries_data = [0]; 
+
          window.onload = function() {  
+            //tab02 차트그리기
+            // Tab02Chartinit()
+            //tab03 차트그리기
+            Tab03Chartinit()
             //tab01검색 popup list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                 pageSize: 12
@@ -532,9 +551,57 @@
                     cnt++;
                 }    
                 return wcontnm_data;                                         
-            }              
+            }  
 
-         } 
+
+ 
+            // TAB02 차트 init            
+            function Tab02Chartinit() {         
+                barchart = new wijmo.chart.FlexChart('#chartTabB', {
+                    header: '현장별고장내용',
+                    legend: {
+                        position: wijmo.chart.Position.Bottom
+                    },
+                    bindingX: 'contnm', 
+                    series: wseries_data,
+                    selectionMode: wijmo.chart.SelectionMode.Point,
+                    itemsSource: [0],
+                    palette: ['#0288D1',
+                        '#FFC107',
+                        '#FF7043',
+                        "#EF5350"]
+                });
+                //
+                ani = new wijmo.chart.animation.ChartAnimation(barchart);
+            }
+
+
+            // TAB03 차트 init            
+            function Tab03Chartinit() { 
+                // 차트 타입 변경
+                typeMenu = new wijmo.input.Menu('#typeMenu', {
+                    itemClicked: function (s, e) {
+                    treemap.type = parseInt(s.selectedValue);
+                    updateMenuHeader(s, 'Type');
+                    }
+                });
+                updateMenuHeader(typeMenu, 'Type');
+                //
+                treemap = new wijmo.chart.hierarchical.TreeMap('#chartTabC', {
+                    binding: 'sales',
+                    bindingName: ['category', 'subCategory'],
+                    itemsSource: [0],
+                    dataLabel: {
+                    position: 'Center',
+                    content: '{name}'
+                    },
+                    type: wijmo.chart.hierarchical.TreeMapType.Squarified
+                });
+                treemap.palette = getRandomPalette();
+            }
+                //            
+
+        } 
 
          
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -613,9 +680,11 @@
 
                     })  
                     break;
-                case 'B':
+                case 'B': 
+                    barChartInit01(arg1, arg2, arg3, arg4, arg5)
                     break;
                 case 'C':
+                    barChartInit02(arg1, arg2, arg3, arg4, arg5)
                     break;                
                 default:    
                     break;                
@@ -645,7 +714,7 @@
                 cnt++;
             }   
             // console.log("wtab01_data",wactnm_data) +
-            console.log(wtab01_data.length);
+            // console.log(wtab01_data.length);
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
@@ -707,8 +776,7 @@
             let lsConflag = document.getElementById('conflag').value;  
             if(searchText == null || searchText.length == 0 || searchText == ""){
                 searchText = "%";
-            }
-            // console.log('ls_cltcd-->' + ls_cltcd);
+            }            
             $.ajax({
                 url: '/pop01/wactnm',  
                 type:"POST",
@@ -856,7 +924,220 @@
                 $("#wcontnmmodal_btn").trigger("click");
             }
         
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    const barChartInit01 = (arg1, arg2, arg3, arg4, arg5) => { 
+        
+        var tab02_data = getDataTabB(arg2, arg3, arg4, arg5);
+        // // console.log(tab02_data);
+        // // console.log(wseries_data);
+        // barchart.series =  wseries_data;
+        // barchart.itemsSource =  tab02_data;
+        barchart = new wijmo.chart.FlexChart('#chartTabB', {
+            header: '현장별고장내용',
+            legend: {
+                position: wijmo.chart.Position.Bottom
+            },
+            bindingX: 'contnm', 
+            series: wseries_data,
+            selectionMode: wijmo.chart.SelectionMode.Point,
+            itemsSource: tab02_data,
+            palette: ['#0288D1',
+                '#FFC107',
+                '#FF7043',
+                "#EF5350"]
+        });
+        
+        ani = new wijmo.chart.animation.ChartAnimation(barchart);
+    }
+
+    function getDataTabB(arg2, arg3, arg4, arg5) {  
+        if(arg4 == null || arg4.length == 0 || arg4 == "" || arg4 == "%"){ 
+            alert("현장을 선택하세요")
+            return 
+        }  
+        var wtab02_data = [];
+        $.ajax({
+            url: '/app03/p001tab02',  
+            type:"POST",
+            data: { 
+                "frdate"      : arg2,  
+                "todate"      : arg3 ,  
+                "actcdz"      : arg4 ,  
+                "actcontcdz"  : arg5  
+            }, 
+            async:false,
+            success:function(data){  
+                var wtab02Dto  = data;
+                var cnt = 1;
+                var ls_tmpchk;
+                for (var i = 0; i < wtab02Dto.length; i++) {
+                    let yyyymm = wtab02Dto[i]["recedate"]; 
+                    wtab02_data.push({
+                        id: i, 
+                        index: cnt, 
+                        contnm: wtab02Dto[i]["contnm"],
+                        [yyyymm]: wtab02Dto[i]["cnt"],      
+                        recedate: wtab02Dto[i]["recedate"],   
+                                                        
+                    }); 
+                    if (ls_tmpchk !== yyyymm){ 
+                        wseries_data.push({
+                            binding: wtab02Dto[i]["recedate"], 
+                            name: wtab02Dto[i]["recedate"]                                       
+                        }); 
+                    }
+                    ls_tmpchk = yyyymm;
+                    cnt++;
+                }     
+                return wtab02_data;    
+            },error:function(e){
+                console.log("error");
+                // alert(data.code);
+                // alert(data.message);
+            }
+                
+        }).done(function(fragment){           
+
+        }) 
+
+        // wtab02_data ='[' + wtab02_data + ']';
+        var ls_arr = []
+        ls_arr = wtab02_data
+        // console.log(ls_arr);
+        // console.log(wseries_data);
+        return ls_arr;        
+        // return [
+        //     { country: 'United States', '2014': 17348075, '2015': 18036650, '2016': 18624450 },
+        //     { country: 'China', '2014': 10356508, '2015': 11181556, '2016': 11232110 },
+        //     { country: 'Japan', '2014': 4602367, '2015': 4124211, '2016': 4936540 },
+        //     { country: 'Germany', '2014': 3874437, '2015': 3365293, '2016': 3479230 },
+        //     { country: 'United Kingdom', '2014': 2950039, '2015': 2858482, '2016': 2629190 },
+        //     { country: 'France', '2014': 2833687, '2015': 2420163, '2016': 2466470 },
+        //     { country: 'India', '2014': 2051228, '2015': 2073002, '2016': 2263790 },
+        //     { country: 'Italy', '2014': 2147744, '2015': 1815759, '2016': 1850740 }
+        // ];
+    };  
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+    // 데이터
+    var categories = [];
+    var subCategories = [];
+    var subvalues = [] 
+    function barChartInit02(arg1, arg2, arg3, arg4, arg5)  { 
+        treemap.itemsSource = getDataTabC(arg2, arg3, arg4, arg5) 
+        treemap.palette = getRandomPalette();
+    }
+
+    function getRandomPalette() {
+        let palettes = Object.getOwnPropertyNames(wijmo.chart.Palettes)
+        .filter(prop => typeof wijmo.chart.Palettes[prop] === "object" && prop !== 'prototype');
+        let rand = Math.floor(Math.random() * palettes.length);
+        //
+        return wijmo.chart.Palettes[palettes[rand]];
+    }
+    // 메뉴 헤더와 현재 값 보여주기
+    function updateMenuHeader(menu, header) {
+        menu.header = header
+            ? header + ': <b>' + menu.text + '</b>'
+        : menu.text;
+    }
+    
+
+    function getDataTabC(arg2, arg3, arg4, arg5) {  
+        var ls_subcat = new Array();
+        var ls_getvalue = new Array();
+        if(arg4 == null || arg4.length == 0 || arg4 == "" || arg4 == "%"){ 
+            alert("현장을 선택하세요")
+            return 
+        }  
+        var wtab02_data = [];
+        $.ajax({
+            url: '/app03/p001tab03',  
+            type:"POST",
+            data: { 
+                "frdate"      : arg2,  
+                "todate"      : arg3 ,  
+                "actcdz"      : arg4 ,  
+                "actcontcdz"  : arg5  
+            }, 
+            async:false,
+            success:function(data){   
+                var wtab03Dto  = data;
+                categories = [];
+                ls_subcat = [];
+                ls_getvalue = [];
+                var ls_tmpchk; 
+                for (var i = 0; i < wtab03Dto.length; i++) { 
+                    let ls_equpnm = wtab03Dto[i]["equpnm"];  
+                    if (ls_tmpchk !== ls_equpnm){                      
+                        const ls_cellarr = [];
+                        var ls_valuearr = [];
+    
+                        for (var h = 0; h < wtab03Dto.length; h++) { 
+                            if(ls_equpnm == wtab03Dto[h]["equpnm"]  ){                            
+                                ls_cellarr.push(wtab03Dto[h]["contnm"]);
+                                ls_valuearr.push(wtab03Dto[h]["cnt"]);  
+                            }
+                        }
+                        
+                        categories.push(ls_equpnm);
+                        ls_subcat.push(ls_cellarr); 
+                        ls_getvalue.push(ls_valuearr);
+                        
+                    }
+                    ls_tmpchk = ls_equpnm;
+                }   
+                // console.log(categories)  ;
+                // console.log(ls_subcat)  ; 
+                // console.log(ls_getvalue)  ;
+            },error:function(e){
+                console.log("error");
+                // alert(data.code);
+                // alert(data.message);
+            }
+                
+        }).done(function(fragment){           
+
+        }) 
+    
+        subCategories = ls_subcat;
+        subvalues     = ls_getvalue;
+        var data = [];
+        categories.forEach(function (category, index) {
+            subCategories[index].forEach(function (subCategory) {
+            data.push({
+                category: category,
+                subCategory: subCategory,
+                sales: subvalues
+            });
+            });
+        });  
+        // console.log(ls_arr);
+        // console.log(wseries_data);
+        return data;     
+    };  
+
+
+    // // 데이터
+    // var categories = ['Beverages', 'Condiments', 'Confections', 'Dairy Products', 'Grains/Cereals', 'Meat/Poultry', 'Produce', 'Seafood'];
+    // var subCategories = [
+    //   ['Soft drinks', 'Coffees', 'Teas', 'Beers', 'Ales'],
+    //   ['Sweet and Savory sauces', 'Relishes', 'Spreads', 'Seasonings'],
+    //   ['Desserts', 'Candies', 'Sweet breads'],
+    //   ['Cheeses'],
+    //   ['Breads', 'Crackers', 'Pasta', 'Cereal'],
+    //   ['Prepared meats'],
+    //   ['Dried fruit', 'Bean curd'],
+    //   ['Seaweed', 'Fish']
+    // ];
+    // var subvalues = []
+    // function getSales() {
+    //   return Math.round(Math.random() * 100);
+    // }
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
         $(document).ready(function() { 

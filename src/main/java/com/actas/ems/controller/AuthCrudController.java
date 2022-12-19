@@ -72,7 +72,7 @@ public class AuthCrudController {
                 case "100534":      //한국엘레텍
                     userformDto.setDbnm("ELV_LRT");
                     break;
-                case "100542":      //한국엘레텍
+                case "100542":      //한양엘리베이터
                     userformDto.setDbnm("hanyangs");
                     break;
                 default:

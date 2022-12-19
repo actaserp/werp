@@ -19,6 +19,10 @@ public class App03ElvlrtService {
 
     /** 고장내용별현황 / 기간별 고장내용 */
     public List<App03ElvlrtDto> GetApp03List001(PopupDto parm){return app03ElvMapper.GetApp03List001(parm);}
+    /** 고장내용별현황 / 현장별 고장내용 */
+    public List<App03ElvlrtDto> GetApp03List002(PopupDto parm){return app03ElvMapper.GetApp03List002(parm);}
+    /** 고장내용별현황 / 호기별 고장내용 */
+    public List<App03ElvlrtDto> GetApp03List003(PopupDto parm){return app03ElvMapper.GetApp03List003(parm);}
 
 
 

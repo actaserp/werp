@@ -626,7 +626,7 @@
         var view_Mmanualpage = new wijmo.collections.CollectionView(getData_wlist(), {
             pageSize: 10
         });  
-        // 작업설비 페이지 이동
+        // 페이지 이동
         new wijmo.input.CollectionViewNavigator('#thePager01', {
             byPage: true,
             headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
@@ -893,7 +893,7 @@
             var $inputdate = $('#actminputdatez');
             var $endDate = $('#endDate');
             $inputdate.datetimepicker({
-                timepicker: true,
+                timepicker: false,
                 lang: 'ko',
                 format: 'Y-m-d',
                 scrollMonth: false,
@@ -906,7 +906,7 @@
             });
 
             $endDate.datetimepicker({
-                timepicker: true,
+                timepicker: false,
                 lang: 'ko',
                 format: 'Y-m-d H:i',
                 scrollMonth: false,
