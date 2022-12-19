@@ -56,7 +56,7 @@
                                 </div>
                                 <ul>
                                     <li><a th:href="@{/app04/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
-                                    <li><a th:href="@{/app04/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품자료실</a></li>
+                                    <li><a th:href="@{/app04/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품메뉴얼</a></li>
                                     <li><a th:href="@{/app04/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기타자료실</a></li>
                                 </ul>
                             </div>
@@ -618,7 +618,7 @@
         }
 
         function listUp(){ 
-            window.location.href = '/app04/index01';          
+            window.location.href = '/app04/index01';
             }
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     window.onload = function() { 
@@ -921,7 +921,19 @@
 
         }
 
+
+
+         //여기까지 index01 도면자료실-->
+
     </script>
+
+
+
+
+
+
+
+
 
     <!------footer ------>
     <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
