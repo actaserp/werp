@@ -23,6 +23,13 @@ public interface AuthDBMapper {
     public String TB_XUSER_PHDUPCHK(UserFormDto PARM);
 
     public String TB_XCLIENT_SELECT(UserFormDto PARM);
+    public String TB_XUSER_DBNM(UserFormDto parm);
+
+    public void TB_XLOGIN_INSERT(UserFormDto PARM);
+
+    public void TB_XUSERS_LOGFAIL(UserFormDto Parm);
+
+    public void TB_XUSERS_LOGSUCC(UserFormDto Parm);
 
 
 }

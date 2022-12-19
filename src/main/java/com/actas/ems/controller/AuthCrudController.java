@@ -3,6 +3,8 @@ package com.actas.ems.controller;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class AuthCrudController {
 
 
 
-
+    protected Log log =  LogFactory.getLog(this.getClass());
 
 
 
@@ -43,7 +45,7 @@ public class AuthCrudController {
         try {
             userformDto.setCustcd("actas");
             userformDto.setSpjangcd("ZZ");
-            userformDto.setUseyn("1");
+            userformDto.setUseyn("Y");
             userformDto.setRnum("0");
             userformDto.setFlag(flag);
             userformDto.setSaupnum(saupnum);
@@ -98,6 +100,12 @@ public class AuthCrudController {
         userformDto.setPasswd1(logpass);
 
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
+
+        if(userReturnDto.getWrongnum().equals("3")){
+            return userReturnDto;
+        }
+
+        authService.TB_XUSERS_LOGSUCC(userReturnDto);
 
         String ls_dbnm = userReturnDto.getDbnm();
         model.addAttribute("UserInfo", userReturnDto );
@@ -155,4 +163,83 @@ public class AuthCrudController {
             return ls_cltnm;
     }
 
+    @RequestMapping(value = "/loginlog", method = RequestMethod.POST)
+    public void Login_Log(@RequestParam("loginid") String loginid
+            , @RequestParam("logpass") String logpass
+            , @RequestParam("ipaddr") String ipaddr)throws Exception {
+            System.out.printf("--loginlog 진입");
+
+            UserFormDto user = new UserFormDto();
+
+            user.setUserid(loginid);
+            user.setPasswd1(logpass);
+            System.out.printf("--User 값 받아오기");
+            System.out.printf(user.getUsername() + user.getUserid());
+
+            user = authService.GetUserInfo(user);
+            user.setIpaddr(ipaddr);
+
+            authService.TB_XLOGIN_INSERT(user);
+
+    }
+
+    @RequestMapping(value = "/wrongpasswd", method = RequestMethod.POST)
+    public Object Login_fail(@RequestParam("loginid") String loginid
+                             , @RequestParam("logpass") String logpass)throws Exception {
+            System.out.printf("--loginfail 진입");
+
+            UserFormDto user = new UserFormDto();
+
+            user.setUserid(loginid);
+            user.setPasswd1(logpass);
+
+            user = authService.GetUserInfoDto(user);
+
+            if(user.getWrongnum().equals("3")){
+
+            }else{
+                authService.TB_XUSERS_LOGFAIL(user);
+                user = authService.GetUserInfo(user);
+            }
+
+            return user;
+
+    }
+
+    @RequestMapping(value = "/searchnum_actcd", method = RequestMethod.POST)
+    public Object TB_XCLIENT_ACTCD_SELECT(@RequestParam("actcd") String actcd, @RequestParam("dbnm") String dbnm,
+                                          Model model, HttpServletRequest request)throws Exception{
+        userformDto.setActcd(actcd);
+        userformDto.setDbnm(dbnm);
+
+
+
+
+        authService.TB_XCLIENT_ACTCD_SELECT(userformDto);
+
+
+
+
+        String ls_actcd_nm = authService.TB_XCLIENT_ACTCD_SELECT(userformDto);
+
+        if(ls_actcd_nm == null || ls_actcd_nm.equals("")){
+            ls_actcd_nm = "error";
+            log.info("에로사항발생");
+        }
+        log.info("success");
+        return ls_actcd_nm;
+    }
+
+    @RequestMapping(value = "/dbnm", method = RequestMethod.POST)
+    public Object AppW018_index(@RequestParam("saupnum") String saupnum, Model model, HttpServletRequest request){
+
+        userformDto.setSaupnum(saupnum);
+
+        authService.TB_XUSER_DBNM(userformDto);
+        String ls_dbnm = authService.TB_XUSER_DBNM(userformDto);
+        if(ls_dbnm == null || ls_dbnm.equals("")){
+            ls_dbnm = "error";
+        }
+        return ls_dbnm;
+    }
 }

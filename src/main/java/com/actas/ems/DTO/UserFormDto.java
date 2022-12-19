@@ -86,5 +86,9 @@ public class UserFormDto {
     private String email;
     /** 암호화 pw */
     private String encodepw;
+    /** ip주소 */
+    private String ipaddr;
+    /** 로그인 실패 횟수 */
+    private String wrongnum;
 
 }

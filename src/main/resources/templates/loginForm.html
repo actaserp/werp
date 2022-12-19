@@ -80,6 +80,7 @@
 </div>
 
 <script>
+
       window.onload = function() {  
         getIpClient();
       }
@@ -93,6 +94,9 @@
           console.error(error);
         }
       }
+
+        
+
 
       var btn_obj = document.getElementById('login_btn');
       btn_obj.addEventListener("click",function(){
@@ -119,7 +123,15 @@
                 var ls_dbnm = userFormDto["dbnm"]
                 var ls_flag = userFormDto["flag"]
                 //var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
-                var ls_url = 'userid=' + ls_userid 
+                var ls_url = 'userid=' + ls_userid
+                var ls_useyn = userFormDto["useyn"]
+                var ls_wrongnum = userFormDto["wrongnum"]
+
+                if(ls_wrongnum == 3 || ls_useyn == "N"){
+                  wrongPasswd();
+                }else{
+                  insertLogin();
+
                 window.location.href = '/auth/emmsdashboard?' + ls_url;
                   // if(data == "success"){
                   //     alert("등록 되었습니다.");
@@ -129,17 +141,66 @@
                   //     var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";
                   // }
                   // statusdis_div.innerHTML  = ls_text;
-
+                }
 
               },error:function(e){
-                  console.log('error',e);
-                  alert("아이디와 비밀번호를 확인하세요.")
+                  wrongPasswd();
               }
           }).done(function(fragment){
 
           })
 
      })
+
+     function insertLogin(){
+      console.log("insertlogin start");
+      var ls_loginid   = document.getElementById('loginid').value;
+      var ls_logpass   = document.getElementById('logpass').value;
+      var ls_ipaddr    = document.getElementById('ipaddr').value;
+      console.log(ls_loginid, ls_logpass, ls_ipaddr);
+
+      $.ajax({
+        url: '/authcrud/loginlog',
+        type:"POST",
+        data: {
+              "loginid" : ls_loginid,
+              "logpass" : ls_logpass,
+              "ipaddr"  : ls_ipaddr
+        },
+        async:false,
+        success:function(){
+          console.log('success');
+        }
+      });
+     }
+
+     function wrongPasswd(){
+        console.log("wrongPasswd start");
+        var ls_loginid   = document.getElementById('loginid').value;
+        var ls_logpass   = document.getElementById('logpass').value;
+
+        $.ajax({
+        url: '/authcrud/wrongpasswd',
+        type:"POST",
+        data: {
+              "loginid" : ls_loginid,
+              "logpass" : ls_logpass
+        },
+        async:false,
+        success:function(userFormDto){
+          var ListDto = userFormDto;
+          var ls_wrongnum = userFormDto["wrongnum"];
+          var ls_useyn = userFormDto["useyn"];
+          if(ls_wrongnum < 3 && ls_useyn == "Y"){
+            alert("비밀번호를 "+ls_wrongnum+"회 틀렸습니다. 로그인 3회 실패 시 사용 중지됩니다.");
+          }else{
+            alert("사용 중지된 계정입니다. 관리자에게 문의하세요.");
+          }
+        }
+      });
+     }
+
+
 
 </script>
 </main>
