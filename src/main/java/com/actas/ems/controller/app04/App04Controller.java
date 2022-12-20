@@ -120,6 +120,46 @@ public class App04Controller {
 
         return "app04/app04list_index02";
     }
+    @GetMapping(value="/index03")
+    public String App04Form3(Model model, HttpServletRequest request) throws  Exception{
 
+        Date nowData = new Date();
+        SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
+        String indate = endDate.format(nowData).toString();
+        app04Dto.setYyyymm(indate.substring(0,6));
+        app04Dto.setMinputdate(indate);
+//        if(bflag == "0"){
+//            app04Dto.setMsubject(search);
+//        }else{
+//            app04Dto.setMemo(search);
+//        }
+        try {
+//            app04ListDto = service.GetMManulList(app04Dto);
+//            log.debug("Exception =====>" + app04ListDto );
+            model.addAttribute("app04Dto",service.GetEManulList(app04Dto));
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.debug("Exception =====>" + ex.toString() );
+        }
+        try {
+            com750Dto = service.GetComm750List();
+            model.addAttribute("com750Dto",com750Dto);
+
+        } catch (Exception ex) {
+            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        try {
+
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            model.addAttribute("userformDto",userformDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "app04/app04list_index03";
+    }
 
 }
