@@ -208,7 +208,7 @@
                 <div class="modal-content border-0">
                     <div class="modal-body p-0" >
                         <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-                            <h4 class="mb-1" id="staticBackdropLabel">도면등록</h4>
+                            <h4 class="mb-1" id="staticBackdropLabel">부품메뉴얼</h4>
                         </div>
                         <div class="section ">
 
@@ -221,6 +221,7 @@
                                         <div class="input_wrap">
                                             <input type="text" name="actmsubjectz" id="actmsubjectz" >
                                             <input type="hidden" name="actmseqz" id="actmseqz" >
+                                            <input type="hidden" name="actmsetflagz" id="actmsetflagz" value="DD">
                                         </div>
                                         <div class="title" >
                                             작성일자
@@ -247,6 +248,7 @@
                                                 </td>
                                                 <th style="width: 13%;">회원사공유</th>
                                                 <td style="width: 23%">
+                                                    
                                                     <input type="checkbox" id="actmflagz" value="Y" checked>
                                                     <label for="actmflagz" class="check_style1 no_txt"></label>
                                                 </td>
@@ -457,7 +459,7 @@
             data: {
                 "actidxz"     : arg1 ,
                 "actmseqz"    : arg2 ,
-                "actflagz"    : "MM"
+                "actflagz"    : "DD"
             },
             async:false,
             success:function(data){
@@ -499,9 +501,11 @@
         var ls_actminputdatez   = document.getElementById('actminputdatez').value;
         var ls_actmgroupcdz = document.getElementById('actmgroupcdz').value;
         var ls_actmsubjectz   = document.getElementById('actmsubjectz').value;
-        // var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
+        // var ls_actmfilenamez   = document.getElementById('actdfilenamez').value;
         var ls_actmpernmz   =  document.getElementById('actmpernmz').value;
         var ls_actmemoz   = document.getElementById('actmemoz').value;
+        var ls_actmsetflagz= document.getElementById('actmsetflagz').value;
+
         if(document.getElementById('actmflagz').checked){
             ls_actmflagz = "Y"
         }else{
@@ -541,8 +545,12 @@
             "actmsubjectz"      : ls_actmsubjectz ,
             "actmpernmz"   : ls_actmpernmz   ,
             "actmemoz"   : ls_actmemoz,
-            "actmflagz"   : ls_actmflagz
+            "actmflagz"   : ls_actmflagz,
+            "actmsetflagz"   : ls_actmsetflagz,
         }
+        console.log(inputdata);
+        
+
         // 본문 data formdata 에 추가
         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
 
@@ -593,7 +601,7 @@
             type:"POST",
             data: {
                 "actmseqz"    : ls_actmseqz ,
-                "actflagz"    : "MM"
+                "actflagz"    : "DD"
             },
             async:false,
             success:function(data){
@@ -639,25 +647,26 @@
             alternatingRowStep: 0,
             columns: [
 
-                { binding: 'mseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
+                { binding: 'dseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
                 { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },
-                { binding: 'msubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
+                { binding: 'dsubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
-                        text: '<b>${item.msubject}</b>',
+                        text: '<b>${item.dsubject}</b>',
                         click: (e, ctx) => {
-                            viewPage(ctx.item.mseq, ctx.item.cnam, ctx.item.msubject, ctx.item.mpernm, ctx.item.mfilename, ctx.item.minputdate , ctx.item.mgourpcd , ctx.item.memo, ctx.item.mflag );
+                            viewPage(ctx.item.dseq, ctx.item.cnam, ctx.item.dsubject, ctx.item.dpernm, ctx.item.dfilename, ctx.item.dinputdate , ctx.item.dgourpcd , ctx.item.dmemo, ctx.item.dflag );
                         }
+                        // viewPage 쿼리 순서 오류 
                     })
                 },
-                { binding: 'mpernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
+                { binding: 'dpernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
                 { binding: 'attcnt', header: '첨부파일건수', width: '*', format: 'n0',  align:"center", isReadOnly: true,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
                         click: (e, ctx) => {
-                            viewFilePage(ctx.item.mseq );
+                            viewFilePage(ctx.item.dseq );
                         }
                     }) } ,
-                { binding: 'minputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
+                { binding: 'dinputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
 
             ],
             itemsSource: view_Mmanualpage
@@ -683,15 +692,15 @@
                 data01.push({
                     id: i,
                     index: cnt,
-                    mseq:     mapp04Dto[i]["mseq"],
+                    dseq:     mapp04Dto[i]["dseq"],
                     cnam:     mapp04Dto[i]["cnam"],
-                    msubject: mapp04Dto[i]["msubject"],
-                    mpernm:   mapp04Dto[i]["mpernm"],
+                    dsubject: mapp04Dto[i]["dsubject"],
+                    dpernm:   mapp04Dto[i]["dpernm"],
                     attcnt : mapp04Dto[i]["attcnt"] ,
-                    minputdate : mapp04Dto[i]["minputdate"] ,
-                    mgourpcd : mapp04Dto[i]["mgourpcd"]     ,
-                    memo : mapp04Dto[i]["memo"]     ,
-                    mflag : mapp04Dto[i]["mflag"]
+                    dinputdate : mapp04Dto[i]["dinputdate"] ,
+                    dgourpcd : mapp04Dto[i]["dgourpcd"]     ,
+                    dmemo : mapp04Dto[i]["dmemo"]     ,
+                    dflag : mapp04Dto[i]["dflag"]
                 });
                 cnt++;
             }
@@ -711,7 +720,7 @@
             type:"POST",
             data: {
                 "actmseqz"     : arg1,
-                "actflagz"     : "MM",
+                "actflagz"     : "DD",
             },
             async:false,
             success:function(data){
@@ -730,7 +739,7 @@
 
                         const fileHtml = `
                                     <div data-name="filelistDiv" class="form-group filebox bs3-primary">                                         
-                                        <a href="/appx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=MM" target="_blank" > ${originalName} 다운로드 </a>                                        
+                                        <a href="/appx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=DD" target="_blank" > ${originalName} 다운로드 </a>
                                     </div>   
                                     `;
                         $('#btnDiv02').before(fileHtml);
@@ -757,7 +766,7 @@
             data: {
                 "actidxz"     : arg1,
                 "actboardz"    : arg2,
-                "actflagz"     : "MM",
+                "actflagz"     : "DD",
             },
             async:false,
             success:function(data){
@@ -785,14 +794,14 @@
         document.getElementById('actmemoz').value= arg8;
         document.getElementById('actmflagz').value= arg9;
 
-        // 첨부파일 리스트 호출
+        // 첨부파일 리스트 호출_첨부파일 tb 1개
         var wfile_data = [];
         $.ajax({
             url: '/app04mod/flist',
             type:"POST",
             data: {
                 "actmseqz"     : arg1,
-                "actflagz"     : "MM",
+                "actflagz"     : "DD",
             },
             async:false,
             success:function(data){
@@ -868,13 +877,14 @@
 
     function getToday(){
         let today = new Date();
-
+        console.log (today);
         let year = today.getFullYear(); // 년도
         let month = today.getMonth() + 1;  // 월
         let date = today.getDate();  // 날짜
         let day = today.getDay();  // 요일
         if(date > 0 && date < 10) {date = "0" + date};
         let ls_today = year + '-' + month + '-' + date
+        
         document.getElementById('actminputdatez').value = ls_today;
     }
 
