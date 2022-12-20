@@ -30,6 +30,18 @@ public class App04ElvlrtDto {
     private String dmemo;
     private String dflag;
 
+
+    //부품 메뉴얼 eto
+
+    private String eseq;
+    private String einputdate;
+    private String egroupcd;
+    private String esubject;
+    private String efilename;
+    private String epernm;
+    private String ememo;
+    private String eflag;
+
     //
     private String setflag;
 

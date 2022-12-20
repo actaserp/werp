@@ -28,6 +28,18 @@
         <!--            and memo like '%' + #{memo} + '%'-->
         <!--        </if>-->
     </select>
+    <select id="GetEManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select eseq, einputdate, egroupcd, esubject, efilename, epernm, ememo, eflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd) as cnam,
+        (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
+        from tb_metcmanual WITH (NOLOCK)
+        Where 1 = 1
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
 
 
 
@@ -53,6 +65,17 @@
         <!--        </if>-->
     </select>
 
+    <select id="GetEManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select '' as eseq, '' as einputdate, '' as egroupcd, '' as esubject, '' as efilename, '' as epernm, '' as ememo, '' as eflag
+        from dual
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
 
 
     <select id="getMManualMaxSeq"  parameterType="string" resultType="java.lang.String">
@@ -61,6 +84,10 @@
 
     <select id="getDManualMaxSeq"  parameterType="string" resultType="java.lang.String">
         select max(dseq) from tb_mdevmanual  where Left(dseq,6) = #{mseq}
+    </select>
+
+    <select id="getEManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(eseq) from tb_metcmanual  where Left(eseq,6) = #{mseq}
     </select>
 
 
@@ -77,6 +104,11 @@
         from tb_mdevmanual where dmseq = #{mseq}
     </select>
 
+    <select id="GetEManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select eseq, einputdate, egroupcd, esubject, ememo, epernm, eflag
+        from tb_metcmanual where emseq = #{mseq}
+    </select>
+
 
 
 
@@ -86,6 +118,10 @@
 
     <insert id="InsertDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
         insert into tb_mdevmanual (custcd, spjangcd, dseq, dinputdate, dgourpcd, dsubject, dmemo, dpernm, dflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
+    </insert>
+
+    <insert id="InsertEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
+        insert into tb_metcmanual (custcd, spjangcd, eseq, einputdate, egroupcd, esubject, ememo, epernm, eflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
     </insert>
 
 
@@ -128,6 +164,24 @@
         where dseq = #{mseq}
     </update>
 
+    <update id="UpdateEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        update tb_metcmanual set
+        egroupcd = #{mgourpcd}
+        <if test="msubject != null ">,</if>
+        <if test="msubject != null">esubject=#{msubject}</if>
+        <if test="mfilename != null ">,</if>
+        <if test="mfilename != null">efilename=#{mfilename}</if>
+        <if test="memo != null ">,</if>
+        <if test="memo != null">ememo=#{memo}</if>
+        <if test="minputdate != null ">,</if>
+        <if test="minputdate != null">einputdate=#{minputdate}</if>
+        <if test="mpernm != null ">,</if>
+        <if test="mpernm != null">epernm=#{mpernm}</if>
+        <if test="mflag != null ">,</if>
+        <if test="mflag != null">eflag=#{mflag}</if>
+        where eseq = #{mseq}
+    </update>
+
 
     <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         delete from tb_mmanual where mseq = #{mseq}
@@ -135,6 +189,10 @@
 
     <delete id="DeleteDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         delete from tb_mdevmanual where dseq = #{mseq}
+    </delete>
+
+    <delete id="DeleteEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        delete from tb_metcmanual where eseq = #{mseq}
     </delete>
 
 
