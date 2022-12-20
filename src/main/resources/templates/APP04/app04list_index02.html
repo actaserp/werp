@@ -243,8 +243,9 @@
                                                     </div>
                                                 </td>
                                                 <th style="width: 10%;">작성자</th>
-                                                <td style="width: 23%">
+                                                <td style="width: 23%">                                                 
                                                     <input type="text" name="actmpernmz" id="actmpernmz" >
+                                                    
                                                 </td>
                                                 <th style="width: 13%;">회원사공유</th>
                                                 <td style="width: 23%">
@@ -447,46 +448,46 @@
     }
 
 
-    // 첨부파일 파일데이타 삭제
-    function deleteFile(elem, arg1, arg2) {
-        if (!confirm("파일을 삭제하시겠습니까?")) {
-            return ;
+  // 첨부파일 파일데이타 삭제
+  function deleteFile(elem, arg1, arg2) {
+    if (!confirm("파일을 삭제하시겠습니까?")) {
+      return ;
+    }
+    //도면 파일 삭제
+    $.ajax({
+      url: '/app04mod/filedel',
+      type:"POST",
+      data: {
+        "actidxz"     : arg1 ,
+        "actfseqz"    : arg2 ,
+        "actflagz"    : "DD"
+      },
+      async:false,
+      success:function(data){
+        if(data == "success"){
+          console.log("deletefile", data);
+          const target = $(elem).parents('div[data-name="fileDiv"]');
+          target.remove();
+        }else{
+          alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
         }
-        //도면 파일 삭제
-        $.ajax({
-            url: '/app04mod/filedel',
-            type:"POST",
-            data: {
-                "actidxz"     : arg1 ,
-                "actmseqz"    : arg2 ,
-                "actflagz"    : "DD"
-            },
-            async:false,
-            success:function(data){
-                if(data == "success"){
-                    console.log("deletefile", data);
-                    const target = $(elem).parents('div[data-name="fileDiv"]');
-                    target.remove();
-                }else{
-                    alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                }
-            },error:function(e){
-                console.log('error',e);
-            }
-        }).done(function(fragment){
+      },error:function(e){
+        console.log('error',e);
+      }
+    }).done(function(fragment){
 
-        })
-    }
+    })
+  }
 
-    function changeFilename(file) {
+  function changeFilename(file) {
 
-        file = $(file);
-        const filename = file[0].files[0].name;
-        const target = file.prevAll('input');
-        target.val(filename);
-    }
+    file = $(file);
+    const filename = file[0].files[0].name;
+    const target = file.prevAll('input');
+    target.val(filename);
+  }
 
-    function save_btn(){
+  function save_btn(){
 
 
         //도면 자료 저장
@@ -663,7 +664,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
                         click: (e, ctx) => {
-                            viewFilePage(ctx.item.dseq );
+                            viewFilePage(ctx.item.dseq);
                         }
                     }) } ,
                 { binding: 'dinputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }

@@ -35,11 +35,5 @@ public interface App04ElvlrtMapper {
     public int DeleteDManul(App04ElvlrtDto perm);
     public String getDManualMaxSeq(String perm);
 
-    public App04ElvlrtDto GetEManulView(String eSeq);
-    public int InsertEManul(App04ElvlrtDto perm);
-    public int UpdateEManul(App04ElvlrtDto perm);
-    public int DeleteEManul(App04ElvlrtDto perm);
-    public String getEManualMaxSeq(String perm);
-
 
 }

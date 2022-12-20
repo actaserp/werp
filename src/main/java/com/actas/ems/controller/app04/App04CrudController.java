@@ -185,9 +185,6 @@ public class App04CrudController {
                 case  "DD" :
                     result = appService.InsertDManu(app04Dto);
                     break;
-                case  "EE" :
-                    result = appService.InsertEManu(app04Dto);
-                    break;
 
                 default:
                     break;
@@ -202,9 +199,6 @@ public class App04CrudController {
                     break;
                 case  "DD" :
                     result = appService.UpdateDManu(app04Dto);
-                    break;
-                case  "EE" :
-                    result = appService.UpdateEManu(app04Dto);
                     break;
 
                 default:
@@ -227,13 +221,7 @@ public class App04CrudController {
                         break;
                     case "DD":
                         uploadPath = Paths.get("C:", "develop", "upload","mdevmanual", getToDate()).toString();
-                        break;
-                    case "EE":
-                        uploadPath = Paths.get("C:", "develop", "upload","metcmanual", getToDate()).toString();
-                        break;
-                    default:
-                        break;
-                        //break 없었음
+                      //break 없었음
                 }
                 /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성
                  *     //'C:.develop.upload.mmanul.20221220'*/
@@ -332,9 +320,6 @@ public class App04CrudController {
                 case "DD":
                     result = appService.DeleteDManu(app04Dto);
                     break;
-                case "EE":
-                    result = appService.DeleteEManu(app04Dto);
-                    break;
 
             }
             if(!result){
@@ -411,11 +396,6 @@ public class App04CrudController {
             case "DD":
                 // 부품자료실
                 ls_mseq = appService.getDManualMaxSeq(yyyymm);
-                break;
-
-            case "EE":
-                // 기타자료실
-                ls_mseq = appService.getEManualMaxSeq(yyyymm);
                 break;
 
             default:
