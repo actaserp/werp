@@ -47,6 +47,15 @@ public class App04UploadServiceImpl implements  App04UploadService {
         return (queryResult > 0);
     }
 
+    public boolean registerDManuDel(App04ElvlrtDto perm){
+        int queryResult = 1;
+        queryResult = attachMapper.deleteAttach(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
+
 
     public boolean MManuFileDel(AttachDTO perm){
         int queryResult = 1;
