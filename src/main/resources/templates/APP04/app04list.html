@@ -221,6 +221,7 @@
                                                     <div class="input_wrap">
                                                         <input type="text" name="actmsubjectz" id="actmsubjectz" >
                                                         <input type="hidden" name="actmseqz" id="actmseqz" > 
+                                                        <input type="hidden" name="actmsetflagz" id="actmsetflagz" > 
                                                     </div>
                                                     <div class="title" >
                                                         작성일자
@@ -502,6 +503,7 @@
             // var ls_actmfilenamez   = document.getElementById('actmfilenamez').value;
             var ls_actmpernmz   =  document.getElementById('actmpernmz').value; 
             var ls_actmemoz   = document.getElementById('actmemoz').value;
+            var ls_actmsetflagz= document.getElementById('actmsetflagz').value;
             if(document.getElementById('actmflagz').checked){
                 ls_actmflagz = "Y"
             }else{
@@ -541,7 +543,9 @@
                     "actmsubjectz"      : ls_actmsubjectz , 
                     "actmpernmz"   : ls_actmpernmz   ,
                     "actmemoz"   : ls_actmemoz, 
-                    "actmflagz"   : ls_actmflagz 
+                    "actmflagz"   : ls_actmflagz, 
+                    "actmsetflagz"   : ls_actmsetflagz, 
+                    
              } 
             // 본문 data formdata 에 추가 
             formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
