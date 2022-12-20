@@ -647,17 +647,17 @@
             alternatingRowStep: 0,
             columns: [
 
-                { binding: 'mseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
+                { binding: 'eseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
                 { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },
-                { binding: 'dsubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
+                { binding: 'esubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.dsubject}</b>',
                         click: (e, ctx) => {
-                            viewPage(ctx.item.dseq, ctx.item.cnam, ctx.item.dsubject, ctx.item.dpernm, ctx.item.dfilename, ctx.item.dinputdate , ctx.item.dgourpcd , ctx.item.dmemo, ctx.item.dflag );
+                            viewPage(ctx.item.eseq, ctx.item.cnam, ctx.item.esubject, ctx.item.epernm, ctx.item.efilename, ctx.item.einputdate , ctx.item.egourpcd , ctx.item.ememo, ctx.item.eflag );
                         }
                     })
                 },
-                { binding: 'dpernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
+                { binding: 'epernm', header: '작성자', width: '*',   align:"center", isReadOnly: true } ,
                 { binding: 'attcnt', header: '첨부파일건수', width: '*', format: 'n0',  align:"center", isReadOnly: true,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
@@ -665,7 +665,7 @@
                             viewFilePage(ctx.item.dseq );
                         }
                     }) } ,
-                { binding: 'dinputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
+                { binding: 'einputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
 
             ],
             itemsSource: view_Mmanualpage
@@ -691,15 +691,15 @@
                 data01.push({
                     id: i,
                     index: cnt,
-                    dseq:     mapp04Dto[i]["dseq"],
-                    cnam:     mapp04Dto[i]["dnam"],
-                    dsubject: mapp04Dto[i]["dsubject"],
-                    dpernm:   mapp04Dto[i]["dpernm"],
+                    dseq:     mapp04Dto[i]["eseq"],
+                    cnam:     mapp04Dto[i]["enam"],
+                    dsubject: mapp04Dto[i]["esubject"],
+                    dpernm:   mapp04Dto[i]["epernm"],
                     attcnt : mapp04Dto[i]["attcnt"] ,
-                    dinputdate : mapp04Dto[i]["dinputdate"] ,
-                    dgourpcd : mapp04Dto[i]["dgourpcd"]     ,
-                    dmemo : mapp04Dto[i]["dmemo"]     ,
-                    dflag : mapp04Dto[i]["dflag"]
+                    dinputdate : mapp04Dto[i]["einputdate"] ,
+                    dgourpcd : mapp04Dto[i]["egourpcd"]     ,
+                    dmemo : mapp04Dto[i]["ememo"]     ,
+                    dflag : mapp04Dto[i]["eflag"]
                 });
                 cnt++;
             }
