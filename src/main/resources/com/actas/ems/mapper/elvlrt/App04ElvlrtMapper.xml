@@ -29,19 +29,6 @@
         <!--        </if>-->
     </select>
 
-    <select id="GetEManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select eseq, einputdate, egourpcd, esubject, efilename, epernm, ememo, eflag, spjangcd,
-        (select Count(*) from tb_mattach where flag='EE' and board_idx=Eseq and delete_yn = 'N') as attcnt
-        from tb_metcmanual WITH (NOLOCK)
-        Where 1 = 1
-        <!--        <if test="msubject != null">-->
-        <!--            and msubject like '%' + #{msubject} + '%'-->
-        <!--        </if>-->
-        <!--        <if test="memo != null">-->
-        <!--            and memo like '%' + #{memo} + '%'-->
-        <!--        </if>-->
-    </select>
-
 
 
     <select id="GetMManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
@@ -66,16 +53,6 @@
         <!--        </if>-->
     </select>
 
-    <select id="GetEManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select '' as eseq, '' as einputdate, '' as egourpcd, '' as esubject, '' as efilename, '' as epernm, '' as ememo, '' as eflag
-        from dual
-        <!--        <if test="msubject != null">-->
-        <!--            and msubject like '%' + #{msubject} + '%'-->
-        <!--        </if>-->
-        <!--        <if test="memo != null">-->
-        <!--            and memo like '%' + #{memo} + '%'-->
-        <!--        </if>-->
-    </select>
 
 
     <select id="getMManualMaxSeq"  parameterType="string" resultType="java.lang.String">
@@ -89,6 +66,7 @@
 
 
 
+
     <select id="GetMManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         select mseq, minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag
         from tb_mmanual where mseq = #{mseq}
@@ -96,8 +74,9 @@
 
     <select id="GetDManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         select dseq, dinputdate, dgourpcd, dsubject, dmemo, dpernm, dflag
-        from tb_mdevmanual where dmseq = #{dmseq}
+        from tb_mdevmanual where dmseq = #{mseq}
     </select>
+
 
 
 
@@ -108,6 +87,7 @@
     <insert id="InsertDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
         insert into tb_mdevmanual (custcd, spjangcd, dseq, dinputdate, dgourpcd, dsubject, dmemo, dpernm, dflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
     </insert>
+
 
 
 
@@ -148,8 +128,6 @@
         where dseq = #{mseq}
     </update>
 
-    <!--    //index02 부품 메뉴얼 쿼리수정-->
-
 
     <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         delete from tb_mmanual where mseq = #{mseq}
@@ -158,9 +136,6 @@
     <delete id="DeleteDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         delete from tb_mdevmanual where dseq = #{mseq}
     </delete>
-
-
-
 
 
     <select id="GetComm750List"  resultType="com.actas.ems.DTO.CommonDto">

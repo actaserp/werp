@@ -11,7 +11,6 @@ public interface MattachElvlrtMapper {
 
     public int InsertAttach(List<AttachDTO> attachList);
 
-
     public int deleteAttach(App04ElvlrtDto perm);
     public int deleteAttachDetail(AttachDTO perm);
     public AttachDTO selectAttachDeteil(AttachDTO perm);
