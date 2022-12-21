@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -46,23 +47,20 @@
     <script  th:src="@{/assets/scripts/script.js}"  ></script>
 
 
-    <!-- falcon-->
-    <!-- ===============================================-->
-<!--    &lt;!&ndash;    Favicons&ndash;&gt;-->
-<!--    &lt;!&ndash; ===============================================&ndash;&gt;-->
-<!--    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/assetsfalcon/img/favicons/apple-touch-icon.png}">-->
-<!--    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/assetsfalcon/img/favicons/favicon-32x32.png}">-->
-<!--    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assetsfalcon/img/favicons/favicon-16x16.png}">-->
-<!--    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assetsfalcon/img/favicons/favicon.ico}">-->
-<!--    <link rel="manifest" th:href="@{/assetsfalcon/img/favicons/manifest.json}">-->
-<!--    <meta name="msapplication-TileImage" th:content="@{/assetsfalcon/img/favicons/mstile-150x150.png}">-->
-<!--    -->
-<!--    팔콘 파비콘누락-->
-<!--    -->
-<!--    -->
-<!--    <meta name="theme-color" content="#ffffff">-->
 
-<!--    <script th:src="@{/vendors/overlayscrollbars/OverlayScrollbars.min.js}"></script>-->
+    <!--  ===============================================-->
+    <!--     falcon-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/assetsfalcon/img/favicons/apple-touch-icon.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/assetsfalcon/img/favicons/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assetsfalcon/img/favicons/favicon-16x16.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assetsfalcon/img/favicons/favicon.ico}">
+    <link rel="manifest" th:href="@{/assetsfalcon/img/favicons/manifest.json}">
+    <meta name="msapplication-TileImage" th:href="@{/assetsfalcon/img/favicons/mstile-150x150.png}">
+    <meta name="theme-color" content="#ffffff">
+
+    <script th:src="@{/vendors/overlayscrollbars/OverlayScrollbars.min.js}"></script>
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
@@ -321,23 +319,37 @@
                     <div class="card mb-3">
                         <div class="card-header bg-light overflow-hidden">
                             <div class="card-body p-0">
-                                <form1 >
-
-                                    <div class="input_wrap">
-                                <textarea class="shadow-none form-control rounded-0 resize-100 px-card p-100 border-y-0 border-200" placeholder="제목을 작성해주세요." rows="1">
+                                <div class="input_wrap">
 
 
-                                        <input type="text" name="actfsubjectz" id="actfsubjectz" >
+                                    <form1 >
+
+
+                                <textarea name="actfsubjectz" id="actfsubjectz" cols="20" style="resize: none;" class="shadow-none form-control rounded-0 resize-100 px-card p-100 border-y-0 border-200" placeholder="제목을 작성해주세요." rows="1"></textarea>
+
                                         <input type="hidden" name="actfseqz" id="actfseqz" >
                                         <input type="hidden" name="actfsetflagz" id="actfsetflagz" value="MF" >
 
+                                        <!-- // 제목 글자수 제한 스크립트 -->
+                                        <div id="test_cnt">(0 / 20)</div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#actfsubjectz').on('keyup', function() {
+                                                    $('#test_cnt').html("("+$(this).val().length+" / 20)");
 
-
-                                </textarea>
-                                    </div>
+                                                    if($(this).val().length > 20) {
+                                                        $(this).val($(this).val().substring(0, 20));
+                                                        $('#test_cnt').html("(20 / 20)");
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
 
                                 </form1>
+
+                            </div>
+                                <hr class="my-3">
                                 <div class="title" >
                                     작성일자
                                 </div>
@@ -356,7 +368,22 @@
                                 <hr class="my-3">
                             </div>
                             <form2>
-                                <textarea id="actfmemoz" class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 작성해주세요." rows="4"></textarea>
+                                <textarea style="resize: none;" id="actfmemoz" class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 작성해주세요." rows="4"></textarea>
+
+                                 <!-- // 제목 글자수 제한 스크립트 -->
+                                 <div id="test_cnt2">(0 / 300)</div>
+                                 <script>
+                                     $(document).ready(function() {
+                                         $('#actfmemoz').on('keyup', function() {
+                                             $('#test_cnt2').html("("+$(this).val().length+" / 300)");
+
+                                             if($(this).val().length > 300) {
+                                                 $(this).val($(this).val().substring(0, 300));
+                                                 $('#test_cnt2').html("(300 / 300)");
+                                             }
+                                         });
+                                     });
+                                 </script>
 
                                 <div class="row g-0 justify-content-between mt-3 px-card pb-3">
                                     <div class="col">
@@ -393,7 +420,8 @@
 
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h6> <a href="#!">게시글 제목<span class="fas fa-caret-right fa-lg"></span></a></a></h6>
+                            
+                            <h6><h10>게시글 번호</h1><a href="#!">게시글 제목<span class="fas fa-caret-right fa-lg"></span></a></a></h6>
                             <p class="fs--1 mb-0">게시글 내용</p>
                             <hr class="my-3">  <!-- 구분선 -->
                             <h6> <a href="#!">게시글 제목<span class="fas fa-caret-right fa-lg"></span></a></a></h6>
@@ -406,12 +434,13 @@
                             <p class="fs--1 mb-0">게시글 내용</p>
                             <hr class="my-3">  <!-- 구분선 -->
 
-                            <h6> <a href="#!">What is your refund policy?<svg class="svg-inline--fa fa-caret-right fa-lg"  data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg"  data-fa-i2svg=""><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg></a></h6>
-                            <p class="fs--1 mb-0">We do not offer refunds apart from exceptions listed below. If you cancel your plan before the next renewal cycle, you will retain access to paid features until the end of your subscription period. When your subscription expires, you will lose access to paid features and all data associated with those features. Exceptions to our refund policy: canceling within 48 hours of initial charge will result in a full refund. If you cancel within this timeframe, you will lose access to paid features and associated data immediately upon canceling.</p>
+                            <h6> <a href="#!">게시글 제목<svg class="svg-inline--fa fa-caret-right fa-lg"  data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg"  data-fa-i2svg=""><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg></a></h6>
+                            <p class="fs--1 mb-0">게시글 내용 마지막</p>
+
                         </div>
                         <!-- 게시글 푸터박스=품질만족도 질문 박스 시작 -->
                         <div class="card-footer d-flex align-items-center bg-light">
-                            <h5 class="d-inline-block me-3 mb-0 fs--1">질문과 답변이 도움이 됐나요?</h5>
+                            <h5 class="d-inline-block me-3 mb-0 fs--1">질문과 답변이 도움됐나요?</h5>
                             <button class="btn btn-falcon-default btn-sm">네</button>
                             <button class="btn btn-falcon-default btn-sm ms-2">아니오</button>
                         </div>
@@ -426,7 +455,7 @@
                             <p class="mb-0 text-600">Thank you for creating with Actas <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2021 © <a href="https://themewagon.com">Actas</a></p>
                         </div>
                         <div class="col-12 col-sm-auto text-center">
-                            <p class="mb-0 text-600">번호적어</p>
+                            <p class="mb-0 text-600">02-6959-5020</p>
                         </div>
                     </div>
 
@@ -480,10 +509,10 @@
                                                 <th style="width: 7%;">분류</th>
                                                 <td style="width: 24%">
                                                     <div class="input_wrap" style="max-width: 235px;">
-<!--                                                        <select th:field="*{com750Dto}" name="actmgroupcdz" id="actmgroupcdz">-->
-<!--                                                            <option value="">선택</option>-->
-<!--                                                            <option th:each="val : ${com750Dto}" th:value="${val.code}" th:text="${val.cnam}">-->
-<!--                                                        </select>-->
+                                                        <!--                                                        <select th:field="*{com750Dto}" name="actmgroupcdz" id="actmgroupcdz">-->
+                                                        <!--                                                            <option value="">선택</option>-->
+                                                        <!--                                                            <option th:each="val : ${com750Dto}" th:value="${val.code}" th:text="${val.cnam}">-->
+                                                        <!--                                                        </select>-->
                                                     </div>
                                                 </td>
                                                 <th style="width: 10%;">작성자</th>
@@ -780,8 +809,8 @@
                 fgroupcd : mapp04Dto[i]["fgroupcd"]     ,
                 fmemo : mapp04Dto[i]["fmemo"]     ,
                 fflag : mapp04Dto[i]["fflag"]   ,
-                    fanswer : mapp04Dto[i]["fanswer"]
-        });
+                fanswer : mapp04Dto[i]["fanswer"]
+            });
             cnt++;
         }
         // console.log(data01);
@@ -884,40 +913,4 @@
 </footer>
 
 </body>
-</html><script>
-    (function() {
-        var ws = new WebSocket('ws://' + window.location.host +
-            '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
-            'referrer=' + encodeURIComponent(window.location.pathname));
-        ws.onmessage = function (msg) {
-            if (msg.data === 'reload') {
-                window.location.reload();
-            }
-            if (msg.data.startsWith('update-css ')) {
-                var messageId = msg.data.substring(11);
-                var links = document.getElementsByTagName('link');
-                for (var i = 0; i < links.length; i++) {
-                    var link = links[i];
-                    if (link.rel !== 'stylesheet') continue;
-                    var clonedLink = link.cloneNode(true);
-                    var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
-                    if (newHref !== link.href) {
-                        clonedLink.href = newHref;
-                    }
-                    else {
-                        var indexOfQuest = newHref.indexOf('?');
-                        if (indexOfQuest >= 0) {
-                            // to support ?foo#hash
-                            clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
-                                newHref.substring(indexOfQuest + 1);
-                        }
-                        else {
-                            clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
-                        }
-                    }
-                    link.replaceWith(clonedLink);
-                }
-            }
-        };
-    })();
-</script>
+</html>
