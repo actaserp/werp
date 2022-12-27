@@ -1,8 +1,8 @@
-package com.actas.ems.controller.app05;
+package com.actas.ems.controller.app06;
 
-import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
-import com.actas.ems.Service.elvlrt.App05ElvlrtService;
+import com.actas.ems.Service.elvlrt.App06ElvlrtService;
 import com.actas.ems.controller.EncryptionController;
 import com.actas.ems.controller.SessionManager;
 import com.actas.ems.DTO.CommonDto;
@@ -25,24 +25,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@RequestMapping("/app05")
+@RequestMapping("/app06")
 @Controller
 @RequiredArgsConstructor
-public class App05Controller {
+public class App06Controller {
 
     UserFormDto userformDto = new UserFormDto();
-    private final App05ElvlrtService service;
+    private final App06ElvlrtService service;
     private final SessionManager sessionManager;
-    List<App05ElvlrtDto> App05ListDto;
+    List<App06ElvlrtDto> App06ListDto;
     List<CommonDto> com750Dto;
-    App05ElvlrtDto App05Dto = new App05ElvlrtDto();
+    App06ElvlrtDto App06Dto = new App06ElvlrtDto();
 
 
     protected Log log =  LogFactory.getLog(this.getClass());
 
     // 도면자료실 index
     @GetMapping(value="/index01")
-    public String App05Form(Model model, HttpServletRequest request) throws  Exception{
+    public String App06Form(Model model, HttpServletRequest request) throws  Exception{
 //        userformDto.setUserid(userid);
 //        userformDto.setUsername(username);
 //        userformDto.setCltcd(cltcd);
@@ -56,17 +56,21 @@ public class App05Controller {
         Date nowData = new Date();
         SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
         String indate = endDate.format(nowData).toString();
-        App05Dto.setYyyymm(indate.substring(0,6));
-        App05Dto.setNinputdate(indate);
+        App06Dto.setYyyymm(indate.substring(0,6));
+        App06Dto.setHinputdate(indate);
 //        if(bflag == "0"){
 //            App05Dto.setMsubject(search);
 //        }else{
 //            App05Dto.setMemo(search);
 //        }
         try {
-            App05ListDto = service.GetMNoticeList(App05Dto);
+            App06ListDto = service.GetMHManualList(App06Dto);
 //            log.debug("Exception =====>" + App05ListDto );
-            model.addAttribute("App05Dto",App05ListDto);
+            model.addAttribute("App06Dto",App06ListDto);
+
+            for(int i=0; i<App06ListDto.size(); i++) {
+                System.out.println(App06ListDto.get(i).getHsubject());
+            }
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );
@@ -95,7 +99,7 @@ public class App05Controller {
 
 
 
-        return "app05/noticelist";
+        return "app06/app06list";
     }
 
 

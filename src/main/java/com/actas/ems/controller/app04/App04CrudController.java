@@ -42,9 +42,10 @@ public class App04CrudController {
     protected Log log =  LogFactory.getLog(this.getClass());
 
     private static final Logger logger     = LoggerFactory.getLogger(App04CrudController.class);
-    private final String uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
+    private String uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
 
-    @RequestMapping(value="/saveboard")
+    @RequestMapping(value="/saveboard")   //save 시에 M Dto 수행문
+
     public String memberSave(@RequestParam("actmseqz") String mseq
             ,@RequestParam("actminputdatez") String minputdate
             , @RequestParam("actmgroupcdz") String mgroupcd
@@ -53,9 +54,8 @@ public class App04CrudController {
             , @RequestParam("actmpernmz") String mpernm
             , @RequestParam("actmemoz") String memo
             , @RequestParam("actmflagz") String mflag
-            , @RequestParam("actmsetflagz") String setflag
             , Model model, HttpServletRequest request){
-
+//M Dto 수행문
         try {
 
             HttpSession session = request.getSession();
@@ -70,7 +70,7 @@ public class App04CrudController {
             app04Dto.setCustcd(ls_custcd);
             app04Dto.setSpjangcd(ls_spjangcd);
             if(mseq == null || mseq.equals("")){
-                app04Dto.setMseq(CountSeq(ls_yeare + ls_mm, setflag));
+                app04Dto.setMseq(CountSeq(ls_yeare + ls_mm, app04Dto.getSetflag()));
             }else{
                 app04Dto.setMseq(mseq);
             }
@@ -99,6 +99,8 @@ public class App04CrudController {
         return ls_mseq;
     }
 
+
+
     /**
      * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환
      * @return 랜덤 문자열
@@ -108,12 +110,15 @@ public class App04CrudController {
     }
 
     @RequestMapping(value="/save")
+//저장시 M dto 수행문
     public String mmnualUpload ( @RequestPart(value = "key") Map<String, Object> param,
-                                          @RequestPart(value = "file",required = false) List<MultipartFile> file
+
+                                 @RequestPart(value = "file",required = false) List<MultipartFile> file
                                         , Model model
                                         , HttpServletRequest request){
         String ls_fileName = "";
         String ls_errmsg = "";
+        boolean result = false;
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<AttachDTO> attachList = new ArrayList<>();
 
@@ -149,7 +154,6 @@ public class App04CrudController {
                 case "actmsetflagz":
                     app04Dto.setSetflag(values.toString());
                     break;
-
                 default:
                     break;
             }
@@ -165,43 +169,94 @@ public class App04CrudController {
         minputdate =  ls_yeare + ls_mm + ls_dd;
         app04Dto.setMinputdate(minputdate);
         if(mseq == null || mseq.equals("")){
-            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm,app04Dto.getSetflag()));
+            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm, app04Dto.getSetflag()));
+            //자꾸 여기서부터 flag 값이 DD로 고정됨
         }else{
             app04Dto.setMseq(mseq);
         }
         app04Dto.setYyyymm(ls_yeare + ls_mm);
+
         if(mseq == null || mseq.equals("")){
-            boolean result = appService.InsertMManu(app04Dto);
+
+            switch (app04Dto.getSetflag()){
+                case "MM":
+                    result = appService.InsertMManu(app04Dto);
+                    break;
+                case  "DD" :
+                    result = appService.InsertDManu(app04Dto);
+                    break;
+                case  "EE" :
+                    result = appService.InsertEManu(app04Dto);
+                    break;
+
+                default:
+                    break;
+            }
             if(!result){
                 return  "error";
             }
         }else{
-            boolean result = appService.UpdateMManu(app04Dto);
+            switch (app04Dto.getSetflag()){
+                case "MM":
+                    result = appService.UpdateMManu(app04Dto);
+                    break;
+                case  "DD" :
+                    result = appService.UpdateDManu(app04Dto);
+                    break;
+                case  "EE" :
+                    result = appService.UpdateEManu(app04Dto);
+                    break;
+
+                default:
+                    break;
+            }
             if(!result){
                 return  "error";
             }
         }
         model.addAttribute("userformDto",userformDto);
-        /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
-        File dir = new File(uploadPath);
-        if (dir.exists() == false) {
-            dir.mkdirs();
-        }
-        try {
 
+        try {
             if (file == null) {
-                return "success";
+                ls_errmsg = "success";
+                return ls_errmsg;
+            }else {
+                switch (app04Dto.getSetflag()){
+                    case "MM":
+                        uploadPath = Paths.get("C:", "develop", "upload","mmanul", getToDate()).toString();
+                        break;
+                    case "DD":
+                        uploadPath = Paths.get("C:", "develop", "upload","mdevmanual", getToDate()).toString();
+                        break;
+                    case "EE":
+                        uploadPath = Paths.get("C:", "develop", "upload","metcmanual", getToDate()).toString();
+                        break;
+                    default:
+                        break;
+                        //break 없었음
+                }
+                /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성
+                 *     //'C:.develop.upload.mmanul.20221220'*/
+
+                File dir = new File(uploadPath);
+                if (dir.exists() == false) {
+                    //파일 디렉토리는 계속 생김
+                    dir.mkdirs();
+                }
             }
+
             for(MultipartFile multipartFile : file){
 //                log.info("================================================================");
 //                log.info("upload file name : " + multipartFile.getOriginalFilename());
 //                log.info("upload file name : " + multipartFile.getSize());
                 ls_fileName = multipartFile.getOriginalFilename();
                 /* 파일이 비어있으면 비어있는 리스트 반환 */
+
                 if (multipartFile.getSize() < 1) {
                     ls_errmsg = "success";
                     return ls_errmsg;
                 }
+
                 /* 파일 확장자 */
                 final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
                 /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
@@ -210,20 +265,25 @@ public class App04CrudController {
                 /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
                 File target = new File(uploadPath, saveName);
                 multipartFile.transferTo(target);
-
                 /* 파일 정보 저장 */
+
                 AttachDTO attach = new AttachDTO();
+
                 attach.setBoardIdx(mseq);
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
-                attach.setFlag("MM");
-                /* 파일 정보 추가 */
+                attach.setFlag(app04Dto.getSetflag());
+
+
+                          /* 파일 정보 추가 */
                 attachList.add(attach);
+
             }
-                boolean result  = appServiceImpl.registerMManu(app04Dto, attachList);
+            result =  appServiceImpl.registerMManu(app04Dto, attachList);
+
                 if(!result){
-                    return  "error";
+                  return  "error";
                 }
 
         }catch (DataAccessException e){
@@ -245,30 +305,46 @@ public class App04CrudController {
 
 
     @RequestMapping(value="/del")
-    public String mmnualDelete(@RequestParam("actmseqz") String mseq
+    public String mmnualDelete(
+                                @RequestParam("actmseqz") String mseq
                               ,@RequestParam("actflagz") String mflag
                               ,Model model, HttpServletRequest request){
 
-        try {
+        boolean result = false;
 
+
+        try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            app04Dto.setMseq(mseq);
+            //아래부터 param
+            app04Dto.setMseq(mseq);        //도면자료 삭제쿼리
             app04Dto.setMflag(mflag);
 
-            boolean result = appService.DeleteMManu(app04Dto);
+            // 해당 flag의 data를 삭제한다.
+
+
+            switch (app04Dto.getMflag()) {
+                case "MM":
+                    result = appService.DeleteMManu(app04Dto);
+                    break;
+                case "DD":
+                    result = appService.DeleteDManu(app04Dto);
+                    break;
+                case "EE":
+                    result = appService.DeleteEManu(app04Dto);
+                    break;
+
+            }
             if(!result){
                 return  "error";
             }
             result = appServiceImpl.registerMManuDel(app04Dto);
-            if(!result){
-                return  "error";
-            }
+
             model.addAttribute("userformDto",userformDto);
 
-        }catch (IllegalStateException e){
+        }catch (IllegalStateException e){ //잘못된 접근 시에 에러 메시지 송출
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
@@ -276,11 +352,12 @@ public class App04CrudController {
     }
 
 
+    //파일 삭제시 M dto 사용
     @RequestMapping(value="/filedel")
     public String mmnualFileDelete(@RequestParam("actidxz") Long idx
-                                   ,@RequestParam("actmseqz") String mseq
-                                   ,@RequestParam("actflagz") String mflag
-                                   ,Model model, HttpServletRequest request){
+            ,@RequestParam("actfseqz") String mseq
+            ,@RequestParam("actflagz") String mflag
+            ,Model model, HttpServletRequest request){
 
         try {
             attachDTO.setIdx(idx);
@@ -297,7 +374,6 @@ public class App04CrudController {
         }
         return "success";
     }
-
 
     @RequestMapping(value="/flist")
     public Object mmnualFilelist(@RequestParam("actmseqz") String mseq
@@ -321,12 +397,27 @@ public class App04CrudController {
         return attach;
     }
 
+    //날짜
+
     public String CountSeq(String yyyymm, String flag){
         String ls_mseq = "";
-        switch (flag){
+        switch (flag) {
+
             case "MM":
+                //도면자료실
                 ls_mseq = appService.getMManualMaxSeq(yyyymm);
                 break;
+
+            case "DD":
+                // 부품자료실
+                ls_mseq = appService.getDManualMaxSeq(yyyymm);
+                break;
+
+            case "EE":
+                // 기타자료실
+                ls_mseq = appService.getEManualMaxSeq(yyyymm);
+                break;
+
             default:
                 break;
         }
@@ -340,7 +431,6 @@ public class App04CrudController {
         }
         return ls_mseq;
     }
-
 
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

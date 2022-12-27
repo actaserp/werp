@@ -2,9 +2,9 @@ package com.actas.ems.Service.elvlrt;
 
 
 import com.actas.ems.DTO.AttachDTO;
-import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
-import com.actas.ems.Mapper.Elvlrt.App04ElvlrtMapper;
-import com.actas.ems.Mapper.Elvlrt.MattachElvlrtMapper;
+import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
+import com.actas.ems.Mapper.Elvlrt.App06ElvlrtMapper;
+import com.actas.ems.Mapper.Elvlrt.Attach06ElvlrtMapper;
 import com.actas.ems.util.FilsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +14,18 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service
-public class App04UploadServiceImpl implements  App04UploadService {
+public class App06UploadServiceImpl implements  App06UploadService {
 
     @Autowired
-    private App04ElvlrtMapper app04Mapper;
+    private App06ElvlrtMapper app06Mapper;
 
     @Autowired
-    private MattachElvlrtMapper attachMapper;
+    private Attach06ElvlrtMapper attachMapper;
 
     @Autowired
     private FilsUtils fileUtils;
 
-    public boolean registerMManu(App04ElvlrtDto params,  List<AttachDTO> attachDto){
+    public boolean registerMHManual(App06ElvlrtDto params,  List<AttachDTO> attachDto){
         int queryResult = 1;
 
 //        List<AttachDTO> fileList = fileUtils.uploadFiles(files, params.getMseq());
@@ -38,17 +38,7 @@ public class App04UploadServiceImpl implements  App04UploadService {
         return (queryResult > 0);
     }
 
-
-    public boolean registerMManuDel(App04ElvlrtDto perm){
-        int queryResult = 1;
-        queryResult = attachMapper.deleteAttach(perm);
-        if(queryResult < 1){
-            queryResult = 0;
-        }
-        return (queryResult > 0);
-    }
-
-    public boolean registerDManuDel(App04ElvlrtDto perm){
+    public boolean registerMHManualDel(App06ElvlrtDto perm){
         int queryResult = 1;
         queryResult = attachMapper.deleteAttach(perm);
         if(queryResult < 1){
@@ -58,7 +48,7 @@ public class App04UploadServiceImpl implements  App04UploadService {
     }
 
 
-    public boolean MManuFileDel(AttachDTO perm){
+    public boolean MHManualFileDel(AttachDTO perm){
         int queryResult = 1;
         queryResult = attachMapper.deleteAttachDetail(perm);
         if(queryResult < 1){
@@ -67,7 +57,7 @@ public class App04UploadServiceImpl implements  App04UploadService {
         return (queryResult > 0);
     }
 
-    public List<AttachDTO> MManuFilelist(App04ElvlrtDto perm){
+    public List<AttachDTO> MHManualFilelist(App06ElvlrtDto perm){
         List<AttachDTO> attachDto = attachMapper.selectAttachList(perm);
         return attachDto;
     }
@@ -78,7 +68,7 @@ public class App04UploadServiceImpl implements  App04UploadService {
     }
 
     @Override
-    public boolean registerMManu(App04ElvlrtDto params, MultipartFile[] files) {
+    public boolean registerMHManual(App06ElvlrtDto params, MultipartFile[] files) {
         return false;
     }
 }

@@ -221,7 +221,7 @@
                                                     <div class="input_wrap">
                                                         <input type="text" name="actmsubjectz" id="actmsubjectz" >
                                                         <input type="hidden" name="actmseqz" id="actmseqz" > 
-                                                        <input type="hidden" name="actmsetflagz" id="actmsetflagz" value="MM"> 
+                                                        <input type="hidden" name="actmsetflagz" id="actmsetflagz" value="MM" > 
                                                     </div>
                                                     <div class="title" >
                                                         작성일자
@@ -446,36 +446,36 @@
         }     
         
         
-        // 첨부파일 파일데이타 삭제
-        function deleteFile(elem, arg1, arg2) {
-            if (!confirm("파일을 삭제하시겠습니까?")) {
-                return ; 
-            }  
-            //도면 파일 삭제 
-            $.ajax({
-                url: '/app04mod/filedel',   
-                type:"POST", 
-                data: {
-                    "actidxz"     : arg1 ,
-                    "actmseqz"    : arg2 ,
-                    "actflagz"    : "MM" 
-                },
-                async:false,
-                success:function(data){ 
-                    if(data == "success"){   
-                        console.log("deletefile", data); 
-                        const target = $(elem).parents('div[data-name="fileDiv"]'); 
-                        target.remove();
-                    }else{
-                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
-                    }   
-                },error:function(e){
-                    console.log('error',e);
-                }
-            }).done(function(fragment){           
+  // 첨부파일 파일데이타 삭제
+  function deleteFile(elem, arg1, arg2) {
+    if (!confirm("파일을 삭제하시겠습니까?")) {
+      return ;
+    }
+    //도면 파일 삭제
+    $.ajax({
+      url: '/app04mod/filedel',
+      type:"POST",
+      data: {
+        "actidxz"     : arg1 ,
+        "actfseqz"    : arg2 ,
+        "actflagz"    : "MM"
+      },
+      async:false,
+      success:function(data){
+        if(data == "success"){
+          console.log("deletefile", data);
+          const target = $(elem).parents('div[data-name="fileDiv"]');
+          target.remove();
+        }else{
+          alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+        }
+      },error:function(e){
+        console.log('error',e);
+      }
+    }).done(function(fragment){
 
-            })  
-        }     
+    })
+  }   
 
         function changeFilename(file) {
 
@@ -547,33 +547,34 @@
                     "actmsetflagz"   : ls_actmsetflagz, 
                     
              } 
-            // 본문 data formdata 에 추가 
-            formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
-                  
-            $.ajax({
-                url: '/app04mod/save', 
-                processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
-                contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 
-                enctype : 'multipart/form-data',       
-                type: "POST", 
-                data: formData,
-                async:false,
-                success:function(data){
-                    // console.log("등록OK", data); 
-                    if(data == "error"){  
-                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.") 
-                    }else{
-                        alert("저장되었습니다.")                      
-                        $("#CloseBtn").trigger("click"); 
-                        listUp();                             
-                    }                     
-                    
-                },error:function(e){
-                    console.log('error',e);
-                }
-            }).done(function(fragment){           
+           // 본문 data formdata 에 추가
+        formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
 
-            })    
+            $.ajax({
+            url: '/app04mod/save',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+            data: formData,
+            async:false,
+            success:function(data){
+                // console.log("등록OK", data);
+                if(data == "success"){
+                    alert("저장되었습니다.")
+                    console.log("save", data);
+                    $("#CloseBtn").trigger("click");
+                    listUp();
+                }else{
+                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        }) 
 
 
         }

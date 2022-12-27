@@ -16,6 +16,10 @@ public interface App04ElvlrtMapper {
     public List<App04ElvlrtDto>  GetMManulList(App04ElvlrtDto perm);
     public List<App04ElvlrtDto> GetMManulBlankList();
 
+    public List<App04ElvlrtDto>  GetDManulList(App04ElvlrtDto perm);
+    public List<App04ElvlrtDto> GetDManulBlankList();
+    public List<App04ElvlrtDto>  GetEManulList(App04ElvlrtDto perm);
+    public List<App04ElvlrtDto> GetEManulBlankList();
     public List<CommonDto> GetComm750List();
     public List<CommonDto> GetComm750BlankList();
 
@@ -24,4 +28,18 @@ public interface App04ElvlrtMapper {
     public int UpdateMManul(App04ElvlrtDto perm);
     public int DeleteMManul(App04ElvlrtDto perm);
     public String getMManualMaxSeq(String perm);
+
+    public App04ElvlrtDto GetDManulView(String dSeq);
+    public int InsertDManul(App04ElvlrtDto perm);
+    public int UpdateDManul(App04ElvlrtDto perm);
+    public int DeleteDManul(App04ElvlrtDto perm);
+    public String getDManualMaxSeq(String perm);
+
+    public App04ElvlrtDto GetEManulView(String eSeq);
+    public int InsertEManul(App04ElvlrtDto perm);
+    public int UpdateEManul(App04ElvlrtDto perm);
+    public int DeleteEManul(App04ElvlrtDto perm);
+    public String getEManualMaxSeq(String perm);
+
+
 }
