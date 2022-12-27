@@ -39,7 +39,6 @@ public class App12RetrieveController {
             , @RequestParam("actgregicdz") String gregicd
             , @RequestParam("actresultcdz") String resultcdz
             , Model model) throws  Exception{
-        System.out.println("----1");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -56,29 +55,9 @@ public class App12RetrieveController {
         popParmDto.setRemocd(remocd);
         popParmDto.setGregicd(gregicd);
         popParmDto.setResultcd(resultcdz);
-        System.out.println("----2");
         try {
-            System.out.println("----3");
             app12DtoList = service.GetApp12List001(popParmDto);
-            System.out.println("----4");
             model.addAttribute("app12DtoList",app12DtoList);
-            System.out.println("----5");
-            for(int i=0; i<app12DtoList.size(); i++) {
-                System.out.print(app12DtoList.get(i).getResulttime()+",");
-                System.out.print(app12DtoList.get(i).getPernm()+",");
-                System.out.print(app12DtoList.get(i).getResunm()+",");
-                System.out.print(app12DtoList.get(i).getResuremark()+",");
-                System.out.print(app12DtoList.get(i).getContnm()+",");
-                System.out.print(app12DtoList.get(i).getContremark()+",");
-                System.out.print(app12DtoList.get(i).getRemonm()+",");
-                System.out.print(app12DtoList.get(i).getRemoremark()+",");
-                System.out.print(app12DtoList.get(i).getGreginm()+",");
-                System.out.print(app12DtoList.get(i).getReginm()+",");
-                System.out.print(app12DtoList.get(i).getResult()+",");
-                System.out.print(app12DtoList.get(i).getResultnm()+",");
-                System.out.println();
-
-            }
         }catch (DataAccessException e) {
             log.info("App12001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
