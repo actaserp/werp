@@ -30,6 +30,8 @@
                             </button>
                         </a>
                     </div>
+
+
                     <ul>
                         <li  class="on"><a th:href="@{/app03/index01}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장내용별고장현황</a></li>
                         <li><a href="./control.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장부위별수리현황</a></li>
@@ -90,14 +92,21 @@
                 <button type="button"><img th:src="@{/assets/images/header_icon6.png}" alt=""></button>
                 <div class="depth2">
                     <div class="dep_main">
-                        <a th:href="@{/app05/index01}">
+
                             <button type="button">
                                 공지사항
                             </button>
                         </a>
-                    </div>
-                </div>                        
+                      </div>
+                    <ul>
+                        <li><a th:href="@{/app05/index01}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>공지사항</a></li>
+                        <li class="on"><a th:href="@{/app09/index01}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>FaQ</a></li>
+
+                    </ul>
+                </div>
+
             </li>
+
             <li>
                 <button type="button"><img th:src="@{/assets/images/header_icon7.png}" alt=""></button>
                 <div class="depth2">

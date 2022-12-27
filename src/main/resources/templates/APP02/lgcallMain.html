@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="ko">
+    
+<html xmlns:th="http://www.thymeleaf.org">
+    
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+       <!-- datetimepicker 스타일 적용 -->
+       <link rel="stylesheet" th:href="@{/css/jquery.datetimepicker.css}"> > 
+       <!-- 제이쿼리 import -->
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       <!-- datetimepicker import -->
+       <script type="text/javascript" th:src="@{/assets/js/jquery.datetimepicker.full.min.js}"></script>
+
+
+       <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+       <link rel="stylesheet" href="/resources/demos/style.css">
+       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+       <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+       <script>
+       $( function() {
+         $( "#datepicker" ).datepicker();
+       } );
+       </script> -->
+   
+
+       
+
+
+    <!-- Wijmo 레퍼런스 (필수) -->
+    <link th:href="@{/wijimo/styles/wijmo.min.css}" rel="stylesheet" />
+    <!-- 
+        wijmo.min.css 대신에 아래와 같이 사용자 정의 테마 사용가능
+        <link href="styles/themes/wijmo.theme.modern.min.css" rel="stylesheet"/>
+    -->
+    <script th:src="@{/wijimo/controls/wijmo.min.js}"></script>
+
+    <!-- Wijmo 컨트롤 (옵션, 필요한 컨트롤 만 추가) -->
+    <script th:src="@{/wijimo/controls/wijmo.grid.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.chart.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.input.min.js}"></script>
+    <script th:src="@{/wijimo/controls/wijmo.gauge.min.js}"></script>
+
+    <!-- Wijmo custom culture (옵션, 원하는 문화권을 추가) -->
+    <script th:src="@{/wijimo/controls/cultures/wijmo.culture.ko.min.js}"></script>
+ 
+ 
+    <!-- Wijmo 배포라이선스키 적용 (배포 시 필요) -->
+    <script>
+      wijmo.setLicenseKey('emmsg.co.kr,173371689525245#B0IdMwSZzxWYmpjIyNHZisnOiwmbBJye0ICRiwiI34TQKFkWzU6btlWZwhjRhZEWDlXdQNjev4mWqZVVXZEeHBjUvZ4d6kzSwtGetNncl96VmJmViJDbKdlYDZFdTN4U8RnRkNUZJlTTZ5WYUdkbPJUOGZGaMFEZDJ5bOVleYl6KYR6ZvA5bOdnTVlmZZtEbCRXUsFmRwo5LudGUxkTZ5E4RykDZ6wmZYVVa7M5bURDVatCakF6T7BjNkdDUzoEVC5WN5U7K5IkM9p7N9A5RDRTZjlHTHJEO4BnSxYmWk5UYBlDTM36cppET8pWQzBnVnhUVkV5QTp7VL9WVIJHUrcGakZDcGJHVl3kQId7Vw8GTiB5VtFVdxE7c0xmZ4o5LBp7SxVmZ7JHR4IHWrJ5UQVWeUhXavRVV5QEbL3iNEhkdZdzLkhGMFhjaXtGSZJTOVREVzo6Sw4mMrJ7Yzd4UwwGbrplNWV6dCtiT9oWU6gXQ7AnVP5kI0IyUiwiIxkzN5gDN6cjI0ICSiwCO9YTM9IzM4ATM0IicfJye#4Xfd5nIJBjMSJiOiMkIsIibvl6cuVGd8VEIgQXZlh6U8VGbGBybtpWaXJiOi8kI1xSfiUTSOFlI0IyQiwiIu3Waz9WZ4hXRgAicldXZpZFdy3GclJFIv5mapdlI0IiTisHL3JyS7gDSiojIDJCLi86bpNnblRHeFBCI73mUpRHb55EIv5mapdlI0IiTisHL3JCNGZDRiojIDJCLi86bpNnblRHeFBCIQFETPBCIv5mapdlI0IiTisHL3JyMDBjQiojIDJCLiUmcvNEIv5mapdlI0IiTisHL3JSV8cTQiojIDJCLi86bpNnblRHeFBCI4JXYoNEbhl6YuFmbpZEIv5mapdlI0IiTis7W0ICZyBlIsICOxkzM4ADIwITOwIjMwIjI0ICdyNkIsIyNykDMyIDMyIiOiAHeFJCLiI7au26Yuc6ct5WZiojIz5GRiwiIcWY1kqI1cuI1wuY146J1EWJ1oiJ1iojIh94QiwiI5QjM5ITN9gjNxczMzcTMiojIklkIs4XXbpjInxmZiwiIyYHMyAjMioYIJV');
+    </script>
+
+
+
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+     
+ 
+    
+    <title>LGCALL 고객상담서비스</title>
+
+
+
+    <SCRIPT FOR="LGOpenAPIX" EVENT="EventLogin(nResult)" LANGUAGE="Jscript">
+        /**
+            로그인 관련 이벤트
+        **/ 
+            if(nResult==200)
+            {
+                alert( "[Event] Login 성공" );		
+            }
+            else
+            {
+                alert( "[Event] Login 실패" );
+            }
+            
+        </SCRIPT>
+        
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventConnect(nResult)" LANGUAGE="Jscript">
+        /**
+            Connect 이벤트
+        **/ 
+            var oDiv = document.all("DivConnect");
+            if(nResult==1){
+                oDiv.innerText="성공";
+            }else{
+                oDiv.innerText="실패";
+            }
+        </SCRIPT>
+            
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventCTC ( sCaller, sCallee, sResult, sMiSeqno)" LANGUAGE="Jscript">
+        /**
+            CTC이벤트
+        **/
+            var CTC ="";
+            CTC   =	"발신:"		+	sCaller		+" "+
+                        ", 수신:"	+	sCallee		+" "+
+                        ", 결과:"	+	sResult		+" "+
+                        ", ID  :"	+	sMiSeqno	+ "\n";
+            document.getElementById("CTC").value =CTC;
+        
+        </SCRIPT>
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventCON( sCaller, sCallee, sCallBackID, sResult)" LANGUAGE="Jscript">
+        /**
+            CON이벤트
+        **/
+            var CON ="";
+            if(sResult=="200"){sResult="성공"}
+            
+            CON   =	"발신:"			+	sCaller		+" "+
+                        ", 수신:"		+	sCallee		+" "+
+                        ", 결과:"		+	sResult		+" "+
+                        ", 방번호  :"	+	sCallBackID +"\n";
+            
+        document.getElementById("CON").value =CON;
+        
+        </SCRIPT>
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventCID( sCaller, sCallee, sResult, sClSeqno, sMiSeqno)" LANGUAGE="Jscript">
+        
+        /*
+            발신정보 수신 통지 이벤트
+        */
+        
+                    switch (sResult)
+                    {
+                    case "200": sResult	= "호처리성공"; break;
+                    case "201": sResult	= "호처리중"; break;
+                    case "202": sResult	= "부재중"; break;
+                    case "203": sResult	= "부재중"; break;
+                    case "401": sResult	= "결번"; break;
+                    case "404": sResult	= "통화중"; break;
+                    case "405": sResult	= "무응답"; break;
+                    case "407": sResult	= "발신자 호포기"; break;
+                    case "408": sResult	= "착신자 호포기"; break;
+                    case "701": sResult	= "SHOW CID 무선 회선 호 연결중"; break;
+                    case "700": sResult	= "SHOW CID 무선 회선 호 연결됨"; break;
+                    case "904": sResult	= "SHOW CID 무선 회선 부재중"; break;
+                    case "905": sResult	= "SHOW CID 무선 회선 부재중"; break;
+                    case "906": sResult	= "SHOW CID 무선 회선 부재중"; break;
+                    case "907": sResult	= "SHOW CID 무선 회선 부재중"; break;
+                    default: sResult="Error";
+                    }
+        
+            alert(	"발신:"						+	sCaller		+" "+
+                        ", 수신:"					+	sCallee		+" "+
+                        ", 결과:"					+	sResult		+" "+
+                        ", 통화내역 일련번호:"		+	sClSeqno	+" "+
+                        ", 발신사용자 일련번호  :"	+	sMiSeqno);
+                        
+        </SCRIPT>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <!--  새로운 이벤트-->
+        
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventChangePasswd( sPasswd )" LANGUAGE="Jscript">
+        /**
+         패스워드 변경 통지 이벤트
+        **/
+        alert( "패스워드 변경 : " + sPasswd );
+        </SCRIPT>
+        
+        
+        <!-- 새로운 이벤트 -->
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventSMS( sCaller, sCallee, sMessage, sSlSeqno)" LANGUAGE="Jscript">
+        
+        /**
+            문자 수신 통지 이벤트
+        
+        **/
+                alert(	"발신:"					+	sCaller		+" "+
+                        ", 수신:"				+	sCallee		+" "+
+                        ", 메세지:"				+	sMessage	+" "+
+                        ", 문자내역 일련번호:"	+	sSlSeqno
+                        );
+        </SCRIPT>
+        
+        <!--
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventSyncCallMemo( nMode, sCaller, sCallee, sCmType, sClSeqno, sCmSeqno, sCallName, sMemo, sCallGroup, sProgGroup, sIDate, sUDate)" LANGUAGE="Jscript">
+        
+        /**
+            통화 메모 통지 이벤트
+        
+        **/
+            var GetCallMemoCount ="";
+        
+                GetCallMemoCount   =	"모드:"				+	nMode		+" "+
+                            ", 발신:"			+	sCaller		+" "+
+                            ", 수신:"			+	sCallee		+" "+
+                            ", 타입:"			+	sCmType		+" "+
+                            ", 내역일련번호:"	+	sClSeqno	+" "+
+                            ", 메모일련번호:"	+	sCmSeqno	+" "+
+                            ", 발신자이름:"		+	sCallName	+" "+
+                            ", 메모:"			+	sMemo		+" "+
+                            ", 그룹:"			+	sCallGroup	+" "+
+                            ", 진행상태:"		+	sProgGroup	+" "+
+                            ", 생성시간:"		+	sIDate		+" "+
+                            ", 수정시간:"		+	sUDate		+"\n";
+                            
+                    document.getElementById("GetCallMemoCount").value =GetCallMemoCount;
+        </SCRIPT>
+        
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventSyncAddressGroup( nMode, sAgName, sAgParentSeqno, sAgSeqno, sAgType, sIDate, sUDate)" LANGUAGE="Jscript">
+        
+        /**
+            주소록 그룹 통지 이벤트
+        
+        **/
+                    if (nMode == "0")
+                    {
+                        nMode = "주소록 그룹추가";
+                    }else if (nMode == "1")
+                    {
+                        nMode = "주소록 그룹수정"; 
+                    }else if (nMode == "2")
+                    {
+                        nMode = "주소록 그룹삭제";
+                    }
+                    
+                    if (sAgType == "1")
+                    {
+                        sAgType = "개인 주소록";
+                    }else if (sAgType == "2")
+                    {
+                        sAgType = "공유 주소록";
+                    }else if (sAgType == "3")
+                    {
+                        sAgType = "직원 주소록";
+                    }
+                alert(	"모드:"					+	nMode			+" "+
+                        ", 그룹이름:"			+	sAgName			+" "+
+                        ", 상위그룹일련번호:"	+	sAgParentSeqno	+" "+
+                        ", 그룹일련번호:"		+	sAgSeqno		+" "+
+                        ", 그룹타입:"			+	sAgType			+" "+
+                        ", 만든날짜:"			+	sIDate			+" "+
+                        ", 수정한날짜:"			+	sUDate			+"\n");
+            
+        </SCRIPT>
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventSyncAddressData( nMode, sAdType, sAdParentSeqno, sAdSeqno, sAdName, sAdMNumber, sAdONumber, sAdHNumber, sAdFNumber, sAdCompany, sAdTeam, sAdTitle, sAdBusiness, sAdZipCode, sAdAddress, sAdEmail, sAdMemo, sAdBirthDay, sAdBirthType, sNgName, sAdMetChance, sAdKeyman, sAdFavorite)" LANGUAGE="Jscript">
+        
+        /**
+            주소록 사용자 통지 이벤트
+        
+        **/
+            var EventSyncAddressData = "";
+            EventSyncAddressData = 
+            "모드:"     + nMode   +" "+
+            
+            ", 주소:"    + sAdAddress  +" "+
+            ", 생년월일:"   + sAdBirthDay  +" "+
+            ", 음력0,양력1:"  + sAdBirthType +" "+
+            ", 담당업무:"   + sAdBusiness  +" "+
+            ", 회사이름:"   + sAdCompany  +" "+
+            ", 이메일주소:"   + sAdEmail  +" "+
+            ", 관심사:"    + sAdFavorite  +"\n"+
+            ", 팩스번호:"   + sAdFNumber  +" "+
+            ", 집전화번호:"   + sAdHNumber  +" "+
+            ", 추천인:"    + sAdKeyman  +" "+
+            ", 인물메모:"   + sAdMemo   +" "+
+            ", 만난상황:"   + sAdMetChance +" "+
+            ", 핸드폰번호:"   + sAdMNumber  +" "+
+            ", 이름:"    + sAdName   +" "+
+            ", 회사전화번호:"  + sAdONumber  +"\n"+
+            ", 상위그룹일련번호:" + sAdParentSeqno +" "+
+            ", 주소록일련번호:"  + sAdSeqno  +" "+
+            ", 부서:"    + sAdTeam   +" "+
+            ", 직책:"    + sAdTitle  +" "+
+            ", 그룹타입:"   + sAdType   +" "+
+            ", 우편번호:"   + sAdZipCode  +" "+
+            ", 인맥:"    + sNgName   +"\n\n";
+        
+        document.getElementById("EventSyncAddressData").value =EventSyncAddressData;
+        
+        
+        </SCRIPT>
+        
+        <SCRIPT FOR="LGOpenAPIX" EVENT="EventAddinCall( nSelectType, sAddinType, nCount)" LANGUAGE="Jscript">
+        
+        /**
+            브라우져 콜 이벤트
+        
+        **/
+            var EventAddinCall = "";
+        
+                EventAddinCall =	"선택한메뉴타입:"		+	nMode			+" "+
+                        ", 사용한프로그램:"		+	sAgName			+" "+
+                        ", 전화번호 수:"		+	sAgParentSeqno	+"\n";
+            
+                document.getElementById("EventAddinCall").value =EventAddinCall;
+        </SCRIPT>-->
+        <script type="text/javascript">
+        <!--
+            //로그인 요청 함수
+        function Login(){
+            var	result		=	500;
+            var Server			=	document.all.server.value;
+            var Authkey		=	document.all.authkey.value;
+            var LoginID		=	document.all.loginID.value;
+            var LoginPWD	=	document.all.loginPWD.value;
+            var date = new Date();
+            
+                result		=	LGOpenAPIX.Login( Server, Authkey, LoginID, LoginPWD );
+                switch (result)
+                {
+                case 200:alert("서버요청성공");break;
+                case 301:alert("다른 위치에서 로그인");break;
+                case 401:alert("미등록 아이디로 로그인"); break;
+                case 402:alert("비밀번호 오류 횟수 초과 (5회제한)"); break;
+                case 403: alert("임시비밀호 로그인");break;
+                case 404:alert("임시비밀번호 설정"); break;
+                case 405:alert("비밀번호 오류"); break;
+                case 407:alert("접속 IP 오류"); break;
+                case 408: alert("미등록 PC");break;
+                case 500: alert("기타(HTTPS/HTTP 요청 실패)");break;
+                case 1000:alert("이미 로그인중"); break;
+                case 1001:alert("서버 타입 에러"); break;
+                case 1502:alert("협정 만료일이 지났음"); break;
+                case 1503: alert("인증키 유효기간이 지났음");break;
+                case 1504:alert("인증키 비활성"); break;
+                case 1505: alert("인증키 타입이 틀릴 경우");break;
+                case 1506: alert("개발 서버이나 상용 인증키, 상용 Flag일 경우");break;
+                case 1507: alert("상용 서버이나 개발 인증키, 개발 Flag일 경우");break;
+                case 1700: alert("API 환경 정보 얻지 못함(실행되는 경로)");break;
+                case 1701: alert("KTA_API.dat / KTD_API.dat등의 data 파일 초기화 에러 파일이 존재해야 함"); break;	 
+                case 1702: alert("PC 메모리 부족(API 생성 에러)");break;
+                default: alert(result);
+                }
+                date.setMinutes( date.getMinutes() + 20 );
+                var year = 	date.getFullYear();
+                var month= date.getMonth()+1;
+                    month = (month < 10)?"0" + month:month;		
+                var day = (date.getDate() < 10)?"0" + date.getDate():date.getDate();
+                var hour =  (date.getHours() < 10)?"0" + date.getHours():date.getHours();
+                var minute =  date.getMinutes();
+                    minute = (minute < 10)?"0" + minute:minute;
+                var time = year +""+ month +"" + day+ "" + hour+ "" + minute;
+                document.getElementById("sSendDate").value =time;
+                    
+        }
+        
+        //로그아웃 요청 함수
+        
+        function  Logout(){
+            var result = 500;
+            result = confirm("로그아웃 하시겠습니까?");
+                if (result == true)
+                {
+                    LGOpenAPIX.Logout();
+                } 
+        }
+        
+        //기존 사용자 강제 로그아웃 요청 함수
+        function LoginKickOut(){
+            var re = confirm("강제로그아웃 하시겠습니까?");
+            var result = 500;
+            if (re == true)
+            {
+                    result = LGOpenAPIX.LoginKickOut();
+                    if (result == "0")
+                {
+                    alert("중복로그인 상태가 아님");
+                }else {
+                    alert(result)
+                }
+            }
+            
+        }
+        
+        //회선청약 요청 함수
+        function  LineJoin(){
+            var Authkey		=	document.all.authkey.value;
+            LGOpenAPIX.LineJoin(Authkey);
+        }
+        // 도움말 확장 함수
+        function HelpEX(){
+            var Server			=	document.all.server.value;
+            LGOpenAPIX.HelpEX(Server);
+        }
+        
+        //회원 가입 확장 합수
+        function UserJoinEX(){
+        var Server			=	document.all.server.value;
+            LGOpenAPIX.UserJoinEx(Server)
+        }
+        // 패스워드 찾기 확장 함수
+        function FindPasswdEX(){
+            var Server			=	document.all.server.value;
+            LGOpenAPIX.FindPasswdEx(Server)
+        }
+        // 설정 변경 함수
+        function SetMyInfo(){
+            LGOpenAPIX.SetMyInfo()
+        }
+        
+        //가입 전화번호 리스트 정보 및 설정 값 구하기 함수
+        
+        function GetPhoneList(){
+        
+            var Ctc			=	"";
+            var Intercall	=	"";
+            var Tollline		=	"";
+            var Localcall	=	"";
+            var Mobile		=	"";
+            var Cid			=	"";
+            var Smssend	=	"";
+            var Smsrecv	=	"";
+            var Mainnum	=	"";
+            var LineState	=	"";
+            var GetPhoneList = "";
+            
+            
+            KTDPhone = LGOpenAPIX.GetPhoneList()
+        if( KTDPhone != null && KTDPhone != undefined )
+                {
+            var KTDPhoneArray	=	( new VBArray( KTDPhone ) ).toArray();
+            
+                for( i = 0; i < KTDPhoneArray.length; i++ )
+                        {
+                            if (KTDPhoneArray[ i ].Ctc == "1"){
+                                    Ctc = "O"; 
+                                }else{
+                                    Ctc = "X";
+                                }
+                            if (KTDPhoneArray[ i ].Intercall == "1"){
+                                    Intercall = "O"; 
+                                }else{
+                                    Intercall = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].Tollline == "1"){
+                                    Tollline = "O"; 
+                                }else{
+                                    Tollline = "X";
+                                }
+                            if (KTDPhoneArray[ i ].Localcall == "1"){
+                                    Localcall = "O"; 
+                                }else{
+                                    Localcall = "X";
+                                }	
+                            if (KTDPhoneArray[ i ].Mobile == "1"){
+                                    Mobile = "O"; 
+                                }else{
+                                    Mobile = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].Cid == "1"){
+                                    Cid = "O"; 
+                                }else{
+                                    Cid = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].Smssend == "1"){
+                                    Smssend = "O"; 
+                                }else{
+                                    Smssend = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].Smsrecv == "1"){
+                                    Smsrecv = "O"; 
+                                }else{
+                                    Smsrecv = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].Mainnum == "1"){
+                                    Mainnum = "O"; 
+                                }else{
+                                    Mainnum = "X";
+                                }		
+                            if (KTDPhoneArray[ i ].LineState == "0"){
+                                    LineState = "정상통화"; 
+                                }else if(KTDPhoneArray[ i ].LineState == "1"){
+                                    LineState = "착신전환";
+                                }else if(KTDPhoneArray[ i ].LineState == "2"){
+                                    LineState = "부재중 착신전환";
+                                }else if(KTDPhoneArray[ i ].LineState == "3"){
+                                    LineState = "부재중 멘트";
+                                }
+                            
+                            GetPhoneList += "회선번호 : "			+  KTDPhoneArray[ i ].Telnum		+
+                                ", 전화 발신 : "	+	Ctc			+  
+                                ", 국제전화 : "		+	Intercall		+
+                                ", 시회전화 : "		+	Tollline		+
+                                ", 시내전화 : "		+	Localcall	+
+                                ", 휴대전화 : "		+	Mobile		+
+                                ", 발신정보 표시 : "		+ Cid		+
+                                ", SMS발신 : "	+	Smssend	+
+                                ", SMS수신 : "	+	Smsrecv	+
+                                ", 대표번호 : "		+	Mainnum	+
+                                ", 회선상태 : "	 	+	LineState	+
+                                ", 착신전환 : "		+	KTDPhoneArray[ i ].RecvTel		+  "\n"; 
+                                
+                        }				
+                            
+                }
+                document.getElementById("GetPhoneList").value =GetPhoneList;
+        }
+        
+        //전화번호 셋팅 함수
+        
+        function SetRecvPhone(){
+            var	result		=	500;
+            var sRecvPhone = document.all.sRecvPhone.value;
+                result = LGOpenAPIX.SetRecvPhone(sRecvPhone)
+                
+                switch (result)
+                {
+                case 0: alert("기타오류"); break;
+                case 200: alert("서버로 요청 성공함"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 3001: alert("수신번호 오류(자릿수 최소 8 자리)"); break;
+                case 4005: alert("수신번호 오류"); break;
+                case 4004: alert("수신번호 개수 오류(최대32개)"); break;
+                default : alert(result);
+                }
+                GetRecvPhone();	
+        }
+        
+        //세팅된 전화번호 가져오는 함수
+        function GetRecvPhone(){
+            var RecvPhonelist ="";
+            
+            GetPhone = LGOpenAPIX.GetRecvPhone()
+        
+            if( GetPhone != null && GetPhone != undefined )
+                    {
+                var GetPhoneArray 	=	( new VBArray( GetPhone ) ).toArray();
+                
+                for( i = 0; i < GetPhoneArray.length; i++ )
+                            {
+                            RecvPhonelist += GetPhoneArray[ i ].Callee +  "\n";
+                            }
+                    }else	{
+                            RecvPhonelist		+=	"찾을 수 없음";
+                            }
+                document.getElementById("RecvPhonelist").value =RecvPhonelist;	
+        }
+        
+        //세팅된 전화번호 삭제 함수
+        function RemoveRecvPhone(){
+            var	result		=	500;
+                var sRecvPhone = document.all.sRecvPhone.value;
+                result	=	LGOpenAPIX.RemoveRecvPhone(sRecvPhone);
+                switch (result)
+                {
+                case 0: alert("기타오류"); break;
+                case 200: alert("서버로 요청 성공함");break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 4001: alert("전화번호 존재하지 않음"); break;
+                default: alert(result);
+                }
+                GetRecvPhone();	
+        }
+        
+        //세팅된 전화번호 전체삭제 함수
+        function RemoveAllRecvPhone(){
+            var	result		=	500;
+                result	=	LGOpenAPIX.RemoveAllRecvPhone();
+                switch (result)
+                {
+                case 0: alert("기타 오류"); break;
+                case 200: alert("서버로 요청 성공함"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                default : alert(result);
+                }
+                GetRecvPhone();	
+        }
+        
+        //전화걸기 요청 함수
+        function SendCTC(){
+            var	result		=	500;
+                var sCaller		=	document.all.sCaller.value;
+                var sCallee	=	document.all.sCallee.value;
+                result	=	LGOpenAPIX.SendCTC(sCaller, sCallee);
+                
+                switch (result)
+                {
+                case 200: alert("서버로 요청성공함"); break;
+                case 2000: alert("로그인 되어있지 않음"); break;
+                case 3000: alert("수신/발신 번호가 동일"); break;
+                case 3001: alert("수신번호 오류(자리수 최소 8자리)"); break;
+                case 4002: alert("전화걸기를 할 수 있는 전화번호가 아님"); break;
+                case 4101: alert("핸드폰에 전화를 걸 권한이 없음"); break;
+                case 4102: alert("국제전화를 걸 권한이 없음"); break;
+                case 4103: alert("시내전화를 걸 권한이 없음"); break;
+                case 4104: alert("시외전화를 걸 권한이 없음"); break;
+                default : alert(result);
+                }
+        
+        }
+        //다자통화 요청 함수
+        function SendCON(){
+            var result = 500;
+            var sCaller	 =	document.all.sCaller.value;
+            var sRecvPhone	 =	document.all.sRecvPhone.value;
+                LGOpenAPIX.SetRecvPhone( sRecvPhone );
+                result = LGOpenAPIX.SendCON(sCaller);
+            alert(result);
+            switch (result)
+                {
+                case 200: alert("서버로 요청성공함"); break;
+                case 2000: alert("로그인 되어있지 않음"); break;
+                case 3000: alert("수신/발신 번호가 동일"); break;
+                case 3001: alert("수신번호 오류(자리수 최소 8자리)"); break;
+                case 4002: alert("전화걸기를 할 수 있는 전화번호가 아님"); break;
+                case 4101: alert("핸드폰에 전화를 걸 권한이 없음"); break;
+                case 4102: alert("국제전화를 걸 권한이 없음"); break;
+                case 4103: alert("시내전화를 걸 권한이 없음"); break;
+                case 4104: alert("시외전화를 걸 권한이 없음"); break;
+                default : alert(result);
+                }
+        }
+        
+        //다자통화 사용자 추가 함수
+        function SendCONAddUser()
+            {
+                var	result		=	500;
+                var sCaller		=	document.all.sCaller.value;
+                var sCallee	=	document.all.sCallee.value;
+                var sDBID		=	document.all.sDBID.value;
+                result = LGOpenAPIX.SendCONAddUser(sDBID, sCaller, sCallee );
+                switch (result)
+                {
+                case 200: alert("서버로 요청성공함"); break;
+                case 2000: alert("로그인 되어있지 않음"); break;
+                case 3000: alert("수신/발신 번호가 동일"); break;
+                case 3001: alert("수신번호 오류(자리수 최소 8자리)"); break;
+                case 4002: alert("전화걸기를 할 수 있는 전화번호가 아님"); break;
+                case 4101: alert("핸드폰에 전화를 걸 권한이 없음"); break;
+                case 4102: alert("국제전화를 걸 권한이 없음"); break;
+                case 4103: alert("시내전화를 걸 권한이 없음"); break;
+                case 4104: alert("시외전화를 걸 권한이 없음"); break;
+                default : alert(result);
+                }
+        
+            }
+        //다자통화 사용자 삭제 함수
+        function SendCONKickOutUser(){
+                var	result		=	500;
+                var sCaller		=	document.all.sCaller.value;
+                var sCallee	=	document.all.sCallee.value;
+                var sDBID		=	document.all.sDBID.value;
+                result = LGOpenAPIX.SendCONKickOutUser(sDBID, sCaller, sCallee );
+                switch (result)
+                {
+                case 200: alert("서버로 요청성공함"); break;
+                case 2000: alert("로그인 되어있지 않음"); break;
+                case 3000: alert("수신/발신 번호가 동일"); break;
+                case 3001: alert("수신번호 오류(자리수 최소 8자리)"); break;
+                case 4002: alert("전화걸기를 할 수 있는 전화번호가 아님"); break;
+                case 4101: alert("핸드폰에 전화를 걸 권한이 없음"); break;
+                case 4102: alert("국제전화를 걸 권한이 없음"); break;
+                case 4103: alert("시내전화를 걸 권한이 없음"); break;
+                case 4104: alert("시외전화를 걸 권한이 없음"); break;
+                default : alert(result);
+                }
+        }
+        //문자 전송요청 함수
+        function SendSMS(){
+                var	result		=	500;
+                var MsCaller		=	document.all.MsCaller.value;
+                var sDisplay	=	document.all.sDisplay.value;
+                var sMessage		=	document.all.sMessage.value;
+        
+            result = LGOpenAPIX.SendSMS( MsCaller, sDisplay, sMessage);
+                switch(result){
+                case 0: alert("서버 요청 실패"); break;
+                case 200: alert("서버로 요청 성공함"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 4001: alert("수신번호 없음"); break;
+                case 4003: alert("메세지 없음"); break;
+                case 4004: alert("SMS 발신 한도 초과"); break;
+                case 4005: alert("발신번호 오류"); break;
+                case 4006: alert("메세지 길이 오류(최대 80bytes)"); break;
+                default : alert(result);
+            }
+        }
+        
+        // 예약 문자 전송 함수 
+        function SendReserveSMS(){
+                var	result		=	500;
+                var sRecvPhone = document.all.sRecvPhone.value;
+                var MsCaller		=	document.all.MsCaller.value;
+                var sDisplay		=	document.all.sDisplay.value;
+                var sMessage		=	document.all.sMessage.value;
+                var sSendDate		=	document.all.sSendDate.value;
+                var ReserveSMS	 ="";
+                var list		= "";
+            
+            result = LGOpenAPIX.SendReserveSMS( MsCaller, sDisplay, sMessage, sSendDate);
+            
+            GetPhone = LGOpenAPIX.GetRecvPhone();
+            if( GetPhone != null && GetPhone != undefined )
+                    {
+                var GetPhoneArray 	=	( new VBArray( GetPhone ) ).toArray();
+                
+                for( i = 0; i < GetPhoneArray.length; i++ )
+                            {
+                                list = GetPhoneArray[ i ].Callee;
+                            }
+                    }
+        
+        
+            if (result=="0")
+            {
+                alert("서버 요청 실패 또는 요청 번호 에러");
+            }else{ 
+                ReserveSMS += "발신번호" + MsCaller +
+                    ", 회신번호:" + sDisplay +
+                    ", 수신번호:" + list +
+                    ", 예약시간:" + sSendDate +
+                    ", 메시지:" + sMessage +
+                    ", 문자그룹번호:"+ result	+ "\n";
+                }
+            document.getElementById("SendReserveSMS").value =ReserveSMS;	
+        }
+        // 예약문자 수정 요청 함수
+        function EditReserveSMS(){
+                var	result		=	500;
+                var MsCaller		=	document.all.MsCaller.value;
+                var sSmsGroupSeqNo 	=	document.all.sSmsGroupSeqNo.value;
+                var sDisplay		=	document.all.sDisplay.value;
+                var sMessage		=	document.all.sMessage.value;
+                var sSendDate		=	document.all.sSendDate.value;
+                var ReserveSMS	 ="";
+                var list		= "";
+        
+            GetPhone = LGOpenAPIX.GetRecvPhone();
+                    if( GetPhone != null && GetPhone != undefined )
+                            {
+                        var GetPhoneArray 	=	( new VBArray( GetPhone ) ).toArray();
+                        
+                        for( i = 0; i < GetPhoneArray.length; i++ )
+                                    {
+                                        list = list + GetPhoneArray[ i ].Callee;
+                                    }
+                            }
+        
+        alert(list);
+        
+            result = LGOpenAPIX.EditReserveSMS( MsCaller, sSmsGroupSeqNo, sMessage, sSendDate);
+            switch(result){
+                case 0: alert("서버 요청 실패"); break;
+                case 200: alert("서버로 요청 성공함"); 
+                    ReserveSMS += "발신번호" + MsCaller +
+                        ", 회신번호:" + sDisplay +
+                        ", 수신번호:" + list +
+                        ", 예약시간:" + sSendDate +
+                        ", 메시지:" + sMessage +
+                        ", 문자그룹번호:"+ sSmsGroupSeqNo; break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 4200: alert("문자 보낼 시간 포맷이 잘못됨"); break;
+                case 4201: alert("문자 보낼 시간이 잘못됨"); break;
+                default : alert(result);
+            }
+                document.getElementById("SendReserveSMS").value =ReserveSMS;	
+        
+        }
+        // 예약 문자 취소 요청 함수
+        function CancelReserveSMS(){
+                var	result		=	500;
+                var MsCaller		=	document.all.MsCaller.value;
+                var sSendDate		=	document.all.sSendDate.value;
+                
+                result = LGOpenAPIX.CancelReserveSMS( MsCaller, sSendDate);
+            switch(result){
+                case 0: alert("서버 요청 실패(이미 발송된 경우 포함)"); break;
+                case 200: alert("서버로 요청 성공함"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                default : alert(result);
+            }
+        }
+        
+        //부재중 통화 내역 리스트 요청 함수
+        function GetAbsenceCallList(){
+                var CallList = "";
+                var	KTDCallData	=	LGOpenAPIX.GetAbsenceCallList();
+                
+                if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        CallList		+=	"발신번호: "	 + KTDCallDataArray[ i ].Caller 	+ ", " + 
+                                        "수신번호: "		 + KTDCallDataArray[ i ].Callee 	+ ", " +
+                                        "수신날짜: "		 + KTDCallDataArray[ i ].Date 	+ ", " +
+                                        "일련번호: "		 + KTDCallDataArray[ i ].DBID 	+ ", " +
+                                        "결과: "				+ KTDCallDataArray[ i ].Result 	+ "\n"; 
+                    }
+        
+                }else
+                {
+                    CallList	=	"찾을 수 없음";
+                }
+                
+                document.getElementById("GetAbsenceCallList").value =CallList;	
+        }
+        //통화 내역 수 요청 함수
+        function GetCallCount(){
+            var sKind		=	document.all.sKind.value;
+            var kind	 =	"";
+            switch (sKind)
+            {
+            case "1":	kind	 ="전체 통화내역 수 : "; break;
+            case "2":	kind	 ="발신 통화내역 수 : "; break;
+            case "3":	kind	 ="수신 통화내역 수 : "; break;
+            case "4":	kind	 ="부재중 통화내역 수 : "; break;
+            case "5":	kind	 ="실패 : "; break;
+            case "6":	kind	 ="예약전송 : "; break;
+            case "7":	kind	 ="핸드폰 : "; break;
+            default : kind ="";
+            
+            }
+                alert(kind + LGOpenAPIX.GetCallCount(sKind)  );
+        }
+        //통화 내역 리스트 요청 함수
+        function GetCallList(){
+            var sKind		=	document.all.sKind.value;
+            var nStart		=  document.all.nStart.value;
+            var nCount	=  document.all.nCount.value;
+            var CallList = "";
+                var	KTDCallData	=	LGOpenAPIX.GetCallList(sKind, nStart, nCount );
+                
+                if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        CallList		+=	"발신 : "	+ KTDCallDataArray[ i ].Caller	+
+                                    ", 수신 : "		+ KTDCallDataArray[ i ].Callee	+
+                                    ", 수신날짜 : " + KTDCallDataArray[ i ].Date	+
+                                    ", 일련번호 : " + KTDCallDataArray[ i ].DBID	+
+                                    ", 결과 : "		+ KTDCallDataArray[ i ].Result	+ "\n"; 
+                    }
+                }
+                else
+                {
+                    CallList	=	"찾을 수 없음";
+                }
+            document.getElementById("GetAbsenceCallList").value =CallList;	
+        }
+        //통화 내역 상세 정보 함수
+        function GetCall (){
+        var CallsDBID = document.all.CallsDBID.value;
+            var	KTDCallData  =	LGOpenAPIX.GetCall(CallsDBID);
+        if( KTDCallData != null && KTDCallData != undefined )
+                {	
+                    alert(		"발신 : "		+ KTDCallData.Caller	+	
+                        ", 수신 : "		+ KTDCallData.Callee	+
+                        ", 수신날짜 : " + KTDCallData.Date		+
+                        ", 일련번호 : " + KTDCallData.DBID		+
+                        ", 결과 : "		+ KTDCallData.Result 
+                                );	
+                }else
+                {
+                    alert("찾을 수 없음");
+                }
+        }
+        //통화 내역 삭제 요청 함수
+        function DelCall()
+        {
+            var	result		=	500;
+            var CallsDBID = document.all.CallsDBID.value;
+            result = LGOpenAPIX.DelCall(CallsDBID);
+            if (result == "0")
+            {
+                alert("서버 요청 실패(이미 발송된 경우 포함)");
+            }else if (result =="200")
+            {	
+                alert("서버로 요청 성공함")
+            }else if (result =="2000")
+            {	
+                alert("로그인 되어 있지 않음")
+            }else {
+                alert(result)	
+            }
+        
+        GetCallList();
+        }
+        
+        //부재중 문자 내역 리스트 요청 함수
+        function GetAbsenceSmsList()
+        {
+            var GetSmsList	= "";
+            var	KTDCallData  =	LGOpenAPIX.GetAbsenceSmsList();
+        
+            if( KTDCallData != null && KTDCallData != undefined )
+                {
+            var KTDCallDataArray	=	( new VBArray( KTDCallData ) ).toArray();
+            
+                for( i = 0; i < KTDCallDataArray.length; i++ )
+                        {
+                            GetSmsList +=
+                                "발신 : "			+ KTDCallDataArray[ i ].Caller	 +
+                                ", 수신 : "			+ KTDCallDataArray[ i ].Callee	 +
+                                ", 수신날짜 : "		+ KTDCallDataArray[ i ].Date	 +
+                                ", 일련번호 : "		+ KTDCallDataArray[ i ].DBID	 +
+                                ", 문자메시지 : "	+ KTDCallDataArray[ i ].Message  +
+                                ", 결과 : "			+ KTDCallDataArray[ i ].Result  + "\n";
+                                                
+                        }	
+                        
+                }else{
+                    GetSmsList = "찾을 수 없음"
+                }
+                document.getElementById("GetAbsenceSmsList").value =GetSmsList;	
+        }
+        
+        //문자 내역 수 요청 함수
+        function GetSmsCount()
+        {
+            var SmssKind = document.all.SmssKind.value;
+            alert(LGOpenAPIX.GetSmsCount(SmssKind));
+        }
+        
+        //문자 내역 리스트 요청 함수
+        function GetSmsList()
+        {	
+            var GetSmsList	= ""; 
+            var SmssKind	=	document.all.SmssKind.value;
+            var SmsnStart	=	document.all.SmsnStart.value;
+            var SmsnCount	=	document.all.SmsnCount.value;
+            
+                var	KTDCallData	=	LGOpenAPIX.GetSmsList(SmssKind, SmsnStart, SmsnCount );
+                
+                if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        GetSmsList		+=	"발신 : "		+	KTDCallDataArray[ i ].Caller	+
+                                    ", 수신 : "			+	KTDCallDataArray[ i ].Callee	+
+                                    ", 수신날짜 : "		+	KTDCallDataArray[ i ].Date		+
+                                    ", 일련번호 : "		+	KTDCallDataArray[ i ].DBID		+
+                                    ", 문자메세지 : "	+	KTDCallDataArray[ i ].Message	+
+                                    ", 결과 : "			+	KTDCallDataArray[ i ].Result	+ "\n"; 
+                    }
+                }
+                else
+                {
+                    GetSmsList	=	"찾을 수 없음";
+                }
+        
+                document.getElementById("GetAbsenceSmsList").value =GetSmsList;	
+        }
+        
+        //문자 내역 상세 정보 함수
+        function GetSms()
+        {
+            var SmssDBID = document.all.SmssDBID.value;
+            var	KTDCallData  =	LGOpenAPIX.GetSms(SmssDBID);
+                
+                if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    alert(		"발신 : "			+	KTDCallData.Caller	+
+                                ", 수신 : "			+	KTDCallData.Callee	+
+                                ", 수신날짜 : "		+	KTDCallData.Date	+
+                                ", 일련번호 : "		+	KTDCallData.DBID	+
+                                ", 문자메세지 : "	+	KTDCallData.Message +
+                                ", 결과 : "			+	KTDCallData.Result 
+                                        );					
+                }else{
+                    alert("찾을 수 없음");
+                }
+        }
+        
+        //문자 내역 삭제 함수
+        function DelSms()
+        {
+            var	result		=	500;
+            var SmssDBID = document.all.SmssDBID.value;
+            result = LGOpenAPIX.DelSms(SmssDBID);
+            if (result == "0")
+            {
+                alert("서버 요청 실패");
+            }else if (result =="200")
+            {	
+                alert("서버로 요청 성공함");
+            }else if (result =="2000")
+            {	
+                alert("로그인 되어 있지 않음");
+            }else {
+                alert(result);
+            }
+            GetSmsList();
+        }
+        // 통화 메모 수 요청 함수
+        function GetCallMemoCount(){
+                var cCmType = document.all.cCmType.value;
+                var type ="";
+                if (cCmType == "1")
+                {
+                    type="개인 통화 메모 갯수 : ";
+                }else if (cCmType == "2")
+                {
+                    type="공유 통화 메모 갯수 : ";
+                }
+                alert(type + LGOpenAPIX.GetCallMemoCount(cCmType));
+        }
+        
+        //통화 메모 내역 리스트 요청 함수
+        function GetCallMemoList(){
+                var cCmType = document.all.cCmType.value;
+        
+                var MemonStart = document.all.MemonStart.value;
+                var MemonCount = document.all.MemonCount.value;
+                var MemoList ="";
+                var	KTDCallData	=	LGOpenAPIX.GetCallMemoList(cCmType, MemonStart, MemonCount );
+        
+            if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        MemoList		+=	"발신 : "		+	KTDCallDataArray[ i ].Caller	+
+                                    ", 수신 : "			+	KTDCallDataArray[ i ].Callee	+
+                                    ", 통화내역일련번호 : "		+	KTDCallDataArray[ i ].CLDBID 		+
+                                    ", 통화메모일련번호 : "		+	KTDCallDataArray[ i ].DBID 		+
+                                    ", 발신자이름 : "		+	KTDCallDataArray[ i ].CallName 	+
+                                    ", 통화메모 : "	+	KTDCallDataArray[ i ].Memo 	+
+                                    ", 메모그룹 : "	+	KTDCallDataArray[ i ].MemoGroup 	+
+                                    ", 진행상태 : "	+	KTDCallDataArray[ i ].ProgGroup 	+
+                                    ", 수신날짜 : "	+	KTDCallDataArray[ i ].Date 	+
+                                    ", 메모타입 : "	+	KTDCallDataArray[ i ].Type 	+
+                                    ", 최종수정시간 : "			+	KTDCallDataArray[ i ].UDate 	+ "\n"; 
+                    }
+                }
+                else
+                {
+                    MemoList	=	"찾을 수 없음";
+                }
+        
+                document.getElementById("GetCallMemoCount").value =MemoList;	
+        }
+        
+        //통화 메모 내역 요청 함수 
+        function GetCallMemo(){
+                var cCmType = document.all.cCmType.value;
+                var MemosDBID  = document.all.MemosDBID  .value;
+                var KTDCallData = LGOpenAPIX.GetCallMemo(cCmType, MemosDBID);
+                var type="";
+                if( KTDCallData != null && KTDCallData != undefined )
+                {
+                
+                if (KTDCallData.Type == "1")
+                {
+                    type = "개인 통화 메모";
+                }else if (KTDCallData.Type == "2")
+                {
+                    type = "공유 통화 메모";
+                }
+                alert(		"발신 : "			+	KTDCallData.Caller	+
+                        ", 수신 : "			+	KTDCallData.Callee	+
+                        ", 통화내역일련번호 : "		+	KTDCallData.CLDBID 	+
+                        ", 통화메모일련번호 : "		+	KTDCallData.DBID	+
+                        ", 발신자 : "		+	KTDCallData.CallName  +
+                        ", 통화메모 : "	+	KTDCallData.Memo  +
+                        ", 메모그룹 : "	+	KTDCallData.MemoGroup  +
+                        ", 진행상태 : "	+	KTDCallData.ProgGroup  +
+                        ", 수신날짜 : "	+	KTDCallData.Date  +
+                        ", 통화내역 고유 일련번호 : "	+	KTDCallData.LogicID  +
+                        ", 타입 : "	+	type  +
+                        ", 최종수정시간 : "			+	KTDCallData.UDate  
+                            );					
+                }else{
+                    alert("찾을 수 없음");
+                }
+        
+        }
+        
+        //통화 메모 추가 요청 함수
+        function NewCallMemo(){
+                var	result		=	500;
+                var cCmType = document.all.cCmType.value;
+                var sCLDBID = document.all.sCLDBID.value;
+                var sCallName = document.all.sCallName.value;
+                var sCallGroup = document.all.sCallGroup.value;
+                var sProgGroup = document.all.sProgGroup.value;
+                var sMemo = document.all.sMemo.value;
+                
+                result = LGOpenAPIX.NewCallMemo(cCmType, sCLDBID, sCallName, sCallGroup,sProgGroup, sMemo);
+                
+                if (result == "0")
+                {
+                    alert("로그인 되어 있지 않거나 요청 에러");
+                }else{		
+                    alert("신규 통화 메모 일련번호 :" + result)
+                }
+                GetCallMemoList();
+        }
+        //통화 메모 수정 요청 함수
+        function EditCallMemo(){
+                
+                var	result		=	500;
+                var cCmType = document.all.cCmType.value;
+                var MemosDBID = document.all.MemosDBID.value;
+                var sCallName = document.all.sCallName.value;
+                var sCallGroup = document.all.sCallGroup.value;
+                var sProgGroup = document.all.sProgGroup.value;
+                var sMemo = document.all.sMemo.value;
+        
+                result = LGOpenAPIX.EditCallMemo(cCmType, MemosDBID, sCallName, sCallGroup,sProgGroup, sMemo);
+        
+            switch (result)
+            {
+            case 200: alert("통화메모 수정 요청 성공");break;
+            case 2000: alert("로그인 되어 있지 않음");break;
+            case 4300: alert("통화 메모 이름 길이가 30byte를 초과"); break;
+            case 4301: alert("통화 메모 길이가 256byte를 초과"); break;
+            default : alert("신규 통화 메모 일련번호" + result );	
+            }
+            GetCallMemoList();
+        }
+        //통와 메모 삭제 요청 함수
+        function DelCallMemo(){
+                var	result		=	500;
+                var cCmType = document.all.cCmType.value;
+                var MemosDBID = document.all.MemosDBID.value;
+                result	=	LGOpenAPIX.DelCallMemo(cCmType, MemosDBID);
+                switch (result)
+                {
+                case 200: alert("통화메모 삭제 요청 성공");break;
+                case 2000: alert("로그인 되어 있지 않음");break;
+                case 4300: alert("통화 메모 이름 길이가 30byte를 초과"); break;
+                case 4301: alert("통화 메모 길이가 256byte를 초과"); break;
+                default : alert("신규 통화 메모 일련번호" + result );	
+                }
+                GetCallMemoList();
+        }
+        
+        //주소록 그룹 리스트 요청 함수
+        function GetAddressGroupList(){
+                var cAgType = document.all.cAgType.value;
+                var sPDBID = document.all.sPDBID.value;
+                var GroupList ="";
+                var	KTDCallData	=	LGOpenAPIX.GetAddressGroupList(cAgType, sPDBID);
+        
+            if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        GroupList		+=	"그룹 일련번호 : "		+	KTDCallDataArray[ i ].DBID 	+
+                                    ", 그룹 타입 : "			+	KTDCallDataArray[ i ].Type 	+
+                                    ", 그룹 이름 : "		+	KTDCallDataArray[ i ].Name  		+
+                                    ", 부모 그룹 일련번호 : "		+	KTDCallDataArray[ i ].PDBID  		+
+                                        "\n"; 
+                    }
+                }
+                else
+                {
+                    GroupList	=	"찾을 수 없음";
+                }
+        
+                document.getElementById("GetAddressGroupList").value =GroupList;	
+        }
+        
+        //주소록 그룹 정보 가져오기 요청 함수
+        function GetAddressGroup(){
+                var cAgType = document.all.cAgType.value;
+                var GroupsDBID = document.all.GroupsDBID.value;
+                var	KTDCallData	=	LGOpenAPIX.GetAddressGroup(cAgType, GroupsDBID);
+            
+            if( KTDCallData != null && KTDCallData != undefined )
+                {
+                alert (	
+                    "그룹 일련 번호 : " + KTDCallData.DBID	+	
+                    ", 그룹 타입" + KTDCallData.Type 	+
+                    ", 그룹 이름" + KTDCallData.Name 	+
+                    ", 부모 그룹 일련번호" + KTDCallData.PDBID 
+                );		
+                }else {
+                    alert ("찾을 수 없음")
+                }
+        }
+        
+        //신규 주소록 그룹 추가 함수
+        function NewAddressGroup(){
+                var result = 500;
+                var cAgType = document.all.cAgType.value;
+                var sAgName = document.all.sAgName.value;
+                var sPDBID = document.all.sPDBID.value;
+                
+                result	=	LGOpenAPIX.NewAddressGroup(cAgType, sAgName, sPDBID);
+        
+                if (result == "0")
+                {
+                    alert("신규 주소록 그룹 추가 요청 실패");
+                }else{
+                    alert("신규 주소록 그룹 일련번호 : " + result);
+                }
+                GetAddressGroupList();
+        }
+        
+        //주소록 그룹 수정 함수
+        function EditAddressGroup(){
+                var result = 500;
+                var cAgType = document.all.cAgType.value;
+                var sPDBID = document.all.sPDBID.value;
+                var sAgName = document.all.sAgName.value;
+                var GroupsDBID = document.all.GroupsDBID.value;
+        
+                result	=	LGOpenAPIX.EditAddressGroup(cAgType, sAgName, sPDBID, GroupsDBID);
+                switch (result)
+                {
+                case 0: alert("주소록 변경 요청 실패"); break;
+                case 200: alert("주소록 그룹 변경 요청 성공"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 4400: alert("변경할 주소록 그룹 이름이 없음"); break;
+                case 4401: alert("주소록 그룹을 찾을 수 없음"); break;
+                case 4402: alert("이미 동일한 주소록 그룹을 가지고 있음"); break;
+                case 4301: alert("통화 메모 길이가 256 byte를 초과"); break;
+                default: alert(result);	
+                }
+                GetAddressGroupList();
+        }
+        
+        // 주소록 그룹 삭제 함수
+        function DelAddressGroup(){
+                var result = 500;
+                var cAgType = document.all.cAgType.value;
+                var GroupsDBID = document.all.GroupsDBID.value;
+                result =  LGOpenAPIX.DelAddressGroup(cAgType, GroupsDBID);
+                switch (result)
+                {
+                case 0: alert("주소록 그룹 삭제 요청 실패"); break;
+                case 200: alert("주소록 그룹 삭제 요청 성공"); break;
+                case 2000: alert("로그인 되어 있지 않음"); break;
+                case 4401: alert("주소록 그룹을 찾을 수 없음"); break;
+                default: alert(result);	
+                }
+                GetAddressGroupList();
+        }
+        
+        //주소록 사용자 리스트 요청 함수
+        function GetAddressDataList(){
+                var DatacAgType = document.all.DatacAgType.value;
+                var DatasPDBID  = document.all.DatasPDBID.value;
+                
+                var DataList ="";
+                var	KTDCallData	=	LGOpenAPIX.GetAddressDataList(DatacAgType, DatasPDBID);
+        
+            if( KTDCallData != null && KTDCallData != undefined )
+                {
+                    var KTDCallDataArray = ( new VBArray(KTDCallData)).toArray();
+        
+                    for( i = 0; i < KTDCallDataArray.length; i++ )
+                    {
+                        DataList		+=	"일련번호 : "		+	KTDCallDataArray[ i ].DBID 	+
+                                    ", 이름 : "			+	KTDCallDataArray[ i ].Name         	+
+                                    ", 타입 : "		+	KTDCallDataArray[ i ].Type           		+
+                                    ", 집주소 : "		+	KTDCallDataArray[ i ].Address       		+
+                                    ", 생년월일 : "		+	KTDCallDataArray[ i ].BirthDay      		+
+                                    ", 음력0, 양력1 : "		+	KTDCallDataArray[ i ].BirthDay      		+
+                                    ", 업무 : "		+	KTDCallDataArray[ i ].Business      		+
+                                    ", 회사명 : "		+	KTDCallDataArray[ i ].CompanyName   		+
+                                    ", 부서명 : "		+	KTDCallDataArray[ i ].Department    		+
+                                    ", 이메일 : "		+	KTDCallDataArray[ i ].Email         		+
+                                    ", 관심사 : "		+	KTDCallDataArray[ i ].Favorite      		+
+                                    ", 팩스 : "		+	KTDCallDataArray[ i ].FaxNum        		+
+                                    ", 집 전화 : "		+	KTDCallDataArray[ i ].HomeNum       		+
+                                    ", 추천인 : "		+	KTDCallDataArray[ i ].Keyman        		+
+                                    ", 인물메모 : "		+	KTDCallDataArray[ i ].Memo          		+
+                                    ", 만난상황 : "		+	KTDCallDataArray[ i ].MetChance     		+
+                                    ", 핸드폰번호 : "		+	KTDCallDataArray[ i ].MobileNum     		+
+                                    ", 회사전화 : "		+	KTDCallDataArray[ i ].OfficeNum     		+
+                                    ", 직책 : "		+	KTDCallDataArray[ i ].Position      		+
+                                    ", 우편번호 : "		+	KTDCallDataArray[ i ].ZipCode       		+
+                                    "\n"; 
+                    }
+                }
+                else
+                {
+                    DataList =	 "찾을 수 없음"
+                }
+        
+                document.getElementById("GetAddressDataList").value =DataList;	
+                
+        }
+        
+        //주소록 사용자 정보 요청 함수
+        function GetAddressData(){
+                    var DatacAgType = document.all.DatacAgType.value;
+                    var DatasDBID  = document.all.DatasDBID.value;
+        
+                    var	KTDAddressData   =	LGOpenAPIX.GetAddressData(DatacAgType, DatasDBID);
+                                
+                                alert(
+                                "일련번호: "	+	KTDAddressData.DBID	+
+                                ", 이름: "			+	KTDAddressData.Name	+
+                                ", 타입: "	+	KTDAddressData. Type	+
+                                ", 집주소: "		+	KTDAddressData.Address	+
+                                ", 생년월일: "		+	KTDAddressData.BirthDay	+
+                                ", 음력0,양력1: "	+	KTDAddressData.BirthType	+
+                                ", 업무: "			+	KTDAddressData.Business	+
+                                ", 회사명: "		+	KTDAddressData.CompanyName	 	+
+                                ", 부서명: "		+	KTDAddressData.Department	+
+                                ", 이메일주소: "	+	KTDAddressData.Email	+
+                                ", 관심사: "		+	KTDAddressData.Favorite	+
+                                ", 팩스번호: "		+	KTDAddressData.FaxNum	+
+                                ", 집전화번호: "	+	KTDAddressData.HomeNum	+
+                                ", 추천인: "		+	KTDAddressData.Keyman	+
+                                ", 인물메모: "		+	KTDAddressData.Memo	+
+                                ", 만난상황: "		+	KTDAddressData.MetChance	+
+                                ", 핸드폰: "	+	KTDAddressData.MobileNum	+
+                                ", 회사전화: "	+	KTDAddressData.OfficeNum	+
+                                ", 직책: "			+	KTDAddressData.Position	+
+                                ", 우편번호: "		+	KTDAddressData.ZipCode
+                                );			
+                        document.getElementById("sAdName").value = KTDAddressData.Name;	
+                        document.getElementById("sAdAddress").value = KTDAddressData.Address;
+                        document.getElementById("sAdBirthDay").value = KTDAddressData.BirthDay;
+                        document.getElementById("cAdBirthType").value = KTDAddressData.BirthType;
+                        document.getElementById("sAdBusiness").value = KTDAddressData.Business;
+                        document.getElementById("sAdCompany").value = KTDAddressData.CompanyName;
+                        document.getElementById("sAdTeam").value = KTDAddressData.Department;
+                        document.getElementById("sAdEmail").value = KTDAddressData.Email;
+                        document.getElementById("sAdFNumber").value = KTDAddressData.FaxNum;
+                        document.getElementById("sAdFavorite").value = KTDAddressData.Favorite;
+                        document.getElementById("sAdHNumber").value = KTDAddressData.HomeNum;
+                        document.getElementById("sAdKeyMan").value = KTDAddressData.Keyman;
+                        document.getElementById("sAdMemo").value = KTDAddressData.Memo;
+                        document.getElementById("sAdMetChange").value = KTDAddressData.MetChance;
+                        document.getElementById("sAdMNumber").value = KTDAddressData.MobileNum;
+                        document.getElementById("sAdONumber").value = KTDAddressData.OfficeNum;
+                        document.getElementById("sAdTitle").value = KTDAddressData.Position;
+                        document.getElementById("sAdZipCode").value = KTDAddressData.ZipCode;
+                        
+        
+        }
+        
+        //주소록 사용자 추가 요청 함수
+        function NewAddressData(){
+                    var result = 500;
+                    var DatacAgType = document.all.DatacAgType.value;
+                    var DatasPDBID  = document.all.DatasPDBID.value;
+                    var sAdName  = document.all.sAdName.value;
+                    var sAdMNumber  = document.all.sAdMNumber.value;
+                    var sAdONumber  = document.all.sAdONumber.value;
+                    var sAdHNumber  = document.all.sAdHNumber.value;
+                    var sAdFNumber  = document.all.sAdFNumber.value;
+                    var sAdCompany  = document.all.sAdCompany.value;
+                    var sAdTeam  = document.all.sAdTeam.value;
+                    var sAdTitle  = document.all.sAdTitle.value;
+                    var sAdBusiness  = document.all.sAdBusiness.value;
+                    var sAdZipCode  = document.all.sAdZipCode.value;
+                    var sAdAddress  = document.all.sAdAddress.value;
+                    var sAdEmail  = document.all.sAdEmail.value;
+                    var sAdMemo  = document.all.sAdMemo.value;
+                    var sAdBirthDay  = document.all.sAdBirthDay.value;
+                    var cAdBirthType  = document.all.cAdBirthType.value;
+                    var sNgName  = document.all.sNgName.value;
+                    var sAdMetChance  = document.all.sAdMetChance.value;
+                    var sAdKeyman  = document.all.sAdKeyman.value;
+                    var sAdFavorite  = document.all.sAdFavorite.value;
+        
+            result   =	LGOpenAPIX.NewAddressData( DatacAgType, DatasPDBID, sAdName,  sAdMNumber, sAdONumber,  sAdHNumber, sAdFNumber,  sAdCompany, sAdTeam,  sAdTitle, sAdBusiness,  sAdZipCode, sAdAddress,  sAdEmail, sAdMemo,  sAdBirthDay, cAdBirthType,  sNgName, sAdMetChance,  sAdKeyman, sAdFavorite);
+        
+                    if (result =="0")
+                    {
+                        alert("주소록 사용자 추가 서버 요청 실패");
+                    }else{
+                        alert("일련번호" + result);
+                    }
+                    GetAddressDataList()
+        }
+        
+        //주소록 사용자 수정 함수
+        function EditAddressData(){
+                var result = 500;
+                var DatacAgType = document.all.DatacAgType.value;
+                    var DatasPDBID  = document.all.DatasPDBID.value;
+                    var DatasDBID  = document.all.DatasDBID.value;
+                    var sAdName  = document.all.sAdName.value;
+                    var sAdMNumber  = document.all.sAdMNumber.value;
+                    var sAdONumber  = document.all.sAdONumber.value;
+                    var sAdHNumber  = document.all.sAdHNumber.value;
+                    var sAdFNumber  = document.all.sAdFNumber.value;
+                    var sAdCompany  = document.all.sAdCompany.value;
+                    var sAdTeam  = document.all.sAdTeam.value;
+                    var sAdTitle  = document.all.sAdTitle.value;
+                    var sAdBusiness  = document.all.sAdBusiness.value;
+                    var sAdZipCode  = document.all.sAdZipCode.value;
+                    var sAdAddress  = document.all.sAdAddress.value;
+                    var sAdEmail  = document.all.sAdEmail.value;
+                    var sAdMemo  = document.all.sAdMemo.value;
+                    var sAdBirthDay  = document.all.sAdBirthDay.value;
+                    var cAdBirthType  = document.all.cAdBirthType.value;
+                    var sNgName  = document.all.sNgName.value;
+                    var sAdMetChance  = document.all.sAdMetChance.value;
+                    var sAdKeyman  = document.all.sAdKeyman.value;
+                    var sAdFavorite  = document.all.sAdFavorite.value;
+        
+            result   =	LGOpenAPIX.EditAddressData( DatacAgType, DatasPDBID, DatasDBID, sAdName,  sAdMNumber, sAdONumber,  sAdHNumber, sAdFNumber,  sAdCompany, sAdTeam,  sAdTitle, sAdBusiness,  sAdZipCode, sAdAddress,  sAdEmail, sAdMemo,  sAdBirthDay, cAdBirthType,  sNgName, sAdMetChance,  sAdKeyman, sAdFavorite);
+            
+            switch (result)
+            {
+            case 0: alert("주소록 사용자 수정 서버 요청 실패"); break;
+            case 200: alert("주소록 그룹 변경 요청 선공"); break;
+            case 2000: alert("로그인 되어 있지 않음"); break;
+            case 4401: alert("주소록 그룹을 찾을 수 없음"); break;
+            case 4500: alert("주소록 사용자 이름이 없음"); break;
+            case 4502: alert("주소록 사용자 전화번호가 하나도 존재하지 않음"); break;
+            default:alert(result);
+            }
+            GetAddressDataList()
+        }
+        //주소록 사용자 삭제 함수
+        function DelAddressData(){
+                    var result	=	500;
+                    var DatacAgType = document.all.DatacAgType.value;
+                    var DatasPDBID  = document.all.DatasPDBID.value;
+                    var DatasDBID  = document.all.DatasDBID.value;
+                result   =	LGOpenAPIX.DelAddressData( DatacAgType,DatasPDBID, DatasDBID);
+            
+            switch (result)
+            {
+            case 0: alert("주소록 사용자 수정 서버 요청 실패"); break;
+            case 200: alert("주소록 그룹 삭제 요청 선공"); break;
+            case 2000: alert("로그인 되어 있지 않음"); break;
+            case 4500: alert("주소록 사용자 이름이 없음"); break;
+            case 4501: alert("주소록 사용자를 찾을 수 없음"); break;
+            default:alert(result);
+            }
+            GetAddressDataList()
+        }
+        
+        var keycnt = 0;
+        var idcnt = 0;
+        var passcnt = 0;
+        
+        function keyclear(){
+        if (keycnt == 0)
+        {
+            document.all.authkey.value = "";
+        }
+        keycnt =1;
+        }
+        
+        function idclear(){
+        if (idcnt == 0)
+        {
+            document.all.loginID.value = "";
+        }
+        idcnt = 1;
+        }
+        
+        function passclear(){
+        if (passcnt == 0)
+        {
+            document.all.loginPWD.value = "";
+        }
+        passcnt = 1;
+        }
+        
+        
+        function getver(){
+            document.getElementById("verBox").innerText = LGOpenAPIX.GetApiVer();
+        }
+        
+        
+        
+        //회선의 통화 상태(정상통화/착신전환/부재중 착신전환) 설정 함수
+        function SetLineState(){
+            var result = 500;
+            var sTelNum = document.all.sTelNum.value;
+            var sTelState = document.all.sTelState.value;
+            var sRecvTel = document.all.sRecvTel.value;
+            
+            result = LGOpenAPIX.SetLineState( sTelNum, sTelState, sRecvTel);
+        
+            switch (result)
+            {
+            case 0: alert("기타 오류"); break;
+            case 200: alert("서버로 부터 요청 성공함"); break;
+            case 4002: alert("사용가능 회선이 아님"); break;
+            case 4110: alert("통화 상태 변경 권한 없음"); break;
+            case 4111: alert("통화 상태 번호가 잘못됨(sTelState 확인)"); break;
+            case 1600: alert("네트웍 요청 에러"); break;
+            case 1601: alert("네트웍 요청 에러"); break;
+            default:alert(result);
+            }
+            
+        }
+        
+        
+        //-->
+        </script>    
+</head>
+<body>
+    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form>
+        Actas Elevator LG 고객상담서비스 <br>
+        <p>
+        아이디<input type="text"  name="userid" th:value="${userFormDto.userid}" >
+        사용자명<input type="text" name="username" th:value="${userFormDto.username}" > 
+        거래처코드<input type="text"  name="cltcd" th:value="${userFormDto.cltcd}" >
+        DBNAME<input type="text" name="dbnm" th:value="${userFormDto.dbnm}" > 
+        구분<input type="text" name="flag" th:value="${userFormDto.flag}" > 
+        kt id<input type="text" name="calluserid" th:value="${userFormDto.calluserid}" > 
+        kt pw<input type="text" name="calluserpw" th:value="${userFormDto.calluserpw}" > 
+        </p> 
+        <p>
+            
+            <div class="row g-3 mb-3">
+                <div class="col-lg-12">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <div class="row flex-between-center">
+                                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+                                    <h5 class="mb-0" >접수등록</h5>
+                                </div>
+                                <div class="col-8 col-sm-auto ms-auto text-end ps-0"> 
+                                    <div id='inwarnning_div'></div>  
+                                    <div id="orders-actions">
+                                    <button class="btn btn-primary me-1 mb-1" type="button" id="save_btn"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">저장</span></button>  
+                                    <button class="btn btn-outline-info me-1 mb-1" type="button"  id="new_btn"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">신규</span></button>
+                                    <!-- <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button> -->
+                                    </div>                                                                
+                                </div> 
+                            </div>
+                        </div> <!-- lass="card-header"-->
+                        <div class="card-body bg-light">
+                                <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">접수일자</div> 
+                                            <input type="text"  class="datetimepicker" id="recedate" autocomplete="off"   placeholder="Y-m-d"  >
+                                            
+                                            <!-- <input class="form-control datetimepicker" id="datetimepicker" type="text"    placeholder="Y-m-d H:i" data-options='{"enableTime":true,"dateFormat":"Y-m-d H:i","disableMobile":false}' />                                                                                                         -->
+                                            <!-- <input class="form-control form-control-sm" id="codenm04" type="datetime"
+                                                size="20" placeholder="" th:field="*{wfrdt}"   th:value="${itemDto.wfrdt}"/> -->   
+                                        </div>
+                                        
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">고장일자</div>
+                                            <input type="text"  class="form-control datetimepicker" id="hitchdate"   autocomplete="off"   placeholder="Y-m-d"  >
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">현장명</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">호기명</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                     </div>   
+                                </div> 
+                                <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">접수자</div> 
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                        
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">통보자</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">갇힘사고일자</div>
+                                            <input type="text"  class="form-control datetimepicker" id="lockdate" autocomplete="off"   placeholder="Y-m-d"  >
+                                        </div>
+                                    </div>  
+                                </div> 
+                            </div>    
+                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text">고장내용</div> 
+                                        <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                    </div>
+                                </div>   
+                            </div>    
+                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text">비고</div> 
+                                        <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                    </div>
+                                </div>   
+                            </div> 
+                        </div> <!-- class="card-body bg-light" -->
+                    </div> <!--- class="card h-100" --> 
+                </div> <!-- class="col-lg-8">-->
+
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row flex-between-center"> 
+                            <div class="col-8 col-sm-auto ms-auto text-end ps-0"> 
+                                <div id="orders-actions">
+                                    <button class="btn btn-falcon-default btn-sm" type="button" id="addRow"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">행추가</span></button>
+                                    <button class="btn btn-falcon-default btn-sm mx-2" type="button" id="deleteRow"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">행삭제</span></button>
+                                    <!-- <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- lass="card-header"-->
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div id='inwarnning_grid'></div> 
+                            <div id="theGroupPanel"></div>
+                            <div id="theGrid_div"></div>
+                            <div id="thePager01"></div>
+                        </div>  
+                    </div>
+                </div> <!--- class="card mb-3" -->
+            
+            </div> <!--- class="row g-3 mb-3" --> 
+
+        </p>
+
+        <p> 
+  
+            <input class="form-control form-control-sm"  type="hidden" id="pcodebtn" data-bs-toggle="modal" data-bs-target="#pcodemodal"  />  
+        </p>
+
+
+                        <!--------------------------------------------------------------------------------------->   
+                         <!-- the popup editor -->  
+                         <div class="modal fade" id="pcodemodal" data-bs-keyboard="false"
+                         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                         aria-hidden="true">
+                             <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+                                 style="max-width: 500px">
+                                 <div class="modal-content border-0">
+                                     <div class="modal-body p-0" > 
+                                          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                              <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>
+                                              <div class="col-9">
+                                                <input class="form-control form-control-sm" id="searchCode" type="text"    onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                                                    placeholder="현장코드 / 현장명 "     />  
+                                               </div>
+                                               <div class="col-auto">
+                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="wpcodeBtn" type="button" >검색
+                                                    </button>
+                                               </div>  
+                                         </div>   
+                                         <div class="container-fluid"> 
+                                             <div id="wpcodeGrid_div" ></div>
+                                             <div id="thePager02"></div>
+                                         </div>   
+                                      </div>  
+
+                                     <div class="modal-footer">
+                                         <div class="row g-1">
+                                             <div class="col-auto">
+                                                 <button class="badge-soft-primary dropdown-item rounded-1"
+                                                     type="button"  id="wpcodemodal_btn" data-bs-dismiss="modal">Close</button>
+                                             </div> 
+                                         </div>
+                                     </div>   
+
+                                 </div>
+                             </div> 
+                         </div>  
+                    <!--------------------------------------------------------------------------------------->    
+
+
+
+                    <script type="text/javascript" th:inline="javascript"> 
+
+                        var PcodeGrid = ""
+                        var wpcodeGrid= ""
+                        var view_pcodepage = "" 
+
+                        window.onload = function () { 
+                                    var ll_bomchkrow = 0;
+                                    view_flistpage = new wijmo.collections.CollectionView(getData_flist(), {
+                                        groupDescriptions: ['reqdate'], // group data by reqdate
+                                        pageSize: 10
+                                    }); 
+                                    new wijmo.input.CollectionViewNavigator('#thePager01', {
+                                        byPage: true,
+                                        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                                        cv: view_flistpage
+                                    });     
+
+                          
+                                    let customContent = false;
+                                    let includeColumnHeader = false;
+                                    PcodeGrid = new wijmo.grid.FlexGrid('#theGrid_div', {
+                                        autoGenerateColumns: false,
+                                        showMarquee: true,
+                                        isReadOnly: false, 
+                                        allowSorting: 'MultiColumn',
+                                        columns: [
+                                            // { binding: 'index', header: 'seq', width: '*' },
+                                            { binding: 'pcode', header: '품목코드', align: "center", width: '1*' },
+                                            { binding: 'pname', header: '품목', align: "center", width: '2*' },
+                                            { binding: 'psize', header: '품명 및 규격', align: "center", width: '*' },
+                                            { binding: 'qty', header: '수량', align: "center", width: '*', },  //aggregate: 'Sum' ,isReadOnly: false},
+                                            // { binding: 'ordqty', header: '재고', align: "center", width: '*' },
+                                            { binding: 'uamt', header: '단가', align: "center", width: '*' ,isReadOnly: true},
+                                            { binding: 'totamt', header: '금액', align: "center", width: '*', aggregate: 'Sum' ,isReadOnly: true},
+                                            { binding: 'reqdate', header: '일자', align: "center", width: '1*' ,isReadOnly: true},
+                                            // { binding: 'remark', header: '비고', align: "center", width: '*' }, 
+
+                                        ],
+                                        cellEditEnding: function (s, e) {
+                                            var col = s.columns[e.col];    
+                                            var ll_intqty = 0;
+                                            var ll_uamt = 0;
+                                            var ll_totamt = 0;
+                                            if (col.binding == 'qty') { 
+                                                ll_inputqty = s.activeEditor.value;
+                                                ll_uamt = PcodeGrid.getCellData(e.row, 4, false);
+                                                ll_totamt = ll_inputqty * ll_uamt ;
+                                                PcodeGrid.setCellData(e.row,5,ll_totamt); 
+
+                                            }
+                                        },
+                                        gotFocus: s => startEditing(s),
+                                        selectionChanged: s => startEditing(s),
+                                        itemsSource: view_flistpage,
+                                        allowAddNew: true,
+                                        allowDelete: true,
+                                        rowAdded:function(s,e){
+                                            console.log("rowAdded !!",s,e)
+                                        },
+                                        deletingRow:function(s,e){
+                                            console.log("deletingRow !!",s,e)
+                                        },
+                                        beginningEdit: function (s, e) {
+                                                // row : 0  col : 1  => pname
+                                                // s => event
+                                                var col = s.columns[e.col];   
+                                                var jatodata = [];
+                                                var ll_row = e.row;
+                                                var pcode = ''; 
+                                                    if (col.binding == 'pcode') {  
+                                                        // console.log(ll_row)   ;
+                                                        document.getElementById("pcodebtn").click();
+                                                        document.getElementById("pcodebtn").value = ll_row;  //클릭한 row 
+                                                         
+                                                    } 
+                                        },                                        
+                                    }); 
+
+
+
+                                    // 그룹 패널 생성
+                                    var theGroupPanel = new wijmo.grid.grouppanel.GroupPanel('#theGroupPanel', {
+                                        placeholder: '그룹을 만들려면 열을 여기로 끌어다 놓아주세요.  마우스 우 클릭하시면 엑셀로 받으실 수 있습니다.',
+                                        grid: PcodeGrid
+                                    });
+
+                                    PcodeGrid.showMarquee = true;
+                                    PcodeGrid.focus();
+                                    wijmo.toggleClass(PcodeGrid.hostElement, 'highlightActive', true);
+                                    PcodeGrid.focus();
+                                    //행 머리글 셀에 '편집 버튼' 추가
+                                    PcodeGrid.formatItem.addHandler(function (s, e) {
+                                        if (e.panel == s.rowHeaders && e.col == 0) {
+                                        e.cell.innerHTML = '<span class="wj-glyph-plus"></span>';
+                                        }
+                                    });
+ 
+                                    function startEditing(grid) {
+                                        let index = grid.selection.col, col = index > -1 ? grid.columns[index] : null;
+                                        if (col && !col.isReadOnly && col.dataType != wijmo.DataType.Boolean) {
+                                        setTimeout(() => {
+                                            grid.startEditing(false); // 빠른 모드
+                                        }, 50); // 그리드 업데이트
+                                        }
+                                    }
+
+
+                                     function getData_flist(){ 
+                                            // var ListDto = [[${Da007Dto}]]; 
+                                            // console.log("ListDto : ", ListDto);
+                                            var data = [];
+                                            // var cnt = 1;
+                                            // var today = new Date()
+                                            // // console.log("today->" + today);
+                                            // for (var i = 0; i < ListDto.length; i++) { 
+                                            //     data.push({
+                                            //         id: i, 
+                                            //         index: cnt,                                           
+                                            //         pcode: ListDto[i]["pcode"],  
+                                            //         pname: ListDto[i]["pname"], 
+                                            //         psize: ListDto[i]["psize"], 
+                                            //         qty: ListDto[i]["qty"], 
+                                            //         ordqty: ListDto[i]["ordqty"],
+                                            //         uamt: ListDto[i]["uamt"] , 
+                                            //         totamt: ListDto[i]["totamt"]  , 
+                                            //         remark: ListDto[i]["remark"]  
+                                                    
+                                            //     });
+                                            //     cnt++;
+                                            // }   
+                                            return data                                          
+                                        }  
+                                     
+                                     
+
+
+                                   //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                                    //품목검색 popup list
+                                    view_pcodepage = new wijmo.collections.CollectionView(getData_wlist(), {
+                                        pageSize: 12
+                                    });
+                                    // 품목검색 페이지 이동
+                                    new wijmo.input.CollectionViewNavigator('#thePager02', {
+                                        byPage: true,
+                                        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                                        cv: view_pcodepage
+                                    });     
+                                    wpcodeGrid = new wijmo.grid.FlexGrid('#wpcodeGrid_div', {  
+                                        autoGenerateColumns: false,
+                                        isReadOnly: false, 
+                                        selectionMode: 'RowRange',
+                                        alternatingRowStep: 0,
+                                        columns: [   
+
+                                            // { binding: 'pcode', header: '코드', width: '*', format: '*' }, 
+                                            {
+                                                binding: 'pname',
+                                                header: '품명', 
+                                                align:"left",
+                                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                                    text: '<b>${item.pname}</b>',
+                                                    click: (e, ctx) => {
+                                                        wpcodeChk(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                                    }
+                                                })
+                                            },
+                                            {
+                                                binding: 'psize',
+                                                header: '품목 및 규격', 
+                                                width: '*', 
+                                                align:"left",
+                                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                                    text: '<b>${item.psize}</b>',
+                                                    click: (e, ctx) => {
+                                                        wpcodeChk(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                                    }
+                                                })
+                                            },
+
+                                            // { binding: 'psize', header: '규격', width: '*', format: '*' } 
+
+                                        ], 
+                                        itemsSource: view_pcodepage
+                                    });  
+                                    // 품목검색 데이터 수집
+                                    function getData_wlist(){
+
+                                        // var WpcodeDto = [[${wpcodeDto}]];  
+                                        var data02 = []; 
+                                        // var cnt = 1;
+                                        // for (var i = 0; i < WpcodeDto.length; i++) {
+                                        //     data02.push({
+                                        //         id: i, 
+                                        //         index: cnt,
+                                        //         pcode:WpcodeDto[i]["pcode"],
+                                        //         pname: WpcodeDto[i]["pname"], 
+                                        //         psize: WpcodeDto[i]["psize"],  
+                                        //         uamt: WpcodeDto[i]["uamt"]                                                    
+                                        //     });
+                                        //     cnt++;
+                                        // }    
+                                        return data02                                          
+                                    }    
+
+
+                                    function wpcodeChk(arg1, arg2, arg3 , arg4 ){   
+                                        var ll_rownum = Number($('#pcodebtn').val()) ;
+                                        ls_reqdate = document.getElementById('reqdate').value; 
+                                         
+                                        PcodeGrid.setCellData(ll_rownum, 0, arg1); 
+                                        PcodeGrid.setCellData(ll_rownum, 1, arg2); 
+                                        PcodeGrid.setCellData(ll_rownum, 2, arg3); 
+                                        PcodeGrid.setCellData(ll_rownum, 4, arg4);  
+                                        PcodeGrid.setCellData(ll_rownum, 6, ls_reqdate);
+
+                                            $("#wpcodemodal_btn").trigger("click"); 
+                                    }
+
+
+
+
+                        }
+                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                        //품목 검색   
+                        
+                        document.getElementById("wpcodeBtn").addEventListener("click",function(){
+                            let searchText = '';  
+                            searchText = document.getElementById('searchCode').value; 
+                            ls_cltcd = document.getElementById('cltcd').value; 
+                            console.log('ls_cltcd-->' + ls_cltcd);
+                            $.ajax({
+                                url: '/popup/wpcode',  
+                                type:"POST", 
+                                data: { 
+                                    "pname"      : searchText ,
+                                    "cltcd"      : ls_cltcd  
+                                }, 
+                                success:function(data){
+                                    var wpcodeDto  = data;  
+                                    var wpcode_data = [];
+                                    var cnt = 1;
+                                    for (var i = 0; i < wpcodeDto.length; i++) {
+                                        wpcode_data.push({
+                                            id: i, 
+                                            index: cnt,
+                                            pcode:wpcodeDto[i]["pcode"],
+                                            pname: wpcodeDto[i]["pname"], 
+                                            psize: wpcodeDto[i]["psize"], 
+                                            uamt: wpcodeDto[i]["uamt"]                                                  
+                                        });
+                                        cnt++;
+                                    }   
+                                    // console.log("wpcode_data",wpcode_data) 
+                                    wpcodeGrid.columns.clear();   
+                                    wpcodeGrid.autoGenerateColumns = false; 
+                                    view_pcodepage.sourceCollection  = wpcode_data;
+                                    // var cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'pcode';
+                                    // cols.header = '코드';
+                                    // cols.width = '*';
+                                    // wpcodeGrid.columns.push(cols);    
+                                    // console.log("cols", cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'pname';
+                                    cols.header = '품명';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.pname}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'psize';
+                                    cols.header = '품목 및 규격';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.psize}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                },error:function(e){
+                                    alert(data.code);
+                                    alert(data.message);
+                                }
+                            }).done(function(fragment){           
+
+                            }) 
+                        })    
+
+                        function searchpcode_rtn(){
+                            let searchText = '';  
+                            searchText = document.getElementById('searchCode').value; 
+                            ls_cltcd = document.getElementById('cltcd').value; 
+                            console.log('ls_cltcd-->' + ls_cltcd);
+                            $.ajax({
+                                url: '/popup/wpcode',  
+                                type:"POST", 
+                                data: { 
+                                    "pname"      : searchText ,
+                                    "cltcd"      : ls_cltcd  
+                                }, 
+                                success:function(data){
+                                    var wpcodeDto  = data;  
+                                    var wpcode_data = [];
+                                    var cnt = 1;
+                                    for (var i = 0; i < wpcodeDto.length; i++) {
+                                        wpcode_data.push({
+                                            id: i, 
+                                            index: cnt,
+                                            pcode:wpcodeDto[i]["pcode"],
+                                            pname: wpcodeDto[i]["pname"], 
+                                            psize: wpcodeDto[i]["psize"], 
+                                            uamt: wpcodeDto[i]["uamt"]                                                  
+                                        });
+                                        cnt++;
+                                    }   
+                                    // console.log("wpcode_data",wpcode_data) 
+                                    wpcodeGrid.columns.clear();   
+                                    wpcodeGrid.autoGenerateColumns = false; 
+                                    view_pcodepage.sourceCollection  = wpcode_data;
+                                    // var cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'pcode';
+                                    // cols.header = '코드';
+                                    // cols.width = '*';
+                                    // wpcodeGrid.columns.push(cols);    
+                                    // console.log("cols", cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'pname';
+                                    cols.header = '품명';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.pname}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'psize';
+                                    cols.header = '품목 및 규격';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.psize}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                },error:function(e){
+                                    alert(data.code);
+                                    alert(data.message);
+                                }
+                            }).done(function(fragment){           
+
+                            }) 
+                        }
+
+                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                        //저장클릭
+                        document.getElementById("save_btn").addEventListener("click",function(){  
+                            //TB_FPLAN_WORK TB_FPLAN_W010  SAVE  
+                            var ls_text = ""   ;
+                            var ls_custcd   = 'YESTOOL'; 
+                            var ls_spjangcd = 'ZZ'; 
+                            var ls_reqdate   = document.getElementById('reqdate').value; 
+                            var ls_pono   = document.getElementById('pono').value;
+                            var ls_pernm   = document.getElementById('pernm').value; 
+                            // var ls_deldate   = document.getElementById('deldate').value;
+                            ls_deldate = ls_reqdate;
+                            var ls_remark  = document.getElementById('remark').value;   
+                            var ls_cltcd  = document.getElementById('cltcd').value;          
+                            var ls_pcode  =  [];        
+                            var ll_qty    =  [];      
+                            var ll_uamt    =  [];    
+                            var ll_totamt    =  [];
+                            const warnning_div = document.getElementById('inwarnning_div');                                          
+                            const warnning_grid = document.getElementById('inwarnning_grid');  
+                            
+
+                            if (!confirm("저장하시겠습니까?")) {
+                                return ; 
+                            }                             
+
+                            if(!ls_reqdate){
+                                ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>주문일자를 입력하세요</span></div>";
+                                warnning_div.innerHTML  = ls_text;  
+                                return  false
+                            }else{
+                                warnning_div.innerHTML  = "";  
+                            }       
+ 
+
+                            $.ajax({
+                                url: '/input/wda006w',   
+                                type:"POST", 
+                                data: { 
+                                    "cltcd"      : ls_cltcd ,
+                                    "reqdate"      : ls_reqdate ,
+                                    "pono" : ls_pono ,
+                                    "pernm"   : ls_pernm   , 
+                                    "deldate"      : ls_deldate      ,
+                                    "remark"     : ls_remark     ,
+                                    "pcode"     : ls_pcode     ,
+                                    "qty"     : ll_qty   ,  
+                                    "uamt"     : ll_uamt  ,  
+                                    "totamt"     : ll_totamt     
+                                },
+                                async:false,
+                                success:function(data){
+                                    console.log("등록OK", data); 
+                                    if(data == 'success'){
+                                        ls_text = "<div style='color:green'><span class='badge rounded-pill bg-success'>등록되었습니다.</span></div>";
+                                        warnning_div.innerHTML  = ls_text;   
+                                    }
+                                    // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
+                                    //var ls_reqnum = data[0]["reqnum"];    
+                                
+                                },error:function(e){
+                                    console.log('error',e);
+                                }
+                            }).done(function(fragment){           
+
+                            })   
+
+
+
+                        })  
+
+                           
+
+                        document.getElementById("deleteRow").addEventListener("click",function(){
+  
+                            if (!confirm("삭제하시겠습니까?")) {
+                                return ; 
+                            }           
+                            view_flistpage.removeAt(0);
+                            //theGrid.select(0,0)
+                            let e = new wijmo.grid.CellEditEndingEventArgs(theGrid_div.cells, theGrid_div.selection); //cellEditEndingEventArgs 생성
+
+                            theGrid_div.onDeletingRow(e)
+                        })
+
+                         
+
+                        $(document).ready(function () {
+                            fn_egov_init_date()
+                            // $('datetimepicker').datetimepicker({
+
+                            // });
+
+                            $("#recedate").change(function (e) {
+                                console.log("달력클릭 recedate");
+                                console.log(convert_time(e.timestamp));
+                            })
+                            $("#hitchdate").change(function (e) {
+                                console.log("달력클릭 hitchdate");
+                                console.log(convert_time(e.timestamp));
+                            })
+
+                        })
+
+                        function convert_time(timestamp) {
+                            //현재시간
+                            var date = new Date(timestamp);
+                            var year = date.getFullYear();
+                            var month = ("0" + (1 + date.getMonth())).slice(-2);
+                            var day = ("0" + date.getDate()).slice(-2);
+                            var hh = date.getHours();
+                            var min = ('0' + date.getMinutes()).slice(-2)
+                            // console.log('year',year); 
+                            // console.log('month',month); 
+                            // console.log('day',day); 
+                            // console.log('hh',hh); 
+                            // console.log('min',min); 
+                            time = year + month + day + hh + min  ;
+                            return time;
+                        }
+
+                        function fn_egov_init_date() { 
+                            var $recedate = $('#recedate'); 
+                            console.log($recedate);
+                            $recedate.datetimepicker({
+                                timepicker: true,
+                                lang: 'ko',
+                                format: 'Y-m-d H:i ',
+                                scrollMonth: false,
+                                scrollInput: false,
+                                onShow: function (ct) {
+                                    this.setOptions({
+                                        maxDate: $recedate.val() ? $recedate.val() : false
+                                    })
+                                },
+                            });
+
+                            
+                            var $hitchdate = $('#hitchdate'); 
+                            $hitchdate.datetimepicker({
+                                timepicker: true,
+                                lang: 'ko',
+                                format: 'Y-m-d H:i ',
+                                scrollMonth: false,
+                                scrollInput: false,
+                                onShow: function (ct) {
+                                    this.setOptions({
+                                        maxDate: $hitchdate.val() ? $hitchdate.val() : false
+                                    })
+                                },
+                            });
+ 
+
+                        }
+                    </script>
+
+
+
+
+        <P> 
+            <OBJECT ID="LGOpenAPIX" CLASSID="CLSID:16AB1B2A-A22E-4FAC-92CB-84102DF5CE3D"></OBJECT>
+	
+            <table border="1" width ="1450px">
+                <tr>
+                    <td>접속확인(02-862-9980) <input type = "button"  value = "버전" onclick = "getver()">  <span id = "verBox" ></span> </td>
+                </tr>
+                <tr>
+                    <td><div id="DivConnect">&nbsp;</div>   </td>  
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border="1" style="float:left" >
+                            <tr>
+                                <td >로그인 </td>
+                                <td><input type ="button" value ="강제로그아웃" onclick ="LoginKickOut()"></td>
+                            </tr>
+                            <tr>
+                                <td width="70">서버</td>
+                                <td>
+                                    <select Name="server" >
+                                    <option value="0" >개발용</option>
+                                    <option value="1" selected>상용</option>
+                                    </select>
+                                    <input type="button" value="회선청약" onclick="LineJoin()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>인증키</td>
+                                <td> <Input Type = "Text" Name = "authkey" value = "402920198688d2f63a3daa45ecf2fcb4a48d0922" onclick = "keyclear();" onfocus = "keyclear();" ></td>
+                            </tr>
+                            <tr>
+                                <td>아이디</td>
+                                <td><Input Type = "Text" Name = "loginID" th:value="${userFormDto.calluserid}"  onclick = "idclear();" onfocus = "idclear();"></td>
+                            </tr>
+                            <tr>
+                                <td>비밀번호</td>
+                                <td><Input Type = "password" Name = "loginPWD" th:value="${userFormDto.calluserpw}"   onclick ="passclear();" onfocus = "passclear();"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="button" value='로그인' onClick="Login()"> 
+                                    <input type="button" value='로그아웃' onClick="Logout()">
+                                    <input type="button" value='도움말' onClick="HelpEX()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="button" value='회원가입' onClick="UserJoinEX()">
+                                    <input type="button" value='비밀번호 찾기' onClick="FindPasswdEX()">
+                                </td>
+                            </tr>
+                        </table>
+        
+                        <table border ="1px" style="float:left">
+                            <tr>
+                                <td>전화번호 세팅</td>
+                            </tr>
+                            <tr>
+                                <td><input type = "text" name ="sRecvPhone" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type = "button" value="전화번호 세팅" onclick="SetRecvPhone()">
+                                    <input type = "button" value="가져오기" onclick="GetRecvPhone()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type = "button" value="전화번호 삭제" onclick="RemoveRecvPhone()">
+                                    <input type = "button" value="전체삭제" onclick="RemoveAllRecvPhone()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="RecvPhonelist" cols ="30" rows = "5"></textarea></td>
+                            </tr>	
+                        </table>
+        
+                        <table border = "1px">
+                            <tr>
+                                <td>주소록 사용자 통지</td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="EventSyncAddressData" style="width:900px" rows = "4"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>브라우져 콜</td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="EventSyncAddressData" style="width:900px" rows = "4"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border = "1px"  style="float:left;width:238px;">
+                            <tr>
+                                <td align = "center">환경설정 <input type="button" value="환경설정" onclick="SetMyInfo()"></td>
+                            </tr>
+                        </table>
+                        <table border = "1px">
+                        <tr>
+                            <td>&nbsp;착신전환&nbsp;</td>
+                            <td> 
+                                &nbsp;변경할 회선 <input type = "text" name = "sTelNum">
+                                <select  name = "sTelState">
+                                    <option value = "0">정상통화</option>
+                                    <option value = "1">착신전환</option>
+                                    <option value = "2">부재중 착신전환</option>
+                                </select >
+                                착신번호 <input type = "text" name = "sRecvTel">
+                                <input type = "button" value = "착신전환" onclick = "SetLineState()">
+                            </td>
+        
+                        </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>가입된 전화번호 리스트 정보 <input type="button" value="전화번호리스트" onclick="GetPhoneList()"></td>
+                </tr>
+                <tr>
+                    <td><textarea id="GetPhoneList" style="width:1400px"></textarea></td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border="1px" style="float:left">
+                            <tr>
+                                <td>전화걸기/다자통화</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    발신 : <input type= "text" name = "sCaller" value = ""> 
+                                    다자통화방번호 : <input type="text" name = "sDBID"><br>
+                                    수신 : <input type="text" name = "sCallee" value = "">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type ="button" value="전화걸기" onclick = "SendCTC()">
+                                    <input type ="button" value="다자통화요청" onclick = "SendCON()">
+                                    <input type ="button" value="사용자추가" onclick = "SendCONAddUser()">
+                                    <input type ="button" value="사용자삭제" onclick = "SendCONKickOutUser()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="CTC" cols ="65"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="CON" cols ="65"></textarea></td>
+                            </tr>
+                        </table>
+        
+                        <table border="1px">
+                            <tr>
+                                <td>문자 전송</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    발신번호 : <input type ="text" name ="MsCaller" value  = "" >
+                                    예약시간 : <input type ="text" name ="sSendDate">
+                                    문자메세지 : <input type ="text" name ="sMessage" value = "TEST"><br>
+                                    회신번호 : <input type ="text" name ="sDisplay" value  = ""> 
+                                    그룹번호 : <input type ="text" name ="sSmsGroupSeqNo">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type ="button" value="문자전송" onclick = "SendSMS()">
+                                    <input type ="button" value="예약문자" onclick = "SendReserveSMS()">
+                                    <input type ="button" value="예약문자수정" onclick = "EditReserveSMS()">
+                                    <input type ="button" value="예약문자취소" onclick = "CancelReserveSMS()">						
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="SendReserveSMS" cols ="129" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border ="1px">
+                            <tr>
+                                <td>통화내역</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type = "button" value="부재중리스트" onclick="GetAbsenceCallList()">
+                                    통화내역 종류 : 
+                                    <select name = "sKind">
+                                    <option value="1">ALL</option>
+                                    <option value="2">발신</option>
+                                    <option value="3">수신</option>
+                                    <option value="4">부재중</option>
+                                    <option value="5">실패</option>
+                                    <option value="6">예약전송</option>
+                                    <option value="7">핸드폰</option>
+                                    </select>
+                                    통화내역시작번호 : <input type ="text" name ="nStart" size = "3" value="0">
+                                    가져올통화내역수 : <input type ="text" name ="nCount" size = "3"value="20">
+                                    <input type = "button" value="통화 내역 수" onclick="GetCallCount()">
+                                    <input type = "button" value="통화내역 리스트" onclick="GetCallList()">
+                                    통화내역 일련번호 : <input type ="text" name ="CallsDBID" size = "5">
+                                    <input type = "button" value = "통화내역" onclick="GetCall()">
+                                    <input type = "button" value = "내역삭제" onclick="DelCall()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="GetAbsenceCallList" cols ="200" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border ="1px">
+                            <tr>
+                                <td>문자 내역</td>	
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type = "button" value="부재중리스트" onclick="GetAbsenceSmsList()">
+                                    문자내역 종류 : 
+                                    <select name = "SmssKind">
+                                    <option value="1">ALL</option>
+                                    <option value="2">발신</option>
+                                    <option value="3">수신</option>
+                                    <option value="4">부재중</option>
+                                    <option value="5">실패</option>
+                                    <option value="6">예약전송</option>
+                                    <option value="7">핸드폰</option>
+                                    </select>
+                                    문자내역시작번호 : <input type ="text" name ="SmsnStart" size = "3"value="0">
+                                    가져올문자내역수 : <input type ="text" name ="SmsnCount" size = "3"value="20">
+                                    <input type = "button" value="문자 내역 수" onclick="GetSmsCount()">
+                                    <input type = "button" value="문자내역 리스트" onclick="GetSmsList()">
+                                    문자내역 일련번호 : <input type ="text" name ="SmssDBID" size = "5">
+                                    <input type = "button" value = "문자내역" onclick="GetSms()">
+                                    <input type = "button" value = "내역삭제" onclick="DelSms()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="GetAbsenceSmsList" cols ="200" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border = "1px">
+                            <tr>
+                                <td>통화메모</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name ="cCmType">
+                                    <option value ="1">개인메모</option>
+                                    <option value ="2">공유메모</option>
+                                    </select>
+                                    <input type = "button" value = "통화메모 수" onclick="GetCallMemoCount()">
+                                    통화메모 시작번호 : <input type ="text" name ="MemonStart" size = "3" value="0">
+                                    가져올메모내역수 : <input type ="text" name ="MemonCount" size = "3" value="20">
+                                    <input type = "button" value="통화메모 리스트" onclick="GetCallMemoList()">
+                                    통화메모 일련번호 : <input type ="text" name ="MemosDBID" size = "5">
+                                    <input type = "button" value = "통화메모" onclick="GetCallMemo()"><br>
+                                    통화내역일련번호 : <input type = "text" name ="sCLDBID" size = "5"> 
+                                    발신자 이름 : <input type = "text" name ="sCallName" size = "15" value="홍길동">
+                                    그룹이름 : <input type = "text" name ="sCallGroup" size = "15" value="그룹1"> 
+                                    진행상태 : <input type = "text" name ="sProgGroup" size = "10" value="진행"> 
+                                    메모 : <input type = "text" name ="sMemo" size = "20" value="테스트 입니다."><br>
+                                    <input type = "button" value="메모 추가" onclick="NewCallMemo()">
+                                    <input type = "button" value="메모 수정" onclick="EditCallMemo()">
+                                    <input type = "button" value = "메모 삭제" onclick="DelCallMemo()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="GetCallMemoCount" cols ="200" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border ="1px">
+                            <tr>
+                                <td>주소록 그룹</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name = "cAgType">							
+                                    <option value="1">개인 주소록</option>
+                                    <option value="2">공유 주소록</option>
+                                    </select>
+                                    부모 일련번호 : <input type = "text" name = "sPDBID" size = "8" value = "0">
+                                    <input type = "button" value = "주소록 그룹리스트" onclick = "GetAddressGroupList()">
+                                    그룹 일련번호 : <input type = "text" name = "GroupsDBID" size = "8">
+                                    <input type = "button" value = "주소록정보" onclick = "GetAddressGroup()">
+                                    그룹이름 : <input type ="text" name = "sAgName" value="그룹1"><br>
+                                    <input type = "button" value = "그룹추가" onclick = "NewAddressGroup()" >
+                                    <input type = "button" value = "그룹수정" onclick = "EditAddressGroup()">
+                                    <input type = "button" value = "그룹삭제" onclick = "DelAddressGroup()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="GetAddressGroupList" cols ="200" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+        
+                        <table border ="1px">
+                            <tr>
+                                <td>주소록 사용자</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                주소록 타입 : <select name = "DatacAgType">
+                                <option value = "1">개인 주소록</option>
+                                <option value = "2">공유 주소록</option>
+                                </select>
+                                부모 일련번호 : <input type = "text" name = "DatasPDBID" value = "0">
+                                <input type = "button" value  = "사용자리스트" onclick = "GetAddressDataList()">
+                                사용자 일련번호 : <input type = "text" name = "DatasDBID">
+                                <input type = "button" value = "사용자 정보" onclick = "GetAddressData()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+        
+                                    <table border = "1px" style = "float:left">
+                                        <tr>
+                                            <td>이    름</td>
+                                            <td><input type = "text" name = "sAdName" value="홍길동"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>핸드폰</td>
+                                            <td><input type = "text" name = "sAdMNumber" value="01000000000"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>회사번호</td>
+                                            <td><input type = "text" name = "sAdONumber" value="020000000"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>집 전화 </td>
+                                            <td><input type = "text" name = "sAdHNumber" value="021111111"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>팩스번호</td>
+                                            <td><input type = "text" name = "sAdFNumber" value="020001111"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>이메일 주소</td>
+                                            <td><input type = "text" name = "sAdEmail" value="open@api.com"></td>
+                                        </tr>
+                                    </table>
+        
+                                    <table border = "1px" style = "float:left">
+                                        <tr>
+                                            <td>회사 이름</td>
+                                            <td><input type = "text" name = "sAdCompany" value="회사1"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>부서</td>
+                                            <td><input type = "text" name = "sAdTeam" value="경영"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>직책</td>
+                                            <td><input type = "text" name = "sAdTitle" value="대리"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>담당업무</td>
+                                            <td><input type = "text" name = "sAdBusiness" value="복사"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>우편번호</td>
+                                            <td><input type = "text" name = "sAdZipCode" value="123456"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>주소</td>
+                                            <td><input type = "text" name = "sAdAddress" value="서울시서울구서울동서울103"></td>
+                                        </tr>
+                                    </table>
+        
+                                    <table border = "1px" style = "float:left">
+                                        <tr>
+                                            <td>인물메모</td>
+                                            <td><input type = "text" name = "sAdMemo" value="일잘함"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td>
+                                                <input type = "text" name = "sAdBirthDay" value="19700101">
+                                                <select name = "cAdBirthType">
+                                                <option value  = "0">음력</option>
+                                                <option value  = "1">양력</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>인맥 그룹</td>
+                                            <td><input type = "text" name = "sNgName" value="그룹2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>만난 상황</td>
+                                            <td><input type = "text" name = "sAdMetChance" value="회사앞"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>추천인 </td>
+                                            <td><input type = "text" name = "sAdKeyman" value="사장님"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>관심사</td>
+                                            <td><input type = "text" name = "sAdFavorite" value="일"></td>
+                                        </tr>
+                                    </table>
+                                <input type = "button" value = "사용자 추가" onclick = "NewAddressData()"> <br>
+                                <input type = "button" value = "사용자 수정" onclick = "EditAddressData()"> <br>
+                                <input type = "button" value = "사용자 삭제" onclick = "DelAddressData()"> <br>
+        
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><textarea id="GetAddressDataList" cols ="200" rows= "5"></textarea></td>
+                            </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+            </table>            
+        </P>
+    </body>
+</body>
+</html>
