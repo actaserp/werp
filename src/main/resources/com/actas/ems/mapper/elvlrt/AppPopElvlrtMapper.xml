@@ -36,4 +36,52 @@
           AND A.useyn = '1'
         ]]>
     </select>
+
+    <!-- 고장요인 -->
+    <select id="GetRemonmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.remocd    remocd  ,
+               a.remonm    remonm
+        FROM TB_E011 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(remonm , '') Like concat('%',#{remonm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 처리내용 -->
+    <select id="GetResunmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.resucd    resucd  ,
+               a.resunm    resunm
+        FROM TB_E012 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(resunm , '') Like concat('%',#{resunm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 고장부위 -->
+    <select id="GetGreginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.gregicd    gregicd  ,
+               a.greginm    greginm
+        FROM TB_E013 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(greginm , '') Like concat('%',#{greginm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 처리방법 -->
+    <select id="GetResultnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.resultcd    resultcd  ,
+               a.resultnm    resultnm
+        FROM TB_E015 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(resultnm , '') Like concat('%',#{resultnm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
 </mapper>

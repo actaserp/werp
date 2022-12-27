@@ -16,5 +16,10 @@ public interface AppPopElvlrtMapper {
 
     public List<PopupDto>  GetActnmList(PopupDto parm);
     public List<PopupDto>  GetContnmList(PopupDto parm);
+    public List<PopupDto>  GetRemonmList(PopupDto parm);
+    public List<PopupDto>  GetResunmList(PopupDto parm);
+    public List<PopupDto>  GetGreginmList(PopupDto parm);
+    public List<PopupDto>  GetResultnmList(PopupDto parm);
+
 
 }

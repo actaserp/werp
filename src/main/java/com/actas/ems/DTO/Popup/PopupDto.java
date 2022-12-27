@@ -19,5 +19,13 @@ public class PopupDto {
     private String actpernm;        //담당자
     private String contcd;        //고장내용코드
     private String contnm;        //고장내용
+    private String remocd;          //고장요인코드
+    private String remonm;          //고장요인
+    private String resucd;          //처리내용코드
+    private String resunm;          //처리내용
+    private String gregicd;         //고장부위코드
+    private String greginm;         //고장부위
+    private String resultnm;        //처리방법
+    private String resultcd;        //처리코드
 
 }
