@@ -53,6 +53,7 @@ public class App04CrudController {
             , @RequestParam("actmpernmz") String mpernm
             , @RequestParam("actmemoz") String memo
             , @RequestParam("actmflagz") String mflag
+            , @RequestParam("actmsetflagz") String setflag
             , Model model, HttpServletRequest request){
 
         try {
@@ -69,7 +70,7 @@ public class App04CrudController {
             app04Dto.setCustcd(ls_custcd);
             app04Dto.setSpjangcd(ls_spjangcd);
             if(mseq == null || mseq.equals("")){
-                app04Dto.setMseq(CountSeq(ls_yeare + ls_mm));
+                app04Dto.setMseq(CountSeq(ls_yeare + ls_mm, setflag));
             }else{
                 app04Dto.setMseq(mseq);
             }
@@ -145,6 +146,10 @@ public class App04CrudController {
                 case "actmflagz":
                     app04Dto.setMflag(values.toString());
                     break;
+                case "actmsetflagz":
+                    app04Dto.setSetflag(values.toString());
+                    break;
+
                 default:
                     break;
             }
@@ -160,7 +165,7 @@ public class App04CrudController {
         minputdate =  ls_yeare + ls_mm + ls_dd;
         app04Dto.setMinputdate(minputdate);
         if(mseq == null || mseq.equals("")){
-            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm));
+            app04Dto.setMseq(CountSeq(ls_yeare + ls_mm,app04Dto.getSetflag()));
         }else{
             app04Dto.setMseq(mseq);
         }
@@ -316,8 +321,16 @@ public class App04CrudController {
         return attach;
     }
 
-    public String CountSeq(String yyyymm){
-        String ls_mseq = appService.getMManualMaxSeq(yyyymm);
+    public String CountSeq(String yyyymm, String flag){
+        String ls_mseq = "";
+        switch (flag){
+            case "MM":
+                ls_mseq = appService.getMManualMaxSeq(yyyymm);
+                break;
+            default:
+                break;
+        }
+
         int ll_mseq = 0;
         if(ls_mseq == null ){
             ls_mseq = yyyymm + "001";

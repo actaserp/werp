@@ -39,6 +39,7 @@ public class App03ElvlrtDto {
     private String resutime;
     private String resulttime;
     private String resultnm;
+    private String tel;
 
 
 }

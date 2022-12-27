@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">  
+    <div id="retrieveDiv">
+        <ul class="check_list scrollbar" style="overflow-y: scroll; height: 610px; width: 370px;" >  
+            
+            <li class="receipt" th:each="formdata: ${app03DtoList}" >
+                <div class="left">
+                    <div class="img">
+                        <i><img th:src="@{/assets/images/status1.png}" alt=""></i>
+                        <div class="badge bg-info" th:text="${formdata.recedate} ">접수일자</div>
+                        <div class="badge bg-primary" th:text="${formdata.recetime}">접수시간</div> 
+                    </div>
+                    <div class="number">
+                        <h9 th:text="${formdata.actnm}">삼성리더스타워</h9><br>
+                        <h10 th:text="${formdata.tel}">02-6959-5020</h10>
+                    </div>
+                </div>
+                <div class="name" th:text="${formdata.actpernm}">홍길동</div> 
+            </li>    
+            
+        </ul> 
+    </div> 
+</html>

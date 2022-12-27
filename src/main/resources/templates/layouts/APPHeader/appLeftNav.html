@@ -13,8 +13,9 @@
                         </a>
                     </div>
                     <ul>
-                        <li><a href="./center.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고객상담센터</a></li>
-                        <li><a href="./control.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장접수관제현황</a></li>
+                        <li><a href="javascript:menu01_btn();"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>KT고객상담센터</a></li>
+                        <li><a href="javascript:menu02_btn();"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>KT디자인</a></li>
+                        <li><a th:href="@{/app01/emcontrol}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장접수관제현황</a></li>
                         <li><a href="./registration"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장처리등록</a></li>
                     </ul>
                 </div>     
@@ -53,6 +54,11 @@
                             </button>
                         </a>
                     </div>
+                    <ul>
+                        <li  class="on"><a th:href="@{/app04/index01}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>도면자료실</a></li>
+                        <li><a href="./control.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>부품자료실</a></li>
+                        <li><a href="./registration"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>기타자료실</a></li>
+                    </ul>
                 </div>
             </li>
             <li>
@@ -106,4 +112,25 @@
             </li>
         </ul>
     </th:block>
+
+    <script>
+        function menu01_btn(){ 
+                    // var ls_actuseridz   =  jQuery('#actuseridz').val(); //document.getElementById('actuseridz').value; 
+                    // var ls_actusernamez =  jQuery('#actusernamez').val(); //document.getElementById('actusernamez').value;  
+                    // var ls_actcltcdz =   jQuery('#actcltcdz').val();  //document.getElementById('actcltcdz').value;  
+                    // ls_actcltcdz =    ls_actcltcdz + "";
+                    // var ls_actdbnmz =  jQuery('#actdbnmz').val();   //document.getElementById('actdbnmz').value;    
+                    // var ls_actflagz =  jQuery('#actflagz').val();   //document.getElementById('actflagz').value;  
+                    // var ls_actcalluseridz =  jQuery('#actcalluseridz').val();   
+                    // var ls_actcalluserpwz =  jQuery('#actcalluserpwz').val();   
+
+                    // var ls_uri          = "actuseridz=" + ls_actuseridz +"&actusernamez=" + ls_actusernamez + "&actcltcdz=" + ls_actcltcdz ;
+                    //     ls_uri = ls_uri +  "&actdbnmz=" + ls_actdbnmz + "&actflagz=" + ls_actflagz + "&actcalluseridz=" + ls_actcalluseridz;
+                    //     ls_uri = ls_uri +  "&actcalluserpwz=" + ls_actcalluserpwz;
+                    var win = window.open("/app01/ktcall",   "codetab", "fullscreen=yes"); 
+            } 
+        function menu02_btn(){ 
+                    var win = window.open("/app01/ktcalltemp",  "designtab" ); 
+            } 
+    </script>
 </html>

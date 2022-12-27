@@ -16,6 +16,7 @@ public class App04ElvlrtDto {
     private String mpernm;
     private String memo;
     private String mflag;
+    private String setflag;
     private String yyyymm;
     private String cnam;
     private int attcnt;

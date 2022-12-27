@@ -10,22 +10,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTAS Elevator 유지보수센터</title>
-    <meta name="keyword" content="ACTAS Elevator 유지보수센터">
-    <meta name="description" content="ACTAS Elevator 유지보수센터">
-    <meta name="author" content="ACTAS Elevator 유지보수센터">   
-    
-    <!-- css -->
-    <link rel="stylesheet" href="../../static/assets/css/reset.css">
-    <link rel="stylesheet" href="../../static/assets/css/common.css">
-    <link rel="stylesheet" href="../../static/assets/css/sub.css">
-
-    <!-- script -->
-    <script src="../../static/assets/scripts/jquery-3.1.1.min.js"></script>
-    <script src="../../static/assets/scripts/script.js"></script>
-
     <!-- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> -->
@@ -1539,583 +1523,708 @@
         </script>    
 </head>
 <body>
-   
-    <!-- modal -->
-    <!-- class="modal_step_open" modal_step="1" -->
-    <!-- 기획서와 디자인을 봐도 해당 모달이 어디로 부터 나오는지 알 수 없어서 페이지를 따로 만듬 -->
-    <div class="modal modal modal_step modal_stepKt "> <!-- 클래스 hidden으로 감추고 생성 -->
-        <div class="modal_overlay">
-        </div>
-        <div class="modal_content modal_wd scrollbar">
-            <div class="layoutCont">  
-                <div class="modalContWrap">
-                    <!-- <div class="modal_close cancerButton">
-                      <img src="./assets/images/modal_close.png" alt="모달 닫기버튼">
-                    </div>                       -->
-                    <div class="modal_head">
-                        <div class="infor_bar">
-                            <ul class="left">
-                                <li>
-                                    <i><img src="./assets/images/i_circle1.png" alt=""></i>
-                                    <p>금일수신 <span>50</span></p>
-                                </li>
-                                <li>
-                                    <i><img src="./assets/images/i_circle2.png" alt=""></i>
-                                    <p>고장접수 <span>50</span></p>
-                                </li>
-                                <li>
-                                    <i><img src="./assets/images/i_circle3.png" alt=""></i>
-                                    <p>콜백예약 <span>50</span></p>
-                                </li>
-                                <li>
-                                    <i><img src="./assets/images/i_circle4.png" alt=""></i>
-                                    <p>당일처리 <span>50</span></p>
-                                </li>
-                            </ul>
-                            <ul class="mid">
-                                <li>
-                                    <button type="button" class="color2">
-                                        전화번호 검색
-                                    </button>
-                                </li>
-                                <li>
-                                    <div class="input_wrap">
-                                        <input type="text">
-                                    </div>
-                                    <button>
-                                        <img src="./assets/images/call.png" alt="">
-                                    </button>
-                                </li>
-                            </ul>
-                            <div class="right">
-                                <div class="input_wrap">
-                                    <h5>ID</h5>
-                                    <input type="text">
-                                </div>
-                                <div class="input_wrap">
-                                    <h5>PW</h5>
-                                    <input type="password">
-                                </div>
-                                <div class="button button1"><button><img src="./assets/images/in1.png" alt=""></button></div>
-                                <div class="button button2"><button><img src="./assets/images/in2.png" alt=""></button></div>
-                                <div class="modal_close cancerButton"><button><img src="./assets/images/modal_close.png" alt=""></button></div>
-                            </div>
+    <!-- <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data"></form> -->
+        Actas Elevator KT 고객상담서비스 <br>
+        <p>
+        <!-- 아이디<input type="text"  name="userid" th:value="${userFormDto.userid}" >
+        사용자명<input type="text" name="username" th:value="${userFormDto.username}" > 
+        거래처코드<input type="text"  name="cltcd" th:value="${userFormDto.cltcd}" >
+        DBNAME<input type="text" name="dbnm" th:value="${userFormDto.dbnm}" > 
+        구분<input type="text" name="flag" th:value="${userFormDto.flag}" > 
+        kt id<input type="text" name="calluserid" th:value="${userFormDto.calluserid}" > 
+        kt pw<input type="text" name="calluserpw" th:value="${userFormDto.calluserpw}" >  -->
+        </p> 
+        <p>
             
-                        </div>                        
-                    </div>
-                    <div class="modal_con scrollbar auto_height" style="overflow-y: scroll; height: 86%;">
-                          <div class="board">
-                                <div class="part1" style="width: 75%;">
-                                    <ul class="btn_list">
-                                        <li>
-                                            <button class="type1" type="button">승강기번호조회</button>
-                                        </li>
-                                        <li>
-                                            <button class="type1 color1 modal_step_open2" modal_step="Inquiry" type="button">보수현장조회</button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="part1_top ">
-                                        <div class="left modal_box" style="width: 55%;">
-                                            <div class="title">
-                                                고장접수현황
-                                            </div>
-                                            <div class="con_wrap">
-                                                <div class="date">
-                                                    2022.10.01 - 2022.10.31
-                                                </div>
-                                                <div class="search">
-                                                    <div class="input_wrap">
-                                                        <input type="text" placeholder="전화번호/현장명">
-                                                    </div>
-                                                    <button>
-                                                        <img src="./assets/images/i_search.png" alt="">
-                                                    </button>
-                                                </div>          
-                                                <ul class="status_list scrollbar" style="overflow-y: scroll; height: 235px;">
-                                                    <li class="receipt">
-                                                        <div class="left">
-                                                            <div class="img">
-                                                                <i><img src="./assets/images/status1.png" alt=""></i>
-                                                                <p>고장접수</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <h4>삼성리더스타워</h4>
-                                                                <h5>02-6959-5020</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="name">홍길동</div>
-                                                    </li>
-                                                    <li class="reserv">
-                                                        <div class="left">
-                                                            <div class="img">
-                                                                <i><img src="./assets/images/status2.png" alt=""></i>
-                                                                <p>고장접수</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <h4>삼성리더스타워</h4>
-                                                                <h5>02-6959-5020</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="name">홍길동</div>
-                                                    </li>
-                                                    <li class="missed">
-                                                        <div class="left">
-                                                            <div class="img">
-                                                                <i><img src="./assets/images/status3.png" alt=""></i>
-                                                                <p>고장접수</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <h4>삼성리더스타워</h4>
-                                                                <h5>02-6959-5020</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="name">홍길동</div>
-                                                    </li>
-                                                </ul> 
-                                                <div class="inquiry_btn">
-                                                    <button class="type1 color2">조회</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="right modal_box" style="width: 45%;">
-                                            <div class="title">
-                                                고장 접수
-                                            </div>
-                                            <form action="">
-                                                <div class="table table_style1">
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                              <th>접수일자</th>
-                                                              <td>
-                                                                <div class="input_wrap date">
-                                                                    <input type="text">
-                                                                </div>                                                            
-                                                              </td>
-                                                              <th>고장일자</th>
-                                                              <td>
-                                                                <div class="input_wrap date">
-                                                                    <input type="text">
-                                                                </div>                                                            
-                                                              </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>현장명</th>
-                                                                <td>
-                                                                    <div class="input_wrap table_search">
-                                                                        <input type="text">
-                                                                        <button class="btn1" type="button"><img src="./assets/images/i_search2.png" alt=""></button>
-                                                                    </div>                                                                
-                                                                </td>
-                                                                <th>호기명</th>
-                                                                <td>
-                                                                    <div class="input_wrap table_search">
-                                                                        <input type="text">
-                                                                        <button class="btn1" type="button"><img src="./assets/images/i_search2.png" alt=""></button>
-                                                                    </div>                                                                
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>접수자</th>
-                                                                <td>
-                                                                    <div class="input_wrap table_search">
-                                                                        <input type="text">
-                                                                        <button class="btn1" type="button"><img src="./assets/images/i_search2.png" alt=""></button>
-                                                                    </div>                                                                
-                                                                </td>
-                                                                <th>통보자<br/>(담당기사)</th>
-                                                                <td>
-                                                                    <div class="input_wrap table_search">
-                                                                        <input type="text">
-                                                                        <button class="btn1" type="button"><img src="./assets/images/i_search2.png" alt=""></button>
-                                                                    </div>                                                                
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>고장내용</th>
-                                                                <td colspan="3">
-                                                                    <div class="input_wrap date">
-                                                                        <input type="text" style="background: url(./assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;">
-                                                                    </div>                                                                
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>갇힘<br/>사고 일자</th>
-                                                                <td colspan="3">
-                                                                    <div class="input_wrap">
-                                                                        <input type="text">
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>비고</th>
-                                                                <td colspan="3">
-                                                                    <div class="input_wrap">
-                                                                        <input type="text">
-                                                                    </div>                                                                
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="btns">
-                                                        
-                                                        <button class="type1 color3 modal_step_open2" modal_step="Message"  style="min-width: 90px;" type="button">문자전송</button>
-                                                        <button class="type1 color4" style="min-width: 90px;" type="submit">접수</button>
-                                                    </div>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="part1_bottom">
-                                        <div class="modal_box">
-                                            <div class="title toggle" style="cursor: pointer;">
-                                                <h5>KT CTI</h5>
-                                                <button><img src="./assets/images/toggle.png" alt=""></button>
-                                            </div>
-                                            <div class="con_wrap toggle_box" style="display: none;">
-                                                <div class="left">
-                                                    <ul class="font_title">
-                                                        <li class="color1" style="height: 31px;">통화내역리스트</li>
-                                                        <li style="height: 64px;">문자전송</li>
-                                                        <li style="height: 31px;">착신전환</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="mid" style="width: 43%">
-                                                    <div class="input_wrap">
-                                                        <h5>통화내역종류</h5>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                        <h5 style="width: 80px;">통화건수</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">부재중리스트</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>발신번호</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>문자메세지</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>변경할회선</h5>
-                                                        <input type="text">
-                                                        <select name="" id="" style="margin-left: 10px">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="right" style="width: 43%">
-                                                    <div class="input_wrap">
-                                                        <h5>통화내역종류</h5>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                전체
-                                                            </option>
-                                                        </select>
-                                                        <h5 style="width: 80px;">통화건수</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>예약시간</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">예약전송</button>
-                                                            <button class="type1 color2" style="height: 31px;">예약취소</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>회신번호</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">문자전송</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>착신번호</h5>
-                                                        <input type="text">
-                                                        <select name="" id="" style="margin-left: 10px">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">착신전환</button>
-                                                        </div>
-                                                    </div>
-    
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="part_hide_grid">
-                                        <div class="modal_box">
-                                            그리드 영역
-                                        </div>
-                                    </div>
+            <div class="row g-3 mb-3">
+                <div class="col-lg-12">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <div class="row flex-between-center">
+                                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+                                    <h5 class="mb-0" >접수등록</h5>
                                 </div>
-                                <div class="part2" style="width: 25%;">
-                                    <div class="modal_box">
-                                        <div class="title">
-                                            고객 통화 메모
-                                        </div>
-                                        <div class="form">
-                                            <form action="">
-                                                <div class="date_wrap">
-                                                    <h5>수신일자</h5>
-                                                    <input type="text">
-                                                </div>
-                                                <div class="input_wrap">
-                                                    <h5>고객명</h5>
-                                                    <input type="text">
-                                                </div>
-                                                <div class="input_wrap">
-                                                    <h5>콜백예약</h5>
-                                                    <input type="checkbox" id="reserv_chk">
-                                                    <label for="reserv_chk" class="check_style1 no_txt"></label>
-                                                    <input type="text">
-                                                </div>
-                                                <div class="date_wrap" style="margin-top: 10px;">
-                                                    <h5>콜백메모</h5>
-                                                    <input type="text">
-                                                </div>
-                                                <div class="input_wrap" style="margin-top: 10px;">
-                                                    <h5>메모내용</h5>
-                                                    <textarea name="" id=""></textarea>
-                                                </div>
-                                                <div class="btns">
-                                                    <button class="type1 color4" style="min-width: 90px;" type="submit">등록</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="call_box">
-                                            고객통화메모현황
-                                        </div>
-                                        <div class="message_list">
-                                            <div class="top">
-                                                <h5>문자 전송 내역</h5>
-                                                <div class="btns">
-                                                    <button class="type1 color2" type="button">조회</button>
-                                                </div>
-                                            </div>
-                                            <ul class="client scrollbar" style="overflow-y: scroll; height: 217px;">
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(./assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(./assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(./assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(./assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                            </ul>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                          </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 모달 문자전송 -->
-    <div class="modal modal modal_step modal_stepMessage hidden"> <!-- 클래스 hidden으로 감추고 생성 -->
-        <div class="modal_overlay">
-        </div>
-        <div class="modal_content modal_sm scrollbar">
-            <div class="layoutCont">  
-                <div class="modalContWrap">
-                    <div class="modal_close2 cancerButton">
-                      <img src="./assets/images/modal_close.png" alt="모달 닫기버튼">
-                    </div>                      
-                    <div class="modal_head">                      
-                        문자전송
-                    </div>
-                    <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
-                        <div class="message_form">
-                            <div class="input_wrap">
-                                <h5>발신번호</h5>
-                                <select name="" id="">
-                                    <option value="">
-                                        전체
-                                    </option>
-                                </select>
+                                <div class="col-8 col-sm-auto ms-auto text-end ps-0"> 
+                                    <div id='inwarnning_div'></div>  
+                                    <div id="orders-actions">
+                                    <button class="btn btn-primary me-1 mb-1" type="button" id="save_btn"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">저장</span></button>  
+                                    <button class="btn btn-outline-info me-1 mb-1" type="button"  id="new_btn"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">신규</span></button>
+                                    <!-- <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button> -->
+                                    </div>                                                                
+                                </div> 
                             </div>
-                            <div class="input_wrap">
-                                <h5>수신번호</h5>
-                                <input type="text">
-                            </div>
-                            <div class="date_wrap input_wrap">
-                                <h5>예약전송</h5>
-                                <input type="text">
-                                <h5 style="width: 45px;">구분</h5>
-                                <select name="" id="">
-                                    <option value="">단문</option>
-                                </select>
-                            </div>
-                            <div class="input_wrap">
-                                <h5>제목</h5>
-                                <input type="text">
-                            </div>
-                            <div class="input_wrap">
-                                <h5>부서</h5>
-                                <select name="" id="" >
-                                    <option value="">
+                        </div> <!-- lass="card-header"-->
+                        <div class="card-body bg-light">
+                                <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">접수일자</div> 
+                                            <input type="text"  class="datetimepicker" id="recedate" autocomplete="off"   placeholder="Y-m-d"  >
+                                            
+                                            <!-- <input class="form-control datetimepicker" id="datetimepicker" type="text"    placeholder="Y-m-d H:i" data-options='{"enableTime":true,"dateFormat":"Y-m-d H:i","disableMobile":false}' />                                                                                                         -->
+                                            <!-- <input class="form-control form-control-sm" id="codenm04" type="datetime"
+                                                size="20" placeholder="" th:field="*{wfrdt}"   th:value="${itemDto.wfrdt}"/> -->   
+                                        </div>
                                         
-                                    </option>
-                                </select>
-                                <div class="btns">
-                                    <button class="type1 color3" style="height: 31px;">선택</button>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">고장일자</div>
+                                            <input type="text"  class="form-control datetimepicker" id="hitchdate"   autocomplete="off"   placeholder="Y-m-d"  >
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">현장명</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">호기명</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                     </div>   
+                                </div> 
+                                <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">접수자</div> 
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                        
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">통보자</div>
+                                            <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                        </div>
+                                    </div> 
+                                    <div class="col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-text">갇힘사고일자</div>
+                                            <input type="text"  class="form-control datetimepicker" id="lockdate" autocomplete="off"   placeholder="Y-m-d"  >
+                                        </div>
+                                    </div>  
+                                </div> 
+                            </div>    
+                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text">고장내용</div> 
+                                        <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                    </div>
+                                </div>   
+                            </div>    
+                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text">비고</div> 
+                                        <input class="form-control form-control-sm" id="pernm" type="text"  />
+                                    </div>
+                                </div>   
+                            </div> 
+                        </div> <!-- class="card-body bg-light" -->
+                    </div> <!--- class="card h-100" --> 
+                </div> <!-- class="col-lg-8">-->
+
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row flex-between-center"> 
+                            <div class="col-8 col-sm-auto ms-auto text-end ps-0"> 
+                                <div id="orders-actions">
+                                    <button class="btn btn-falcon-default btn-sm" type="button" id="addRow"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">행추가</span></button>
+                                    <button class="btn btn-falcon-default btn-sm mx-2" type="button" id="deleteRow"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">행삭제</span></button>
+                                    <!-- <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button> -->
                                 </div>
                             </div>
-                            <div class="empoyee_location">
-                                부서별 직원 리스트 위치
-                            </div>
-                            <div class="button">
-                                <button>전송</button>
-                            </div>
-
                         </div>
+                    </div> <!-- lass="card-header"-->
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div id='inwarnning_grid'></div> 
+                            <div id="theGroupPanel"></div>
+                            <div id="theGrid_div"></div>
+                            <div id="thePager01"></div>
+                        </div>  
                     </div>
+                </div> <!--- class="card mb-3" -->
+            
+            </div> <!--- class="row g-3 mb-3" --> 
 
-                </div>
-            </div>
-        </div>
-    </div>    
-    
+        </p>
 
-    <!-- 모달 보수현장 조회 -->
-    <div class="modal modal modal_step modal_stepInquiry hidden"> <!-- 클래스 hidden으로 감추고 생성 -->
-        <div class="modal_overlay">
-        </div>
-        <div class="modal_content modal_md scrollbar">
-            <div class="layoutCont">  
-                <div class="modalContWrap">
-                    <div class="modal_close2 cancerButton">
-                      <img src="./assets/images/modal_close.png" alt="모달 닫기버튼">
-                    </div>                      
-                    <div class="modal_head">                      
-                        보수현장조회
-                    </div>
-                    <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
-                        <div class="date_wrap">
-                            <input type="text">
-                            <span>-</span>
-                            <input type="text">
-                        </div>
-                        <div class="input_wrap">
-                            <select name="" id="">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="chk_wrap">
-                            <input type="checkbox" id="chk1">
-                            <label for="chk1" class="check_style1">123</label>
-                        </div>
-                        <div class="radio_wrap">
-                            <input type="radio" id="chk2">
-                            <label for="chk2" class="radio_style1">123</label>
-                        </div>
-                        <!-- <div class="chk_wrap">
-                            <input type="checkbox" id="chk1">
-                            <label for="chk1" class="check_style1 no_txt"></label>
-                        </div>
-                        <div class="radio_wrap">
-                            <input type="radio" id="chk2">
-                            <label for="chk2" class="radio_style1 no_txt"></label>
-                        </div> -->
-                        <div class="btns">
-                            <button class="type1 color5">검색</button>
-                        </div>
-                    </div>
+        <p> 
+  
+            <input class="form-control form-control-sm"  type="hidden" id="pcodebtn" data-bs-toggle="modal" data-bs-target="#pcodemodal"  />  
+        </p>
 
-                </div>
-            </div>
-        </div>
-    </div>  
+
+                        <!--------------------------------------------------------------------------------------->   
+                         <!-- the popup editor -->  
+                         <div class="modal fade" id="pcodemodal" data-bs-keyboard="false"
+                         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                         aria-hidden="true">
+                             <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+                                 style="max-width: 500px">
+                                 <div class="modal-content border-0">
+                                     <div class="modal-body p-0" > 
+                                          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                              <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>
+                                              <div class="col-9">
+                                                <input class="form-control form-control-sm" id="searchCode" type="text"    onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                                                    placeholder="현장코드 / 현장명 "     />  
+                                               </div>
+                                               <div class="col-auto">
+                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="wpcodeBtn" type="button" >검색
+                                                    </button>
+                                               </div>  
+                                         </div>   
+                                         <div class="container-fluid"> 
+                                             <div id="wpcodeGrid_div" ></div>
+                                             <div id="thePager02"></div>
+                                         </div>   
+                                      </div>  
+
+                                     <div class="modal-footer">
+                                         <div class="row g-1">
+                                             <div class="col-auto">
+                                                 <button class="badge-soft-primary dropdown-item rounded-1"
+                                                     type="button"  id="wpcodemodal_btn" data-bs-dismiss="modal">Close</button>
+                                             </div> 
+                                         </div>
+                                     </div>   
+
+                                 </div>
+                             </div> 
+                         </div>  
+                    <!--------------------------------------------------------------------------------------->    
+
+
+
+                    <script type="text/javascript" th:inline="javascript"> 
+
+                        var PcodeGrid = ""
+                        var wpcodeGrid= ""
+                        var view_pcodepage = "" 
+
+                        window.onload = function () { 
+                                    var ll_bomchkrow = 0;
+                                    view_flistpage = new wijmo.collections.CollectionView(getData_flist(), {
+                                        groupDescriptions: ['reqdate'], // group data by reqdate
+                                        pageSize: 10
+                                    }); 
+                                    new wijmo.input.CollectionViewNavigator('#thePager01', {
+                                        byPage: true,
+                                        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                                        cv: view_flistpage
+                                    });     
+
+                          
+                                    let customContent = false;
+                                    let includeColumnHeader = false;
+                                    PcodeGrid = new wijmo.grid.FlexGrid('#theGrid_div', {
+                                        autoGenerateColumns: false,
+                                        showMarquee: true,
+                                        isReadOnly: false, 
+                                        allowSorting: 'MultiColumn',
+                                        columns: [
+                                            // { binding: 'index', header: 'seq', width: '*' },
+                                            { binding: 'pcode', header: '품목코드', align: "center", width: '1*' },
+                                            { binding: 'pname', header: '품목', align: "center", width: '2*' },
+                                            { binding: 'psize', header: '품명 및 규격', align: "center", width: '*' },
+                                            { binding: 'qty', header: '수량', align: "center", width: '*', },  //aggregate: 'Sum' ,isReadOnly: false},
+                                            // { binding: 'ordqty', header: '재고', align: "center", width: '*' },
+                                            { binding: 'uamt', header: '단가', align: "center", width: '*' ,isReadOnly: true},
+                                            { binding: 'totamt', header: '금액', align: "center", width: '*', aggregate: 'Sum' ,isReadOnly: true},
+                                            { binding: 'reqdate', header: '일자', align: "center", width: '1*' ,isReadOnly: true},
+                                            // { binding: 'remark', header: '비고', align: "center", width: '*' }, 
+
+                                        ],
+                                        cellEditEnding: function (s, e) {
+                                            var col = s.columns[e.col];    
+                                            var ll_intqty = 0;
+                                            var ll_uamt = 0;
+                                            var ll_totamt = 0;
+                                            if (col.binding == 'qty') { 
+                                                ll_inputqty = s.activeEditor.value;
+                                                ll_uamt = PcodeGrid.getCellData(e.row, 4, false);
+                                                ll_totamt = ll_inputqty * ll_uamt ;
+                                                PcodeGrid.setCellData(e.row,5,ll_totamt); 
+
+                                            }
+                                        },
+                                        gotFocus: s => startEditing(s),
+                                        selectionChanged: s => startEditing(s),
+                                        itemsSource: view_flistpage,
+                                        allowAddNew: true,
+                                        allowDelete: true,
+                                        rowAdded:function(s,e){
+                                            console.log("rowAdded !!",s,e)
+                                        },
+                                        deletingRow:function(s,e){
+                                            console.log("deletingRow !!",s,e)
+                                        },
+                                        beginningEdit: function (s, e) {
+                                                // row : 0  col : 1  => pname
+                                                // s => event
+                                                var col = s.columns[e.col];   
+                                                var jatodata = [];
+                                                var ll_row = e.row;
+                                                var pcode = ''; 
+                                                    if (col.binding == 'pcode') {  
+                                                        // console.log(ll_row)   ;
+                                                        document.getElementById("pcodebtn").click();
+                                                        document.getElementById("pcodebtn").value = ll_row;  //클릭한 row 
+                                                         
+                                                    } 
+                                        },                                        
+                                    }); 
+
+
+
+                                    // 그룹 패널 생성
+                                    var theGroupPanel = new wijmo.grid.grouppanel.GroupPanel('#theGroupPanel', {
+                                        placeholder: '그룹을 만들려면 열을 여기로 끌어다 놓아주세요.  마우스 우 클릭하시면 엑셀로 받으실 수 있습니다.',
+                                        grid: PcodeGrid
+                                    });
+
+                                    PcodeGrid.showMarquee = true;
+                                    PcodeGrid.focus();
+                                    wijmo.toggleClass(PcodeGrid.hostElement, 'highlightActive', true);
+                                    PcodeGrid.focus();
+                                    //행 머리글 셀에 '편집 버튼' 추가
+                                    PcodeGrid.formatItem.addHandler(function (s, e) {
+                                        if (e.panel == s.rowHeaders && e.col == 0) {
+                                        e.cell.innerHTML = '<span class="wj-glyph-plus"></span>';
+                                        }
+                                    });
+ 
+                                    function startEditing(grid) {
+                                        let index = grid.selection.col, col = index > -1 ? grid.columns[index] : null;
+                                        if (col && !col.isReadOnly && col.dataType != wijmo.DataType.Boolean) {
+                                        setTimeout(() => {
+                                            grid.startEditing(false); // 빠른 모드
+                                        }, 50); // 그리드 업데이트
+                                        }
+                                    }
+
+
+                                     function getData_flist(){ 
+                                            // var ListDto = [[${Da007Dto}]]; 
+                                            // console.log("ListDto : ", ListDto);
+                                            var data = [];
+                                            // var cnt = 1;
+                                            // var today = new Date()
+                                            // // console.log("today->" + today);
+                                            // for (var i = 0; i < ListDto.length; i++) { 
+                                            //     data.push({
+                                            //         id: i, 
+                                            //         index: cnt,                                           
+                                            //         pcode: ListDto[i]["pcode"],  
+                                            //         pname: ListDto[i]["pname"], 
+                                            //         psize: ListDto[i]["psize"], 
+                                            //         qty: ListDto[i]["qty"], 
+                                            //         ordqty: ListDto[i]["ordqty"],
+                                            //         uamt: ListDto[i]["uamt"] , 
+                                            //         totamt: ListDto[i]["totamt"]  , 
+                                            //         remark: ListDto[i]["remark"]  
+                                                    
+                                            //     });
+                                            //     cnt++;
+                                            // }   
+                                            return data                                          
+                                        }  
+                                     
+                                     
+
+
+                                   //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                                    //품목검색 popup list
+                                    view_pcodepage = new wijmo.collections.CollectionView(getData_wlist(), {
+                                        pageSize: 12
+                                    });
+                                    // 품목검색 페이지 이동
+                                    new wijmo.input.CollectionViewNavigator('#thePager02', {
+                                        byPage: true,
+                                        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                                        cv: view_pcodepage
+                                    });     
+                                    wpcodeGrid = new wijmo.grid.FlexGrid('#wpcodeGrid_div', {  
+                                        autoGenerateColumns: false,
+                                        isReadOnly: false, 
+                                        selectionMode: 'RowRange',
+                                        alternatingRowStep: 0,
+                                        columns: [   
+
+                                            // { binding: 'pcode', header: '코드', width: '*', format: '*' }, 
+                                            {
+                                                binding: 'pname',
+                                                header: '품명', 
+                                                align:"left",
+                                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                                    text: '<b>${item.pname}</b>',
+                                                    click: (e, ctx) => {
+                                                        wpcodeChk(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                                    }
+                                                })
+                                            },
+                                            {
+                                                binding: 'psize',
+                                                header: '품목 및 규격', 
+                                                width: '*', 
+                                                align:"left",
+                                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                                    text: '<b>${item.psize}</b>',
+                                                    click: (e, ctx) => {
+                                                        wpcodeChk(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                                    }
+                                                })
+                                            },
+
+                                            // { binding: 'psize', header: '규격', width: '*', format: '*' } 
+
+                                        ], 
+                                        itemsSource: view_pcodepage
+                                    });  
+                                    // 품목검색 데이터 수집
+                                    function getData_wlist(){
+
+                                        // var WpcodeDto = [[${wpcodeDto}]];  
+                                        var data02 = []; 
+                                        // var cnt = 1;
+                                        // for (var i = 0; i < WpcodeDto.length; i++) {
+                                        //     data02.push({
+                                        //         id: i, 
+                                        //         index: cnt,
+                                        //         pcode:WpcodeDto[i]["pcode"],
+                                        //         pname: WpcodeDto[i]["pname"], 
+                                        //         psize: WpcodeDto[i]["psize"],  
+                                        //         uamt: WpcodeDto[i]["uamt"]                                                    
+                                        //     });
+                                        //     cnt++;
+                                        // }    
+                                        return data02                                          
+                                    }    
+
+
+                                    function wpcodeChk(arg1, arg2, arg3 , arg4 ){   
+                                        var ll_rownum = Number($('#pcodebtn').val()) ;
+                                        ls_reqdate = document.getElementById('reqdate').value; 
+                                         
+                                        PcodeGrid.setCellData(ll_rownum, 0, arg1); 
+                                        PcodeGrid.setCellData(ll_rownum, 1, arg2); 
+                                        PcodeGrid.setCellData(ll_rownum, 2, arg3); 
+                                        PcodeGrid.setCellData(ll_rownum, 4, arg4);  
+                                        PcodeGrid.setCellData(ll_rownum, 6, ls_reqdate);
+
+                                            $("#wpcodemodal_btn").trigger("click"); 
+                                    }
+
+
+
+
+                        }
+                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                        //품목 검색   
+                        
+                        document.getElementById("wpcodeBtn").addEventListener("click",function(){
+                            let searchText = '';  
+                            searchText = document.getElementById('searchCode').value; 
+                            ls_cltcd = document.getElementById('cltcd').value; 
+                            console.log('ls_cltcd-->' + ls_cltcd);
+                            $.ajax({
+                                url: '/popup/wpcode',  
+                                type:"POST", 
+                                data: { 
+                                    "pname"      : searchText ,
+                                    "cltcd"      : ls_cltcd  
+                                }, 
+                                success:function(data){
+                                    var wpcodeDto  = data;  
+                                    var wpcode_data = [];
+                                    var cnt = 1;
+                                    for (var i = 0; i < wpcodeDto.length; i++) {
+                                        wpcode_data.push({
+                                            id: i, 
+                                            index: cnt,
+                                            pcode:wpcodeDto[i]["pcode"],
+                                            pname: wpcodeDto[i]["pname"], 
+                                            psize: wpcodeDto[i]["psize"], 
+                                            uamt: wpcodeDto[i]["uamt"]                                                  
+                                        });
+                                        cnt++;
+                                    }   
+                                    // console.log("wpcode_data",wpcode_data) 
+                                    wpcodeGrid.columns.clear();   
+                                    wpcodeGrid.autoGenerateColumns = false; 
+                                    view_pcodepage.sourceCollection  = wpcode_data;
+                                    // var cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'pcode';
+                                    // cols.header = '코드';
+                                    // cols.width = '*';
+                                    // wpcodeGrid.columns.push(cols);    
+                                    // console.log("cols", cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'pname';
+                                    cols.header = '품명';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.pname}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'psize';
+                                    cols.header = '품목 및 규격';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.psize}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                },error:function(e){
+                                    alert(data.code);
+                                    alert(data.message);
+                                }
+                            }).done(function(fragment){           
+
+                            }) 
+                        })    
+
+                        function searchpcode_rtn(){
+                            let searchText = '';  
+                            searchText = document.getElementById('searchCode').value; 
+                            ls_cltcd = document.getElementById('cltcd').value; 
+                            console.log('ls_cltcd-->' + ls_cltcd);
+                            $.ajax({
+                                url: '/popup/wpcode',  
+                                type:"POST", 
+                                data: { 
+                                    "pname"      : searchText ,
+                                    "cltcd"      : ls_cltcd  
+                                }, 
+                                success:function(data){
+                                    var wpcodeDto  = data;  
+                                    var wpcode_data = [];
+                                    var cnt = 1;
+                                    for (var i = 0; i < wpcodeDto.length; i++) {
+                                        wpcode_data.push({
+                                            id: i, 
+                                            index: cnt,
+                                            pcode:wpcodeDto[i]["pcode"],
+                                            pname: wpcodeDto[i]["pname"], 
+                                            psize: wpcodeDto[i]["psize"], 
+                                            uamt: wpcodeDto[i]["uamt"]                                                  
+                                        });
+                                        cnt++;
+                                    }   
+                                    // console.log("wpcode_data",wpcode_data) 
+                                    wpcodeGrid.columns.clear();   
+                                    wpcodeGrid.autoGenerateColumns = false; 
+                                    view_pcodepage.sourceCollection  = wpcode_data;
+                                    // var cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'pcode';
+                                    // cols.header = '코드';
+                                    // cols.width = '*';
+                                    // wpcodeGrid.columns.push(cols);    
+                                    // console.log("cols", cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'pname';
+                                    cols.header = '품명';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.pname}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                    cols = new wijmo.grid.Column(); 
+                                    cols.binding = 'psize';
+                                    cols.header = '품목 및 규격';
+                                    cols.width = '*';
+                                    cols.align = "left";
+                                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                        text: '<b>${item.psize}</b>',
+                                        click: (e, ctx) => {
+                                            wpcodeChk_2(ctx.item.pcode, ctx.item.pname, ctx.item.psize, ctx.item.uamt);
+                                        }
+                                    });
+                                    wpcodeGrid.columns.push(cols);  
+                                },error:function(e){
+                                    alert(data.code);
+                                    alert(data.message);
+                                }
+                            }).done(function(fragment){           
+
+                            }) 
+                        }
+
+                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                        //저장클릭
+                        document.getElementById("save_btn").addEventListener("click",function(){  
+                            //TB_FPLAN_WORK TB_FPLAN_W010  SAVE  
+                            var ls_text = ""   ;
+                            var ls_custcd   = 'YESTOOL'; 
+                            var ls_spjangcd = 'ZZ'; 
+                            var ls_reqdate   = document.getElementById('reqdate').value; 
+                            var ls_pono   = document.getElementById('pono').value;
+                            var ls_pernm   = document.getElementById('pernm').value; 
+                            // var ls_deldate   = document.getElementById('deldate').value;
+                            ls_deldate = ls_reqdate;
+                            var ls_remark  = document.getElementById('remark').value;   
+                            var ls_cltcd  = document.getElementById('cltcd').value;          
+                            var ls_pcode  =  [];        
+                            var ll_qty    =  [];      
+                            var ll_uamt    =  [];    
+                            var ll_totamt    =  [];
+                            const warnning_div = document.getElementById('inwarnning_div');                                          
+                            const warnning_grid = document.getElementById('inwarnning_grid');  
+                            
+
+                            if (!confirm("저장하시겠습니까?")) {
+                                return ; 
+                            }                             
+
+                            if(!ls_reqdate){
+                                ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>주문일자를 입력하세요</span></div>";
+                                warnning_div.innerHTML  = ls_text;  
+                                return  false
+                            }else{
+                                warnning_div.innerHTML  = "";  
+                            }       
+ 
+
+                            $.ajax({
+                                url: '/input/wda006w',   
+                                type:"POST", 
+                                data: { 
+                                    "cltcd"      : ls_cltcd ,
+                                    "reqdate"      : ls_reqdate ,
+                                    "pono" : ls_pono ,
+                                    "pernm"   : ls_pernm   , 
+                                    "deldate"      : ls_deldate      ,
+                                    "remark"     : ls_remark     ,
+                                    "pcode"     : ls_pcode     ,
+                                    "qty"     : ll_qty   ,  
+                                    "uamt"     : ll_uamt  ,  
+                                    "totamt"     : ll_totamt     
+                                },
+                                async:false,
+                                success:function(data){
+                                    console.log("등록OK", data); 
+                                    if(data == 'success'){
+                                        ls_text = "<div style='color:green'><span class='badge rounded-pill bg-success'>등록되었습니다.</span></div>";
+                                        warnning_div.innerHTML  = ls_text;   
+                                    }
+                                    // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
+                                    //var ls_reqnum = data[0]["reqnum"];    
+                                
+                                },error:function(e){
+                                    console.log('error',e);
+                                }
+                            }).done(function(fragment){           
+
+                            })   
+
+
+
+                        })  
+
+                           
+
+                        document.getElementById("deleteRow").addEventListener("click",function(){
+  
+                            if (!confirm("삭제하시겠습니까?")) {
+                                return ; 
+                            }           
+                            view_flistpage.removeAt(0);
+                            //theGrid.select(0,0)
+                            let e = new wijmo.grid.CellEditEndingEventArgs(theGrid_div.cells, theGrid_div.selection); //cellEditEndingEventArgs 생성
+
+                            theGrid_div.onDeletingRow(e)
+                        })
+
+                         
+
+                        $(document).ready(function () {
+                            fn_egov_init_date()
+                            // $('datetimepicker').datetimepicker({
+
+                            // });
+
+                            $("#recedate").change(function (e) {
+                                console.log("달력클릭 recedate");
+                                console.log(convert_time(e.timestamp));
+                            })
+                            $("#hitchdate").change(function (e) {
+                                console.log("달력클릭 hitchdate");
+                                console.log(convert_time(e.timestamp));
+                            })
+
+                        })
+
+                        function convert_time(timestamp) {
+                            //현재시간
+                            var date = new Date(timestamp);
+                            var year = date.getFullYear();
+                            var month = ("0" + (1 + date.getMonth())).slice(-2);
+                            var day = ("0" + date.getDate()).slice(-2);
+                            var hh = date.getHours();
+                            var min = ('0' + date.getMinutes()).slice(-2)
+                            // console.log('year',year); 
+                            // console.log('month',month); 
+                            // console.log('day',day); 
+                            // console.log('hh',hh); 
+                            // console.log('min',min); 
+                            time = year + month + day + hh + min  ;
+                            return time;
+                        }
+
+                        function fn_egov_init_date() { 
+                            var $recedate = $('#recedate'); 
+                            console.log($recedate);
+                            $recedate.datetimepicker({
+                                timepicker: true,
+                                lang: 'ko',
+                                format: 'Y-m-d H:i ',
+                                scrollMonth: false,
+                                scrollInput: false,
+                                onShow: function (ct) {
+                                    this.setOptions({
+                                        maxDate: $recedate.val() ? $recedate.val() : false
+                                    })
+                                },
+                            });
+
+                            
+                            var $hitchdate = $('#hitchdate'); 
+                            $hitchdate.datetimepicker({
+                                timepicker: true,
+                                lang: 'ko',
+                                format: 'Y-m-d H:i ',
+                                scrollMonth: false,
+                                scrollInput: false,
+                                onShow: function (ct) {
+                                    this.setOptions({
+                                        maxDate: $hitchdate.val() ? $hitchdate.val() : false
+                                    })
+                                },
+                            });
+ 
+
+                        }
+                    </script>
+
 
 
 

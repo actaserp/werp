@@ -3,9 +3,13 @@ package com.actas.ems.Mapper.Elvlrt;
 
 
 import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
+import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface App01ElvlrtMapper {
 
     public App01ElvlrtDto GetCallXenv(App01ElvlrtDto datainfo);
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
 
 
 }
