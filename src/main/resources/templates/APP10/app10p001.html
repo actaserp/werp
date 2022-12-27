@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+    <div class="content flex">
+        <div class="header on">
+            <div class="left">
+                <div class="ham">
+                    <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+                </div>
+                <div class="nav_bg"></div>
+                <!-- ################################ -->
+                <!-- ## Left navigator include -->
+                <th:block th:include="layouts/APPHeader/appLeftNav" />
+            </div>
+            <div class="right">           
+            </div>
+        </div>
+        <div class="con">
+            <div class="header_top">
+                <ul class="left">
+                    <li>
+                        <div class="logo">
+                            <a href="">
+                                <img th:src="@{/assets/images/logo.png}" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li class="home">
+                        <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                        <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+                    </li>
+                    <li>
+                        종합유지관리서비스
+                    </li>
+                    <li class="on">
+                        고장처리등록
+                    </li>
+                </ul>
+                <ul class="right">
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_call.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_bell.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_menu.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_que.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_user.png}" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="infor_bar type2">
+                <ul class="right" style="visibility: hidden; opacity: 0;">
+                    <li>
+                        <button type="button" class="color2">
+                            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="color5">
+                            <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+                        </button>
+                    </li>
+                </ul>
+                <div class="left">
+                    고장처리등록
+                </div>
+                <ul class="right">
+                    <li>
+                        <button type="button" class="color2" id="retrieveBtn"> 
+                            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                        </button>
+                    </li>
+                    <!-- <li>
+                        <button type="button" class="color5">
+                            <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+                        </button>
+                    </li> -->
+                </ul>
+
+            </div>
+
+    </div>
+
+
+    <!--        모달처리 actnmmodal -->
+
+    <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />  
+    <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  /> 
+
+
+    <!--------------------------------------------------------------------------------------->   
+        <!-- 현장명 MODAL FROM  -->  
+        <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                style="max-width: 800px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" > 
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                            <div class="search">
+                                <div class="input_wrap">
+                                    <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                                    placeholder="현장코드 / 현장명 "     />                                      
+                                </div>
+                                <button id="wactnmBtn">
+                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                </button>
+                            </div> 
+                            <div  class="save_id" >
+                                <input type="checkbox" id="conflag" value="1" checked>
+                                <label for="conflag" class="check_style1">계약현장</label>
+                            </div>
+                        </div>   
+                        <div class="container-fluid"> 
+                            <div id="theGroupPanel"></div>
+                            <div id="wactnmGrid_div" ></div>
+                            <div id="thePager01"></div>
+                        </div>   
+                    </div>  
+
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                            </div> 
+                        </div>
+                    </div>   
+
+                </div>
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->     
+
+
+<!--------------------------------------------------------------------------------------->   
+        <!-- 고장내용 MODAL FROM  -->  
+        <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                style="max-width: 500px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" > 
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                            <div class="search">
+                                <div class="input_wrap">
+                                    <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
+                                    placeholder="고장내용 "     />                                      
+                                </div>
+                                <button id="wcontnmBtn">
+                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                </button>
+                            </div>  
+                        </div>   
+                        <div class="container-fluid"> 
+                            <div id="wcontnmGrid_div" ></div>
+                            <div id="thePager02"></div>
+                        </div>   
+                    </div>  
+
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                            </div> 
+                        </div>
+                    </div>   
+
+                </div>
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->     
+
+<!--        자바 시작-->
+
+    
+    <!------footer ------>
+    <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
+
+    <!-- modal script -->
+    <!-- class="modal_step_open" modal_step="1" -->
+    <div class="modal modal modal_step modal_step1 hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+                    </div>                       -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                      모든 정보를 입력하세요.                          
+                    </div>
+
+                </div>
+                <div class="modal_btn">
+                    <button class="cancerButton " type="button">확인</button>
+                </div>
+                <!-- <div class="modal_btn flex">
+                    <button class="cancerButton " type="button">확인</button>
+                    <button class="cancerButton " type="button">확인</button>                        
+                </div> -->
+            </div>
+        </div>
+    </div></div>
+
+</body>
+</html>
