@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App15ElvlrtMapper">
+
+    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <select id="GetApp00List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        SELECT m.equpnm,
+               a.actcd,
+               a.equpcd,
+               sum(comp1) as comp1,
+               sum(comp2) as comp2,
+               sum(comp3) as comp3,
+               sum(comp4) as comp4,
+               sum(comp5) as comp5,
+               sum(comp6) as comp6,
+               sum(comp7) as comp7,
+               sum(comp8) as comp8,
+               sum(comp9) as comp9,
+               sum(comp10) as comp10,
+               sum(comp11) as comp11,
+               sum(comp12) as comp12,
+               sum(a.qty) as qty
+        FROM (SELECT custcd,
+                     spjangcd,
+                  left(compdate, 6) as compmon,
+                  actcd,
+                  equpcd,
+                  COUNT(equpcd) as qty,
+                  (Case when right(left(compdate, 6),2) = '01' Then count(compdate) ELSE 0 END) as comp1,
+                  (Case when right(left(compdate, 6),2) = '02' Then count(compdate) ELSE 0 END) as comp2,
+                  (Case when right(left(compdate, 6),2) = '03' Then count(compdate) ELSE 0 END) as comp3,
+                  (Case when right(left(compdate, 6),2) = '04' Then count(compdate) ELSE 0 END) as comp4,
+                  (Case when right(left(compdate, 6),2) = '05' Then count(compdate) ELSE 0 END) as comp5,
+                  (Case when right(left(compdate, 6),2) = '06' Then count(compdate) ELSE 0 END) as comp6,
+                  (Case when right(left(compdate, 6),2) = '07' Then count(compdate) ELSE 0 END) as comp7,
+                  (Case when right(left(compdate, 6),2) = '08' Then count(compdate) ELSE 0 END) as comp8,
+                  (Case when right(left(compdate, 6),2) = '09' Then count(compdate) ELSE 0 END) as comp9,
+                  (Case when right(left(compdate, 6),2) = '10' Then count(compdate) ELSE 0 END) as comp10,
+                  (Case when right(left(compdate, 6),2) = '11' Then count(compdate) ELSE 0 END) as comp11,
+                  (Case when right(left(compdate, 6),2) = '12' Then count(compdate) ELSE 0 END) as comp12
+
+
+              FROM tb_e411
+              WHERE  left(compdate, 8) BETWEEN #{frdate} and #{todate}
+                AND actcd Like concat('%',#{actcd},'%')
+              GROUP BY custcd, spjangcd, left(compdate, 6), actcd, equpcd) a
+                 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+        GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, m.equpnm
+    </select>
+</mapper>

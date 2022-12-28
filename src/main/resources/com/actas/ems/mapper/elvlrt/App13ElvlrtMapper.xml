@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App13ElvlrtMapper">
+
+    <!--      현장별수리현황 / 기간별 고장내용  -->
+    <select id="GetApp13List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App13ElvlrtDto">
+        <![CDATA[
+        SELECT
+            b.actnm as actnm,
+            c.equpnm as equpnm,
+            a.pernm  as pernm,
+            a.contnm as contnm,
+            a.contremark as contremark,
+            a.resunm as resunm,
+            a.resuremark as resuremark,
+            a.remonm as remonm,
+            a.remoremark as remoremark,
+            a.greginm as greginm,
+            a.reginm as reginm,
+            a.resultnm as resultnm,
+            a.result as result,
+            a.contcd as contcd,
+            a.recedate as recedate,
+            a.compdate as compdate
+
+
+        FROM
+            (
+                SELECT a.custcd,
+                       a.spjangcd,
+                       a.cltcd,
+                       a.actcd,
+                       a.equpcd,
+                       a.recedate,
+                       a.recetime,
+                       a.hitchdate,
+                       a.hitchhour,
+                       1 as cnt,
+                       1 as ascnt,
+                       c.pernm as recepernm,
+                       d.pernm,
+                       e.divinm,
+                       f.contnm,
+                       a.contents as contremark,
+                       g.resunm,
+                       resuremark,
+                       h.pernm as repernm,
+                       i.remonm,
+                       b.faccd,
+                       j.facnm,
+                       b.remoremark,
+                       k.greginm,
+                       l.reginm,
+                       (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
+                       b.arrivdate,
+                       b.arrivtime,
+                       b.compdate,
+                       b.comptime,
+                       b.resutime,
+                       b.resulttime,
+                       m.resultnm,
+                       a.contcd
+                FROM tb_e401 a WITH(NOLOCK)
+  LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND 'p' + a.perid =  c.perid )
+                    LEFT OUTER JOIN tb_ja001 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND 'p' + a.reperid = h.perid )
+                    LEFT OUTER JOIN tb_e010 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.contcd = f.contcd)
+                    LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+                    LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' + b.perid =  d.perid )
+                    LEFT OUTER JOIN tb_jc002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
+                    LEFT OUTER JOIN tb_e012 g WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = g.spjangcd AND b.resucd = g.resucd)
+                    LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND b.remocd = i.remocd)
+                    LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND b.faccd = j.faccd)
+                    LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd)
+                    LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND b.gregicd = l.gregicd AND b.regicd = l.regicd  )
+                    LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND b.resultcd = m.resultcd)
+
+            ) a LEFT OUTER JOIN tb_e611 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd and a.equpcd = c.equpcd)
+            LEFT OUTER JOIN tb_e006 f WITH(NOLOCK) ON (c.custcd = f.custcd AND c.spjangcd = f.spjangcd AND c.jejak = f.manucd AND c.model = f.mdcd),
+            tb_e601 b
+            LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' +  b.perid =  d.perid )
+            LEFT OUTER JOIN tb_e018_1 e WITH(NOLOCK) ON (b.custcd = e.custcd AND b.spjangcd = e.spjangcd AND b.wkactcd = e.wkactcd)
+
+        WHERE a.custcd = b.custcd
+          AND a.spjangcd = b.spjangcd
+          AND a.actcd = b.actcd
+
+          AND a.recedate BETWEEN #{frdate} AND #{todate}
+          AND a.actcd Like concat('%',#{actcd},'%')
+          AND b.actnm like CONCAT('%',#{actnm},'%')
+          AND a.contcd LIKE CONCAT('%',#{contcd},'%')
+
+        ]]>
+    </select>
+
+
+    <!--      고장내용별현황 / 현장별 고장내용  -->
+    <select id="GetApp13List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App13ElvlrtDto">
+        <![CDATA[
+        SELECT  sum(a.cnt) as cnt,
+                a.contnm as contnm,
+            left(a.recedate,6) as recedate
+
+
+        FROM
+            (
+            SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            a.equpcd,
+            a.recedate,
+            a.recetime,
+            a.hitchdate,
+            a.hitchhour,
+            1 as cnt,
+            1 as ascnt,
+            c.pernm as recepernm,
+            d.pernm,
+            e.divinm,
+            f.contnm,
+            a.contents as contremark,
+            g.resunm,
+            resuremark,
+            h.pernm as repernm,
+            i.remonm,
+            b.faccd,
+            j.facnm,
+            b.remoremark,
+            k.greginm,
+            l.reginm,
+            (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
+            b.arrivdate,
+            b.arrivtime,
+            b.compdate,
+            b.comptime,
+            b.resutime,
+            b.resulttime,
+            m.resultnm,
+            a.contcd
+
+            FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND 'p' + a.perid =  c.perid )
+            LEFT OUTER JOIN tb_ja001 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND 'p' + a.reperid = h.perid )
+            LEFT OUTER JOIN tb_e010 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.contcd = f.contcd)
+            LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+            LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' + b.perid =  d.perid )
+            LEFT OUTER JOIN tb_jc002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
+            LEFT OUTER JOIN tb_e012 g WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = g.spjangcd AND b.resucd = g.resucd)
+            LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND b.remocd = i.remocd)
+            LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND b.faccd = j.faccd)
+            LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd)
+            LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND b.gregicd = l.gregicd AND b.regicd = l.regicd  )
+            LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND b.resultcd = m.resultcd)
+
+            ) a LEFT OUTER JOIN tb_e611 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd and a.equpcd = c.equpcd)
+            LEFT OUTER JOIN tb_e006 f WITH(NOLOCK) ON (c.custcd = f.custcd AND c.spjangcd = f.spjangcd AND c.jejak = f.manucd AND c.model = f.mdcd),
+            tb_e601 b
+            LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' +  b.perid =  d.perid )
+            LEFT OUTER JOIN tb_e018_1 e WITH(NOLOCK) ON (b.custcd = e.custcd AND b.spjangcd = e.spjangcd AND b.wkactcd = e.wkactcd)
+
+        WHERE
+            a.recedate BETWEEN #{frdate} AND #{todate}
+          AND a.actcd = #{actcd}
+          AND a.contcd like CONCAT('%',#{contcd},'%')
+        group by  a.contnm, left(a.recedate,6)
+        order by LEFT(a.recedate,6), a.contnm
+
+        ]]>
+    </select>
+
+    <!--      고장내용별현황 / 호기별 고장내용  -->
+    <select id="GetApp13List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App13ElvlrtDto">
+        <![CDATA[
+        SELECT  sum(a.cnt) as cnt,
+                a.contnm as contnm,
+                c.equpnm as equpnm
+
+
+        FROM
+            (
+                SELECT a.custcd,
+                       a.spjangcd,
+                       a.cltcd,
+                       a.actcd,
+                       a.equpcd,
+                       a.recedate,
+                       a.recetime,
+                       a.hitchdate,
+                       a.hitchhour,
+                       1 as cnt,
+                       1 as ascnt,
+                       c.pernm as recepernm,
+                       d.pernm,
+                       e.divinm,
+                       f.contnm,
+                       a.contents as contremark,
+                       g.resunm,
+                       resuremark,
+                       h.pernm as repernm,
+                       i.remonm,
+                       b.faccd,
+                       j.facnm,
+                       b.remoremark,
+                       k.greginm,
+                       l.reginm,
+                       (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
+                       b.arrivdate,
+                       b.arrivtime,
+                       b.compdate,
+                       b.comptime,
+                       b.resutime,
+                       b.resulttime,
+                       m.resultnm,
+                       a.contcd
+
+                FROM tb_e401 a WITH(NOLOCK)
+  LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND 'p' + a.perid =  c.perid )
+                    LEFT OUTER JOIN tb_ja001 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND 'p' + a.reperid = h.perid )
+                    LEFT OUTER JOIN tb_e010 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.contcd = f.contcd)
+                    LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+                    LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' + b.perid =  d.perid )
+                    LEFT OUTER JOIN tb_jc002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
+                    LEFT OUTER JOIN tb_e012 g WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = g.spjangcd AND b.resucd = g.resucd)
+                    LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND b.remocd = i.remocd)
+                    LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND b.faccd = j.faccd)
+                    LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd)
+                    LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND b.gregicd = l.gregicd AND b.regicd = l.regicd  )
+                    LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND b.resultcd = m.resultcd)
+
+            ) a LEFT OUTER JOIN tb_e611 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd and a.equpcd = c.equpcd)
+            LEFT OUTER JOIN tb_e006 f WITH(NOLOCK) ON (c.custcd = f.custcd AND c.spjangcd = f.spjangcd AND c.jejak = f.manucd AND c.model = f.mdcd),
+            tb_e601 b
+            LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' +  b.perid =  d.perid )
+            LEFT OUTER JOIN tb_e018_1 e WITH(NOLOCK) ON (b.custcd = e.custcd AND b.spjangcd = e.spjangcd AND b.wkactcd = e.wkactcd)
+
+        WHERE
+            a.recedate BETWEEN #{frdate} AND #{todate}
+          AND a.actcd = #{actcd}
+          AND a.contcd like CONCAT('%',#{contcd},'%')
+        group by c.equpnm, a.contnm
+        order by c.equpnm, a.contnm
+        ]]>
+    </select>
+</mapper>
