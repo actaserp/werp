@@ -73,10 +73,7 @@
                 <div class="sec_con" style="width: 100%;">
                     <div class="box_wrap">
                         <form action="">
-
-
                             <!-- //본문 -->
-
                             <div class="card mb-3">
                                 <div class="card-header bg-light overflow-hidden">
                                     <div class="d-flex align-items-center">
@@ -85,40 +82,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body p-0">
-
-                                       
+                                <div class="card-body p-0">                                       
                                     <textarea name="actfsubjectz" id="actfsubjectz" cols="20" style="resize: none;" class="shadow-none form-control rounded-0 resize-100 px-card p-100 border-y-0 border-200" placeholder="제목을 작성해주세요." rows="1"></textarea>
-    
                                             <input type="hidden" name="actfseqz" id="actfseqz">
-                                            <input type="hidden" name="actfflagz" id="actfflagz" value="FQ">                                                    
-                                
+                                            <input type="hidden" name="actfflagz" id="actfflagz" value="FQ">                                                 
                                     <hr class="my-2">                                    
                                         <textarea name="actfmemoz" id="actfmemoz"  class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 입력하세요." rows="4"></textarea>
-
-                                        <div class="d-flex align-items-center ps-card border border-100">
-                                            
+                                        <div class="d-flex align-items-center ps-card border border-100">                                            
                                         </div>
                                         <div class="row g-0 justify-content-between mt-3 px-card pb-3">
-                                            <div class="col">
-                                                                                             
+                                            <div class="col">                                                                                             
                                             </div>
                                             <div class="col-auto">
                                                 <button class="btn btn-primary btn-sm px-4 px-sm-5" onclick="save_btn()" >저장</button> 
-                                                <button class="btn btn-primary btn-sm px-4 px-sm-5" onclick="del_btn()" >삭제</button> 
-                                                <!-- type="button" -->
+                                                <button class="btn btn-primary btn-sm px-4 px-sm-5" onclick="del_btn()" >삭제</button>                                                
                                             </div>
                                         </div>
-
-
                                 </div>
-
-
-
-                            </div>
-                          
-        
-
+                            </div>                      
+    
                             <div class="card mb-3" >
                                 <div class="card-body" th:each="formdata:${app09Dto}"> 
                                     <h5><a href="#"><span th:text="${formdata.fsubject}" th:onclick="viewPage ([[${formdata.fseq}]], [[${formdata.fsubject}]], [[${formdata.fmemo}]], [[${formdata.fflag}]] )">제목</span><span class="fas fa-caret-right ms-2"></span></a></h5></a>
@@ -132,25 +114,12 @@
                                     <button class="btn btn-falcon-default btn-sm ms-2">아니오</button>
                                 </div>
                             </div>
-
-
-
-
-
-
-
                         </form>
 
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
     </div>
 
 

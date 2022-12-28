@@ -26,7 +26,7 @@ public class App10Controller {
 
     // 고장내용별현황 index
     @GetMapping(value="/index01")
-    public String App03IndexForm(Model model, HttpServletRequest request) throws  Exception{
+    public String App10IndexForm(Model model, HttpServletRequest request) throws  Exception{
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
