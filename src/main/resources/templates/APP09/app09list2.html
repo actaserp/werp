@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead_nwijmo :: headFragment_nw" />
+
+<body style="background: #f5f9fa;">
+
+    <div class="content flex">
+
+        <div class="header on">
+            <div class="left">
+                <div class="ham">
+                    <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+                </div>
+                <div class="nav_bg"></div>
+                <!-- ################################ -->
+                <!-- ## Left navigator include -->
+                <th:block th:include="layouts/APPHeader/appLeftNav" />
+            </div>
+            <div class="right">
+            </div>
+        </div>
+        <div class="con">
+            <div class="header_top">
+                <ul class="left">
+                    <li>
+                        <div class="logo">
+                            <a href="">
+                                <img th:src="@{/assets/images/logo.png}" alt="">
+                            </a>
+                        </div>
+                    </li>
+                    <li class="home">
+                        <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                        <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+                    </li>
+                    <li class="on">
+                        FaQ
+                    </li>
+                    <!-- <li class="on">
+                            고장접수관제현황
+                        </li> -->
+                </ul>
+                <ul class="right">
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_call.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_bell.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_menu.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_que.png}" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img th:src="@{/assets/images/i_user.png}" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+           
+            <div class="section ">
+                <div class="sec_con" style="width: 100%;">
+                    <div class="box_wrap">
+                        <form action="">
+                            <!-- //본문 -->
+                            <div class="card mb-3">
+                                <div class="bg-holder d-none d-lg-block bg-card" th:style="'background-image:url('+ @{/assetsfalcon/img/icons/spot-illustrations/corner-4.png} +');'">
+                                    <!-- <img th:src="@{/assetsfalcon/img/icons/spot-illustrations/corner-4.png}"> -->
+                                </div>
+                                <!--/.bg-holder-->                    
+                                <div class="card-body position-relative">
+                                  <div class="row">
+                                    <div class="col-lg-8">
+                                      <h3>FaQ</h3>
+                                      <p class="mb-0">자주 묻는 질문에 대한 답변을 확인하세요<br class="d-none.d-sm-block">ㅇㅇ</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>                   
+    
+                            <div class="card mb-3" >
+                                <div class="card-body" th:each="formdata:${app09Dto}"> 
+                                    <h5><a href="#"><span th:text="${formdata.fsubject}" th:onclick="viewPage ([[${formdata.fseq}]], [[${formdata.fsubject}]], [[${formdata.fmemo}]], [[${formdata.fflag}]] )">제목</span><span class="fas fa-caret-right ms-2"></span></a></h5></a>
+                                    <p th:text="${formdata.fmemo}" class="fs--1 mb-0">내용2</p>
+                                    <hr class="my-3"/>
+                                   
+                                </div>
+                                <div class="card-footer d-flex align-items-center bg-light">
+                                    <h5 class="d-inline-block me-3 mb-0 fs--1">답변이 도움되셨습니까?</h5>
+                                    <button class="btn btn-falcon-default btn-sm">네</button>
+                                    <button class="btn btn-falcon-default btn-sm ms-2">아니오</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- 자바 스크립트  -->
+<script>  
+// <!-- 저장 스크립트 시작 -->
+function save_btn(){ 
+
+    var ls_actfseqz   = document.getElementById('actfseqz').value; 
+    var ls_actfsubjectz   = document.getElementById('actfsubjectz').value; 
+    var ls_actfmemoz   = document.getElementById('actfmemoz').value;
+    var ls_actfflagz = "N";
+
+    if(!ls_actfsubjectz){
+        alert("제목을 입력하세요")
+        return 
+    } 
+    if(!ls_actfmemoz){
+        alert("본문을 입력하세요")
+        return 
+    }              
+        $.ajax({
+        url: '/app09mod/saveboard',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+        type: "POST",
+                  data:{
+                "actfseqz"    : ls_actfseqz ,
+                "actfsubjectz": ls_actfsubjectz , 
+                "actfmemoz"   : ls_actfmemoz, 
+                "actfflagz"   : ls_actfflagz,               
+                },       
+                async:false,
+        success:function(data){
+                if(data == "success"){
+                alert("저장되었습니다.")
+                console.log("save", data);
+                    listUp();
+            }else{
+                alert("저장되었습니다.")
+                    listUp();
+            }
+        },error:function(e){
+            console.log('error',e);
+        }
+        }).done(function(fragment){
+           
+        }) 
+        
+        listUp(); 
+}
+
+function listUp(){
+    window.location.href = '/app09/index02';
+}; 
+
+//조회 script
+
+function viewPage(arg1,arg2,arg3,arg4){
+        document.getElementById('actfseqz').value= arg1;
+        document.getElementById('actfsubjectz').value= arg2;
+        document.getElementById('actfmemoz').value= arg3;
+        document.getElementById('actfflagz').value= arg4;
+
+}
+
+//삭제 script
+
+function del_btn(){
+
+    if (!confirm("삭제하시겠습니까?")) {
+            return ;
+        }       
+        var ls_actfseqz   = document.getElementById('actfseqz').value;
+        if(!ls_actfseqz){
+            alert("삭제할 자료를 선택하세요")
+            return
+        }
+        $.ajax({
+            url: '/app09mod/del',
+            type:"POST",
+            data: {
+                "actfseqz"    : ls_actfseqz ,
+                "actflagz"    : "FQ"
+            },
+            async:false,
+            success:function(data){
+                if(data == "success"){
+                    alert("삭제되었습니다.")
+                    console.log("delete", data);
+                    listUp();
+                }else{
+                    alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        })
+
+        listUp();
+
+
+}
+
+</script>
+
+</body>
+<!------footer ------>
+<footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+
+
+
+</html>

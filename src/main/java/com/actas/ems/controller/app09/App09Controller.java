@@ -58,5 +58,23 @@ public class App09Controller {
         return "app09/app09list";
     }
 
+    @GetMapping(value = "/index02")
+    public String App09Form2(Model model, HttpServletRequest request) throws  Exception{
+        Date nowData = new Date();
+        SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
+        String indate = endDate.format(nowData).toString();
+        app09Dto.setYyyymm(indate.substring(0, 6));
+        app09Dto.setFinputdate(indate);
+
+        try{
+            app09DtoList = service.GetFQManulList(app09Dto);
+            model.addAttribute("app09Dto", app09DtoList);
+        }catch (Exception ex){
+            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "app09/app09list2";
+    }
+
 
 }
