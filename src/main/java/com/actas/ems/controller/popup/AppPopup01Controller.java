@@ -136,4 +136,38 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    @RequestMapping(value="/wdivinm")
+    public Object AppdivinmList(@RequestParam("actdivinmz") String divinm
+            , Model model){
+        if(divinm.length() == 0){
+            divinm = "%";
+        }
+        try {
+            popParmDto.setDivinm(divinm);
+            poplistDto = appPopElvlrtService.GetDivinmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+    @RequestMapping(value="/wpernm")
+    public Object ApppernmList(@RequestParam("actpernmz") String pernm
+            , Model model){
+        if(pernm.length() == 0){
+            pernm = "%";
+        }
+        try {
+            popParmDto.setPernm(pernm);
+            poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
 }

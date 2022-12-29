@@ -32,6 +32,10 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetGreginmList(PopupDto parm){return appPopElvMapper.GetGreginmList(parm);}
     /** 처리방법 조회 */
     public List<PopupDto> GetResultnmList(PopupDto parm){return appPopElvMapper.GetResultnmList(parm);}
+    /** 담당부서 조회 */
+    public List<PopupDto> GetDivinmList(PopupDto parm){return appPopElvMapper.GetDivinmList(parm);}
+    /** 담당자 조회 */
+    public List<PopupDto> GetPernmList(PopupDto parm){return appPopElvMapper.GetPernmList(parm);}
 
 
 

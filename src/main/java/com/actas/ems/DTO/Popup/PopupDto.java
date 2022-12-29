@@ -27,5 +27,12 @@ public class PopupDto {
     private String greginm;         //고장부위
     private String resultnm;        //처리방법
     private String resultcd;        //처리코드
+    private String divicd;          //담당부서코드
+    private String divinm;          //담당부서명
+    private String perid;           //사원코드
+    private String pernm;           //사원명
+    private String rtclafi;         //재/퇴직 구분
+    private String custcd;
+    private String spjangcd;
 
 }

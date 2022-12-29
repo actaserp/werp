@@ -84,4 +84,27 @@
           AND A.useyn = '1'
         ]]>
     </select>
+
+    <!-- 담당부서 -->
+    <select id="GetDivinmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.divicd    divicd  ,
+               a.divinm    divinm
+        FROM TB_JC002 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(divinm , '') Like concat('%',#{divinm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 담당자 -->
+    <select id="GetPernmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.perid    perid  ,
+               a.pernm    pernm
+        FROM TB_JA001 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        ]]>
+    </select>
 </mapper>
