@@ -91,9 +91,9 @@
                                 <button type="button">검색</button>                             
 
                                 <div class="input_wrap">
-                                    <select name="" id="">
-                                        <option value="">미처리</option>
-                                        <option value="">처리</option>
+                                    <select name="" id="changeinput" onchange="ChangeValue();">
+                                        <option value="dn">미처리</option>
+                                        <option value="do">처리</option>
                                     </select>
                                 </div>
                             </div>                            
@@ -105,7 +105,7 @@
                                                 <div class="card-body bg-light">
                                                     <ul class="nav nav-tabs">
                                                         <li class="nav-item">
-                                                          <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">기간별고장내용</a>
+                                                          <a class="nav-link active" href="#step01" onclick="tabchk_rtn('A')">기간별고장내용</a>
                                                         </li>
                                                         <li class="nav-item">
                                                           <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">현장별고장내용</a>
@@ -157,51 +157,42 @@
                                         <tr>
                                         <th>접수일자</th>
                                         <td>
-                                            <div class="input_wrap date">
-                                                <input type="text"  class="form-control datetimepicker" id="frdate2" autocomplete="off"  placeholder="Y-m-d">
+                                            <div class="input_wrap">
+                                                <p>값호출</p>
+                                                <!-- <input type="text"  autocomplete="off"  placeholder="Y-m-d22"> -->
                                             </div>
                                         </td>
                                         <th>접수번호</th>
                                         <td>
                                             <div class="input_wrap">
-                                                <input type="text">
+                                                <p>값호출</p>
+                                                <!-- <input type="text"> -->
                                             </div>
                                         </td>
-                                       <th>공유가능</th>
-                                       
+                                       <th>공유가능</th>                                       
                                           <td>
                                             <input type="checkbox" id="share">
                                             <label for="share" class="check_style1 no_txt"></label>
-                                          </td>
-                                            <!-- <input type="checkbox" id="share">
-                                            <label for="actmflagz" class="check_style1 no_txt"></label> 
-                                    
-                                        </td> -->
+                                          </td>                                            
                                         </tr>
                                     <tr>
                                         <th>현장명</th>
                                         <td>
-                                            <div class="input_wrap table_search">
-                                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />                                    
-                                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz">
-                                                <button class="btn1" type="button"></button>
+                                            <div class="input_wrap">
+                                                <p>값호출</p>
                                             </div>
                                         </td>
                                         <th>호기명</th>
                                         <td>
-                                            <div class="input_wrap table_search">
-                                                <input class="form-control" type="text" placeholder="호기명을 입력하세요" id="equpnm" name="equpnm" aria-label="equpnm" aria-describedby="basic-addon1">                                    
-                                                <input class="form-control form-control-sm"  type="hidden"  id="aaaz"> 
-                                                <button class="btn1" type="button"></button>
+                                            <div class="input_wrap">
+                                                <p>값호출</p>
                                             </div>
                                         </td>
                                         <th>처리자</th>
                                         <td>
-                                            <div class="input_wrap table_search">
-                                                <input class="form-control" type="text" placeholder="처리자를 입력하세요" id="resuname" name="resuname" aria-label="resuname" aria-describedby="basic-addon1">                                    
-                                                <input class="form-control form-control-sm"  type="hidden"  id="acz"> 
-                                                <button class="btn1" type="button"></button>
-                                            </div>
+                                            <div class="input_wrap">
+                                                <p>로그인 정보 호출</p>
+                                        </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -214,7 +205,7 @@
                                         <th>도착시간</th>
                                         <td colspan="3">
                                             <div class="input_wrap">
-                                                <input type="text"  class="form-control convert_time" id="frtime" autocomplete="off"  placeholder="도착시간을 입력해주세요.">
+                                                <input type="time"  class="form-control datetimepicker" id="frtime" autocomplete="off"  placeholder="도착시간을 입력해주세요.">
                                             </div>
                                         </td>
                                     </tr>
@@ -228,7 +219,7 @@
                                         <th>완료시간</th>
                                         <td colspan="3">
                                             <div class="input_wrap">
-                                                <input type="text"  class="form-control convert_time" id="totime" autocomplete="off"  placeholder="완료시간을 입력해주세요.">
+                                                <input type="time"  class="form-control datetimepicker" id="totime" autocomplete="off"  placeholder="완료시간을 입력해주세요.">
                                             </div>
                                         </td>
                                     </tr>
@@ -236,7 +227,7 @@
                                         <th>고장내용</th>
                                         <td colspan="5">
                                             <div class="input_wrap">
-                                                <input type="text">
+                                                <input type="text" placeholder="값호출">
                                             </div>
                                         </td>
                                     </tr>
@@ -244,7 +235,7 @@
                                         <th>고장상세내용</th>
                                         <td colspan="5">
                                             <div class="input_wrap table_btn">
-                                                <input type="text">
+                                                <input type="text" placeholder="값호출">
                                                 <button class="btn2" type="button">유사사례 찾아보기</button>
                                             </div>
                                         </td>
@@ -340,87 +331,8 @@
         <input class="form-control form-control-sm"  type="hidden" id="TB_E015btn" data-bs-toggle="modal" data-bs-target="#TB_E015modal"  />
         <input class="form-control form-control-sm"  type="hidden" id="TB_E012btn" data-bs-toggle="modal" data-bs-target="#TB_E012modal2"  />
 <!--------------------------------------------------------------------------------------->   
-<!-- 동작중@현장명(TB_E401.actnm) thePager01 MODAL FROM  -->  
-        <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                style="max-width: 800px">
-                <div class="modal-content border-0">
-                    <div class="modal-body p-0" > 
-                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                            <div class="search">
-                                <div class="input_wrap">
-                                    <input class="form-control form-control-sm" id="searchCode" type="text" onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
-                                    placeholder="현장코드 / 현장명 "     />                                      
-                                </div>
-                                <button id="wactnmBtn">
-                                    <img th:src="@{/assets/images/i_search2.png}" alt=""> 
-                                </button>
-                            </div> 
-                            <div  class="save_id" >
-                                <input type="checkbox" id="conflag" value="1" checked>
-                                <label for="conflag" class="check_style1">체크박스</label>
-                            </div>
-                        </div>   
-                        <div class="container-fluid"> 
-                            <div id="theGroupPanel"></div>
-                            <div id="wactnmGrid_div" ></div>
-                            <div id="thePager01"></div>
-                        </div>   
-                    </div>  
 
-                    <div class="modal-footer">
-                        <div class="row g-1">
-                            <div class="col-auto">
-                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">닫기</button>
-                            </div> 
-                        </div>
-                    </div>   
 
-                </div>
-            </div> 
-        </div>  
-
-<!-- 동작중호기명(TB_E401.equpnm) thePager03 MODAL FROM  -->  
-         <div class="modal fade" id="equpnmmodal" data-bs-keyboard="false"
-         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-         aria-hidden="true">
-             <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                 style="max-width: 800px">
-                 <div class="modal-content border-0">
-                     <div class="modal-body p-0" > 
-                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                             
-                             <div class="search">
-                                 <div class="input_wrap">
-                                     <input class="form-control form-control-sm" id="searchCode" type="text" onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
-                                     placeholder="호기명"     />                                                                           
-                                 </div>
-                                 <button id="wactnmBtn">                                     
-                                     <img th:src="@{/assets/images/i_search2.png}" alt=""> 
-                                 </button>
-                             </div>                              
-                         </div>   
-                         <div class="container-fluid"> 
-                             <div id="theGroupPanel"></div>
-                             <div id="wequpnmGrid_div" ></div>
-                             <div id="thePager03"></div>
-                         </div>   
-                     </div>  
- 
-                     <div class="modal-footer">
-                         <div class="row g-1">
-                             <div class="col-auto">
-                                 <button class="badge-soft-primary dropdown-item rounded-1"
-                                     type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">닫기</button>
-                             </div> 
-                         </div>
-                     </div>   
- 
-                 </div>
-             </div> 
-         </div>  
 <!--------------------------------------------------------------------------------------->   
         <!-- 동작중@고장부위(actcontnmmodal, TB_E012) thePager02 테이블 리스트 MODAL FROM  -->  
         <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
@@ -516,45 +428,6 @@
         </div>  
 <!--------------------------------------------------------------------------------------->  
 
-<!--------------------------------------------------------------------------------------->   
-        <!-- 처리자) thePager081 테이블 리스트가 고장부위와 겹침 MODAL FROM  -->  
-        <div class="modal fade" id="resunamemodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                style="max-width: 500px">
-                <div class="modal-content border-0">
-                    <div class="modal-body p-0" > 
-                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                          
-                            <div class="search">
-                                <div class="input_wrap">
-                                    <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
-                                    placeholder="처리자 찾기"     />                                      
-                                </div>
-                                <button id="wcontnmBtn">
-                                    <img th:src="@{/assets/images/i_search2.png}" alt=""> 
-                                </button>
-                            </div>  
-                        </div>   
-                        <div class="container-fluid"> 
-                            <div id="wresunameGrid_div" ></div>
-                            <div id="thePager081"></div>
-                        </div>   
-                    </div>  
-
-                    <div class="modal-footer">
-                        <div class="row g-1">
-                            <div class="col-auto">
-                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">닫기</button>
-                            </div> 
-                        </div>
-                    </div>   
-
-                </div>
-            </div> 
-        </div>  
-<!--------------------------------------------------------------------------------------->  
 
 
 <!--------------------------------------------------------------------------------------->   
@@ -650,14 +523,28 @@
 
 <!--        자바 시작-->
  <script>
+
+    //처리 및 미처리
+
+    function ChangeValue(){
+    var value_str = document.getElementById('changeinput');
+    alert("value:" + value_str.options[value_str.selectedIndex].value + 
+	" text:" + value_str.options[value_str.selectedIndex].text);
+    }
+
+    // var selectDoChange = function(value){
+	//     console.log("값변경테스트: " + value);
+	//     $("#changeinput").val(value);
+    // }
+    // alert 없이 https://gurtn.tistory.com/98
         
 // 날짜 및 시간 표현 script       
         $(document).ready(function() { 
+            //먼저 실행되게 하는 것을 막는 쿼리
             getToday()
             fn_egov_init_date()
             $('datetimepicker').datetimepicker({
-                
-            }); 
+            });            
 
             $("#frdate").change(function(e){ 
                 // from                
@@ -665,15 +552,22 @@
             $("#todate").change(function(e){ 
                 // untill                
             })
-            $("#frdate2").change(function(e){ 
-                // 접수일자                
-            })
+            
             $("#todate2").change(function(e){ 
                 // 도착일자
             })
             $("#codate").change(function(e){ 
                 // 완료일자
             })
+
+            $("#frtime").change(function(e){ 
+                // from                
+            })
+            $("#totime").change(function(e){ 
+                // untill                
+            })
+            
+           
         })
         function getToday(){
             let today = new Date();   
@@ -688,17 +582,18 @@
             document.getElementById('frdate').value = ls_frday; //날짜 조회 현재 시간 쿼리
             document.getElementById('todate').value = ls_today; 
         }
-        function convert_time(timestamp){ 
-            //현재시간
-            var date = new Date(timestamp); 
-            var year = date.getFullYear();
-            var month = ("0" + (1 + date.getMonth())).slice(-2);
-            var day = ("0" + date.getDate()).slice(-2); 
-            var hh = date.getHours();  
-            var min = ('0' + date.getMinutes()).slice(-2) 
-            time = year +  month +  day   ;
-            return time;  
-        }
+        // function convert_time(timestamp){ 
+        //     //현재시간
+        //     var date = new Date(timestamp); 
+        //     var year = date.getFullYear();
+        //     var month = ("0" + (1 + date.getMonth())).slice(-2);
+        //     var day = ("0" + date.getDate()).slice(-2); 
+        //     var hh = date.getHours();  
+        //     var min = ('0' + date.getMinutes()).slice(-2) 
+        //     time = year +  month +  day   ;
+        //     return time;  
+           
+        // }
         function fn_egov_init_date(){
                 //from_untill date pick 시작
             var $frdate = $('#frdate');    //날짜조회from
@@ -734,22 +629,9 @@
                         // minDate: $todate.val() ? $todate.val() : false
                     })
                 }
-            });
+            });        
 
-            $frdate2.datetimepicker({ //from
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                        // maxDate: $frdate.val() ? $frdate.val() : false
-                    })
-                },
-            });
-
-            $todate2.datetimepicker({ //untill
+            $todate2.datetimepicker({ //도착일자
                 //from_untill date pick 끝
                 timepicker: false,
                 lang: 'ko',
@@ -757,13 +639,13 @@
                 scrollMonth: false,
                 scrollInput: false,
                 onShow: function (ct) {
-                    this.setOptions({
+                    this.setOptions({                        
                         // minDate: $todate.val() ? $todate.val() : false
                     })
                 }
             });
 
-            $codate.datetimepicker({ //from
+            $codate.datetimepicker({ //완료일자
                 timepicker: false,
                 lang: 'ko',
                 format: 'Y-m-d',
@@ -771,13 +653,12 @@
                 scrollInput: false,
                 onShow: function (ct) {                                    
                     this.setOptions({
+                        minDate: 0,
                         // maxDate: $frdate.val() ? $frdate.val() : false
                     })
                 },
-            });
-            
-            $frtime.datetimepicker({ //도착시간
-                // datepicker: false,
+            }); 
+            $frtime.timepicker({ //도착시간                
                 timepicker: true,
                 lang: 'ko',                
                 step:10,
@@ -787,17 +668,17 @@
                 scrollInput: false,
                 onShow: function (ct) {                                    
                     this.setOptions({
+                        datepicker: false,
                         minTime: '09:00',
                         maxTime: '22:10',                        
                     })
                 },
             });
             
-            $totime.datetimepicker({ //완료시간
-                // datepicker: false,
+            $(totime).timepicker({ //완료시간                
                 timepicker: true,
                 lang: 'ko',                
-                step:10,
+                // step:10,
                 timeFormat: 'H:i',
                 controlType:'select',
                 scrollMonth: false,
@@ -805,13 +686,21 @@
                 onShow: function (ct) {                                    
                     this.setOptions({
                         minTime: '09:00',
-                        maxTime: '22:10',                        
+                        maxTime: '22:10',  
+                        datepicker: false,                      
                     })
                 },
-            });
-
-
+            });                  
         }
+
+        // function fn_egov_init_time(){
+        //     var $frtime = $('#frtime');    //도착시간
+        //     var $totime = $('#totime');    //완료시간
+
+            
+
+        // }  
+
 
 
 
@@ -892,7 +781,6 @@ function searchpcode_rtn(){
                     alert(data.message);
                 }
             }).done(function(fragment){           
-
             }) 
         }
         
