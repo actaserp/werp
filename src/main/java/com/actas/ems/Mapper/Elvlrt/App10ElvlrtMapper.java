@@ -13,8 +13,8 @@ import java.util.List;
 @Mapper
 public interface App10ElvlrtMapper {
 
-    public List<App03ElvlrtDto> GetApp10List001(PopupDto parm) ;
-    public List<App03ElvlrtDto> GetApp10List002(PopupDto parm) ;
-    public List<App03ElvlrtDto> GetApp10List003(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp03List001(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp03List002(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp03List003(PopupDto parm) ;
 
 }

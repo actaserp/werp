@@ -18,11 +18,11 @@ public class App10ElvlrtService {
     App10ElvlrtMapper  app10ElvMapper;
 
     /** 고장내용별현황 / 기간별 고장내용 */
-    public List<App03ElvlrtDto> GetApp03List001(PopupDto parm){return app10ElvMapper.GetApp10List001(parm);}
+    public List<App03ElvlrtDto> GetApp03List001(PopupDto parm){return app10ElvMapper.GetApp03List001(parm);}
     /** 고장내용별현황 / 현장별 고장내용 */
-    public List<App03ElvlrtDto> GetApp03List002(PopupDto parm){return app10ElvMapper.GetApp10List002(parm);}
+    public List<App03ElvlrtDto> GetApp03List002(PopupDto parm){return app10ElvMapper.GetApp03List002(parm);}
     /** 고장내용별현황 / 호기별 고장내용 */
-    public List<App03ElvlrtDto> GetApp03List003(PopupDto parm){return app10ElvMapper.GetApp10List003(parm);}
+    public List<App03ElvlrtDto> GetApp03List003(PopupDto parm){return app10ElvMapper.GetApp03List003(parm);}
 
 
 

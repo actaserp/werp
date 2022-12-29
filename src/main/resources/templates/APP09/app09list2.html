@@ -75,31 +75,19 @@
                         <form action="">
                             <!-- //본문 -->
                             <div class="card mb-3">
-                                <div class="card-header bg-light overflow-hidden">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0 fs-0">FaQ</h5>
-                                        </div>
+                                <div class="bg-holder d-none d-lg-block bg-card" th:style="'background-image:url('+ @{/assetsfalcon/img/icons/spot-illustrations/corner-4.png} +');'">
+                                    <!-- <img th:src="@{/assetsfalcon/img/icons/spot-illustrations/corner-4.png}"> -->
+                                </div>
+                                <!--/.bg-holder-->                    
+                                <div class="card-body position-relative">
+                                  <div class="row">
+                                    <div class="col-lg-8">
+                                      <h3>FaQ</h3>
+                                      <p class="mb-0">자주 묻는 질문에 대한 답변을 확인하세요<br class="d-none.d-sm-block">ㅇㅇ</p>
                                     </div>
+                                  </div>
                                 </div>
-                                <div class="card-body p-0">                                       
-                                    <textarea name="actfsubjectz" id="actfsubjectz" cols="20" style="resize: none;" class="shadow-none form-control rounded-0 resize-100 px-card p-100 border-y-0 border-200" placeholder="제목을 작성해주세요." rows="1"></textarea>
-                                            <input type="hidden" name="actfseqz" id="actfseqz">
-                                            <input type="hidden" name="actfflagz" id="actfflagz" value="FQ">                                                 
-                                    <hr class="my-2">                                    
-                                        <textarea name="actfmemoz" id="actfmemoz"  class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 입력하세요." rows="4"></textarea>
-                                        <div class="d-flex align-items-center ps-card border border-100">                                            
-                                        </div>
-                                        <div class="row g-0 justify-content-between mt-3 px-card pb-3">
-                                            <div class="col">                                                                                             
-                                            </div>
-                                            <div class="col-auto">
-                                                <button class="btn btn-primary btn-sm px-4 px-sm-5" onclick="save_btn()" >저장</button> 
-                                                <button class="btn btn-primary btn-sm px-4 px-sm-5" onclick="del_btn()" >삭제</button>                                                
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>                      
+                              </div>                   
     
                             <div class="card mb-3" >
                                 <div class="card-body" th:each="formdata:${app09Dto}"> 
@@ -173,7 +161,7 @@ function save_btn(){
 }
 
 function listUp(){
-    window.location.href = '/app09/index01#';
+    window.location.href = '/app09/index02';
 }; 
 
 //조회 script

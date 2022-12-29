@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+<header>
+
+</header>
+<div class="content flex">
+  <div class="header on">
+    <div class="left">
+      <div class="ham">
+        <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+      </div>
+      <div class="nav_bg"></div>
+      <!-- ################################ -->
+      <!-- ## Left navigator include -->
+      <th:block th:include="layouts/APPHeader/appLeftNav" />
+    </div>
+    <div class="right">
+    </div>
+  </div>
+  <div class="con">
+    <div class="header_top">
+      <ul class="left">
+        <li>
+          <div class="logo">
+            <a href="">
+              <img th:src="@{/assets/images/logo.png}" alt="">
+            </a>
+          </div>
+        </li>
+        <li class="home">
+          <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+          <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+        </li>
+        <li>
+          종합유지관리서비스
+        </li>
+        <li class="on">
+          동호기별고장통계
+        </li>
+      </ul>
+      <ul class="right">
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_call.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_bell.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_menu.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_que.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_user.png}" alt="">
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="infor_bar type2">
+      <ul class="right" style="visibility: hidden; opacity: 0;">
+        <li>
+          <button type="button" class="color2">
+            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+          </button>
+        </li>
+        <li>
+          <button type="button" class="color5">
+            <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+          </button>
+        </li>
+      </ul>
+      <div class="left">
+        동호기별고장통계
+      </div>
+      <ul class="right">
+        <li>
+          <button type="button" class="color2" id="retrieveBtn">
+            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+          </button>
+        </li>
+        <!-- <li>
+            <button type="button" class="color5">
+                <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+            </button>
+        </li> -->
+      </ul>
+
+    </div>
+    <div class="section">
+      <div class="sec_con" style="width: 100%;">
+        <div class="box_wrap">
+          <ul class="search_box">
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
+                <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                <!-- <span>-</span> -->
+                <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
+                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3">
+                <input class="form-control" type="hidden" placeholder="고장내용을 입력하세요" aria-label="actcontnmz" id="actcontnmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actcontcdz"  />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section status">
+      <div class="sec_con" style="width: 100%;">
+        <div class="box_wrap">
+          <div class="table table_style2">
+            <div class="card-body bg-light">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">동호기별고장통계</a>
+                </li>
+                <!--<li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">현장별고장내용</a>
+                </li>--><!--
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">호기별고장내용</a>
+                </li>-->
+                <input type="hidden" id="tabvalue" value="A">
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="step01">
+                  <div class="container-fluid">
+
+
+                    <div id="theGrid" class="animated"></div>
+                    <div id="tab01Pager"></div>
+                  </div>
+                </div>
+                <!--<div class="tab-pane fade" id="step02">
+                  <div class="container-fluid">
+                    <div id="chartTabB"></div>
+                  </div>
+                </div>-->
+                <!--<div class="tab-pane fade" id="step03">
+                  <div class="container-fluid">
+                    <select id="typeMenu">
+                      <option value="0" selected="selected">사분면(Squarified)</option>
+                      <option value="1">수평(Horizontal)</option>
+                      <option value="2">수직(Vertical)</option>
+                    </select>
+                    <div id="chartTabC"></div>
+                  </div>
+                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
+  <!--    <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />-->
+
+
+  <!--------------------------------------------------------------------------------------->
+  <!-- 현장명 MODAL FROM  -->
+  <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                       placeholder="현장코드 / 현장명 "     />
+              </div>
+              <button id="wactnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+            <div  class="save_id" >
+              <input type="checkbox" id="conflag" value="1" checked>
+              <label for="conflag" class="check_style1">계약현장</label>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="theGroupPanel"></div>
+            <div id="wactnmGrid_div" ></div>
+            <div id="thePager01"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+
+
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장내용 MODAL FROM  -->
+  <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
+                       placeholder="고장내용 "     />
+              </div>
+              <button id="wcontnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wcontnmGrid_div" ></div>
+            <div id="thePager02"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+  <script type="text/javascript" th:inline="javascript">
+    var theGrid;
+    var view_p01tab01page;
+    var view_actnmpage;
+    var wactnmGrid;
+
+    window.onload = function() {
+
+      view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+        pageSize: 12
+      })
+
+      // 열 그룹 옵션
+      let colGroups1 = getColumnGroups();
+
+      // 열 그룹을 가진 그리드 생성
+      theGrid = new wijmo.grid.FlexGrid("#theGrid", {
+        headersVisibility: "Column",
+        isReadOnly: false,
+        alternatingRowStep: 0,
+        allowSorting: 'MultiColumn',
+        showMarquee: true,
+        showSelectedHeaders: "All",
+        autoGenerateColumns: false,
+        columnGroups: colGroups1,
+        itemsSource:  view_p01tab01page//getData()
+      });
+
+      new FlexGridContextMenu(theGrid);
+
+      // 열 축소/확장 애니메이션 전환
+      document.getElementById("animated").addEventListener("click", (e) => {
+        wijmo.toggleClass(theGrid.hostElement, "animated", e.target.checked);
+      });
+
+
+
+
+      function getColumnGroups() {
+
+        return [
+          {binding: "equpnm", header: "동·호기", width: 250},
+
+          {
+
+            header: "1월",
+            align: "center",
+
+            columns: [
+
+              {binding: "1월.comp1", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "2월",
+            align: "center",
+
+            columns: [
+
+              {binding: "2월.comp2", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "3월",
+            align: "center",
+
+            columns: [
+
+              {binding: "3월.comp3", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "4월",
+            align: "center",
+
+            columns: [
+
+              {binding: "4월.comp4", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "5월",
+            align: "center",
+
+            columns: [
+
+              {binding: "5월.comp5", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "6월",
+            align: "center",
+
+            columns: [
+
+              {binding: "6월.comp6", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "7월",
+            align: "center",
+
+            columns: [
+
+              {binding: "7월.comp7", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "8월",
+            align: "center",
+
+            columns: [
+
+              {binding: "8월.comp8", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "9월",
+            align: "center",
+
+            columns: [
+
+              {binding: "9월.comp9", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "10월",
+            align: "center",
+
+            columns: [
+
+              {binding: "10월.comp10", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "11월",
+            align: "center",
+
+            columns: [
+
+              {binding: "11월.comp11", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "12월",
+            align: "center",
+
+            columns: [
+
+              {
+                binding: "12월.comp12", header: "처리", format: "a0", width: 80, align: "center"
+              },
+
+            ]
+          },
+          {
+            header: "총 처리 수",
+            align: "center",
+
+            columns: [
+
+              {
+                binding: "총 처리 수.qty", header: "처리", format: "a0", width: 80, align: "center"
+              },
+
+            ]
+          },
+
+
+        ];
+      }
+
+
+
+      //검색 데이터 수집
+      function getData_tab01() {
+        return [
+          {
+            equpnm: "동·호기",
+
+            "1월": {
+
+              comp1: "",
+
+            },
+            "2월": {
+
+              comp2: "",
+
+            },
+            "3월": {
+
+              comp3: "",
+
+            },
+            "4월": {
+
+              comp4: "",
+
+            },
+            "5월": {
+
+              comp5: "",
+
+            },
+            "6월": {
+
+              comp6: "",
+
+            },
+            "7월": {
+
+              comp7: "",
+
+            },
+            "8월": {
+
+              comp8: "",
+
+            },
+            "9월": {
+
+              comp9: "",
+
+            },
+            "10월": {
+
+              comp10: "",
+
+            },
+            "11월": {
+
+              comp11: "",
+
+            },
+            "12월": {
+
+              comp12: "",
+
+            },
+            "총 처리 수": {
+
+              qty: "",
+            }
+          },
+
+        ];
+
+      }
+
+
+
+    }
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //현장 검색
+
+
+    //tab01 검색
+    document.getElementById("retrieveBtn").addEventListener("click", function(){
+
+      let ls_tab = document.getElementById('tabvalue').value;
+      let ls_frdate = document.getElementById('frdate').value;
+      let ls_todate = document.getElementById('todate').value;
+      let ls_actcdz = document.getElementById('actcdz').value;
+      if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
+        ls_actcdz = "%";
+      }
+      searchList_rtn(ls_frdate, ls_todate, ls_actcdz);
+    })
+
+    function searchList_rtn(arg1, arg2, arg3){
+      $.ajax({
+        url: '/app15/p001tab01',
+        type: "POST",
+        data: {
+          "frdate" : arg1,
+          "todate" : arg2,
+          "actcdz" : arg3,
+
+        },
+        async: false,
+        success: function(data){
+          console.log("succ" + data);
+          tabA_grid(data);
+        },error:function(e){
+          console.log("error");
+          // alert(data.code);
+          // alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+
+    }
+
+    function tabA_grid(data){
+      var wtab01Dto = data;
+      var wtab01_data = [];
+      var cnt = 1;
+      for(var i=0; i<wtab01Dto.length; i++){
+        wtab01_data.push({
+          id: i,
+          index: cnt,
+          equpnm: wtab01Dto[i]["equpnm"],
+          "1월" : {
+          comp1: wtab01Dto[i]["comp1"]},
+          "2월" : {
+          comp2: wtab01Dto[i]["comp2"]},
+          "3월" : {
+            comp3: wtab01Dto[i]["comp3"]},
+          "4월" : {
+            comp4: wtab01Dto[i]["comp4"]},
+          "5월" : {
+            comp5: wtab01Dto[i]["comp5"]},
+          "6월" : {
+            comp6: wtab01Dto[i]["comp6"]},
+          "7월" : {
+            comp7: wtab01Dto[i]["comp7"]},
+          "8월" : {
+            comp8: wtab01Dto[i]["comp8"]},
+          "9월" : {
+            comp9: wtab01Dto[i]["comp9"]},
+          "10월" : {
+            comp10: wtab01Dto[i]["comp10"]},
+          "11월" : {
+            comp11: wtab01Dto[i]["comp11"]},
+          "12월" : {
+            comp12: wtab01Dto[i]["comp12"]},
+          "총 처리 수" : {
+            qty: wtab01Dto[i]["qty"]}
+
+        });
+        cnt++;
+      }
+      console.log("wtab01_data, check", )
+
+      theGrid.columns.clear();
+      theGrid.autoGenerateColumns = false;
+      /*view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+
+      })
+*/
+      view_p01tab01page.sourceCollection = wtab01_data;
+
+
+      let gridFormat =[
+
+        {binding: "equpnm", header: "동·호기", width: 250},
+        {
+          header: "1월",
+          align: "center",
+          columns: [
+
+            { binding: "1월.comp1", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "2월",
+          align: "center",
+          columns: [
+
+            { binding: "2월.comp2", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "3월",
+          align: "center",
+          columns: [
+
+            { binding: "3월.comp3", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "4월",
+          align: "center",
+          columns: [
+
+            { binding: "4월.comp4", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "5월",
+          align: "center",
+          columns: [
+
+            { binding: "5월.comp5", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "6월",
+          align: "center",
+          columns: [
+
+            { binding: "6월.comp6", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "7월",
+          align: "center",
+          columns: [
+
+            { binding: "7월.comp7", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "8월",
+          align: "center",
+          columns: [
+
+            { binding: "8월.comp8", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "9월",
+          align: "center",
+          columns: [
+
+            { binding: "9월.comp9", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "10월",
+          align: "center",
+          columns: [
+
+            { binding: "10월.comp10", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "11월",
+          align: "center",
+          columns: [
+
+            { binding: "11월.comp11", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "12월",
+          align: "center",
+          columns: [
+
+            { binding: "12월.comp12", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "총 처리 수",
+          align: "center",
+          columns: [
+
+            { binding: "총 처리 수.qty", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+      ]
+      /*
+      function getData_tab01() {
+        return [
+          {
+            equpnm: wtab01Dto[0]["equpnm"],
+
+            "1월": {
+              comp1: wtab01Dto[0]["comp1"],
+
+            },
+            "2월": {
+
+              comp2: wtab01Dto[0]["comp2"],
+
+            },
+            "3월": {
+
+              comp3: wtab01Dto[0]["comp3"],
+
+            },
+            "4월": {
+
+              comp4: wtab01Dto[0]["comp4"],
+
+            },
+            "5월": {
+
+              comp5: wtab01Dto[0]["comp5"],
+
+            },
+            "6월": {
+
+              comp6: wtab01Dto[0]["comp6"],
+
+            },
+            "7월": {
+
+              comp7: wtab01Dto[0]["comp7"],
+
+            },
+            "8월": {
+
+              comp8: wtab01Dto[0]["comp8"],
+
+            },
+            "9월": {
+
+              comp9: wtab01Dto[0]["comp9"],
+
+            },
+            "10월": {
+
+              comp10: wtab01Dto[0]["comp10"],
+
+            },
+            "11월": {
+
+              comp11: wtab01Dto[0]["comp11"],
+
+            },
+            "12월": {
+
+              comp12: wtab01Dto[0]["comp12"],
+
+            },
+            "총 처리 수": {
+              qty: wtab01Dto[0]["qty"]
+            }
+          },
+
+        ];
+
+      }
+      */
+      console.log('------------');
+
+
+      theGrid.columnGroups = gridFormat;
+      theGrid.itemsSource = view_p01tab01page;
+
+
+      // console.log(theGrid.columnGroups);
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp1';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece2';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp2';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece3';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp3';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece4';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp4';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece5';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp5';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece6';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp6';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece7';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp7';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece8';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp8';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece9';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp9';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece10';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp10';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece11';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp11';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'rece12';
+      // cols.header = '접수';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+      //
+      //
+      //
+      // cols = new wijmo.grid.Column();
+      // cols.binding = 'comp12';
+      // cols.header = '처리';
+      // cols.align = 'center';
+      // cols.width = '1*';
+      // theGrid.columns.push(cols);
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+  </script>
+
+  <script>
+
+    //현장검색 popup list
+    view_actnmpage = new wijmo.collections.CollectionView(getData_wlist(), {
+      pageSize: 12
+    });
+    // 현장검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager01', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_actnmpage
+    });
+    wactnmGrid = new wijmo.grid.FlexGrid('#wactnmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      allowSorting: 'MultiColumn',
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        {binding: 'actnm', header: '현장명', align: "center", width: '1*'},
+        {binding: 'telno', header: '전화번호', align: "center", width: '1*'},
+        {binding: 'addr', header: '주소', align: "center", width: '*'},
+      ],
+      itemsSource: view_actnmpage
+    });
+
+    // 현장검색 데이터 수집
+    function getData_wlist() {
+      var wactnm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wactnm_data.push({
+          id: i,
+          index: cnt,
+          actnm: "",
+          telno: "",
+          addr: "",
+        });
+        cnt++;
+      }
+      return wactnm_data;
+    }
+
+
+
+
+
+
+    document.getElementById("actnmz").addEventListener("click",function(){
+      document.getElementById("actnmbtn").click();
+    });
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    document.getElementById("wactnmBtn").addEventListener("click", function(){
+      searchpcode_rtn();
+    })
+
+
+
+
+
+
+
+    function searchpcode_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchCode').value;
+      let lsConflag = document.getElementById('conflag').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wactnm',
+        type: "POST",
+        data: {
+          "actnmz" : searchText,
+          "conflag" : lsConflag
+        },
+        success:function (data){
+          var wactnmDto = data;
+          var wactnm_data = [];
+          var cnt = 1;
+          for(var i=0; i< wactnmDto.length; i++){
+            wactnm_data.push({
+              id: i,
+              index: cnt,
+              actnm:wactnmDto[i]["actnm"],
+              actcd: wactnmDto[i]["actcd"],
+              telno: wactnmDto[i]["telno"]  ,
+              addr: wactnmDto[i]["addr"]
+
+            });
+            cnt++;
+          }
+          wactnmGrid.columns.clear();
+          wactnmGrid.autoGenerateColumns = false;
+          view_actnmpage.sourceCollection = wactnm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'actcd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actcd}</b>',
+            click: (e, ctx) => {
+              wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+            }
+          });
+          wactnmGrid.columns.push(cols);
+          // console.log("cols", cols);
+
+
+          cols = new wijmo.grid.Column();
+          cols.binding = 'actnm';
+          cols.header = '현장명';
+          cols.align = "left";
+          cols.width = '*';
+          wactnmGrid.columns.push(cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'telno';
+          cols.header = '전화번호';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.telno}</b>',
+            click: (e, ctx) => {
+              wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+            }
+          });
+          wactnmGrid.columns.push(cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'addr';
+          cols.header = '주소';
+          cols.align = "left";
+          cols.width = '*';
+          wactnmGrid.columns.push(cols);
+
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+
+    }
+
+    function wactnmChk_2(arg1, arg2){
+      document.getElementById('actcdz').value = arg1;
+      document.getElementById('actnmz').value = arg2;
+
+      $("#wactnmmodal_btn").trigger("click");
+    }
+
+  </script>
+
+  <script>
+
+
+    $(document).ready(function() {
+      getToday()
+      fn_egov_init_date()
+      $('datetimepicker').datetimepicker({
+
+      });
+
+      $("#frdate").change(function(e){
+        // console.log("달력클릭");
+        // console.log(convert_time(e.timestamp));
+      })
+      $("#todate").change(function(e){
+        // console.log("달력클릭");
+        // console.log(convert_time(e.timestamp));
+      })
+    })
+
+
+
+    function getToday(){
+      let today = new Date();
+
+      let year = today.getFullYear(); // 년도
+      let month = today.getMonth() + 1;  // 월
+      let date = today.getDate();  // 날짜
+      let day = today.getDay();  // 요일
+      if(date > 0 && date < 10) {date = "0" + date};
+      let ls_frday = year + '-' + month + '-01'
+      let ls_today = year + '-' + month + '-' + date
+      document.getElementById('frdate').value = ls_frday;
+      document.getElementById('todate').value = ls_today;
+    }
+
+
+
+    function fn_egov_init_date(){
+      var $frdate = $('#frdate');
+      var $todate = $('#todate');
+      $frdate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // maxDate: $frdate.val() ? $frdate.val() : false
+          })
+        },
+      });
+
+      $todate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',    //'Y-m-d H:i',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // minDate: $todate.val() ? $todate.val() : false
+          })
+        }
+      });
+
+    }
+
+
+    function fn_egov_init_date(){
+      var $frdate = $('#frdate');
+      var $todate = $('#todate');
+      $frdate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // maxDate: $frdate.val() ? $frdate.val() : false
+          })
+        },
+      });
+
+      $todate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',    //'Y-m-d H:i',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // minDate: $todate.val() ? $todate.val() : false
+          })
+        }
+      });
+
+    }
+
+    class FlexGridContextMenu {
+      constructor(grid) {
+        let host = grid.hostElement, menu = this._buildMenu(grid);
+        host.addEventListener('contextmenu', (e) => {
+          // 클릭된 셀/열 선택
+          let sel = grid.selection, ht = grid.hitTest(e), row = ht.getRow();
+
+          switch (ht.panel) {
+            case grid.cells:
+              let colIndex = ht.col;
+              // 만약 그룹 헤더이면, 그룹 열 선택
+              if (row instanceof wijmo.grid.GroupRow && row.dataItem instanceof wijmo.collections.CollectionViewGroup) {
+                let gd = row.dataItem.groupDescription;
+                if (gd instanceof wijmo.collections.PropertyGroupDescription) {
+                  let col = grid.getColumn(gd.propertyName);
+                  if (col && col.index > -1) {
+                    colIndex = col.index;
+                  }
+                }
+              }
+              grid.select(ht.row, colIndex);
+              break;
+            case grid.columnHeaders:
+              grid.select(sel.row, ht.col);
+              break;
+            case grid.rowHeaders:
+              grid.select(ht.row, sel.col);
+              break;
+            default:
+              return; // 유효하지 않는 패널
+          }
+          // 현재 열에 대한 메뉴 표시
+          if (grid.selection.col > -1) {
+            e.preventDefault(); // 브라우저의 기본 메뉴 취소
+            menu.show(e); // Wijmo 메뉴 표시
+          }
+        }, true);
+      }
+      _buildMenu(grid) {
+        let menu = new wijmo.input.Menu(document.createElement('div'), {
+          owner: grid.hostElement,
+          displayMemberPath: 'header',
+          subItemsPath: 'items',
+          commandParameterPath: 'cmd',
+          dropDownCssClass: 'ctx-menu',
+          openOnHover: true,
+          closeOnLeave: true,
+          itemsSource: [
+            {
+              header: '정렬', items: [
+                { header: 'Ascending', cmd: 'SRT_ASC' },
+                { header: 'Descending', cmd: 'SRT_DESC' },
+                { header: 'No Sort', cmd: 'SRT_NONE' },
+                { header: '-' },
+                { header: 'Clear All Sorts', cmd: 'SRT_CLR' }
+              ]
+            },
+            { header: '-' },
+            { header: 'Pin/Unpin', cmd: 'PIN' },
+            { header: '-' },
+            { header: 'AutoSize', cmd: 'ASZ' },
+            { header: 'AutoSize All', cmd: 'ASZ_ALL' },
+            { header: '-' },
+            { header: 'Group/Ungroup', cmd: 'GRP' },
+            { header: 'Clear All Groups', cmd: 'GRP_CLR' },
+            { header: '-' },
+            {
+              header: '내려받기', items: [
+                { header: 'CSV', cmd: 'X_CSV' },
+                { header: 'XLSX', cmd: 'X_XLSX' },
+                { header: 'PDF', cmd: 'X_PDF' },
+              ]
+            }
+          ],
+          command: {
+            // 메뉴 명령 활성화/비활성화
+            canExecuteCommand: (cmd) => {
+              let view = grid.collectionView, col = grid.columns[grid.selection.col];
+              switch (cmd) {
+                case 'SRT_ASC':
+                  return col.currentSort != '+';
+                case 'SRT_DESC':
+                  return col.currentSort != '-';
+                case 'SRT_NONE':
+                  return col.currentSort != null;
+                case 'SRT_CLR':
+                  return view.sortDescriptions.length > 0;
+                case 'PIN':
+                  return true; // toggle pin
+                case 'ASZ':
+                case 'ASZ_ALL':
+                  return true;
+                case 'GRP':
+                  return col.dataType != wijmo.DataType.Number; // don't group numbers
+                case 'GRP_CLR':
+                  return view.groupDescriptions.length > 0;
+              }
+              return true;
+            },
+            // 메뉴 명령 실행
+            executeCommand: (cmd) => {
+              let view = grid.collectionView, cols = grid.columns, col = cols[grid.selection.col], sd = view.sortDescriptions, gd = view.groupDescriptions;
+              switch (cmd) {
+                case 'SRT_ASC':
+                case 'SRT_DESC':
+                case 'SRT_NONE':
+                  if (grid.allowSorting != wijmo.grid.AllowSorting.MultiColumn) {
+                    sd.clear();
+                  }
+                  else {
+                    for (let i = 0; i < sd.length; i++) {
+                      if (sd[i].property == col.binding) {
+                        sd.removeAt(i);
+                        break;
+                      }
+                    }
+                  }
+                  if (cmd != 'SRT_NONE') {
+                    sd.push(new wijmo.collections.SortDescription(col.binding, cmd == 'SRT_ASC'));
+                  }
+                  break;
+                case 'SRT_CLR':
+                  sd.clear();
+                  break;
+                case 'PIN':
+                  let fCols = grid.frozenColumns;
+                  if (col.index >= fCols) { // pinning
+                    cols.moveElement(col.index, fCols, false);
+                    cols.frozen++;
+                  }
+                  else { // unpinning
+                    cols.moveElement(col.index, fCols - 1, false);
+                    cols.frozen--;
+                  }
+                  break;
+                case 'ASZ':
+                  grid.autoSizeColumn(col.index);
+                  break;
+                case 'ASZ_ALL':
+                  grid.autoSizeColumns(0, grid.columns.length - 1);
+                  break;
+                case 'GRP':
+                  // 그룹 삭제
+                  for (let i = 0; i < gd.length; i++) {
+                    if (gd[i].propertyName == col.binding) {
+                      gd.removeAt(i);
+                      return; // we're done
+                    }
+                  }
+                  // 그룹 추가
+                  gd.push(new wijmo.collections.PropertyGroupDescription(col.binding));
+                  break;
+                case 'GRP_CLR':
+                  gd.clear();
+                  break;
+                      // 내보내기
+                case 'X_CSV':
+                  let rng = new wijmo.grid.CellRange(0, 0, grid.rows.length - 1, grid.columns.length - 1), csv = grid.getClipString(rng, wijmo.grid.ClipStringOptions.CSV, true, false);
+                  wijmo.saveFile(csv, 'FlexGrid.csv');
+                  break;
+                case 'X_XLSX':
+                  wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, null, 'FlexGrid.xlsx');
+                  break;
+                case 'X_PDF':
+                  wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 'FlexGrid.pdf', {
+                    maxPages: 10,
+                    scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
+                    documentOptions: {
+                      compress: true,
+                      header: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      info: { author: 'GrapeCity', title: 'FlexGrid' }
+                    },
+                    styles: {
+                      cellStyle: { backgroundColor: '#ffffff', borderColor: '#c6c6c6' },
+                      altCellStyle: { backgroundColor: '#f9f9f9' },
+                      groupCellStyle: { backgroundColor: '#dddddd' },
+                      headerCellStyle: { backgroundColor: '#eaeaea' }
+                    }
+                  });
+                  break;
+              }
+              // 활성화 그리드 셀에 포커스 복원
+              grid.refresh();
+              let sel = grid.selection, cell = grid.cells.getCellElement(sel.row, sel.col);
+              if (cell) {
+                cell.focus();
+              }
+            }
+          }
+        });
+        // 완료
+        return menu;
+      }
+    }
+  </script>
+
+  <!------footer ------>
+  <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+
+  <!-- modal -->
+  <!-- class="modal_step_open" modal_step="1" -->
+
+  <div class="modal modal modal_step modal_step1 hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+      <div class="layoutCont">
+        <div class="modalContWrap">
+          <!-- <div class="modal_close cancerButton">
+            <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+          </div>                       -->
+          <div class="modal_head">
+          </div>
+          <div class="modal_con scrollbar">
+            모든 정보를 입력하세요.
+          </div>
+
+        </div>
+        <div class="modal_btn">
+          <button class="cancerButton " type="button">확인</button>
+        </div>
+        <!-- <div class="modal_btn flex">
+            <button class="cancerButton " type="button">확인</button>
+            <button class="cancerButton " type="button">확인</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

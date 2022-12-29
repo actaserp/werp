@@ -1,4 +1,5 @@
-package com.actas.ems.controller.app10;
+package com.actas.ems.controller.app13;
+
 
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.controller.SessionManager;
@@ -14,32 +15,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-@RequestMapping(value = "/app10", method = RequestMethod.POST)
 @Controller
+@RequestMapping(value = "/app13", method = RequestMethod.POST)
 @RequiredArgsConstructor
-public class App10Controller {
-    UserFormDto userformDto = new UserFormDto();
+public class App13Controller {
+
+    UserFormDto userFormDto = new UserFormDto();
     private final SessionManager sessionManager;
 
-    protected Log log =  LogFactory.getLog(this.getClass());
+    protected Log log = LogFactory.getLog(this.getClass());
 
-    // 고장내용별현황 index
-    @GetMapping(value="/index01")
-    public String App10IndexForm(Model model, HttpServletRequest request) throws  Exception{
+
+    //현장별수리현황
+    @GetMapping(value = "/index01")
+    public String App13IndexForm(Model model, HttpServletRequest request) throws Exception{
         try {
             HttpSession session = request.getSession();
-            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-            model.addAttribute("userformDto",userformDto);
-        } catch (Exception ex) {
-//                dispatchException = ex;
-            log.debug("Exception =====>" + ex.toString() );
+            UserFormDto userFormDto = (UserFormDto) session.getAttribute("userformDto");
+            model.addAttribute("userformDto", userFormDto);
+        } catch (Exception ex){
+            log.debug("Exception ====>" + ex.toString());
         }
-
-        return "app10/app10p001";
+        return "app13/app13p001";
     }
-
-
-
-
 }
