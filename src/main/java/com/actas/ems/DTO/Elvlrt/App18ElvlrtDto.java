@@ -1,5 +1,10 @@
 package com.actas.ems.DTO.Elvlrt;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class App18ElvlrtDto {
     private String frdate;
     private String todate;

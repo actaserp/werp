@@ -34,5 +34,6 @@ public class PopupDto {
     private String rtclafi;         //재/퇴직 구분
     private String custcd;
     private String spjangcd;
+    private int qty;
 
 }
