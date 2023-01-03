@@ -21,6 +21,12 @@ public class App01ElvlrtService {
     public App01ElvlrtDto GetCallXenv(App01ElvlrtDto parm){return appMapper.GetCallXenv(parm);}
     /** 관제현황 / 접수현황 리스트 */
     public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){return appMapper.GetApp01List001(parm);}
+    /** 관제현황 / 수리기사 리스트 */
+    public List<App03ElvlrtDto> GetApp01List002(PopupDto parm){return appMapper.GetApp01List002(parm);}
+    /** 관제현황 / 상단통계 리스트 */
+    public List<App03ElvlrtDto> GetApp01List003(PopupDto parm){return appMapper.GetApp01List003(parm);}
+    /** 관제현황 / 기사 이동라인 리스트 */
+    public List<App03ElvlrtDto> GetApp01List004(PopupDto parm){return appMapper.GetApp01List004(parm);}
 
 
 

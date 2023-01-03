@@ -40,17 +40,12 @@ public class App04Controller {
     // 도면자료실 index
     @GetMapping(value="/index01")
     public String App04Form(Model model, HttpServletRequest request) throws  Exception{
-//여기부터 화면 구성
+
         Date nowData = new Date();
         SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
         String indate = endDate.format(nowData).toString();
         app04Dto.setYyyymm(indate.substring(0,6));
         app04Dto.setMinputdate(indate);
-//        if(bflag == "0"){
-//            app04Dto.setMsubject(search);
-//        }else{
-//            app04Dto.setMemo(search);
-//        }
         try {
 //            app04ListDto = service.GetMManulList(app04Dto);
 //            log.debug("Exception =====>" + app04ListDto );
@@ -71,6 +66,8 @@ public class App04Controller {
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("기술자료실");
+            userformDto.setPagenm("도면자료실");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

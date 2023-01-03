@@ -3,9 +3,7 @@
 <head th:replace="layouts/APPHeader/apphead :: headFragment" />
 
 <body style="background: #f5f9fa;">
-    <header>
-
-    </header>
+    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" ></form>
     <div class="content flex">
         
             <div class="header on">
@@ -13,159 +11,22 @@
                     <div class="ham">
                         <button type="button"><img th:src="@{/assets/images/ham.png}"   alt=""></button>
                     </div>
-                    <div class="nav_bg"></div>
-                    <ul class="nav">
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon1.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="./center.html">
-                                        <button type="button">
-                                            종합유지관리서비스
-                                        </button>
-                                    </a>
-                                </div>
-                                <ul>
-                                    <li><a href="./center.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고객상담센터</a></li>
-                                    <li><a href="./control.html"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장접수관제현황</a></li>
-                                    <li><a href="./registration"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>고장처리등록</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="">
-                                        <button type="button">
-                                            통계관리
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon3.png}" alt=""></button>
-                            <div class="depth2 on">
-                                <div class="dep_main">
-                                    <a href="./reference.html">
-                                        <button type="button">
-                                            기술자료실
-                                        </button>
-                                    </a>
-                                </div>
-                                <ul>
-                                    <li  class="on"><a th:href="@{/app04/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>도면자료실</a></li>
-                                    <li><a th:href="@{/app04/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부품자료실</a></li>
-                                    <li><a th:href="@{/app04/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기타자료실</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon4.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="">
-                                        <button type="button">
-                                            수리노하우
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon5.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="./care_center.html">
-                                        <button type="button">
-                                            고객케어센터
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon6.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="">
-                                        <button type="button">
-                                            공지사항
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button"><img th:src="@{/assets/images/header_icon7.png}" alt=""></button>
-                            <div class="depth2">
-                                <div class="dep_main">
-                                    <a href="">
-                                        <button type="button">
-                                            고객지원
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="nav_bg"></div>                        
+                    <!-- ################################ -->
+                    <!-- ## Left navigator include -->
+                    <th:block th:include="layouts/APPHeader/appLeftNav" />
                 </div>
                 <div class="right">           
                 </div>
             </div>
-            <div class="con">
-                <div class="header_top">
-                    <ul class="left">
-                        <li>
-                            <div class="logo">
-                                <a href="">
-                                    <img th:src="@{/assets/images/logo.png}" alt="">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="home">
-                            <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-                            <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-                        </li> 
-                        <li class="on">
-                            도면자료실
-                        </li>
-                        <!-- <li class="on">
-                            고장접수관제현황
-                        </li> -->
-                    </ul>
-                    <ul class="right">
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_call.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_bell.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_menu.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_que.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_user.png}" alt="">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="con">                 
+                <!-- ################################ -->
+                <!-- ## header top include -->
+                <th:block th:include="layouts/APPHeader/appheadTop" />
+                
                 <div class="infor_bar type2">
                     <div class="left">
-                        도면자료실
+                         <span th:text="${userformDto.pagenm}"></span>
                     </div>
                     <ul class="right">
                         <li>
@@ -783,7 +644,7 @@
                 document.getElementById('actmsubjectz').value= arg3;   
                 document.getElementById('actmpernmz').value= arg4;   
                 // document.getElementById('actmfilenamez').value= arg5;   
-                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                //arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
                 document.getElementById('actminputdatez').value= arg6;   
                 document.getElementById('actmgroupcdz').value= arg7;   
                 document.getElementById('actmemoz').value= arg8;   

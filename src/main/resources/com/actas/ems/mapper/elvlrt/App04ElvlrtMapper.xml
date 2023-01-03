@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App04ElvlrtMapper">
     <select id="GetMManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select mseq, minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
+        select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
         (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
         from tb_mmanual WITH (NOLOCK)
         Where 1 = 1
@@ -17,7 +17,7 @@
     </select>
 
     <select id="GetDManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select dseq, dinputdate, dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd) as cnam,
+        select dseq, Left(dinputdate,4) + '-' + substring(dinputdate, 5,2) + '-' + substring(dinputdate, 7,2) as dinputdate , dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd) as cnam,
         (select Count(*) from tb_mattach where flag='DD' and board_idx=dseq and delete_yn = 'N') as attcnt
         from tb_mdevmanual WITH (NOLOCK)
         Where 1 = 1
@@ -29,7 +29,7 @@
         <!--        </if>-->
     </select>
     <select id="GetEManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select eseq, einputdate, egroupcd, esubject, efilename, epernm, ememo, eflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd) as cnam,
+        select eseq, Left(einputdate,4) + '-' + substring(einputdate, 5,2) + '-' + substring(einputdate, 7,2) as einputdate , egroupcd, esubject, efilename, epernm, ememo, eflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd) as cnam,
         (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
         from tb_metcmanual WITH (NOLOCK)
         Where 1 = 1

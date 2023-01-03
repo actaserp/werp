@@ -269,7 +269,7 @@ public class App04CrudController {
 
                 AttachDTO attach = new AttachDTO();
 
-                attach.setBoardIdx(mseq);
+                attach.setBoardIdx(app04Dto.getMseq());
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());

@@ -18,6 +18,9 @@ public interface App01ElvlrtMapper {
 
     public App01ElvlrtDto GetCallXenv(App01ElvlrtDto datainfo);
     public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp01List002(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp01List003(PopupDto parm) ;
+    public List<App03ElvlrtDto> GetApp01List004(PopupDto parm) ;
 
 
 }

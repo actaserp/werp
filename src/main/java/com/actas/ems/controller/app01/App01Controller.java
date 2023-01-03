@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +26,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RequestMapping("/app01")
+@RequestMapping(value = "/app01", method = RequestMethod.POST)
 @Controller
 @RequiredArgsConstructor
 public class App01Controller {
     private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     PopupDto popParmDto = new PopupDto();
-    List<App03ElvlrtDto> app03DtoList = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList02 = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList03 = new ArrayList<>();
     private final App01ElvlrtService service;
     protected Log log =  LogFactory.getLog(this.getClass());
 
@@ -75,8 +78,6 @@ public class App01Controller {
     @GetMapping(value="/emcontrol")
     public String App01ControlForm(  Model model
             , HttpServletRequest request){
-        HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String todate = getToDate();
 //        String ls_yeare = todate.substring(0,4);
 //        String ls_mm = todate.substring(4,6);
@@ -86,8 +87,13 @@ public class App01Controller {
         popParmDto.setTodate(todate);
         popParmDto.setActcd("%");
         try {
-            app03DtoList = service.GetApp01List001(popParmDto);
-            model.addAttribute("app03DtoList",app03DtoList);
+            app03DtoList01 = service.GetApp01List001(popParmDto);
+            model.addAttribute("app03DtoList",app03DtoList01);
+            app03DtoList02 = service.GetApp01List002(popParmDto);
+            model.addAttribute("app03DtoList02",app03DtoList02);
+            app03DtoList03 = service.GetApp01List003(popParmDto);
+            model.addAttribute("app03DtoList03",app03DtoList03);
+
         }catch (DataAccessException e) {
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
@@ -100,9 +106,53 @@ public class App01Controller {
 //            log.debug("Exception =====>" + ex.toString() );
         }
 
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        userformDto.setPagetree01("고객상담센터");
+        userformDto.setPagenm("고장접수관제센터");
+        model.addAttribute("userformDto",userformDto);
         model.addAttribute("userFormDto", userformDto);
         return "app01/emcontrol";
     }
+
+
+    // 관제현황 > 접수조회
+    @GetMapping(value="/emconlist")
+    public Object App01001EmconlistForm( @RequestParam("frdate") String frdate
+            , @RequestParam("todate") String todate
+            , @RequestParam("actnmz") String actnmz
+            , Model model) throws  Exception{
+
+        String ls_yeare = frdate.substring(0,4);
+        String ls_mm = frdate.substring(5,7);
+        String ls_dd = frdate.substring(8,10);
+        frdate =  ls_yeare + ls_mm + ls_dd;
+        ls_yeare = todate.substring(0,4);
+        ls_mm = todate.substring(5,7);
+        ls_dd = todate.substring(8,10);
+        todate =  ls_yeare + ls_mm + ls_dd;
+        popParmDto.setFrdate(frdate);
+        popParmDto.setTodate(todate);
+        popParmDto.setActcd(actnmz);
+        try {
+            app03DtoList01 = service.GetApp01List001(popParmDto);
+            model.addAttribute("app03DtoList",app03DtoList01);
+        }catch (DataAccessException e) {
+            log.info("App03001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return "app01/emcontrollist01";
+    }
+
+
+
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date      = new Date(System.currentTimeMillis());

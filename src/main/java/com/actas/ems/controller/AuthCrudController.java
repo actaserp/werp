@@ -1,6 +1,8 @@
 package com.actas.ems.controller;
 
+import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
+import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.lang.reflect.Field;
 
@@ -20,7 +23,9 @@ import java.lang.reflect.Field;
 @RequestMapping(value = "/authcrud", method = RequestMethod.POST)
 public class AuthCrudController {
     private final AuthService authService;
+    private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
+    App01ElvlrtDto app01ElvlrtDto = new App01ElvlrtDto();
 
     EncryptionController enc = new EncryptionController();
 
@@ -115,6 +120,43 @@ public class AuthCrudController {
             default:
                 break;
         }
+
+        userformDto.setUserid(loginid);
+        userformDto =  authService.GetUserInfoDto(userformDto);
+        App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
+        userformDto.setCallflag(app01data.getCallflag());
+        userformDto.setCalluserid(app01data.getCalluserid());
+        userformDto.setCalluserpw(app01data.getCalluserpw());
+
+        String dbnm = userformDto.getDbnm();
+        String ls_custcd = "";
+        String ls_spjangcd = "";
+
+        switch (dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+        ls_spjangcd = "ZZ";
+        userformDto.setCustcd(ls_custcd);
+        userformDto.setSpjangcd(ls_spjangcd);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto",userformDto);
+
+
+
+
+
         return userReturnDto;
     }
 

@@ -40,6 +40,13 @@ public class App03ElvlrtDto {
     private String resulttime;
     private String resultnm;
     private String tel;
-
-
+    private String addrtxt;
+    private String teltime;
+    private String telxcoordi;
+    private String telycodrdi;
+    private String handphone;
+    private Long callcount;
+    private Long rececnt;
+    private Long callback;
+    private Long compcnt;
 }

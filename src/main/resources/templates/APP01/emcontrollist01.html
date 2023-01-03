@@ -10,8 +10,10 @@
                         <div class="badge bg-info" th:text="${formdata.recedate} ">접수일자</div>
                         <div class="badge bg-primary" th:text="${formdata.recetime}">접수시간</div> 
                     </div>
-                    <div class="number">
-                        <h9 th:text="${formdata.actnm}">삼성리더스타워</h9><br>
+                    <div class="number">                        
+                        <!-- <h9 th:text="${formdata.actnm}" th:onclick="map_dis(${formdata.addrtxt})">삼성리더스타워</h9><br> -->
+                        <h9><a href="#" th:id="${formdata.actnm}" th:onclick="map_dis([[${formdata.addrtxt}]],[[${formdata.actnm}]],[[${formdata.recetime}]],[[${formdata.actpernm}]],[[${formdata.equpnm}]],[[${formdata.contnm}]],[[${formdata.tel}]])" th:text="${formdata.actnm}">삼성리더스타워</a></h9><br>
+                        
                         <h10 th:text="${formdata.tel}">02-6959-5020</h10>
                     </div>
                 </div>

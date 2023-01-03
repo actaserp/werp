@@ -14,12 +14,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/app01mod", method = RequestMethod.POST)
 public class App01RetrieveController {
@@ -27,45 +33,76 @@ public class App01RetrieveController {
 
     PopupDto popParmDto = new PopupDto();
     List<App03ElvlrtDto> app03DtoList = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
 
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
-    // 관제현황 > 접수조회
-    @GetMapping(value="/emconlist")
-    public Object App01001EmconlistForm( @RequestParam("frdate") String frdate
-            , @RequestParam("todate") String todate
-            , @RequestParam("actnmz") String actnmz
-            , Model model) throws  Exception{
+    String clientId = "261b1f258775bb5dd9a70a3b938aed73"; //h2xhfxhh0l";//애플리케이션 클라이언트 아이디값";
+    String clientSecret = "KfBfPJEo8qB2lMFHTxdpg9OGkNbIwASFaElmM3gh";//애플리케이션 클라이언트 시크릿값";
 
-        String ls_yeare = frdate.substring(0,4);
-        String ls_mm = frdate.substring(5,7);
-        String ls_dd = frdate.substring(8,10);
-        frdate =  ls_yeare + ls_mm + ls_dd;
-        ls_yeare = todate.substring(0,4);
-        ls_mm = todate.substring(5,7);
-        ls_dd = todate.substring(8,10);
-        todate =  ls_yeare + ls_mm + ls_dd;
-        popParmDto.setFrdate(frdate);
-        popParmDto.setTodate(todate);
-        popParmDto.setActcd(actnmz);
+
+    // 관제현황 > 접수조회
+    @GetMapping(value="/getgeocode")
+    public Object App01001GetgeoForm( @RequestParam("addrtext") String addrtext
+            , Model model) throws  Exception{
+        Object returnDto = "";
         try {
-            app03DtoList = service.GetApp01List001(popParmDto);
-            model.addAttribute("app03DtoList",app03DtoList);
-        }catch (DataAccessException e) {
-            log.info("App03001Tab01Form DataAccessException ================================================================");
-            log.info(e.toString());
-            throw new AttachFileException(" DataAccessException to save");
-            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-        }catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("App03001Tab01Form Exception ================================================================");
-            log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
+            String text = URLEncoder.encode(addrtext, "UTF-8");
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", "KakaoAK " + clientId);
+//            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+            String postParams = "query=" + text;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+//            System.out.println(response.toString());
+            returnDto = response.toString();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return "app01/emcontrollist01";
+        return returnDto;
     }
 
+
+    // 관제현황 > 라인조회
+    @GetMapping(value="/getlinecode")
+    public Object App01001GetlineForm( @RequestParam("phone") String phone
+            , Model model) throws  Exception{
+        Object returnDto = "";
+        try {
+            String todate = getToDate();
+            String frdate =  getToDate();
+            popParmDto.setFrdate(frdate);
+            popParmDto.setTodate(todate);
+            popParmDto.setActcd("%");
+            popParmDto.setHandphone(phone);
+            app03DtoList01 = service.GetApp01List004(popParmDto);
+            model.addAttribute("app03DtoList",app03DtoList01);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return app03DtoList01;
+    }
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date      = new Date(System.currentTimeMillis());

@@ -90,5 +90,13 @@ public class UserFormDto {
     private String ipaddr;
     /** 로그인 실패 횟수 */
     private String wrongnum;
+    /** 상위분류01 */
+    private String pagetree01;
+    /** 상위분류02 */
+    private String pagetree02;
+    /** 상위분류03 */
+    private String pagetree03;
+    /** 화면명 */
+    private String pagenm;
 
 }
