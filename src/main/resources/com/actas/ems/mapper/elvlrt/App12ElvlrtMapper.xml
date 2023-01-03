@@ -96,7 +96,7 @@ SELECT a.custcd,
     AND a.actcd = c.actcd
     AND a.equpcd = c.equpcd
     AND a.recedate  between #{frdate} and #{todate}
-    AND a.actcd = #{actcd}
+    AND (a.actcd = #{actcd} OR #{actcd} = '%')
     AND (a.gregicd = #{gregicd} OR #{gregicd} = '%')
     AND (a.contcd = #{contcd} OR #{contcd} = '%')
     AND (a.remocd = #{remocd} OR #{remocd} = '%')

@@ -47,6 +47,8 @@ public class App12RetrieveController {
         ls_mm = todate.substring(5,7);
         ls_dd = todate.substring(8,10);
         todate =  ls_yeare + ls_mm + ls_dd;
+        System.out.println(frdate);
+        System.out.println(todate);
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
         popParmDto.setActcd(actcd);

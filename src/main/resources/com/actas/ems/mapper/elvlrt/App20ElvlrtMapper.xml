@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App20ElvlrtMapper">
 
-    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <!--      현장별 고장현황  -->
     <select id="GetApp20List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App20ElvlrtDto">
         <![CDATA[
                 SELECT a.actcd,
