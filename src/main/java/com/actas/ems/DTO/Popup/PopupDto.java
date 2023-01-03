@@ -35,5 +35,6 @@ public class PopupDto {
     private String custcd;
     private String spjangcd;
     private int qty;
+    private String handphone;        //처리코드
 
 }
