@@ -51,6 +51,94 @@
         ]]>
     </select>
 
+<!--    우측 윈도우 매핑값-->
+<!--    SELECT a.custcd,-->
+<!--    a.spjangcd,-->
+<!--    convert(datetime, substring(a.compdate, 1,4) + '-' + substring(a.compdate, 5,2) + '-' + substring(a.compdate, 7,2)) as datetime,-->
+<!--    convert(datetime, substring(a.arrivdate, 1,4) + '-' + substring(a.arrivdate, 5,2) + '-' + substring(a.arrivdate, 7,2)) as datetime2,-->
+<!--    a.compdate,-->
+<!--    a.compnum,-->
+<!--    a.recedate,-->
+<!--    a.recenum,-->
+<!--    a.result,-->
+<!--    a.cltcd,-->
+<!--    a.perid,-->
+<!--    d.pernm,-->
+<!--    a.actperid,-->
+<!--    f.pernm as actpernm,-->
+<!--    a.divicd,-->
+<!--    e.divinm,-->
+<!--    a.actcd,-->
+<!--    c.actnm,-->
+<!--    a.equpcd,-->
+<!--    h.equpnm,-->
+<!--    h.dong,-->
+<!--    h.ho,-->
+<!--    i.contnm,-->
+<!--    b.contents,-->
+<!--    a.contremark,-->
+<!--    a.gregicd,-->
+<!--    l.greginm,-->
+<!--    a.regicd,-->
+<!--    m.reginm,-->
+<!--    a.remocd,-->
+<!--    j.remonm,-->
+<!--    a.remoremark,-->
+<!--    a.resucd,-->
+<!--    k.resunm,-->
+<!--    a.resuremark,-->
+<!--    a.resultcd,-->
+<!--    n.resultnm,-->
+<!--    a.faccd,-->
+<!--    o.facnm,-->
+<!--    a.resutime,-->
+<!--    a.resulttime,-->
+<!--    a.sucetime,-->
+<!--    a.sucehour,-->
+<!--    a.recetime,-->
+<!--    a.arrivdate,-->
+<!--    a.arrivtime,-->
+<!--    a.comptime,-->
+<!--    resuname,-->
+<!--    a.remark,-->
+<!--    a.store,-->
+<!--    a.store as storenm,-->
+<!--    a.gubun,-->
+<!--    a.evigubun,-->
+<!--    a.addgubun,-->
+<!--    a.samt,-->
+<!--    a.addamt,-->
+<!--    a.inputdate,-->
+<!--    a.inperid,-->
+<!--    a.indate,-->
+<!--    a.customer,-->
+<!--    a.trouble,-->
+<!--    a.troubledate,-->
+<!--    a.troubletime,-->
+<!--    a.troublesu,-->
+<!--    a.rescue,-->
+<!--    a.rescuedate,-->
+<!--    a.rescuetime,-->
+<!--    a.rescuenm,-->
+<!--    b.hitchhour,-->
+<!--    '0' as newrow-->
+<!--    FROM TB_E411 a WITH(NOLOCK)-->
+<!--    LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))-->
+<!--    LEFT OUTER JOIN TB_JC002 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.divicd = e.divicd)-->
+<!--    LEFT OUTER JOIN TB_JA001 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.actperid = substring(f.perid, 2, 10))-->
+<!--    LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)-->
+<!--    LEFT OUTER JOIN TB_E010 i WITH(NOLOCK) ON (a.custcd = i.custcd AND a.spjangcd = i.spjangcd AND a.contcd = i.contcd)-->
+<!--    LEFT OUTER JOIN TB_E011 j WITH(NOLOCK) ON (a.custcd = j.custcd AND a.spjangcd = j.spjangcd AND a.remocd = j.remocd)-->
+<!--    LEFT OUTER JOIN TB_E012 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.resucd = k.resucd)-->
+<!--    LEFT OUTER JOIN TB_E013 l WITH(NOLOCK) ON (a.custcd = l.custcd AND a.spjangcd = l.spjangcd AND a.gregicd = l.gregicd)-->
+<!--    LEFT OUTER JOIN TB_E014 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.gregicd = m.gregicd AND a.regicd = m.regicd)-->
+<!--    LEFT OUTER JOIN TB_E015 n WITH(NOLOCK) ON (a.custcd = n.custcd AND a.spjangcd = n.spjangcd AND a.resultcd = n.resultcd)-->
+<!--    LEFT OUTER JOIN TB_E019 o WITH(NOLOCK) ON (a.custcd = o.custcd AND a.spjangcd = o.spjangcd AND a.faccd = o.faccd)-->
+<!--    LEFT OUTER JOIN TB_E601 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd)-->
+<!--    LEFT OUTER JOIN TB_E401 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)-->
+<!--    LEFT OUTER JOIN TB_E010 g WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = g.spjangcd AND b.contcd = g.contcd)-->
+<!--    WHERE  a.compdate Like concat('%',#{compdate},'%')-->
+<!--    AND a.compnum  Like concat('%',#{compnum},'%')-->
 
 <!--    &lt;!&ndash;      고장내용별현황 / 현장별 고장내용  &ndash;&gt;-->
 <!--    <select id="GetApp03List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">-->

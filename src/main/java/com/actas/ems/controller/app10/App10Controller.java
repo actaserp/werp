@@ -39,7 +39,4 @@ public class App10Controller {
         return "app10/app10p001";
     }
 
-
-
-
 }

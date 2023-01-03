@@ -9,21 +9,20 @@
             <div class="header on">
                 <div class="left">
                     <div class="ham">
-                        <button type="button"><img th:src="@{/assets/images/ham.png}"   alt=""></button>
+                        <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
                     </div>
-                    <div class="nav_bg"></div>                        
-                    <!-- ################################ -->
+                    <div class="nav_bg"></div>
+                    <!-- ######################### -->
                     <!-- ## Left navigator include -->
                     <th:block th:include="layouts/APPHeader/appLeftNav" />
                 </div>
-                <div class="right">           
-                </div>
+                <div class="right"></div>
             </div>
-            <div class="con">                 
+            <div class="con">
                 <!-- ################################ -->
                 <!-- ## header top include -->
                 <th:block th:include="layouts/APPHeader/appheadTop" />
-                
+
                 <div class="infor_bar type2">
                     <div class="left">
                          <span th:text="${userformDto.pagenm}"></span>
@@ -644,7 +643,7 @@
                 document.getElementById('actmsubjectz').value= arg3;   
                 document.getElementById('actmpernmz').value= arg4;   
                 // document.getElementById('actmfilenamez').value= arg5;   
-                //arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
                 document.getElementById('actminputdatez').value= arg6;   
                 document.getElementById('actmgroupcdz').value= arg7;   
                 document.getElementById('actmemoz').value= arg8;   
