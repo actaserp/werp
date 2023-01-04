@@ -136,12 +136,8 @@
                 <div class="box_wrap">
                     <div class="table table_style2">
                         <div class="card-body bg-light">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">고장목록</a>
-                                </li>
+                                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
                                 <input type="hidden" id="tabvalue" value="A">
-                            </ul>
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="step01">
                                     <div class="container-fluid">
@@ -261,14 +257,16 @@
          var treemap;
          let barchart;
          let ani;
-        var wseries_data = [0];
+         var wseries_data = [0];
 
          window.onload = function() {
             localStorage.setItem("setpage", "app03p001");
 
             //tab01검색 popup list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-                pageSize: 12
+                sortDescriptions: ['actnm'],
+                groupDescriptions: ['actnm'],
+                pageSize: 18
             });
             // tab01검색 페이지 이동
             new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -400,7 +398,7 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'perid', header: '처리자코드', align: "center", width: '1*' },
+                    { binding: 'perid', header: '코드', align: "center", width: '1*' },
                     { binding: 'pernm', header: '처리자', align: "center", width: '1*' },
                 ],
                 itemsSource: view_pernmpage
@@ -424,25 +422,6 @@
 
 
 
-            // TAB02 차트 init
-            function Tab02Chartinit() {
-                barchart = new wijmo.chart.FlexChart('#chartTabB', {
-                    header: '현장별고장내용',
-                    legend: {
-                        position: wijmo.chart.Position.Bottom
-                    },
-                    bindingX: 'contnm',
-                    series: wseries_data,
-                    selectionMode: wijmo.chart.SelectionMode.Point,
-                    itemsSource: [0],
-                    palette: ['#0288D1',
-                        '#FFC107',
-                        '#FF7043',
-                        "#EF5350"]
-                });
-                //
-                ani = new wijmo.chart.animation.ChartAnimation(barchart);
-            }
 
 
             // TAB03 차트 init
@@ -528,6 +507,7 @@
                 ls_qtyz = "0";
             }
             searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_peridz, ls_qtyz);
+            console.log(ls_qtyz, ls_peridz, ls_frdate, ls_todate, ls_actcdz, ls_peridz)
         })
 
         function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6){
@@ -620,13 +600,13 @@
             cols.binding = 'contents';
             cols.header = '고장상세내용';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remark';
             cols.header = '비고';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
 
         }
@@ -680,7 +660,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'actnm';
                     cols.header = '현장명';
-                    cols.align = "left";
+                    cols.align = "center";
                     cols.width = '*';
                     wactnmGrid.columns.push(cols);
                     cols = new wijmo.grid.Column();
@@ -741,7 +721,6 @@
                             perid: wactpernmDto[i]["perid"]
                         });
                         cnt++;
-                        console.log(wactpernmDto[i]["pernm"]);
                     }
                     // console.log("wactnm_data",wactnm_data)
                     wpernmGrid.columns.clear();
@@ -749,7 +728,7 @@
                     view_pernmpage.sourceCollection  = wactpernm_data;
                     var cols = new wijmo.grid.Column();
                     cols.binding = 'perid';
-                    cols.header = '담당자코드';
+                    cols.header = '코드';
                     cols.align = "center";
                     cols.width = '*';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
@@ -762,8 +741,8 @@
                     // console.log("cols", cols);
                     cols = new wijmo.grid.Column();
                     cols.binding = 'pernm';
-                    cols.header = '담당자';
-                    cols.align = "left";
+                    cols.header = '처리자';
+                    cols.align = "center";
                     cols.width = '*';
                     wpernmGrid.columns.push(cols);
                 },error:function(e){
@@ -839,6 +818,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
+            if(month > 0 && date < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01'
             let ls_today = year + '-' + month + '-' + date

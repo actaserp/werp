@@ -125,12 +125,13 @@
                 <div class="box_wrap">
                     <div class="table table_style2">
                         <div class="card-body bg-light">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">대응목록</a>
+                            <ul >
+                                <li >
+                                  <a data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
                                 </li>
+                
                                 <input type="hidden" id="tabvalue" value="A">
-                            </ul>
+                              </ul>
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="step01">
                                     <div class="container-fluid">
@@ -213,7 +214,7 @@
             
             //tab01검색 popup list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-                pageSize: 12
+                pageSize: 18
             });
             // tab01검색 페이지 이동
             new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -484,18 +485,12 @@
             cols.header = '접수일자';
             cols.align = "center";
             cols.width = '*';
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
-                text: '<b>${item.recedate}</b>',
-                click: (e, ctx) => {
-                    wactnmChk_3(ctx.item.recedate, ctx.item.recenum);
-                }
-            });
             wtab01Grid.columns.push(cols);
             // console.log("cols", cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -513,37 +508,37 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'pernm';
             cols.header = '처리자';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remoremark';
             cols.header = '고장원인';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resuremark';
             cols.header = '조치내용';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '3*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resutime';
             cols.header = '대응시간';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resulttime';
             cols.header = '처리시간';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'totaltime';
             cols.header = '총처리시간';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
 
@@ -692,6 +687,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
+            if(month > 0 && date < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01'
             let ls_today = year + '-' + month + '-' + date

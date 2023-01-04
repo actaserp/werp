@@ -25,7 +25,7 @@
          ]]>
     </select>
 
-
+    <!-- 고장내용 -->
     <select id="GetContnmList"   parameterType="com.actas.ems.DTO.Popup.PopupDto"  resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
         SELECT a.contcd    contcd  ,

@@ -7,456 +7,414 @@
 
 </header>
 <div class="content flex">
-  <div class="header on">
-    <div class="left">
-      <div class="ham">
-        <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
-      </div>
-      <div class="nav_bg"></div>
-      <!-- ################################ -->
-      <!-- ## Left navigator include -->
-      <th:block th:include="layouts/APPHeader/appLeftNav" />
-    </div>
-    <div class="right">
-    </div>
-  </div>
-  <div class="con">
-    <div class="header_top">
-      <ul class="left">
-        <li>
-          <div class="logo">
-            <a href="">
-              <img th:src="@{/assets/images/logo.png}" alt="">
-            </a>
-          </div>
-        </li>
-        <li class="home">
-          <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-          <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-        </li>
-        <li>
-          통계관리
-        </li>
-        <li class="on">
-          고장내용별수리현황
-        </li>
-      </ul>
-      <ul class="right">
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_call.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_bell.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_menu.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_que.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_user.png}" alt="">
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="infor_bar type2">
-      <ul class="right" style="visibility: hidden; opacity: 0;">
-        <li>
-          <button type="button" class="color2">
-            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-          </button>
-        </li>
-        <li>
-          <button type="button" class="color5">
-            <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
-          </button>
-        </li>
-      </ul>
-      <div class="left">
-        고장내용별수리현황
-      </div>
-      <ul class="right">
-        <li>
-          <button type="button" class="color2" id="retrieveBtn">
-            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-          </button>
-        </li>
-        <!-- <li>
-            <button type="button" class="color5">
-                <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
-            </button>
-        </li> -->
-      </ul>
-
-    </div>
-    <div class="section">
-      <div class="sec_con" style="width: 100%;">
-        <div class="box_wrap">
-          <ul class="search_box">
-            <li>
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
-                <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
-                <!-- <span>-</span> -->
-                <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
-              </div>
-            </li>
-            <li>
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
-                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
-              </div>
-            </li>
-            <li>
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장내용</span>
-                <input class="form-control" type="text" placeholder="고장내용을 입력하세요" aria-label="actcontnmz" id="actcontnmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actcontcdz"  />
-              </div>
-            </li>
-          </ul>
-          <ul class="search_box">
-            <li>
-              <!--tb_e012-->
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리내용</span>
-                <input class="form-control" type="text" placeholder="처리내용을 입력하세요" aria-label="actresunmz" id="actresunmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actresucdz"  />
-              </div>
-            </li>
-            <li>
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장요인</span>
-                <input class="form-control" type="text" placeholder="고장요인을 입력하세요" aria-label="actremonmz" id="actremonmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actremocdz"  />
-              </div>
-            </li>
-            <li>
-              <!--tb_e013-->
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장부위</span>
-                <input class="form-control" type="text" placeholder="고장부위를 입력하세요" aria-label="actgreginmz" id="actgreginmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actgregicdz"  />
-              </div>
-            </li>
-            <li>
-              <!-- tb_e015-->
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리방법</span>
-                <input class="form-control" type="text" placeholder="처리방법을 입력하세요" aria-label="actresultnmz" id="actresultnmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actresultcdz"  />
-              </div>
-            </li>
-          </ul>
+    <div class="header on">
+        <div class="left">
+            <div class="ham">
+                <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+            </div>
+            <div class="nav_bg"></div>
+            <!-- ################################ -->
+            <!-- ## Left navigator include -->
+            <th:block th:include="layouts/APPHeader/appLeftNav" />
         </div>
-      </div>
+        <div class="right">
+        </div>
     </div>
-    <div class="section status">
-      <div class="sec_con" style="width: 100%;">
-        <div class="box_wrap">
-          <div class="table table_style2">
-            <div class="card-body bg-light">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">기간별고장내용</a>
+    <div class="con">
+        <div class="header_top">
+            <ul class="left">
+                <li>
+                    <div class="logo">
+                        <a href="">
+                            <img th:src="@{/assets/images/logo.png}" alt="">
+                        </a>
+                    </div>
                 </li>
+                <li class="home">
+                    <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                    <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+                </li>
+                <li>
+                    통계관리
+                </li>
+                <li class="on">
+                    고장부위별현황
+                </li>
+            </ul>
+            <ul class="right">
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_call.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_bell.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_menu.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_que.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_user.png}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="infor_bar type2">
+            <ul class="right" style="visibility: hidden; opacity: 0;">
+                <li>
+                    <button type="button" class="color2">
+                        <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="color5">
+                        <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+                    </button>
+                </li>
+            </ul>
+            <div class="left">
+                고장부위별현황
+            </div>
+            <ul class="right">
+                <li>
+                    <button type="button" class="color2" id="retrieveBtn">
+                        <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                    </button>
+                </li>
+                <!-- <li>
+                    <button type="button" class="color5">
+                        <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+                    </button>
+                </li> -->
+            </ul>
 
-                <input type="hidden" id="tabvalue" value="A">
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane fade show active" id="step01">
-                  <div class="container-fluid">
-                    <div id="wtab01Grid_div" ></div>
-                    <div id="tab01Pager"></div>
-                  </div>
+        </div>
+        <div class="section">
+            <div class="sec_con" style="width: 100%;">
+                <div class="box_wrap">
+                    <ul class="search_box">
+                        <li>
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
+                                <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                                <!-- <span>-</span> -->
+                                <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+                            </div>
+                        </li>
+                        <li>
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
+                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
+                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장건수</span>
+                                <input class="form-control" type="text" placeholder="입력하지 않을시 0으로 검색됩니다." id="actqtyz" name="actqtyz" aria-label="actqtyz" aria-describedby="basic-addon1" />
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="search_box">
+                        <li>
+                            <!--tb_e012-->
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리내용</span>
+                                <input class="form-control" type="text" placeholder="처리내용을 입력하세요" aria-label="actresunmz" id="actresunmz" aria-describedby="basic-addon1" />
+                                <input class="form-control form-control-sm"  type="hidden"  id="actresucdz"  />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장요인</span>
+                                <input class="form-control" type="text" placeholder="고장요인을 입력하세요" aria-label="actremonmz" id="actremonmz" aria-describedby="basic-addon1" />
+                                <input class="form-control form-control-sm"  type="hidden"  id="actremocdz"  />
+                            </div>
+                        </li>
+                        <li>
+                            <!--tb_e013-->
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장부위</span>
+                                <input class="form-control" type="text" placeholder="고장부위를 입력하세요" aria-label="actgreginmz" id="actgreginmz" aria-describedby="basic-addon1" />
+                                <input class="form-control form-control-sm"  type="hidden"  id="actgregicdz"  />
+                            </div>
+                        </li>
+                        <li>
+                            <!-- tb_e015-->
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리방법</span>
+                                <input class="form-control" type="text" placeholder="처리방법을 입력하세요" aria-label="actresultnmz" id="actresultnmz" aria-describedby="basic-addon1" />
+                                <input class="form-control form-control-sm"  type="hidden"  id="actresultcdz"  />
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-pane fade" id="step02">
-                  <div class="container-fluid">
-                    <div id="chartTabB"></div>
-                  </div>
+            </div>
+        </div>
+        <div class="section status">
+            <div class="sec_con" style="width: 100%;">
+                <div class="box_wrap">
+                    <div class="table table_style2">
+                        <div class="card-body bg-light">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">기간별고장내용</a>
+                                </li>
+
+                                <input type="hidden" id="tabvalue" value="A">
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="step01">
+                                    <div class="container-fluid">
+                                        <div id="wtab01Grid_div" ></div>
+                                        <div id="tab01Pager"></div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="step02">
+                                    <div class="container-fluid">
+                                        <div id="chartTabB"></div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="step03">
+                                    <div class="container-fluid">
+                                        <select id="typeMenu">
+                                            <option value="0" selected="selected">사분면(Squarified)</option>
+                                            <option value="1">수평(Horizontal)</option>
+                                            <option value="2">수직(Vertical)</option>
+                                        </select>
+                                        <div id="chartTabC"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="step03">
-                  <div class="container-fluid">
-                    <select id="typeMenu">
-                      <option value="0" selected="selected">사분면(Squarified)</option>
-                      <option value="1">수평(Horizontal)</option>
-                      <option value="2">수직(Vertical)</option>
-                    </select>
-                    <div id="chartTabC"></div>
-                  </div>
+            </div>
+        </div>
+    </div>
+
+    <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
+    <input class="form-control form-control-sm"  type="hidden" id="actremonmbtn" data-bs-toggle="modal" data-bs-target="#actremonmmodal"  />
+    <input class="form-control form-control-sm"  type="hidden" id="actresunmbtn" data-bs-toggle="modal" data-bs-target="#actresunmmodal"  />
+    <input class="form-control form-control-sm"  type="hidden" id="actgreginmbtn" data-bs-toggle="modal" data-bs-target="#actgreginmmodal"  />
+    <input class="form-control form-control-sm"  type="hidden" id="actresultnmbtn" data-bs-toggle="modal" data-bs-target="#actresultnmmodal"  />
+
+
+
+    <!--------------------------------------------------------------------------------------->
+    <!-- 현장명 MODAL FROM  -->
+    <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
+         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+             style="max-width: 800px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" >
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                        <div class="search">
+                            <div class="input_wrap">
+                                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                                       placeholder="현장코드 / 현장명 "     />
+                            </div>
+                            <button id="wactnmBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt="">
+                            </button>
+                        </div>
+                        <div  class="save_id" >
+                            <input type="checkbox" id="conflag" value="1" checked>
+                            <label for="conflag" class="check_style1">계약현장</label>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="theGroupPanel"></div>
+                        <div id="wactnmGrid_div" ></div>
+                        <div id="thePager01"></div>
+                    </div>
                 </div>
-              </div>
+
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-
-  <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
-  <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />
-  <input class="form-control form-control-sm"  type="hidden" id="actremonmbtn" data-bs-toggle="modal" data-bs-target="#actremonmmodal"  />
-  <input class="form-control form-control-sm"  type="hidden" id="actresunmbtn" data-bs-toggle="modal" data-bs-target="#actresunmmodal"  />
-  <input class="form-control form-control-sm"  type="hidden" id="actgreginmbtn" data-bs-toggle="modal" data-bs-target="#actgreginmmodal"  />
-  <input class="form-control form-control-sm"  type="hidden" id="actresultnmbtn" data-bs-toggle="modal" data-bs-target="#actresultnmmodal"  />
+    <!--------------------------------------------------------------------------------------->
 
 
 
-  <!--------------------------------------------------------------------------------------->
-  <!-- 현장명 MODAL FROM  -->
-  <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 800px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
-                       placeholder="현장코드 / 현장명 "     />
-              </div>
-              <button id="wactnmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
+    <!--------------------------------------------------------------------------------------->
+    <!-- 고장요인 MODAL FROM  -->
+    <div class="modal fade" id="actremonmmodal" data-bs-keyboard="false"
+         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+             style="max-width: 500px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" >
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                        <div class="search">
+                            <div class="input_wrap">
+                                <input class="form-control form-control-sm" id="searchRemoCode" type="text"   onkeyup="if(window.event.keyCode==13){searchremo_rtn()}"
+                                       placeholder="고장요인 "     />
+                            </div>
+                            <button id="wremonmBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="wremonmGrid_div" ></div>
+                        <div id="thePager03"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wremonmmodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div  class="save_id" >
-              <input type="checkbox" id="conflag" value="1" checked>
-              <label for="conflag" class="check_style1">계약현장</label>
-            </div>
-          </div>
-          <div class="container-fluid">
-            <div id="theGroupPanel"></div>
-            <div id="wactnmGrid_div" ></div>
-            <div id="thePager01"></div>
-          </div>
         </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------->
 
+    <!--------------------------------------------------------------------------------------->
+    <!-- 처리내용 MODAL FROM  -->
+    <div class="modal fade" id="actresunmmodal" data-bs-keyboard="false"
+         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+             style="max-width: 500px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" >
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                        <div class="search">
+                            <div class="input_wrap">
+                                <input class="form-control form-control-sm" id="searchResuCode" type="text"   onkeyup="if(window.event.keyCode==13){searchresu_rtn()}"
+                                       placeholder="처리내용 "     />
+                            </div>
+                            <button id="wresunmBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="wresunmGrid_div" ></div>
+                        <div id="thePager04"></div>
+                    </div>
+                </div>
 
-  <!--------------------------------------------------------------------------------------->
-  <!-- 고장내용 MODAL FROM  -->
-  <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
-                       placeholder="고장내용 "     />
-              </div>
-              <button id="wcontnmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wresunmmodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wcontnmGrid_div" ></div>
-            <div id="thePager02"></div>
-          </div>
         </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------->
 
-  <!--------------------------------------------------------------------------------------->
-  <!-- 고장요인 MODAL FROM  -->
-  <div class="modal fade" id="actremonmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchRemoCode" type="text"   onkeyup="if(window.event.keyCode==13){searchremo_rtn()}"
-                       placeholder="고장요인 "     />
-              </div>
-              <button id="wremonmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
+    <!--------------------------------------------------------------------------------------->
+    <!-- 고장부위 MODAL FROM  -->
+    <div class="modal fade" id="actgreginmmodal" data-bs-keyboard="false"
+         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+             style="max-width: 500px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" >
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                        <div class="search">
+                            <div class="input_wrap">
+                                <input class="form-control form-control-sm" id="searchGregiCode" type="text"   onkeyup="if(window.event.keyCode==13){searchgregi_rtn()}"
+                                       placeholder="고장부위 "     />
+                            </div>
+                            <button id="wgreginmBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="wgreginmGrid_div" ></div>
+                        <div id="thePager05"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wgreginmmodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wremonmGrid_div" ></div>
-            <div id="thePager03"></div>
-          </div>
         </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wremonmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------->
 
-  <!--------------------------------------------------------------------------------------->
-  <!-- 처리내용 MODAL FROM  -->
-  <div class="modal fade" id="actresunmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchResuCode" type="text"   onkeyup="if(window.event.keyCode==13){searchresu_rtn()}"
-                       placeholder="처리내용 "     />
-              </div>
-              <button id="wresunmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
+    <!--------------------------------------------------------------------------------------->
+    <!-- 처리방법 MODAL FROM  -->
+    <div class="modal fade" id="actresultnmmodal" data-bs-keyboard="false"
+         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+             style="max-width: 500px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" >
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                        <div class="search">
+                            <div class="input_wrap">
+                                <input class="form-control form-control-sm" id="searchResultCode" type="text"   onkeyup="if(window.event.keyCode==13){searchresult_rtn()}"
+                                       placeholder="처리방법 "     />
+                            </div>
+                            <button id="wresultnmBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="wresultnmGrid_div" ></div>
+                        <div id="thePager06"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wresultnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wresunmGrid_div" ></div>
-            <div id="thePager04"></div>
-          </div>
         </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wresunmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
-
-  <!--------------------------------------------------------------------------------------->
-  <!-- 고장부위 MODAL FROM  -->
-  <div class="modal fade" id="actgreginmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchGregiCode" type="text"   onkeyup="if(window.event.keyCode==13){searchgregi_rtn()}"
-                       placeholder="고장부위 "     />
-              </div>
-              <button id="wgreginmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
-            </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wgreginmGrid_div" ></div>
-            <div id="thePager05"></div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wgreginmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
-
-  <!--------------------------------------------------------------------------------------->
-  <!-- 처리방법 MODAL FROM  -->
-  <div class="modal fade" id="actresultnmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchResultCode" type="text"   onkeyup="if(window.event.keyCode==13){searchresult_rtn()}"
-                       placeholder="처리방법 "     />
-              </div>
-              <button id="wresultnmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
-            </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wresultnmGrid_div" ></div>
-            <div id="thePager06"></div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wresultnmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------->
 
 
 
@@ -465,7 +423,7 @@
 
 
 
-  <script type="text/javascript" th:inline="javascript">
+    <script type="text/javascript" th:inline="javascript">
          var view_p01tab01page;
          var view_actnmpage;
          var view_contnmpage;
@@ -522,11 +480,9 @@
                     // { binding: 'resultnm', header: '상태', align: "center", width: '*' }
                     // { binding: 'psize', header: '규격', width: '*', format: '*' }
 
-                    { binding: 'compdate', header: '처리일자', align: "center", width: '*' },
-                    { binding: 'resulttime', header: '처리시간', align: "center", width: '*' },
-                    { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
                     { binding: 'actnm', header: '현장명', align: "center", width: '*' },
                     { binding: 'equpnm', header: '호기명', align: "center", width: '*' },
+                    { binding: 'qty', header: '건수', align: "center", width: '*' },
                     { binding: 'pernm', header: '처리자', align: "center", width: '*' },
                     { binding: 'contnm', header: '고장내용', align: "center", width: '*' },
                     { binding: 'contremark', header: '고장상세내용', align: "center", width: '*' },
@@ -635,42 +591,7 @@
 
 
 
-            //고장내용검색 popup list
-            view_contnmpage = new wijmo.collections.CollectionView(getData_wlist02(), {
-                pageSize: 12
-            });
-            // 고장내용검색 페이지 이동
-            new wijmo.input.CollectionViewNavigator('#thePager02', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_contnmpage
-            });
-            wcontnmGrid = new wijmo.grid.FlexGrid('#wcontnmGrid_div', {
-                autoGenerateColumns: false,
-                isReadOnly: false,
-                selectionMode: 'RowRange',
-                alternatingRowStep: 0,
-                columns: [
-                    { binding: 'contcd', header: '코드', align: "center", width: '1*' },
-                    { binding: 'contnm', header: '고장내용', align: "center", width: '1*' },
-                ],
-                itemsSource: view_contnmpage
-            });
-            // 고장내용검색 데이터 수집
-            function getData_wlist02(){
-                var wcontnm_data = [];
-                var cnt = 1;
-                for (var i = 0; i < 12; i++) {
-                    wcontnm_data.push({
-                        id: i,
-                        index: cnt,
-                        contcd: "",
-                        contnm: "",
-                    });
-                    cnt++;
-                }
-                return wcontnm_data;
-            }
+
 
             //고장요인검색 popup list
             view_remonmpage = new wijmo.collections.CollectionView(getData_wlist03(), {
@@ -688,8 +609,8 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'remocd', header: '코드', align: "center", width: '1*' },
-                    { binding: 'remonm', header: '고장요인', align: "center", width: '1*' },
+                    { binding: 'remocd', header: '고장코드', align: "center", width: '1*' },
+                    { binding: 'remonm', header: '고장내용', align: "center", width: '1*' },
                 ],
                 itemsSource: view_remonmpage
             });
@@ -725,12 +646,12 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'resucd', header: '코드', align: "center", width: '1*' },
+                    { binding: 'resucd', header: '처리코드', align: "center", width: '1*' },
                     { binding: 'resunm', header: '처리내용', align: "center", width: '1*' },
                 ],
                 itemsSource: view_resunmpage
             });
-            // 처리내용검색 데이터 수집
+            // 고장요인검색 데이터 수집
             function getData_wlist04(){
                 var wresunm_data = [];
                 var cnt = 1;
@@ -762,8 +683,8 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'gregicd', header: '코드', align: "center", width: '1*' },
-                    { binding: 'greginm', header: '고장부위', align: "center", width: '1*' },
+                    { binding: 'gregicd', header: '부위코드', align: "center", width: '1*' },
+                    { binding: 'greginm', header: '고장요인', align: "center", width: '1*' },
                 ],
                 itemsSource: view_greginmpage
             });
@@ -799,7 +720,7 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'resultcd', header: '코드', align: "center", width: '1*' },
+                    { binding: 'resultcd', header: '방법코드', align: "center", width: '1*' },
                     { binding: 'resultnm', header: '처리방법', align: "center", width: '1*' },
                 ],
                 itemsSource: view_resultnmpage
@@ -919,8 +840,6 @@
             let ls_todate = document.getElementById('todate').value;
             let ls_actcdz = document.getElementById('actcdz').value;
             let ls_actnmz = document.getElementById('actnmz').value;
-            let ls_actcontcdz = document.getElementById('actcontcdz').value;
-            let ls_actcontnmz = document.getElementById('actcontnmz').value;
             let ls_actremocdz = document.getElementById('actremocdz').value;
             let ls_actremonmz = document.getElementById('actremonmz').value;
             let ls_actresucdz = document.getElementById('actresucdz').value;
@@ -929,50 +848,43 @@
             let ls_actgreginmz = document.getElementById('actgreginmz').value;
             let ls_actresultcdz = document.getElementById('actresultcdz').value;
             let ls_actresultnmz = document.getElementById('actresultnmz').value;
+            let ls_actqtyz = document.getElementById('actqtyz').value;
 
             if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
                 ls_actcdz = "%";
                 document.getElementById('actcdz').value = "";
             }
-            if(ls_actcontnmz == null || ls_actcontnmz.length == 0 || ls_actcontnmz == ""){
-                ls_actcontcdz = "%";
-                document.getElementById('actcontcdz').value = "";
-            }
             if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
                 ls_actcdz = "%";
-            }
-            if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == ""){
-                ls_actcontcdz = "%";
             }
             if(ls_actremocdz == null || ls_actremocdz.length == 0 || ls_actremocdz == ""){
                 ls_actremocdz = "%";
             }
             if(ls_actremonmz == null || ls_actremonmz.length == 0 || ls_actremonmz == ""){
                 ls_actremonmz = "%";
-                document.getElementById('actremonmz').value = "";
             }
             if(ls_actresucdz == null || ls_actresucdz.length == 0 || ls_actresucdz == ""){
                 ls_actresucdz = "%";
             }
             if(ls_actresunmz == null || ls_actresunmz.length == 0 || ls_actresunmz == ""){
                 ls_actresunmz = "%";
-                document.getElementById('actresunmz').value = "";
             }
             if(ls_actgregicdz == null || ls_actgregicdz.length == 0 || ls_actgregicdz == ""){
                 ls_actgregicdz = "%";
             }
             if(ls_actgreginmz == null || ls_actgreginmz.length == 0 || ls_actgreginmz == ""){
                 ls_actgreginmz = "%";
-                document.getElementById('actgreginmz').value = "";
             }
             if(ls_actresultcdz == null || ls_actresultcdz.length == 0 || ls_actresultcdz == ""){
                 ls_actresultcdz = "%";
             }
             if(ls_actresultnmz == null || ls_actresultnmz.length == 0 || ls_actresultnmz == ""){
                 ls_actresultnmz = "%";
-                document.getElementById('actresultnmz').value = "";
             }
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz , ls_actcontcdz, ls_actremocdz, ls_actresucdz, ls_actgregicdz, ls_actresultcdz);
+            if(ls_actqtyz == null || ls_actqtyz.length == 0 || ls_actqtyz == ""){
+                ls_actqtyz = "%";
+            }
+            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz , ls_actremocdz, ls_actresucdz, ls_actgregicdz, ls_actresultcdz, ls_actqtyz);
         })
 
         function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9){
@@ -985,11 +897,11 @@
                             "frdate"      : arg2,
                             "todate"      : arg3,
                             "actcdz"      : arg4,
-                            "actcontcdz"  : arg5,
-                            "actremocdz"  : arg6,
-                            "actresucdz"  : arg7,
-                            "actgregicdz" : arg8,
-                            "actresultcdz": arg9
+                            "actremocdz"  : arg5,
+                            "actresucdz"  : arg6,
+                            "actgregicdz" : arg7,
+                            "actresultcdz": arg8,
+                            "actqtyz"     : arg9
                         },
                         async:false,
                         success:function(data){
@@ -1002,12 +914,6 @@
                     }).done(function(fragment){
 
                     })
-                    break;
-                case 'B':
-                    barChartInit01(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-                    break;
-                case 'C':
-                    barChartInit02(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
                     break;
                 default:
                     break;
@@ -1053,6 +959,12 @@
             cols.header = '처리일자';
             cols.align = "center";
             cols.width = '*';
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+                text: '<b>${item.recedate}</b>',
+                click: (e, ctx) => {
+                    wactnmChk_3(ctx.item.compdate, ctx.item.recenum);
+                }
+            });
             wtab01Grid.columns.push(cols);
             // console.log("cols", cols);
             cols = new wijmo.grid.Column();
@@ -1064,14 +976,14 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'recedate';
             cols.header = '접수일자';
-            cols.align = "center";
-            cols.width = '*';
+            cols.align = "left";
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';
             cols.align = "center";
-            cols.width = '3*';
+            cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'equpnm';
@@ -1082,7 +994,7 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'pernm';
             cols.header = '처리자';
-            cols.align = "center";
+            cols.align = "left";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -1112,7 +1024,7 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'remonm';
             cols.header = '고장요인';
-            cols.align = "center";
+            cols.align = "left";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -1124,7 +1036,7 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'greginm';
             cols.header = '고장부위';
-            cols.align = "center";
+            cols.align = "left";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -1136,13 +1048,13 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'result';
             cols.header = '처리방법';
-            cols.align = "center";
+            cols.align = "left";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resultnm';
             cols.header = '진행내역';
-            cols.align = "center";
+            cols.align = "left";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
 
@@ -1197,7 +1109,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'actnm';
                     cols.header = '현장명';
-                    cols.align = "center";
+                    cols.align = "left";
                     cols.width = '*';
                     wactnmGrid.columns.push(cols);
                     cols = new wijmo.grid.Column();
@@ -1281,7 +1193,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'contnm';
                     cols.header = '고장내용';
-                    cols.align = "center";
+                    cols.align = "left";
                     cols.width = '*';
                     wcontnmGrid.columns.push(cols);
                 },error:function(e){
@@ -1343,7 +1255,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'remonm';
                     cols.header = '고장요인';
-                    cols.align = "center";
+                    cols.align = "left";
                     cols.width = '*';
                     wremonmGrid.columns.push(cols);
                 },error:function(e){
@@ -1403,7 +1315,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'greginm';
                     cols.header = '고장부위';
-                    cols.align = "center";
+                    cols.align = "left";
                     cols.width = '*';
                     wgreginmGrid.columns.push(cols);
                 },error:function(e){
@@ -1484,8 +1396,8 @@
                     // console.log("cols", cols);
                     cols = new wijmo.grid.Column();
                     cols.binding = 'resunm';
-                    cols.header = '처리내용';
-                    cols.align = "center";
+                    cols.header = '고장요인';
+                    cols.align = "left";
                     cols.width = '*';
                     wresunmGrid.columns.push(cols);
                 },error:function(e){
@@ -1559,7 +1471,7 @@
                     cols = new wijmo.grid.Column();
                     cols.binding = 'resultnm';
                     cols.header = '처리방법';
-                    cols.align = "center";
+                    cols.align = "left";
                     cols.width = '*';
                     wresultnmGrid.columns.push(cols);
                 },error:function(e){
@@ -2077,38 +1989,46 @@
 
     </script>
 
-  <!------footer ------>
-  <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+    <!------footer ------>
+    <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
 
-  <!-- modal -->
-  <!-- class="modal_step_open" modal_step="1" -->
+    <!-- modal -->
+    <!-- class="modal_step_open" modal_step="1" -->
 
-  <div class="modal modal modal_step modal_step1 hidden">
-    <div class="modal_overlay">
-    </div>
-    <div class="modal_content modal_sm scrollbar">
-      <div class="layoutCont">
-        <div class="modalContWrap">
-          <!-- <div class="modal_close cancerButton">
-            <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
-          </div>                       -->
-          <div class="modal_head">
-          </div>
-          <div class="modal_con scrollbar">
-            모든 정보를 입력하세요.
-          </div>
-
+    <div class="modal modal modal_step modal_step1 hidden">
+        <div class="modal_overlay">
         </div>
-        <div class="modal_btn">
-          <button class="cancerButton " type="button">확인</button>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+                    </div>                       -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                        모든 정보를 입력하세요.
+                    </div>
+
+                </div>
+                <div class="modal_btn">
+                    <button class="cancerButton " type="button">확인</button>
+                </div>
+                <!-- <div class="modal_btn flex">
+                    <button class="cancerButton " type="button">확인</button>
+                    <button class="cancerButton " type="button">확인</button>
+                </div> -->
+            </div>
         </div>
-        <!-- <div class="modal_btn flex">
-            <button class="cancerButton " type="button">확인</button>
-            <button class="cancerButton " type="button">확인</button>
-        </div> -->
-      </div>
     </div>
-  </div>
 </div>
 </body>
+<!-- scripts -->
+
+<script src="./assets/js/echart-example.js"></script>
+<script src="./assets/js/echarts-example.js"></script>
+<script src="./assets/js/echart-example.js.map"></script>
+<script src="./assets/js/echarts-example.js.map"></script>
+<!-- -->
+
 </html>
