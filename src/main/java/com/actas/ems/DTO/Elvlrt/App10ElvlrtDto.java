@@ -8,18 +8,14 @@ public class App10ElvlrtDto {
     private String frdate;
     private String todate;
 
-    // 여기서부터 수정2 시작
-    private String frdate2;        //접수일자
-    private String todate2;        //도착일자
-    private String codate;        //완료일자
     //여기까지 수정2 끝
-    private String recedate;
+    private String recedate; //접수일자
     private String recenum;
     private String recetime;
     private String actcd;
     private String actnm;
     private String equpcd;
-    private String equpnm;
+    private String equpnm; //호기명
     private Long cnt;
     private Long ascnt;
     private String actpernm;

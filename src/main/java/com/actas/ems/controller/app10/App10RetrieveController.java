@@ -34,8 +34,7 @@ public class App10RetrieveController {
     @GetMapping(value="/p001tab01")
     public Object App10001Tab01Form( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
-            , @RequestParam("actcdz") String actcd
-            , @RequestParam("actcontcdz") String contcd
+            , @RequestParam("actnm") String actnm
             , Model model) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
@@ -48,8 +47,7 @@ public class App10RetrieveController {
         todate =  ls_yeare + ls_mm + ls_dd;
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
-        popParmDto.setContcd(contcd);
+        popParmDto.setActnm(actnm);
         try {
             app10DtoList = service.GetApp03List001(popParmDto);
             model.addAttribute("app10DtoList",app10DtoList);
@@ -69,7 +67,7 @@ public class App10RetrieveController {
 
 // 고장내용별현황 > 현장별 고장내용
 @GetMapping(value = "/p001tab02")
-public Object App03001Tab02Form(@RequestParam("frdate") String frdate
+public Object App10001Tab02Form(@RequestParam("frdate") String frdate
         , @RequestParam("todate") String todate
         , @RequestParam("actcdz") String actcd
         , @RequestParam("actcontcdz") String contcd
@@ -106,7 +104,7 @@ public Object App03001Tab02Form(@RequestParam("frdate") String frdate
 
     // 고장내용별현황 > 호기별 고장내용
     @GetMapping(value = "/p001tab03")
-    public Object App03001Tab03Form(@RequestParam("frdate") String frdate
+    public Object App10001Tab03Form(@RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
