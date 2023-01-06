@@ -26,6 +26,8 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetContnmList(PopupDto parm){return appPopElvMapper.GetContnmList(parm);}
     /** 고장요인 조회 */
     public List<PopupDto> GetRemonmList(PopupDto parm){return appPopElvMapper.GetRemonmList(parm);}
+    /** 고장원인 조회 */
+    public List<PopupDto> GetFacnmList(PopupDto parm){return appPopElvMapper.GetFacnmList(parm);}
     /** 처리내용 조회 */
     public List<PopupDto> GetResunmList(PopupDto parm){return appPopElvMapper.GetResunmList(parm);}
     /** 고장부위 조회 */
@@ -36,6 +38,8 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetDivinmList(PopupDto parm){return appPopElvMapper.GetDivinmList(parm);}
     /** 담당자 조회 */
     public List<PopupDto> GetPernmList(PopupDto parm){return appPopElvMapper.GetPernmList(parm);}
+    /** 담당자2 조회 */
+    public List<PopupDto> GetPernm2List(PopupDto parm){return appPopElvMapper.GetPernm2List(parm);}
 
 
 

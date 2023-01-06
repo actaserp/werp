@@ -49,6 +49,18 @@
         ]]>
     </select>
 
+    <!-- 고장원인 -->
+    <select id="GetFacnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.faccd    faccd  ,
+               a.facnm    facnm
+        FROM TB_E019 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(facnm , '') Like concat('%',#{facnm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
     <!-- 처리내용 -->
     <select id="GetResunmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
@@ -105,6 +117,17 @@
         FROM TB_JA001 a WITH(NOLOCK)
         WHERE 1 = 1
           AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        ]]>
+    </select>
+
+    <!-- 담당자2 -->
+    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.actperid    actperid  ,
+               a.actpernm    actpernm
+        FROM TB_E601 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )
         ]]>
     </select>
 </mapper>

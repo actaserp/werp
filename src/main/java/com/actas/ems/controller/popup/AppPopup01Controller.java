@@ -82,6 +82,24 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    //  고장원인조회
+    @RequestMapping(value="/wfacnm")
+    public Object AppfacnmList(@RequestParam("facnmz") String facnm
+            , Model model){
+        if(facnm.length() == 0){
+            facnm = "%";
+        }
+        try {
+            popParmDto.setFacnm(facnm);
+            poplistDto = appPopElvlrtService.GetFacnmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
     //  처리내용조회
     @RequestMapping(value="/wresunm")
     public Object AppresunmList(@RequestParam("resunmz") String resunm
@@ -162,6 +180,23 @@ public class AppPopup01Controller {
         try {
             popParmDto.setPernm(pernm);
             poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+    @RequestMapping(value="/wactpernm")
+    public Object Apppernm2List(@RequestParam("actpernmz") String actpernmz
+            , Model model){
+        if(actpernmz.length() == 0){
+            actpernmz = "%";
+        }
+        try {
+            popParmDto.setPernm(actpernmz);
+            poplistDto = appPopElvlrtService.GetPernm2List(popParmDto);
             model.addAttribute("poplistDto", poplistDto);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());

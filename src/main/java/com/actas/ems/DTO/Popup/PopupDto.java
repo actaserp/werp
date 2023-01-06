@@ -16,11 +16,16 @@ public class PopupDto {
     private String cltcd;        //거래처코드
     private String cltnm;        //거래처명
     private String contflag;        //계약구분
+    
+    private String actperid; //담당자코드
     private String actpernm;        //담당자
     private String contcd;        //고장내용코드
     private String contnm;        //고장내용
     private String remocd;          //고장요인코드
     private String remonm;          //고장요인
+
+    private String faccd; //고장원인코드
+    private String facnm; //고장원인
     private String resucd;          //처리내용코드
     private String resunm;          //처리내용
     private String gregicd;         //고장부위코드
