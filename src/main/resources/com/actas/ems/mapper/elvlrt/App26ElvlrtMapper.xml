@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
-<mapper namespace="com.actas.ems.Mapper.Elvlrt.App21ElvlrtMapper">
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App26ElvlrtMapper">
 
     <!--      호기별 고장현황  -->
-    <select id="GetApp21List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App21ElvlrtDto">
+    <select id="GetApp26List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
         <![CDATA[
                 SELECT a.actcd,
                 a.actnm,
@@ -22,9 +22,7 @@
 				a.remonm,
 				a.resultnm,
 				a.resunm,
-				a.reginm,
-				a.remoremark,
-				a.resuremark
+				a.reginm
           FROM (SELECT a.actcd,
                             q.actnm,
                             a.equpcd,
@@ -40,9 +38,7 @@
 							e.remonm,
 							z.resultnm,
 							s.resunm,
-							k.reginm,
-							cast(remoremark as varchar) remoremark,
-							cast(resuremark as varchar) resuremark
+							k.reginm
                      FROM tb_e411 a
                        LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
                             LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
@@ -61,7 +57,7 @@
                       AND (a.remocd = #{remocd} OR #{remocd} = '%')
                       AND (a.resucd = #{resucd} OR #{resucd} = '%')
                       AND (a.resultcd = #{resultcd} OR #{resultcd} = '%')
-                    GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm, n.greginm, e.remonm, z.resultnm, s.resunm, k.reginm, cast(remoremark as varchar), cast(resuremark as varchar)) a
+                    GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm, n.greginm, e.remonm, z.resultnm, s.resunm, k.reginm) a
           WHERE a.qty >= #{qty}
 
         ]]>
