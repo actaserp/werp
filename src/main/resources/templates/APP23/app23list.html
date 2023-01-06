@@ -133,7 +133,7 @@
                         <div class="card-body bg-light">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">기간별고장내용</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
                                 </li>
 
                                 <input type="hidden" id="tabvalue" value="A">
@@ -596,7 +596,7 @@
             cols.binding = 'greginm';
             cols.header = '고장부위명';
             cols.align = "center";
-            cols.width = '1*';
+            cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'reginm';
@@ -813,10 +813,17 @@
             return wtab02_data;
         }
 
+        var initnum = 0;
+
         function chartInit(arg1, arg2, arg3, arg4) { // arg1 : actnm arg2 : actcd arg3 : frdate arg4 : todate
             let data = getChartData(arg2, arg3, arg4);
             let sum = data.map(c => c.qty).reduce((sum, cur) => sum + cur);
             console.log(data);
+
+            if(initnum > 0){
+                new wijmo.chart.FlexPie('#actChart').refresh(true);
+            }
+
             let pie = new wijmo.chart.FlexPie('#actChart', {
                 header: arg1,
                 bindingName: 'greginm',
@@ -833,39 +840,13 @@
                 '#355070', '#5f0f40', 
                 ]
             });
+
+            initnum++;
         }
 
 
         
-        //###########################################
-        // 원형 차트
-        //###########################################
-
-
-
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-
-    
-
-    // // 데이터
-    // var categories = ['Beverages', 'Condiments', 'Confections', 'Dairy Products', 'Grains/Cereals', 'Meat/Poultry', 'Produce', 'Seafood'];
-    // var subCategories = [
-    //   ['Soft drinks', 'Coffees', 'Teas', 'Beers', 'Ales'],
-    //   ['Sweet and Savory sauces', 'Relishes', 'Spreads', 'Seasonings'],
-    //   ['Desserts', 'Candies', 'Sweet breads'],
-    //   ['Cheeses'],
-    //   ['Breads', 'Crackers', 'Pasta', 'Cereal'],
-    //   ['Prepared meats'],
-    //   ['Dried fruit', 'Bean curd'],
-    //   ['Seaweed', 'Fish']
-    // ];
-    // var subvalues = []
-    // function getSales() {
-    //   return Math.round(Math.random() * 100);
-    // }
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
         $(document).ready(function() {
             getToday()
