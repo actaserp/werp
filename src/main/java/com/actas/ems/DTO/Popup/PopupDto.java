@@ -30,6 +30,11 @@ public class PopupDto {
     private String resunm;          //처리내용
     private String gregicd;         //고장부위코드
     private String greginm;         //고장부위
+
+    private String reginm; //고장부위상세
+
+    private String regicd; //고장부위상세코드
+
     private String resultnm;        //처리방법
     private String resultcd;        //처리코드
     private String divicd;          //담당부서코드
@@ -41,5 +46,4 @@ public class PopupDto {
     private String spjangcd;
     private int qty;
     private String handphone;        //처리코드
-
 }

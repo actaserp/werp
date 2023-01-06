@@ -188,7 +188,7 @@
                                         <th>부서명</th>
                                         <td colspan="2">
                                             <div class="input_wrap table_search">
-                                                <input type="text" name="divinmz" id="divinmz" placeholder="부서명을 찾아주세요">
+                                                <input type="text" name="actdivinmz" id="actdivinmz" placeholder="부서명을 찾아주세요">
                                                 <input  type="hidden"  id="divicdz">
                                                 <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
@@ -387,11 +387,7 @@
                                 <button id="wgreginmBtn">
                                     <img th:src="@{/assets/images/i_search.png}" alt=""> 
                                 </button>
-                            </div> 
-                            <div  class="save_id" >
-                                <input type="checkbox" id="conflag" value="1" checked>
-                                <label for="conflag" class="check_style1">회원사공유</label>
-                            </div>
+                            </div>                             
                         </div>   
                         <div class="container-fluid"> 
                             <div id="theGroupPanel"></div>
@@ -753,7 +749,7 @@
          var wtab01Grid;
          var wtab02Grid;
          var wactnmGrid; //tab01 해당 지우면안됨
-         var wagreginmGrid;//고장부위
+         var wgreginmGrid;//고장부위
          var wreginmGrid; //고장부위상세
          var wremonmGrid; //고장요인
          var wfacnmGrid; //고장원인
@@ -790,7 +786,7 @@
                 columns: [    
                     // { binding: 'pcode', header: '코드', width: '*', format: '*' }, 
                     { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
-                    { binding: 'recenum', header: '현장번호', align: "center", width: '*' },  
+                    { binding: 'actcd', header: '현장코드', align: "center", width: '*' },  
                     { binding: 'actnm', header: '현장명', align: "center", width: '*' },                      
                     { binding: 'equpnm', header: '호기명', align: "center", width: '*' },                       
                     
@@ -829,7 +825,7 @@
                             id: i, 
                             index: cnt,
                             recedate: "",
-                            recenum: "",
+                            actcd: "",
                             actnm: "",
                             equpnm: "",                          
                            
@@ -899,15 +895,15 @@
                     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
                     cv: view_greginmpage
                 });     
-                var wgreginmGrid = new wijmo.grid.FlexGrid('#wgreginmGrid_div', {  
+                wgreginmGrid = new wijmo.grid.FlexGrid('#wgreginmGrid_div', {  
                     autoGenerateColumns: false,
                     isReadOnly: false, 
                     allowSorting: 'MultiColumn',
                     selectionMode: 'RowRange',
                     alternatingRowStep: 0,
                     columns: [     
-                        { binding: 'greginm', header: '고장부위상세', align: "center", width: '1*' },
-                        
+                        { binding: 'gregicd', header: '코드', align: "center", width: '1*' },
+                        { binding: 'greginm', header: '고장부위', align: "center", width: '1*' },
                     ], 
                     itemsSource: view_greginmpage
                 });  
@@ -919,6 +915,7 @@
                         wgreginm_data.push({
                             id: i, 
                             index: cnt,
+                            gregicd:"",
                             greginm: "",                            
                         });
                         cnt++;
@@ -927,16 +924,16 @@
                 } 
 
                 //고장부위상세 popup list
-                view_pernmpage = new wijmo.collections.CollectionView(getData_wlist02(), {
+                view_reginmpage = new wijmo.collections.CollectionView(getData_wlist02(), {
                     pageSize: 12
                 });
                 // 고장부위상세 페이지 이동
                 new wijmo.input.CollectionViewNavigator('#thePager02', {
                     byPage: true,
                     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_pernmpage
+                    cv: view_reginmpage
                 });
-                wpernmGrid = new wijmo.grid.FlexGrid('#wreginmGrid_div', {
+                wreginmGrid = new wijmo.grid.FlexGrid('#wreginmGrid_div', {
                     autoGenerateColumns: false,
                     isReadOnly: false,
                     selectionMode: 'RowRange',
@@ -945,14 +942,14 @@
                         { binding: 'perid', header: '코드', align: "center", width: '1*' },
                         { binding: 'pernm', header: '고장부위상세', align: "center", width: '1*' },
                     ],
-                    itemsSource: view_pernmpage
+                    itemsSource: view_reginmpage
                 });
                 // 고장부위상세 데이터 수집
                 function getData_wlist02(){
-                    var wpernm_data = [];
+                    var wreginm_data = [];
                     var cnt = 1;
                     for (var i = 0; i < 12; i++) {
-                        wpernm_data.push({
+                        wreginm_data.push({
                             id: i,
                             index: cnt,
                             perid: "",
@@ -960,7 +957,7 @@
                         });
                         cnt++;
                     }
-                    return wpernm_data;
+                    return wreginm_data;
                 } 
 
                 //고장요인 popup list
@@ -1126,7 +1123,7 @@
                 });
                 wractpernmGrid = new wijmo.grid.FlexGrid('#wactpernmGrid_div', {
                     autoGenerateColumns: false,
-                    isReadOnly: false,
+                    isReadOnly: false,                    
                     selectionMode: 'RowRange',
                     alternatingRowStep: 0,
                     columns: [
@@ -1152,14 +1149,14 @@
                     return wractpernm_data;
                 }
                  //부서명 popup list
-                 view_divicdpage = new wijmo.collections.CollectionView(getData_wlist08(), {
+                 view_divinmpage = new wijmo.collections.CollectionView(getData_wlist08(), {
                     pageSize: 12
                 });
                 // 부서명 페이지 이동
                 new wijmo.input.CollectionViewNavigator('#thePager08', {
                     byPage: true,
                     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_divicdpage
+                    cv: view_divinmpage
                 });
                 wdivinmGrid = new wijmo.grid.FlexGrid('#wdivinmGrid_div', {
                     autoGenerateColumns: false,
@@ -1172,7 +1169,7 @@
     
                     ],
                     
-                    itemsSource: view_divicdpage
+                    itemsSource: view_divinmpage
                 });
                 // 부서명 데이터 수집
                 function getData_wlist08(){
@@ -1183,22 +1180,21 @@
                             id: i,
                             index: cnt,                           
                             divicd: "",
-                            divinm: "",
-                           
+                            divinm: "",                           
                         });
                         cnt++;
                     }
                     return wdivinm_data;
                 }
                    //처리자 popup list
-                   view_peridpage = new wijmo.collections.CollectionView(getData_wlist09(), {
+                   view_pernmpage = new wijmo.collections.CollectionView(getData_wlist09(), {
                     pageSize: 12
                 });
                 // 처리자 페이지 이동
                 new wijmo.input.CollectionViewNavigator('#thePager09', {
                     byPage: true,
                     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_peridpage
+                    cv: view_pernmpage
                 });
                 wpernmGrid = new wijmo.grid.FlexGrid('#wpernmGrid_div', {
                     autoGenerateColumns: false,
@@ -1207,10 +1203,10 @@
                     alternatingRowStep: 0,
                     columns: [
                         { binding: 'perid', header: '코드', align: "center", width: '1*' },  
-                        { binding: 'pernm', header: '처리자', align: "center", width: '1*' },        
+                        { binding: 'pernm', header: '처리자명', align: "center", width: '1*' },        
       
                     ],
-                    itemsSource: view_peridpage
+                    itemsSource: view_pernmpage
                 });
                 // 처리자 데이터 수집
                 function getData_wlist09(){
@@ -1284,7 +1280,7 @@ function CahngeSlect(value){
             document.getElementById("actpernmbtn").click();
         });
          //부서명 onclick   
-         document.getElementById("divinmz").addEventListener("click",function(){ 
+         document.getElementById("actdivinmz").addEventListener("click",function(){ 
             document.getElementById("divinmbtn").click();
         });
         //처리자 onclick   
@@ -1298,7 +1294,7 @@ function CahngeSlect(value){
         })                            
         // 고장부위상세 검색   
         document.getElementById("wreginmBtn").addEventListener("click",function(){ 
-            searchtxt_rtn();
+            searchtxt1_rtn();
         })  
         // 고장요인검색 검색   
         document.getElementById("wremonmBtn").addEventListener("click",function(){ 
@@ -1507,8 +1503,7 @@ function CahngeSlect(value){
         //고장부위 rtn
         function searchpcode_rtn(){
             let searchText = '';  
-            searchText = document.getElementById('searchCode').value;  
-            let lsConflag = document.getElementById('conflag').value;  
+            searchText = document.getElementById('searchCode').value; 
             if(searchText == null || searchText.length == 0 || searchText == ""){
                 searchText = "%";
             }            
@@ -1516,8 +1511,7 @@ function CahngeSlect(value){
                 url: '/pop01/wgreginm',  
                 type:"POST",
                 data: { 
-                    "greginmz"      : searchText,  
-                    "conflagz"      : lsConflag  
+                    "greginmz"      : searchText,                       
                 }, 
                 success:function(data){ 
                     var wgreginmDto  = data;    
@@ -1526,14 +1520,14 @@ function CahngeSlect(value){
                     for (var i = 0; i < wgreginmDto.length; i++) {
                         wgreginm_data.push({
                             id: i, 
-                            index: cnt,
-                            greginm:wgreginmDto[i]["greginm"],
+                            index: cnt,                           
                             gregicd:wgreginmDto[i]["gregicd"],
+                            greginm:wgreginmDto[i]["greginm"],
                                                                             
                         });
                         cnt++;
                     }   
-                    // console.log("wgreginm_data",wgreginm_data) 
+                    console.log("wgreginm_data",wgreginm_data) 
                     wgreginmGrid.columns.clear();  
                     wgreginmGrid.autoGenerateColumns = false; 
                     view_greginmpage.sourceCollection  = wgreginm_data;
@@ -1554,19 +1548,7 @@ function CahngeSlect(value){
                     cols.binding = 'greginm';
                     cols.header = '고장부위';
                     cols.align = "left";
-                    cols.width = '*'; 
-                    // wgreginmGrid.columns.push(cols);  
-                    // cols = new wijmo.grid.Column(); 
-                    // cols.binding = 'telno';
-                    // cols.header = '전화번호';
-                    // cols.align = "center";
-                    // cols.width = '*';
-                    // cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    //     text: '<b>${item.telno}</b>',
-                    //     click: (e, ctx) => {
-                    //         wgreginmChk_2(ctx.item.gregicd, ctx.item.greginm);
-                    //     }
-                    // });                    
+                    cols.width = '*';                                       
                     wgreginmGrid.columns.push(cols);  
                 },error:function(e){
                     alert(data.code);
@@ -1579,8 +1561,7 @@ function CahngeSlect(value){
         
         function wactnmChk_2(arg1, arg2){
             document.getElementById('gregicdz').value = arg1; 
-            document.getElementById('greginmz').value = arg2;     
-
+            document.getElementById('greginmz').value = arg2;   
             $("#wgreginmmodal_btn").trigger("click");
         }
         
@@ -1645,10 +1626,9 @@ function CahngeSlect(value){
 
         }
 
-        function wactnmChk_1(arg1, arg2){ //id값이 와야한다
+        function wactnmChk_1(arg1, arg2){ 
                 document.getElementById('regicdz').value = arg1; 
-                document.getElementById('reginmz').value = arg2;     
-
+                document.getElementById('reginmz').value = arg2;    
                 $("#wreginmmodal_btn").trigger("click");
             }
 
@@ -1933,20 +1913,22 @@ function CahngeSlect(value){
                     "actpernmz"      : searchText, 
                 }, 
                 success:function(data){ 
-                    // console.log(data);
-                    var wactpernmDto  = data;    
+                    console.log(data);
+                    var wactpernmDto  = data;
                     var wactpernm_data = [];
                     var cnt = 1;
                     for (var i = 0; i < wactpernmDto.length; i++) {
-                        wactpernm_data.push({
+                        //console.log("actpernm=",wactpernmDto[i]["actpernm"]);
+                        // console.log("actperid=",wactpernmDto[i]["actperid"]);
+                        wactpernm_data.push({                            
                             id: i, 
                             index: cnt,
-                            actpernm:wactpernmDto[i]["actpernm"],
-                            actperid: wactpernmDto[i]["actperid"],                                             
+                            actperid: wactpernmDto[i]["actperid"], 
+                            actpernm: wactpernmDto[i]["actpernm"],                                                                        
                         });
                         cnt++;
                     }   
-                    console.log("wactpernm_data",wactpernm_data) 
+                    // console.log("wactpernm_data",wactpernm_data); 
                     wactpernmGrid.columns.clear();  
                     wactpernmGrid.autoGenerateColumns = false; 
                     view_actpernmpage.sourceCollection  = wactpernm_data;
@@ -1965,7 +1947,7 @@ function CahngeSlect(value){
                     // console.log("cols", cols);  
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'actpernm';
-                    cols.header = '담당자코드';
+                    cols.header = '담당자';
                     cols.align = "center";
                     cols.width = '*'; 
                     wactpernmGrid.columns.push(cols);    
@@ -1979,7 +1961,7 @@ function CahngeSlect(value){
 
         }
         function wactnmChk_7(arg1, arg2){
-                document.getElementById('actactperidz').value = arg1; 
+                document.getElementById('actperidz').value = arg1; 
                 document.getElementById('actpernmz').value = arg2; 
                 $("#wactpernmmodal_btn").trigger("click");
             }         
@@ -1995,7 +1977,7 @@ function CahngeSlect(value){
                 url: '/pop01/wdivinm',  
                 type:"POST",
                 data: { 
-                    "divinmz"      : searchText, 
+                    "actdivinmz"      : searchText, 
                 }, 
                 success:function(data){ 
                     console.log(data);
@@ -2030,7 +2012,7 @@ function CahngeSlect(value){
                     // console.log("cols", cols);  
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'divinm';
-                    cols.header = '부서코드';
+                    cols.header = '부서명';
                     cols.align = "center";
                     cols.width = '*'; 
                     wdivinmGrid.columns.push(cols);    
@@ -2046,7 +2028,7 @@ function CahngeSlect(value){
 
         function wactnmChk_8(arg1, arg2){
                 document.getElementById('divicdz').value = arg1; 
-                document.getElementById('divinmz').value = arg1; 
+                document.getElementById('actdivinmz').value = arg1; 
 
                 $("#wdivinmmodal_btn").trigger("click");
             }  
@@ -2059,7 +2041,7 @@ function CahngeSlect(value){
             }
             // console.log('ls_cltcd-->' + ls_cltcd);
             $.ajax({
-                url: '/pop01/wpernm',  
+                url: '/pop01/wpernm2',  
                 type:"POST",
                 data: { 
                     "pernmz"      : searchText, 
@@ -2097,7 +2079,7 @@ function CahngeSlect(value){
                     // console.log("cols", cols);  
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'pernm';
-                    cols.header = '처리코드';
+                    cols.header = '처리자명';
                     cols.align = "center";
                     cols.width = '*'; 
                     wpernmGrid.columns.push(cols);    

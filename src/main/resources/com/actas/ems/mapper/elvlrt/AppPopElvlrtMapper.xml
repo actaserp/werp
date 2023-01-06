@@ -85,6 +85,18 @@
         ]]>
     </select>
 
+    <!-- 고장부위상세 -->
+    <select id="GetReginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.regicd    regicd  ,
+               a.reginm    reginm
+        FROM TB_E014 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(reginm , '') Like concat('%',#{reginm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
     <!-- 처리방법 -->
     <select id="GetResultnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
@@ -120,14 +132,35 @@
         ]]>
     </select>
 
-    <!-- 담당자2 -->
-    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+    <!-- 처리자 -->
+    <select id="GetPernm3List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
-        SELECT a.actperid    actperid  ,
-               a.actpernm    actpernm
-        FROM TB_E601 a WITH(NOLOCK)
+        SELECT a.perid    perid  ,
+               a.pernm    pernm
+        FROM TB_JA001 a WITH(NOLOCK)
         WHERE 1 = 1
-          AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )
+          AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        ]]>
+    </select>
+
+<!--    &lt;!&ndash; actas 담당자 &ndash;&gt;-->
+<!--    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">-->
+<!--        <![CDATA[  SELECT  a.actperid    actperid  ,-->
+<!--                          a.actpernm    actpernm-->
+<!--                  FROM TB_E411 a WITH(NOLOCK)-->
+<!--                  WHERE 1 = 1-->
+<!--                    AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <!-- actas 담당자 -->
+    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[   SELECT a.actperid    actperid  ,
+                           a.actpernm    actpernm
+                    FROM TB_E601 a WITH(NOLOCK)
+                    WHERE 1 = 1
+                      AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )
+
         ]]>
     </select>
 </mapper>
