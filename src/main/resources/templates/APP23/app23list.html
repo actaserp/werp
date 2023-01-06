@@ -776,13 +776,51 @@
         //###########################################
         // 원형 차트
         //###########################################
-        function chartInit(arg1, arg2, arg3, arg4) {
-            let data = getData();
-            let sum = data.map(c => c.sales).reduce((sum, cur) => sum + cur);
+
+        //데이터
+        function getChartData(arg2, arg3, arg4) {
+            var wtab02_data = [];
+            var cnt = 1;
+            console.log(arg2, arg3, arg4);
+            $.ajax({
+                url: '/app23/p001tab02',
+                type: "POST",
+                data: {
+                    "actcdz"   : arg2,
+                    "frdate"  : arg3,
+                    "todate"  : arg4
+                },
+                async:false,
+                success:function(data){
+                    console.log("success");
+                    for(var i = 0; i < data.length; i++){
+                        wtab02_data.push({
+                            id: i,
+                            index: cnt,
+                            greginm: data[i]["greginm"],
+                            qty: data[i]["qty"]
+                        });
+                        cnt++;
+                    }
+                },error:function(e){
+                    console.log("error");
+                }
+            }).done(function(fragment){
+                
+            })
+
+
+            return wtab02_data;
+        }
+
+        function chartInit(arg1, arg2, arg3, arg4) { // arg1 : actnm arg2 : actcd arg3 : frdate arg4 : todate
+            let data = getChartData(arg2, arg3, arg4);
+            let sum = data.map(c => c.qty).reduce((sum, cur) => sum + cur);
+            console.log(data);
             let pie = new wijmo.chart.FlexPie('#actChart', {
                 header: arg1,
-                bindingName: 'brand',
-                binding: 'sales',
+                bindingName: 'greginm',
+                binding: 'qty',
                 dataLabel: {
                 content: (ht) => {
                     return `${ht.name} ${wijmo.Globalize.format(ht.value / sum, 'p2')}`;
@@ -798,17 +836,7 @@
         }
 
 
-        //데이터
-        function getData() {
-            return [
-                { brand: 'Samsung', sales: 321 },
-                { brand: 'Apple', sales: 215 },
-                { brand: 'Huawei', sales: 160 },
-                { brand: 'OPPO', sales: 112 },
-                { brand: 'Vivo', sales: 100 },
-                { brand: 'Others', sales: 638 }
-            ];
-        }
+        
         //###########################################
         // 원형 차트
         //###########################################

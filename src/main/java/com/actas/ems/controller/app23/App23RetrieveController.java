@@ -70,11 +70,6 @@ public class App23RetrieveController {
     public Object App23001Tab02Form( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
-            , @RequestParam("actgregicdz") String gregicd
-            , @RequestParam("actremocdz") String remocd
-            , @RequestParam("actresucdz") String resucd
-            , @RequestParam("actresultcdz") String resultcd
-            , @RequestParam("actqtyz") int qtyz
             , Model model) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
@@ -88,11 +83,6 @@ public class App23RetrieveController {
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
         popParmDto.setActcd(actcd);
-        popParmDto.setGregicd(gregicd);
-        popParmDto.setRemocd(remocd);
-        popParmDto.setResucd(resucd);
-        popParmDto.setResultcd(resultcd);
-        popParmDto.setQty(qtyz);
         try {
             app23DtoList = service.GetApp23List002(popParmDto);
             model.addAttribute("app23DtoList",app23DtoList);
