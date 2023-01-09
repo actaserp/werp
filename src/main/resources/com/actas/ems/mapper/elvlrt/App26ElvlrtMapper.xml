@@ -7,58 +7,139 @@
     <!--      호기별 고장현황  -->
     <select id="GetApp26List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
         <![CDATA[
-                SELECT a.actcd,
-                a.actnm,
-                a.equpcd,
-                a.equpnm,
-                a.qty,
-                a.perid,
-                a.pernm,
-                a.contcd,
-                a.contnm,
-                a.contents as contremark,
-                a.remark,
-                a.greginm,
-				a.remonm,
-				a.resultnm,
-				a.resunm,
-				a.reginm
-          FROM (SELECT a.actcd,
-                            q.actnm,
-                            a.equpcd,
-                            m.equpnm,
-                            count(a.compdate) as qty,
-                            max(a.perid) as perid,
-                            d.pernm,
-                            max(b.contcd) as contcd,
-                            p.contnm,
-                            max(convert(varchar(100), b.contents)) as contents,
-                            max(a.remark) as remark,
-                            n.greginm,
-							e.remonm,
-							z.resultnm,
-							s.resunm,
-							k.reginm
-                     FROM tb_e411 a
-                       LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
-                            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
-                       LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
-                            LEFT OUTER JOIN tb_e401 b ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
-                       LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (b.custcd = p.custcd AND b.spjangcd = p.spjangcd AND b.contcd = p.contcd)
-                            LEFT OUTER JOIN tb_e013 n WITH(NOLOCK) ON (a.custcd = n.custcd AND a.spjangcd = n.spjangcd AND a.gregicd = n.gregicd)
-                       LEFT OUTER JOIN tb_e011 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.remocd = e.remocd)
-                            LEFT OUTER JOIN tb_e015 z WITH(NOLOCK) ON (a.custcd = z.custcd AND a.spjangcd = z.spjangcd AND a.resultcd = z.resultcd)
-                       LEFT OUTER JOIN tb_e012 s WITH(NOLOCK) ON (a.custcd = s.custcd AND a.spjangcd = s.spjangcd AND a.resucd = s.resucd)
-                            LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.gregicd = k.gregicd AND a.regicd = k.regicd)
-                       LEFT OUTER JOIN tb_e401 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
-                    WHERE a.compdate BETWEEN #{frdate} AND #{todate}
-                      AND (q.actcd = #{actcd} OR #{actcd} = '%')
-                      AND (a.contcd = #{gregicd} OR #{gregicd} = '%')
-                      AND (a.remocd = #{remocd} OR #{remocd} = '%')
-                      AND (a.resucd = #{resucd} OR #{resucd} = '%')
-                      AND (a.resultcd = #{resultcd} OR #{resultcd} = '%')
-                    GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm, n.greginm, e.remonm, z.resultnm, s.resunm, k.reginm) a
-          WHERE a.qty >= #{qty}
+                SELECT a.custcd,
+			a.spjangcd,
+			a.actcd as actcd1,
+         a.actcd,
+         a.actnm,
+			b.contg,
+         a.cltcd,
+         a.actperid,
+         a.actpernm,
+         a.actrespon,
+         a.tel,
+         a.hp,
+         a.fax,
+         a.actmail,
+         a.stdate,
+         a.enddate,
+         a.gigan,
+         a.zipcode,
+         a.address,
+         a.address2,
+         a.remark,
+		a.emactcd,
+         a.qty,
+         a.perid,
+		(select pernm from tb_ja001 where spjangcd = a.spjangcd and perid = 'p' + a.perid)  as pernm,
+         a.pperid,
+		(select pernm from tb_ja001 where spjangcd = a.spjangcd and perid = 'p' + a.pperid) as ppernm,
+         a.inperid,
+         a.indate,
+         a.gubun,
+         a.bildyd,
+         a.bildlv,
+         a.bildju,
+         a.bilddate,
+			a.gareacd,
+			a.areacd,
+			a.areacd AS areanm,
+			a.wkactcd,
+			a.wkactcd AS wkactnm,
+			a.pubcltcd,
+			c.prtcltnm as pubcltnm,
+			a.pubpernm,
+			c.zipcd as pubzipcd,
+			c.cltadres as pubaddress,
+			c.prenm,
+			c.saupnum,
+			a.pubaddress2,
+			a.ancltcd,
+			a.ancltnm,
+			a.anpernm,
+			a.anzipcd,
+			a.anaddress,
+			a.anaddress2,
+			e.divicd,
+			f.divinm,
+			a.special,
+			a.cltnum,
+		     b.contdate,
+			a.taxmailyn,
+			a.giromisuyn,
+			b.contgubun,
+			b.contamt,
+			b.jirogubun,
+			b.stdate ,
+			b.enddate ,
+			b.freefrdate ,
+			b.freetodate ,
+			b.deljugi,
+			b.taxchk ,
+			b.dedate ,
+			b.bigo,
+			b.addyn,
+			b.contyul,
+			b.taxgubun,
+			b.cmsflag,
+			b.ungijun,
+			b.billgubun,
+			b.mgubun,
+			a.etccltcd,
+			(select cltnm from tb_xclient where custcd=a.custcd and cltcd=a.etccltcd) as etccltnm,
+		 	a.etcmail,
+			a.etcpernm,
+			a.actgubun,
+			a.sedae,
+			c.prenum,
+			'0' as newrow
+    FROM TB_E601 a WITH(NOLOCK)
+    LEFT OUTER JOIN (SELECT   a.custcd,
+ 								    a.spjangcd,
+								    a.actcd,
+								    a.contg,
+									a.contdate,
+								 	 a.gubun as contgubun,
+									a.amt as contamt,
+									a.jirogubun as jirogubun,
+									a.stdate as stdate,
+									a.enddate as enddate,
+									a.freefrdate as freefrdate,
+									a.freetodate as freetodate,
+									a.deljugi as deljugi,
+									a.taxchk as taxchk,
+									a.dedate as dedate,
+									a.bigo   as bigo,
+									a.addyn as addyn,
+									a.contyul as contyul,
+									a.taxgubun as taxgubun,
+									a.cmsflag as cmsflag,
+									a.ungijun as ungijun  ,
+									a.billgubun as billgubun,
+									a.mgubun	as mgubun
+					  		  FROM tb_e101 a WITH(NOLOCK), (SELECT custcd,
+																		 	   spjangcd,
+																			   actcd,
+																			   max(contdate) as contdate
+																	    FROM tb_e101 WITH(NOLOCK)
+											  						   GROUP BY custcd, spjangcd, actcd) b
+						    WHERE a.custcd = b.custcd
+                        AND a.spjangcd = b.spjangcd
+                        AND a.actcd = b.actcd
+							 	AND a.contdate = b.contdate) b
+     ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+	 LEFT OUTER JOIN TB_XCLIENT c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.cltcd = c.cltcd)
+	 LEFT OUTER JOIN TB_JA001 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.perid = substring(e.perid, 2, 10))
+	 LEFT OUTER JOIN TB_JC002 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND e.divicd = f.divicd)
+  WHERE ((a.actcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%')
+     OR (a.cltcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%'))
+    AND (a.areacd = :as_areacd OR :as_areacd = '%')
+	AND (a.wkactcd = :as_wkactcd OR :as_wkactcd = '%')
+    AND (Case when b.contg in ('01', '02', '03')THEN '1' when b.contg = '04' then '2' else '3' end = :as_gubun OR :as_gubun = '%')
+    AND (a.cltnum = :as_cltnum OR :as_cltnum = '%')
+    AND (a.perid = :as_perid OR :as_perid = '%')
+    AND (a.actgubun = :as_actgubun OR :as_actgubun = '%')
+    AND (f.divinm like :as_divinm + '%' OR :as_divinm = '%' OR f.divinm is null)
 
         ]]>
     </select>

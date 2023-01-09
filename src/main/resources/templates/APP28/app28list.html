@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+<header>
+
+</header>
+<div class="content flex">
+
+    <div class="header on">
+        <div class="left">
+            <div class="ham">
+                <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+            </div>
+            <div class="nav_bg"></div>
+            <!-- ################################ -->
+            <!-- ## Left navigator include -->
+            <th:block th:include="layouts/APPHeader/appLeftNav" />
+        </div>
+        <div class="right">
+        </div>
+    </div>
+    <div class="con">
+        <div class="header_top">
+            <ul class="left">
+                <li>
+                    <div class="logo">
+                        <a href="">
+                            <img th:src="@{/assets/images/logo.png}" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="home">
+                    <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                    <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+                </li>
+                <li>
+                    수리노하우
+                </li>
+                <li class="on">
+                    수리 Q&A
+                </li>
+            </ul>
+            <ul class="right">
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_call.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_bell.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_menu.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_que.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_user.png}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="infor_bar type2">
+            <div class="left">
+                수리Q&A
+            </div>
+            <ul class="right">
+                <li>
+                    <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn(this)" >공지등록 </button>
+                    <button  class="color4" type="button" visible="false" data-bs-toggle="modal" data-bs-target="#fileBackdrop" id="filemodal_btn" onclick="clear_rtn(this)" >미리보기 </button>
+                </li>
+            </ul>
+
+        </div>
+        <div class="section ">
+            <div class="row g-3">
+                <div class="col-lg-8">
+                  <div class="card mb-3">
+                    <div class="card-header bg-light overflow-hidden">
+                      <div class="d-flex align-items-center">
+                        
+                        <div class="flex-1 ms-2">
+                          <h5 class="mb-0 fs-0">질문 작성</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                      <form>
+                        <textarea class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 입력하세요." rows="4"></textarea>
+                        
+                        <div class="row g-0 justify-content-between mt-3 px-card pb-3">
+                          <div class="col">
+                            <button class="btn btn-light btn-sm rounded-pill shadow-none d-inline-flex align-items-center fs--1 mb-0 me-1" type="button"><img class="cursor-pointer" src="../../assets/img/icons/spot-illustrations/image.svg" width="17" alt="" /><span class="ms-2 d-none d-md-inline-block">이미지 첨부</span></button>
+                          </div>
+                          <div class="col-auto">
+                            
+                            <button class="btn btn-primary btn-sm px-4 px-sm-5" type="submit">질문 등록</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card mb-3">
+                    <div class="card-header bg-light">
+                      <div class="row justify-content-between">
+                        <div class="col">
+                          <div class="d-flex">
+                            
+                            <div class="flex-1 align-self-center ms-2">
+                              <p class="mb-1 lh-1"><a class="fw-semi-bold" href="#!">Rowan Atkinson</a> 님이 작성하신 질문입니다.</p>
+                              <p class="mb-0 fs--1">11 시간 전</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <div class="dropdown font-sans-serif">
+                            <button class="btn btn-sm dropdown-toggle p-1 dropdown-caret-none" type="button" id="post-album-action" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                            <div class="dropdown-menu dropdown-menu-end py-3" aria-labelledby="post-album-action"><a class="dropdown-item" href="#!">수정</a>
+                              <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">삭제</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body overflow-hidden">
+                      <p>Rowan Sebastian Atkinson CBE is an English actor, comedian and screenwriter best known for his work on the sitcoms Blackadder and Mr. Bean.</p>
+                      <div class="row mx-n1">
+                        <div class="col-6 p-1"><a href="../../assets/img/generic/4.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/generic/4.jpg" alt="" /></a></div>
+                        <div class="col-6 p-1"><a href="../../assets/img/generic/5.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/generic/5.jpg" alt="" /></a></div>
+                        <div class="col-4 p-1"><a href="../../assets/img/gallery/4.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/4.jpg" alt="" /></a></div>
+                        <div class="col-4 p-1"><a href="../../assets/img/gallery/5.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/5.jpg" alt="" /></a></div>
+                        <div class="col-4 p-1"><a href="../../assets/img/gallery/3.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/3.jpg" alt="" /></a></div>
+                      </div>
+                    </div>
+                    <div class="card-footer bg-light pt-0">
+                      <div class="border-bottom border-200 fs--1 py-3"><a class="text-700" href="#!">댓글 34개</a>
+                      </div>
+                      <div class="row g-0 fw-semi-bold text-center py-2 fs--1">
+                        <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1">댓글</span></a></div>
+                      </div>
+                      <form class="d-flex align-items-center border-top border-200 pt-3">
+                        
+                        <input class="form-control rounded-pill ms-2 fs--1" type="text" placeholder="댓글을 입력하세요." />
+                      </form>
+                      <div class="d-flex mt-3">
+                        
+                        <div class="flex-1 ms-2 fs--1">
+                          <p class="mb-1 bg-200 rounded-3 p-2"><a class="fw-semi-bold" href="#!">Rowan Atkinson</a> She starred as Jane Porter in The <a href="#!">@Legend of Tarzan (2016)</a>, Tanya Vanderpoel in Whiskey Tango Foxtrot (2016) and as DC comics villain Harley Quinn in Suicide Squad (2016), for which she was nominated for a Teen Choice Award, and many other awards.</p>
+                          <div class="px-2"><a href="#!"><a href="#!">답글 달기</a> &bull; 23분 전 </div>
+                        </div>
+                      </div>
+                      <div class="d-flex mt-3">
+                        
+                        <div class="flex-1 ms-2 fs--1">
+                          <p class="mb-1 bg-200 rounded-3 p-2"><a class="fw-semi-bold" href="#!">Jessalyn Gilsig</a> Jessalyn Sarah Gilsig is a Canadian-American actress known for her roles in television series, e.g., as Lauren Davis in Boston Public, Gina Russo in Nip/Tuck, Terri Schuester in Glee, and as Siggy Haraldson on the History Channel series Vikings. 🏆</p>
+                          <div class="px-2"><a href="#!"><a href="#!">답글 달기</a> &bull; 3시간 전 </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    
+
+
+    
+      
+
+
+
+<!------footer ------>
+<footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+
+
+<!-- modal -->
+<!-- class="modal_step_open" modal_step="1" -->
+
+<div class="modal modal modal_step modal_step1 hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+                </div>                       -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    모든 정보를 입력하세요.
+                </div>
+
+            </div>
+            <div class="modal_btn">
+                <button class="cancerButton " type="button">확인</button>
+            </div>
+            <!-- <div class="modal_btn flex">
+                <button class="cancerButton " type="button">확인</button>
+                <button class="cancerButton " type="button">확인</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.actas.ems.Mapper.Elvlrt;
 
 import com.actas.ems.DTO.AttachDTO;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App28ElvlrtDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
