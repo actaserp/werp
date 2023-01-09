@@ -30,7 +30,7 @@ public class PopupDto {
     private int qty;
     private String perid;
     private String handphone;
-
+    private String resultcd;
 
 
 
