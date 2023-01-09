@@ -5,6 +5,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class App10ElvlrtDto {
+
+    private String resultck;
     private String frdate;
     private String todate;
     //여기까지 수정2 끝

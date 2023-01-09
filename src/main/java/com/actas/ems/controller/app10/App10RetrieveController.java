@@ -37,7 +37,7 @@ public class App10RetrieveController {
     public Object App01001Tab01Form( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
-            , @RequestParam("actnmz") String actnm
+            , @RequestParam("opchange") String resultck
             , Model model) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
@@ -51,9 +51,16 @@ public class App10RetrieveController {
         app10tDto.setFrdate(frdate);
         app10tDto.setTodate(todate);
         app10tDto.setActcd(actcd);
-        app10tDto.setActnm(actnm);
+        app10tDto.setResultck(resultck);
         try {
             app10DtoList = service.GetApp10List001(app10tDto);
+                for(int i=0; i< app10DtoList.size(); i++){
+                if(app10DtoList.get(i).getResultck().equals("0")){
+                    app10DtoList.get(i).setResultck("0");
+                }else{
+                    app10DtoList.get(i).setResultck("1");
+                }
+            }
             model.addAttribute("app10DtoList",app10DtoList);
         }catch (DataAccessException e) {
             log.info("App01001Tab01Form DataAccessException ================================================================");

@@ -125,6 +125,14 @@ public class  App04ElvlrtService {
     public List<CommonDto> GetComm750List(){return app04ElvMapper.GetComm750List();}
     public List<CommonDto>  GetComm750BlankList(){return app04ElvMapper.GetComm750List();}
 
+    public List<CommonDto> GetComm752List(){return app04ElvMapper.GetComm752List();}
+    public List<CommonDto>  GetComm752BlankList(){return app04ElvMapper.GetComm752List();}
+
+    public List<CommonDto> GetComm753List(){return app04ElvMapper.GetComm753List();}
+
+    public List<CommonDto>  GetComm753BlankList(){return app04ElvMapper.GetComm753List();}
+
+
 
 
 }

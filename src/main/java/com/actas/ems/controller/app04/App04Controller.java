@@ -32,6 +32,8 @@ public class App04Controller {
     private final SessionManager sessionManager;
     List<App04ElvlrtDto> app04ListDto ;
     List<CommonDto> com750Dto ;
+    List<CommonDto> com752Dto ;
+    List<CommonDto> com753Dto ;
     App04ElvlrtDto app04Dto = new App04ElvlrtDto();
 
 
@@ -98,8 +100,8 @@ public class App04Controller {
             log.debug("Exception =====>" + ex.toString() );
         }
         try {
-            com750Dto = service.GetComm750List();
-            model.addAttribute("com750Dto",com750Dto);
+            com752Dto = service.GetComm752List();
+            model.addAttribute("com752Dto",com752Dto);
 
         } catch (Exception ex) {
             log.debug("Exception =====>" + ex.toString() );
@@ -139,8 +141,8 @@ public class App04Controller {
             log.debug("Exception =====>" + ex.toString() );
         }
         try {
-            com750Dto = service.GetComm750List();
-            model.addAttribute("com750Dto",com750Dto);
+            com753Dto = service.GetComm753List();
+            model.addAttribute("com753Dto",com753Dto);
 
         } catch (Exception ex) {
             log.debug("Exception =====>" + ex.toString() );

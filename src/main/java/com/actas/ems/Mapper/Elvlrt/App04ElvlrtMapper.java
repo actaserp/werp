@@ -23,6 +23,17 @@ public interface App04ElvlrtMapper {
     public List<CommonDto> GetComm750List();
     public List<CommonDto> GetComm750BlankList();
 
+//    공통코드 구분 부품메뉴얼
+
+    public List<CommonDto> GetComm752List();
+    public List<CommonDto> GetComm752BlankList();
+
+    public List<CommonDto> GetComm753List();
+
+    public List<CommonDto> GetComm753BlankList();
+
+
+
     public App04ElvlrtDto GetMManulView(String mSeq);
     public int InsertMManul(App04ElvlrtDto perm);
     public int UpdateMManul(App04ElvlrtDto perm);

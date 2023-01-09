@@ -1357,13 +1357,9 @@ function CahngeSlect(value){
             let ls_frdate = document.getElementById('frdate').value; //기간
             let ls_todate = document.getElementById('todate').value;  //""
             let ls_actcdz = document.getElementById('actcdz').value;  //현장코드
-            let ls_actnmz = document.getElementById('actnmz').value;  //현장명            
             let ls_equpnmz = document.getElementById('equpnmz').value; //호기명
             // let ls_actcontnmz = document.getElementById('actcontnmz').value;
-            if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
-                ls_actnm = "%";
-                document.getElementById('actnmz').value = ""; 
-            }  
+            
             if(ls_equpnmz == null || ls_equpnmz.length == 0 || ls_equpnmz == ""){                
                 ls_equpnmz = "%";
                 document.getElementById('equpnmz').value = "";  
@@ -1371,12 +1367,12 @@ function CahngeSlect(value){
             if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
                 ls_actcdz = "%";
             }                         
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_actnmz, ls_equpnmz);
+            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_equpnmz);
             // console.log(data);
 
         })   
        
-        function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6){             
+        function searchList_rtn(arg1, arg2, arg3, arg4, arg5){             
             switch(arg1){
                 
                 case 'A':
@@ -1387,8 +1383,7 @@ function CahngeSlect(value){
                             "frdate"      : arg2,  
                             "todate"      : arg3 , 
                             "actcdz"      : arg4 , 
-                            "actnmz"  : arg5,
-                            "equpnmz"  : arg6 
+                            "equpnmz"  : arg5 
                         }, 
                         async:false,
                         success:function(data){   
