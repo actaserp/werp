@@ -27,7 +27,9 @@ public class PopupDto {
     private String remonm;      //고장원인명
     private String resunm;      //처리내용
     private String resucd;      //처리내용
-
+    private int qty;
+    private String perid;
+    private String handphone;
 
 
 
