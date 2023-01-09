@@ -143,24 +143,25 @@
         ]]>
     </select>
 
-<!--    &lt;!&ndash; actas 담당자 &ndash;&gt;-->
-<!--    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">-->
-<!--        <![CDATA[  SELECT  a.actperid    actperid  ,-->
-<!--                          a.actpernm    actpernm-->
-<!--                  FROM TB_E411 a WITH(NOLOCK)-->
-<!--                  WHERE 1 = 1-->
-<!--                    AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )-->
-<!--        ]]>-->
-<!--    </select>-->
-
     <!-- actas 담당자 -->
     <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
-        <![CDATA[   SELECT a.actperid    actperid  ,
-                           a.actpernm    actpernm
-                    FROM TB_E601 a WITH(NOLOCK)
-                    WHERE 1 = 1
-                      AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )
-
-        ]]>
+        <![CDATA[ SELECT CASE WHEN a.actperid IS NULL THEN 'nocode'
+                              ELSE actperid end as actperid ,
+                         CASE WHEN a.actpernm IS NULL THEN 'noname'
+                              ELSE actpernm end as actpernm
+                  FROM DEV_WERP.dbo.TB_E601 a WITH(NOLOCK)
+                  WHERE 1 = 1
+                    AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )]]>
     </select>
+
+<!--     actas 담당자-->
+<!--    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">-->
+<!--        <![CDATA[   SELECT a.actperid    actperid  ,-->
+<!--                           a.actpernm    actpernm-->
+<!--                    FROM TB_E601 a WITH(NOLOCK)-->
+<!--                    WHERE 1 = 1-->
+<!--                      AND (   isnull(actpernm, '') Like concat('%',#{actpernm},'%') )-->
+
+<!--        ]]>-->
+<!--    </select>-->
 </mapper>
