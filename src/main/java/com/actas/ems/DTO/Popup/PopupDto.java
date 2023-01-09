@@ -31,6 +31,8 @@ public class PopupDto {
     private String perid;
     private String handphone;
     private String resultcd;
+    private String divicd;
+    private String rtclafi;
 
 
 
