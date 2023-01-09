@@ -62,7 +62,7 @@
                FROM tb_e401 a  WITH(NOLOCK)
                    LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
                    LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) on (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
-               WHERE left(a.recedate, 4) between #{frdate} and #{todate}
+               WHERE  a.recedate between #{frdate} and #{todate}
                GROUP BY a.custcd, a.spjangcd, a.actcd, left(a.recedate, 6), q.actnm) a
         WHERE a.custcd = 'ELVLRT'
           AND a.spjangcd = 'ZZ'

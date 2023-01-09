@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+<header>
+
+</header>
+<div class="content flex">
+  <div class="header on">
+    <div class="left">
+      <div class="ham">
+        <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+      </div>
+      <div class="nav_bg"></div>
+      <!-- ################################ -->
+      <!-- ## Left navigator include -->
+      <th:block th:include="layouts/APPHeader/appLeftNav" />
+    </div>
+    <div class="right">
+    </div>
+  </div>
+  <div class="con">
+    <div class="header_top">
+      <ul class="left">
+        <li>
+          <div class="logo">
+            <a href="">
+              <img th:src="@{/assets/images/logo.png}" alt="">
+            </a>
+          </div>
+        </li>
+        <li class="home">
+          <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
+          <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+        </li>
+        <li>
+          종합유지관리서비스
+        </li>
+        <li class="on">
+          고장구분별현황
+        </li>
+      </ul>
+      <ul class="right">
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_call.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_bell.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_menu.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_que.png}" alt="">
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img th:src="@{/assets/images/i_user.png}" alt="">
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="infor_bar type2">
+      <ul class="right" style="visibility: hidden; opacity: 0;">
+        <li>
+          <button type="button" class="color2">
+            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+          </button>
+        </li>
+        <li>
+          <button type="button" class="color5">
+            <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+          </button>
+        </li>
+      </ul>
+      <div class="left">
+        고장구분별현황
+      </div>
+      <ul class="right">
+        <li>
+          <button type="button" class="color2" id="retrieveBtn">
+            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+          </button>
+        </li>
+        <!-- <li>
+            <button type="button" class="color5">
+                <i><img th:src="@{/assets/images/i_print.png}" alt=""></i>프린트
+            </button>
+        </li> -->
+      </ul>
+
+    </div>
+    <div class="section">
+      <div class="sec_con" style="width: 100%;">
+        <div class="box_wrap">
+          <ul class="search_box">
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
+                <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                <!-- <span>-</span> -->
+                <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">동호기명 </span>
+                <input class="form-control" type="text" placeholder="호기명을 입력하세요" id="equpnmz" name="equpnmz" aria-label="equpnmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="equpcdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장부위</span>
+                <input class="form-control" type="text" placeholder="고장부위명을 입력하세요" id="greginmz" name="greginmz" aria-label="greginmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="gregicdz"  />
+              </div>
+            </li>
+          </ul>
+          <ul class="search_box">
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장내용</span>
+                <input class="form-control" type="text" placeholder="고장내용을 입력하세요" aria-label="actcontnmz" id="actcontnmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actcontcdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장원인</span>
+                <input class="form-control" type="text" placeholder="고장원인을 입력하세요" aria-label="actremonmz" id="actremonmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actremocdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리내용</span>
+                <input class="form-control" type="text" placeholder="처리내용을 입력하세요" aria-label="actremonmz" id="actresunmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actresucdz"  />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="section status">
+      <div class="sec_con" style="width: 100%;">
+        <div class="box_wrap">
+          <div class="table table_style2">
+            <div class="card-body bg-light">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">기간별고장부위</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">기간별고장내용</a>
+                </li>
+                <!--<li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">호기별고장내용</a>
+                </li>-->
+                <input type="hidden" id="tabvalue" value="A">
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="step01">
+                  <div class="container-fluid">
+                    <div id="theGrid" class="animated"></div>
+                    <div id="tab01Pager"></div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="step02">
+                  <div class="container-fluid">
+                    <div id="theGrid2"></div>
+                    <div id="tab02Pager"></div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="step03">
+                  <div class="container-fluid">
+                    <select id="typeMenu">
+                      <option value="0" selected="selected">사분면(Squarified)</option>
+                      <option value="1">수평(Horizontal)</option>
+                      <option value="2">수직(Vertical)</option>
+                    </select>
+                    <div id="chartTabC"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input class="form-control form-control-sm"  type="hidden" id="equpnmbtn" data-bs-toggle="modal" data-bs-target="#equpnmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="greginmbtn" data-bs-toggle="modal" data-bs-target="#greginmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actremonmbtn" data-bs-toggle="modal" data-bs-target="#actremonmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actresunmbtn" data-bs-toggle="modal" data-bs-target="#actresunmmodal"  />
+
+
+
+  <!--------------------------------------------------------------------------------------->
+  <!-- 호기명 MODAL FROM  -->
+  <div class="modal fade" id="equpnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                       placeholder="호기코드 / 호기명 "     />
+              </div>
+              <button id="wequpnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+
+            <div id="wequpnmGrid_div" ></div>
+            <div id="thePager01"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wequpnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장부위 MODAL FROM  -->
+  <div class="modal fade" id="greginmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchgcode_rtn()}"
+                       placeholder="고장부위코드 / 고장부위명 "     />
+              </div>
+              <button id="wgreginmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+
+            <div id="wgreginmGrid_div" ></div>
+            <div id="thePager02"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wgreginmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장내용 MODAL FROM  -->
+  <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchTextCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
+                       placeholder="고장내용 "     />
+              </div>
+              <button id="wcontnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wcontnmGrid_div" ></div>
+            <div id="thePager03"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장원인 MODAL FROM  -->
+  <div class="modal fade" id="actremonmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchWordCode" type="text"   onkeyup="if(window.event.keyCode==13){searchword_rtn()}"
+                       placeholder="고장원인 "     />
+              </div>
+              <button id="wremonmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wremonmGrid_div" ></div>
+            <div id="thePager04"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wremonmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--*************************************************************************************************************************-->
+  <!-- 고장원인 MODAL FROM  -->
+  <div class="modal fade" id="actresunmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchCode2" type="text"   onkeyup="if(window.event.keyCode==13){searchword2_rtn()}"
+                       placeholder="처리내용 "     />
+              </div>
+              <button id="wresunmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wresunmGrid_div" ></div>
+            <div id="thePager05"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wresunmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--*************************************************************************************************************************-->
+  <script type="text/javascript" th:inline="javascript">
+    var view_p01tab01page;
+    var view_p01tab02page;
+    var view_actnmpage;
+    var view_contnmpage;
+    var wtab01Grid;
+    var wtab02Grid
+    var wactnmGrid;
+    var wcontnmGrid;
+    var typeMenu;
+    var treemap;
+    let barchart;
+    let ani;
+    var wseries_data = [0];
+    var view_equpnmpage;
+    var wequpnmGrid;
+    var theGrid;
+    var theGrid2;
+    var wgreginmGrid;
+    var view_greginmpage;
+    var view_remonmpage;
+    var wremonmGrid;
+    var wresunmGrid;
+    var view_resunmpage;
+
+    window.onload = function() {
+      //localStorage.setItem("setpage", "app19p001");
+
+      Tab02Chartinit()
+
+      view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+        pageSize: 12
+      });
+
+      new wijmo.input.CollectionViewNavigator('#tab01Pager', {
+        byPage: true,
+        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        cv: view_p01tab01page
+      });
+
+      // 열 그룹 옵션
+      let colGroups1 = getColumnGroups();
+
+      // 열 그룹을 가진 그리드 생성
+      theGrid = new wijmo.grid.FlexGrid("#theGrid", {
+        allowSorting: 'MultiColumn',
+        headersVisibility: "Column",
+        alternatingRowStep: 0,
+        showMarquee: true,
+        showSelectedHeaders: "All",
+        autoGenerateColumns: false,
+        columnGroups: colGroups1,
+        itemsSource:  view_p01tab01page//getData()
+      });
+
+      new FlexGridContextMenu(theGrid);
+
+      function getColumnGroups() {
+
+        return [
+          {binding: "compyear", header: "년도", width: 100, align: "center"},
+          {binding: "actnm", header: "현장명", width: 150, align: "center"},
+          {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+          {binding: "greginm", header: "고장부위명", width: 100, align: "center"},
+          {binding: "reginm", header: "고장부위상세명", width: 150, align: "center"},
+          {binding: "result", header: "건수", width: 100, align: "center"},
+
+
+          {
+
+            header: "1월",
+            align: "center",
+
+            columns: [
+              {
+                binding: "1월.mon01",
+                header: "처리",
+                format: "a0",
+                width: 80,
+                cssClass: "main-column",
+                align: "center",
+              },
+            ]
+          },
+          {
+            header: "2월",
+            align: "center",
+
+            columns: [
+              {binding: "2월.mon02", header: "처리", format: "a0", width: 80, align: "center"},
+
+            ]
+          },
+          {
+            header: "3월",
+            align: "center",
+            columns: [{binding: "3월.mon03", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "4월",
+            align: "center",
+            columns: [{binding: "4월.mon04", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "5월",
+            align: "center",
+            columns: [{binding: "5월.mon05", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "6월",
+            align: "center",
+            columns: [{binding: "6월.mon06", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "7월",
+            align: "center",
+            columns: [{binding: "7월.mon07", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          { header: "8월",
+            align: "center",
+            columns: [{binding: "8월.mon08", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "9월",
+            align: "center",
+            columns: [{binding: "9월.mon09", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "10월",
+            align: "center",
+            columns: [{binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "11월",
+            align: "center",
+            columns: [{binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+          {
+            header: "12월",
+            align: "center",
+            columns: [{binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center"}]
+          },
+        ];
+      }
+
+      //검색 데이터 수집
+      function getData_tab01() {
+        return [
+          {
+            compyear: "",
+            actnm: "",
+            equpnm: "",
+            greginm: "",
+            reginm: "",
+            result: "",
+            "1월": {mon01: ""},
+            "2월": {mon02: ""},
+            "3월": {mon03: ""},
+            "4월": {mon04: ""},
+            "5월": {mon05: ""},
+            "6월": {mon06: ""},
+            "7월": {mon07: ""},
+            "8월": {mon08: ""},
+            "9월": {mon09: ""},
+            "10월": {mon10: ""},
+            "11월": {mon11: ""},
+            "12월": {mon12: ""},
+          },
+        ];
+      }
+
+      function Tab02Chartinit(){
+        view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
+          pageSize: 12
+        });
+
+        new wijmo.input.CollectionViewNavigator('#tab02Pager', {
+          byPage: true,
+          headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+          cv: view_p01tab02page
+        });
+
+        let colGroups2 = getColumnGroups2();
+
+        theGrid2 = new wijmo.grid.FlexGrid("#theGrid2", {
+          allowSorting: 'MultiColumn',
+          headersVisibility: "Column",
+          alternatingRowStep: 0,
+          showMarquee: true,
+          showSelectedHeaders: "All",
+          autoGenerateColumns: false,
+          columnGroups: colGroups2,
+          itemsSource: view_p01tab02page
+        });
+
+        new FlexGridContextMenu(theGrid2);
+
+        function getColumnGroups2(){
+          return [
+            {binding: "compyear", header: "년도", width: 100, align: "center"},
+            {binding: "actnm", header: "현장명", width: 150, align: "center"},
+            {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+            {binding: "contnm", header: "고장내용명", width: 100, align: "center"},
+            {binding: "contents", header: "고장내용상세", width: 150, align: "center"},
+            {binding: "result", header: "건수", width: 100, align: "center"},
+
+            { header: "1월",
+              align: "center",
+              columns: [
+                {
+                  binding: "1월.mon01",
+                  header: "처리",
+                  format: "a0",
+                  width: 80,
+                  cssClass: "main-column",
+                  align: "center",
+                },
+              ]
+            },
+            {
+              header: "2월",
+              align: "center",
+
+              columns: [
+                {binding: "2월.mon02", header: "처리", format: "a0", width: 80, align: "center"},
+
+              ]
+            },
+            {
+              header: "3월",
+              align: "center",
+              columns: [{binding: "3월.mon03", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "4월",
+              align: "center",
+              columns: [{binding: "4월.mon04", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "5월",
+              align: "center",
+              columns: [{binding: "5월.mon05", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "6월",
+              align: "center",
+              columns: [{binding: "6월.mon06", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "7월",
+              align: "center",
+              columns: [{binding: "7월.mon07", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            { header: "8월",
+              align: "center",
+              columns: [{binding: "8월.mon08", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "9월",
+              align: "center",
+              columns: [{binding: "9월.mon09", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "10월",
+              align: "center",
+              columns: [{binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "11월",
+              align: "center",
+              columns: [{binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "12월",
+              align: "center",
+              columns: [{binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+
+          ];
+
+        }
+
+        //검색 데이터 수집
+        function getData_tab02(){
+          return [
+            {
+              compyear: "",
+              actnm: "",
+              equpnm: "",
+              contnm: "",
+              contents: "",
+              result: "",
+              "1월": {mon01: ""},
+              "2월": {mon02: ""},
+              "3월": {mon03: ""},
+              "4월": {mon04: ""},
+              "5월": {mon05: ""},
+              "6월": {mon06: ""},
+              "7월": {mon07: ""},
+              "8월": {mon08: ""},
+              "9월": {mon09: ""},
+              "10월": {mon10: ""},
+              "11월": {mon11: ""},
+              "12월": {mon12: ""},
+
+            },
+          ];
+        }
+
+
+      }
+
+
+
+
+
+    }
+
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //선택한 탭 체크
+    function tabchk_rtn(arg){
+      document.getElementById('tabvalue').value = arg;
+    }
+    //2번재 탭 체크
+    document.getElementById("")
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+    // tab01 검색
+    document.getElementById("retrieveBtn").addEventListener("click",function(){
+
+      var ls_tab = document.getElementById('tabvalue').value;
+      let ls_frdate = document.getElementById('frdate').value;
+      let ls_todate = document.getElementById('todate').value;
+      let ls_actequpcdz = document.getElementById('equpcdz').value;
+      let ls_actequpnmz = document.getElementById('equpnmz').value;
+      let ls_actgreginmz = document.getElementById('greginmz').value;
+      let ls_actgregicdz = document.getElementById('gregicdz').value;
+      let ls_actcontnmz = document.getElementById('actcontnmz').value;
+      let ls_actcontcdz = document.getElementById('actcontcdz').value;
+
+      if(ls_actequpnmz == null || ls_actequpnmz.length == 0 || ls_actequpnmz == ""){
+        ls_actequpcdz = "%";
+        document.getElementById('equpcdz').value = "";
+      }
+      if(ls_actequpcdz == null || ls_actequpcdz.length == 0 || ls_actequpcdz == ""){
+        ls_actequpcdz = "%";
+      }
+
+      if(ls_actgreginmz == null || ls_actgreginmz.length == 0 || ls_actgreginmz == ""){
+        ls_actgregicdz = "%";
+        document.getElementById('gregicdz').value = "";
+      }
+      if(ls_actgregicdz == null || ls_actgregicdz.length == 0 || ls_actgregicdz == ""){
+        ls_actgregicdz = "%";
+      }
+      if(ls_actcontnmz == null || ls_actcontnmz.length == 0 || ls_actcontnmz == 0){
+        ls_actcontcdz = '%';
+        document.getElementById('actcontcdz').value = "";
+      }
+      if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == 0){
+        ls_actcontcdz = '%';
+      }
+
+      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actequpcdz, ls_actgregicdz, ls_actcontcdz);
+
+
+    })
+
+    function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6){
+      switch(arg1){
+
+        case 'A':
+          $.ajax({
+            url: '/app27/p001tab01',
+            type:"POST",
+            data: {
+              "frdate"      : arg2,
+              "todate"      : arg3 ,
+              "actequpcdz"  : arg4,
+              "actgregicdz" : arg5
+              // "actcdz"      : arg4 ,
+
+            },
+            async:false,
+            success:function(data){
+              tabA_grid(data);
+            },error:function(e){
+              console.log("error");
+              // alert(data.code);
+              // alert(data.message);
+            }
+          }).done(function(fragment){
+
+          })
+          break;
+
+        case 'B':
+          $.ajax({
+            url: '/app27/p001tab02',
+            type:"POST",
+            data: {
+              "frdate"      : arg2,
+              "todate"      : arg3,
+              "actequpcdz"  : arg4,
+              "actcontcdz" : arg6
+              // "actcdz"      : arg4 ,
+
+            },
+            async:false,
+            success:function(data){
+              tabB_grid(data);
+            },error:function(e){
+              console.log("error");
+              // alert(data.code);
+              // alert(data.message);
+            }
+          }).done(function(fragment){
+
+          })
+          break;
+
+
+
+        default:
+          break;
+      }
+
+
+    }
+
+    function tabA_grid(data){
+      var wtab01Dto = data;
+      var wtab01_data = [];
+      var cnt = 1;
+      for(var i=0; i<wtab01Dto.length; i++){
+        wtab01_data.push({
+          id: i,
+          index: cnt,
+          compyear: wtab01Dto[i]["compyear"],
+          actnm: wtab01Dto[i]["actnm"],
+          equpnm: wtab01Dto[i]["equpnm"],
+          greginm: wtab01Dto[i]["greginm"],
+          reginm: wtab01Dto[i]["reginm"],
+          result: wtab01Dto[i]["result"],
+
+          "1월" : {
+            mon01: wtab01Dto[i]["mon01"]},
+          "2월" : {
+            mon02: wtab01Dto[i]["mon02"]},
+          "3월" : {
+            mon03: wtab01Dto[i]["mon03"]},
+          "4월" : {
+            mon04: wtab01Dto[i]["mon04"]},
+          "5월" : {
+            mon05: wtab01Dto[i]["mon05"]},
+          "6월" : {
+            mon06: wtab01Dto[i]["mon06"]},
+          "7월" : {
+            mon07: wtab01Dto[i]["mon07"]},
+          "8월" : {
+            mon08: wtab01Dto[i]["mon08"]},
+          "9월" : {
+            mon09: wtab01Dto[i]["mon09"]},
+          "10월" : {
+            mon10: wtab01Dto[i]["mon10"]},
+          "11월" : {
+            mon11: wtab01Dto[i]["mon11"]},
+          "12월" : {
+            mon12: wtab01Dto[i]["mon12"]},
+
+        });
+        cnt++;
+      }
+      console.log("wtab01_data, check", )
+
+      theGrid.columns.clear();
+      theGrid.autoGenerateColumns = false;
+
+
+      view_p01tab01page.sourceCollection = wtab01_data;
+
+
+      let gridFormat =[
+        {binding: "compyear", header: "년도", width: 100, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center"},
+        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+        {binding: "greginm", header: "고장부위명", width:100, align: "center"},
+        {binding: "reginm", header: "고장부위상세명", width:150, align: "center"},
+        {binding: "result", header: "건수", width:100, align: "center"},
+
+
+        {
+          header: "1월",
+          align: "center",
+          columns: [
+
+            { binding: "1월.mon01", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "2월",
+          align: "center",
+          columns: [
+            { binding: "2월.mon02", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "3월",
+          align: "center",
+          columns: [
+            { binding: "3월.mon03", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "4월",
+          align: "center",
+          columns: [
+            { binding: "4월.mon04", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "5월",
+          align: "center",
+          columns: [
+            { binding: "5월.mon05", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "6월",
+          align: "center",
+          columns: [
+            { binding: "6월.mon06", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "7월",
+          align: "center",
+          columns: [
+            { binding: "7월.mon07", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "8월",
+          align: "center",
+          columns: [
+            { binding: "8월.mon08", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "9월",
+          align: "center",
+          columns: [
+            { binding: "9월.mon09", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "10월",
+          align: "center",
+          columns: [
+            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "11월",
+          align: "center",
+          columns: [
+            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "12월",
+          align: "center",
+          columns: [
+            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+
+      ]
+
+      theGrid.columnGroups = gridFormat;
+      theGrid.itemsSource = view_p01tab01page;
+    }
+
+    function tabB_grid(data){
+      var wtab02Dto = data;
+      var wtab02_data = [];
+      var cnt = 1;
+      for(var i=0; i<wtab02Dto.length; i++){
+        wtab02_data.push({
+          id: i,
+          index: cnt,
+          compyear: wtab02Dto[i]["compyear"],
+          actnm: wtab02Dto[i]["actnm"],
+          equpnm: wtab02Dto[i]["equpnm"],
+          contnm: wtab02Dto[i]["contnm"],
+          contents: wtab02Dto[i]["contents"],
+          result: wtab02Dto[i]["result"],
+
+          "1월" : {
+            mon01: wtab02Dto[i]["mon01"]},
+          "2월" : {
+            mon02: wtab02Dto[i]["mon02"]},
+          "3월" : {
+            mon03: wtab02Dto[i]["mon03"]},
+          "4월" : {
+            mon04: wtab02Dto[i]["mon04"]},
+          "5월" : {
+            mon05: wtab02Dto[i]["mon05"]},
+          "6월" : {
+            mon06: wtab02Dto[i]["mon06"]},
+          "7월" : {
+            mon07: wtab02Dto[i]["mon07"]},
+          "8월" : {
+            mon08: wtab02Dto[i]["mon08"]},
+          "9월" : {
+            mon09: wtab02Dto[i]["mon09"]},
+          "10월" : {
+            mon10: wtab02Dto[i]["mon10"]},
+          "11월" : {
+            mon11: wtab02Dto[i]["mon11"]},
+          "12월" : {
+            mon12: wtab02Dto[i]["mon12"]},
+
+        });
+        cnt++;
+      }
+      console.log("wtab01_data, check", )
+
+      theGrid2.columns.clear();
+      theGrid2.autoGenerateColumns = false;
+
+
+      view_p01tab02page.sourceCollection = wtab02_data;
+
+
+      let gridFormat2 =[
+        {binding: "compyear", header: "년도", width: 100, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center"},
+        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+        {binding: "contnm", header: "고장내용명", width:100, align: "center"},
+        {binding: "contents", header: "고장내용상세", width:150, align: "center"},
+        {binding: "result", header: "건수", width:100, align: "center"},
+
+
+        {
+          header: "1월",
+          align: "center",
+          columns: [
+
+            { binding: "1월.mon01", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "2월",
+          align: "center",
+          columns: [
+            { binding: "2월.mon02", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "3월",
+          align: "center",
+          columns: [
+            { binding: "3월.mon03", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "4월",
+          align: "center",
+          columns: [
+            { binding: "4월.mon04", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "5월",
+          align: "center",
+          columns: [
+            { binding: "5월.mon05", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "6월",
+          align: "center",
+          columns: [
+            { binding: "6월.mon06", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "7월",
+          align: "center",
+          columns: [
+            { binding: "7월.mon07", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "8월",
+          align: "center",
+          columns: [
+            { binding: "8월.mon08", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "9월",
+          align: "center",
+          columns: [
+            { binding: "9월.mon09", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "10월",
+          align: "center",
+          columns: [
+            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "11월",
+          align: "center",
+          columns: [
+            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "12월",
+          align: "center",
+          columns: [
+            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+
+      ]
+
+      theGrid2.columnGroups = gridFormat2;
+      theGrid2.itemsSource = view_p01tab02page;
+    }
+
+
+
+
+
+
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+  </script>
+  <script>
+    //호기검색 popup list
+    view_equpnmpage = new wijmo.collections.CollectionView(getData_wlist(), {
+      pageSize: 12
+    });
+    //호기검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager01', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_equpnmpage
+    });
+    wequpnmGrid = new wijmo.grid.FlexGrid('#wequpnmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      allowSorting: 'MultiColumn',
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        {binding: 'equpnm', header: '호기명', align: "center", width: '1*'},
+        {binding: 'equpcd', header: '호기코드', align: "center", width: '1*'},
+
+      ],
+      itemsSource: view_equpnmpage
+
+    });
+
+    function getData_wlist(){
+      var wequpnm_data = [];
+      var cnt = 1;
+      for(var i=0; i<12; i++){
+        wequpnm_data.push({
+          id: 1,
+          index: cnt,
+          equpnm: "",
+          equpcd: "",
+        });
+        cnt++;
+      }
+      return wequpnm_data;
+    }
+
+
+    document.getElementById("equpnmz").addEventListener("click", function(){
+      document.getElementById("equpnmbtn").click();
+      console.log("eee")
+    });
+
+    document.getElementById("wequpnmBtn").addEventListener("click", function(){
+      searchpcode_rtn();
+    })
+
+
+    function searchpcode_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchCode').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wequpnm',
+        type: "POST",
+        data: {
+          "equpnmz" : searchText,
+        },
+        success:function (data){
+          var wequpnmDto = data;
+          var wequpnm_data = [];
+          var cnt = 1;
+          for(var i=0; i< wequpnmDto.length; i++){
+            wequpnm_data.push({
+              id : i,
+              index: cnt,
+              equpnm: wequpnmDto[i]["equpnm"],
+              equpcd: wequpnmDto[i]["equpcd"]
+            });
+            cnt++
+          }
+
+          wequpnmGrid.columns.clear();
+          wequpnmGrid.autoGenerateColumns = false;
+          view_equpnmpage.sourceCollection = wequpnm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'equpnm';
+          cols.header = '호기명';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.equpnm}</b>',
+            click: (e, ctx) => {
+              wequpnmChk_2(ctx.item.equpnm, ctx.item.equpcd);
+            }
+          });
+          wequpnmGrid.columns.push(cols);
+
+          cols = new wijmo.grid.Column();
+          cols.binding = 'equpcd';
+          cols.header = '호기코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.equpcd}</b>',
+            click: (e, ctx) => {
+              wactnmChk_2(ctx.item.equpnm, ctx.item.equpcd);
+            }
+          });
+          wactnmGrid.columns.push(cols);
+        },error: function(e){
+          alert(data.code);
+          alert(data.message);
+
+        }
+      }).done(function(fragment){
+
+      })
+
+    }
+
+    function wequpnmChk_2(arg1, arg2){
+      document.getElementById('equpnmz').value = arg1;
+      document.getElementById('equpcdz').value = arg2;
+
+      $("#wequpnmmodal_btn").trigger("click");
+    }
+
+
+    /**-------------------------------------------------------------*/
+    view_greginmpage = new wijmo.collections.CollectionView(getData_wlist2(), {
+      pageSize: 12
+    });
+    new wijmo.input.CollectionViewNavigator('#thePager02', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_greginmpage
+    });
+    wgreginmGrid = new wijmo.grid.FlexGrid('#wgreginmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      allowSorting: 'MultiColumn',
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        {binding: 'gregicd', header: '고장부위명', align: "center", width: '1*'},
+        {binding: 'greginm', header: '고장부위코드', align: "center", width: '1*'},
+
+      ],
+      itemsSource: view_greginmpage
+
+    });
+
+    function getData_wlist2(){
+      var wgreginm_data = [];
+      var cnt = 1;
+      for(var i=0; i<12; i++){
+        wgreginm_data.push({
+          id: 1,
+          index: cnt,
+          gregicd: "",
+          greginm: "",
+        });
+        cnt++;
+      }
+      return wgreginm_data;
+    }
+
+    document.getElementById("greginmz").addEventListener("click", function(){
+      document.getElementById("greginmbtn").click();
+      console.log("eee")
+    });
+
+    document.getElementById("wgreginmBtn").addEventListener("click", function(){
+      searchgcode_rtn();
+    });
+
+    function searchgcode_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchTxtCode').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wgreginm',
+        type: "POST",
+        data: {
+
+          "greginmz": searchText
+        },
+        success: function(data){
+          var wgreginmDto = data;
+          var wgreginm_data = [];
+          var cnt = 1;
+          for(var i=0; i< wgreginmDto.length; i++){
+            wgreginm_data.push({
+              id : i,
+              index: cnt,
+              gregicd: wgreginmDto[i]["gregicd"],
+              greginm: wgreginmDto[i]["greginm"]
+            });
+            cnt++
+          }
+
+          wgreginmGrid.columns.clear();
+          wgreginmGrid.autoGenerateColumns = false;
+          view_greginmpage.sourceCollection = wgreginm_data;
+
+
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'gregicd';
+          cols.header = '고장부위코드';
+          cols.align = 'center';
+          cols.width = '*';
+          wgreginmGrid.columns.push(cols);
+
+
+          cols = new wijmo.grid.Column();
+          cols.binding = 'greginm';
+          cols.header = '고장부위명';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.greginm}</b>',
+            click: (e, ctx) => {
+              wgreginmChk_2(ctx.item.gregicd, ctx.item.greginm);
+            }
+          });
+          wgreginmGrid.columns.push(cols);
+        }, error: function(e){
+          alert(data.code);
+          alert(data.message);
+
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wgreginmChk_2(arg1, arg2){
+      document.getElementById('greginmz').value = arg2;
+      document.getElementById('gregicdz').value = arg1;
+
+      $("#wgreginmmodal_btn").trigger("click");
+    }
+    /*****************************************************************************************/
+    //고장내용검색 popup list
+    view_contnmpage = new wijmo.collections.CollectionView(getData_wlist02(), {
+      pageSize: 12
+    });
+    // 고장내용검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager03', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_contnmpage
+    });
+    wcontnmGrid = new wijmo.grid.FlexGrid('#wcontnmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        { binding: 'contcd', header: '고장코드', align: "center", width: '1*' },
+        { binding: 'contnm', header: '고장내용', align: "center", width: '1*' },
+      ],
+      itemsSource: view_contnmpage
+    });
+    // 고장내용검색 데이터 수집
+    function getData_wlist02(){
+      var wcontnm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wcontnm_data.push({
+          id: i,
+          index: cnt,
+          contcd: "",
+          contnm: "",
+        });
+        cnt++;
+      }
+      return wcontnm_data;
+    }
+
+    //고장내용 검색
+    document.getElementById("actcontnmz").addEventListener("click",function(){
+      document.getElementById("actcontnmbtn").click();
+
+    });
+    // 고장내용 검색
+    document.getElementById("wcontnmBtn").addEventListener("click",function(){
+      searchtxt_rtn();
+    })
+
+    function searchtxt_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchTextCode').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wcontnm',
+        type:"POST",
+        data: {
+          "contnmz"      : searchText,
+        },
+        success:function(data){
+          console.log(data);
+          var wcontnmDto  = data;
+          var wcontnm_data = [];
+          var cnt = 1;
+          for (var i = 0; i < wcontnmDto.length; i++) {
+            wcontnm_data.push({
+              id: i,
+              index: cnt,
+              contnm:wcontnmDto[i]["contnm"],
+              contcd: wcontnmDto[i]["contcd"],
+            });
+            cnt++;
+          }
+          // console.log("wcontnm_data",wcontnm_data)
+          wcontnmGrid.columns.clear();
+          wcontnmGrid.autoGenerateColumns = false;
+          view_contnmpage.sourceCollection  = wcontnm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'contcd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.contcd}</b>',
+            click: (e, ctx) => {
+              wactnmChk_1(ctx.item.contcd, ctx.item.contnm);
+            }
+          });
+          wcontnmGrid.columns.push(cols);
+          // console.log("cols", cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'contnm';
+          cols.header = '고장내용';
+          cols.align = "left";
+          cols.width = '*';
+          wcontnmGrid.columns.push(cols);
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wactnmChk_1(arg1, arg2){
+      document.getElementById('actcontcdz').value = arg1;
+      document.getElementById('actcontnmz').value = arg2;
+
+      $("#wcontnmmodal_btn").trigger("click");
+    }
+    <!--************************************************************************************************-->
+    //고장원인검색 popup list
+    view_remonmpage = new wijmo.collections.CollectionView(getData_wlist03(), {
+      pageSize: 12
+    });
+    // 고장원인검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager04', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_remonmpage
+    });
+    wremonmGrid = new wijmo.grid.FlexGrid('#wremonmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        { binding: 'remocd', header: '고장원인코드', align: "center", width: '1*' },
+        { binding: 'remonm', header: '고장원인내용', align: "center", width: '1*' },
+      ],
+      itemsSource: view_remonmpage
+    });
+    // 고장내용검색 데이터 수집
+    function getData_wlist03(){
+      var wremonm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wremonm_data.push({
+          id: i,
+          index: cnt,
+          remocd: "",
+          remonm: "",
+        });
+        cnt++;
+      }
+      return wremonm_data;
+    }
+
+    //고장내용 검색
+    document.getElementById("actremonmz").addEventListener("click",function(){
+      document.getElementById("actremonmbtn").click();
+
+    });
+    // 고장내용 검색
+    document.getElementById("wremonmBtn").addEventListener("click",function(){
+      searchword_rtn();
+    })
+
+    function searchword_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchWordCode').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wremonm',
+        type:"POST",
+        data: {
+          "remonmz"      : searchText,
+        },
+        success:function(data){
+          console.log(data);
+          var wremonmDto  = data;
+          var wremonm_data = [];
+          var cnt = 1;
+          for (var i = 0; i < wremonmDto.length; i++) {
+            wremonm_data.push({
+              id: i,
+              index: cnt,
+              remonm:wremonmDto[i]["remonm"],
+              remocd: wremonmDto[i]["remocd"],
+            });
+            cnt++;
+          }
+          // console.log("wcontnm_data",wcontnm_data)
+          wremonmGrid.columns.clear();
+          wremonmGrid.autoGenerateColumns = false;
+          view_remonmpage.sourceCollection  = wremonm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'remocd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.remocd}</b>',
+            click: (e, ctx) => {
+              wremonmChk_1(ctx.item.remocd, ctx.item.remonm);
+            }
+          });
+          wremonmGrid.columns.push(cols);
+          // console.log("cols", cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'remonm';
+          cols.header = '원인내용';
+          cols.align = "left";
+          cols.width = '*';
+          wremonmGrid.columns.push(cols);
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wremonmChk_1(arg1, arg2){
+      document.getElementById('actremocdz').value = arg1;
+      document.getElementById('actremonmz').value = arg2;
+
+      $("#wremonmmodal_btn").trigger("click");
+    }
+    <!--************************************************************************************-->
+    //처리내용검색 popup list
+    view_resunmpage = new wijmo.collections.CollectionView(getData_wlist04(), {
+      pageSize: 12
+    });
+    // 고장원인검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager05', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_resunmpage
+    });
+    wresunmGrid = new wijmo.grid.FlexGrid('#wresunmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        { binding: 'resucd', header: '처리내용코드', align: "center", width: '1*' },
+        { binding: 'resunm', header: '처리내용', align: "center", width: '1*' },
+      ],
+      itemsSource: view_resunmpage
+    });
+    // 고장내용검색 데이터 수집
+    function getData_wlist04(){
+      var wresunm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wresunm_data.push({
+          id: i,
+          index: cnt,
+          resucd: "",
+          resunm: "",
+        });
+        cnt++;
+      }
+      return wresunm_data;
+    }
+
+    //고장내용 검색
+    document.getElementById("actresunmz").addEventListener("click",function(){
+      document.getElementById("actresunmbtn").click();
+
+    });
+    // 고장내용 검색
+    document.getElementById("wresunmBtn").addEventListener("click",function(){
+      searchword2_rtn();
+    })
+
+    function searchword2_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchCode2').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wresunm',
+        type:"POST",
+        data: {
+          "resunmz"      : searchText,
+        },
+        success:function(data){
+          console.log(data);
+          var wresunmDto  = data;
+          var wresunm_data = [];
+          var cnt = 1;
+          for (var i = 0; i < wresunmDto.length; i++) {
+            wresunm_data.push({
+              id: i,
+              index: cnt,
+              resunm:wresunmDto[i]["resunm"],
+              resucd: wresunmDto[i]["resucd"],
+            });
+            cnt++;
+          }
+          // console.log("wcontnm_data",wcontnm_data)
+          wresunmGrid.columns.clear();
+          wresunmGrid.autoGenerateColumns = false;
+          view_resunmpage.sourceCollection  = wresunm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'resucd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.resucd}</b>',
+            click: (e, ctx) => {
+              wremonmChk_2(ctx.item.resucd, ctx.item.resunm);
+            }
+          });
+          wresunmGrid.columns.push(cols);
+          // console.log("cols", cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'resunm';
+          cols.header = '처리내용';
+          cols.align = "left";
+          cols.width = '*';
+          wresunmGrid.columns.push(cols);
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wremonmChk_2(arg1, arg2) {
+      document.getElementById('actresucdz').value = arg1;
+      document.getElementById('actresunmz').value = arg2;
+
+      $("#wresunmmodal_btn").trigger("click");
+
+    }
+  </script>
+
+
+  <script>
+
+
+    $(document).ready(function() {
+      getToday()
+      fn_egov_init_date()
+      $('datetimepicker').datetimepicker({
+
+      });
+
+      $("#frdate").change(function(e){
+        // console.log("달력클릭");
+        // console.log(convert_time(e.timestamp));
+      })
+      $("#todate").change(function(e){
+        // console.log("달력클릭");
+        // console.log(convert_time(e.timestamp));
+      })
+    })
+    function test_rtn(arg1){
+      console.log(arg1);
+      const disHtml = `
+                <div class="tab-pane fade show active" id=${arg1} role="tabpanel" aria-labelledby="profile-tab">${arg1}</div>`
+      $('#btnDiv02').before(disHtml);
+    }
+
+
+    function getToday(){
+      let today = new Date();
+
+      let year = today.getFullYear(); // 년도
+      let month = today.getMonth() + 1;  // 월
+      let date = today.getDate();  // 날짜
+      let day = today.getDay();  // 요일
+      if(month> 0 && month < 10) {month = "0" + month;}
+      if(date > 0 && date < 10) {date = "0" + date};
+      let ls_frday = year + '-' + month + '-01'
+      let ls_today = year + '-' + month + '-' + date
+      document.getElementById('frdate').value = ls_frday;
+      document.getElementById('todate').value = ls_today;
+    }
+
+
+
+    function fn_egov_init_date(){
+      var $frdate = $('#frdate');
+      var $todate = $('#todate');
+      $frdate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // maxDate: $frdate.val() ? $frdate.val() : false
+          })
+        },
+      });
+
+      $todate.datetimepicker({
+        timepicker: false,
+        lang: 'ko',
+        format: 'Y-m-d',    //'Y-m-d H:i',
+        scrollMonth: false,
+        scrollInput: false,
+        onShow: function (ct) {
+          this.setOptions({
+            // minDate: $todate.val() ? $todate.val() : false
+          })
+        }
+      });
+
+    }
+
+
+    class FlexGridContextMenu {
+      constructor(grid) {
+        let host = grid.hostElement, menu = this._buildMenu(grid);
+        host.addEventListener('contextmenu', (e) => {
+          // 클릭된 셀/열 선택
+          let sel = grid.selection, ht = grid.hitTest(e), row = ht.getRow();
+
+          switch (ht.panel) {
+            case grid.cells:
+              let colIndex = ht.col;
+              // 만약 그룹 헤더이면, 그룹 열 선택
+              if (row instanceof wijmo.grid.GroupRow && row.dataItem instanceof wijmo.collections.CollectionViewGroup) {
+                let gd = row.dataItem.groupDescription;
+                if (gd instanceof wijmo.collections.PropertyGroupDescription) {
+                  let col = grid.getColumn(gd.propertyName);
+                  if (col && col.index > -1) {
+                    colIndex = col.index;
+                  }
+                }
+              }
+              grid.select(ht.row, colIndex);
+              break;
+            case grid.columnHeaders:
+              grid.select(sel.row, ht.col);
+              break;
+            case grid.rowHeaders:
+              grid.select(ht.row, sel.col);
+              break;
+            default:
+              return; // 유효하지 않는 패널
+          }
+          // 현재 열에 대한 메뉴 표시
+          if (grid.selection.col > -1) {
+            e.preventDefault(); // 브라우저의 기본 메뉴 취소
+            menu.show(e); // Wijmo 메뉴 표시
+          }
+        }, true);
+      }
+      _buildMenu(grid) {
+        let menu = new wijmo.input.Menu(document.createElement('div'), {
+          owner: grid.hostElement,
+          displayMemberPath: 'header',
+          subItemsPath: 'items',
+          commandParameterPath: 'cmd',
+          dropDownCssClass: 'ctx-menu',
+          openOnHover: true,
+          closeOnLeave: true,
+          itemsSource: [
+            {
+              header: '정렬', items: [
+                { header: 'Ascending', cmd: 'SRT_ASC' },
+                { header: 'Descending', cmd: 'SRT_DESC' },
+                { header: 'No Sort', cmd: 'SRT_NONE' },
+                { header: '-' },
+                { header: 'Clear All Sorts', cmd: 'SRT_CLR' }
+              ]
+            },
+            { header: '-' },
+            { header: 'Pin/Unpin', cmd: 'PIN' },
+            { header: '-' },
+            { header: 'AutoSize', cmd: 'ASZ' },
+            { header: 'AutoSize All', cmd: 'ASZ_ALL' },
+            { header: '-' },
+            { header: 'Group/Ungroup', cmd: 'GRP' },
+            { header: 'Clear All Groups', cmd: 'GRP_CLR' },
+            { header: '-' },
+            {
+              header: '내려받기', items: [
+                { header: 'CSV', cmd: 'X_CSV' },
+                { header: 'XLSX', cmd: 'X_XLSX' },
+                { header: 'PDF', cmd: 'X_PDF' },
+              ]
+            }
+          ],
+          command: {
+            // 메뉴 명령 활성화/비활성화
+            canExecuteCommand: (cmd) => {
+              let view = grid.collectionView, col = grid.columns[grid.selection.col];
+              switch (cmd) {
+                case 'SRT_ASC':
+                  return col.currentSort != '+';
+                case 'SRT_DESC':
+                  return col.currentSort != '-';
+                case 'SRT_NONE':
+                  return col.currentSort != null;
+                case 'SRT_CLR':
+                  return view.sortDescriptions.length > 0;
+                case 'PIN':
+                  return true; // toggle pin
+                case 'ASZ':
+                case 'ASZ_ALL':
+                  return true;
+                case 'GRP':
+                  return col.dataType != wijmo.DataType.Number; // don't group numbers
+                case 'GRP_CLR':
+                  return view.groupDescriptions.length > 0;
+              }
+              return true;
+            },
+            // 메뉴 명령 실행
+            executeCommand: (cmd) => {
+              let view = grid.collectionView, cols = grid.columns, col = cols[grid.selection.col], sd = view.sortDescriptions, gd = view.groupDescriptions;
+              switch (cmd) {
+                case 'SRT_ASC':
+                case 'SRT_DESC':
+                case 'SRT_NONE':
+                  if (grid.allowSorting != wijmo.grid.AllowSorting.MultiColumn) {
+                    sd.clear();
+                  }
+                  else {
+                    for (let i = 0; i < sd.length; i++) {
+                      if (sd[i].property == col.binding) {
+                        sd.removeAt(i);
+                        break;
+                      }
+                    }
+                  }
+                  if (cmd != 'SRT_NONE') {
+                    sd.push(new wijmo.collections.SortDescription(col.binding, cmd == 'SRT_ASC'));
+                  }
+                  break;
+                case 'SRT_CLR':
+                  sd.clear();
+                  break;
+                case 'PIN':
+                  let fCols = grid.frozenColumns;
+                  if (col.index >= fCols) { // pinning
+                    cols.moveElement(col.index, fCols, false);
+                    cols.frozen++;
+                  }
+                  else { // unpinning
+                    cols.moveElement(col.index, fCols - 1, false);
+                    cols.frozen--;
+                  }
+                  break;
+                case 'ASZ':
+                  grid.autoSizeColumn(col.index);
+                  break;
+                case 'ASZ_ALL':
+                  grid.autoSizeColumns(0, grid.columns.length - 1);
+                  break;
+                case 'GRP':
+                  // 그룹 삭제
+                  for (let i = 0; i < gd.length; i++) {
+                    if (gd[i].propertyName == col.binding) {
+                      gd.removeAt(i);
+                      return; // we're done
+                    }
+                  }
+                  // 그룹 추가
+                  gd.push(new wijmo.collections.PropertyGroupDescription(col.binding));
+                  break;
+                case 'GRP_CLR':
+                  gd.clear();
+                  break;
+                      // 내보내기
+                case 'X_CSV':
+                  let rng = new wijmo.grid.CellRange(0, 0, grid.rows.length - 1, grid.columns.length - 1), csv = grid.getClipString(rng, wijmo.grid.ClipStringOptions.CSV, true, false);
+                  wijmo.saveFile(csv, 'FlexGrid.csv');
+                  break;
+                case 'X_XLSX':
+                  wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, null, 'FlexGrid.xlsx');
+                  break;
+                case 'X_PDF':
+                  wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 'FlexGrid.pdf', {
+                    maxPages: 10,
+                    scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
+                    documentOptions: {
+                      compress: true,
+                      header: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      info: { author: 'GrapeCity', title: 'FlexGrid' }
+                    },
+                    styles: {
+                      cellStyle: { backgroundColor: '#ffffff', borderColor: '#c6c6c6' },
+                      altCellStyle: { backgroundColor: '#f9f9f9' },
+                      groupCellStyle: { backgroundColor: '#dddddd' },
+                      headerCellStyle: { backgroundColor: '#eaeaea' }
+                    }
+                  });
+                  break;
+              }
+              // 활성화 그리드 셀에 포커스 복원
+              grid.refresh();
+              let sel = grid.selection, cell = grid.cells.getCellElement(sel.row, sel.col);
+              if (cell) {
+                cell.focus();
+              }
+            }
+          }
+        });
+        // 완료
+        return menu;
+      }
+    }
+  </script>
+
+
+  <!------footer ------>
+  <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer>
+
+  <!-- modal -->
+  <!-- class="modal_step_open" modal_step="1" -->
+
+  <div class="modal modal modal_step modal_step1 hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+      <div class="layoutCont">
+        <div class="modalContWrap">
+          <!-- <div class="modal_close cancerButton">
+            <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
+          </div>                       -->
+          <div class="modal_head">
+          </div>
+          <div class="modal_con scrollbar">
+            모든 정보를 입력하세요.
+          </div>
+
+        </div>
+        <div class="modal_btn">
+          <button class="cancerButton " type="button">확인</button>
+        </div>
+        <!-- <div class="modal_btn flex">
+            <button class="cancerButton " type="button">확인</button>
+            <button class="cancerButton " type="button">확인</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

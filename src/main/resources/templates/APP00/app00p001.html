@@ -228,44 +228,7 @@
 
   <!--------------------------------------------------------------------------------------->
   <!-- 고장내용 MODAL FROM  -->
-  <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
-       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-         style="max-width: 500px">
-      <div class="modal-content border-0">
-        <div class="modal-body p-0" >
-          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-            <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt_rtn()}"
-                       placeholder="고장내용 "     />
-              </div>
-              <button id="wcontnmBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
-            </div>
-          </div>
-          <div class="container-fluid">
-            <div id="wcontnmGrid_div" ></div>
-            <div id="thePager02"></div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <div class="row g-1">
-            <div class="col-auto">
-              <button class="badge-soft-primary dropdown-item rounded-1"
-                      type="button"  id="wcontnmmodal_btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <!--------------------------------------------------------------------------------------->
+  ------------------------------>
 
 
 
@@ -281,10 +244,17 @@
     var wactnmGrid;
 
     window.onload = function() {
+      localStorage.setItem("setpage", "app00p001");
 
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
         pageSize: 12
-      })
+      });
+
+      new wijmo.input.CollectionViewNavigator('#tab01Pager', {
+        byPage: true,
+        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        cv: view_p01tab01page
+      });
 
         // 열 그룹 옵션
         let colGroups1 = getColumnGroups();
@@ -299,6 +269,8 @@
           columnGroups: colGroups1,
           itemsSource:  view_p01tab01page//getData()
         });
+
+        new FlexGridContextMenu(theGrid);
 
         // 열 축소/확장 애니메이션 전환
         document.getElementById("animated").addEventListener("click", (e) => {
@@ -454,7 +426,7 @@
       function getData_tab01() {
         return [
           {
-            actnm: "aa",
+            actnm: "",
 
             "1월": {
               rece1: "",
@@ -583,45 +555,64 @@
           id: i,
           index: cnt,
           actnm: wtab01Dto[i]["actnm"],
-          rece1: wtab01Dto[i]["rece1"],
-          comp1: wtab01Dto[i]["comp1"],
-          rece2: wtab01Dto[i]["rece2"],
-          comp2: wtab01Dto[i]["comp2"],
-          rece3: wtab01Dto[i]["rece3"],
-          comp3: wtab01Dto[i]["comp3"],
-          rece4: wtab01Dto[i]["rece4"],
-          comp4: wtab01Dto[i]["comp4"],
-          rece5: wtab01Dto[i]["rece5"],
-          comp5: wtab01Dto[i]["comp5"],
-          rece6: wtab01Dto[i]["rece6"],
-          comp6: wtab01Dto[i]["comp6"],
-          rece7: wtab01Dto[i]["rece7"],
-          comp7: wtab01Dto[i]["comp7"],
-          rece8: wtab01Dto[i]["rece8"],
-          comp8: wtab01Dto[i]["comp8"],
-          rece9: wtab01Dto[i]["rece9"],
-          comp9: wtab01Dto[i]["comp9"],
-          rece10: wtab01Dto[i]["rece10"],
-          comp10: wtab01Dto[i]["comp10"],
-          rece11: wtab01Dto[i]["rece11"],
-          comp11: wtab01Dto[i]["comp11"],
-          rece12: wtab01Dto[i]["rece12"],
-          comp12: wtab01Dto[i]["comp12"],
-
+          "1월": {
+            rece1: wtab01Dto[i]["rece1"],
+            comp1: wtab01Dto[i]["comp1"],
+          },
+          "2월": {
+            rece2: wtab01Dto[i]["rece2"],
+            comp2: wtab01Dto[i]["comp2"],
+          },
+          "3월": {
+            rece3: wtab01Dto[i]["rece3"],
+            comp3: wtab01Dto[i]["comp3"],
+          },
+          "4월": {
+            rece4: wtab01Dto[i]["rece4"],
+            comp4: wtab01Dto[i]["comp4"],
+          },
+          "5월": {
+            rece5: wtab01Dto[i]["rece5"],
+            comp5: wtab01Dto[i]["comp5"],
+          },
+          "6월": {
+            rece6: wtab01Dto[i]["rece6"],
+            comp6: wtab01Dto[i]["comp6"],
+          },
+          "7월": {
+            rece7: wtab01Dto[i]["rece7"],
+            comp7: wtab01Dto[i]["comp7"],
+          },
+          "8월": {
+            rece8: wtab01Dto[i]["rece8"],
+            comp8: wtab01Dto[i]["comp8"],
+          },
+          "9월": {
+            rece9: wtab01Dto[i]["rece9"],
+            comp9: wtab01Dto[i]["comp9"],
+          },
+          "10월": {
+            rece10: wtab01Dto[i]["rece10"],
+            comp10: wtab01Dto[i]["comp10"],
+          },
+          "11월": {
+            rece11: wtab01Dto[i]["rece11"],
+            comp11: wtab01Dto[i]["comp11"],
+          },
+          "12월": {
+            rece12: wtab01Dto[i]["rece12"],
+            comp12: wtab01Dto[i]["comp12"],
+          }
 
         });
         cnt++;
       }
       console.log("wtab01_data, check", )
 
-      theGrid.columns.clear();
+      //theGrid.columns.clear();
       theGrid.autoGenerateColumns = false;
-      view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
 
-      })
-
-      //view_p01tab01page.sourceCollection = wtab01_data;
-
+      view_p01tab01page.sourceCollection = wtab01_data;
 
       let gridFormat =[
 
@@ -758,78 +749,9 @@
             { binding: "12월.comp12", align: "center", header: "처리", format: "a0", width: 80 },
           ]
         }
-              ]
+      ]
 
-      function getData_tab01() {
-        return [
-          {
-            actnm: wtab01Dto[0]["actnm"],
 
-            "1월": {
-              rece1: wtab01Dto[0]["rece1"],
-              comp1: wtab01Dto[0]["comp1"],
-
-            },
-            "2월": {
-              rece2: wtab01Dto[0]["rece2"],
-              comp2: wtab01Dto[0]["comp2"],
-
-            },
-            "3월": {
-              rece3: wtab01Dto[0]["rece3"],
-              comp3: wtab01Dto[0]["comp3"],
-
-            },
-            "4월": {
-              rece4: wtab01Dto[0]["rece4"],
-              comp4: wtab01Dto[0]["comp4"],
-
-            },
-            "5월": {
-              rece5: wtab01Dto[0]["rece5"],
-              comp5: wtab01Dto[0]["comp5"],
-
-            },
-            "6월": {
-              rece6: wtab01Dto[0]["rece6"],
-              comp6: wtab01Dto[0]["comp6"],
-
-            },
-            "7월": {
-              rece7: wtab01Dto[0]["rece7"],
-              comp7: wtab01Dto[0]["comp7"],
-
-            },
-            "8월": {
-              rece8: wtab01Dto[0]["rece8"],
-              comp8: wtab01Dto[0]["comp8"],
-
-            },
-            "9월": {
-              rece9: wtab01Dto[0]["rece9"],
-              comp9: wtab01Dto[0]["comp9"],
-
-            },
-            "10월": {
-              rece10: wtab01Dto[0]["rece10"],
-              comp10: wtab01Dto[0]["comp10"],
-
-            },
-            "11월": {
-              rece11: wtab01Dto[0]["rece11"],
-              comp11: wtab01Dto[0]["comp11"],
-
-            },
-            "12월": {
-              rece12: wtab01Dto[0]["rece12"],
-              comp12: wtab01Dto[0]["comp12"],
-
-            },
-          },
-
-        ];
-
-      }
       console.log('------------');
 
 
@@ -837,178 +759,203 @@
       theGrid.itemsSource = view_p01tab01page;
 
 
-      // console.log(theGrid.columnGroups);
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp1';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece2';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp2';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece3';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp3';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece4';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp4';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece5';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp5';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece6';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp6';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece7';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp7';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece8';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp8';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece9';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp9';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece10';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp10';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece11';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp11';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'rece12';
-      // cols.header = '접수';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-      //
-      //
-      //
-      // cols = new wijmo.grid.Column();
-      // cols.binding = 'comp12';
-      // cols.header = '처리';
-      // cols.align = 'center';
-      // cols.width = '1*';
-      // theGrid.columns.push(cols);
-
-
-
-
     }
 
+    class FlexGridContextMenu {
+      constructor(grid) {
+        let host = grid.hostElement, menu = this._buildMenu(grid);
+        host.addEventListener('contextmenu', (e) => {
+          // 클릭된 셀/열 선택
+          let sel = grid.selection, ht = grid.hitTest(e), row = ht.getRow();
 
+          switch (ht.panel) {
+            case grid.cells:
+              let colIndex = ht.col;
+              // 만약 그룹 헤더이면, 그룹 열 선택
+              if (row instanceof wijmo.grid.GroupRow && row.dataItem instanceof wijmo.collections.CollectionViewGroup) {
+                let gd = row.dataItem.groupDescription;
+                if (gd instanceof wijmo.collections.PropertyGroupDescription) {
+                  let col = grid.getColumn(gd.propertyName);
+                  if (col && col.index > -1) {
+                    colIndex = col.index;
+                  }
+                }
+              }
+              grid.select(ht.row, colIndex);
+              break;
+            case grid.columnHeaders:
+              grid.select(sel.row, ht.col);
+              break;
+            case grid.rowHeaders:
+              grid.select(ht.row, sel.col);
+              break;
+            default:
+              return; // 유효하지 않는 패널
+          }
+          // 현재 열에 대한 메뉴 표시
+          if (grid.selection.col > -1) {
+            e.preventDefault(); // 브라우저의 기본 메뉴 취소
+            menu.show(e); // Wijmo 메뉴 표시
+          }
+        }, true);
+      }
+      _buildMenu(grid) {
+        let menu = new wijmo.input.Menu(document.createElement('div'), {
+          owner: grid.hostElement,
+          displayMemberPath: 'header',
+          subItemsPath: 'items',
+          commandParameterPath: 'cmd',
+          dropDownCssClass: 'ctx-menu',
+          openOnHover: true,
+          closeOnLeave: true,
+          itemsSource: [
+            {
+              header: '정렬', items: [
+                { header: 'Ascending', cmd: 'SRT_ASC' },
+                { header: 'Descending', cmd: 'SRT_DESC' },
+                { header: 'No Sort', cmd: 'SRT_NONE' },
+                { header: '-' },
+                { header: 'Clear All Sorts', cmd: 'SRT_CLR' }
+              ]
+            },
+            { header: '-' },
+            { header: 'Pin/Unpin', cmd: 'PIN' },
+            { header: '-' },
+            { header: 'AutoSize', cmd: 'ASZ' },
+            { header: 'AutoSize All', cmd: 'ASZ_ALL' },
+            { header: '-' },
+            { header: 'Group/Ungroup', cmd: 'GRP' },
+            { header: 'Clear All Groups', cmd: 'GRP_CLR' },
+            { header: '-' },
+            {
+              header: '내려받기', items: [
+                { header: 'CSV', cmd: 'X_CSV' },
+                { header: 'XLSX', cmd: 'X_XLSX' },
+                { header: 'PDF', cmd: 'X_PDF' },
+              ]
+            }
+          ],
+          command: {
+            // 메뉴 명령 활성화/비활성화
+            canExecuteCommand: (cmd) => {
+              let view = grid.collectionView, col = grid.columns[grid.selection.col];
+              switch (cmd) {
+                case 'SRT_ASC':
+                  return col.currentSort != '+';
+                case 'SRT_DESC':
+                  return col.currentSort != '-';
+                case 'SRT_NONE':
+                  return col.currentSort != null;
+                case 'SRT_CLR':
+                  return view.sortDescriptions.length > 0;
+                case 'PIN':
+                  return true; // toggle pin
+                case 'ASZ':
+                case 'ASZ_ALL':
+                  return true;
+                case 'GRP':
+                  return col.dataType != wijmo.DataType.Number; // don't group numbers
+                case 'GRP_CLR':
+                  return view.groupDescriptions.length > 0;
+              }
+              return true;
+            },
+            // 메뉴 명령 실행
+            executeCommand: (cmd) => {
+              let view = grid.collectionView, cols = grid.columns, col = cols[grid.selection.col], sd = view.sortDescriptions, gd = view.groupDescriptions;
+              switch (cmd) {
+                case 'SRT_ASC':
+                case 'SRT_DESC':
+                case 'SRT_NONE':
+                  if (grid.allowSorting != wijmo.grid.AllowSorting.MultiColumn) {
+                    sd.clear();
+                  }
+                  else {
+                    for (let i = 0; i < sd.length; i++) {
+                      if (sd[i].property == col.binding) {
+                        sd.removeAt(i);
+                        break;
+                      }
+                    }
+                  }
+                  if (cmd != 'SRT_NONE') {
+                    sd.push(new wijmo.collections.SortDescription(col.binding, cmd == 'SRT_ASC'));
+                  }
+                  break;
+                case 'SRT_CLR':
+                  sd.clear();
+                  break;
+                case 'PIN':
+                  let fCols = grid.frozenColumns;
+                  if (col.index >= fCols) { // pinning
+                    cols.moveElement(col.index, fCols, false);
+                    cols.frozen++;
+                  }
+                  else { // unpinning
+                    cols.moveElement(col.index, fCols - 1, false);
+                    cols.frozen--;
+                  }
+                  break;
+                case 'ASZ':
+                  grid.autoSizeColumn(col.index);
+                  break;
+                case 'ASZ_ALL':
+                  grid.autoSizeColumns(0, grid.columns.length - 1);
+                  break;
+                case 'GRP':
+                  // 그룹 삭제
+                  for (let i = 0; i < gd.length; i++) {
+                    if (gd[i].propertyName == col.binding) {
+                      gd.removeAt(i);
+                      return; // we're done
+                    }
+                  }
+                  // 그룹 추가
+                  gd.push(new wijmo.collections.PropertyGroupDescription(col.binding));
+                  break;
+                case 'GRP_CLR':
+                  gd.clear();
+                  break;
+                      // 내보내기
+                case 'X_CSV':
+                  let rng = new wijmo.grid.CellRange(0, 0, grid.rows.length - 1, grid.columns.length - 1), csv = grid.getClipString(rng, wijmo.grid.ClipStringOptions.CSV, true, false);
+                  wijmo.saveFile(csv, 'FlexGrid.csv');
+                  break;
+                case 'X_XLSX':
+                  wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, null, 'FlexGrid.xlsx');
+                  break;
+                case 'X_PDF':
+                  wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 'FlexGrid.pdf', {
+                    maxPages: 10,
+                    scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
+                    documentOptions: {
+                      compress: true,
+                      header: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                      info: { author: 'GrapeCity', title: 'FlexGrid' }
+                    },
+                    styles: {
+                      cellStyle: { backgroundColor: '#ffffff', borderColor: '#c6c6c6' },
+                      altCellStyle: { backgroundColor: '#f9f9f9' },
+                      groupCellStyle: { backgroundColor: '#dddddd' },
+                      headerCellStyle: { backgroundColor: '#eaeaea' }
+                    }
+                  });
+                  break;
+              }
+              // 활성화 그리드 셀에 포커스 복원
+              grid.refresh();
+              let sel = grid.selection, cell = grid.cells.getCellElement(sel.row, sel.col);
+              if (cell) {
+                cell.focus();
+              }
+            }
+          }
+        });
+        // 완료
+        return menu;
+      }
+    }
 
 
 
@@ -1203,6 +1150,7 @@
       let date = today.getDate();  // 날짜
       let day = today.getDay();  // 요일
       if(date > 0 && date < 10) {date = "0" + date};
+      if(month > 0 && month < 10) {month = "0" + month};
       let ls_frday = year + '-' + month + '-01'
       let ls_today = year + '-' + month + '-' + date
       document.getElementById('frdate').value = ls_frday;

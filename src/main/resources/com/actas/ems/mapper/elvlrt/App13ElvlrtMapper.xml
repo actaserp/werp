@@ -87,7 +87,7 @@
           AND a.actcd = b.actcd
 
           AND a.recedate BETWEEN #{frdate} AND #{todate}
-          AND a.actcd Like concat('%',#{actcd},'%')
+          AND (a.actcd = #{actcd} OR #{actcd} = '%')
           AND b.actnm like CONCAT('%',#{actnm},'%')
           AND a.contcd LIKE CONCAT('%',#{contcd},'%')
 

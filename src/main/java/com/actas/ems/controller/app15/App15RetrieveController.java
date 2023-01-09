@@ -13,9 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -65,12 +63,6 @@ public class App15RetrieveController {
 //            log.debug("Exception =====>" + ex.toString() );
         }
         return app15DtoList;
-    }
-    private String getToDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        Date date      = new Date(System.currentTimeMillis());
-
-        return formatter.format(date);
     }
 
 }

@@ -44,7 +44,7 @@
 
               FROM tb_e411
               WHERE  left(compdate, 8) BETWEEN #{frdate} and #{todate}
-                AND actcd Like concat('%',#{actcd},'%')
+                AND (actcd = #{actcd} OR #{actcd} = '%')
               GROUP BY custcd, spjangcd, left(compdate, 6), actcd, equpcd) a
                  LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
         GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, m.equpnm
