@@ -10,19 +10,19 @@
                a.actpernm actpernm,
                a.tel      telno,
                a.hp       hpno,
-             isnull(a.address,'') + ' ' + isnull(a.address2, '')  addr,
-             cltnm  as cltnm
-           FROM TB_E601 a WITH(NOLOCK)
+               isnull(a.address,'') + ' ' + isnull(a.address2, '')  addr,
+               cltnm  as cltnm
+        FROM TB_E601 a WITH(NOLOCK)
            LEFT OUTER JOIN (SELECT distinct a.custcd, a.spjangcd, a.actcd, a.contg, dbo.df_nm_rtn('tb_xclient', a.custcd, a.cltcd, '', '') AS cltnm 
                                       FROM tb_e101 a WITH(NOLOCK), (select custcd, spjangcd, actcd, max(contdate) as contdate from tb_e101 WITH(NOLOCK)
                                       group by custcd, spjangcd, actcd) b 
                                    WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate) b
-             ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
-            WHERE 1 = 1
-            AND (   isnull(actnm , '') Like concat('%',#{actnm},'%') )
-            AND  isnull(b.contg, '01') <> '04'
+        ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+        WHERE 1 = 1
+          AND (   isnull(actnm , '') Like concat('%',#{actnm},'%') )
+          AND  isnull(b.contg, '01') <> '04'
 
-         ]]>
+        ]]>
     </select>
 
 
@@ -37,22 +37,93 @@
         ]]>
     </select>
 
+    <!-- 고장요인 -->
+    <select id="GetRemonmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.remocd    remocd  ,
+               a.remonm    remonm
+        FROM TB_E011 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(remonm , '') Like concat('%',#{remonm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 처리내용 -->
+    <select id="GetResunmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.resucd    resucd  ,
+               a.resunm    resunm
+        FROM TB_E012 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(resunm , '') Like concat('%',#{resunm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 고장부위 -->
+    <select id="GetGreginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.gregicd    gregicd  ,
+               a.greginm    greginm
+        FROM TB_E013 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(greginm , '') Like concat('%',#{greginm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 처리방법 -->
+    <select id="GetResultnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.resultcd    resultcd  ,
+               a.resultnm    resultnm
+        FROM TB_E015 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(resultnm , '') Like concat('%',#{resultnm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 담당부서 -->
+    <select id="GetDivinmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.divicd    divicd  ,
+               a.divinm    divinm
+        FROM TB_JC002 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(divinm , '') Like concat('%',#{divinm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 담당자 -->
+    <select id="GetPernmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.perid    perid  ,
+               a.pernm    pernm
+        FROM TB_JA001 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        ]]>
+    </select>
+
     <select id="GetEqupList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
-            SELECT equpnm as equpnm,
-                   equpcd as equpcd
-            FROM TB_E611
-            WHERE (   isnull(actcd, '') like concat('%',#{actcd},'%'))
-              and (isnull(equpnm,'') like concat('%',#{equpnm},'%'))
-            group by actcd, equpnm, equpcd
+        SELECT equpnm as equpnm,
+               equpcd as equpcd
+        FROM TB_E611
+        WHERE (   isnull(actcd, '') like concat('%',#{actcd},'%'))
+          and (isnull(equpnm,'') like concat('%',#{equpnm},'%'))
+        group by actcd, equpnm, equpcd
         ]]>
     </select>
 
     <select id="GetGreGicdList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[SELECT gregicd ,
-                 greginm
-          from TB_E013
-          where (isnull(greginm, '') like concat('%',#{greginm},'%'))
+                        greginm
+                 from TB_E013
+                 where (isnull(greginm, '') like concat('%',#{greginm},'%'))
         ]]>
     </select>
 
@@ -62,9 +133,56 @@
         where (ISNULL(remonm,'') like CONCAT('%',#{remonm},'%'))
     </select>
 
-    <select id="GetresunmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+    <select id="GetresunmList2" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         select resucd, resunm
         from TB_E012 a with(nolock)
         where (ISNULL(resunm,'') like CONCAT('%',#{resunm},'%'))
+    </select>
+
+    <!-- 고장원인 -->
+    <select id="GetFacnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.faccd    faccd  ,
+               a.facnm    facnm
+        FROM TB_E019 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(facnm , '') Like concat('%',#{facnm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+    <!-- 고장부위상세 -->
+    <select id="GetReginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.regicd    regicd  ,
+               a.reginm    reginm
+        FROM TB_E014 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(reginm , '') Like concat('%',#{reginm},'%') )
+          AND A.useyn = '1'
+        ]]>
+    </select>
+
+
+    <!-- 처리자 -->
+    <select id="GetPernm3List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+    <![CDATA[
+        SELECT a.perid    perid  ,
+               a.pernm    pernm
+        FROM TB_JA001 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        ]]>
+    </select>
+
+    <!-- actas 담당자 -->
+    <select id="GetPernm2List" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[ SELECT CASE WHEN a.actperid IS NULL THEN 'nocode'
+                              ELSE actperid end as actperid ,
+                         CASE WHEN a.actpernm IS NULL THEN 'noname'
+                              ELSE actpernm end as actpernm
+                  FROM DEV_WERP.dbo.TB_E601 a WITH(NOLOCK)
+                  WHERE 1 = 1
+                    AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )]]>
     </select>
 </mapper>

@@ -20,8 +20,22 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetActnmList(PopupDto parm){return appPopElvMapper.GetActnmList(parm);}
     /** 고장내용 조회 */
     public List<PopupDto> GetContnmList(PopupDto parm){return appPopElvMapper.GetContnmList(parm);}
+    /** 고장요인 조회 */
+    public List<PopupDto> GetRemonmList(PopupDto parm){return appPopElvMapper.GetRemonmList(parm);}
+    /** 처리내용 조회 */
+    public List<PopupDto> GetResunmList(PopupDto parm){return appPopElvMapper.GetResunmList(parm);}
+    /** 고장부위 조회 */
+    public List<PopupDto> GetGreginmList(PopupDto parm){return appPopElvMapper.GetGreginmList(parm);}
+    /** 처리방법 조회 */
+    public List<PopupDto> GetResultnmList(PopupDto parm){return appPopElvMapper.GetResultnmList(parm);}
+    /** 담당부서 조회 */
+    public List<PopupDto> GetDivinmList(PopupDto parm){return appPopElvMapper.GetDivinmList(parm);}
+    /** 담당자 조회 */
+    public List<PopupDto> GetPernmList(PopupDto parm){return appPopElvMapper.GetPernmList(parm);}
 
-    /** 호기명 조회 (고객센타)*/
+    /** 고장원인 조회 */
+    public List<PopupDto> GetFacnmList(PopupDto parm){return appPopElvMapper.GetFacnmList(parm);}
+
     public List<PopupDto> GetEqupList(PopupDto parm){return appPopElvMapper.GetEqupList(parm);}
 
     /** 고장부위 조회 */
@@ -31,7 +45,11 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetremoList(PopupDto parm){return appPopElvMapper.GetremoList(parm);}
 
     /**처리내용*/
-    public List<PopupDto> GetresunmList(PopupDto parm){return appPopElvMapper.GetresunmList(parm);}
+    public List<PopupDto> GetresunmList(PopupDto parm){return appPopElvMapper.GetresunmList2(parm);}
+    /** 고장부위 상세조회 */
+    public List<PopupDto> GetReginmList(PopupDto parm){return appPopElvMapper.GetReginmList(parm);}
 
-
+    public List<PopupDto> GetPernm3List(PopupDto parm){return appPopElvMapper.GetPernm3List(parm);}
+    /** 담당자2 조회 */
+    public List<PopupDto> GetPernm2List(PopupDto parm){return appPopElvMapper.GetPernm2List(parm);}
 }

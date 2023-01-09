@@ -30,6 +30,23 @@ public class PopupDto {
     private int qty;
     private String perid;
     private String handphone;
+    private String resultcd;
+    private String divicd;
+    private String rtclafi;
+    private String resultnm;        //처리방법
+    private String divinm;          //담당부서명
+    private String pernm;           //사원명
+    private String custcd;
+    private String spjangcd;
+    private String actperid; //담당자코드
+    private String faccd; //고장원인코드
+    private String facnm; //고장원인
+    private String reginm; //고장부위상세
+
+    private String regicd; //고장부위상세코드
+
+
+
 
 
 
