@@ -290,13 +290,13 @@
                     { binding: 'pernm', header: '사원명', align: "center", width: '*' },
                     { binding: 'divinm', header: '부서명', align: "center", width: '*' },
                     { binding: 'rspnm', header: '직급', align: "center", width: '*' },
-                    { binding: 'rnum', header: '주민번호', align: "center", width: '*' },
+                    { binding: 'rnum', header: '주민번호', align: "center", width: '2*' },
                     { binding: 'entdate', header: '입사일', align: "center", width: '*' },
                     { binding: 'dayterm', header: '근속년수', align: "center", width: '*' },
                     { binding: 'handphone', header: '핸드폰', align: "center", width: '2*' },
                     { binding: 'agegap', header: '나이', align: "center", width: '*' },
-                    { binding: 'rtclafi', header: '재/퇴직', align: "center", width: '2*' },
-                    { binding: 'zipadres', header: '주소', align: "center", width: '*' }
+                    { binding: 'rtclafi', header: '재/퇴직', align: "center", width: '*' },
+                    { binding: 'zipadres', header: '주소', align: "center", width: '3*' }
                 ],
                 itemsSource: view_p01tab01page
             });
@@ -367,7 +367,7 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [
-                    { binding: 'divicd', header: '부서코드', align: "center", width: '1*' },
+                    { binding: 'divicd', header: '코드', align: "center", width: '1*' },
                     { binding: 'divinm', header: '담당부서', align: "center", width: '1*' },
                 ],
                 itemsSource: view_divinmpage
@@ -472,12 +472,14 @@
             }
             if(ls_actdivinmz == null || ls_actdivinmz.length == 0 || ls_actdivinmz == ""){
                 ls_actdivinmz = "%";
+                document.getElementById('actdivicdz').value = "";
             }
             if(ls_actperidz == null || ls_actperidz.length == 0 || ls_actperidz == ""){
                 ls_actperidz = "%";
             }
             if(ls_actpernmz == null || ls_actpernmz.length == 0 || ls_actpernmz == ""){
                 ls_actpernmz = "%";
+                document.getElementById('actperidz').value = "";
             }
 
             searchList_rtn(ls_tab, ls_actdivicdz, ls_actperidz, ls_actrtclafiz);
@@ -526,7 +528,7 @@
                 wtab01_data.push({
                     id: i,
                     index: cnt,
-                    perid: wtab01Dto[i]["perid"],
+                    perid: wtab01Dto[i]["perid"].substr(1),
                     pernm: wtab01Dto[i]["pernm"],
                     divinm: wtab01Dto[i]["divinm"],
                     rspnm: wtab01Dto[i]["rspnm"],
@@ -550,12 +552,6 @@
             cols.header = '사원번호';
             cols.align = "center";
             cols.width = '*';
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
-                text: '<b>${item.perid}</b>',
-                click: (e, ctx) => {
-                    wactnmChk_3(ctx.item.perid, ctx.item.recenum);
-                }
-            });
             wtab01Grid.columns.push(cols);
             // console.log("cols", cols);
             cols = new wijmo.grid.Column();
@@ -580,43 +576,43 @@
             cols.binding = 'rnum';
             cols.header = '주민번호';
             cols.align = "center";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'entdate';
             cols.header = '입사일';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'dayterm';
             cols.header = '근속년수';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'handphone';
             cols.header = '핸드폰';
-            cols.align = "left";
-            cols.width = '3*';
+            cols.align = "center";
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'agegap';
             cols.header = '나이';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'rtclafi';
             cols.header = '재/퇴직';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'zipadres';
             cols.header = '주소';
-            cols.align = "left";
-            cols.width = '*';
+            cols.align = "center";
+            cols.width = '3*';
             wtab01Grid.columns.push(cols);
 
         }
@@ -642,7 +638,7 @@
                             id: i,
                             index: cnt,
                             divinm:wactdivinmDto[i]["divinm"],
-                            divicd: wactdivinmDto[i]["divicd"]
+                            divicd: wactdivinmDto[i]["divicd"].substr(2)
                         });
                         cnt++;
                     }
@@ -652,7 +648,7 @@
                     view_divinmpage.sourceCollection  = wactdivinm_data;
                     var cols = new wijmo.grid.Column();
                     cols.binding = 'divicd';
-                    cols.header = '부서코드';
+                    cols.header = '코드';
                     cols.align = "center";
                     cols.width = '*';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
@@ -706,7 +702,7 @@
                             id: i,
                             index: cnt,
                             pernm:wactpernmDto[i]["pernm"],
-                            perid: wactpernmDto[i]["perid"]
+                            perid: wactpernmDto[i]["perid"].substr(1)
                         });
                         cnt++;
                         console.log(wactpernmDto[i]["pernm"]);
@@ -717,7 +713,7 @@
                     view_pernmpage.sourceCollection  = wactpernm_data;
                     var cols = new wijmo.grid.Column();
                     cols.binding = 'perid';
-                    cols.header = '담당자코드';
+                    cols.header = '코드';
                     cols.align = "center";
                     cols.width = '*';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
