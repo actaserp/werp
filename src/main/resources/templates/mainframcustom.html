@@ -17,103 +17,7 @@
                 <button type="button"><img src="/images/ham.png" alt=""></button>
             </div>
             <div class="nav_bg"></div>
-            <ul class="nav">
-                <li>
-                    <button type="button"><img src="/images/header_icon1.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="./center.html">
-                                <button type="button">
-                                    종합유지관리서비스
-                                </button>
-                            </a>
-                        </div>
-                        <ul>
-                            <li><a href="./center.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고객상담센터</a></li>
-                            <li><a href="./control.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장접수관제현황</a></li>
-                            <li><a href="./registration"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장처리등록</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon2.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="">
-                                <button type="button">
-                                    통계관리
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon3.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="./reference.html">
-                                <button type="button">
-                                    기술자료실
-                                </button>
-                            </a>
-                        </div>
-                        <ul>
-                            <li><a href="/app04/index01"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>도면자료실</a></li>
-                            <li><a href="./center.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장접수관제현황</a></li>
-                            <li><a href="./center.html"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>고장처리등록</a></li>
-                            <li><a href="/app07/index01"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>점검조치사항</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon4.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="">
-                                <button type="button">
-                                    수리노하우
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon5.png" alt=""></button>
-                    <div class="depth2 on">
-                        <div class="dep_main">
-                            <a href="./care_center.html">
-                                <button type="button">
-                                    고객케어센터
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon6.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="">
-                                <button type="button">
-                                    공지사항
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <button type="button"><img src="/images/header_icon7.png" alt=""></button>
-                    <div class="depth2">
-                        <div class="dep_main">
-                            <a href="">
-                                <button type="button">
-                                    고객지원
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <th:block th:include="layouts/APPHeader/appcareleft" />
         </div>
         <div class="right">
         </div>
@@ -199,7 +103,7 @@
                             <div class="txt">
                                 <h5>현장별 호기별 고장 현황</h5>
                                 <p>호기별로 고장부위 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app21/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>
@@ -211,7 +115,7 @@
                             <div class="txt">
                                 <h5>현장별 고장구분별 현황</h5>
                                 <p>호기별로 고장구분별로 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app27/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>
@@ -223,7 +127,7 @@
                             <div class="txt">
                                 <h5>현장별 월별 고장율 현황</h5>
                                 <p>호기별로 고장구분별로 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app16/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>
@@ -237,7 +141,7 @@
                             <div class="txt">
                                 <h5>승강기 호기별 고장통계</h5>
                                 <p>호기별로 고장구분별로 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app19/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>
@@ -249,7 +153,7 @@
                             <div class="txt">
                                 <h5>동호기별 고장 통계</h5>
                                 <p>호기별로 고장 구분별로 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app25/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>
@@ -261,7 +165,7 @@
                             <div class="txt">
                                 <h5>승강기 월별 고장 통계</h5>
                                 <p>호기별로 고장 구분별로 현황을<br>살펴 볼 수 있습니다.</p>
-                                <a href="">
+                                <a th:href="@{/app22/index01}">
                                     자세히 보기 >
                                 </a>
                             </div>

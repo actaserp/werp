@@ -563,6 +563,12 @@
     })
 
     function searchList_rtn(arg1, arg2, arg3){
+
+      if(arg3 == null || arg3.length == 0 || arg3 == "" || arg3 == "%"){
+        alert("현장을 선택하세요")
+        return
+      }
+
       $.ajax({
         url: '/app15/p001tab01',
         type: "POST",
