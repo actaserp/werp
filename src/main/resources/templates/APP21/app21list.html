@@ -908,7 +908,7 @@
             wtab01Grid.columns.clear();
             wtab01Grid.autoGenerateColumns = false;
             view_p01tab01page.sourceCollection  = wtab01_data;
-            
+
             var cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';
@@ -1495,7 +1495,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
-            if(month > 0 && date < 10) {month = "0" + month};
+            if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01'
             let ls_today = year + '-' + month + '-' + date
