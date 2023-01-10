@@ -1268,81 +1268,97 @@ function CahngeSlect(value){
         })
 
         
-//     // <!-- 저장 스크립트 시작 -->
-// function save_btn(){ 
+    // <!-- 저장 스크립트 시작 -->
+function save_btn(){ 
 
-// var ls_actfseqz   = document.getElementById('actfseqz').value; 
-// var ls_actfsubjectz   = document.getElementById('actfsubjectz').value; 
-// var ls_actfmemoz   = document.getElementById('actfmemoz').value;
+var ls_compnumz   = document.getElementById('compnumz').value; 
+var ls_actpernmz   = document.getElementById('actpernmz').value; 
+var ls_pernmz   = document.getElementById('pernmz').value;
+var ls_arrivdatez   = document.getElementById('arrivdatez').value; 
+var ls_actcompdatez   = document.getElementById('actcompdatez').value; 
+var ls_actarrivtimez   = document.getElementById('actarrivtimez').value;
+var ls_actcomptimez   = document.getElementById('actcomptimez').value; 
+var ls_remoremarkz   = document.getElementById('remoremarkz').value; 
+var ls_resuremarkz   = document.getElementById('resuremarkz').value;
+var ls_remarkz   = document.getElementById('remarkz').value; 
 
-// if(!ls_actfsubjectz){
-//     alert("담당자를 입력하세요")
-//     return 
-// } 
-// if(!ls_actfmemoz){
-//     alert("처리자를 입력하세요")
-//     return 
-// } 
-// if(!ls_actfsubjectz){
-//     alert("도착일자를 입력하세요")
-//     return 
-// } 
-// if(!ls_actfmemoz){
-//     alert("완료일자를 입력하세요")
-//     return 
-// }
-// if(!ls_actfsubjectz){
-//     alert("도착시간을 입력하세요")
-//     return 
-// } 
-// if(!ls_actfsubjectz){
-//     alert("완료시간을 입력하세요")
-//     return 
-// } 
-// if(!ls_actfsubjectz){
-//     alert("고장상세원인을 입력하세요")
-//     return 
-// } 
-// if(!ls_actfsubjectz){
-//     alert("처리내용상세를 입력하세요")
-//     return 
-// }  
-// if(!ls_actfsubjectz){
-//     alert("고객요망사항을 입력하세요")
-//     return 
-// }              
-//     $.ajax({
-//     url: '/app10/saveboard',
-//     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
-//     type: "POST",
-//               data:{
-//             "actfseqz"    : ls_actfseqz ,
-//             "actfsubjectz": ls_actfsubjectz , 
-//             "actfmemoz"   : ls_actfmemoz, 
-//             "actfflagz"   : ls_actfflagz,               
-//             },       
-//             async:false,
-//     success:function(data){
-//             if(data == "success"){
-//             alert("저장되었습니다.")
-//             console.log("save", data);
-//                 listUp();
-//         }else{
-//             alert("저장되었습니다.")
-//                 listUp();
-//         }
-//     },error:function(e){
-//         console.log('error',e);
-//     }
-//     }).done(function(fragment){
+
+if(!ls_actpernmz){
+    alert("담당자를 입력하세요")
+    return 
+} 
+if(!ls_pernmz){
+    alert("처리자를 입력하세요")
+    return 
+} 
+if(!ls_arrivdatez){
+    alert("도착일자를 입력하세요")
+    return 
+} 
+if(!ls_actcompdatez){
+    alert("완료일자를 입력하세요")
+    return 
+}
+if(!ls_actarrivtimez){
+    alert("도착시간을 입력하세요")
+    return 
+} 
+if(!ls_actcomptimez){
+    alert("완료시간을 입력하세요")
+    return 
+} 
+if(!ls_remoremarkz){
+    alert("고장상세원인을 입력하세요")
+    return 
+} 
+if(!ls_resuremarkz){
+    alert("처리내용상세를 입력하세요")
+    return 
+}  
+if(!ls_remarkz){
+    alert("고객요망사항을 입력하세요")
+    return 
+}              
+    $.ajax({
+    url: '/app10/saveboard',
+    contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+    type: "POST",
+              data:{
+            "compnumz"    : ls_compnumz ,
+            "actpernmz": ls_actpernmz , 
+            "pernmz"   : ls_pernmz, 
+            "arrivdatez"   : ls_arrivdatez, 
+            "actcompdatez": ls_actcompdatez , 
+            "actarrivtimez"   : ls_actarrivtimez, 
+            "actcomptimez"   : ls_actcomptimez,  
+            "remoremarkz": ls_remoremarkz , 
+            "resuremarkz"   : ls_resuremarkz, 
+            "remarkz"   : ls_remarkz,                
+            },       
+            async:false,
+    success:function(data){
+            if(data == "success"){
+            alert("저장되었습니다.")
+            console.log("save", data);
+                listUp();
+        }else{
+            alert("저장되었습니다.")
+                listUp();
+        }
+    },error:function(e){
+        console.log('error',e);
+    }
+    }).done(function(fragment){
        
-//     }) 
+    }) 
     
-//     listUp(); 
-// }
-// function listUp(){
-// window.location.href = '/app10/index01';
-// }; 
+    listUp(); 
+}
+
+
+function listUp(){
+window.location.href = '/app10/index01';
+}; 
 
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){ 
@@ -1395,7 +1411,7 @@ function CahngeSlect(value){
                 wtab01_data.push({
                     id: i, 
                     index: cnt,
-                    recedate: wtab01Dto[i]["recedate"],
+                    recedate: wtab01Dto[i]["recedate"].substr(2),
                     recenum: wtab01Dto[i]["recenum"],                
                     actnm: wtab01Dto[i]["actnm"],
                     equpnm: wtab01Dto[i]["equpnm"], 

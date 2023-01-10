@@ -37,9 +37,22 @@
         ]]>
     </select>
 
-<!--//저장 mapper-->
-<!--    <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >-->
-<!--        insert into tb_e401 (todate2, codate, frtime, totime, actpernm, pernm, greginm, reginm, remonm, facnm, resunm, resultnm, remoremark, resuremark, remark) values (#{todate2}, #{codate}, #{frtime}, #{totime}, #{actpernm}, #{pernm}, #{greginm}, #{reginm}, #{remonm}, #{facnm}, #{resunm}, #{resultnm}, #{remoremark}, #{resuremark}, #{remark})-->
-<!--    </insert>-->
+
+<!--    //////////////////////////////수정중-->
+
+    <!--게시글 작성-->
+    <insert id="Insert10anul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        insert into tb_e401 (custcd, spjangcd, fseq, todate2, codate, fgroupcd, fsubject, fmemo, fpernm, fflag) values (#{custcd}, #{spjangcd}, #{fseq}, #{finputdate}, #{fgroupcd}, #{fsubject}, #{fmemo}, #{fpernm}, #{fflag})
+    </insert>
+
+
+    <!--게시글 수정-->
+    <update id="UpdateFQManul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        update tb_e401
+        set fgroupcd = #{custcd}
+        <if test="compnum != null ">,</if>
+        <if test="compnum != null">compnum=#{compnum}</if>
+        where compnum = #{compnum}
+    </update>
 
 </mapper>

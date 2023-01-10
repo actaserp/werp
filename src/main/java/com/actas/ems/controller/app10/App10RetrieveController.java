@@ -81,55 +81,55 @@ public class App10RetrieveController {
         return app10DtoList;
     }
 
-    //게시글 저장
-//    @RequestMapping(value = "/saveboard")
-//    public String memberSave(@RequestParam("actfseqz") String fseq
-//            , @RequestParam("actfsubjectz") String fsubject
-//            , @RequestParam("actfflagz") String fflag
-//            , Model model, HttpServletRequest request){
-//        try{
-//            HttpSession session = request.getSession();
-//            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-//            String ls_custcd = userformDto.getCustcd();
-//            String ls_spjangcd = userformDto.getSpjangcd();
-//            String finputdate = getToDate();
-//            String ls_yeare = finputdate.substring(0,4);
-//            String ls_mm = finputdate.substring(4,6);
-//            app10tDto.setCustcd(ls_custcd);
-//            app10tDto.setSpjangcd(ls_spjangcd);
-//            app10tDto.setFflag(fflag);
-//            app10tDto.setYyyymm(ls_yeare + ls_mm);
+//    게시글 저장
+    @RequestMapping(value = "/saveboard")
+    public String memberSave(@RequestParam("compnumz") String compnum
+            , @RequestParam("actfsubjectz") String fsubject
+            , @RequestParam("actfflagz") String fflag
+            , Model model, HttpServletRequest request){
+        try{
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+            String ls_spjangcd = userformDto.getSpjangcd();
+            String finputdate = getToDate();
+            String ls_yeare = finputdate.substring(0,4);
+            String ls_mm = finputdate.substring(4,6);
+            app10tDto.setSpjangcd(ls_spjangcd);
+            app10tDto.setYyyymm(ls_yeare + ls_mm);
 //            app10tDto.setFpernm(userformDto.getUsername());
-//            log.info(app10tDto); //consolelog에 app04Dto 호출
-//
-////            if(compnum == null || compnum.equals("")){
-////                appService.InsertMManu(app04Dto);
-////            }else{
-////                appService.UpdateMManu(app04Dto);
-////            }
-//
-//            if(fseq == null || fseq.equals("")){
-//                boolean result = service.Insert10Manu(app10tDto);
-//                if (!result) {
-//                    return "error";
-//                }
-//            }else{
+            log.info(app10tDto); //consolelog에 app04Dto 호출
+
+            if(compnum == null || compnum.equals("")){
+                service.Insert10Manu(app10tDto);
+            }else{
+                return "error";
+//                service.Update10Manu(app10tDto);
+            }
+
+            if(compnum == null || compnum.equals("")){
+                boolean result = service.Insert10Manu(app10tDto);
+                if (!result) {
+                    return "error";
+                }
+            }else{
 //                boolean result = service.Update10Manu(app10tDto);
 //                if (!result) {
 //                    return "error";
 //                }
-//            }
-//            model.addAttribute("userformDto",userformDto);
-//
-//        }catch (IllegalStateException e){
-//            model.addAttribute("errorMessage", e.getMessage());
-//            return "error";
-//        }
-//        String ls_fseq = app10tDto.getFseq();
-//        return ls_fseq;
-//
-//
-//    }
+                return "error";
+            }
+            model.addAttribute("userformDto",userformDto);
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        String ls_compnum = app10tDto.getCompnum();
+        return ls_compnum;
+
+
+    }
 
 //                service.Insert10Manu(app10tDto);
 
