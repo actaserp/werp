@@ -33,10 +33,11 @@ public class App14RetrieveController {
                                      @RequestParam("actperidz") String perid,
                                      @RequestParam("actrtclafiz") String rtclafi
             , Model model) throws  Exception{
-        popParmDto.setDivicd(divicd);
-        popParmDto.setPerid(perid);
+
+        popParmDto.setDivicd("AA"+divicd);
+        popParmDto.setPerid('p'+perid);
         popParmDto.setRtclafi(rtclafi);
-        System.out.println(divicd + perid + rtclafi);
+        System.out.println(popParmDto.getDivicd() + popParmDto.getPerid() + popParmDto.getRtclafi());
         System.out.println("------1");
 
         try {
@@ -50,6 +51,10 @@ public class App14RetrieveController {
                 }
             }
             model.addAttribute("app14DtoList",app14DtoList);
+
+            for(int i=0; i< app14DtoList.size(); i++){
+                System.out.println(app14DtoList.get(i).getPernm()+"i");
+            }
             
         }catch (DataAccessException e) {
             log.info("App14001Tab01Form DataAccessException ================================================================");

@@ -133,21 +133,9 @@
         </div>
         <div class="section status">
             <div class="sec_con" style="width: 100%;">
-                <div class="box_wrap">
-                    <div class="table table_style2">
-                        <div class="card-body bg-light">
-                                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
-                                <input type="hidden" id="tabvalue" value="A">
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="step01">
-                                    <div class="container-fluid">
-                                        <div id="wtab01Grid_div" ></div>
-                                        <div id="tab01Pager"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="container-fluid">
+                    <div id="wtab01Grid_div" ></div>
+                    <div id="tab01Pager"></div>
                 </div>
             </div>
         </div>
@@ -480,7 +468,6 @@
         // tab01 검색
         document.getElementById("retrieveBtn").addEventListener("click",function(){
 
-            var ls_tab = document.getElementById('tabvalue').value;
             let ls_frdate = document.getElementById('frdate').value;
             let ls_todate = document.getElementById('todate').value;
             let ls_actcdz = document.getElementById('actcdz').value;
@@ -506,22 +493,21 @@
             if(ls_qtyz == null || ls_qtyz.length == 0 || ls_qtyz == ""){
                 ls_qtyz = "0";
             }
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_peridz, ls_qtyz);
+            searchList_rtn(ls_frdate, ls_todate, ls_actcdz, ls_peridz, ls_qtyz);
             console.log(ls_qtyz, ls_peridz, ls_frdate, ls_todate, ls_actcdz, ls_peridz)
         })
 
-        function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6){
-            switch(arg1){
-                case 'A':
+        function searchList_rtn(arg1, arg2, arg3, arg4, arg5){
+
                     $.ajax({
                         url: '/app20/p001tab01',
                         type:"POST",
                         data: {
-                            "frdate"      : arg2,
-                            "todate"      : arg3,
-                            "actcdz"      : arg4,
-                            "peridz"      : arg5,
-                            "qtyz"        : arg6
+                            "frdate"      : arg1,
+                            "todate"      : arg2,
+                            "actcdz"      : arg3,
+                            "peridz"      : arg4,
+                            "qtyz"        : arg5
                         },
                         async:false,
                         success:function(data){
@@ -534,13 +520,9 @@
                     }).done(function(fragment){
 
                     })
-                    break;
-                default:
-                    break;
             }
 
 
-        }
         function tabA_grid(data){
             var wtab01Dto  = data;
             var wtab01_data = [];

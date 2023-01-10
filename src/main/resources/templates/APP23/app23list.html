@@ -128,29 +128,13 @@
         </div>
         <div class="section status">
             <div class="sec_con" style="width: 100%;">
-                <div class="box_wrap">
-                    <div class="table table_style2">
-                        <div class="card-body bg-light">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
-                                </li>
-
-                                <input type="hidden" id="tabvalue" value="A">
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="step01" style="height:370px;">
-                                    <div class="container-fluid" style="width:800px; height:150px; float:left;">
-                                        <div id="wtab01Grid_div" ></div>
-                                        <div id="tab01Pager"></div>
-                                    </div>
-                                    <div class="container-fluid" style="width:700px; height:150px; float:left;">
-                                        <div id="actChart"></div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
+                <div class="box_wrap" style="height:430px;">
+                    <div class="container-fluid" style="width:50%; height:150px; float:left;">
+                        <div id="wtab01Grid_div" ></div>
+                        <div id="tab01Pager"></div>
+                    </div>
+                    <div class="container-fluid" style="width:50%; height:150px; float:left;">
+                        <div id="actChart"></div>
                     </div>
                 </div>
             </div>
@@ -455,10 +439,7 @@
         }
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //선택한 탭 체크
-         function tabchk_rtn(arg){
-            document.getElementById('tabvalue').value = arg;
-        }
+
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //현장 검색
         document.getElementById("actnmz").addEventListener("click",function(){
@@ -483,7 +464,6 @@
         // tab01 검색
         document.getElementById("retrieveBtn").addEventListener("click",function(){
 
-            var ls_tab = document.getElementById('tabvalue').value;
             let ls_frdate = document.getElementById('frdate').value;
             let ls_todate = document.getElementById('todate').value;
             let ls_actcdz = document.getElementById('actcdz').value;
@@ -504,7 +484,7 @@
             if(ls_actgreginmz == null || ls_actgreginmz.length == 0 || ls_actgreginmz == ""){
                 ls_actgreginmz = "%";
             }
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_actgregicdz);
+            searchList_rtn(ls_frdate, ls_todate, ls_actcdz, ls_actgregicdz);
         })
 
     //    document.readyState === 'complete' ? init() : window.onload = init;
@@ -512,17 +492,16 @@
         
 
 
-        function searchList_rtn(arg1, arg2, arg3, arg4, arg5){
-            switch(arg1){
-                case 'A':
+        function searchList_rtn(arg1, arg2, arg3, arg4){
+
                     $.ajax({
                         url: '/app23/p001tab01',
                         type:"POST",
                         data: {
-                            "frdate"      : arg2,
-                            "todate"      : arg3,
-                            "actcdz"      : arg4,
-                            "actgregicdz" : arg5
+                            "frdate"      : arg1,
+                            "todate"      : arg2,
+                            "actcdz"      : arg3,
+                            "actgregicdz" : arg4
                         },
                         async:false,
                         success:function(data){
@@ -535,10 +514,6 @@
                     }).done(function(fragment){
 
                     })
-                    break;
-                default:
-                    break;
-            }
 
 
         }

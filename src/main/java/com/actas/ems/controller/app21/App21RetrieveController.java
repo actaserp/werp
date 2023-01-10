@@ -12,6 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +41,11 @@ public class App21RetrieveController {
             , @RequestParam("actresucdz") String resucd
             , @RequestParam("actresultcdz") String resultcd
             , @RequestParam("actqtyz") int qtyz
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto", userformDto);
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -51,7 +57,12 @@ public class App21RetrieveController {
         todate =  ls_yeare + ls_mm + ls_dd;
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
+        if(userformDto.getCallflag().equals("AA")) {
+            popParmDto.setActcd(actcd);
+        }else if(userFormDto.getCallflag().equals("CC")){
+            popParmDto.setActcd(userformDto.getActcd());
+        }
+
         popParmDto.setGregicd(gregicd);
         popParmDto.setRemocd(remocd);
         popParmDto.setResucd(resucd);

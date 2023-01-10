@@ -8,32 +8,32 @@
     <select id="GetApp14List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App14ElvlrtDto">
         <![CDATA[
         SELECT  Z.perid 		 ,
-		    Z.pernm 		 ,
-			Z.divicd		,
-		    Z.divinm	 	,
-			Z.rspnm 		 ,
-			Z.tel			,
-			Z.handphone,
-		    Z.entdate		 ,
-			Z.DAYTERM	,
-			Z.AGEGAP	,
-			Z.blood		,
-			Z.mrgyn		,
-			Z.fami60		,
-			Z.schnm		,
-			Z.igrad		,
-			Z.carm		,
-			Z.grad		,
-			Z.army		,
-			Z.disperyn	,
-			Z.email		,
+		    Z.pernm pernm,
+			Z.divicd divicd,
+		    Z.divinm divinm,
+			Z.rspnm rspnm,
+			Z.tel tel,
+			Z.handphone handphone,
+		    Z.entdate entdate,
+			Z.DAYTERM dayterm,
+			Z.AGEGAP agegap,
+			Z.blood blood,
+			Z.mrgyn mrgyn,
+			Z.fami60 fami60,
+			Z.schnm schnm,
+			Z.igrad	igrad,
+			Z.carm carm,
+			Z.grad grad,
+			Z.army army,
+			Z.disperyn disperyn,
+			Z.email email,
 			isnull( Z.zipadres, '') as zipadres	,
 			isnull( Z.adres, '' ) as adres		,
-			Z.rtclafi		,
-			Z.perclasifi,
-			Z.rnum,
-			Z.majo,
-			Z.rspcd,
+			Z.rtclafi rtclafi,
+			Z.perclasifi perclasifi,
+			Z.rnum rnum,
+			Z.majo majo,
+			Z.rspcd rspcd,
 			cast(0 as Decimal(7,1) ) as jopyear
 FROM
 (
@@ -78,8 +78,8 @@ FROM
 				AND (A.custcd   = D.custcd   )
 				AND (A.spjangcd = D.spjangcd )
 				AND (A.rspcd    = D.rspcd    )
-				AND (C.divicd = #{divicd} OR #{divicd} = '%')
-				AND (A.perid = #{perid} OR #{perid} = '%')
+				AND (C.divicd like '%'+ #{divicd} +'%')
+				AND (A.perid like '%'+ #{perid} +'%')
 				AND (A.rtclafi = #{rtclafi} OR #{rtclafi} = '%')
 
 ) Z
