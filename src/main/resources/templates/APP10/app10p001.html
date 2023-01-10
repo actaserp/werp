@@ -81,7 +81,7 @@
             
              <!-- contents body 시작-->
              <div class="section regist">
-                <div class="sec_con" style="width: 40%;">
+                <div class="sec_con" style="width: 70%;">
                     <div class="box_wrap">
                         <div class="box_input" >
                             <div class="date_wrap">
@@ -97,24 +97,25 @@
                                         <option value="0">미처리</option>    
                                         <option value="1">처리</option> 
                                     </select>
+                                    <input type="hidden" name="resultck" id="resultckz">
                                 </div>
                             </div>                              
                             <!-- //여기서부터 그래프 -->
                             <div class="table table_style2">
                                 <div class="card-body bg-light">   
-                                    <input type="hidden" id="changeop2" value="A">                                                                                                                                    
-                                      <div class="tab-content" style="max-width: 800px">                                        
-                                        <div class="tab-pane fade show active" >  
+                                    <!-- <input type="hidden" id="changeop2" value="A">                                                                                                                                     -->
+                                      <div class="tab-content" >                                        
+                                        <div class="tab-pane fade show active"  >  
                                             <div class="container-fluid" id="opdefault" style="visibility: hidden">
                                             </div>
                                             <div class="container-fluid" id="op1" style="display: none"> 
                                                 <div id="wtab01Grid_div" ></div>
                                                 <div id="tab01Pager"></div>
                                             </div>   
-                                            <div class="container-fluid" id="op2" style="display: none"> 
-                                                <div id="wtab02Grid_div"></div>
-                                                <div id="tab11Pager"></div>
-                                            </div> 
+                                            <!-- <div class="container-fluid" id="op2" style="display: none"> 
+                                                <div th:id="wtab01Grid_div" ></div>
+                                                <div th:id="tab01Pager"></div>
+                                            </div>  -->
                                         </div>                                        
                                       </div>
                                 </div>
@@ -142,7 +143,7 @@
                                         <th>접수시간</th>
                                         <td>
                                             <div class="input_wrap">                                               
-                                                <input type="text"  class="form-control " id="recetime" autocomplete="off" placeholder="호출" disabled >
+                                                <input type="text"  class="form-control " id="recetimez" autocomplete="off" placeholder="호출" disabled >
                                             </div>
                                         </td>                                        
                                        <th>공유</th>                                       
@@ -193,8 +194,8 @@
                                         <th>처리자</th>
                                         <td colspan="2">
                                             <div class="input_wrap table_search">
-                                                <input type="text" name="pernmz" id="pernmz" autocomplete="off" placeholder="처리자를 찾아주세요">
-                                                <input type="hidden"  id="peridz">
+                                                <input type="text" name="pernm" id="pernmz" autocomplete="off" placeholder="처리자를 찾아주세요">
+                                                <input type="hidden" name="perid" id="peridz">
                                                 <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
                                         </td> 
@@ -231,7 +232,7 @@
                                         <th>고장내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" name="actddz" id="actddz" placeholder="고장내용" disabled>
+                                                <input type="text" name="actdd" id="actddz" placeholder="고장내용" disabled>
                                             </div>
                                         </td>
                                     </tr>
@@ -239,7 +240,7 @@
                                         <th>고장상세내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap table_btn">
-                                                <input type="text" name="actreginmz" id="actreginmz" placeholder="고장상세내용" disabled>
+                                                <input type="text" name="actreginm" id="actreginmz" placeholder="고장상세내용" disabled>
                                                 <button class="btn2" type="button">유사사례 찾아보기</button>
                                             </div>
                                         </td>
@@ -333,7 +334,7 @@
                                     </tbody>
                                 </table>
                                 <div class="btn_wrap">
-                                    <button type="submit">저장</button>
+                                    <button type="submit" onclick="save_btn()">저장</button>
                                 </div>
                             </div>
 
@@ -717,8 +718,9 @@
 <!--------------------------------------------------------------------------------------->     
 
 
-<!--########################################자바 시작-->
+<!--########################################자바 스크립트 시작-->
  <script>
+
 
     // 그리드 호출 window.onload
          var view_p01tab01page;
@@ -755,7 +757,7 @@
             localStorage.setItem("setpage", "app10p001");
             //tab01 grid list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-                pageSize: 20
+                pageSize: 21
             });
             // tab01 grid page
             new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -774,7 +776,8 @@
                     { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
                     { binding: 'recenum', header: '접수번호', align: "center", width: '*' },  
                     { binding: 'actnm', header: '현장명', align: "center", width: '*' },                      
-                    { binding: 'equpnm', header: '호기명', align: "center", width: '*' },                       
+                    { binding: 'equpnm', header: '호기명', align: "center", width: '*' },  
+                    { binding: 'resultck', header: '처리여부', align: "center", width: '*' },                     
                     
                 ], 
                 itemsSource: view_p01tab01page
@@ -808,14 +811,15 @@
                     
                     var wactnm_data = []; 
                     var cnt = 1;
-                    for (var i = 0; i < 20; i++) {
+                    for (var i = 0; i < 21; i++) {
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
                             recedate: "", //접수일자
                             recenum: "", //접수번호
                             actnm: "", //현장명
-                            equpnm: "", //호기명                  
+                            equpnm: "", //호기명 
+                            resultck: "",                 
                            
                         });
                         cnt++;
@@ -824,77 +828,7 @@
                 } 
 
                 // ################################################################
-
-                //tab02 grid list
-            view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
-                pageSize: 20
-            });
-            // tab02 grid page
-            new wijmo.input.CollectionViewNavigator('#tab11Pager', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_p01tab02page
-            });     
-            wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
-                autoGenerateColumns: false,
-                showMarquee: true,
-                isReadOnly: false, 
-                // selectionMode: 'RowRange',
-                allowSorting: 'MultiColumn',
-                alternatingRowStep: 0,
-                columns: [    
-                    { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
-                    { binding: 'recenum', header: '접수번호', align: "center", width: '*' },  
-                    { binding: 'actnm', header: '현장명', align: "center", width: '*' },                      
-                    { binding: 'equpnm', header: '호기명', align: "center", width: '*' },                       
-                    
-                ], 
-                itemsSource: view_p01tab02page
-            });         
-            
-            new FlexGridContextMenu(wtab02Grid);
-            
-            // 선택기 생성
-            var selector = new wijmo.grid.selector.Selector(wtab02Grid, {
-                itemChecked: () => {
-                    showCheckedCount();
-                }
-            }); 
-            // 헤더 열 전환
-            setHeaderColumn2(true);
-            function setHeaderColumn2(headerOn) {
-                wtab02Grid.headersVisibility = headerOn
-                ? wijmo.grid.HeadersVisibility.All
-                : wijmo.grid.HeadersVisibility.Column;
-                selector.column = headerOn
-                ? wtab02Grid.rowHeaders.columns[0]
-                : wtab02Grid.columns[0];
-                
-            } 
-            wtab02Grid.showMarquee = true;
-            wtab02Grid.focus();
-            wijmo.toggleClass(wtab02Grid.hostElement, 'highlightActive', true);
-            wtab02Grid.focus();          
-           
-
-                // tab02검색 데이터 수집
-                function getData_tab02(){    
-                    var wtab02_data = []; 
-                    var cnt = 1;
-                    for (var i = 0; i < 20; i++) {
-                        wtab02_data.push({
-                            id: i, 
-                            index: cnt,
-                            recedate: "",
-                            recenum: "",
-                            actnm: "",
-                            equpnm: "",                          
-                           
-                        });
-                        cnt++;
-                    }    
-                    return wtab02_data;                                         
-                } 
+               
                  // ################################################################
 
                 //고장부위 popup modal list
@@ -1244,17 +1178,15 @@
 //onchange script
 
 function CahngeSlect(value){
-            var key = changeop.value;          
+            var key = changeop.value; 
+            if (key == "%"){                
+                document.getElementById('op1').style.display="none";
+             }         
              if (key == "0"){                
                 document.getElementById('op1').style.display="block";
-             } else
-             { document.getElementById('op1').style.display="none";
-                // $('wtab01Grid_div').style.visibility="hidden"; wfacnmGrid_div
-             }
+             } 
              if (key == "1"){
-                document.getElementById('op2').style.display="block";
-             } else{
-                document.getElementById('op2').style.display="none";
+                document.getElementById('op1').style.display="block";
              }             
             
             }
@@ -1335,6 +1267,82 @@ function CahngeSlect(value){
             searchtxt8_rtn();
         })
 
+        
+//     // <!-- 저장 스크립트 시작 -->
+// function save_btn(){ 
+
+// var ls_actfseqz   = document.getElementById('actfseqz').value; 
+// var ls_actfsubjectz   = document.getElementById('actfsubjectz').value; 
+// var ls_actfmemoz   = document.getElementById('actfmemoz').value;
+
+// if(!ls_actfsubjectz){
+//     alert("담당자를 입력하세요")
+//     return 
+// } 
+// if(!ls_actfmemoz){
+//     alert("처리자를 입력하세요")
+//     return 
+// } 
+// if(!ls_actfsubjectz){
+//     alert("도착일자를 입력하세요")
+//     return 
+// } 
+// if(!ls_actfmemoz){
+//     alert("완료일자를 입력하세요")
+//     return 
+// }
+// if(!ls_actfsubjectz){
+//     alert("도착시간을 입력하세요")
+//     return 
+// } 
+// if(!ls_actfsubjectz){
+//     alert("완료시간을 입력하세요")
+//     return 
+// } 
+// if(!ls_actfsubjectz){
+//     alert("고장상세원인을 입력하세요")
+//     return 
+// } 
+// if(!ls_actfsubjectz){
+//     alert("처리내용상세를 입력하세요")
+//     return 
+// }  
+// if(!ls_actfsubjectz){
+//     alert("고객요망사항을 입력하세요")
+//     return 
+// }              
+//     $.ajax({
+//     url: '/app10/saveboard',
+//     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+//     type: "POST",
+//               data:{
+//             "actfseqz"    : ls_actfseqz ,
+//             "actfsubjectz": ls_actfsubjectz , 
+//             "actfmemoz"   : ls_actfmemoz, 
+//             "actfflagz"   : ls_actfflagz,               
+//             },       
+//             async:false,
+//     success:function(data){
+//             if(data == "success"){
+//             alert("저장되었습니다.")
+//             console.log("save", data);
+//                 listUp();
+//         }else{
+//             alert("저장되었습니다.")
+//                 listUp();
+//         }
+//     },error:function(e){
+//         console.log('error',e);
+//     }
+//     }).done(function(fragment){
+       
+//     }) 
+    
+//     listUp(); 
+// }
+// function listUp(){
+// window.location.href = '/app10/index01';
+// }; 
 
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){ 
@@ -1390,7 +1398,19 @@ function CahngeSlect(value){
                     recedate: wtab01Dto[i]["recedate"],
                     recenum: wtab01Dto[i]["recenum"],                
                     actnm: wtab01Dto[i]["actnm"],
-                    equpnm: wtab01Dto[i]["equpnm"],                                                                                                        
+                    equpnm: wtab01Dto[i]["equpnm"], 
+                    recetime : wtab01Dto[i]["recetime"], 
+                    actcd : wtab01Dto[i]["actcd"],                                                                                                       
+                    equpnm : wtab01Dto[i]["equpnm"],
+                    equpcd : wtab01Dto[i]["equpcd"],                                                                                                       
+                    pernm : wtab01Dto[i]["pernm"],
+                    perid : wtab01Dto[i]["perid"].substr(1),    
+                    // perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                          
+                    actdd : wtab01Dto[i]["actdd"], 
+                    actreginm : wtab01Dto[i]["actreginm"],  
+                    resultck : wtab01Dto[i]["resultck"]  
+                    // 미처리 0번                                                                                                                                                                                                       
+
                 });
                 cnt++;
             }   
@@ -1421,11 +1441,11 @@ function CahngeSlect(value){
             cols.binding = 'actnm';
             cols.header = '현장명';
             cols.align = "center";
-            cols.width = '2*'; 
+            cols.width = '3*'; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.actdd, ctx.item.actreginm,);
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1437,11 +1457,27 @@ function CahngeSlect(value){
             cols.width = '*';                  
             wtab01Grid.columns.push(cols);  
 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'resultck';
+            cols.header = '처리여부';
+            cols.align = "center";
+            cols.width = '*';                  
+            wtab01Grid.columns.push(cols); 
+
         }
 
-        function wactnmChk_a(arg1, arg2){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
+            document.getElementById('recetimez').value = arg3;
+            document.getElementById('actnmz').value = arg4; 
+            document.getElementById('actcdz').value = arg5; 
+            document.getElementById('equpnmz').value = arg6;   
+            document.getElementById('equpcdz').value = arg7;
+            document.getElementById('pernmz').value = arg8; 
+            document.getElementById('peridz').value = arg9;   
+            document.getElementById('actddz').value = arg10;
+            document.getElementById('actreginmz').value = arg11;
         }
         
       
@@ -1871,7 +1907,7 @@ function CahngeSlect(value){
                         wactpernm_data.push({                            
                             id: i, 
                             index: cnt,
-                            perid: wactpernmDto[i]["perid"], 
+                            perid: wactpernmDto[i]["perid"].substr(1), 
                             pernm: wactpernmDto[i]["pernm"],                                                                        
                         });
                         cnt++;
@@ -2003,7 +2039,7 @@ function CahngeSlect(value){
                             id: i, 
                             index: cnt,
                             pernm:wpernmDto[i]["pernm"],
-                            perid:wpernmDto[i]["perid"],                                             
+                            perid:wpernmDto[i]["perid"].substr(1),                                             
                         });
                         cnt++;
                     }   
@@ -2085,7 +2121,6 @@ function CahngeSlect(value){
         }
         function getToday(){
             let today = new Date();   
-
             let year = today.getFullYear(); // 년도
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜

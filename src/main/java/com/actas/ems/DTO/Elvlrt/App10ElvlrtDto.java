@@ -13,6 +13,11 @@ public class App10ElvlrtDto {
     private String compnum; //완료번호
     private String remark; //고객요망사항
 
+    private String todate2; //도착일자
+    private String codate; //완료일자
+    private String frtime; //도착시간
+    private String totime; //완료시간
+    private String facnm;
     private String cltcd;
     private String contents;
     private String perid;
