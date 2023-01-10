@@ -14,7 +14,7 @@ import java.util.List;
 public interface App10ElvlrtMapper {
 
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm) ;
-//    public List<App10ElvlrtDto> GetApp03List002(App10ElvlrtDto parm) ;
+    public List<App10ElvlrtDto> GetApp10List002(App10ElvlrtDto parm) ;
 //    public List<App10ElvlrtDto> GetApp03List003(App10ElvlrtDto parm) ;
 
 }

@@ -94,8 +94,8 @@
                                 <div class="input_wrap">
                                     <select  name="changeop" id="changeop" onchange="CahngeSlect(this.value)">
                                         <option value="%"  >선택</option>
-                                        <option value="A">미처리</option>    
-                                        <option value="B">처리</option> 
+                                        <option value="0">미처리</option>    
+                                        <option value="1">처리</option> 
                                     </select>
                                 </div>
                             </div>                              
@@ -103,12 +103,12 @@
                             <div class="table table_style2">
                                 <div class="card-body bg-light">   
                                     <input type="hidden" id="changeop2" value="A">                                                                                                                                    
-                                      <div class="tab-content">                                        
-                                        <div class="tab-pane fade show active">  
+                                      <div class="tab-content" style="max-width: 800px">                                        
+                                        <div class="tab-pane fade show active" >  
                                             <div class="container-fluid" id="opdefault" style="visibility: hidden">
                                             </div>
                                             <div class="container-fluid" id="op1" style="display: none"> 
-                                                <div id="wtab01Grid_div"></div>
+                                                <div id="wtab01Grid_div" ></div>
                                                 <div id="tab01Pager"></div>
                                             </div>   
                                             <div class="container-fluid" id="op2" style="display: none"> 
@@ -135,12 +135,14 @@
                                         <td >
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
+                                                <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
+
                                             </div>
                                         </td>
-                                        <th>접수번호</th>
+                                        <th>접수시간</th>
                                         <td>
-                                            <div class="input_wrap">
-                                                <input type="text" id="recenumz" placeholder="접수번호" disabled>
+                                            <div class="input_wrap">                                               
+                                                <input type="text"  class="form-control " id="recetime" autocomplete="off" placeholder="호출" disabled >
                                             </div>
                                         </td>                                        
                                        <th>공유</th>                                       
@@ -172,29 +174,7 @@
                                                 <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
                                             </td>
-                                    </tr>
-                                    <tr>
-                                        <th>접수일자</th>
-                                        <td >
-                                            <div class="input_wrap">                                                
-                                                <input type="text"  class="form-control " id="recedate" autocomplete="off" placeholder="호출" disabled>
-                                            </div>
-                                        </td>
-                                        <th>접수시간</th>
-                                        <td >
-                                            <div class="input_wrap">                                               
-                                                <input type="text"  class="form-control " id="recetime" autocomplete="off" placeholder="호출" disabled >
-                                            </div>
-                                        </td>
-                                        <th>부서명</th>
-                                        <td colspan="2">
-                                            <div class="input_wrap table_search">
-                                                <input type="text" name="actdivinmz" id="actdivinmz" autocomplete="off" placeholder="부서명을 찾아주세요" aria-label="actdivinmz" aria-describedby="basic-addon1">
-                                                <input type="hidden"  id="divicdz">
-                                                <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
-                                            </div>
-                                        </td> 
-                                    </tr>                                    
+                                    </tr>                                                                                                                                                                                       
                                     <tr>                                        
                                         <th>도착일자</th>
                                         <td >
@@ -217,7 +197,13 @@
                                                 <input type="hidden"  id="peridz">
                                                 <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
-                                        </td>                                        
+                                        </td> 
+                                        <!-- 부서명 -->
+                                            <div type="hidden" class="input_wrap table_search">
+                                                <input type="hidden" name="actdivinmz" id="actdivinmz" autocomplete="off" placeholder="부서명을 찾아주세요" aria-label="actdivinmz" aria-describedby="basic-addon1">
+                                                <input type="hidden"  id="divicdz">
+                                                <!-- <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button> -->
+                                            </div>                                                                               
                                     </tr>
                                     <tr>                                        
                                         <th>완료일자</th>
@@ -786,7 +772,7 @@
                 alternatingRowStep: 0,
                 columns: [    
                     { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
-                    { binding: 'actcd', header: '현장코드', align: "center", width: '*' },  
+                    { binding: 'recenum', header: '접수번호', align: "center", width: '*' },  
                     { binding: 'actnm', header: '현장명', align: "center", width: '*' },                      
                     { binding: 'equpnm', header: '호기명', align: "center", width: '*' },                       
                     
@@ -826,10 +812,10 @@
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            recedate: "",
-                            actcd: "",
-                            actnm: "",
-                            equpnm: "",                          
+                            recedate: "", //접수일자
+                            recenum: "", //접수번호
+                            actnm: "", //현장명
+                            equpnm: "", //호기명                  
                            
                         });
                         cnt++;
@@ -893,10 +879,10 @@
 
                 // tab02검색 데이터 수집
                 function getData_tab02(){    
-                    var wequpnm_data = []; 
+                    var wtab02_data = []; 
                     var cnt = 1;
                     for (var i = 0; i < 20; i++) {
-                        wequpnm_data.push({
+                        wtab02_data.push({
                             id: i, 
                             index: cnt,
                             recedate: "",
@@ -907,7 +893,7 @@
                         });
                         cnt++;
                     }    
-                    return wequpnm_data;                                         
+                    return wtab02_data;                                         
                 } 
                  // ################################################################
 
@@ -1153,8 +1139,8 @@
                     selectionMode: 'RowRange',
                     alternatingRowStep: 0,
                     columns: [
-                        { binding: 'actperid', header: '코드', align: "center", width: '1*' },     
-                        { binding: 'actpernm', header: '담당자', align: "center", width: '1*' },        
+                        { binding: 'perid', header: '코드', align: "center", width: '1*' },     
+                        { binding: 'pernm', header: '담당자', align: "center", width: '1*' },        
    
                     ],
                     itemsSource: view_actpernmpage
@@ -1167,8 +1153,8 @@
                         wractpernm_data.push({
                             id: i,
                             index: cnt,                           
-                            actperid: "",
-                            actpernm: "",
+                            perid: "",
+                            pernm: "",
                         });
                         cnt++;
                     }
@@ -1259,13 +1245,13 @@
 
 function CahngeSlect(value){
             var key = changeop.value;          
-             if (key == "A"){                
+             if (key == "0"){                
                 document.getElementById('op1').style.display="block";
              } else
              { document.getElementById('op1').style.display="none";
                 // $('wtab01Grid_div').style.visibility="hidden"; wfacnmGrid_div
              }
-             if (key == "B"){
+             if (key == "1"){
                 document.getElementById('op2').style.display="block";
              } else{
                 document.getElementById('op2').style.display="none";
@@ -1352,61 +1338,43 @@ function CahngeSlect(value){
 
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){ 
+
             //조회시임.
-            var ls_tab = document.getElementById('changeop2').value; 
             let ls_frdate = document.getElementById('frdate').value; //기간
-            let ls_todate = document.getElementById('todate').value;  //""
-            let ls_actcdz = document.getElementById('actcdz').value;  //현장코드
-            let ls_equpnmz = document.getElementById('equpnmz').value; //호기명
-            // let ls_actcontnmz = document.getElementById('actcontnmz').value;
-            
-            if(ls_equpnmz == null || ls_equpnmz.length == 0 || ls_equpnmz == ""){                
-                ls_equpnmz = "%";
-                document.getElementById('equpnmz').value = "";  
+            let ls_todate = document.getElementById('todate').value;  //""  
+            var ls_changeop = document.getElementById('changeop').value; //setop        
+            if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == ""){                
+                alert("시작일자를 입력하세요.")
+                 return;
             }  
-            if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
-                ls_actcdz = "%";
+            if(ls_todate == null || ls_todate.length == 0 || ls_todate == ""){
+                alert("종료일자를 입력하세요.")
+                 return;                 
             }                         
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_equpnmz);
-            // console.log(data);
+            searchList_rtn(ls_frdate, ls_todate, ls_changeop);
 
         })   
-       
-        function searchList_rtn(arg1, arg2, arg3, arg4, arg5){             
-            switch(arg1){
-                
-                case 'A':
-                    $.ajax({
+            
+        function searchList_rtn(arg1, arg2, arg3){ 
+            console.log(arg1);            
+            $.ajax({
                         url: '/app10/p001tab01',  
                         type:"POST",
                         data: { 
-                            "frdate"      : arg2,  
-                            "todate"      : arg3 , 
-                            "actcdz"      : arg4 , 
-                            "equpnmz"  : arg5 
+                            "frdate" :arg1,
+                            "todate"      : arg2, 
+                            "changeop"      : arg3 , 
+
                         }, 
                         async:false,
                         success:function(data){   
                             tabA_grid(data);
                         },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
+                            console.log("error");                            
                         }
                     }).done(function(fragment){           
 
-                    })  
-                    break;
-                case 'B': 
-                    barChartInit01(arg1, arg2, arg3, arg4, arg5)
-                    break;
-                // case 'C':
-                //     barChartInit02(arg1, arg2, arg3, arg4, arg5)
-                //     break;                
-                default:    
-                    break;                
-            }
-        
+                    })        
 
         }        
 
@@ -1420,101 +1388,62 @@ function CahngeSlect(value){
                     id: i, 
                     index: cnt,
                     recedate: wtab01Dto[i]["recedate"],
-                    actcd: wtab01Dto[i]["actcd"],                
+                    recenum: wtab01Dto[i]["recenum"],                
                     actnm: wtab01Dto[i]["actnm"],
                     equpnm: wtab01Dto[i]["equpnm"],                                                                                                        
                 });
                 cnt++;
             }   
-            // console.log("wtab01_data",wactnm_data) +
+
+            console.log("wtab01_data"); 
             // console.log(wtab01_data.length);
+
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
+
             var cols = new wijmo.grid.Column(); 
             cols.binding = 'recedate';
             cols.header = '접수일자';
             cols.align = "center";
             cols.width = '*';
+           
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'recenum';
+            cols.header = '접수번호';
+            cols.align = "center";
+            cols.width = '*';
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'actnm';
+            cols.header = '현장명';
+            cols.align = "center";
+            cols.width = '2*'; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.recedate}</b>',
+                text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
                     wactnmChk_a(ctx.item.recedate, ctx.item.recenum);
                 }
             });
             wtab01Grid.columns.push(cols);  
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'actcd';
-            cols.header = '접수번호';
-            cols.align = "center";
-            cols.width = '2*';
-            wtab01Grid.columns.push(cols);  
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'actnm';
-            cols.header = '현장명';
-            cols.align = "center";
-            cols.width = '2*'; 
-            wtab01Grid.columns.push(cols);  
+
             cols = new wijmo.grid.Column(); 
             cols.binding = 'equpnm';
             cols.header = '호기명';
             cols.align = "center";
             cols.width = '*';                  
- 
+            wtab01Grid.columns.push(cols);  
+
         }
 
-         //  tab02 grid data 수집
-         function tabB_grid(data){
-            var wtab02Dto  = data;    
-            var wtab02_data = [];
-            var cnt = 1;
-            for (var i = 0; i < wtab02Dto.length; i++) {
-                wtab02_data.push({
-                    id: i, 
-                    index: cnt,
-                    recedate: wtab02Dto[i]["recedate"],
-                    actcd: wtab02Dto[i]["actcd"],                    
-                    actnm: wtab02Dto[i]["actnm"],
-                    equpnm: wtab02Dto[i]["equpnm"],                                                                                                        
-                });
-                cnt++;
-            }   
-            // console.log("wtab02_data",wactnm_data) +
-            // console.log(wtab02_data.length);
-            wtab01Grid.columns.clear();  
-            wtab01Grid.autoGenerateColumns = false; 
-            view_p01tab01page.sourceCollection  = wtab02_data;
-            var cols = new wijmo.grid.Column(); 
-            cols.binding = 'recedate';
-            cols.header = '접수일자';
-            cols.align = "center";
-            cols.width = '*';
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.recedate}</b>',
-                click: (e, ctx) => {
-                    wactnmChk_b(ctx.item.recedate, ctx.item.recenum);
-                }
-            });
-            wtab01Grid.columns.push(cols);  
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'recenum';
-            cols.header = '접수번호';
-            cols.align = "left";
-            cols.width = '2*';
-            wtab01Grid.columns.push(cols);  
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'actnm';
-            cols.header = '현장명';
-            cols.align = "left";
-            cols.width = '2*'; 
-            wtab01Grid.columns.push(cols);  
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'equpnm';
-            cols.header = '호기명';
-            cols.align = "center";
-            cols.width = '*';                  
- 
+        function wactnmChk_a(arg1, arg2){            
+            document.getElementById('recedatez').value = arg1; 
+            document.getElementById('recenumz').value = arg2;   
         }
+        
       
         //모달검색 바디-푸터
 
@@ -1926,7 +1855,7 @@ function CahngeSlect(value){
             }
             // console.log('ls_cltcd-->' + ls_cltcd);
             $.ajax({
-                url: '/pop01/wactpernm',  
+                url: '/pop01/wpernm',  
                 type:"POST",
                 data: { 
                     "actpernmz"      : searchText7, 
@@ -1942,8 +1871,8 @@ function CahngeSlect(value){
                         wactpernm_data.push({                            
                             id: i, 
                             index: cnt,
-                            actperid: wactpernmDto[i]["actperid"], 
-                            actpernm: wactpernmDto[i]["actpernm"],                                                                        
+                            perid: wactpernmDto[i]["perid"], 
+                            pernm: wactpernmDto[i]["pernm"],                                                                        
                         });
                         cnt++;
                     }   
@@ -1952,20 +1881,20 @@ function CahngeSlect(value){
                     wactpernmGrid.autoGenerateColumns = false; 
                     view_actpernmpage.sourceCollection  = wactpernm_data;
                     var cols = new wijmo.grid.Column(); 
-                    cols.binding = 'actperid';
+                    cols.binding = 'perid';
                     cols.header = '코드';
                     cols.align = "center";
                     cols.width = '*';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.actperid}</b>',
+                        text: '<b>${item.perid}</b>',
                         click: (e, ctx) => {
-                            wactnmChk_7(ctx.item.actperid, ctx.item.actpernm);
+                            wactnmChk_7(ctx.item.perid, ctx.item.pernm);
                         }
                     });
                     wactpernmGrid.columns.push(cols);    
                     // console.log("cols", cols);  
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'actpernm';
+                    cols.binding = 'pernm';
                     cols.header = '담당자';
                     cols.align = "center";
                     cols.width = '*'; 

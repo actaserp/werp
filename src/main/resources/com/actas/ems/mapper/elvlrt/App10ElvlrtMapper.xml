@@ -29,59 +29,14 @@
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
                      LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
                      LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.perid = e.perid)
-                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND tb_e401.divicd = f.divicd)
+                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
                  WHERE
                      a.spjangcd = #{spjangcd}
-                   AND a.resultck <> '1'
-                --     $new = htmlspecialchars("<div id='changeop'>Test</div>", ENT_QUOTES);
-                      --  (CASE WEHN id ='${changeop}' == A THEN '1' ELSE (resultck = #{resultck}) END)
+                   AND a.resultck like CONCAT('%',#{changeop},'%')
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
---
-
         ]]>
     </select>
 
-
-
-<!--    &lt;!&ndash;      고장내용별현황 / 현장별 고장내용  &ndash;&gt;-->
-<!--    <select id="GetApp10List002"  parameterType="com.actas.ems.DTO.Popup.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">-->
-<!--        <![CDATA[-->
-<!--        SELECT   sum(a.cnt) as cnt,-->
-<!--                 a.contnm as contnm,-->
-<!--                 left(a.recedate,6) as recedate-->
-<!--        FROM-->
-<!--            (-->
-<!--            SELECT a.custcd,-->
-<!--            a.spjangcd,-->
-<!--            a.cltcd,-->
-<!--            a.actcd,-->
-<!--            a.equpcd,-->
-<!--            a.recedate,-->
-<!--            a.recetime,-->
-<!--            q.actnm,-->
-<!--            m.equpnm,-->
-<!--            1 as cnt,-->
-<!--            1 as ascnt,-->
-<!--            a.contcd,-->
-<!--            p.contnm,-->
-<!--            a.contents as contremark,-->
-<!--            g.pernm as repernm,-->
-<!--            d.pernm-->
-<!--            FROM tb_e401 a WITH(NOLOCK)-->
-<!--            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)-->
-<!--            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)-->
-<!--            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)-->
-<!--            LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))-->
-<!--            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))-->
-<!--            ) a-->
-<!--        WHERE  a.recedate  between #{frdate} and #{todate}-->
-<!--          AND a.actcd = #{actcd}-->
-<!--          AND a.contcd Like concat('%',#{contcd},'%')-->
-<!--        group by  a.contnm,  left(a.recedate,6)-->
-<!--        order by   left(a.recedate,6), a.contnm-->
-
-<!--        ]]>-->
-<!--    </select>-->
 
 <!--    &lt;!&ndash;      고장내용별현황 / 호기별 고장내용  &ndash;&gt;-->
 <!--    <select id="GetApp03List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">-->
