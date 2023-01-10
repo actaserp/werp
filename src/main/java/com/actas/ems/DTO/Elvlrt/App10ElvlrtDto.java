@@ -7,11 +7,28 @@ import lombok.Setter;
 public class App10ElvlrtDto {
 
     private String resultck;
+
+    private String changeop;
+    private String spjangcd;
+    private String compnum; //완료번호
+    private String remark; //고객요망사항
+
+    private String todate2; //도착일자
+    private String codate; //완료일자
+    private String frtime; //도착시간
+    private String totime; //완료시간
+    private String facnm;
+    private String cltcd;
+    private String contents;
+    private String perid;
+    private String custcd;
+    private String divicd;
+
+
     private String frdate;
     private String todate;
-    //여기까지 수정2 끝
     private String recedate; //접수일자
-    private String recenum;
+    private String recenum; //접수번호
     private String recetime;
     private String actcd;
     private String actnm;
@@ -26,13 +43,13 @@ public class App10ElvlrtDto {
     private String contnm;
     private String contremark;
     private String resunm;
-    private String resuremark;
+    private String resuremark; //처리내용상세
     private String jejak;
     private String model;
     private String yyyymm;
     private String repernm;
     private String remonm;
-    private String remoremark;
+    private String remoremark; //고장원인상세
     private String greginm;
     private String reginm;
     private String result;

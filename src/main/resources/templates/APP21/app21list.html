@@ -480,8 +480,7 @@
                     { binding: 'remoremark', header: '고장요인상세', align: "center", width: '*' },
                     { binding: 'greginm', header: '고장부위', align: "center", width: '*' },
                     { binding: 'reginm', header: '고장부위상세', align: "center", width: '*' },
-                    { binding: 'result', header: '처리방법', align: "center", width: '*' },
-                    { binding: 'resultnm', header: '진행내역', align: "center", width: '*' }
+                    { binding: 'resultnm', header: '처리방법', align: "center", width: '*' }
                 ],
                 itemsSource: view_p01tab01page
             });
@@ -908,12 +907,12 @@
             wtab01Grid.columns.clear();
             wtab01Grid.autoGenerateColumns = false;
             view_p01tab01page.sourceCollection  = wtab01_data;
-            
+
             var cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';
             cols.align = "center";
-            cols.width = '*';
+            cols.width = '3*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'equpnm';
@@ -924,7 +923,7 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'pernm';
             cols.header = '처리자';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -936,62 +935,56 @@
             cols = new wijmo.grid.Column();
             cols.binding = 'contnm';
             cols.header = '고장내용';
-            cols.align = "left";
-            cols.width = '3*';
+            cols.align = "center";
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contremark';
             cols.header = '고장상세내용';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resunm';
             cols.header = '처리내용';
-            cols.align = "left";
-            cols.width = '*';
+            cols.align = "center";
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resuremark';
             cols.header = '처리내용상세';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remonm';
             cols.header = '고장요인';
-            cols.align = "left";
-            cols.width = '*';
+            cols.align = "center";
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remoremark';
             cols.header = '고장요인상세';
             cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'greginm';
             cols.header = '고장부위';
-            cols.align = "left";
+            cols.align = "center";
             cols.width = '*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'reginm';
             cols.header = '고장부위상세';
             cols.align = "left";
-            cols.width = '*';
-            wtab01Grid.columns.push(cols);
-            cols = new wijmo.grid.Column();
-            cols.binding = 'result';
-            cols.header = '처리방법';
-            cols.align = "left";
-            cols.width = '*';
+            cols.width = '2*';
             wtab01Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resultnm';
-            cols.header = '진행내역';
-            cols.align = "left";
-            cols.width = '*';
+            cols.header = '처리방법';
+            cols.align = "center";
+            cols.width = '1*';
             wtab01Grid.columns.push(cols);
 
         }
@@ -1495,7 +1488,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
-            if(month > 0 && date < 10) {month = "0" + month};
+            if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01'
             let ls_today = year + '-' + month + '-' + date

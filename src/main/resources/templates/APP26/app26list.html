@@ -157,6 +157,18 @@
                   <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">현장현황</a>
                 </li>
 
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step02" onclick="tabchk_rtn('B')">현장별호기</a>
+                </li>
+  
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step03" onclick="tabchk_rtn('C')">계약일별대수</a>
+                </li>
+  
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step04" onclick="tabchk_rtn('D')">구분별계약대수</a>
+                </li>
+  
                 <input type="hidden" id="tabvalue" value="A">
               </ul>
               <div class="tab-content">
@@ -168,19 +180,22 @@
                 </div>
                 <div class="tab-pane fade" id="step02">
                   <div class="container-fluid">
-                    <div id="chartTabB"></div>
+                    <div id="wtab02Grid_div" ></div>
+                    <div id="tab02Pager"></div>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="step03">
                   <div class="container-fluid">
-                    <select id="typeMenu">
-                      <option value="0" selected="selected">사분면(Squarified)</option>
-                      <option value="1">수평(Horizontal)</option>
-                      <option value="2">수직(Vertical)</option>
-                    </select>
-                    <div id="chartTabC"></div>
+                    <div id="wtab03Grid_div" ></div>
+                    <div id="tab03Pager"></div>
                   </div>
                 </div>
+                <div class="tab-pane fade" id="step04">
+                    <div class="container-fluid">
+                        <div id="wtab04Grid_div" ></div>
+                      <div id="tab04Pager"></div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -418,6 +433,9 @@
 
   <script type="text/javascript" th:inline="javascript">
          var view_p01tab01page;
+         var view_p01tab02page;
+         var view_p01tab03page;
+         var view_p01tab04page;
          var view_actnmpage;
          var view_contnmpage;
          var view_remonmpage;
@@ -425,6 +443,9 @@
          var view_greginmpage;
          var view_resultnmpage;
          var wtab01Grid;
+         var wtab02Grid;
+         var wtab03Grid;
+         var wtab04Grid;
          var wactnmGrid;
          var wcontnmGrid;
          var wremonmGrid;
@@ -433,7 +454,6 @@
          var wresultnmGrid;
          var typeMenu;
          var treemap;
-         let barchart;
          let ani;
         var wseries_data = [0];
 
@@ -458,6 +478,44 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [
+                    { binding: 'actnm', header: '계약구분', align: "center", width: '*' },
+                    { binding: 'actnm', header: '현장명', align: "center", width: '*' },
+                    { binding: 'actnm', header: '거래처명', align: "center", width: '*' },
+                    { binding: 'actnm', header: '관리대수', align: "center", width: '*' },
+                    { binding: 'pernm', header: '담당자', align: "center", width: '*' },
+                    { binding: 'divinm', header: '부서명', align: "center", width: '*' },
+                    
+                ],
+                itemsSource: view_p01tab01page
+            });
+
+            new FlexGridContextMenu(wtab01Grid);
+            
+            // 선택기 생성
+            let selector = new wijmo.grid.selector.Selector(wtab02Grid, {
+                itemChecked: () => {
+                    showCheckedCount();
+                }
+            });
+            
+            //tab01검색 popup list
+            view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
+                pageSize: 12
+            });
+            // tab01검색 페이지 이동
+            new wijmo.input.CollectionViewNavigator('#tab02Pager', {
+                byPage: true,
+                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                cv: view_p01tab02page
+            });
+            wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {
+                autoGenerateColumns: false,
+                showMarquee: true,
+                isReadOnly: false,
+                // selectionMode: 'RowRange',
+                allowSorting: 'MultiColumn',
+                alternatingRowStep: 0,
+                columns: [
 
                     { binding: 'actnm', header: '현장명', align: "center", width: '*' },
                     { binding: 'equpnm', header: '호기명', align: "center", width: '*' },
@@ -474,17 +532,17 @@
                     { binding: 'result', header: '처리방법', align: "center", width: '*' },
                     { binding: 'resultnm', header: '진행내역', align: "center", width: '*' }
                 ],
-                itemsSource: view_p01tab01page
+                itemsSource: view_p01tab02page
             });
 
-            new FlexGridContextMenu(wtab01Grid);
+            new FlexGridContextMenu(wtab02Grid);
             // 그룹 패널 생성
             var theGroupPanel = new wijmo.grid.grouppanel.GroupPanel('#theGroupPanel', {
                 placeholder: '그룹을 만들려면 열을 여기로 끌어다 놓아주세요.  마우스 우 클릭하시면 엑셀로 받으실 수 있습니다.',
-                grid: wtab01Grid
+                grid: wtab02Grid
             });
             // 선택기 생성
-            let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
+            let selector2 = new wijmo.grid.selector.Selector(wtab02Grid, {
                 itemChecked: () => {
                     showCheckedCount();
                 }
@@ -492,17 +550,115 @@
             // 헤더 열 전환
             setHeaderColumn(true);
             function setHeaderColumn(headerOn) {
-                wtab01Grid.headersVisibility = headerOn
+                wtab02Grid.headersVisibility = headerOn
                 ? wijmo.grid.HeadersVisibility.All
                 : wijmo.grid.HeadersVisibility.Column;
                 selector.column = headerOn
-                ? wtab01Grid.rowHeaders.columns[0]
-                : wtab01Grid.columns[0];
+                ? wtab02Grid.rowHeaders.columns[0]
+                : wtab02Grid.columns[0];
             }
-            wtab01Grid.showMarquee = true;
-            wtab01Grid.focus();
-            wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
-            wtab01Grid.focus();
+            wtab02Grid.showMarquee = true;
+            wtab02Grid.focus();
+            wijmo.toggleClass(wtab02Grid.hostElement, 'highlightActive', true);
+            wtab02Grid.focus();
+
+            //tab03검색 popup list
+            view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
+                pageSize: 12
+            });
+            // tab03검색 페이지 이동
+            new wijmo.input.CollectionViewNavigator('#tab03Pager', {
+                byPage: true,
+                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                cv: view_p01tab03page
+            });
+            wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {
+                autoGenerateColumns: false,
+                showMarquee: true,
+                isReadOnly: false,
+                // selectionMode: 'RowRange',
+                allowSorting: 'MultiColumn',
+                alternatingRowStep: 0,
+                columns: [
+
+                    { binding: 'actnm', header: '현장명', align: "center", width: '*' },
+                    { binding: 'equpnm', header: '호기명', align: "center", width: '*' },
+                    { binding: 'pernm', header: '처리자', align: "center", width: '*' },
+                    { binding: 'qty', header: '건수', align: "center", width: '*' },
+                    { binding: 'contnm', header: '고장내용', align: "center", width: '*' },
+                    { binding: 'contremark', header: '고장상세내용', align: "center", width: '*' },
+                    { binding: 'resunm', header: '처리내용', align: "center", width: '*' },
+                    { binding: 'resuremark', header: '처리내용상세', align: "center", width: '*' },
+                    { binding: 'remonm', header: '고장요인', align: "center", width: '*' },
+                    { binding: 'remoremark', header: '고장요인상세', align: "center", width: '*' },
+                    { binding: 'greginm', header: '고장부위', align: "center", width: '*' },
+                    { binding: 'reginm', header: '고장부위상세', align: "center", width: '*' },
+                    { binding: 'result', header: '처리방법', align: "center", width: '*' },
+                    { binding: 'resultnm', header: '진행내역', align: "center", width: '*' }
+                ],
+                itemsSource: view_p01tab03page
+            });
+
+            new FlexGridContextMenu(wtab03Grid);
+            
+            // 선택기 생성
+            let selector3 = new wijmo.grid.selector.Selector(wtab03Grid, {
+                itemChecked: () => {
+                    showCheckedCount();
+                }
+            });
+            wtab03Grid.showMarquee = true;
+            wtab03Grid.focus();
+            wijmo.toggleClass(wtab03Grid.hostElement, 'highlightActive', true);
+            wtab03Grid.focus();
+
+            //tab04검색 popup list
+            view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
+                pageSize: 12
+            });
+            // tab04검색 페이지 이동
+            new wijmo.input.CollectionViewNavigator('#tab04Pager', {
+                byPage: true,
+                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                cv: view_p01tab04page
+            });
+            wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {
+                autoGenerateColumns: false,
+                showMarquee: true,
+                isReadOnly: false,
+                // selectionMode: 'RowRange',
+                allowSorting: 'MultiColumn',
+                alternatingRowStep: 0,
+                columns: [
+
+                    { binding: 'actnm', header: '현장명', align: "center", width: '*' },
+                    { binding: 'equpnm', header: '호기명', align: "center", width: '*' },
+                    { binding: 'pernm', header: '처리자', align: "center", width: '*' },
+                    { binding: 'qty', header: '건수', align: "center", width: '*' },
+                    { binding: 'contnm', header: '고장내용', align: "center", width: '*' },
+                    { binding: 'contremark', header: '고장상세내용', align: "center", width: '*' },
+                    { binding: 'resunm', header: '처리내용', align: "center", width: '*' },
+                    { binding: 'resuremark', header: '처리내용상세', align: "center", width: '*' },
+                    { binding: 'remonm', header: '고장요인', align: "center", width: '*' },
+                    { binding: 'remoremark', header: '고장요인상세', align: "center", width: '*' },
+                    { binding: 'greginm', header: '고장부위', align: "center", width: '*' },
+                    { binding: 'reginm', header: '고장부위상세', align: "center", width: '*' },
+                    { binding: 'result', header: '처리방법', align: "center", width: '*' },
+                    { binding: 'resultnm', header: '진행내역', align: "center", width: '*' }
+                ],
+                itemsSource: view_p01tab04page
+            });
+
+            new FlexGridContextMenu(wtab04Grid);
+            
+            // 선택기 생성
+            let selector4 = new wijmo.grid.selector.Selector(wtab04Grid, {
+                itemChecked: () => {
+                    showCheckedCount();
+                }
+            });
+
+
 
 
             // tab01검색 데이터 수집
@@ -526,6 +682,75 @@
                     cnt++;
                 }
                 return wactnm_data;
+            }
+
+            // tab02검색 데이터 수집
+            function getData_tab02(){
+                var wtab02_data = [];
+                var cnt = 1;
+                for (var i = 0; i < 12; i++) {
+                    wtab02_data.push({
+                        id: i,
+                        index: cnt,
+                        recedate: "",
+                        recetime: "",
+                        actnm: "",
+                        equpnm: "",
+                        actpernm: "",
+                        pernm: "",
+                        equpnm: "",
+                        contnm: "",
+                        contremark: "",
+                    });
+                    cnt++;
+                }
+                return wtab02_data;
+            }
+
+            // tab03검색 데이터 수집
+            function getData_tab03(){
+                var wtab03_data = [];
+                var cnt = 1;
+                for (var i = 0; i < 12; i++) {
+                    wtab03_data.push({
+                        id: i,
+                        index: cnt,
+                        recedate: "",
+                        recetime: "",
+                        actnm: "",
+                        equpnm: "",
+                        actpernm: "",
+                        pernm: "",
+                        equpnm: "",
+                        contnm: "",
+                        contremark: "",
+                    });
+                    cnt++;
+                }
+                return wtab03_data;
+            }
+
+            // tab04검색 데이터 수집
+            function getData_tab04(){
+                var wtab04_data = [];
+                var cnt = 1;
+                for (var i = 0; i < 12; i++) {
+                    wtab04_data.push({
+                        id: i,
+                        index: cnt,
+                        recedate: "",
+                        recetime: "",
+                        actnm: "",
+                        equpnm: "",
+                        actpernm: "",
+                        pernm: "",
+                        equpnm: "",
+                        contnm: "",
+                        contremark: "",
+                    });
+                    cnt++;
+                }
+                return wtab04_data;
             }
 
             //현장검색 popup list
@@ -739,22 +964,6 @@
         document.getElementById("actnmz").addEventListener("click",function(){
             document.getElementById("actnmbtn").click();
         });
-        //고장요인 검색
-        document.getElementById("actremonmz").addEventListener("click",function(){
-            document.getElementById("actremonmbtn").click();
-        });
-        //처리내용 검색
-        document.getElementById("actresunmz").addEventListener("click",function(){
-            document.getElementById("actresunmbtn").click();
-        });
-        //고장부위 검색
-        document.getElementById("actgreginmz").addEventListener("click",function(){
-            document.getElementById("actgreginmbtn").click();
-        });
-        //처리방법 검색
-        document.getElementById("actresultnmz").addEventListener("click",function(){
-            document.getElementById("actresultnmbtn").click();
-        });
 
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -762,40 +971,13 @@
         document.getElementById("wactnmBtn").addEventListener("click",function(){
             searchpcode_rtn();
         })
-        // 고장요인 검색
-        document.getElementById("wremonmBtn").addEventListener("click",function(){
-            searchremo_rtn();
-        })
-        // 처리내용 검색
-        document.getElementById("wresunmBtn").addEventListener("click",function(){
-            searchresu_rtn();
-        })
-        // 고장부위 검색
-        document.getElementById("wgreginmBtn").addEventListener("click",function(){
-            searchgregi_rtn();
-        })
-        // 처리방법 검색
-        document.getElementById("wresultnmBtn").addEventListener("click",function(){
-            searchresult_rtn();
-        })
 
         // tab01 검색
         document.getElementById("retrieveBtn").addEventListener("click",function(){
 
             var ls_tab = document.getElementById('tabvalue').value;
-            let ls_frdate = document.getElementById('frdate').value;
-            let ls_todate = document.getElementById('todate').value;
             let ls_actcdz = document.getElementById('actcdz').value;
             let ls_actnmz = document.getElementById('actnmz').value;
-            let ls_actremocdz = document.getElementById('actremocdz').value;
-            let ls_actremonmz = document.getElementById('actremonmz').value;
-            let ls_actresucdz = document.getElementById('actresucdz').value;
-            let ls_actresunmz = document.getElementById('actresunmz').value;
-            let ls_actgregicdz = document.getElementById('actgregicdz').value;
-            let ls_actgreginmz = document.getElementById('actgreginmz').value;
-            let ls_actresultcdz = document.getElementById('actresultcdz').value;
-            let ls_actresultnmz = document.getElementById('actresultnmz').value;
-            let ls_actqtyz = document.getElementById('actqtyz').value;
 
             if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
                 ls_actcdz = "%";
@@ -804,51 +986,18 @@
             if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
                 ls_actcdz = "%";
             }
-            if(ls_actremocdz == null || ls_actremocdz.length == 0 || ls_actremocdz == ""){
-                ls_actremocdz = "%";
-            }
-            if(ls_actremonmz == null || ls_actremonmz.length == 0 || ls_actremonmz == ""){
-                ls_actremonmz = "%";
-            }
-            if(ls_actresucdz == null || ls_actresucdz.length == 0 || ls_actresucdz == ""){
-                ls_actresucdz = "%";
-            }
-            if(ls_actresunmz == null || ls_actresunmz.length == 0 || ls_actresunmz == ""){
-                ls_actresunmz = "%";
-            }
-            if(ls_actgregicdz == null || ls_actgregicdz.length == 0 || ls_actgregicdz == ""){
-                ls_actgregicdz = "%";
-            }
-            if(ls_actgreginmz == null || ls_actgreginmz.length == 0 || ls_actgreginmz == ""){
-                ls_actgreginmz = "%";
-            }
-            if(ls_actresultcdz == null || ls_actresultcdz.length == 0 || ls_actresultcdz == ""){
-                ls_actresultcdz = "%";
-            }
-            if(ls_actresultnmz == null || ls_actresultnmz.length == 0 || ls_actresultnmz == ""){
-                ls_actresultnmz = "%";
-            }
-            if(ls_actqtyz == null || ls_actqtyz.length == 0 || ls_actqtyz == ""){
-                ls_actqtyz = "0";
-            }
-            searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz , ls_actremocdz, ls_actresucdz, ls_actgregicdz, ls_actresultcdz, ls_actqtyz);
+            
+            searchList_rtn(ls_tab, ls_actcdz);
         })
 
-        function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9){
+        function searchList_rtn(arg1, arg2){
             switch(arg1){
                 case 'A':
                     $.ajax({
-                        url: '/app21/p001tab01',
+                        url: '/app26/p001tab01',
                         type:"POST",
                         data: {
-                            "frdate"      : arg2,
-                            "todate"      : arg3,
-                            "actcdz"      : arg4,
-                            "actremocdz"  : arg5,
-                            "actresucdz"  : arg6,
-                            "actgregicdz" : arg7,
-                            "actresultcdz": arg8,
-                            "actqtyz"     : arg9
+                            "actcdz"      : arg2
                         },
                         async:false,
                         success:function(data){
@@ -861,9 +1010,65 @@
                     }).done(function(fragment){
 
                     })
+                case 'B': 
+                    $.ajax({
+                        url: '/app21/p001tab02',
+                        type:"POST",
+                        data: {
+                            "actcdz"      : arg2
+                        },
+                        async:false,
+                        success:function(data){
+                            tabB_grid(data);
+                        },error:function(e){
+                            console.log("error");
+                            // alert(data.code);
+                            // alert(data.message);
+                        }
+                    }).done(function(fragment){
+
+                    })
                     break;
-                default:
+                case 'C':
+                $.ajax({
+                        url: '/app21/p001tab03',
+                        type:"POST",
+                        data: {
+                            "actcdz"      : arg2
+                        },
+                        async:false,
+                        success:function(data){
+                            tabC_grid(data);
+                        },error:function(e){
+                            console.log("error");
+                            // alert(data.code);
+                            // alert(data.message);
+                        }
+                    }).done(function(fragment){
+
+                    })
                     break;
+                case 'C':
+                $.ajax({
+                        url: '/app21/p001tab04',
+                        type:"POST",
+                        data: {
+                            "actcdz"      : arg2
+                        },
+                        async:false,
+                        success:function(data){
+                            tabD_grid(data);
+                        },error:function(e){
+                            console.log("error");
+                            // alert(data.code);
+                            // alert(data.message);
+                        }
+                    }).done(function(fragment){
+
+                    })
+                    break;                
+                default:    
+                    break;   
             }
 
 
@@ -1454,88 +1659,7 @@
 
 
 
-        $(document).ready(function() {
-            getToday()
-            fn_egov_init_date()
-            $('datetimepicker').datetimepicker({
-
-            });
-
-            $("#frdate").change(function(e){
-                // console.log("달력클릭");
-                // console.log(convert_time(e.timestamp));
-            })
-            $("#todate").change(function(e){
-                // console.log("달력클릭");
-                // console.log(convert_time(e.timestamp));
-            })
-        })
-
-        function test_rtn(arg1){
-            console.log(arg1);
-            const disHtml = `
-                <div class="tab-pane fade show active" id=${arg1} role="tabpanel" aria-labelledby="profile-tab">${arg1}</div>`
-            $('#btnDiv02').before(disHtml);
-        }
-
-
-        function getToday(){
-            let today = new Date();
-
-            let year = today.getFullYear(); // 년도
-            let month = today.getMonth() + 1;  // 월
-            let date = today.getDate();  // 날짜
-            let day = today.getDay();  // 요일
-            if(month > 0 && date < 10) {month = "0" + month};
-            if(date > 0 && date < 10) {date = "0" + date};
-            let ls_frday = year + '-' + month + '-01'
-            let ls_today = year + '-' + month + '-' + date
-            document.getElementById('frdate').value = ls_frday;
-            document.getElementById('todate').value = ls_today;
-        }
-
-        function convert_time(timestamp){
-            //현재시간
-            var date = new Date(timestamp);
-            var year = date.getFullYear();
-            var month = ("0" + (1 + date.getMonth())).slice(-2);
-            var day = ("0" + date.getDate()).slice(-2);
-            var hh = date.getHours();
-            var min = ('0' + date.getMinutes()).slice(-2)
-            time = year +  month +  day   ;
-            return time;
-        }
-
-        function fn_egov_init_date(){
-            var $frdate = $('#frdate');
-            var $todate = $('#todate');
-            $frdate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({
-                        // maxDate: $frdate.val() ? $frdate.val() : false
-                    })
-                },
-            });
-
-            $todate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',    //'Y-m-d H:i',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({
-                        // minDate: $todate.val() ? $todate.val() : false
-                    })
-                }
-            });
-
-        }
+        
 
         class FlexGridContextMenu {
             constructor(grid) {
