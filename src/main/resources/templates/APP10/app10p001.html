@@ -129,6 +129,7 @@
                     <div class="box_wrap">
                         <form action="">
                             <div class="table table_style1">
+                                <input type="hidden" name="compnum" id="compnumz">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -179,16 +180,14 @@
                                     <tr>                                        
                                         <th>도착일자</th>
                                         <td >
-                                            <div class="input_wrap date">
-                                                <input type="hidden" name="arrivdatez" id="arrivdatez">
-                                                <input type="text" class="form-control datetimepicker" id="todate2" autocomplete="off"  placeholder="Y-m-d">
+                                            <div class="input_wrap date">                                                
+                                                <input type="text" class="form-control datetimepicker" id="arrivdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>도착시간</th>
                                         <td >
                                             <div class="input_wrap">                                               
-                                                <input type="hidden" name="actarrivtimez" id="actarrivtimez">
-                                                <input type="time"  id="frtime" autocomplete="off" >
+                                                <input type="time"  id="actarrivtimez" autocomplete="off" >
                                             </div>
                                         </td>
                                         <th>처리자</th>
@@ -210,15 +209,13 @@
                                         <th>완료일자</th>
                                         <td >
                                             <div class="input_wrap date">
-                                                <input type="hidden" name="actcompdatez" id="actcompdatez">
-                                                <input type="text"  class="form-control datetimepicker" id="codate" autocomplete="off"  placeholder="Y-m-d">
+                                                <input type="text"  class="form-control datetimepicker" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>완료시간</th>
                                         <td >
                                             <div class="input_wrap ">
-                                                <input type="hidden" name="actcomptimez" id="actcomptimez">
-                                                <input type="time"  class="form-control " id="totime" autocomplete="off" >
+                                                <input type="time"  class="form-control " id="actcomptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>고장시간</th>
@@ -241,7 +238,7 @@
                                         <td colspan="6">
                                             <div class="input_wrap table_btn">
                                                 <input type="text" name="actreginm" id="actreginmz" placeholder="고장상세내용" disabled>
-                                                <button class="btn2" type="button">유사사례 찾아보기</button>
+                                                <button class="btn2" type="button">유사사례 찾기</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -262,7 +259,7 @@
                                                     <input class="form-control form-control-sm"  type="hidden"  id="regicdz"> 
                                                     <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                                 </div>
-                                                <button class="btn2" type="button">유사사례 찾아보기</button>
+                                                <button class="btn2" type="button">유사사례 찾기</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -308,8 +305,7 @@
                                         <th>고장상세원인</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" autocomplete="off">
-                                                <input type="hidden" name="remoremarkz" id="remoremarkz">
+                                                <input type="text" name="remoremarkz" id="remoremarkz" autocomplete="off">
                                             </div>
                                         </td>
                                     </tr>
@@ -317,8 +313,7 @@
                                         <th>처리내용상세</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" autocomplete="off">
-                                                <input type="hidden" name="resuremarkz" id="resuremarkz">
+                                                <input type="text" name="resuremarkz" id="resuremarkz" autocomplete="off">
                                             </div>
                                         </td>
                                     </tr>
@@ -326,8 +321,7 @@
                                         <th>고객요망사항</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" autocomplete="off">
-                                                <input type="hidden" name="remarkz" id="remarkz">
+                                                <input type="text" name="remarkz" id="remarkz" autocomplete="off">                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -336,8 +330,8 @@
                                 <div class="btn_wrap">
                                     <button type="submit" onclick="save_btn()">저장</button>
                                 </div>
-                            </div>
 
+                            </div>                           
                         </form>
 
                     </div>
@@ -721,6 +715,95 @@
 <!--########################################자바 스크립트 시작-->
  <script>
 
+    // <!-- 저장 스크립트 시작 -->
+    function save_btn(){ 
+var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
+var ls_actpernmz   = document.getElementById('actpernmz').value; //처리자 
+var ls_pernmz   = document.getElementById('pernmz').value; //담당자 ~ 조회
+var ls_arrivdatez   = document.getElementById('arrivdatez').value; //도착일자
+var ls_actcompdatez   = document.getElementById('actcompdatez').value; //완료일자
+var ls_actarrivtimez   = document.getElementById('actarrivtimez').value; //도착시간
+var ls_actcomptimez   = document.getElementById('actcomptimez').value; //완료시간
+var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
+var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
+var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
+
+if(!ls_actpernmz){
+    alert("담당자를 입력하세요")
+    return 
+} 
+if(!ls_pernmz){
+    alert("처리자를 입력하세요")
+    return 
+} 
+if(!ls_arrivdatez){
+    alert("도착일자를 입력하세요")
+    return 
+} 
+if(!ls_actcompdatez){
+    alert("완료일자를 입력하세요")
+    return 
+}
+if(!ls_actarrivtimez){
+    alert("도착시간을 입력하세요")
+    return 
+} 
+if(!ls_actcomptimez){
+    alert("완료시간을 입력하세요")
+    return 
+} 
+if(!ls_remoremarkz){
+    alert("고장상세원인을 입력하세요")
+    return 
+} 
+if(!ls_resuremarkz){
+    alert("처리내용상세를 입력하세요")
+    return 
+}  
+if(!ls_remarkz){
+    alert("고객요망사항을 입력하세요")
+    return 
+}             
+    $.ajax({
+        url: '/app10/save',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+        type: "POST",
+              data:{
+            "compnumz"    : ls_compnumz ,
+            "actpernmz": ls_actpernmz , 
+            "pernmz"   : ls_pernmz, 
+            "arrivdatez"   : ls_arrivdatez, 
+            "actcompdatez": ls_actcompdatez , 
+            "actarrivtimez"   : ls_actarrivtimez, 
+            "actcomptimez"   : ls_actcomptimez,  
+            "remoremarkz": ls_remoremarkz , 
+            "resuremarkz"   : ls_resuremarkz, 
+            "remarkz"   : ls_remarkz,                        
+            },       
+            async:false,
+    success:function(data){
+            if(data == "success"){
+            alert("저장되었습니다.")
+            console.log(data);
+            $("#CloseBtn").trigger("click");
+            // listUp();
+        }else{
+            alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                // listUp();
+        }
+    },error:function(e){
+        console.log('error',e);
+    }
+    }).done(function(fragment){
+       
+    }) 
+    
+    // listUp(); 
+}
+
+// function listUp(){
+// window.location.href = '/app10/index01';
+// }; 
 
     // 그리드 호출 window.onload
          var view_p01tab01page;
@@ -1266,99 +1349,6 @@ function CahngeSlect(value){
         document.getElementById("wrpernmBtn").addEventListener("click",function(){ 
             searchtxt8_rtn();
         })
-
-        
-    // <!-- 저장 스크립트 시작 -->
-function save_btn(){ 
-
-var ls_compnumz   = document.getElementById('compnumz').value; 
-var ls_actpernmz   = document.getElementById('actpernmz').value; 
-var ls_pernmz   = document.getElementById('pernmz').value;
-var ls_arrivdatez   = document.getElementById('arrivdatez').value; 
-var ls_actcompdatez   = document.getElementById('actcompdatez').value; 
-var ls_actarrivtimez   = document.getElementById('actarrivtimez').value;
-var ls_actcomptimez   = document.getElementById('actcomptimez').value; 
-var ls_remoremarkz   = document.getElementById('remoremarkz').value; 
-var ls_resuremarkz   = document.getElementById('resuremarkz').value;
-var ls_remarkz   = document.getElementById('remarkz').value; 
-
-
-if(!ls_actpernmz){
-    alert("담당자를 입력하세요")
-    return 
-} 
-if(!ls_pernmz){
-    alert("처리자를 입력하세요")
-    return 
-} 
-if(!ls_arrivdatez){
-    alert("도착일자를 입력하세요")
-    return 
-} 
-if(!ls_actcompdatez){
-    alert("완료일자를 입력하세요")
-    return 
-}
-if(!ls_actarrivtimez){
-    alert("도착시간을 입력하세요")
-    return 
-} 
-if(!ls_actcomptimez){
-    alert("완료시간을 입력하세요")
-    return 
-} 
-if(!ls_remoremarkz){
-    alert("고장상세원인을 입력하세요")
-    return 
-} 
-if(!ls_resuremarkz){
-    alert("처리내용상세를 입력하세요")
-    return 
-}  
-if(!ls_remarkz){
-    alert("고객요망사항을 입력하세요")
-    return 
-}              
-    $.ajax({
-    url: '/app10/saveboard',
-    contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
-    type: "POST",
-              data:{
-            "compnumz"    : ls_compnumz ,
-            "actpernmz": ls_actpernmz , 
-            "pernmz"   : ls_pernmz, 
-            "arrivdatez"   : ls_arrivdatez, 
-            "actcompdatez": ls_actcompdatez , 
-            "actarrivtimez"   : ls_actarrivtimez, 
-            "actcomptimez"   : ls_actcomptimez,  
-            "remoremarkz": ls_remoremarkz , 
-            "resuremarkz"   : ls_resuremarkz, 
-            "remarkz"   : ls_remarkz,                
-            },       
-            async:false,
-    success:function(data){
-            if(data == "success"){
-            alert("저장되었습니다.")
-            console.log("save", data);
-                listUp();
-        }else{
-            alert("저장되었습니다.")
-                listUp();
-        }
-    },error:function(e){
-        console.log('error',e);
-    }
-    }).done(function(fragment){
-       
-    }) 
-    
-    listUp(); 
-}
-
-
-function listUp(){
-window.location.href = '/app10/index01';
-}; 
 
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){ 
@@ -2113,33 +2103,30 @@ window.location.href = '/app10/index01';
                 // untill                
             })
             
-            $("#todate2").change(function(e){ 
+            $("#arrivdatez").change(function(e){ 
                 // 도착일자
             })
-            $("#codate").change(function(e){ 
+            $("#actcompdatez").change(function(e){ 
                 // 완료일자
             })
 
-            $("#frtime").change(function(e){ 
+            $("#actarrivtimez").change(function(e){ 
                 // from                
             })
-            $("#totime").change(function(e){ 
+            $("#actcomptimez").change(function(e){ 
                 // untill                
             })           
-        })
-        //시간 피킹 value selector #id .class
-        //document.getElementById 는 객체를 가져올 때 사용된다.
-        //var 중복선언가능, let 중복선언 불가 및 재할당 가능, const 중복선언 불가 재할당 불가
-        //https://www.w3bai.com/ko/jsref/prop_input_time_value.html#gsc.tab=0
+        })       
+      
         function timeFunction() {
-            var frtime = document.getElementById("#frtime").value;
-            var totime = document.getElementById("#totime").value;
+            var actarrivtimez = document.getElementById("#actarrivtimez").value;
+            var actcomptimez = document.getElementById("#actcomptimez").value;
         }
         function getToday(){
             let today = new Date();   
             let year = today.getFullYear(); // 년도
             let month = today.getMonth() + 1;  // 월
-            let date = today.getDate();  // 날짜
+            let date = today.getDate();  // 날짜d
             let day = today.getDay();  // 요일
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
@@ -2164,9 +2151,8 @@ window.location.href = '/app10/index01';
                 //from_untill date pick 선택창
             var $frdate = $('#frdate');    //날짜조회from
             var $todate = $('#todate');    //날짜조회untill
-            var $frdate2 = $('#frdate2'); //접수일~
-            var $todate2 = $('#todate2'); //도착일
-            var $codate = $('#codate'); //완료일자 
+            var $arrivdatez = $('#arrivdatez'); //도착일
+            var $actcompdatez = $('#actcompdatez'); //완료일자 
          
             $frdate.datetimepicker({ //from
                 timepicker: false,
@@ -2196,7 +2182,7 @@ window.location.href = '/app10/index01';
                 }
             });        
 
-            $todate2.datetimepicker({ //도착일자
+            $arrivdatez.datetimepicker({ //도착일자
                 //from_untill date pick 끝
                 timepicker: false,
                 lang: 'ko',
@@ -2211,7 +2197,7 @@ window.location.href = '/app10/index01';
                 }
             });
 
-            $codate.datetimepicker({ //완료일자
+            $actcompdatez.datetimepicker({ //완료일자
                 timepicker: false,
                 lang: 'ko',
                 format: 'Y-m-d',

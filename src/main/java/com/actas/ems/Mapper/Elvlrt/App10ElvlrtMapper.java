@@ -18,7 +18,10 @@ public interface App10ElvlrtMapper {
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm) ;
     public int Insert10Manul(App10ElvlrtDto perm);
 
-    public int Update10Manul(App10ElvlrtDto perm);
+//    public int Update10Manul(App10ElvlrtDto perm);
+
+    public String get10ManualMaxSeq(String perm);
+
 
 
 }

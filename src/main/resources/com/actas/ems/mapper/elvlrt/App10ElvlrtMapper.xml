@@ -42,17 +42,22 @@
 
     <!--게시글 작성-->
     <insert id="Insert10anul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e401 (custcd, spjangcd, fseq, todate2, codate, fgroupcd, fsubject, fmemo, fpernm, fflag) values (#{custcd}, #{spjangcd}, #{fseq}, #{finputdate}, #{fgroupcd}, #{fsubject}, #{fmemo}, #{fpernm}, #{fflag})
-    </insert>
+        insert into tb_e411 (compnum, actpernm, pernm, arrivdate, actcompdate, actarrivtime, actcomptime, remoremark, resuremark, remark) values (#{compnum}, #{actpernm}, #{pernm}, #{arrivdate}, #{actcompdate}, #{actcomptime}, #{remoremark}, #{resuremark}, #{remark})
+</insert>
 
 
     <!--게시글 수정-->
-    <update id="UpdateFQManul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
-        update tb_e401
-        set fgroupcd = #{custcd}
-        <if test="compnum != null ">,</if>
-        <if test="compnum != null">compnum=#{compnum}</if>
-        where compnum = #{compnum}
-    </update>
+<!--    <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">-->
+<!--        update tb_e401-->
+<!--        set custcd = #{custcd}-->
+<!--        <if test="compnum != null ">,</if>-->
+<!--        <if test="compnum != null">compnum=#{compnum}</if>-->
+<!--        where compnum = #{compnum}-->
+<!--    </update>-->
+
+    <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
+    <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
+        select max(compnum) from tb_e411 where Left(compnum,6) = #{compnum}
+    </select>
 
 </mapper>

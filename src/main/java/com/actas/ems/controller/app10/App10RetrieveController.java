@@ -81,43 +81,57 @@ public class App10RetrieveController {
         return app10DtoList;
     }
 
-//    게시글 저장
-    @RequestMapping(value = "/saveboard")
-    public String memberSave(@RequestParam("compnumz") String compnum
-            , @RequestParam("actfsubjectz") String fsubject
-            , @RequestParam("actfflagz") String fflag
+    //save
+
+    @RequestMapping(value = "/save")
+    public String memberSave(@RequestParam("compnumz") String compnum //seq
+//                             compdate 고장일자 = 등록일자
+            , @RequestParam("actpernmz") String actpernm //처리자
+            , @RequestParam("pernmz") String pernm //담당자
+            , @RequestParam("arrivdatez") String arrivdate //도착일자
+            , @RequestParam("actcompdatez") String actcompdate //완료일자
+            , @RequestParam("actarrivtimez") String actarrivtime //도착시간
+            , @RequestParam("actcomptimez") String actcomptime //완료시간
+            , @RequestParam("remoremarkz") String remoremark //고장상세원인
+            , @RequestParam("resuremarkz") String resuremark //처리내용상세
+            , @RequestParam("remarkz") String remark //고객 요망사항
             , Model model, HttpServletRequest request){
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-
+            String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String finputdate = getToDate();
-            String ls_yeare = finputdate.substring(0,4);
-            String ls_mm = finputdate.substring(4,6);
+            String compdate = getToDate();
+            String ls_yeare = compdate.substring(0,4);
+            String ls_mm = compdate.substring(4,6);
+
+            app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
-            app10tDto.setYyyymm(ls_yeare + ls_mm);
-//            app10tDto.setFpernm(userformDto.getUsername());
-            log.info(app10tDto); //consolelog에 app04Dto 호출
-
             if(compnum == null || compnum.equals("")){
-                service.Insert10Manu(app10tDto);
+                app10tDto.setCompnum(CountSeq(ls_yeare + ls_mm));
             }else{
-                return "error";
-//                service.Update10Manu(app10tDto);
+                app10tDto.setCompnum(compnum);
             }
+            app10tDto.setActpernm(actpernm);
+            app10tDto.setPernm(pernm);
+            app10tDto.setArrivdate(arrivdate);
+            app10tDto.setActcompdate(actcompdate);
+            app10tDto.setActarrivtime(actarrivtime);
+            app10tDto.setActcomptime(actcomptime);
+            app10tDto.setRemoremark(remoremark);
+            app10tDto.setResuremark(resuremark);
+            app10tDto.setRemark(remark);
+            app10tDto.setYyyymm(ls_yeare + ls_mm);
 
+            log.info(app10tDto); //consolelog에 app04Dto 호출
             if(compnum == null || compnum.equals("")){
                 boolean result = service.Insert10Manu(app10tDto);
                 if (!result) {
                     return "error";
                 }
             }else{
-//                boolean result = service.Update10Manu(app10tDto);
-//                if (!result) {
-//                    return "error";
-//                }
-                return "error";
+                    return "error";
+
             }
             model.addAttribute("userformDto",userformDto);
 
@@ -132,6 +146,19 @@ public class App10RetrieveController {
     }
 
 //                service.Insert10Manu(app10tDto);
+
+
+    public String CountSeq(String yyyymm){
+        String ls_compnum = service.get10ManualMaxSeq(yyyymm);
+        int ll_compnum = 0;
+        if(ls_compnum == null){
+            ls_compnum = yyyymm + "001";
+        }else{
+            ll_compnum = Integer.parseInt(ls_compnum);
+            ls_compnum = Integer.toString(ll_compnum + 1);
+        }
+        return ls_compnum;
+    }
 
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

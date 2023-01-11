@@ -34,10 +34,12 @@ public class App10ElvlrtService {
         }
         return (queryResult > 0);
     }
-//
+
+    public String get10ManualMaxSeq(String parm){return app10ElvMapper.get10ManualMaxSeq(parm);}
+
 //    //글수정
 //    @Transactional
-//    public boolean UpdateFQManu(App10ElvlrtDto perm){
+//    public boolean Update10Manu(App10ElvlrtDto perm){
 //        queryResult = app10ElvMapper.Update10Manul(perm);
 //        if(queryResult < 1){
 //            queryResult = 0;
