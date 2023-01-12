@@ -33,6 +33,7 @@ public interface AppPopElvlrtMapper {
     public List<PopupDto> GetPernm3List(PopupDto parm);
 
     public List<PopupDto> GetPernm2List(PopupDto parm);
-    public List<PopupDto>  GetFacnmList(PopupDto parm);
+    public List<PopupDto> GetFacnmList(PopupDto parm);
 
+    public List<PopupDto> GetWkactList(PopupDto parm);
 }

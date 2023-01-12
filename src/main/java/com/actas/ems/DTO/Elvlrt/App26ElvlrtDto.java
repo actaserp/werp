@@ -6,46 +6,28 @@ import lombok.Setter;
 @Getter
 @Setter
 public class App26ElvlrtDto {
-    private String frdate;
-    private String todate;
-    private int qty;
-    private String actcd;
+
+    private String contg;
+    private String cltnm;
     private String actnm;
-    private String equpcd;
-    private String equpnm;
-    private String perid;
+    private String qty;
     private String pernm;
-    private String contcd;
-    private String contnm;
-    private String contents;
-    private String remark;
+    private String divinm;
+    private String actmail;
+    private String address;
+    private String baladdress;
+    private String pubcltnm;
+    private String ancltnm;
+    private String amt;
+    private String monamt;
     private String stdate;
     private String enddate;
 
-    private String recedate;
-    private String recenum;
-    private String recetime;
-    private Long cnt;
-    private Long ascnt;
-    private String actpernm;
-    private String divinm;
-    private String contremark;
-    private String resunm;
-    private String resuremark;
-    private String jejak;
-    private String model;
-    private String yyyymm;
-    private String repernm;
-    private String remonm;
-    private String remoremark;
-    private String greginm;
-    private String reginm;
-    private String result;
-    private String compdate;
-    private String arrivtime;
-    private String comptime;
-    private String resutime;
-    private String resulttime;
-    private String resultnm;
+    private String wkactnm;
+    private String elignm;
+    private String bildyd;
+    private String tel;
+    private String hp;
+    private String contdate;
 
 }

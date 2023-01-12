@@ -19,6 +19,9 @@ public class App26ElvlrtService {
 
     public List<App26ElvlrtDto> GetApp26List001(PopupDto parm){return app26ElvMapper.GetApp26List001(parm);}
 
+    public List<App26ElvlrtDto> GetApp26List002(PopupDto parm){return app26ElvMapper.GetApp26List002(parm);}
 
+    public List<App26ElvlrtDto> GetApp26List003(PopupDto parm){return app26ElvMapper.GetApp26List003(parm);}
+    public List<App26ElvlrtDto> GetApp26List004(PopupDto parm){return app26ElvMapper.GetApp26List004(parm);}
 
 }

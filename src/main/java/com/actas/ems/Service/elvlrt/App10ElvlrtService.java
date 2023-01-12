@@ -37,14 +37,14 @@ public class App10ElvlrtService {
 
     public String get10ManualMaxSeq(String parm){return app10ElvMapper.get10ManualMaxSeq(parm);}
 
-//    //글수정
-//    @Transactional
-//    public boolean Update10Manu(App10ElvlrtDto perm){
-//        queryResult = app10ElvMapper.Update10Manul(perm);
-//        if(queryResult < 1){
-//            queryResult = 0;
-//        }
-//        return (queryResult > 0);
-//    }
+    //글수정
+    @Transactional
+    public boolean Update10Manu(App10ElvlrtDto perm){
+        queryResult = app10ElvMapper.Update10Manul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 
 }

@@ -158,24 +158,22 @@
                                         <td >
                                             <div class="input_wrap">
                                                 <input type="text" name="actnm" id="actnmz" placeholder="현장명" disabled>
-                                                <input type="text" name="actcd" id="actcdz" placeholder="현장코드" disabled>
+                                                <input type="hidden" name="actcd" id="actcdz">
                                             </div>
                                         </td>
                                         <th>호기명</th>
                                         <td >
                                             <div class="input_wrap">
                                                 <input type="text" name="equpnm" id="equpnmz" placeholder="호기명" disabled>
-                                                <input type="text" name="equpcd" id="equpcdz" placeholder="호기코드" disabled>                                                
+                                                <input type="hidden" name="equpcd" id="equpcdz">                                                
                                             </div>
-                                        </td>                                        
-                                        <th>담당자</th>
-                                        <td colspan="2" >
-                                            <div class="input_wrap table_search">
-                                                <input type="text" name="actpernmz" id="actpernmz"autocomplete="off" placeholder="검색">
-                                                <input  type="hidden" id="actperidz"> 
-                                                <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
+                                        </td>  
+                                        <th>대응시간</th>
+                                        <td colspan="2">
+                                            <div class="input_wrap">
+                                                <input type="text" name="resutime" id="resutimez" placeholder="대응시간" disabled>
                                             </div>
-                                            </td>
+                                        </td>                                       
                                     </tr>                                                                                                                                                                                       
                                     <tr>                                        
                                         <th>도착일자</th>
@@ -190,14 +188,14 @@
                                                 <input type="time"  id="actarrivtimez" autocomplete="off" >
                                             </div>
                                         </td>
-                                        <th>처리자</th>
-                                        <td colspan="2">
+                                        <th>담당자</th>
+                                        <td colspan="2" >
                                             <div class="input_wrap table_search">
-                                                <input type="text" name="pernm" id="pernmz" autocomplete="off" placeholder="처리자를 찾아주세요">
-                                                <input type="hidden" name="perid" id="peridz">
+                                                <input type="text" name="actpernm" id="actpernmz"autocomplete="off" placeholder="검색">
+                                                <input  type="hidden" id="actperidz"> 
                                                 <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
-                                        </td> 
+                                        </td>
                                         <!-- 부서명 -->
                                             <div type="hidden" class="input_wrap table_search">
                                                 <input type="hidden" name="actdivinmz" id="actdivinmz" autocomplete="off" placeholder="부서명을 찾아주세요" aria-label="actdivinmz" aria-describedby="basic-addon1">
@@ -218,12 +216,14 @@
                                                 <input type="time"  class="form-control " id="actcomptimez" autocomplete="off" >
                                             </div>
                                         </td> 
-                                        <th>고장시간</th>
+                                        <th>처리자</th>
                                         <td colspan="2">
-                                            <div class="input_wrap">
-                                                <input type="text" placeholder="고장시간" disabled>
+                                            <div class="input_wrap table_search">
+                                                <input type="text" name="pernm" id="pernmz" autocomplete="off" placeholder="처리자를 찾아주세요">
+                                                <input type="hidden" name="perid" id="peridz">
+                                                <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                             </div>
-                                        </td>                               
+                                        </td>                              
                                     </tr>
                                     <tr>
                                         <th>고장내용</th>
@@ -717,68 +717,97 @@
 
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){ 
+
+        // // 저장시에 changeop 1로 바꾸기 ~ 아니면 replace로 치환해도 괜찮을듯
+        // var key = changeop.value; 
+        //     if (key == "0"){                
+        //         document.getElementById('changeop').value="1";
+        //      }         
+        //      if (key == "1"){                
+        //         document.getElementById('changeop').value="0";
+        //      }
+        //     //  update 시에 change op 어떻게할거임? 사용자가 등록/미등록으로 찾아야함.                     
+            
+        //     }
+
+
+ // var ls_resutimez = document.getElementById('resutimez').value = arg12; //대응시간              
+
+ var ac_resutimez = Number;
+            ac_actarrivtimez = Number;
+            ac_actcomptimez = Number;
+            var ac_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
+            var ac_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
+            
+            ac_resutimez = ac_actarrivtimez - ac_actcomptimez;
+            console.log(ac_resutimez) //NaN 반환
+
+
+var regexForslash = /-/g;
 var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
-var ls_actpernmz   = document.getElementById('actpernmz').value; //처리자 
-var ls_pernmz   = document.getElementById('pernmz').value; //담당자 ~ 조회
-var ls_arrivdatez   = document.getElementById('arrivdatez').value; //도착일자
-var ls_actcompdatez   = document.getElementById('actcompdatez').value; //완료일자
-var ls_actarrivtimez   = document.getElementById('actarrivtimez').value; //도착시간
-var ls_actcomptimez   = document.getElementById('actcomptimez').value; //완료시간
+var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
+var ls_peridz   = document.getElementById('peridz').value; //담당자 ~ 조회
+var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
+var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
+var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
+var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
 var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
 var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
 var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
 
-if(!ls_actpernmz){
+
+if(!ls_actperidz){
     alert("담당자를 입력하세요")
-    return 
+     
 } 
-if(!ls_pernmz){
+if(!ls_peridz){
     alert("처리자를 입력하세요")
-    return 
+     
 } 
 if(!ls_arrivdatez){
     alert("도착일자를 입력하세요")
-    return 
+     
 } 
 if(!ls_actcompdatez){
     alert("완료일자를 입력하세요")
-    return 
+     
 }
 if(!ls_actarrivtimez){
     alert("도착시간을 입력하세요")
-    return 
+     
 } 
 if(!ls_actcomptimez){
     alert("완료시간을 입력하세요")
-    return 
+     
 } 
 if(!ls_remoremarkz){
     alert("고장상세원인을 입력하세요")
-    return 
+     
 } 
 if(!ls_resuremarkz){
     alert("처리내용상세를 입력하세요")
-    return 
+     
 }  
 if(!ls_remarkz){
     alert("고객요망사항을 입력하세요")
-    return 
-}             
+    // return 
+}            
     $.ajax({
         url: '/app10/save',
         contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
         type: "POST",
               data:{
             "compnumz"    : ls_compnumz ,
-            "actpernmz": ls_actpernmz , 
-            "pernmz"   : ls_pernmz, 
+            "actperidz": ls_actperidz , 
+            "peridz"   : ls_peridz, 
             "arrivdatez"   : ls_arrivdatez, 
             "actcompdatez": ls_actcompdatez , 
             "actarrivtimez"   : ls_actarrivtimez, 
             "actcomptimez"   : ls_actcomptimez,  
             "remoremarkz": ls_remoremarkz , 
             "resuremarkz"   : ls_resuremarkz, 
-            "remarkz"   : ls_remarkz,                        
+            "remarkz"   : ls_remarkz,  
+                               
             },       
             async:false,
     success:function(data){
@@ -1356,7 +1385,10 @@ function CahngeSlect(value){
             //조회시임.
             let ls_frdate = document.getElementById('frdate').value; //기간
             let ls_todate = document.getElementById('todate').value;  //""  
-            var ls_changeop = document.getElementById('changeop').value; //setop        
+            var ls_changeop = document.getElementById('changeop').value; //setop 
+                       
+        
+
             if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == ""){                
                 alert("시작일자를 입력하세요.")
                  return;
@@ -1366,11 +1398,12 @@ function CahngeSlect(value){
                  return;                 
             }                         
             searchList_rtn(ls_frdate, ls_todate, ls_changeop);
+          
 
         })   
             
         function searchList_rtn(arg1, arg2, arg3){ 
-            console.log(arg1);            
+            // console.log(arg4);            
             $.ajax({
                         url: '/app10/p001tab01',  
                         type:"POST",
@@ -1378,6 +1411,8 @@ function CahngeSlect(value){
                             "frdate" :arg1,
                             "todate"      : arg2, 
                             "changeop"      : arg3 , 
+
+
 
                         }, 
                         async:false,
@@ -1414,14 +1449,12 @@ function CahngeSlect(value){
                     // perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                          
                     actdd : wtab01Dto[i]["actdd"], 
                     actreginm : wtab01Dto[i]["actreginm"],  
-                    resultck : wtab01Dto[i]["resultck"]  
-                    // 미처리 0번                                                                                                                                                                                                       
-
+                    resutime : wtab01Dto[i]["resutime"],
                 });
                 cnt++;
             }   
 
-            console.log("wtab01_data"); 
+            console.log(data); 
             // console.log(wtab01_data.length);
 
             wtab01Grid.columns.clear();  
@@ -1451,7 +1484,8 @@ function CahngeSlect(value){
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.actdd, ctx.item.actreginm,);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.actdd, ctx.item.actreginm, ctx.item.resutime);
+                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1472,7 +1506,7 @@ function CahngeSlect(value){
 
         }
 
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1484,6 +1518,8 @@ function CahngeSlect(value){
             document.getElementById('peridz').value = arg9;   
             document.getElementById('actddz').value = arg10;
             document.getElementById('actreginmz').value = arg11;
+            document.getElementById('resutimez').value = arg11;         
+           
         }
         
       

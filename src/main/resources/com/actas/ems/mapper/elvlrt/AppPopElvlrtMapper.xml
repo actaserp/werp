@@ -185,4 +185,16 @@
                   WHERE 1 = 1
                     AND (   isnull(actpernm , '') Like concat('%',#{actpernm},'%') )]]>
     </select>
+
+    <!-- 회사구분 -->
+    <select id="GetWkactList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.wkactcd    wkactcd  ,
+               a.wkactnm    wkactnm
+        FROM TB_E018_1 a WITH(NOLOCK)
+        WHERE 1 = 1
+          AND (   isnull(wkactnm , '') Like concat('%',#{wkactnm},'%') )
+        ]]>
+    </select>
+
 </mapper>

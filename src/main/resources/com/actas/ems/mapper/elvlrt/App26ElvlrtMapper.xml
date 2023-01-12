@@ -87,18 +87,14 @@
 																			 actcd,
 																			 max(contdate) as contdate
 																	  FROM tb_e101 WITH(NOLOCK)
-																	  where 	spjangcd=:as_spjangcd
-																		and isnull(contgubun, '') Like :as_contgubun + '%'
+																	  where isnull(contgubun, '') Like #{contgubun} + '%'
 											  						 GROUP BY custcd, spjangcd, actcd) b
-						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate and a.contdate <= :as_contdate  ) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate and a.contdate <= #{frdate}  ) b
     ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
- WHERE ((a.actcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%')
-    OR ( isnull(a.actnm,'') like '%' + :as_cltcd + '%' OR :as_cltcd = '%'))
-   AND ( isnull(a.wkactcd,'') = :as_wkactcd OR :as_wkactcd = '%')
-	AND (Case when b.contg in ('04') THEN '2' when b.contg not in ('04') THEN '1'  else '' end = :as_gubun OR :as_gubun = '%')
-	AND ( isnull(a.bildyd,'') = :as_bildyd OR :as_bildyd = '%')
-	AND ( isnull(a.areacd,'') = :as_areacd OR :as_areacd = '%')
-   AND ( isnull(a.perid,'') = :as_perid OR :as_perid = '%')
+ WHERE (a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%')
+   AND ( isnull(a.wkactcd,'') = #{wkactcd} OR #{wkactcd} = '%')
+	AND (Case when b.contg in ('04') THEN '2' when b.contg not in ('04') THEN '1'  else '' end = #{gubun} OR #{gubun} = '%')
+    AND (a.divicd = #{divicd} OR #{divicd} = '%')
 
         ]]>
     </select>
@@ -170,15 +166,9 @@
 											  						 GROUP BY custcd, spjangcd, actcd) b
 						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.contdate <= CONVERT (nvarchar(8), getdate(), 112)) b
     ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
- WHERE a.custcd = :as_custcd
-   AND a.spjangcd = :as_spjangcd
- 	AND ((a.actcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%')
-    OR (a.actnm like '%' + :as_cltcd + '%' OR :as_cltcd = '%'))
-   AND (a.wkactcd = :as_wkactcd OR :as_wkactcd = '%')
-   AND (Case when b.contg in ('01', '02', '03')THEN '1' else '2' end = :as_gubun OR :as_gubun = '%')
-	AND (a.bildyd = :as_bildyd OR :as_bildyd = '%')
-	AND (a.areacd = :as_areacd OR :as_areacd = '%')
-   AND (a.perid = :as_perid OR :as_perid = '%')
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%')
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+   AND (Case when b.contg in ('01', '02', '03')THEN '1' else '2' end = #{gubun} OR #{gubun} = '%'))
 GROUP BY  a.custcd, a.spjangcd,
 		a.cltcd,
 		 x.cltnm,
@@ -272,20 +262,15 @@ GROUP BY  a.custcd, a.spjangcd,
 																			 spjangcd,
 																			 actcd,
 																			 max(contdate) as contdate , amt, stdate, enddate
-																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= :as_contdate and enddate >= :as_contdate   and len(contdate) > 0  and amt > 0 and spjangcd=:as_spjangcd
+																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= #{frdate} and enddate >= #{frdate}   and len(contdate) > 0  and amt > 0
 											  						 GROUP BY custcd, spjangcd, actcd, amt, stdate, enddate) b
-						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= :as_contdate   ) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= #{frdate}   ) b
     ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
- WHERE a.custcd = :as_custcd
-   AND a.spjangcd = :as_spjangcd
- 	AND ((a.actcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%')
-    OR (a.actnm like '%' + :as_cltcd + '%' OR :as_cltcd = '%'))
-   AND (a.wkactcd = :as_wkactcd OR :as_wkactcd = '%')
-	AND (a.bildyd = :as_bildyd OR :as_bildyd = '%')
-	AND (a.areacd = :as_areacd OR :as_areacd = '%')
-   AND (isnull(a.perid,'')  = :as_perid OR :as_perid = '%')
-  AND (isnull(C.divicd , '')  Like :as_divicd + '%' )
-	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= :as_contdate and enddate >= :as_contdate and amt > 0   )
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%'))
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+	AND (isnull(C.divicd , '')  Like #{divicd} + '%' )
+	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= #{frdate} and enddate >= #{frdate} and amt > 0   )
+
 
         ]]>
     </select>
@@ -374,19 +359,13 @@ GROUP BY  a.custcd, a.spjangcd,
 																			 spjangcd,
 																			 actcd,
 																			 max(contdate) as contdate , amt, stdate, enddate
-																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= :as_contdate and enddate >= :as_contdate   and len(contdate) > 0  and amt > 0 and spjangcd=:as_spjangcd
+																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= #{frdate} and enddate >= #{frdate}   and len(contdate) > 0  and amt > 0
 											  						 GROUP BY custcd, spjangcd, actcd, amt, stdate, enddate) b
-						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= :as_contdate   ) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= #{frdate}   ) b
     ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
- WHERE a.custcd = :as_custcd
-   AND a.spjangcd = :as_spjangcd
- 	AND ((a.actcd like '%' + :as_cltcd + '%' OR :as_cltcd = '%')
-    OR (a.actnm like '%' + :as_cltcd + '%' OR :as_cltcd = '%'))
-   AND (a.wkactcd = :as_wkactcd OR :as_wkactcd = '%')
-	AND (a.bildyd = :as_bildyd OR :as_bildyd = '%')
-	AND (a.areacd = :as_areacd OR :as_areacd = '%')
-   AND (a.perid = :as_perid OR :as_perid = '%')
-	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= :as_contdate and enddate >= :as_contdate and amt > 0   )
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%'))
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= #{frdate} and enddate >= #{frdate} and amt > 0   )
 Group by h.gubun ,
 		 a.custcd,
 		  a.spjangcd,
@@ -424,7 +403,6 @@ Group by h.gubun ,
 		 b.jirogihan ,
 		 b.contdate,
 		 b.clsdate
-
         ]]>
     </select>
 

@@ -8,21 +8,23 @@ public class App10ElvlrtDto {
 
     private String resultck;
 
+    private String hitchhour;
+
     private String changeop;
     private String spjangcd;
     private String compnum; //완료번호
     private String remark; //고객요망사항
 
     private String arrivdate; //도착일자
-    private String actcompdate; //완료일자
-    private String actarrivtime; //도착시간
-    private String actcomptime; //완료시간
     private String facnm;
     private String cltcd;
     private String contents;
+
+    private String actperid;
     private String perid;
     private String custcd;
     private String divicd;
+
 
 
     private String frdate;

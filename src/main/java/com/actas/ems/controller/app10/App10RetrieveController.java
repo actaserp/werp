@@ -49,6 +49,7 @@ public class App10RetrieveController {
 
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        String ls_custcd = userformDto.getCustcd();
         String ls_spjangcd = userformDto.getSpjangcd();
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -61,6 +62,7 @@ public class App10RetrieveController {
         app10tDto.setFrdate(frdate);
         app10tDto.setTodate(todate);
         app10tDto.setChangeop(changeop);
+        app10tDto.setCustcd(ls_custcd);
         app10tDto.setSpjangcd(ls_spjangcd);
 
         try {
@@ -86,42 +88,42 @@ public class App10RetrieveController {
     @RequestMapping(value = "/save")
     public String memberSave(@RequestParam("compnumz") String compnum //seq
 //                             compdate 고장일자 = 등록일자
-            , @RequestParam("actpernmz") String actpernm //처리자
-            , @RequestParam("pernmz") String pernm //담당자
+            , @RequestParam("actperidz") String actperid //담당자 코드
+            , @RequestParam("peridz") String perid //처리자 코드
             , @RequestParam("arrivdatez") String arrivdate //도착일자
-            , @RequestParam("actcompdatez") String actcompdate //완료일자
-            , @RequestParam("actarrivtimez") String actarrivtime //도착시간
-            , @RequestParam("actcomptimez") String actcomptime //완료시간
+            , @RequestParam("actcompdatez") String compdate //고장일자
+            , @RequestParam("actarrivtimez") String arrivtime //도착시간
+            , @RequestParam("actcomptimez") String comptime //완료시간
             , @RequestParam("remoremarkz") String remoremark //고장상세원인
             , @RequestParam("resuremarkz") String resuremark //처리내용상세
             , @RequestParam("remarkz") String remark //고객 요망사항
+            , @RequestParam("changeop") String changeop //option
             , Model model, HttpServletRequest request){
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String compdate = getToDate();
-            String ls_yeare = compdate.substring(0,4);
-            String ls_mm = compdate.substring(4,6);
-
+            String recedate = getToDate(); //접수일자 recedate
+            String ls_yeare = recedate.substring(0,4);
+            String ls_mm = recedate.substring(4,6);
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
             if(compnum == null || compnum.equals("")){
-                app10tDto.setCompnum(CountSeq(ls_yeare + ls_mm));
+                app10tDto.setCompnum(CountSeq(compdate));
             }else{
                 app10tDto.setCompnum(compnum);
             }
-            app10tDto.setActpernm(actpernm);
-            app10tDto.setPernm(pernm);
+            app10tDto.setActperid(actperid);
+            app10tDto.setPerid(perid);
             app10tDto.setArrivdate(arrivdate);
-            app10tDto.setActcompdate(actcompdate);
-            app10tDto.setActarrivtime(actarrivtime);
-            app10tDto.setActcomptime(actcomptime);
+            app10tDto.setCompdate(compdate);
+            app10tDto.setArrivtime(arrivtime);
+            app10tDto.setComptime(comptime);
             app10tDto.setRemoremark(remoremark);
             app10tDto.setResuremark(resuremark);
             app10tDto.setRemark(remark);
-            app10tDto.setYyyymm(ls_yeare + ls_mm);
+            app10tDto.setChangeop(changeop);
 
             log.info(app10tDto); //consolelog에 app04Dto 호출
             if(compnum == null || compnum.equals("")){
@@ -130,9 +132,32 @@ public class App10RetrieveController {
                     return "error";
                 }
             }else{
+                boolean result = service.Update10Manu(app10tDto);
+                if (!result) {
                     return "error";
-
+                }
             }
+
+
+
+//            //null 체크 하고 changeop 값 받아와서 넘기기
+//            if(resultck == null){
+//                changeop = "success";
+//                return changeop;
+//                switch (app10tDto.getChangeop()){
+//                    case "0":
+//                        result = app10tDto.setChangeop("1");
+//                        break;
+//                    case "1" :
+//                        result = app10tDto.setChangeop("0");
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                if(!result){
+//                    return  "error";
+//                }
+//            }
             model.addAttribute("userformDto",userformDto);
 
         }catch (IllegalStateException e){
@@ -144,22 +169,27 @@ public class App10RetrieveController {
 
 
     }
-
-//                service.Insert10Manu(app10tDto);
-
-
-    public String CountSeq(String yyyymm){
-        String ls_compnum = service.get10ManualMaxSeq(yyyymm);
+    public String CountSeq(String compdate){
+        String ls_compnum = service.get10ManualMaxSeq(compdate);
         int ll_compnum = 0;
         if(ls_compnum == null){
-            ls_compnum = yyyymm + "001";
+            ls_compnum = "001";
         }else{
             ll_compnum = Integer.parseInt(ls_compnum);
-            ls_compnum = Integer.toString(ll_compnum + 1);
+            ls_compnum = Integer.toString(ll_compnum + 001);
         }
         return ls_compnum;
     }
 
+//    public String Dd(){
+//        String ls_changeop = app10tDto.getChangeop();
+//        if(ls_changeop == "0"){
+//            ls_changeop = "1";
+//        }else(ls_changeop == "1"){
+//            ls_changeop = "0";
+//        }
+//        return ls_changeop;
+//    }
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date(System.currentTimeMillis());
