@@ -112,7 +112,9 @@
             </li>
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
-                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
+                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
+                       th:disabled="${result == false}"/>
+
                 <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
               </div>
             </li>
@@ -1118,6 +1120,7 @@
       let date = today.getDate();  // 날짜
       let day = today.getDay();  // 요일
       if(date > 0 && date < 10) {date = "0" + date};
+      if(month > 0 && month < 10) {month = "0" + month};
       let ls_frday = year + '-' + month + '-01'
       let ls_today = year + '-' + month + '-' + date
       document.getElementById('frdate').value = ls_frday;

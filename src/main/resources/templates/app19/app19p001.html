@@ -110,14 +110,16 @@
                 <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
               </div>
             </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
+                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
+                       th:disabled="${result == false}"/>
+
+                <input class="form-control form-control-sm"  type="hidden"  id="actcdz" th:name="${result} ? 'AA' : 'CC'">
 
 
-            <!--<li>
-              <div class="input-group mb-3">
-                <input class="form-control" type="hidden" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
               </div>
-            </li>-->
+            </li>
 
           </ul>
         </div>
@@ -171,9 +173,52 @@
   </div>
 
 
-
+  <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
   <!--------------------------------------------------------------------------------------->
+  <!-- 현장명 MODAL FROM  -->
+  <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){searchpcode_rtn()}"
+                       placeholder="현장코드 / 현장명 "     />
+              </div>
+              <button id="wactnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+            <div  class="save_id" >
+              <input type="checkbox" id="conflag" value="1" checked>
+              <label for="conflag" class="check_style1">계약현장</label>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="theGroupPanel"></div>
+            <div id="wactnmGrid_div" ></div>
+            <div id="thePager01"></div>
+          </div>
+        </div>
 
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
   <!--*************************************************************************************************************************-->
   <script type="text/javascript" th:inline="javascript">
     var view_p01tab01page;
@@ -206,7 +251,7 @@
       //tab03 차트그리기
       /*Tab03Chartinit()*/
 
-
+      console.log(document.getElementById('actcdz').value + "123")
 
 
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
@@ -466,28 +511,6 @@
 
 
 
-
-      // TAB02 차트 init
-           function Tab02Chartinit() {
-               barchart = new wijmo.chart.FlexChart('#chartTabB', {
-                   header: '현장별고장내용',
-                   legend: {
-                       position: wijmo.chart.Position.Bottom
-                   },
-                   bindingX: 'contnm',
-                   series: wseries_data,
-                   selectionMode: wijmo.chart.SelectionMode.Point,
-                   itemsSource: [0],
-                   palette: ['#0288D1',
-                       '#FFC107',
-                       '#FF7043',
-                       "#EF5350"]
-               });
-               //
-               ani = new wijmo.chart.animation.ChartAnimation(barchart);
-           }
-
-
     }
 
 
@@ -507,22 +530,27 @@
       var ls_tab = document.getElementById('tabvalue').value;
       let ls_frdate = document.getElementById('frdate').value;
       let ls_todate = document.getElementById('todate').value;
-      /*let ls_actcdz = document.getElementById('actcdz').value;
+      let ls_actcdz = document.getElementById('actcdz').value;
       let ls_actnmz = document.getElementById('actnmz').value;
-      */
-     /* if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
-        ls_actcdz = "%";
-        document.getElementById('actcdz').value = "";
+      let ls_name = document.getElementById('actcdz').name;
+
+      if(ls_name != "CC") {
+        if (ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == "") {
+          ls_actcdz = "%";
+          document.getElementById('actcdz').value = "";
+        }
       }
 
-      if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
-        ls_actcdz = "%";
-      }*/
+      if(ls_name != "CC") {
+        if (ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == "") {
+          ls_actcdz = "%";
+        }
+      }
 
-      searchList_rtn(ls_tab, ls_frdate, ls_todate);
+      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz);
     })
 
-    function searchList_rtn(arg1, arg2, arg3){
+    function searchList_rtn(arg1, arg2, arg3, arg4){
       switch(arg1){
 
         case 'A':
@@ -532,7 +560,7 @@
             data: {
               "frdate"      : arg2,
               "todate"      : arg3 ,
-             // "actcdz"      : arg4 ,
+              "actcdz"      : arg4 ,
 
             },
             async:false,
@@ -552,7 +580,8 @@
           if(barchart !== undefined){
             wijmo.Control.refreshAll(barchart);
           }
-          barChartInit01(arg1, arg2, arg3)
+          console.log(arg4 + "ggg")
+          barChartInit01(arg1, arg2, arg3, arg4)
           break;
 
         default:
@@ -732,9 +761,9 @@
 
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    const barChartInit01 = (arg1, arg2, arg3) => {
+    const barChartInit01 = (arg1, arg2, arg3, arg4) => {
 
-      var tab02_data = getDataTabB(arg2, arg3);
+      var tab02_data = getDataTabB(arg2, arg3, arg4);
       // // console.log(tab02_data);
       // // console.log(wseries_data);
       // barchart.series =  wseries_data;
@@ -757,19 +786,26 @@
       ani = new wijmo.chart.animation.ChartAnimation(barchart);
     }
 
-    function getDataTabB(arg2, arg3) {
-      /*if(arg4 == null || arg4.length == 0 || arg4 == "" || arg4 == "%"){
-        alert("현장을 선택하세요")
-        return
-      }*/
+    function getDataTabB(arg2, arg3, arg4) {
+
+      let ls_name = document.getElementById('actcdz').name;
+      console.log(ls_name)
+
+      if(ls_name != "CC") {
+        if (arg4 == null || arg4.length == 0 || arg4 == "" || arg4 == "%") {
+          alert("현장을 선택하세요")
+
+          window.location.reload();
+        }
+      }
       var wtab02_data = [];
       $.ajax({
         url: '/app19/p001tab02',
         type:"POST",
         data: {
           "frdate"      : arg2,
-          "todate"      : arg3 ,
-         // "actcdz"      : arg4
+          "todate"      : arg3,
+          "actcdz"      : arg4
 
         },
         async:false,
@@ -817,6 +853,159 @@
 
     };
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+  </script>
+  <script>
+    //현장검색 popup list
+    view_actnmpage = new wijmo.collections.CollectionView(getData_wlist(), {
+      pageSize: 12
+    });
+    // 현장검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager01', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_actnmpage
+    });
+    wactnmGrid = new wijmo.grid.FlexGrid('#wactnmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      allowSorting: 'MultiColumn',
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        {binding: 'actnm', header: '현장명', align: "center", width: '1*'},
+        {binding: 'telno', header: '전화번호', align: "center", width: '1*'},
+        {binding: 'addr', header: '주소', align: "center", width: '*'},
+      ],
+      itemsSource: view_actnmpage
+    });
+
+    // 현장검색 데이터 수집
+    function getData_wlist() {
+      var wactnm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wactnm_data.push({
+          id: i,
+          index: cnt,
+          actnm: "",
+          telno: "",
+          addr: "",
+        });
+        cnt++;
+      }
+      return wactnm_data;
+    }
+
+
+
+
+
+
+    document.getElementById("actnmz").addEventListener("click",function(){
+      document.getElementById("actnmbtn").click();
+    });
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    document.getElementById("wactnmBtn").addEventListener("click", function(){
+      searchpcode_rtn();
+    })
+
+
+
+
+
+
+
+    function searchpcode_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchCode').value;
+      let lsConflag = document.getElementById('conflag').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wactnm',
+        type: "POST",
+        data: {
+          "actnmz" : searchText,
+          "conflag" : lsConflag
+        },
+        success:function (data){
+          var wactnmDto = data;
+          var wactnm_data = [];
+          var cnt = 1;
+          for(var i=0; i< wactnmDto.length; i++){
+            wactnm_data.push({
+              id: i,
+              index: cnt,
+              actnm:wactnmDto[i]["actnm"],
+              actcd: wactnmDto[i]["actcd"],
+              telno: wactnmDto[i]["telno"]  ,
+              addr: wactnmDto[i]["addr"]
+
+            });
+            cnt++;
+          }
+          wactnmGrid.columns.clear();
+          wactnmGrid.autoGenerateColumns = false;
+          view_actnmpage.sourceCollection = wactnm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'actcd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actcd}</b>',
+            click: (e, ctx) => {
+              wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+            }
+          });
+          wactnmGrid.columns.push(cols);
+          // console.log("cols", cols);
+
+
+          cols = new wijmo.grid.Column();
+          cols.binding = 'actnm';
+          cols.header = '현장명';
+          cols.align = "left";
+          cols.width = '*';
+          wactnmGrid.columns.push(cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'telno';
+          cols.header = '전화번호';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.telno}</b>',
+            click: (e, ctx) => {
+              wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+            }
+          });
+          wactnmGrid.columns.push(cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'addr';
+          cols.header = '주소';
+          cols.align = "left";
+          cols.width = '*';
+          wactnmGrid.columns.push(cols);
+
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+
+    }
+
+    function wactnmChk_2(arg1, arg2){
+      document.getElementById('actcdz').value = arg1;
+      document.getElementById('actnmz').value = arg2;
+
+      $("#wactnmmodal_btn").trigger("click");
+    }
 
   </script>
 

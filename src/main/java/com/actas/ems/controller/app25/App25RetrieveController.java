@@ -36,6 +36,7 @@ public class App25RetrieveController {
     @GetMapping(value = "/p001tab01")
     public Object App25001Tab01Form(@RequestParam("frdate") String frdate,
                                     @RequestParam("todate") String todate,
+                                    @RequestParam("actcdz") String actcd,
                                     Model model, HttpServletRequest request) throws Exception{
 
         String ls_yeare = frdate.substring(0, 4);
@@ -50,10 +51,18 @@ public class App25RetrieveController {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto", userformDto);
+        log.info(userformDto.getActcd());
 
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(userformDto.getActcd());
+        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+            popParmDto.setActcd(actcd);
+            log.info("이 사용자는 보수업체용이다.");
+        }else{
+            popParmDto.setActcd(userformDto.getActcd());
+            log.info("이 사용자는 고객용계정이다.");
+        }
+
         try{
             log.info(popParmDto.getActcd() + "check");
             app15DtoList = service.GetApp15List001(popParmDto);

@@ -29,9 +29,17 @@ public class App25Controller {
     @GetMapping(value = "/index01")
     public String App25IndexForm(Model model, HttpServletRequest request)throws Exception{
         try{
+
+
            HttpSession session = request.getSession();
            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+           boolean result = true;
+           if(userformDto.getFlag().equals("CC")){
+               result = false;
+           }
            model.addAttribute("userformDto", userformDto);
+           model.addAttribute("result", result);
+
         }catch (Exception ex)
         {
             log.debug("Exception12 =======>" +  ex.toString());

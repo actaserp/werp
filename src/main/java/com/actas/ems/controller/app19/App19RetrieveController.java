@@ -37,7 +37,7 @@ public class App19RetrieveController {
     @GetMapping(value = "/p001tab01")
     public Object App1601TabForm(@RequestParam("frdate") String frdate,
                                  @RequestParam("todate") String todate,
-                                 //@RequestParam("actcdz") String actcd,
+                                 @RequestParam(value = "actcdz", required = false) String actcd,
                                  Model model, HttpServletRequest request)throws Exception{
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -55,14 +55,20 @@ public class App19RetrieveController {
 
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(userformDto.getActcd());
+        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+            popParmDto.setActcd(actcd);
+            log.info("이 사용자는 보수업체이다.");
+        }else{
+            popParmDto.setActcd(userformDto.getActcd());
+        }
+
         try{
 
 
             log.info(popParmDto.getActcd() + "check");
             app16DtoList = service.GetApp19List001(popParmDto);
             model.addAttribute("app16DtoList", app16DtoList);
-            log.info(app16DtoList);
+            log.info(popParmDto.getActcd());
 
             log.info(userformDto.getActcd() + "3333123215123313123132121dadcdsassd");
         }catch (DataAccessException e){
@@ -85,7 +91,7 @@ public class App19RetrieveController {
     @GetMapping(value = "/p001tab02")
     public Object App19001Tab02Form(@RequestParam("frdate") String frdate,
                                     @RequestParam("todate") String todate,
-                                    //@RequestParam("actcdz") String actcd,
+                                    @RequestParam(value = "actcdz", required = false) String actcd,
                                     HttpServletRequest request,
                                     Model model)throws Exception{
         String ls_yeare = frdate.substring(0,4);
@@ -103,7 +109,14 @@ public class App19RetrieveController {
 
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(userformDto.getActcd());
+        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+            popParmDto.setActcd(actcd);
+            log.info("이 사용자는 보수업체이다.");
+        }else{
+            popParmDto.setActcd(userformDto.getActcd());
+            log.info("이 사용자는 고객계정이다.");
+        }
+
         try{
             app16DtoList = service.GetApp19List002(popParmDto);
             model.addAttribute("app19DtoList", app16DtoList);

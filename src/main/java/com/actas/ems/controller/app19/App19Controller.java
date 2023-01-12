@@ -30,8 +30,13 @@ public class App19Controller {
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            boolean result = true;
+            if(userformDto.getFlag().equals("CC")){
+                result = false;
+            }
             model.addAttribute("userformDto", userformDto);
-            log.info(userformDto.getActcd());
+            model.addAttribute("result", result);
+
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString());

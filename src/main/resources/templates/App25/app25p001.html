@@ -111,9 +111,11 @@
                             </div>
                         </li>
                         <li>
-                            <div class="input-group mb-3">
-                                <input class="form-control" type="hidden" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
-                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
+                            <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
+                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
+                                       th:disabled="${result == false}"/>
+
+                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  th:name="${result} ? 'AA' : 'CC' "/>
                             </div>
                         </li>
                         <li>
@@ -218,6 +220,12 @@
 
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                 pageSize: 12
+            });
+
+            new wijmo.input.CollectionViewNavigator('#tab01Pager', {
+                byPage: true,
+                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                cv: view_p01tab01page
             })
 
             // 열 그룹 옵션
@@ -484,20 +492,44 @@
             let ls_frdate = document.getElementById('frdate').value;
             let ls_todate = document.getElementById('todate').value;
             let ls_actcdz = document.getElementById('actcdz').value;
-            if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
-                ls_actcdz = "%";
+            let ls_actnmz = document.getElementById('actnmz').value;
+            let ls_name = document.getElementById('actcdz').name;
+
+            if(ls_name != "CC"){
+                if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
+                    ls_actcdz = "%";
+                    document.getElementById('actcdz').value = "";
+                }
             }
+            if(ls_name != "CC"){
+                if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
+                    ls_actcdz = "%";
+                }
+            }
+
             searchList_rtn(ls_frdate, ls_todate, ls_actcdz);
         })
 
-        function searchList_rtn(arg1, arg2){
+        function searchList_rtn(arg1, arg2, arg3){
+
+            let ls_name = document.getElementById('actcdz').name;
+            console.log(ls_name + "name check")
+
+            if(ls_name != "CC"){
+            if(arg3 == null || arg3.length == 0 || arg3 == "" || arg3 == "%"){
+                alert("현장을 선택하세요")
+
+                window.location.reload();
+            }
+            }
+
             $.ajax({
                 url: '/app25/p001tab01',
                 type: "POST",
                 data: {
                     "frdate" : arg1,
                     "todate" : arg2,
-
+                    "actcdz" : arg3
 
                 },
                 async: false,
@@ -683,6 +715,161 @@
             theGrid.itemsSource = view_p01tab01page;
 
 
+        }
+
+    </script>
+
+    <script>
+
+        //현장검색 popup list
+        view_actnmpage = new wijmo.collections.CollectionView(getData_wlist(), {
+            pageSize: 12
+        });
+        // 현장검색 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager01', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_actnmpage
+        });
+        wactnmGrid = new wijmo.grid.FlexGrid('#wactnmGrid_div', {
+            autoGenerateColumns: false,
+            isReadOnly: false,
+            allowSorting: 'MultiColumn',
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [
+                {binding: 'actnm', header: '현장명', align: "center", width: '1*'},
+                {binding: 'telno', header: '전화번호', align: "center", width: '1*'},
+                {binding: 'addr', header: '주소', align: "center", width: '*'},
+            ],
+            itemsSource: view_actnmpage
+        });
+
+        // 현장검색 데이터 수집
+        function getData_wlist() {
+            var wactnm_data = [];
+            var cnt = 1;
+            for (var i = 0; i < 12; i++) {
+                wactnm_data.push({
+                    id: i,
+                    index: cnt,
+                    actnm: "",
+                    telno: "",
+                    addr: "",
+                });
+                cnt++;
+            }
+            return wactnm_data;
+        }
+
+
+
+
+
+
+        document.getElementById("actnmz").addEventListener("click",function(){
+            document.getElementById("actnmbtn").click();
+        });
+
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        document.getElementById("wactnmBtn").addEventListener("click", function(){
+            searchpcode_rtn();
+        })
+
+
+
+
+
+
+
+        function searchpcode_rtn(){
+            let searchText = '';
+            searchText = document.getElementById('searchCode').value;
+            let lsConflag = document.getElementById('conflag').value;
+            if(searchText == null || searchText.length == 0 || searchText == ""){
+                searchText = "%";
+            }
+            $.ajax({
+                url: '/pop01/wactnm',
+                type: "POST",
+                data: {
+                    "actnmz" : searchText,
+                    "conflag" : lsConflag
+                },
+                success:function (data){
+                    var wactnmDto = data;
+                    var wactnm_data = [];
+                    var cnt = 1;
+                    for(var i=0; i< wactnmDto.length; i++){
+                        wactnm_data.push({
+                            id: i,
+                            index: cnt,
+                            actnm:wactnmDto[i]["actnm"],
+                            actcd: wactnmDto[i]["actcd"],
+                            telno: wactnmDto[i]["telno"]  ,
+                            addr: wactnmDto[i]["addr"]
+
+                        });
+                        cnt++;
+                    }
+                    wactnmGrid.columns.clear();
+                    wactnmGrid.autoGenerateColumns = false;
+                    view_actnmpage.sourceCollection = wactnm_data;
+                    var cols = new wijmo.grid.Column();
+                    cols.binding = 'actcd';
+                    cols.header = '코드';
+                    cols.align = "center";
+                    cols.width = '*';
+                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+                        text: '<b>${item.actcd}</b>',
+                        click: (e, ctx) => {
+                            wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+                        }
+                    });
+                    wactnmGrid.columns.push(cols);
+                    // console.log("cols", cols);
+
+
+                    cols = new wijmo.grid.Column();
+                    cols.binding = 'actnm';
+                    cols.header = '현장명';
+                    cols.align = "left";
+                    cols.width = '*';
+                    wactnmGrid.columns.push(cols);
+                    cols = new wijmo.grid.Column();
+                    cols.binding = 'telno';
+                    cols.header = '전화번호';
+                    cols.align = "center";
+                    cols.width = '*';
+                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+                        text: '<b>${item.telno}</b>',
+                        click: (e, ctx) => {
+                            wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+                        }
+                    });
+                    wactnmGrid.columns.push(cols);
+                    cols = new wijmo.grid.Column();
+                    cols.binding = 'addr';
+                    cols.header = '주소';
+                    cols.align = "left";
+                    cols.width = '*';
+                    wactnmGrid.columns.push(cols);
+
+                },error:function(e){
+                    alert(data.code);
+                    alert(data.message);
+                }
+            }).done(function(fragment){
+
+            })
+
+        }
+
+        function wactnmChk_2(arg1, arg2){
+            document.getElementById('actcdz').value = arg1;
+            document.getElementById('actnmz').value = arg2;
+
+            $("#wactnmmodal_btn").trigger("click");
         }
 
     </script>

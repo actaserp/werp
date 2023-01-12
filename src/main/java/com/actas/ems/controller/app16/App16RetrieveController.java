@@ -13,6 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,10 @@ public class App16RetrieveController {
     protected Log log =  LogFactory.getLog(this.getClass());
 
     @GetMapping(value = "/p001tab01")
-    public Object App1601TabForm(@RequestParam("frdate") String frdate,
+    public Object App1601TabForm(@RequestParam("frdate")  String frdate,
                                  @RequestParam("todate") String todate,
-                                 @RequestParam("actcdz") String actcd,
-                                 Model model)throws Exception{
+                                 @RequestParam(value = "actcdz", required = false) String actcd,
+                                 Model model, HttpServletRequest request)throws Exception{
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -43,13 +45,25 @@ public class App16RetrieveController {
         ls_dd = todate.substring(8,10);
         todate = ls_yeare + ls_mm + ls_dd;
 
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto", userformDto);
+        log.info(userformDto.getActcd());
+
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
+        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+            popParmDto.setActcd(actcd);
+            log.info("이 사용자는 보수업체용이다.");
+        }else{
+            popParmDto.setActcd(userformDto.getActcd());
+            log.info("이 사용자는 고객용계정이다.");
+        }
+
         try{
             app16DtoList = service.GetApp16List(popParmDto);
             model.addAttribute("app16DtoList", app16DtoList);
-            log.info(app16DtoList);
+
         }catch (DataAccessException e){
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
