@@ -57,9 +57,10 @@ public class App21RetrieveController {
         todate =  ls_yeare + ls_mm + ls_dd;
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        if(userformDto.getCallflag().equals("AA")) {
+
+        if(userformDto.getFlag().equals("AA")) {
             popParmDto.setActcd(actcd);
-        }else if(userFormDto.getCallflag().equals("CC")){
+        }else if(userformDto.getFlag().equals("CC")){
             popParmDto.setActcd(userformDto.getActcd());
         }
 

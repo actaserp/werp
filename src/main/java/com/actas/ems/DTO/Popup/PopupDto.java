@@ -44,6 +44,10 @@ public class PopupDto {
     private String reginm; //고장부위상세
 
     private String regicd; //고장부위상세코드
+    private String wkactcd; //회사구분코드
+    private String wkactnm; //회사구분명
+    private String contgubun;
+    private String gubun;
 
 
 

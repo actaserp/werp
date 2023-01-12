@@ -625,7 +625,7 @@
                     hsubject: mapp06Dto[i]["hsubject"],
                     hpernm:   mapp06Dto[i]["hpernm"],
                     attcnt : mapp06Dto[i]["attcnt"] ,
-                    hinputdate : mapp06Dto[i]["hinputdate"] ,
+                    hinputdate : mapp06Dto[i]["hinputdate"].substr(0, 4)+"-"+mapp06Dto[i]["hinputdate"].substr(4, 2)+"-"+mapp06Dto[i]["hinputdate"].substr(6, 2) ,
                     hgroupcd : mapp06Dto[i]["hgroupcd"]     ,
                     hmemo : mapp06Dto[i]["hmemo"]     ,
                     hflag : mapp06Dto[i]["hflag"]

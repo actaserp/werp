@@ -52,4 +52,6 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetPernm3List(PopupDto parm){return appPopElvMapper.GetPernm3List(parm);}
     /** 담당자2 조회 */
     public List<PopupDto> GetPernm2List(PopupDto parm){return appPopElvMapper.GetPernm2List(parm);}
+
+    public List<PopupDto> GetWkactList(PopupDto parm) {return appPopElvMapper.GetWkactList(parm);}
 }

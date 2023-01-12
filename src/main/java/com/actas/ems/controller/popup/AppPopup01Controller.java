@@ -270,6 +270,22 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    @RequestMapping(value="/wkactnm")
+    public Object AppwkactnmList(@RequestParam("wkactnmz") String wkactnm
+            , Model model){
+        if(wkactnm.length() == 0){
+            wkactnm = "%";
+        }
+        try {
+            popParmDto.setWkactnm(wkactnm);
+            poplistDto = appPopElvlrtService.GetWkactList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
 
 
 
