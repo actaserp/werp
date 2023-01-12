@@ -22,6 +22,21 @@ public class App16ElvlrtDto {
     private String contnm; //고장내용
     private String contents; //고장상세내용
     private Long result;
+    private String remonm; //고장원인
+    private String recedate;
+    private String actpernm;
+    private String divinm;
+    private String pernm;
+    private String contremark;
+    private String resuremark;
+    private String repernm;
+    private String comptime;
+    private String resulttime;
+    private String resultnm;
+    private String resutime;
+    private String recetime;
+    private String remoremark;
+    private String contcd;
 
 
     private String mon1;
@@ -54,6 +69,8 @@ public class App16ElvlrtDto {
     private String compdate;
     private Long allcnt;
     private Long compcnt;
+    private String resunm;
+
 
 
 

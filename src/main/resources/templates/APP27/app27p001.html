@@ -123,6 +123,17 @@
               </div>
             </li>
           </ul>
+
+    <div class="modal_con">
+    <div class="board">
+      <div class="part1" style="width: 80%;">
+        <div class="part1_bottom">
+          <div class="modal_box">
+            <div class="title toggle" style="cursor: pointer;">
+              <h5>조건추가</h5>
+              <button><img src="../images/toggle.png" alt=""></button>
+              </div>
+            <div class="con_wrap toggle_box" style="display: none;">
           <ul class="search_box">
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장내용</span>
@@ -143,6 +154,12 @@
               </div>
             </li>
           </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
         </div>
       </div>
     </div>
@@ -160,9 +177,12 @@
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">기간별고장내용</a>
                 </li>
-                <!--<li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">호기별고장내용</a>
-                </li>-->
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">기간별고장원인</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#step04"  onclick="tabchk_rtn('D')">기간별처리내용</a>
+                </li>
                 <input type="hidden" id="tabvalue" value="A">
               </ul>
               <div class="tab-content">
@@ -180,12 +200,14 @@
                 </div>
                 <div class="tab-pane fade" id="step03">
                   <div class="container-fluid">
-                    <select id="typeMenu">
-                      <option value="0" selected="selected">사분면(Squarified)</option>
-                      <option value="1">수평(Horizontal)</option>
-                      <option value="2">수직(Vertical)</option>
-                    </select>
-                    <div id="chartTabC"></div>
+                    <div id="theGrid3"></div>
+                    <div id="tab03Pager"></div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="step04">
+                  <div class="container-fluid">
+                    <div id="theGrid4"></div>
+                    <div id="tab04Pager"></div>
                   </div>
                 </div>
               </div>
@@ -200,6 +222,7 @@
   <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />
   <input class="form-control form-control-sm"  type="hidden" id="actremonmbtn" data-bs-toggle="modal" data-bs-target="#actremonmmodal"  />
   <input class="form-control form-control-sm"  type="hidden" id="actresunmbtn" data-bs-toggle="modal" data-bs-target="#actresunmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actpopupbtn" data-bs-toggle="modal" data-bs-target="#actpopupmodal"  />
 
 
 
@@ -403,35 +426,75 @@
     </div>
   </div>
   <!--*************************************************************************************************************************-->
+  <!--*************************************************************************************************************************-->
+  <!-- 클릭 팝업 MODAL FROM  -->
+  <div class="modal fade" id="actpopupmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 100%">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchpopup" type="text"/>
+              </div>
+              <button id="wrepopupBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wpopupGrid_div" ></div>
+            <div id="thePager06"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wpopupmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--*************************************************************************************************************************-->
+
   <script type="text/javascript" th:inline="javascript">
     var view_p01tab01page;
     var view_p01tab02page;
-    var view_actnmpage;
     var view_contnmpage;
-    var wtab01Grid;
-    var wtab02Grid
     var wactnmGrid;
     var wcontnmGrid;
-    var typeMenu;
-    var treemap;
-    let barchart;
-    let ani;
-    var wseries_data = [0];
     var view_equpnmpage;
     var wequpnmGrid;
     var theGrid;
     var theGrid2;
+    var theGrid4;
     var wgreginmGrid;
     var view_greginmpage;
     var view_remonmpage;
     var wremonmGrid;
     var wresunmGrid;
     var view_resunmpage;
+    var view_p01tab03page;
+    var theGrid3;
+    var view_p01tab04page;
+    var view_popup;
+    var wpopupGrid;
 
     window.onload = function() {
       //localStorage.setItem("setpage", "app19p001");
 
       Tab02Chartinit()
+      Tab03Chartinit()
+      Tab04Chartinit()
 
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
         pageSize: 12
@@ -716,6 +779,355 @@
       }
 
 
+      function Tab03Chartinit(){
+        view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
+          pageSize: 12
+        });
+
+        new wijmo.input.CollectionViewNavigator('#tab03Pager', {
+          byPage: true,
+          headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+          cv: view_p01tab03page
+        });
+
+        // 열 그룹 옵션
+        let colGroups3 = getColumnGroups3();
+
+        // 열 그룹을 가진 그리드 생성
+        theGrid3 = new wijmo.grid.FlexGrid("#theGrid3", {
+          allowSorting: 'MultiColumn',
+          headersVisibility: "Column",
+          alternatingRowStep: 0,
+          showMarquee: true,
+          showSelectedHeaders: "All",
+          autoGenerateColumns: false,
+          columnGroups: colGroups3,
+          itemsSource:  view_p01tab03page//getData()
+        });
+
+        new FlexGridContextMenu(theGrid3);
+
+        function getColumnGroups3(){
+          return [
+            {binding: "compyear", header: "년도", width: 100, align: "center"},
+            {binding: "actnm", header: "현장명", width: 150, align: "center"},
+            {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+            {binding: "remonm", header: "고장원인", width: 100, align: "center"},
+            {binding: "result", header: "건수", width: 100, align: "center"},
+
+            { header: "1월",
+              align: "center",
+              columns: [
+                {
+                  binding: "1월.mon01",
+                  header: "처리",
+                  format: "a0",
+                  width: 80,
+                  cssClass: "main-column",
+                  align: "center",
+                },
+              ]
+            },
+            {
+              header: "2월",
+              align: "center",
+
+              columns: [
+                {binding: "2월.mon02", header: "처리", format: "a0", width: 80, align: "center"},
+
+              ]
+            },
+            {
+              header: "3월",
+              align: "center",
+              columns: [{binding: "3월.mon03", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "4월",
+              align: "center",
+              columns: [{binding: "4월.mon04", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "5월",
+              align: "center",
+              columns: [{binding: "5월.mon05", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "6월",
+              align: "center",
+              columns: [{binding: "6월.mon06", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "7월",
+              align: "center",
+              columns: [{binding: "7월.mon07", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            { header: "8월",
+              align: "center",
+              columns: [{binding: "8월.mon08", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "9월",
+              align: "center",
+              columns: [{binding: "9월.mon09", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "10월",
+              align: "center",
+              columns: [{binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "11월",
+              align: "center",
+              columns: [{binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "12월",
+              align: "center",
+              columns: [{binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+
+          ];
+        }
+
+        //검색 데이터 수집
+        function getData_tab03(){
+          return  [
+            {
+              compyear: "",
+              actnm: "",
+              equpnm: "",
+              remonm: "",
+              result: "",
+              "1월": {mon01: ""},
+              "2월": {mon02: ""},
+              "3월": {mon03: ""},
+              "4월": {mon04: ""},
+              "5월": {mon05: ""},
+              "6월": {mon06: ""},
+              "7월": {mon07: ""},
+              "8월": {mon08: ""},
+              "9월": {mon09: ""},
+              "10월": {mon10: ""},
+              "11월": {mon11: ""},
+              "12월": {mon12: ""},
+            }
+          ]
+        }
+
+      }
+
+      function Tab04Chartinit(){
+        view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
+          pageSize: 12
+        });
+        new wijmo.input.CollectionViewNavigator('#tab04Pager', {
+          byPage: true,
+          headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+          cv: view_p01tab04page
+        });
+
+        let colGroups4 = getColumnGroups4();
+
+        theGrid4 = new wijmo.grid.FlexGrid("#theGrid4", {
+          allowSorting: 'MultiColumn',
+          headersVisibility: "Column",
+          alternatingRowStep: 0,
+          showMarquee: true,
+          showSelectedHeaders: "All",
+          autoGenerateColumns: false,
+          columnGroups: colGroups4,
+          itemsSource: view_p01tab04page
+        });
+
+        new FlexGridContextMenu(theGrid2);
+
+        function getColumnGroups4(){
+          return [
+            {binding: "compyear", header: "년도", width: 100, align: "center"},
+            {binding: "actnm", header: "현장명", width: 150, align: "center"},
+            {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+            {binding: "resunm", header: "처리내용", width: 100, align: "center"},
+            {binding: "result", header: "건수", width: 100, align: "center"},
+
+            { header: "1월",
+              align: "center",
+              columns: [
+                {
+                  binding: "1월.mon01",
+                  header: "처리",
+                  format: "a0",
+                  width: 80,
+                  cssClass: "main-column",
+                  align: "center",
+                },
+              ]
+            },
+            {
+              header: "2월",
+              align: "center",
+
+              columns: [
+                {binding: "2월.mon02", header: "처리", format: "a0", width: 80, align: "center"},
+
+              ]
+            },
+            {
+              header: "3월",
+              align: "center",
+              columns: [{binding: "3월.mon03", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "4월",
+              align: "center",
+              columns: [{binding: "4월.mon04", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "5월",
+              align: "center",
+              columns: [{binding: "5월.mon05", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "6월",
+              align: "center",
+              columns: [{binding: "6월.mon06", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "7월",
+              align: "center",
+              columns: [{binding: "7월.mon07", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            { header: "8월",
+              align: "center",
+              columns: [{binding: "8월.mon08", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "9월",
+              align: "center",
+              columns: [{binding: "9월.mon09", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "10월",
+              align: "center",
+              columns: [{binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "11월",
+              align: "center",
+              columns: [{binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+            {
+              header: "12월",
+              align: "center",
+              columns: [{binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center"}]
+            },
+
+          ];
+
+        }
+        //검색 데이터 수집
+        function getData_tab04(){
+          return [
+            {
+              compyear: "",
+              actnm: "",
+              equpnm: "",
+              resunm: "",
+              result: "",
+              "1월": {mon01: ""},
+              "2월": {mon02: ""},
+              "3월": {mon03: ""},
+              "4월": {mon04: ""},
+              "5월": {mon05: ""},
+              "6월": {mon06: ""},
+              "7월": {mon07: ""},
+              "8월": {mon08: ""},
+              "9월": {mon09: ""},
+              "10월": {mon10: ""},
+              "11월": {mon11: ""},
+              "12월": {mon12: ""},
+
+            },
+          ];
+        }
+      }
+
+      view_popup = new wijmo.collections.CollectionView(getData_pop(), {
+        pageSize: 12
+      });
+      new wijmo.input.CollectionViewNavigator('#thePager06', {
+        byPage: true,
+        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        cv: view_popup
+      });
+      wpopupGrid = new wijmo.grid.FlexGrid('#wpopupGrid_div', {
+        allowSorting: 'MultiColumn',
+        headersVisibility: 'Column',
+        showSelectedHeaders: "All",
+        autoGenerateColumns: false,
+        isReadOnly: false,
+        allowSorting: 'MultiColumn',
+        selectionMode: 'RowRange',
+        alternatingRowStep: 0,
+        columns: [
+          {binding: 'recedate', header: '접수일자', align: "center", width: 100},
+          /*{binding: 'recetime', header: '접수시간', align: "center", width: '1*'},
+          {binding: 'equpnm', header: '동호기', align: "center", width: '1*'},
+          {binding: 'actpernm', header: '담당사원', align: "center", width: '1*'},
+          {binding: 'divinm', header: '부서', align: "center", width: '1*'},
+          {binding: 'pernm', header: '처리자', align: "center", width: '1*'},
+          {binding: 'contnm', header: '고장내용', align: "center", width: '1*'},
+          {binding: 'contremark', header: '고장내용상세', align: "center", width: '1*'},
+          {binding: 'resunm', header: '처리내용', align: "center", width: '1*'},
+          {binding: 'resuremark', header: '처리내용상세', align: "center", width: '1*'},
+          {binding: 'repernm', header: '접수자', align: "center", width: '1*'},
+          {binding: 'remonm', header: '고장요인', align: "center", width: '1*'},
+          {binding: 'remoremark', header: '고장요인상세', align: "center", width: '1*'},
+          {binding: 'greginm', header: '고장부위', align: "center", width: '1*'},
+          {binding: 'reginm', header: '고장부위상세', align: "center", width: '1*'},
+          {binding: 'compdate', header: '처리일자', align: "center", width: '1*'},
+          {binding: 'comptime', header: '처리시간', align: "center", width: '1*'},
+          {binding: 'resutime', header: '대응시간', align: "center", width: '1*'},
+          {binding: 'resulttime', header: '처리시간', align: "center", width: '1*'},
+          {binding: 'resultnm', header: '진행내역', align: "center", width: '1*'},*/
+        ],
+        itemsSource: view_popup
+      });
+
+      function getData_pop(){
+        var wpopup_data = [];
+        var cnt =  1;
+        /*for(var i=0; i<12; i++){
+          wpopup_data.push({
+            id: 1,
+            index: cnt,
+           // recedate: "",
+           /!* recetime: "",
+            equpnm: "",
+            actpernm: "",
+            divinm: "",
+            pernm: "",
+            contnm: "",
+            contremark: "",
+            resunm: "",
+            resuremark: "",
+            repernm: "",
+            remonm: "",
+            remoremark: "",
+            greginm: "",
+            reginm: "",
+            compdate: "",
+            comptime: "",
+            resutime: "",
+            resulttime: "",
+            resultnm: "",*!/
+
+          });
+          cnt++;
+
+        }*/
+        return wpopup_data;
+      }
 
 
 
@@ -727,8 +1139,7 @@
     function tabchk_rtn(arg){
       document.getElementById('tabvalue').value = arg;
     }
-    //2번재 탭 체크
-    document.getElementById("")
+
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
@@ -746,6 +1157,10 @@
       let ls_actgregicdz = document.getElementById('gregicdz').value;
       let ls_actcontnmz = document.getElementById('actcontnmz').value;
       let ls_actcontcdz = document.getElementById('actcontcdz').value;
+      let ls_actremocdz = document.getElementById('actremocdz').value;
+      let ls_actremonmz = document.getElementById('actremonmz').value;
+      let ls_actresucdz = document.getElementById('actresucdz').value;
+      let ls_actresunmz = document.getElementById('actresunmz').value;
 
       if(ls_actequpnmz == null || ls_actequpnmz.length == 0 || ls_actequpnmz == ""){
         ls_actequpcdz = "%";
@@ -769,13 +1184,28 @@
       if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == 0){
         ls_actcontcdz = '%';
       }
+      if(ls_actremonmz == null || ls_actremonmz.length == 0 || ls_actremonmz == 0){
+        ls_actremocdz = '%';
+        document.getElementById('actremocdz').value = "";
+      }
+      if(ls_actremocdz == null || ls_actremocdz.length == 0 || ls_actremocdz == 0){
+        ls_actremocdz = '%';
+      }
+      if(ls_actresunmz == null || ls_actresunmz.length == 0 || ls_actresunmz == 0){
+        ls_actresucdz = '%';
+        document.getElementById('actresucdz').value = "";
+      }
+      if(ls_actresucdz == null || ls_actresucdz.length == 0 || ls_actresucdz == 0){
+        ls_actresucdz = '%';
+      }
 
-      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actequpcdz, ls_actgregicdz, ls_actcontcdz);
+
+      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actequpcdz, ls_actgregicdz, ls_actcontcdz, ls_actremocdz, ls_actresucdz);
 
 
     })
 
-    function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6){
+    function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8){
       switch(arg1){
 
         case 'A':
@@ -828,7 +1258,55 @@
           })
           break;
 
+        case 'C':
+          $.ajax({
+            url: '/app27/p001tab03',
+            type:"POST",
+            data: {
+              "frdate"      : arg2,
+              "todate"      : arg3,
+              "actequpcdz"  : arg4,
+              "actremocdz" : arg7
+              // "actcdz"      : arg4 ,
 
+            },
+            async:false,
+            success:function(data){
+              tabC_grid(data);
+            },error:function(e){
+              console.log("error");
+              // alert(data.code);
+              // alert(data.message);
+            }
+          }).done(function(fragment){
+
+          })
+          break;
+
+        case 'D':
+          $.ajax({
+            url: '/app27/p001tab04',
+            type:"POST",
+            data: {
+              "frdate"      : arg2,
+              "todate"      : arg3,
+              "actequpcdz"  : arg4,
+              "actresucdz" : arg8
+              // "actcdz"      : arg4 ,
+
+            },
+            async:false,
+            success:function(data){
+              tabD_grid(data);
+            },error:function(e){
+              console.log("error");
+              // alert(data.code);
+              // alert(data.message);
+            }
+          }).done(function(fragment){
+
+          })
+          break;
 
         default:
           break;
@@ -838,8 +1316,12 @@
     }
 
     function tabA_grid(data){
+      var ls_actfrdatez = document.getElementById('frdate').value;
+      var ls_acttodatez = document.getElementById('todate').value;
       var wtab01Dto = data;
       var wtab01_data = [];
+      let frdate = document.getElementById('frdate').value;
+      let todate = document.getElementById('todate').value;
       var cnt = 1;
       for(var i=0; i<wtab01Dto.length; i++){
         wtab01_data.push({
@@ -847,8 +1329,10 @@
           index: cnt,
           compyear: wtab01Dto[i]["compyear"],
           actnm: wtab01Dto[i]["actnm"],
+          equpcd: wtab01Dto[i]["equpcd"],
           equpnm: wtab01Dto[i]["equpnm"],
           greginm: wtab01Dto[i]["greginm"],
+          gregicd: wtab01Dto[i]["gregicd"],
           reginm: wtab01Dto[i]["reginm"],
           result: wtab01Dto[i]["result"],
 
@@ -891,7 +1375,14 @@
 
       let gridFormat =[
         {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actnm}</b>',
+            click: (e, ctx) => {
+              modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
+              //console.log(ctx.item.compyear, ctx.item.equpcd, ctx.item.greginm, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
+            }
+          })
+        },
         {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
         {binding: "greginm", header: "고장부위명", width:100, align: "center"},
         {binding: "reginm", header: "고장부위상세명", width:150, align: "center"},
@@ -992,6 +1483,235 @@
       theGrid.columnGroups = gridFormat;
       theGrid.itemsSource = view_p01tab01page;
     }
+    function modal_call(arg1 ,arg2, arg3, arg4 ,arg5, arg6, arg7, arg8){
+
+      if(arg2 == null || arg2 == undefined || arg2 == ""){
+        arg2 = '%';
+      }
+      if(arg3 == null || arg3 == undefined || arg3 == ""){
+        arg3 = '%';
+      }
+      if(arg4 == null || arg4 == undefined || arg4 == ""){
+        arg4 = '%';
+      }
+      if(arg5 == null || arg5 == undefined || arg5 == ""){
+        arg5 = '%';
+      }
+      if(arg6 == null || arg6 == undefined || arg6 == ""){
+        arg6 = '%';
+      }
+      if(arg7 == null || arg7 == undefined || arg7 == ""){
+        arg7 = '%';
+      }
+      if(arg8 == null || arg8 == undefined || arg8 == ""){
+        arg8 = '%';
+      }
+
+
+      $.ajax({
+        url: '/app27/p001popup',
+        type: "POST",
+        data: {
+          "compyear": arg1,
+          "actequpcdz": arg2,
+          "actgregicd": arg3,
+          "actreginm": arg4,
+          "actcontcd": arg5,
+          "actremonm": arg6,
+          "actresunmz": arg7,
+          "actcontremark": arg8
+        },
+        success:function(data){
+
+          var wpopupDto = data;
+          var wpopup_data = [];
+          var cnt = 1;
+          for(var i=0; i< wpopupDto.length; i++){
+            wpopup_data.push({
+              id: i,
+              index: cnt,
+              recedate: wpopupDto[i]["recedate"],
+              recetime: wpopupDto[i]["recetime"],
+              equpnm: wpopupDto[i]["equpnm"],
+              actpernm: wpopupDto[i]["actpernm"],
+              divinm: wpopupDto[i]["divinm"],
+              pernm: wpopupDto[i]["pernm"],
+              contnm: wpopupDto[i]["contnm"],
+              contremark: wpopupDto[i]["contremark"],
+              resunm: wpopupDto[i]["resunm"],
+              resuremark: wpopupDto[i]["resuremark"],
+              repernm: wpopupDto[i]["repernm"],
+              remonm: wpopupDto[i]["remonm"],
+              remoremark: wpopupDto[i]["remoremark"],
+              greginm: wpopupDto[i]["greginm"],
+              reginm: wpopupDto[i]["reginm"],
+              compdate: wpopupDto[i]["compdate"],
+              comptime: wpopupDto[i]["comptime"],
+              resutime: wpopupDto[i]["resutime"],
+              resulttime: wpopupDto[i]["resulttime"],
+              resultnm: wpopupDto[i]["resultnm"]
+            });
+            cnt++
+          }
+          wpopupGrid.columns.clear();
+          wpopupGrid.autoGenerateColumns = false;
+          view_popup.sourceCollection = wpopup_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'recedate';
+          cols.header = '접수일자';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'recetime';
+          cols.header = '접수시간';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'equpnm';
+          cols.header = '동호기명';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'actpernm';
+          cols.header = '담당사원';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'divinm';
+          cols.header = '부서';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'pernm';
+          cols.header = '처리자';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'contnm';
+          cols.header = '고장내용';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'contremark';
+          cols.header = '고장내용상세';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'resunm';
+          cols.header = '처리내용';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'resuremark';
+          cols.header = '처리내용상세';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'repernm';
+          cols.header = '접수자';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'remonm';
+          cols.header = '고장요인';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'remoremark';
+          cols.header = '고장요인상세';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'greginm';
+          cols.header = '고장부위';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'reginm';
+          cols.header = '고장부위상세';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'compdate';
+          cols.header = '처리일자';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'comptime';
+          cols.header = '처리시간';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'resutime';
+          cols.header = '대응시간';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'resulttime';
+          cols.header = '처리시간';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+
+          cols =  new wijmo.grid.Column();
+          cols.binding = 'resultnm';
+          cols.header = '진행내역';
+          cols.align = 'center';
+          cols.width = 100;
+          wpopupGrid.columns.push(cols);
+        },error: function (e) {
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+
+
+      document.getElementById("actpopupbtn").click();
+
+
+
+      console.log(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+
+    }
+
 
     function tabB_grid(data){
       var wtab02Dto = data;
@@ -1004,7 +1724,9 @@
           compyear: wtab02Dto[i]["compyear"],
           actnm: wtab02Dto[i]["actnm"],
           equpnm: wtab02Dto[i]["equpnm"],
+          equpcd: wtab02Dto[i]["equpcd"],
           contnm: wtab02Dto[i]["contnm"],
+          contcd: wtab02Dto[i]["contcd"],
           contents: wtab02Dto[i]["contents"],
           result: wtab02Dto[i]["result"],
 
@@ -1047,7 +1769,14 @@
 
       let gridFormat2 =[
         {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center",cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actnm}</b>',
+            click: (e, ctx) => {
+              modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
+              //console.log(ctx.item.compyear, ctx.item.equpcd, ctx.item.greginm, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
+            }
+          })
+        },
         {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
         {binding: "contnm", header: "고장내용명", width:100, align: "center"},
         {binding: "contents", header: "고장내용상세", width:150, align: "center"},
@@ -1149,10 +1878,330 @@
       theGrid2.itemsSource = view_p01tab02page;
     }
 
+    function tabC_grid(data){
+      var wtab03Dto = data;
+      var wtab03_data = [];
+      var cnt = 1;
+
+      for(var i=0; i<wtab03Dto.length; i++){
+        wtab03_data.push({
+          id: i,
+          index: cnt,
+          compyear: wtab03Dto[i]["compyear"],
+          actnm: wtab03Dto[i]["actnm"],
+          equpcd: wtab03Dto[i]["equpcd"],
+          equpnm: wtab03Dto[i]["equpnm"],
+          remonm: wtab03Dto[i]["remonm"],
+          result: wtab03Dto[i]["result"],
+
+          "1월" : {
+            mon01: wtab03Dto[i]["mon01"]},
+          "2월" : {
+            mon02: wtab03Dto[i]["mon02"]},
+          "3월" : {
+            mon03: wtab03Dto[i]["mon03"]},
+          "4월" : {
+            mon04: wtab03Dto[i]["mon04"]},
+          "5월" : {
+            mon05: wtab03Dto[i]["mon05"]},
+          "6월" : {
+            mon06: wtab03Dto[i]["mon06"]},
+          "7월" : {
+            mon07: wtab03Dto[i]["mon07"]},
+          "8월" : {
+            mon08: wtab03Dto[i]["mon08"]},
+          "9월" : {
+            mon09: wtab03Dto[i]["mon09"]},
+          "10월" : {
+            mon10: wtab03Dto[i]["mon10"]},
+          "11월" : {
+            mon11: wtab03Dto[i]["mon11"]},
+          "12월" : {
+            mon12: wtab03Dto[i]["mon12"]},
+
+        });
+        cnt++;
+      }
+      console.log("wtab01_data, check", )
+
+      theGrid3.columns.clear();
+      theGrid3.autoGenerateColumns = false;
+
+      view_p01tab03page.sourceCollection = wtab03_data;
 
 
+      let gridFormat3 =[
+        {binding: "compyear", header: "년도", width: 100, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actnm}</b>',
+            click: (e, ctx) => {
+              modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
+              //console.log(ctx.item.compyear, ctx.item.equpcd, ctx.item.greginm, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
+            }
+          })},
+        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+        {binding: "remonm", header: "고장원인", width:100, align: "center"},
+        {binding: "result", header: "건수", width:100, align: "center"},
 
 
+        {
+          header: "1월",
+          align: "center",
+          columns: [
+
+            { binding: "1월.mon01", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "2월",
+          align: "center",
+          columns: [
+            { binding: "2월.mon02", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "3월",
+          align: "center",
+          columns: [
+            { binding: "3월.mon03", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "4월",
+          align: "center",
+          columns: [
+            { binding: "4월.mon04", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "5월",
+          align: "center",
+          columns: [
+            { binding: "5월.mon05", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "6월",
+          align: "center",
+          columns: [
+            { binding: "6월.mon06", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "7월",
+          align: "center",
+          columns: [
+            { binding: "7월.mon07", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "8월",
+          align: "center",
+          columns: [
+            { binding: "8월.mon08", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "9월",
+          align: "center",
+          columns: [
+            { binding: "9월.mon09", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "10월",
+          align: "center",
+          columns: [
+            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "11월",
+          align: "center",
+          columns: [
+            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "12월",
+          align: "center",
+          columns: [
+            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+
+      ]
+
+
+      theGrid3.columnGroups = gridFormat3;
+      theGrid3.itemsSource = view_p01tab03page;
+    }
+
+    function tabD_grid(data){
+      var wtab04Dto = data;
+      var wtab04_data = [];
+      var cnt = 1;
+
+      for(var i=0; i<wtab04Dto.length; i++){
+        wtab04_data.push({
+          id: i,
+          index: cnt,
+          compyear: wtab04Dto[i]["compyear"],
+          actnm: wtab04Dto[i]["actnm"],
+          equpnm: wtab04Dto[i]["equpnm"],
+          equpcd: wtab04Dto[i]["equpcd"],
+          resunm: wtab04Dto[i]["resunm"],
+          result: wtab04Dto[i]["result"],
+
+          "1월" : {
+            mon01: wtab04Dto[i]["mon01"]},
+          "2월" : {
+            mon02: wtab04Dto[i]["mon02"]},
+          "3월" : {
+            mon03: wtab04Dto[i]["mon03"]},
+          "4월" : {
+            mon04: wtab04Dto[i]["mon04"]},
+          "5월" : {
+            mon05: wtab04Dto[i]["mon05"]},
+          "6월" : {
+            mon06: wtab04Dto[i]["mon06"]},
+          "7월" : {
+            mon07: wtab04Dto[i]["mon07"]},
+          "8월" : {
+            mon08: wtab04Dto[i]["mon08"]},
+          "9월" : {
+            mon09: wtab04Dto[i]["mon09"]},
+          "10월" : {
+            mon10: wtab04Dto[i]["mon10"]},
+          "11월" : {
+            mon11: wtab04Dto[i]["mon11"]},
+          "12월" : {
+            mon12: wtab04Dto[i]["mon12"]},
+
+        });
+        cnt++;
+      }
+
+
+      theGrid4.columns.clear();
+      theGrid4.autoGenerateColumns = false;
+
+      view_p01tab04page.sourceCollection = wtab04_data;
+
+
+      let gridFormat4 =[
+        {binding: "compyear", header: "년도", width: 100, align: "center"},
+        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.actnm}</b>',
+            click: (e, ctx) => {
+              modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
+              //console.log(ctx.item.compyear, ctx.item.equpcd, ctx.item.greginm, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
+            }
+          })
+        },
+        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
+        {binding: "resunm", header: "처리내용", width:100, align: "center"},
+        {binding: "result", header: "건수", width:100, align: "center"},
+
+
+        {
+          header: "1월",
+          align: "center",
+          columns: [
+
+            { binding: "1월.mon01", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "2월",
+          align: "center",
+          columns: [
+            { binding: "2월.mon02", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "3월",
+          align: "center",
+          columns: [
+            { binding: "3월.mon03", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "4월",
+          align: "center",
+          columns: [
+            { binding: "4월.mon04", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "5월",
+          align: "center",
+          columns: [
+            { binding: "5월.mon05", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "6월",
+          align: "center",
+          columns: [
+            { binding: "6월.mon06", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "7월",
+          align: "center",
+          columns: [
+            { binding: "7월.mon07", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        }
+        ,
+        {
+          header: "8월",
+          align: "center",
+          columns: [
+            { binding: "8월.mon08", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "9월",
+          align: "center",
+          columns: [
+            { binding: "9월.mon09", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "10월",
+          align: "center",
+          columns: [
+            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "11월",
+          align: "center",
+          columns: [
+            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+        {
+          header: "12월",
+          align: "center",
+          columns: [
+            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 },
+          ]
+        },
+
+      ]
+
+
+      theGrid4.columnGroups = gridFormat4;
+      theGrid4.itemsSource = view_p01tab04page;
+    }
 
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$

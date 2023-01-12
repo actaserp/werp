@@ -20,4 +20,11 @@ public class App27ElvlrtService {
 
     public List<App16ElvlrtDto> GetApp27List001(PopupDto parm){return app27ElvlrtMapper.GetApp27List001(parm);}
     public List<App16ElvlrtDto> GetApp27List002(PopupDto parm){return app27ElvlrtMapper.GetApp27List002(parm);}
+
+    public List<App16ElvlrtDto> GetApp27List003(PopupDto parm) {return app27ElvlrtMapper.GetApp27List003(parm);}
+
+    public List<App16ElvlrtDto> GetApp27List004(PopupDto parm) {return app27ElvlrtMapper.GetApp27List004(parm);}
+
+    public List<App16ElvlrtDto> GetApp27popuplist(App16ElvlrtDto parm) {return app27ElvlrtMapper.GetpopupList(parm);}
+
 }
