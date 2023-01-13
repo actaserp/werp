@@ -30,7 +30,14 @@ public class App20Controller {
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+            boolean result = true;
+            if(userformDto.getFlag().equals("CC")){
+                result = false;
+            }
+
             model.addAttribute("userformDto",userformDto);
+            model.addAttribute("result", result);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );

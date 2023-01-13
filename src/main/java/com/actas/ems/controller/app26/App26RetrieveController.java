@@ -177,6 +177,8 @@ public class App26RetrieveController {
         String ls_dd = frdate.substring(8,10);
         frdate =  ls_yeare + ls_mm + ls_dd;
 
+
+
         popParmDto.setFrdate(frdate);
         popParmDto.setActcd(actcd);
         popParmDto.setWkactcd(wkactcd);

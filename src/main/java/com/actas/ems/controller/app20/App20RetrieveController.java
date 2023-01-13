@@ -13,6 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class App20RetrieveController {
             , @RequestParam("actcdz") String actcd
             , @RequestParam("peridz") String perid
             , @RequestParam("qtyz") int qtyz
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -49,9 +51,18 @@ public class App20RetrieveController {
         todate =  ls_yeare + ls_mm + ls_dd;
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+            popParmDto.setActcd(actcd);
+        }else{
+            popParmDto.setActcd(userformDto.getActcd());
+        }
+
         popParmDto.setPerid(perid);
         popParmDto.setQty(qtyz);
+
         try {
             app20DtoList = service.GetApp20List001(popParmDto);
             model.addAttribute("app20DtoList",app20DtoList);
