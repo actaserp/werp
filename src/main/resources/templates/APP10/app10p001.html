@@ -168,10 +168,11 @@
                                                 <input type="hidden" name="equpcd" id="equpcdz">                                                
                                             </div>
                                         </td>  
-                                        <th>대응시간</th>
+                                        <th>대응시간<button class="btn1" type="button" onclick="wactnresult_btn()"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button></th>
                                         <td colspan="2">
                                             <div class="input_wrap">
                                                 <input type="text" class="form-control" name="resutime" id="resutimez" placeholder="대응시간" disabled>
+                                                
                                             </div>
                                         </td>                                       
                                     </tr>                                                                                                                                                                                       
@@ -1292,31 +1293,31 @@ function CahngeSlect(value){
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //고장부위 onclick   
+        //고장부위    
         document.getElementById("greginmz").addEventListener("click",function(){ 
             document.getElementById("greginmbtn").click();
         });
-        //고장부위상세 onclick   
+        //고장부위상세    
         document.getElementById("reginmz").addEventListener("click",function(){ 
             document.getElementById("reginmbtn").click();
         });
-        //고장요인 onclick   
+        //고장요인    
         document.getElementById("remonmz").addEventListener("click",function(){ 
             document.getElementById("remonmbtn").click();
         });
-        //고장원인 onclick   
+        //고장원인    
         document.getElementById("facnmz").addEventListener("click",function(){ 
             document.getElementById("facnmbtn").click();
         });
-         //처리내용 onclick   
+         //처리내용    
          document.getElementById("resunmz").addEventListener("click",function(){ 
             document.getElementById("resunmbtn").click();
         });
-         //처리결과 onclick   
+         //처리결과    
          document.getElementById("resultnmz").addEventListener("click",function(){ 
             document.getElementById("resultnmbtn").click();
         });
-         //담당자 onclick   
+         //담당자    
          document.getElementById("actpernmz").addEventListener("click",function(){ 
             document.getElementById("actpernmbtn").click();
         });
@@ -1471,7 +1472,7 @@ function CahngeSlect(value){
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents,);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents, ctx.item.resutime);
                     
                 }
             });
@@ -1494,7 +1495,7 @@ function CahngeSlect(value){
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1506,26 +1507,31 @@ function CahngeSlect(value){
             document.getElementById('peridz').value = arg9;   
             document.getElementById('contnmz').value = arg10;
             document.getElementById('contentsz').value = arg11;           
-            // document.getElementById('resutimez').value = arg12; //대응시간
+            document.getElementById('resutimez').value = arg12; //대응시간
 
-            // let ac_resutimez = document.getElementById('resutimez').value;
-
-
-            // HH:MM 으로 출력 되고 있음.
-            // var ac_HH1  = document.getElementById('actarrivtimez').value; //start시간 
-            // var ac_HH2 //end시간
-            // var ac_MM1 //start분
-            // var ac_MM2 //end분
-            // var ac_result //연산을 담을 인수
-            // //'satrt - end' + 'start - end' 이걸 parseInt로 받아야 NaN이 안 나옴.
+           
+        }      
 
 
-            // var ac_actarrivtimez = document.getElementById('actarrivtimez').value.replace(":","");
-            // var ac_actcomptimez = document.getElementById('actcomptimez').value.replace(":","");
-            // ac_resutimez = Math((ac_actarrivtimez - ac_actcomptimez)/60*60);
-            // console.log(ac_resutimez);
 
-            
+         //처리결과 값 넘겨주기  
+         document.getElementById("resutimez").addEventListener("click",function(){ 
+            document.getElementById("wactnresult_btn").click();
+        });
+
+        function wactnresult_btn(){
+            //대응시간
+            var ac_HH1 = document.getElementById('actarrivtimez').value.slice(0,2); //start시간
+            // console.log(ac_HH1); 
+            var ac_HH2 = document.getElementById('actcomptimez').value.slice(0,2); //end 시간
+            // console.log(ac_HH2); 
+            var ac_MM1 = document.getElementById('actarrivtimez').value.substr(3);//start분
+            // console.log(ac_MM1); 
+            var ac_MM2 = document.getElementById('actcomptimez').value.substr(3);//end분
+            // console.log(ac_MM2); 
+            var ac_result = (parseInt(ac_HH1) - parseInt(ac_HH2))*60 + parseInt(ac_MM1) - parseInt(ac_MM2);
+            ac_result = Math.abs(ac_result);            
+            console.log(ac_result);           
         }
         
       
