@@ -97,7 +97,6 @@ public class App10RetrieveController {
             , @RequestParam("remoremarkz") String remoremark //고장상세원인
             , @RequestParam("resuremarkz") String resuremark //처리내용상세
             , @RequestParam("remarkz") String remark //고객 요망사항
-            , @RequestParam("changeop") String changeop //option
             , Model model, HttpServletRequest request){
         try{
             HttpSession session = request.getSession();
@@ -123,7 +122,7 @@ public class App10RetrieveController {
             app10tDto.setRemoremark(remoremark);
             app10tDto.setResuremark(resuremark);
             app10tDto.setRemark(remark);
-            app10tDto.setChangeop(changeop);
+//            app10tDto.setChangeop(changeop);
 
             log.info(app10tDto); //consolelog에 app04Dto 호출
             if(compnum == null || compnum.equals("")){
@@ -137,27 +136,6 @@ public class App10RetrieveController {
                     return "error";
                 }
             }
-
-
-
-//            //null 체크 하고 changeop 값 받아와서 넘기기
-//            if(resultck == null){
-//                changeop = "success";
-//                return changeop;
-//                switch (app10tDto.getChangeop()){
-//                    case "0":
-//                        result = app10tDto.setChangeop("1");
-//                        break;
-//                    case "1" :
-//                        result = app10tDto.setChangeop("0");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                if(!result){
-//                    return  "error";
-//                }
-//            }
             model.addAttribute("userformDto",userformDto);
 
         }catch (IllegalStateException e){

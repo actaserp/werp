@@ -144,7 +144,7 @@
                                         <th>접수시간</th>
                                         <td>
                                             <div class="input_wrap">                                               
-                                                <input type="text"  class="form-control " id="recetimez" autocomplete="off" placeholder="호출" disabled >
+                                                <input type="text"  id="recetimez" autocomplete="off" placeholder="호출" disabled >
                                             </div>
                                         </td>                                        
                                        <th>공유</th>                                       
@@ -171,7 +171,7 @@
                                         <th>대응시간</th>
                                         <td colspan="2">
                                             <div class="input_wrap">
-                                                <input type="text" name="resutime" id="resutimez" placeholder="대응시간" disabled>
+                                                <input type="text" class="form-control" name="resutime" id="resutimez" placeholder="대응시간" disabled>
                                             </div>
                                         </td>                                       
                                     </tr>                                                                                                                                                                                       
@@ -229,7 +229,7 @@
                                         <th>고장내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" name="actdd" id="actddz" placeholder="고장내용" disabled>
+                                                <input type="text" name="contnm" id="contnmz" placeholder="고장내용" disabled>
                                             </div>
                                         </td>
                                     </tr>
@@ -237,7 +237,7 @@
                                         <th>고장상세내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap table_btn">
-                                                <input type="text" name="actreginm" id="actreginmz" placeholder="고장상세내용" disabled>
+                                                <input type="text" name="contents" id="contentsz" placeholder="고장상세내용" disabled>
                                                 <button class="btn2" type="button">유사사례 찾기</button>
                                             </div>
                                         </td>
@@ -256,7 +256,7 @@
                                             <div class="input_wrap table_btn">
                                                 <div class="input_wrap table_search " style="width: 100%;">
                                                     <input class="form-control" type="text" autocomplete="off" placeholder="고장상세를 입력하세요" id="reginmz" name="reginmz" aria-label="reginm" aria-describedby="basic-addon1">                                    
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="regicdz"> 
+                                                    <input class="form-control form-control-sm"  type="hidden" id="regicdz"> 
                                                     <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                                 </div>
                                                 <button class="btn2" type="button">유사사례 찾기</button>
@@ -730,19 +730,6 @@
             
         //     }
 
-
- // var ls_resutimez = document.getElementById('resutimez').value = arg12; //대응시간              
-
- var ac_resutimez = Number;
-            ac_actarrivtimez = Number;
-            ac_actcomptimez = Number;
-            var ac_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
-            var ac_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
-            
-            ac_resutimez = ac_actarrivtimez - ac_actcomptimez;
-            console.log(ac_resutimez) //NaN 반환
-
-
 var regexForslash = /-/g;
 var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
 var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
@@ -813,7 +800,7 @@ if(!ls_remarkz){
     success:function(data){
             if(data == "success"){
             alert("저장되었습니다.")
-            console.log(data);
+            // console.log(data);
             $("#CloseBtn").trigger("click");
             // listUp();
         }else{
@@ -1447,8 +1434,8 @@ function CahngeSlect(value){
                     pernm : wtab01Dto[i]["pernm"],
                     perid : wtab01Dto[i]["perid"].substr(1),    
                     // perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                          
-                    actdd : wtab01Dto[i]["actdd"], 
-                    actreginm : wtab01Dto[i]["actreginm"],  
+                    contnm : wtab01Dto[i]["contnm"], 
+                    contents : wtab01Dto[i]["contents"],  
                     resutime : wtab01Dto[i]["resutime"],
                 });
                 cnt++;
@@ -1484,7 +1471,7 @@ function CahngeSlect(value){
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.actdd, ctx.item.actreginm, ctx.item.resutime);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents,);
                     
                 }
             });
@@ -1504,9 +1491,10 @@ function CahngeSlect(value){
             cols.width = '*';                  
             wtab01Grid.columns.push(cols); 
 
-        }
+        }        
 
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
+       
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1516,10 +1504,28 @@ function CahngeSlect(value){
             document.getElementById('equpcdz').value = arg7;
             document.getElementById('pernmz').value = arg8; 
             document.getElementById('peridz').value = arg9;   
-            document.getElementById('actddz').value = arg10;
-            document.getElementById('actreginmz').value = arg11;
-            document.getElementById('resutimez').value = arg11;         
-           
+            document.getElementById('contnmz').value = arg10;
+            document.getElementById('contentsz').value = arg11;           
+            // document.getElementById('resutimez').value = arg12; //대응시간
+
+            // let ac_resutimez = document.getElementById('resutimez').value;
+
+
+            // HH:MM 으로 출력 되고 있음.
+            // var ac_HH1  = document.getElementById('actarrivtimez').value; //start시간 
+            // var ac_HH2 //end시간
+            // var ac_MM1 //start분
+            // var ac_MM2 //end분
+            // var ac_result //연산을 담을 인수
+            // //'satrt - end' + 'start - end' 이걸 parseInt로 받아야 NaN이 안 나옴.
+
+
+            // var ac_actarrivtimez = document.getElementById('actarrivtimez').value.replace(":","");
+            // var ac_actcomptimez = document.getElementById('actcomptimez').value.replace(":","");
+            // ac_resutimez = Math((ac_actarrivtimez - ac_actcomptimez)/60*60);
+            // console.log(ac_resutimez);
+
+            
         }
         
       
