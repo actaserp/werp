@@ -23,7 +23,8 @@
                         a.perid,
                         e.pernm,
                         a.divicd,
-                        f.divinm
+                        f.divinm,
+                        a.resultck
                  FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)

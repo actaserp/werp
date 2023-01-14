@@ -23,7 +23,7 @@
                 <ul class="left">
                     <li>
                         <div class="logo">
-                            <a href="">
+                            <a href="/auth/emmsdashboard">
                                 <img th:src="@{/assets/images/logo.png}" alt="">
                             </a>
                         </div>
@@ -779,12 +779,10 @@ if(!ls_resuremarkz){
 if(!ls_remarkz){
     alert("고객요망사항을 입력하세요")
     // return 
-}            
-    $.ajax({
-        url: '/app10/save',
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
-        type: "POST",
-              data:{
+}     
+
+// 본문 data
+        var inputdata = {
             "compnumz"    : ls_compnumz ,
             "actperidz": ls_actperidz , 
             "peridz"   : ls_peridz, 
@@ -796,18 +794,33 @@ if(!ls_remarkz){
             "resuremarkz"   : ls_resuremarkz, 
             "remarkz"   : ls_remarkz,  
                                
-            },       
-            async:false,
-    success:function(data){
-            if(data == "success"){
-            alert("저장되었습니다.")
-            // console.log(data);
-            $("#CloseBtn").trigger("click");
-            // listUp();
-        }else{
-            alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                // listUp();
         }
+
+
+         // 본문 data formdata 에 추가
+         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+
+
+
+
+    $.ajax({
+            url: '/app10/save',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+              data:fomData,       
+            async:false,
+            success:function(data){
+                if(data == "success"){
+                alert("저장되었습니다.")
+                // console.log(data);
+                $("#CloseBtn").trigger("click");
+                // listUp();
+                }else{
+                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                        // listUp();
+                }
     },error:function(e){
         console.log('error',e);
     }
@@ -907,8 +920,7 @@ if(!ls_remarkz){
                 wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
                 wtab01Grid.focus();
                 // tab01검색 데이터 수집
-                function getData_tab01(){  
-                    
+                function getData_tab01(){                     
                     var wactnm_data = []; 
                     var cnt = 1;
                     for (var i = 0; i < 21; i++) {
@@ -919,7 +931,7 @@ if(!ls_remarkz){
                             recenum: "", //접수번호
                             actnm: "", //현장명
                             equpnm: "", //호기명 
-                            resultck: "",                 
+                            resultck: "", //처리여부       
                            
                         });
                         cnt++;
@@ -1373,9 +1385,7 @@ function CahngeSlect(value){
             //조회시임.
             let ls_frdate = document.getElementById('frdate').value; //기간
             let ls_todate = document.getElementById('todate').value;  //""  
-            var ls_changeop = document.getElementById('changeop').value; //setop 
-                       
-        
+            var ls_changeop = document.getElementById('changeop').value; //setop                             
 
             if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == ""){                
                 alert("시작일자를 입력하세요.")
@@ -1384,7 +1394,11 @@ function CahngeSlect(value){
             if(ls_todate == null || ls_todate.length == 0 || ls_todate == ""){
                 alert("종료일자를 입력하세요.")
                  return;                 
-            }                         
+            }  
+            if(ls_changeop == null || ls_changeop.length == 0 || ls_changeop == ""){
+                alert("처리여부를 선택하세요.")
+                 return;                 
+            }                        
             searchList_rtn(ls_frdate, ls_todate, ls_changeop);
           
 
@@ -1399,9 +1413,6 @@ function CahngeSlect(value){
                             "frdate" :arg1,
                             "todate"      : arg2, 
                             "changeop"      : arg3 , 
-
-
-
                         }, 
                         async:false,
                         success:function(data){   
@@ -1438,6 +1449,7 @@ function CahngeSlect(value){
                     contnm : wtab01Dto[i]["contnm"], 
                     contents : wtab01Dto[i]["contents"],  
                     resutime : wtab01Dto[i]["resutime"],
+                    resultck : wtab01Dto[i]["resultck"],
                 });
                 cnt++;
             }   
@@ -1487,11 +1499,11 @@ function CahngeSlect(value){
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'resultck';
-            cols.header = '처리여부';
+            cols.header = '처리(0/1)';
             cols.align = "center";
             cols.width = '*';                  
-            wtab01Grid.columns.push(cols); 
-
+            wtab01Grid.columns.push(cols);
+      
         }        
 
        
@@ -1507,11 +1519,10 @@ function CahngeSlect(value){
             document.getElementById('peridz').value = arg9;   
             document.getElementById('contnmz').value = arg10;
             document.getElementById('contentsz').value = arg11;           
-            document.getElementById('resutimez').value = arg12; //대응시간
-
-           
+            document.getElementById('resutimez').value = arg12; //대응시간 ~ 처리때문에 보여줘야함
+          
         }      
-
+        console.log(wactnmChk_a);
 
 
          //처리결과 값 넘겨주기  
