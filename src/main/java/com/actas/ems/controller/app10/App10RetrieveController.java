@@ -97,6 +97,7 @@ public class App10RetrieveController {
             , @RequestParam("remoremarkz") String remoremark //고장상세원인
             , @RequestParam("resuremarkz") String resuremark //처리내용상세
             , @RequestParam("remarkz") String remark //고객 요망사항
+            , @RequestParam("resutimez") String resutime //대응시간
             , Model model, HttpServletRequest request){
         try{
             HttpSession session = request.getSession();
