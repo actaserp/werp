@@ -138,6 +138,9 @@
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
+                                                <input type="hidden" id="inputdatez" placeholder="작성일자" disabled>
+                                                <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
+
 
                                             </div>
                                         </td>
@@ -209,13 +212,13 @@
                                         <th>완료일자</th>
                                         <td >
                                             <div class="input_wrap date">
-                                                <input type="text"  class="form-control datetimepicker" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
+                                                <input type="text"  class="form-control datetimepicker" name="actcompdate" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>완료시간</th>
                                         <td >
                                             <div class="input_wrap ">
-                                                <input type="time"  class="form-control " id="actcomptimez" autocomplete="off" >
+                                                <input type="time"  class="form-control " name="actcomptime" id="actcomptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>처리자</th>
@@ -799,15 +802,14 @@ if(!ls_resutimez){
             "remoremarkz": ls_remoremarkz , 
             "resuremarkz"   : ls_resuremarkz, 
             "remarkz"   : ls_remarkz,  
-            "resutimez" : ls_resutimez                               
+            "resutimez" : ls_resutimez,
+            "inputdatez" : ls_inputdatez,
+            "inputperidz" : ls_inputperidz                               
         }
 
 
          // 본문 data formdata 에 추가
          formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
-
-
-
 
     $.ajax({
             url: '/app10/save',
@@ -815,7 +817,7 @@ if(!ls_resutimez){
             contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
             enctype : 'multipart/form-data',
             type: "POST",
-              data:fomData,       
+            data:fomData,       
             async:false,
             success:function(data){
                 if(data == "success"){
@@ -827,9 +829,9 @@ if(!ls_resutimez){
                     alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                         // listUp();
                 }
-    },error:function(e){
-        console.log('error',e);
-    }
+        },error:function(e){
+            console.log('error',e);
+        }
     }).done(function(fragment){
        
     }) 
@@ -1438,20 +1440,17 @@ function CahngeSlect(value){
                     id: i, 
                     index: cnt,
                     recedate: wtab01Dto[i]["recedate"].substr(2),
-                    recenum: wtab01Dto[i]["recenum"],                
+                    recenum: wtab01Dto[i]["recenum"],  
+                    recetime : wtab01Dto[i]["recetime"],              
                     actnm: wtab01Dto[i]["actnm"],
-                    equpnm: wtab01Dto[i]["equpnm"], 
-                    recetime : wtab01Dto[i]["recetime"], 
-                    actcd : wtab01Dto[i]["actcd"],                                                                                                       
-                    equpnm : wtab01Dto[i]["equpnm"],
+                    actcd : wtab01Dto[i]["actcd"],
+                    equpnm: wtab01Dto[i]["equpnm"],                                                                                           
                     equpcd : wtab01Dto[i]["equpcd"],                                                                                                       
                     pernm : wtab01Dto[i]["pernm"],
-                    perid : wtab01Dto[i]["perid"].substr(1),    
-                    // perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                          
+                    perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                             
                     contnm : wtab01Dto[i]["contnm"], 
-                    contents : wtab01Dto[i]["contents"],  
-                    resutime : wtab01Dto[i]["resutime"],
-                    resultck : wtab01Dto[i]["resultck"],
+                    contents : wtab01Dto[i]["contents"], 
+                    resultck : wtab01Dto[i]["resultck"] 
                 });
                 cnt++;
             }   
@@ -1521,7 +1520,6 @@ function CahngeSlect(value){
             document.getElementById('peridz').value = arg9;   
             document.getElementById('contnmz').value = arg10;
             document.getElementById('contentsz').value = arg11;           
-         
         }      
         console.log(wactnmChk_a);
 
@@ -2196,7 +2194,7 @@ function CahngeSlect(value){
             let day = today.getDay();  // 요일
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
-            let ls_frday = year + '-' + month + '-01' 
+            let ls_frday = year + '-' + month + '-' + (date-5)
             let ls_today = year + '-' + month + '-' + date 
             document.getElementById('frdate').value = ls_frday; //날짜 조회 현재 시간 쿼리
             document.getElementById('todate').value = ls_today; 

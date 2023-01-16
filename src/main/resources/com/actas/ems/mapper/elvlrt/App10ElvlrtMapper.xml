@@ -27,7 +27,6 @@
                         CASE a.resultck WHEN '1' THEN '처리'
                                         WHEN '0' THEN '미처리'
                         end as resultck
-
     FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
@@ -46,7 +45,7 @@
 
     <!--게시글 작성 전부 tb_e411에 있는 상황이고 이걸 icd hidden 으로 받아온 값을 받아야한다.-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, actperid, perid, arrivdate, compdate, arrivtime, comptime, remoremark, resuremark, remark) values (#{custcd}, #{spjangcd}, #{compnum}, #{actperid}, #{perid}, #{arrivdate}, #{compdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark})
+        insert into tb_e411 (custcd, spjangcd, compnum, actperid, perid, arrivdate, compdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid) values (#{custcd}, #{spjangcd}, #{compnum}, #{actperid}, #{perid}, #{arrivdate}, #{compdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid} )
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
@@ -72,6 +71,14 @@
         <if test="resuremark != null">resuremark=#{resuremark}</if>
         <if test="remark != null ">,</if>
         <if test="remark != null">remark=#{remark}</if>
+        <if test="inputdate != null ">,</if>
+        <if test="inputdate != null">inputdate=#{inputdate}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+
+
         where compnum = #{compnum}
     </update>
 

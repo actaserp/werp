@@ -61,6 +61,11 @@ public class App10ElvlrtDto {
     private String resutime;
     private String resulttime;
     private String resultnm;
-    private String tel;
+    private String inputdate;
+    private String indate;
+    private String inperid;
+
+    private String Yyyymm;
+
 
 }
