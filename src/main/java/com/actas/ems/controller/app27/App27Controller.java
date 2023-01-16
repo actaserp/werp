@@ -30,6 +30,8 @@ public class App27Controller {
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("고객지원센터");
+            userformDto.setPagenm("고장구분별현황");
             model.addAttribute("userformDto", userformDto);
             log.info(userformDto.getActcd());
 

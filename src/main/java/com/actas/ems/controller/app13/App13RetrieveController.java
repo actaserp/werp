@@ -36,7 +36,10 @@ public class App13RetrieveController {
     public Object App13001Tab01Form(@RequestParam("frdate") String frdate,
                                     @RequestParam("todate") String todate,
                                     @RequestParam("actcdz") String actcd,
-                                    @RequestParam("actcontcdz") String contcd,
+                                    @RequestParam("actresucdz") String resucd,
+                                    @RequestParam("actremocd") String remocd,
+                                    @RequestParam("actgregicd") String gregicd,
+                                    @RequestParam("actresultcd") String resultcd,
                                     Model model) throws Exception {
         String ls_yeare = frdate.substring(0, 4);
         String ls_mm = frdate.substring(5, 7);
@@ -49,7 +52,10 @@ public class App13RetrieveController {
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
         popParmDto.setActcd(actcd);
-        popParmDto.setContcd(contcd);
+        popParmDto.setResucd(resucd);
+        popParmDto.setRemocd(remocd);
+        popParmDto.setGregicd(gregicd);
+        popParmDto.setResultcd(resultcd);
         try {
             app13DtoList = service.GetApp13List001(popParmDto);
             model.addAttribute("app13DtoList", app13DtoList);
@@ -67,82 +73,5 @@ public class App13RetrieveController {
         return app13DtoList;
     }
 
-    @GetMapping(value = "/p001tab02")
-    public Object App13001Tab02Form(@RequestParam("frdate") String frdate
-            , @RequestParam("todate") String todate
-            , @RequestParam("actcdz") String actcd
-            , @RequestParam("actcontcdz") String contcd
-            , Model model) throws Exception{
 
-        String ls_yeare = frdate.substring(0,4);
-        String ls_mm = frdate.substring(5,7);
-        String ls_dd = frdate.substring(8,10);
-        frdate =  ls_yeare + ls_mm + ls_dd;
-        ls_yeare = todate.substring(0,4);
-        ls_mm = todate.substring(5,7);
-        ls_dd = todate.substring(8,10);
-        todate =  ls_yeare + ls_mm + ls_dd;
-        popParmDto.setFrdate(frdate);
-        popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
-        popParmDto.setContcd(contcd);
-
-        try{
-            app13DtoList = service.GetApp13List002(popParmDto);
-            model.addAttribute("app03DtoList", app13DtoList);
-        }catch (DataAccessException e){
-            log.info("App03001Tab01Form DataAccessException ================================================================");
-            log.info(e.toString());
-            throw new AttachFileException(" DataAccessException to save");
-        }catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("App03001Tab01Form Exception ================================================================");
-            log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-        }
-        return app13DtoList;
-    }
-    //호기별 고장내용
-    @GetMapping(value = "/p001tab03")
-    public Object App03001Tab03Form(@RequestParam("frdate") String frdate
-            , @RequestParam("todate") String todate
-            , @RequestParam("actcdz") String actcd
-            , @RequestParam("actcontcdz") String contcd
-            , Model model) throws Exception{
-        String ls_yeare = frdate.substring(0,4);
-        String ls_mm = frdate.substring(5,7);
-        String ls_dd = frdate.substring(8,10);
-        frdate =  ls_yeare + ls_mm + ls_dd;
-        ls_yeare = todate.substring(0,4);
-        ls_mm = todate.substring(5,7);
-        ls_dd = todate.substring(8,10);
-        todate =  ls_yeare + ls_mm + ls_dd;
-        popParmDto.setFrdate(frdate);
-        popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
-        popParmDto.setContcd(contcd);
-
-        try{
-            app13DtoList = service.GetApp13List003(popParmDto);
-            model.addAttribute("app03DtoList", app13DtoList);
-        }catch (DataAccessException e) {
-            log.info("App03001Tab01Form DataAccessException ================================================================");
-            log.info(e.toString());
-            throw new AttachFileException(" DataAccessException to save");
-            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-        }catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("App03001Tab01Form Exception ================================================================");
-            log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-        }
-        return app13DtoList;
-    }
-
-    private String getToDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        Date date      = new Date(System.currentTimeMillis());
-
-        return formatter.format(date);
-    }
 }

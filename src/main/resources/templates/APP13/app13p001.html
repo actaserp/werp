@@ -21,54 +21,7 @@
     </div>
   </div>
   <div class="con">
-    <div class="header_top">
-      <ul class="left">
-        <li>
-          <div class="logo">
-            <a href="">
-              <img th:src="@{/assets/images/logo.png}" alt="">
-            </a>
-          </div>
-        </li>
-        <li class="home">
-          <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-          <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-        </li>
-        <li>
-          종합유지관리서비스
-        </li>
-        <li class="on">
-          현장별수리현황
-        </li>
-      </ul>
-      <ul class="right">
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_call.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_bell.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_menu.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_que.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_user.png}" alt="">
-          </a>
-        </li>
-      </ul>
-    </div>
+    <th:block th:include="layouts/APPHeader/appheadTop"/>
     <div class="infor_bar type2">
       <ul class="right" style="visibility: hidden; opacity: 0;">
         <li>
@@ -98,7 +51,7 @@
     <div class="section">
       <div class="sec_con" style="width: 100%;">
         <div class="box_wrap">
-          <ul class="search_box">
+          <ul class="search_box" style="margin-bottom: 0rem;">
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -113,12 +66,48 @@
               </div>
             </li>
             <li>
-              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장내용</span>
-                <input class="form-control" type="text" placeholder="고장내용을 입력하세요" aria-label="actcontnmz" id="actcontnmz" aria-describedby="basic-addon1" />
-                <input class="form-control form-control-sm"  type="hidden"  id="actcontcdz"  />
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리내용</span>
+                <input class="form-control" type="text" placeholder="처리내용을 입력하세요." aria-label="actresunmz" id="actresunmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actresucdz"  />
               </div>
             </li>
           </ul>
+          <div class="modal_con">
+          <div class="board">
+          <div class="part1" style="width: 100%;">
+          <div class="part1_bottom">
+          <div class="modal_box">
+          <div class="title toggle" style="cursor: pointer;">
+            <!--<h5>조건추가</h5>-->
+            <button><img src="../images/toggle.png" alt=""></button>검색조건
+          </div>
+          <div class="con_wrap toggle_box" style="display: none;">
+          <ul class="search_box" style="margin-bottom: 0rem;">
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장요인</span>
+                <input class="form-control" type="text" placeholder="고장요인을 입력하세요." aria-label="actremonmz" id="actremonmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="actremocdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장부위</span>
+                <input class="form-control" type="text" placeholder="고장부위명을 입력하세요" id="greginmz" name="greginmz" aria-label="greginmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="gregicdz"  />
+              </div>
+            </li>
+            <li>
+              <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리방법</span>
+                <input class="form-control" type="text" placeholder="처리방법을 입력하세요" id="resultnmz" name="resultnmz" aria-label="resultnmz" aria-describedby="basic-addon1" />
+                <input class="form-control form-control-sm"  type="hidden"  id="resultcdz"  />
+              </div>
+            </li>
+          </ul>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
@@ -171,6 +160,12 @@
 
   <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
   <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actresunmbtn" data-bs-toggle="modal" data-bs-target="#actresunmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="actremonmbtn" data-bs-toggle="modal" data-bs-target="#actremonmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="greginmbtn" data-bs-toggle="modal" data-bs-target="#greginmmodal"  />
+  <input class="form-control form-control-sm"  type="hidden" id="resultnmbtn" data-bs-toggle="modal" data-bs-target="#resultnmmodal"  />
+
+
 
 
   <!--------------------------------------------------------------------------------------->
@@ -221,7 +216,85 @@
 
 
   <!--------------------------------------------------------------------------------------->
-  <!-- 고장내용 MODAL FROM  -->
+  <!-- 처리내용 MODAL FROM  -->
+  <div class="modal fade" id="actresunmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchCode2" type="text"   onkeyup="if(window.event.keyCode==13){searchword2_rtn()}"
+                       placeholder="처리내용 "     />
+              </div>
+              <button id="wresunmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wresunmGrid_div" ></div>
+            <div id="thePager05"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wresunmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장원인 MODAL FROM  -->
+  <div class="modal fade" id="actremonmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchWordCode" type="text"   onkeyup="if(window.event.keyCode==13){searchword_rtn()}"
+                       placeholder="고장원인 "     />
+              </div>
+              <button id="wremonmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div id="wremonmGrid_div" ></div>
+            <div id="thePager04"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wremonmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--*************************************************************************************************************************-->
+  <!-- 고장요인 MODAL FROM  -->
   <div class="modal fade" id="actcontnmmodal" data-bs-keyboard="false"
        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
        aria-hidden="true">
@@ -260,13 +333,111 @@
     </div>
   </div>
   <!--------------------------------------------------------------------------------------->
+  <!--------------------------------------------------------------------------------------->
+  <!-- 고장부위 MODAL FROM  -->
+  <div class="modal fade" id="greginmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchGreCode" type="text"   onkeyup="if(window.event.keyCode==13){searchgcode_rtn()}"
+                       placeholder="고장부위코드 / 고장부위명 "     />
+              </div>
+              <button id="wgreginmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+
+            <div id="wgreginmGrid_div" ></div>
+            <div id="thePager06"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wgreginmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+  <!--------------------------------------------------------------------------------------->
+  <!-- 처리방법 MODAL FROM  -->
+  <div class="modal fade" id="resultnmmodal" data-bs-keyboard="false"
+       data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 800px">
+      <div class="modal-content border-0">
+        <div class="modal-body p-0" >
+          <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+            <div class="search">
+              <div class="input_wrap">
+                <input class="form-control form-control-sm" id="searchResultCode" type="text"   onkeyup="if(window.event.keyCode==13){searchresultcode_rtn()}"
+                       placeholder="처리코드 / 처리방법 "     />
+              </div>
+              <button id="wresultnmBtn">
+                <img th:src="@{/assets/images/i_search.png}" alt="">
+              </button>
+            </div>
+          </div>
+          <div class="container-fluid">
+
+            <div id="wresultnmGrid_div" ></div>
+            <div id="thePager07"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row g-1">
+            <div class="col-auto">
+              <button class="badge-soft-primary dropdown-item rounded-1"
+                      type="button"  id="wresultnmmodal_btn" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------------------->
+
+  <!--------------------------------------------------------------------------------------->
+
   <script>
     var view_p01tab01page;
     var view_actnmpage;
     var view_contnmpage;
+    var view_pernmpage;
+    var view_resunmpage;
+    var view_remonmpage;
+    var view_resultnmpage;
+    var view_greginmpage;
+
+
     var wtab01Grid;
     var wactnmGrid;
     var wcontnmGrid;
+    var wpernmGrid;
+    var wresunmGrid;
+    var wremonmGrid;
+    var wresultnmGrid;
+    var wgreginmGrid;
+
     var typeMenu;
     var treemap;
     let barchart;
@@ -304,8 +475,6 @@
           { binding: 'greginm', header: '고장부위', align: "center", width: '*' },
           { binding: 'reginm', header: '고장부위상세', align: "center", width: '*' },
           { binding: 'resultnm', header: '처리방법', align: "center", width: '*' },
-          { binding: 'result', header: '진행내역', align: "center", width: '*' }
-
 
         ], itemsSource: view_p01tab01page
 
@@ -358,8 +527,6 @@
             greginm: "",
             reginm: "",
             resultnm: "",
-            result: "",
-
           });
           cnt++;
         }
@@ -369,14 +536,11 @@
 
 
     }
-
-
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //선택한 탭 체크
     function tabchk_rtn(arg){
       document.getElementById('tabvalue').value = arg;
     }
-
     //tab01 검색
     document.getElementById("retrieveBtn").addEventListener("click", function(){
 
@@ -385,27 +549,64 @@
       let ls_todate = document.getElementById('todate').value;
       let ls_actcdz = document.getElementById('actcdz').value;
       let ls_actnmz = document.getElementById('actnmz').value;
-      let ls_actcontcdz = document.getElementById('actcontcdz').value;
-      let ls_actcontnmz = document.getElementById('actcontnmz').value;
+      let ls_actresucdz = document.getElementById('actresucdz').value;
+      let ls_actresunmz = document.getElementById('actresunmz').value;
+      let ls_actremonmz = document.getElementById('actremonmz').value;
+      let ls_actremocdz = document.getElementById('actremocdz').value;
+      let ls_actgreginmz = document.getElementById('greginmz').value;
+      let ls_actgregicdz = document.getElementById('gregicdz').value;
+      let ls_actresultnmz = document.getElementById('resultnmz').value;
+      let ls_actresultcdz = document.getElementById('resultcdz').value;
+
+
+
+
       if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
         ls_actcdz = "%";
         document.getElementById('actcdz').value = "";
       }
-      if(ls_actcontnmz == null || ls_actcontnmz.length == 0 || ls_actcontnmz == ""){
-        ls_actcontcdz = "%";
-        document.getElementById('actcontcdz').value = "";
-      }
       if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
         ls_actcdz = "%";
       }
-      if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == ""){
-        ls_actcontcdz = "%";
+      if(ls_actresunmz == null || ls_actresunmz.length == 0 || ls_actresunmz == ""){
+        ls_actresucdz = "%";
+        document.getElementById('actresucdz').value = "";
       }
-      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_actcontcdz);
+      if(ls_actresucdz == null || ls_actresucdz.length == 0 || ls_actresucdz == ""){
+        ls_actresucdz = "%";
+      }
+      if(ls_actremonmz == null || ls_actremonmz.length == 0 || ls_actremonmz == ""){
+        ls_actremocdz = "%";
+        document.getElementById('actremocdz').value = "";
+      }
+      if(ls_actremocdz == null || ls_actremocdz.length == 0 || ls_actremocdz == ""){
+        ls_actremocdz = "%";
+      }
+      if(ls_actgreginmz == null || ls_actgreginmz.length == 0 || ls_actgreginmz == ""){
+        ls_actgregicdz = "%";
+        document.getElementById('gregicdz').value = "";
+      }
+      if(ls_actgregicdz == null || ls_actgregicdz.length == 0 || ls_actgregicdz == ""){
+        ls_actgregicdz = "%";
+      }
+
+      if(ls_actresultnmz == null || ls_actresultnmz.length == 0 || ls_actresultnmz == ""){
+        ls_actresultcdz = "%";
+        document.getElementById('resultcdz').value = "";
+      }
+      if(ls_actresultcdz == null || ls_actresultcdz.length == 0 || ls_actresultcdz == ""){
+        ls_actresultcdz = "%";
+      }
+
+
+
+      searchList_rtn(ls_tab, ls_frdate, ls_todate, ls_actcdz, ls_actresucdz, ls_actremocdz, ls_actgregicdz, ls_actresultcdz);
 
     })
 
-    function searchList_rtn(arg1, arg2, arg3, arg4, arg5){
+
+
+    function searchList_rtn(arg1, arg2, arg3, arg4, arg5, arg6, arg7 ,arg8){
       switch(arg1){
         case 'A':
           $.ajax({
@@ -415,7 +616,11 @@
               "frdate" : arg2,
               "todate" : arg3,
               "actcdz" : arg4,
-              "actcontcdz" : arg5
+              "actresucdz" : arg5,
+              "actremocd" : arg6,
+              "actgregicd" : arg7,
+              "actresultcd" : arg8
+
             },
             async: false,
             success:function(data){
@@ -452,8 +657,6 @@
           greginm: wtab01Dto[i]["greginm"],
           reginm: wtab01Dto[i]["reginm"],
           resultnm: wtab01Dto[i]["resultnm"],
-          result: wtab01Dto[i]["result"],
-
 
         });
         cnt++;
@@ -549,13 +752,6 @@
       cols = new wijmo.grid.Column();
       cols.binding = 'resultnm';
       cols.header = '처리방법';
-      cols.align = 'center';
-      cols.width = '*';
-      wtab01Grid.columns.push(cols);
-
-      cols = new wijmo.grid.Column();
-      cols.binding = 'result';
-      cols.header = '진행내역';
       cols.align = 'center';
       cols.width = '*';
       wtab01Grid.columns.push(cols);
@@ -828,7 +1024,475 @@
       $("#wcontnmmodal_btn").trigger("click");
     }
 
+
+    /*============================================================================================*/
+
   </script>
+  <script>
+  //처리내용검색 popup list
+    view_resunmpage = new wijmo.collections.CollectionView(getData_wlist04(), {
+      pageSize: 12
+    });
+    // 고장원인검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager05', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_resunmpage
+    });
+    wresunmGrid = new wijmo.grid.FlexGrid('#wresunmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        { binding: 'resucd', header: '처리내용코드', align: "center", width: '1*' },
+        { binding: 'resunm', header: '처리내용', align: "center", width: '1*' },
+      ],
+      itemsSource: view_resunmpage
+    });
+    // 고장내용검색 데이터 수집
+    function getData_wlist04(){
+      var wresunm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wresunm_data.push({
+          id: i,
+          index: cnt,
+          resucd: "",
+          resunm: "",
+        });
+        cnt++;
+      }
+      return wresunm_data;
+    }
+
+    //고장내용 검색
+    document.getElementById("actresunmz").addEventListener("click",function(){
+      document.getElementById("actresunmbtn").click();
+
+    });
+    // 고장내용 검색
+    document.getElementById("wresunmBtn").addEventListener("click",function(){
+      searchword2_rtn();
+    })
+
+    function searchword2_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchCode2').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wresunm',
+        type:"POST",
+        data: {
+          "resunmz"      : searchText,
+        },
+        success:function(data){
+          console.log(data);
+          var wresunmDto  = data;
+          var wresunm_data = [];
+          var cnt = 1;
+          for (var i = 0; i < wresunmDto.length; i++) {
+            wresunm_data.push({
+              id: i,
+              index: cnt,
+              resunm:wresunmDto[i]["resunm"],
+              resucd: wresunmDto[i]["resucd"],
+            });
+            cnt++;
+          }
+          // console.log("wcontnm_data",wcontnm_data)
+          wresunmGrid.columns.clear();
+          wresunmGrid.autoGenerateColumns = false;
+          view_resunmpage.sourceCollection  = wresunm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'resucd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.resucd}</b>',
+            click: (e, ctx) => {
+              wremonmChk_2(ctx.item.resucd, ctx.item.resunm);
+            }
+          });
+          wresunmGrid.columns.push(cols);
+          // console.log("cols", cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'resunm';
+          cols.header = '처리내용';
+          cols.align = "left";
+          cols.width = '*';
+          wresunmGrid.columns.push(cols);
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wremonmChk_2(arg1, arg2) {
+      document.getElementById('actresucdz').value = arg1;
+      document.getElementById('actresunmz').value = arg2;
+
+      $("#wresunmmodal_btn").trigger("click");
+
+    }
+
+    <!--************************************************************************************************-->
+    //고장원인검색 popup list
+    view_remonmpage = new wijmo.collections.CollectionView(getData_wlist03(), {
+      pageSize: 12
+    });
+    // 고장원인검색 페이지 이동
+    new wijmo.input.CollectionViewNavigator('#thePager04', {
+      byPage: true,
+      headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+      cv: view_remonmpage
+    });
+    wremonmGrid = new wijmo.grid.FlexGrid('#wremonmGrid_div', {
+      autoGenerateColumns: false,
+      isReadOnly: false,
+      selectionMode: 'RowRange',
+      alternatingRowStep: 0,
+      columns: [
+        { binding: 'remocd', header: '고장원인코드', align: "center", width: '1*' },
+        { binding: 'remonm', header: '고장원인내용', align: "center", width: '1*' },
+      ],
+      itemsSource: view_remonmpage
+    });
+    // 고장내용검색 데이터 수집
+    function getData_wlist03(){
+      var wremonm_data = [];
+      var cnt = 1;
+      for (var i = 0; i < 12; i++) {
+        wremonm_data.push({
+          id: i,
+          index: cnt,
+          remocd: "",
+          remonm: "",
+        });
+        cnt++;
+      }
+      return wremonm_data;
+    }
+
+    //고장내용 검색
+    document.getElementById("actremonmz").addEventListener("click",function(){
+      document.getElementById("actremonmbtn").click();
+
+    });
+    // 고장내용 검색
+    document.getElementById("wremonmBtn").addEventListener("click",function(){
+      searchword_rtn();
+    })
+
+    function searchword_rtn(){
+      let searchText = '';
+      searchText = document.getElementById('searchWordCode').value;
+      if(searchText == null || searchText.length == 0 || searchText == ""){
+        searchText = "%";
+      }
+      $.ajax({
+        url: '/pop01/wremonm',
+        type:"POST",
+        data: {
+          "remonmz"      : searchText,
+        },
+        success:function(data){
+          console.log(data);
+          var wremonmDto  = data;
+          var wremonm_data = [];
+          var cnt = 1;
+          for (var i = 0; i < wremonmDto.length; i++) {
+            wremonm_data.push({
+              id: i,
+              index: cnt,
+              remonm:wremonmDto[i]["remonm"],
+              remocd: wremonmDto[i]["remocd"],
+            });
+            cnt++;
+          }
+          // console.log("wcontnm_data",wcontnm_data)
+          wremonmGrid.columns.clear();
+          wremonmGrid.autoGenerateColumns = false;
+          view_remonmpage.sourceCollection  = wremonm_data;
+          var cols = new wijmo.grid.Column();
+          cols.binding = 'remocd';
+          cols.header = '코드';
+          cols.align = "center";
+          cols.width = '*';
+          cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+            text: '<b>${item.remocd}</b>',
+            click: (e, ctx) => {
+              wremonmChk_1(ctx.item.remocd, ctx.item.remonm);
+            }
+          });
+          wremonmGrid.columns.push(cols);
+          // console.log("cols", cols);
+          cols = new wijmo.grid.Column();
+          cols.binding = 'remonm';
+          cols.header = '원인내용';
+          cols.align = "left";
+          cols.width = '*';
+          wremonmGrid.columns.push(cols);
+        },error:function(e){
+          alert(data.code);
+          alert(data.message);
+        }
+      }).done(function(fragment){
+
+      })
+    }
+
+    function wremonmChk_1(arg1, arg2) {
+      document.getElementById('actremocdz').value = arg1;
+      document.getElementById('actremonmz').value = arg2;
+
+      $("#wremonmmodal_btn").trigger("click");
+    }
+
+      /**-------------------------------------------------------------------------------------------*/
+      view_greginmpage = new wijmo.collections.CollectionView(getData_wlist6(), {
+        pageSize: 12
+      });
+      new wijmo.input.CollectionViewNavigator('#thePager06', {
+        byPage: true,
+        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        cv: view_greginmpage
+      });
+      wgreginmGrid = new wijmo.grid.FlexGrid('#wgreginmGrid_div', {
+        autoGenerateColumns: false,
+        isReadOnly: false,
+        allowSorting: 'MultiColumn',
+        selectionMode: 'RowRange',
+        alternatingRowStep: 0,
+        columns: [
+          {binding: 'gregicd', header: '고장부위명', align: "center", width: '1*'},
+          {binding: 'greginm', header: '고장부위코드', align: "center", width: '1*'},
+
+        ],
+        itemsSource: view_greginmpage
+
+      });
+
+      function getData_wlist6(){
+        var wgreginm_data = [];
+        var cnt = 1;
+        for(var i=0; i<12; i++){
+          wgreginm_data.push({
+            id: 1,
+            index: cnt,
+            gregicd: "",
+            greginm: "",
+          });
+          cnt++;
+        }
+        return wgreginm_data;
+      }
+
+      document.getElementById("greginmz").addEventListener("click", function(){
+        document.getElementById("greginmbtn").click();
+        console.log("eee")
+      });
+
+      document.getElementById("wgreginmBtn").addEventListener("click", function(){
+        searchgcode_rtn();
+      });
+
+      function searchgcode_rtn(){
+        let searchText = '';
+        searchText = document.getElementById('searchGreCode').value;
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+          searchText = "%";
+        }
+        $.ajax({
+          url: '/pop01/wgreginm',
+          type: "POST",
+          data: {
+
+            "greginmz": searchText
+          },
+          success: function(data){
+            var wgreginmDto = data;
+            var wgreginm_data = [];
+            var cnt = 1;
+            for(var i=0; i< wgreginmDto.length; i++){
+              wgreginm_data.push({
+                id : i,
+                index: cnt,
+                gregicd: wgreginmDto[i]["gregicd"],
+                greginm: wgreginmDto[i]["greginm"]
+              });
+              cnt++
+            }
+
+            wgreginmGrid.columns.clear();
+            wgreginmGrid.autoGenerateColumns = false;
+            view_greginmpage.sourceCollection = wgreginm_data;
+
+
+            var cols = new wijmo.grid.Column();
+            cols.binding = 'gregicd';
+            cols.header = '고장부위코드';
+            cols.align = 'center';
+            cols.width = '*';
+            wgreginmGrid.columns.push(cols);
+
+
+            cols = new wijmo.grid.Column();
+            cols.binding = 'greginm';
+            cols.header = '고장부위명';
+            cols.align = "center";
+            cols.width = '*';
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+              text: '<b>${item.greginm}</b>',
+              click: (e, ctx) => {
+                wgreginmChk_2(ctx.item.gregicd, ctx.item.greginm);
+              }
+            });
+            wgreginmGrid.columns.push(cols);
+          }, error: function(e){
+            alert(data.code);
+            alert(data.message);
+
+          }
+        }).done(function(fragment){
+
+        })
+      }
+
+      function wgreginmChk_2(arg1, arg2){
+        document.getElementById('greginmz').value = arg2;
+        document.getElementById('gregicdz').value = arg1;
+
+        $("#wgreginmmodal_btn").trigger("click");
+      }
+
+
+    /**================================================================================================*/
+    view_resultnmpage = new wijmo.collections.CollectionView(getData_wlist7(), {
+      pageSize: 12
+    });
+  new wijmo.input.CollectionViewNavigator('#thePager07', {
+    byPage: true,
+    headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+    cv: view_resultnmpage
+  });
+  wresultnmGrid = new wijmo.grid.FlexGrid('#wresultnmGrid_div', {
+    autoGenerateColumns: false,
+    isReadOnly: false,
+    allowSorting: 'MultiColumn',
+    selectionMode: 'RowRange',
+    alternatingRowStep: 0,
+    columns: [
+      {binding: 'resultcd', header: '처리코드', align: "center", width: '1*'},
+      {binding: 'resultnm', header: '처리방법', align: "center", width: '1*'},
+
+    ],
+    itemsSource: view_resultnmpage
+
+  });
+
+  function getData_wlist7(){
+    var wresultnm_data = [];
+    var cnt = 1;
+    for(var i=0; i<12; i++){
+      wresultnm_data.push({
+        id: 1,
+        index: cnt,
+        resultcd: "",
+        resultnm: "",
+      });
+      cnt++;
+    }
+    return wresultnm_data;
+  }
+
+  document.getElementById("resultnmz").addEventListener("click", function(){
+    document.getElementById("resultnmbtn").click();
+    console.log("eee")
+  });
+
+  document.getElementById("wresultnmBtn").addEventListener("click", function(){
+    searchresultcode_rtn();
+  });
+
+  function searchresultcode_rtn(){
+    let searchText = '';
+    searchText = document.getElementById('searchResultCode').value;
+    if(searchText == null || searchText.length == 0 || searchText == ""){
+      searchText = "%";
+    }
+    $.ajax({
+      url: '/pop01/wresultnm',
+      type: "POST",
+      data: {
+
+        "resultnmz": searchText
+      },
+      success: function(data){
+        var wresultnmDto = data;
+        var wresultnm_data = [];
+        var cnt = 1;
+        for(var i=0; i< wresultnmDto.length; i++){
+          wresultnm_data.push({
+            id : i,
+            index: cnt,
+            resultcd: wresultnmDto[i]["resultcd"],
+            resultnm: wresultnmDto[i]["resultnm"]
+          });
+          cnt++
+        }
+
+        wresultnmGrid.columns.clear();
+        wresultnmGrid.autoGenerateColumns = false;
+        view_resultnmpage.sourceCollection = wresultnm_data;
+
+
+        var cols = new wijmo.grid.Column();
+        cols.binding = 'resultcd';
+        cols.header = '처리코드';
+        cols.align = 'center';
+        cols.width = '*';
+        wresultnmGrid.columns.push(cols);
+
+
+        cols = new wijmo.grid.Column();
+        cols.binding = 'resultnm';
+        cols.header = '처리방법';
+        cols.align = "center";
+        cols.width = '*';
+        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({
+          text: '<b>${item.resultnm}</b>',
+          click: (e, ctx) => {
+            wresultnmChk_2(ctx.item.resultcd, ctx.item.resultnm);
+          }
+        });
+        wresultnmGrid.columns.push(cols);
+      }, error: function(e){
+        alert(data.code);
+        alert(data.message);
+
+      }
+    }).done(function(fragment){
+
+    })
+  }
+
+  function wresultnmChk_2(arg1, arg2){
+    document.getElementById('resultnmz').value = arg2;
+    document.getElementById('resultcdz').value = arg1;
+
+    $("#wresultnmmodal_btn").trigger("click");
+  }
+  </script>
+
+
+
 
   <script>
 
@@ -860,6 +1524,7 @@
       let date = today.getDate();  // 날짜
       let day = today.getDay();  // 요일
       if(date > 0 && date < 10) {date = "0" + date};
+      if(month > 0 && month < 10) {month = "0" + month};
       let ls_frday = year + '-' + month + '-01'
       let ls_today = year + '-' + month + '-' + date
       document.getElementById('frdate').value = ls_frday;

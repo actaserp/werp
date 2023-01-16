@@ -30,6 +30,8 @@ public class App16Controller {
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("고객지원센터");
+            userformDto.setPagenm("월별고장률현황");
             boolean result = true;
              if(userformDto.getFlag().equals("CC")){
 

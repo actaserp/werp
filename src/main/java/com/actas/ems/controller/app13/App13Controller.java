@@ -31,8 +31,12 @@ public class App13Controller {
     public String App13IndexForm(Model model, HttpServletRequest request) throws Exception{
         try {
             HttpSession session = request.getSession();
-            UserFormDto userFormDto = (UserFormDto) session.getAttribute("userformDto");
-            model.addAttribute("userformDto", userFormDto);
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("통계관리");
+            userformDto.setPagenm("현장별수리현황");
+
+            model.addAttribute("userformDto", userformDto);
+
         } catch (Exception ex){
             log.debug("Exception ====>" + ex.toString());
         }
