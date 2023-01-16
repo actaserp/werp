@@ -26,7 +26,7 @@
             <ul class="left">
                 <li>
                     <div class="logo">
-                        <a href="">
+                        <a href="/auth/emmsdashboard">
                             <img th:src="@{/assets/images/logo.png}" alt="">
                         </a>
                     </div>
@@ -602,7 +602,6 @@
                     id: i,
                     index: cnt,
                     eseq:     mapp04Dto[i]["eseq"],
-                    //substring  추가시 쿼리 X
                     cnam:     mapp04Dto[i]["cnam"],
                     esubject: mapp04Dto[i]["esubject"],
                     epernm:   mapp04Dto[i]["epernm"],
@@ -689,6 +688,18 @@
         })
 
     }
+
+
+    viewPage(ctx.item.eseq,  1
+    ctx.item.cnam, 2
+    ctx.item.esubject,3 
+    ctx.item.epernm, 4
+    ctx.item.efilename,5 
+    ctx.item.einputdate ,6 
+    ctx.item.egroupcd , 7
+    ctx.item.ememo, 8
+    ctx.item.eflag 9 );
+                       
 
 
     // 본문내용 표시할 모달 호출

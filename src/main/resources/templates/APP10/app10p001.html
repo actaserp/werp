@@ -23,7 +23,7 @@
                 <ul class="left">
                     <li>
                         <div class="logo">
-                            <a href="">
+                            <a href="/auth/emmsdashboard">
                                 <img th:src="@{/assets/images/logo.png}" alt="">
                             </a>
                         </div>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <!-- 우측 전체 테이블 -->
-                <div class="sec_con" style="width: 60%;">
+                <div class="sec_con" style="width: 65%;">
                     <div class="box_wrap">
                         <form action="">
                             <div class="table table_style1">
@@ -138,17 +138,20 @@
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
+                                                <input type="hidden" id="inputdatez" placeholder="작성일자" disabled>
+                                                <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
+
 
                                             </div>
                                         </td>
                                         <th>접수시간</th>
                                         <td>
                                             <div class="input_wrap">                                               
-                                                <input type="text"  class="form-control " id="recetimez" autocomplete="off" placeholder="호출" disabled >
+                                                <input type="text"  id="recetimez" autocomplete="off" placeholder="호출" disabled >
                                             </div>
                                         </td>                                        
                                        <th>공유</th>                                       
-                                          <td >
+                                          <td  >
                                             <input type="checkbox" id="share">
                                             <label for="share" class="check_style1 no_txt"></label>
                                           </td>                                            
@@ -168,11 +171,13 @@
                                                 <input type="hidden" name="equpcd" id="equpcdz">                                                
                                             </div>
                                         </td>  
-                                        <th>대응시간</th>
-                                        <td colspan="2">
-                                            <div class="input_wrap">
-                                                <input type="text" name="resutime" id="resutimez" placeholder="대응시간" disabled>
-                                            </div>
+                                        <th>대응시간<button class="btn1" type="button" onclick="wactnresult_btn()"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button></th>
+                                        <td>
+                                            <div class="input_wrap table_btn" style="width: 100%;">
+                                                <input type="text" class="control" name="resutime" id="resutimez" disabled>
+                                                <hr><b>분</b></hr>
+                                            </div>      
+                                                                              
                                         </td>                                       
                                     </tr>                                                                                                                                                                                       
                                     <tr>                                        
@@ -207,13 +212,13 @@
                                         <th>완료일자</th>
                                         <td >
                                             <div class="input_wrap date">
-                                                <input type="text"  class="form-control datetimepicker" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
+                                                <input type="text"  class="form-control datetimepicker" name="actcompdate" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>완료시간</th>
                                         <td >
                                             <div class="input_wrap ">
-                                                <input type="time"  class="form-control " id="actcomptimez" autocomplete="off" >
+                                                <input type="time"  class="form-control " name="actcomptime" id="actcomptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>처리자</th>
@@ -229,7 +234,7 @@
                                         <th>고장내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap">
-                                                <input type="text" name="actdd" id="actddz" placeholder="고장내용" disabled>
+                                                <input type="text" name="contnm" id="contnmz" placeholder="고장내용" disabled>
                                             </div>
                                         </td>
                                     </tr>
@@ -237,7 +242,7 @@
                                         <th>고장상세내용</th>
                                         <td colspan="6">
                                             <div class="input_wrap table_btn">
-                                                <input type="text" name="actreginm" id="actreginmz" placeholder="고장상세내용" disabled>
+                                                <input type="text" name="contents" id="contentsz" placeholder="고장상세내용" disabled>
                                                 <button class="btn2" type="button">유사사례 찾기</button>
                                             </div>
                                         </td>
@@ -256,7 +261,7 @@
                                             <div class="input_wrap table_btn">
                                                 <div class="input_wrap table_search " style="width: 100%;">
                                                     <input class="form-control" type="text" autocomplete="off" placeholder="고장상세를 입력하세요" id="reginmz" name="reginmz" aria-label="reginm" aria-describedby="basic-addon1">                                    
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="regicdz"> 
+                                                    <input class="form-control form-control-sm"  type="hidden" id="regicdz"> 
                                                     <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button>
                                                 </div>
                                                 <button class="btn2" type="button">유사사례 찾기</button>
@@ -730,19 +735,6 @@
             
         //     }
 
-
- // var ls_resutimez = document.getElementById('resutimez').value = arg12; //대응시간              
-
- var ac_resutimez = Number;
-            ac_actarrivtimez = Number;
-            ac_actcomptimez = Number;
-            var ac_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
-            var ac_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
-            
-            ac_resutimez = ac_actarrivtimez - ac_actcomptimez;
-            console.log(ac_resutimez) //NaN 반환
-
-
 var regexForslash = /-/g;
 var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
 var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
@@ -754,6 +746,7 @@ var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":
 var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
 var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
 var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
+var ls_resutimez = document.getElementById('resutimez').value; //대응시간
 
 
 if(!ls_actperidz){
@@ -791,12 +784,14 @@ if(!ls_resuremarkz){
 if(!ls_remarkz){
     alert("고객요망사항을 입력하세요")
     // return 
-}            
-    $.ajax({
-        url: '/app10/save',
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
-        type: "POST",
-              data:{
+}     
+if(!ls_resutimez){
+    alert("대응시간을 입력하세요")
+    // return 
+} 
+
+// 본문 data
+        var inputdata = {
             "compnumz"    : ls_compnumz ,
             "actperidz": ls_actperidz , 
             "peridz"   : ls_peridz, 
@@ -807,22 +802,36 @@ if(!ls_remarkz){
             "remoremarkz": ls_remoremarkz , 
             "resuremarkz"   : ls_resuremarkz, 
             "remarkz"   : ls_remarkz,  
-                               
-            },       
-            async:false,
-    success:function(data){
-            if(data == "success"){
-            alert("저장되었습니다.")
-            console.log(data);
-            $("#CloseBtn").trigger("click");
-            // listUp();
-        }else{
-            alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                // listUp();
+            "resutimez" : ls_resutimez,
+            "inputdatez" : ls_inputdatez,
+            "inputperidz" : ls_inputperidz                               
         }
-    },error:function(e){
-        console.log('error',e);
-    }
+
+
+         // 본문 data formdata 에 추가
+         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+
+    $.ajax({
+            url: '/app10/save',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+            data:fomData,       
+            async:false,
+            success:function(data){
+                if(data == "success"){
+                alert("저장되었습니다.")
+                // console.log(data);
+                $("#CloseBtn").trigger("click");
+                // listUp();
+                }else{
+                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                        // listUp();
+                }
+        },error:function(e){
+            console.log('error',e);
+        }
     }).done(function(fragment){
        
     }) 
@@ -919,8 +928,7 @@ if(!ls_remarkz){
                 wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
                 wtab01Grid.focus();
                 // tab01검색 데이터 수집
-                function getData_tab01(){  
-                    
+                function getData_tab01(){                     
                     var wactnm_data = []; 
                     var cnt = 1;
                     for (var i = 0; i < 21; i++) {
@@ -931,7 +939,7 @@ if(!ls_remarkz){
                             recenum: "", //접수번호
                             actnm: "", //현장명
                             equpnm: "", //호기명 
-                            resultck: "",                 
+                            resultck: "", //처리여부       
                            
                         });
                         cnt++;
@@ -1305,31 +1313,31 @@ function CahngeSlect(value){
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //고장부위 onclick   
+        //고장부위    
         document.getElementById("greginmz").addEventListener("click",function(){ 
             document.getElementById("greginmbtn").click();
         });
-        //고장부위상세 onclick   
+        //고장부위상세    
         document.getElementById("reginmz").addEventListener("click",function(){ 
             document.getElementById("reginmbtn").click();
         });
-        //고장요인 onclick   
+        //고장요인    
         document.getElementById("remonmz").addEventListener("click",function(){ 
             document.getElementById("remonmbtn").click();
         });
-        //고장원인 onclick   
+        //고장원인    
         document.getElementById("facnmz").addEventListener("click",function(){ 
             document.getElementById("facnmbtn").click();
         });
-         //처리내용 onclick   
+         //처리내용    
          document.getElementById("resunmz").addEventListener("click",function(){ 
             document.getElementById("resunmbtn").click();
         });
-         //처리결과 onclick   
+         //처리결과    
          document.getElementById("resultnmz").addEventListener("click",function(){ 
             document.getElementById("resultnmbtn").click();
         });
-         //담당자 onclick   
+         //담당자    
          document.getElementById("actpernmz").addEventListener("click",function(){ 
             document.getElementById("actpernmbtn").click();
         });
@@ -1385,9 +1393,7 @@ function CahngeSlect(value){
             //조회시임.
             let ls_frdate = document.getElementById('frdate').value; //기간
             let ls_todate = document.getElementById('todate').value;  //""  
-            var ls_changeop = document.getElementById('changeop').value; //setop 
-                       
-        
+            var ls_changeop = document.getElementById('changeop').value; //setop                             
 
             if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == ""){                
                 alert("시작일자를 입력하세요.")
@@ -1396,7 +1402,7 @@ function CahngeSlect(value){
             if(ls_todate == null || ls_todate.length == 0 || ls_todate == ""){
                 alert("종료일자를 입력하세요.")
                  return;                 
-            }                         
+            }                                    
             searchList_rtn(ls_frdate, ls_todate, ls_changeop);
           
 
@@ -1411,9 +1417,6 @@ function CahngeSlect(value){
                             "frdate" :arg1,
                             "todate"      : arg2, 
                             "changeop"      : arg3 , 
-
-
-
                         }, 
                         async:false,
                         success:function(data){   
@@ -1437,19 +1440,17 @@ function CahngeSlect(value){
                     id: i, 
                     index: cnt,
                     recedate: wtab01Dto[i]["recedate"].substr(2),
-                    recenum: wtab01Dto[i]["recenum"],                
+                    recenum: wtab01Dto[i]["recenum"],  
+                    recetime : wtab01Dto[i]["recetime"],              
                     actnm: wtab01Dto[i]["actnm"],
-                    equpnm: wtab01Dto[i]["equpnm"], 
-                    recetime : wtab01Dto[i]["recetime"], 
-                    actcd : wtab01Dto[i]["actcd"],                                                                                                       
-                    equpnm : wtab01Dto[i]["equpnm"],
+                    actcd : wtab01Dto[i]["actcd"],
+                    equpnm: wtab01Dto[i]["equpnm"],                                                                                           
                     equpcd : wtab01Dto[i]["equpcd"],                                                                                                       
                     pernm : wtab01Dto[i]["pernm"],
-                    perid : wtab01Dto[i]["perid"].substr(1),    
-                    // perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                          
-                    actdd : wtab01Dto[i]["actdd"], 
-                    actreginm : wtab01Dto[i]["actreginm"],  
-                    resutime : wtab01Dto[i]["resutime"],
+                    perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                             
+                    contnm : wtab01Dto[i]["contnm"], 
+                    contents : wtab01Dto[i]["contents"], 
+                    resultck : wtab01Dto[i]["resultck"] 
                 });
                 cnt++;
             }   
@@ -1484,7 +1485,7 @@ function CahngeSlect(value){
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.actdd, ctx.item.actreginm, ctx.item.resutime);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents);
                     
                 }
             });
@@ -1502,11 +1503,12 @@ function CahngeSlect(value){
             cols.header = '처리여부';
             cols.align = "center";
             cols.width = '*';                  
-            wtab01Grid.columns.push(cols); 
+            wtab01Grid.columns.push(cols);
+      
+        }        
 
-        }
-
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
+       
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1516,10 +1518,36 @@ function CahngeSlect(value){
             document.getElementById('equpcdz').value = arg7;
             document.getElementById('pernmz').value = arg8; 
             document.getElementById('peridz').value = arg9;   
-            document.getElementById('actddz').value = arg10;
-            document.getElementById('actreginmz').value = arg11;
-            document.getElementById('resutimez').value = arg11;         
-           
+            document.getElementById('contnmz').value = arg10;
+            document.getElementById('contentsz').value = arg11;           
+        }      
+        console.log(wactnmChk_a);
+
+
+        //  처리결과 값 넘겨주기  
+        //  document.getElementById("resutimez").addEventListener("click",function(){ 
+        //     document.getElementById("wactnresult_btn").click();
+        // });
+        
+                
+        function wactnresult_btn(){
+            //대응시간
+            var ac_HH1 = document.getElementById('actarrivtimez').value.slice(0,2); //start시간
+            // console.log(ac_HH1); 
+            var ac_HH2 = document.getElementById('actcomptimez').value.slice(0,2); //end 시간
+            // console.log(ac_HH2); 
+            var ac_MM1 = document.getElementById('actarrivtimez').value.substr(3);//start분
+            // console.log(ac_MM1); 
+            var ac_MM2 = document.getElementById('actcomptimez').value.substr(3);//end분
+            // console.log(ac_MM2); 
+            var ac_result = (parseInt(ac_HH1) - parseInt(ac_HH2))*60 + parseInt(ac_MM1) - parseInt(ac_MM2);
+            ac_result = Math.abs(ac_result);  
+            console.log(ac_result);   
+          
+            $("#resutimez").val(ac_result);
+
+            console.log(ac_result);            
+                        
         }
         
       
@@ -2166,7 +2194,7 @@ function CahngeSlect(value){
             let day = today.getDay();  // 요일
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
-            let ls_frday = year + '-' + month + '-01' 
+            let ls_frday = year + '-' + month + '-' + (date-5)
             let ls_today = year + '-' + month + '-' + date 
             document.getElementById('frdate').value = ls_frday; //날짜 조회 현재 시간 쿼리
             document.getElementById('todate').value = ls_today; 

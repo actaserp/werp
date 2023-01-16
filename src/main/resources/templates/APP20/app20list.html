@@ -112,8 +112,8 @@
                         </li>
                         <li>
                             <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
-                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" />
-                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
+                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz" aria-describedby="basic-addon1" th:disabled="${result == false}"/>
+                                <input class="form-control form-control-sm"  type="hidden"  id="actcdz" th:name="${result} ? 'AA' : 'CC'"/>
                             </div>
                         </li>
                         <li>
@@ -475,6 +475,7 @@
             let ls_peridz = document.getElementById('actperidz').value;
             let ls_pernmz = document.getElementById('actpernmz').value;
             let ls_qtyz = document.getElementById('actqtyz').value;
+            let ls_name = document.getElementById('actcdz').name;
 
             if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == ""){
                 ls_actcdz = "%";
@@ -492,6 +493,11 @@
             }
             if(ls_qtyz == null || ls_qtyz.length == 0 || ls_qtyz == ""){
                 ls_qtyz = "0";
+            }
+            if(ls_name != "CC") {
+                if(ls_actcdz == null || ls_actcdz.length == 0 || ls_actcdz == ""){
+                    ls_actcdz = "%";
+                }
             }
             searchList_rtn(ls_frdate, ls_todate, ls_actcdz, ls_peridz, ls_qtyz);
             console.log(ls_qtyz, ls_peridz, ls_frdate, ls_todate, ls_actcdz, ls_peridz)

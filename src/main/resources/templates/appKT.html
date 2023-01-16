@@ -1,0 +1,817 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACTAS Elevator 유지보수센터</title>
+    <meta name="keyword" content="ACTAS Elevator 유지보수센터">
+    <meta name="description" content="ACTAS Elevator 유지보수센터">
+    <meta name="author" content="ACTAS Elevator 유지보수센터">
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/assets/css/reset.css}"  >
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}" >
+    <link rel="stylesheet" th:href="@{/assets/css/sub.css}"  >
+
+    <!-- script -->
+    <script  th:src="@{/assets/scripts/jquery-3.1.1.min.js}"  ></script>
+    <script  th:src="@{/assets/scripts/script.js}"  ></script>
+    <style>
+        #Fom1 {
+            position: fixed;
+            top: 6%;
+            left: 2.2%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        #Fom2{
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 98%;
+            height: 100%;
+            position: absolute;
+            z-index: 24;
+        }
+        #Fom3{
+
+            width: 98%;
+            height: 100%;
+            overflow: hidden;
+            background: #f5f9fa;
+            border-radius: 0px;
+            box-shadow: 0.125rem 0.125rem 1.25rem 0.25rem rgb(0 0 0 / 1%);
+        }
+
+    </style>
+</head>
+<body style="background: #f5f9fa;">
+<header>
+
+</header>
+<div class="content flex">
+    <div class="header">
+        <div class="left">
+            <div class="ham">
+                <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+
+            </div>
+            <div class="nav_bg"></div>
+            <ul class="nav">
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon1.png}" alt=""></button>
+                    <div class="depth2 on">
+                        <div class="dep_main">
+                            <a href="./center.html">
+                                <button type="button">
+                                    종합유지관리서비스
+                                </button>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><a href="./center.html"><i><img class="dot1" src="./assets/images/i_dot_header.png" alt=""><img class="dot2" src="./assets/images/i_dot_header2.png" alt=""></i>고객상담센터</a></li>
+                            <li><a href="./control.html"><i><img class="dot1" src="./assets/images/i_dot_header.png" alt=""><img class="dot2" src="./assets/images/i_dot_header2.png" alt=""></i>고장접수관제현황</a></li>
+                            <li><a href="./registration"><i><img class="dot1" src="./assets/images/i_dot_header.png" alt=""><img class="dot2" src="./assets/images/i_dot_header2.png" alt=""></i>고장처리등록</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
+
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    통계관리
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon3.png}" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="./reference.html">
+                                <button type="button">
+                                    기술자료실
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon4.png}" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    수리노하우
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon5.png}" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="./care_center.html">
+                                <button type="button">
+                                    고객케어센터
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon6.png}" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    공지사항
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button type="button"><img th:src="@{/assets/images/header_icon7.png}" alt=""></button>
+                    <div class="depth2">
+                        <div class="dep_main">
+                            <a href="">
+                                <button type="button">
+                                    고객지원
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+        </div>
+    </div>
+    <div class="con">
+        <div class="header_top">
+            <ul class="left">
+                <li>
+                    <div class="logo">
+                        <a href="">
+                            <img th:src="@{/assets/images/logo.png}" alt="">
+                        </a>
+                    </div>
+                </li>
+                <li class="home on">
+                    <a> <img th:src="@{/assets/images/i_home.png}" alt=""></a>
+                    <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
+
+                </li>
+                <li>
+                    종합유지관리서비스
+                </li>
+                <!-- <li>
+                    고장접수관제현황
+                </li> -->
+            </ul>
+            <ul class="mid">
+                <li>
+                    <i><img th:src="@{/assets/images/i_circle1.png}" alt=""></i>
+
+                    <p>계약현장 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img th:src="@{/assets/images/i_circle2.png}" alt=""></i>
+                    <p>계약관리대수 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img th:src="@{/assets/images/i_circle3.png}" alt=""></i>
+                    <p>당월고장접수 <span>50</span></p>
+                </li>
+                <li>
+                    <i><img th:src="@{/assets/images/i_circle4.png}" alt=""></i>
+                    <p>금일고장접수 <span>50</span></p>
+                </li>
+            </ul>
+            <ul class="right">
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_call.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_bell.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_menu.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_que.png}" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img th:src="@{/assets/images/i_user.png}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- modal -->
+        <!-- class="modal_step_open" modal_step="1" -->
+        <!-- 기획서와 디자인을 봐도 해당 모달이 어디로 부터 나오는지 알 수 없어서 페이지를 따로 만듬 -->
+        <div class="modal modal modal_step modal_stepKt " id="Fom1"> <!-- 클래스 hidden으로 감추고 생성 -->
+            <div class="modal_overlay" id="Fom2">
+            </div>
+            <div class="modal_content modal_wd scrollbar" id="Fom3">
+                <div class="layoutCont">
+                    <div class="modalContWrap">
+                        <!-- <div class="modal_close cancerButton">
+                          <img src="./assets/images/modal_close.png" alt="모달 닫기버튼">
+                        </div>                       -->
+                        <div class="modal_head">
+                            <div class="infor_bar">
+                                <ul class="left">
+                                    <li>
+                                        <i><img th:src="@{/assets/images/i_circle1.png}" alt=""></i>
+
+                                        <p>금일수신 <span>50</span></p>
+                                    </li>
+                                    <li>
+                                        <i><img th:src="@{/assets/images/i_circle2.png}" alt=""></i>
+                                        <p>고장접수 <span>50</span></p>
+                                    </li>
+                                    <li>
+                                        <i><img th:src="@{/assets/images/i_circle3.png}" alt=""></i>
+                                        <p>콜백예약 <span>50</span></p>
+                                    </li>
+                                    <li>
+                                        <i><img th:src="@{/assets/images/i_circle4.png}" alt=""></i>
+                                        <p>당일처리 <span>50</span></p>
+                                    </li>
+                                </ul>
+                                <ul class="mid">
+                                    <li>
+                                        <button type="button" class="color2">
+                                            전화번호 검색
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <div class="input_wrap">
+                                            <input type="text">
+                                        </div>
+                                        <button>
+                                            <img th:src="@{/assets/images/call.png}" alt="">
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="right">
+                                    <div class="input_wrap">
+                                        <h5>ID</h5>
+                                        <input type="text">
+                                    </div>
+                                    <div class="input_wrap">
+                                        <h5>PW</h5>
+                                        <input type="password">
+                                    </div>
+                                    <div class="button button1"><button><img th:src="@{/assets/images/in1.png}" alt=""></button></div>
+                                    <div class="button button2"><button><img th:src="@{/assets/images/in2.png}" alt=""></button></div>
+                                    <div class="modal_close cancerButton"><button><img th:src="@{/assets/images/modal_close.png}" alt=""></button></div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal_con scrollbar auto_height" style="overflow-y: scroll; height: 86%;">
+                            <div class="board">
+                                <div class="part1" style="width: 65%;">
+                                    <ul class="btn_list">
+                                        <li>
+                                            <button class="type1" type="button">승강기번호조회</button>
+                                        </li>
+                                        <li>
+                                            <button class="type1 color1 modal_step_open2" modal_step="Inquiry" type="button">보수현장조회</button>
+                                        </li>
+                                    </ul>
+
+                                    <div class="part1_top ">
+                                        <div class="left modal_box" style="width: 55%;">
+                                            <div class="title">
+                                                고장접수현황
+                                            </div>
+                                            <div class="con_wrap">
+                                                <div class="date">
+                                                    2022.10.01 - 2022.10.31
+                                                </div>
+                                                <div class="search">
+                                                    <div class="input_wrap">
+                                                        <input type="text" placeholder="전화번호/현장명">
+                                                    </div>
+                                                    <button>
+                                                        <img th:src="@{/assets/images/i_search.png}" alt="">
+
+                                                    </button>
+                                                </div>
+                                                <ul class="status_list scrollbar" style="overflow-y: scroll; height: 235px;">
+                                                    <li class="receipt">
+                                                        <div class="left">
+                                                            <div class="img">
+                                                                <i><img th:src="@{/assets/images/status1.png}" alt=""></i>
+
+                                                                <p>고장접수</p>
+                                                            </div>
+                                                            <div class="number">
+                                                                <h4>삼성리더스타워</h4>
+                                                                <h5>02-6959-5020</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="name">홍길동</div>
+                                                    </li>
+                                                    <li class="reserv">
+                                                        <div class="left">
+                                                            <div class="img">
+                                                                <i><img th:src="@{/assets/images/status2.png}" alt=""></i>
+                                                                <p>고장접수</p>
+                                                            </div>
+                                                            <div class="number">
+                                                                <h4>삼성리더스타워</h4>
+                                                                <h5>02-6959-5020</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="name">홍길동</div>
+                                                    </li>
+                                                    <li class="missed">
+                                                        <div class="left">
+                                                            <div class="img">
+                                                                <i><img th:src="@{/assets/images/status3.png}" alt=""></i>
+                                                                <p>고장접수</p>
+                                                            </div>
+                                                            <div class="number">
+                                                                <h4>삼성리더스타워</h4>
+                                                                <h5>02-6959-5020</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="name">홍길동</div>
+                                                    </li>
+                                                </ul>
+                                                <div class="inquiry_btn">
+                                                    <button class="type1 color2">조회</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right modal_box" style="width: 45%;">
+                                            <div class="title">
+                                                고장 접수
+                                            </div>
+                                            <form action="">
+                                                <div class="table table_style1">
+                                                    <table>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th>접수일자</th>
+                                                            <td>
+                                                                <div class="input_wrap date">
+                                                                    <input type="text">
+                                                                </div>
+                                                            </td>
+                                                            <th>고장일자</th>
+                                                            <td>
+                                                                <div class="input_wrap date">
+                                                                    <input type="text">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>현장명</th>
+                                                            <td>
+                                                                <div class="input_wrap table_search">
+                                                                    <input type="text">
+                                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+
+                                                                </div>
+                                                            </td>
+                                                            <th>호기명</th>
+                                                            <td>
+                                                                <div class="input_wrap table_search">
+                                                                    <input type="text">
+                                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>접수자</th>
+                                                            <td>
+                                                                <div class="input_wrap table_search">
+                                                                    <input type="text">
+                                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                                </div>
+                                                            </td>
+                                                            <th>통보자<br/>(담당기사)</th>
+                                                            <td>
+                                                                <div class="input_wrap table_search">
+                                                                    <input type="text">
+                                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>고장내용</th>
+                                                            <td colspan="3">
+                                                                <div class="input_wrap date">
+                                                                    <input type="text" style="background: url(/assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;">
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>갇힘<br/>사고 일자</th>
+                                                            <td colspan="3">
+                                                                <div class="input_wrap">
+                                                                    <input type="text">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>비고</th>
+                                                            <td colspan="3">
+                                                                <div class="input_wrap">
+                                                                    <input type="text">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="btns">
+
+                                                        <button class="type1 color3 modal_step_open2" modal_step="Message"  style="min-width: 90px;" type="button">문자전송</button>
+                                                        <button class="type1 color4" style="min-width: 90px;" type="submit">접수</button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="part1_bottom">
+                                        <div class="modal_box">
+                                            <div class="title toggle" style="cursor: pointer;">
+                                                <h5>KT CTI</h5>
+                                                <button><img th:src="@{/assets/images/toggle.png}" alt=""></button>
+                                            </div>
+                                            <div class="con_wrap toggle_box" style="display: none;">
+                                                <div class="left">
+                                                    <ul class="font_title">
+                                                        <li class="color1" style="height: 31px;">통화내역리스트</li>
+                                                        <li style="height: 64px;">문자전송</li>
+                                                        <li style="height: 31px;">착신전환</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="mid" style="width: 43%">
+                                                    <div class="input_wrap">
+                                                        <h5>통화내역종류</h5>
+                                                        <select name="" id="">
+                                                            <option value="">
+                                                                정상통화
+                                                            </option>
+                                                        </select>
+                                                        <h5 style="width: 80px;">통화건수</h5>
+                                                        <input type="text">
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="height: 31px;">부재중리스트</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>발신번호</h5>
+                                                        <input type="text">
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>문자메세지</h5>
+                                                        <input type="text">
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>변경할회선</h5>
+                                                        <input type="text">
+                                                        <select name="" id="" style="margin-left: 10px">
+                                                            <option value="">
+                                                                정상통화
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="right" style="width: 43%">
+                                                    <div class="input_wrap">
+                                                        <h5>통화내역종류</h5>
+                                                        <select name="" id="">
+                                                            <option value="">
+                                                                전체
+                                                            </option>
+                                                        </select>
+                                                        <h5 style="width: 80px;">통화건수</h5>
+                                                        <input type="text">
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>예약시간</h5>
+                                                        <input type="text">
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="height: 31px;">예약전송</button>
+                                                            <button class="type1 color2" style="height: 31px;">예약취소</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>회신번호</h5>
+                                                        <input type="text">
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="height: 31px;">문자전송</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input_wrap">
+                                                        <h5>착신번호</h5>
+                                                        <input type="text">
+                                                        <select name="" id="" style="margin-left: 10px">
+                                                            <option value="">
+                                                                정상통화
+                                                            </option>
+                                                        </select>
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="height: 31px;">착신전환</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="part_hide_grid">
+                                        <div class="modal_box">
+                                            그리드 영역
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="part2" style="width: 35%;">
+                                    <div class="modal_box">
+                                        <div class="title">
+                                            고객 통화 메모
+                                        </div>
+                                        <div class="form">
+                                            <form action="">
+                                                <div class="date_wrap">
+                                                    <h5>수신일자</h5>
+                                                    <input type="text">
+                                                </div>
+                                                <div class="input_wrap">
+                                                    <h5>고객명</h5>
+                                                    <input type="text">
+                                                </div>
+                                                <div class="input_wrap">
+                                                    <h5>콜백예약</h5>
+                                                    <input type="checkbox" id="reserv_chk">
+                                                    <label for="reserv_chk" class="check_style1 no_txt"></label>
+                                                    <input type="text">
+                                                </div>
+                                                <div class="date_wrap" style="margin-top: 10px;">
+                                                    <h5>콜백메모</h5>
+                                                    <input type="text">
+                                                </div>
+                                                <div class="input_wrap" style="margin-top: 10px;">
+                                                    <h5>메모내용</h5>
+                                                    <textarea name="" id=""></textarea>
+                                                </div>
+                                                <div class="btns">
+                                                    <button class="type1 color4" style="min-width: 90px;" type="submit">등록</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="call_box">
+                                            고객통화메모현황
+                                        </div>
+                                        <div class="message_list">
+                                            <div class="top">
+                                                <h5>문자 전송 내역</h5>
+                                                <div class="btns">
+                                                    <button class="type1 color2" type="button">조회</button>
+                                                </div>
+                                            </div>
+                                            <ul class="client scrollbar" style="overflow-y: scroll; height: 217px;">
+                                                <li>
+                                                    <div class="left">
+                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                                                        </div>
+                                                        <div class="txt">
+                                                            <p>
+                                                                김우기
+                                                            </p>
+                                                            <p>
+                                                                10.01 <span>(09:30)</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="txt">
+                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="state">
+                                                        통보
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left">
+                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                                                        </div>
+                                                        <div class="txt">
+                                                            <p>
+                                                                김우기
+                                                            </p>
+                                                            <p>
+                                                                10.01 <span>(09:30)</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="txt">
+                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="state">
+                                                        통보
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left">
+                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                                                        </div>
+                                                        <div class="txt">
+                                                            <p>
+                                                                김우기
+                                                            </p>
+                                                            <p>
+                                                                10.01 <span>(09:30)</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="txt">
+                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="state">
+                                                        통보
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left">
+                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                                                        </div>
+                                                        <div class="txt">
+                                                            <p>
+                                                                김우기
+                                                            </p>
+                                                            <p>
+                                                                10.01 <span>(09:30)</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="txt">
+                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="state">
+                                                        통보
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모달 문자전송 -->
+        <div class="modal modal modal_step modal_stepMessage hidden"> <!-- 클래스 hidden으로 감추고 생성 -->
+            <div class="modal_overlay">
+            </div>
+            <div class="modal_content modal_sm scrollbar">
+                <div class="layoutCont">
+                    <div class="modalContWrap">
+                        <div class="modal_close2 cancerButton">
+                            <img th:src="@{/assets/images/modal_close.png}" alt="">
+
+                        </div>
+                        <div class="modal_head">
+                            문자전송
+                        </div>
+                        <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                            <div class="message_form">
+                                <div class="input_wrap">
+                                    <h5>발신번호</h5>
+                                    <select name="" id="">
+                                        <option value="">
+                                            전체
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="input_wrap">
+                                    <h5>수신번호</h5>
+                                    <input type="text">
+                                </div>
+                                <div class="date_wrap input_wrap">
+                                    <h5>예약전송</h5>
+                                    <input type="text">
+                                    <h5 style="width: 45px;">구분</h5>
+                                    <select name="" id="">
+                                        <option value="">단문</option>
+                                    </select>
+                                </div>
+                                <div class="input_wrap">
+                                    <h5>제목</h5>
+                                    <input type="text">
+                                </div>
+                                <div class="input_wrap">
+                                    <h5>부서</h5>
+                                    <select name="" id="" >
+                                        <option value="">
+
+                                        </option>
+                                    </select>
+                                    <div class="btns">
+                                        <button class="type1 color3" style="height: 31px;">선택</button>
+                                    </div>
+                                </div>
+                                <div class="empoyee_location">
+                                    부서별 직원 리스트 위치
+                                </div>
+                                <div class="button">
+                                    <button>전송</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 모달 보수현장 조회 -->
+        <div class="modal modal modal_step modal_stepInquiry hidden"> <!-- 클래스 hidden으로 감추고 생성 -->
+            <div class="modal_overlay">
+            </div>
+            <div class="modal_content modal_md scrollbar">
+                <div class="layoutCont">
+                    <div class="modalContWrap">
+                        <div class="modal_close2 cancerButton">
+                            <img th:src="@{/assets/images/modal_close.png}" alt="">
+                        </div>
+                        <div class="modal_head">
+                            보수현장조회
+                        </div>
+                        <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                            <div class="date_wrap">
+                                <input type="text">
+                                <span>-</span>
+                                <input type="text">
+                            </div>
+                            <div class="input_wrap">
+                                <select name="" id="">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="chk_wrap">
+                                <input type="checkbox" id="chk1">
+                                <label for="chk1" class="check_style1">123</label>
+                            </div>
+                            <div class="radio_wrap">
+                                <input type="radio" id="chk2">
+                                <label for="chk2" class="radio_style1">123</label>
+                            </div>
+                            <!-- <div class="chk_wrap">
+                                <input type="checkbox" id="chk1">
+                                <label for="chk1" class="check_style1 no_txt"></label>
+                            </div>
+                            <div class="radio_wrap">
+                                <input type="radio" id="chk2">
+                                <label for="chk2" class="radio_style1 no_txt"></label>
+                            </div> -->
+                            <div class="btns">
+                                <button class="type1 color5">검색</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer>
+</footer>
+</body>
+</html>
