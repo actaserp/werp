@@ -90,6 +90,17 @@ public class App10ElvlrtDto {
     private String resuname;
 
     private String Yyyymm;
+    private String yyyymm;
+    private String recepernm;
+    private String faccd;
+    private String stdate;
+    private String enddate;
+    private String wkactcd;
+    private String sttime;
+    private String endtime;
+    private String comp;
+
+
 
 
 }
