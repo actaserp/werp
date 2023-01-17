@@ -1467,7 +1467,13 @@ function CahngeSlect(value){
             cols.header = '접수일자';
             cols.align = "center";
             cols.width = '*';
-           
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.recedate}</b>',
+                click: (e, ctx) => {
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents);
+                    
+                }
+            });
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -1482,13 +1488,7 @@ function CahngeSlect(value){
             cols.header = '현장명';
             cols.align = "center";
             cols.width = '3*'; 
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.actnm}</b>',
-                click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents);
-                    
-                }
-            });
+            
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 

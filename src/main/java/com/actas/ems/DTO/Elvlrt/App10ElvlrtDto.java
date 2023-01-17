@@ -48,7 +48,6 @@ public class App10ElvlrtDto {
     private String resuremark; //처리내용상세
     private String jejak;
     private String model;
-    private String yyyymm;
     private String repernm;
     private String remonm;
     private String remoremark; //고장원인상세
@@ -64,6 +63,30 @@ public class App10ElvlrtDto {
     private String inputdate;
     private String indate;
     private String inperid;
+
+    private String store;
+    private String gubun;
+
+    private String sucetime;
+    private String sucehour;
+    private String customer;
+    private String trouble;
+    private String troubledate;
+    private String troubletime;
+    private String troublesu;
+    private String rescue;
+    private String rescuetime;
+    private String rescuedate;
+    private String rescuenm;
+    private String hitchdate;
+    private String dong;
+    private String ho;
+    private String resucd;
+    private String remocd;
+    private String regicd;
+    private String gregicd;
+    private String resultcd;
+    private String resuname;
 
     private String Yyyymm;
 

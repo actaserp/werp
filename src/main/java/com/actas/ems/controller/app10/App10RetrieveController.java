@@ -83,6 +83,45 @@ public class App10RetrieveController {
         return app10DtoList;
     }
 
+
+    // 고장내용별현황 > 현장별 고장내용
+    @GetMapping(value="/p001tab02")
+    public Object App03001Tab02Form( @RequestParam("frdate") String frdate
+            , @RequestParam("todate") String todate
+            , @RequestParam("actcdz") String actcd
+            , @RequestParam("actcontcdz") String contcd
+            , Model model) throws  Exception{
+
+        String ls_yeare = frdate.substring(0,4);
+        String ls_mm = frdate.substring(5,7);
+        String ls_dd = frdate.substring(8,10);
+        frdate =  ls_yeare + ls_mm + ls_dd;
+        ls_yeare = todate.substring(0,4);
+        ls_mm = todate.substring(5,7);
+        ls_dd = todate.substring(8,10);
+        todate =  ls_yeare + ls_mm + ls_dd;
+        app10tDto.setFrdate(frdate);
+        app10tDto.setTodate(todate);
+        app10tDto.setActcd(actcd);
+        app10tDto.setContcd(contcd);
+        try {
+            app10DtoList = service.GetApptab10List001(app10tDto);
+            model.addAttribute("app10DtoList",app10DtoList);
+        }catch (DataAccessException e) {
+            log.info("App03001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return app10DtoList;
+    }
+
+
     //save , tb_411
 
     @RequestMapping(value = "/save")
@@ -170,8 +209,8 @@ public class App10RetrieveController {
                 return "error";
             }
         }
-        try {
 
+        try {
         model.addAttribute("userformDto", userformDto);
        }catch (DataAccessException e) {
             log.info("App01001Tab01Form DataAccessException ================================================================");
@@ -187,6 +226,34 @@ public class App10RetrieveController {
         return "/p001tab01";
     }
 
+//    <수정중>
+//    @RequestMapping(value="/del")
+//    public String mnoticeDelete(@RequestParam("compnumz") String compnum
+//            ,Model model, HttpServletRequest request){
+//
+//        try {
+//            HttpSession session = request.getSession();
+//            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+//            String ls_custcd = userformDto.getCustcd();
+//            String ls_spjangcd = userformDto.getSpjangcd();
+//            app10tDto.setCompnum(compnum);
+//
+//            boolean result = service.Delete10Manu(app10tDto);
+//            if(!result){
+//                return  "error";
+//            }
+//            result = service.register10Del(app10tDto);
+//            if(!result){
+//                return  "error";
+//            }
+//            model.addAttribute("userformDto",userformDto);
+//
+//        }catch (IllegalStateException e){
+//            model.addAttribute("errorMessage", e.getMessage());
+//            return "error";
+//        }
+//        return "success";
+//    }
 
 
 

@@ -1,5 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
+import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App09ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
@@ -22,8 +23,11 @@ public class App10ElvlrtService {
     int queryResult = 1;
 
 
-    /** 고장내용별현황 / 기간별 고장내용 */
+    /** view page **/
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApp10List001(parm);}
+
+    /** 고장처리현황 tab **/
+    public List<App10ElvlrtDto> GetApptab10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApptab10List001(parm);}
 
 
     /** 글 등록 */
@@ -34,6 +38,7 @@ public class App10ElvlrtService {
         }
         return (queryResult > 0);
     }
+
 
     public String get10ManualMaxSeq(String parm){return app10ElvMapper.get10ManualMaxSeq(parm);}
 
