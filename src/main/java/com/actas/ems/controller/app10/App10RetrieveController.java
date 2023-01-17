@@ -136,7 +136,9 @@ public class App10RetrieveController {
             , @RequestParam("resuremarkz") String resuremark //처리내용상세
             , @RequestParam("remarkz") String remark //고객 요망사항
             , @RequestParam("resutimez") String resutime //대응시간
+            , @RequestParam("resultckz") String resultck
             , Model model, HttpServletRequest request){
+
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -147,6 +149,7 @@ public class App10RetrieveController {
             String ls_mm = recedate.substring(4,6);
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
+            app10tDto.setInperid(userformDto.getPerid());
             if(compnum == null || compnum.equals("")){
                 app10tDto.setCompnum(CountSeq(compdate));
             }else{
@@ -161,15 +164,22 @@ public class App10RetrieveController {
             app10tDto.setRemoremark(remoremark);
             app10tDto.setResuremark(resuremark);
             app10tDto.setRemark(remark);
-//            app10tDto.setChangeop(changeop);
+            app10tDto.setInputdate(getToDate());
+            app10tDto.setIndate(getToDate());
+            app10tDto.setResultck(resultck);
             log.info(app10tDto); //consolelog에 app04Dto 호출
+            boolean result = false;
             if(compnum == null || compnum.equals("")){
-                boolean result = service.Insert10Manu(app10tDto);
-                if (!result) {
-                    return "error";
+                switch(app10tDto.getChangeop()) {
+                    case "0":
+                        result = service.Insert10Manu(app10tDto);
+                        break;
+                    case "1":
+                        result = service.Update10Manu(app10tDto);
+                        break;
+                    default:
+                        break;
                 }
-            }else{
-                boolean result = service.Update10Manu(app10tDto);
                 if (!result) {
                     return "error";
                 }
@@ -179,8 +189,7 @@ public class App10RetrieveController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        String ls_compnum = app10tDto.getCompnum();
-        return ls_compnum;
+        return "app10/p001tab01";
     }
     public String CountSeq(String compdate){
         String ls_compnum = service.get10ManualMaxSeq(compdate);
@@ -194,15 +203,6 @@ public class App10RetrieveController {
         return ls_compnum;
     }
 
-//    public String Dd(){
-//        String ls_changeop = app10tDto.getChangeop();
-//        if(ls_changeop == "0"){
-//            ls_changeop = "1";
-//        }else(ls_changeop == "1"){
-//            ls_changeop = "0";
-//        }
-//        return ls_changeop;
-//    }
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date(System.currentTimeMillis());

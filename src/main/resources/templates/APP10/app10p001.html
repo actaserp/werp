@@ -96,8 +96,7 @@
                                         <option value="%"  >선택</option>
                                         <option value="0">미처리</option>    
                                         <option value="1">처리</option> 
-                                    </select>
-                                    <input type="hidden" name="resultck" id="resultckz">
+                                    </select>                                    
                                 </div>
                             </div>                              
                             <!-- //여기서부터 그래프 -->
@@ -138,10 +137,9 @@
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
-                                                <input type="hidden" id="inputdatez" placeholder="작성일자" disabled>
+                                                <!-- <input type="hidden" id="inputdatez" placeholder="작성일자" disabled> -->
                                                 <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
-
-
+                                                <!-- <input type="hidden" name="resultck" id="resultckz"> -->
                                             </div>
                                         </td>
                                         <th>접수시간</th>
@@ -774,7 +772,7 @@ var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상
 var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
 var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
 var ls_resutimez = document.getElementById('resutimez').value; //대응시간
-
+var ls_resultckz = document.getElementById('changeop').value; //처리
 
 if(!ls_actperidz){
     alert("담당자를 입력하세요")
@@ -831,26 +829,27 @@ $.ajax({
             "actcomptimez"   : ls_actcomptimez,  
             "remoremarkz": ls_remoremarkz , 
             "resuremarkz"   : ls_resuremarkz, 
-            "remarkz"   : ls_remarkz,  
-                               
-            },       
-            async:false,
+            "remarkz"   : ls_remarkz,
+            "resutimez" : ls_resutimez,
+            "resultckz" : ls_resultckz
+            }, 
+                  
+        async:false,
     success:function(data){
             if(data == "success"){
             alert("저장되었습니다.")
-            // console.log(data);
-            $("#CloseBtn").trigger("click");
+            console.log(data);
+            // $("#CloseBtn").trigger("click");
             // listUp();
-        }else{
-            alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+        }else{           
+            // alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                 // listUp();
+                console.log(data);
         }
     },error:function(e){
         console.log('error',e);
     }
-    }).done(function(fragment){
-       
-    }) 
+    })
     
     // listUp(); 
 }
@@ -1558,11 +1557,10 @@ function CahngeSlect(value){
             // console.log(ac_MM2); 
             var ac_result = (parseInt(ac_HH1) - parseInt(ac_HH2))*60 + parseInt(ac_MM1) - parseInt(ac_MM2);
             ac_result = Math.abs(ac_result);  
-            console.log(ac_result);   
-          
+            // console.log(ac_result);             
             $("#resutimez").val(ac_result);
 
-            console.log(ac_result);            
+            // console.log(ac_result);            
                         
         }
         

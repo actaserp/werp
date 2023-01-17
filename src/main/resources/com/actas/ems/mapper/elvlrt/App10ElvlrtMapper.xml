@@ -45,22 +45,19 @@
 
     <!--게시글 작성 전부 tb_e411에 있는 상황이고 이걸 icd hidden 으로 받아온 값을 받아야한다.-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, actperid, perid, arrivdate, compdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid) values (#{custcd}, #{spjangcd}, #{compnum}, #{actperid}, #{perid}, #{arrivdate}, #{compdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid} )
+       <![CDATA[ insert into tb_e411 (custcd, spjangcd, compnum, actperid, perid, arrivdate, compdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, result) values (#{custcd}, #{spjangcd}, #{compnum}, #{actperid}, #{perid}, #{arrivdate}, #{compdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, '1' )
+            ]]>
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e411
-        set custcd = #{custcd}
-        <if test="compnum != null ">,</if>
-        <if test="compnum != null">compnum=#{compnum}</if>
+        set inputdate = #{inputdate}
         <if test="actperid != null ">,</if>
         <if test="actperid != null">actperid=#{actperid}</if>
         <if test="perid != null ">,</if>
         <if test="perid != null">perid=#{perid}</if>
         <if test="arrivdate != null ">,</if>
         <if test="arrivdate != null">arrivdate=#{arrivdate}</if>
-        <if test="compdate != null ">,</if>
-        <if test="compdate != null">compdate=#{compdate}</if>
         <if test="arrivtime != null ">,</if>
         <if test="arrivtime != null">arrivtime=#{arrivtime}</if>
         <if test="comptime != null ">,</if>
@@ -77,14 +74,12 @@
         <if test="inperid != null">inperid=#{inperid}</if>
         <if test="indate != null ">,</if>
         <if test="indate != null">indate=#{indate}</if>
-
-
         where compnum = #{compnum}
     </update>
 
-    <delete id="Delete10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+    <select id="Delete10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         delete from tb_e411 where compnum = #{compnum}
-    </delete>
+    </select>
 
     <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
     <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
