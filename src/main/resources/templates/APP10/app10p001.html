@@ -761,7 +761,7 @@
     function save_btn(){ 
 
 var regexForslash = /-/g;
-var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
+// var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
 var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
 var ls_peridz   = document.getElementById('peridz').value; //담당자 ~ 조회
 var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
@@ -817,10 +817,11 @@ if(!ls_resutimez){
 
 $.ajax({
         url: '/app10/save',
+        
         contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
         type: "POST",
               data:{
-            "compnumz"    : ls_compnumz ,
+            
             "actperidz": ls_actperidz , 
             "peridz"   : ls_peridz, 
             "arrivdatez"   : ls_arrivdatez, 
@@ -832,8 +833,7 @@ $.ajax({
             "remarkz"   : ls_remarkz,
             "resutimez" : ls_resutimez,
             "resultckz" : ls_resultckz
-            }, 
-                  
+            },                   
         async:false,
     success:function(data){
             if(data == "success"){

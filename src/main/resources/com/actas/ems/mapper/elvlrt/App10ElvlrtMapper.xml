@@ -45,8 +45,7 @@
 
     <!--게시글 작성 전부 tb_e411에 있는 상황이고 이걸 icd hidden 으로 받아온 값을 받아야한다.-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-       <![CDATA[ insert into tb_e411 (custcd, spjangcd, compnum, actperid, perid, arrivdate, compdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, result) values (#{custcd}, #{spjangcd}, #{compnum}, #{actperid}, #{perid}, #{arrivdate}, #{compdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, '1' )
-            ]]>
+        insert into tb_e411 (actperid, perid, arrivdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, resutime) values (#{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime})
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
@@ -89,7 +88,7 @@
 <!--    일자별-->
 
     <select id="GetApptab10List001" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        SELECT a.recedate,
+        <![CDATA[  SELECT a.recedate,
                a.recetime,
             left(a.recedate, 6) as recemon,
             left(a.compdate, 6) as compmon,
@@ -130,39 +129,39 @@
 
         FROM
             (
-            SELECT a.custcd,
-            a.spjangcd,
-            a.cltcd,
-            a.actcd,
-            a.equpcd,
-            a.recedate,
-            a.recetime,
-            a.hitchdate,
-            a.hitchhour,
-            1 as cnt,
-            1 as ascnt,
-            c.pernm as recepernm,
-            d.pernm,
-            e.divinm,
-            f.contnm,
-            a.contents as contremark,
-            g.resunm,
-            resuremark,
-            h.pernm as repernm,
-            i.remonm,
-            b.faccd,
-            j.facnm,
-            b.remoremark,
-            k.greginm,
-            l.reginm,
-            (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
-            b.arrivdate,
-            b.arrivtime,
-            b.compdate,
-            b.comptime,
-            b.resutime,
-            b.resulttime,
-            m.resultnm
+                SELECT a.custcd,
+                a.spjangcd,
+                a.cltcd,
+                a.actcd,
+                a.equpcd,
+                a.recedate,
+                a.recetime,
+                a.hitchdate,
+                a.hitchhour,
+                1 as cnt,
+                1 as ascnt,
+                c.pernm as recepernm,
+                d.pernm,
+                e.divinm,
+                f.contnm,
+                a.contents as contremark,
+                g.resunm,
+                resuremark,
+                h.pernm as repernm,
+                i.remonm,
+                b.faccd,
+                j.facnm,
+                b.remoremark,
+                k.greginm,
+                l.reginm,
+                (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
+                b.arrivdate,
+                b.arrivtime,
+                b.compdate,
+                b.comptime,
+                b.resutime,
+                b.resulttime,
+                m.resultnm
 
             FROM tb_e401 a WITH(NOLOCK)
             LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND 'p' + a.perid =  c.perid )
@@ -188,12 +187,13 @@
           AND a.spjangcd = b.spjangcd
           AND a.actcd = b.actcd
           AND a.custcd = #{custcd}
-          AND a.spjangcd = #{spjangcd}
-          AND a.recedate BETWEEN #{stdate} AND #{enddate}
-          AND (isnull(a.actcd, '') =  #{cltcd} OR  #{cltcd} = '%')
-          AND (isnull(b.wkactcd, '') Like concat('%',#{wkactcd},'%') OR #{wkactcd} = '%'
-          AND (Case when isnull(a.compdate, '') = '' THEN '1' else '2' end #{comp} OR #{comp} = '%')
-          AND a.recetime BETWEEN #{frdate} AND #{todate}
+          AND a.spjangcd = #{spjangcd} OR #{spjangcd}
+          AND a.recedate BETWEEN #{frdate} AND #{todate}
+          AND a.actcd IS NULL THEN #{cltcd} OR  #{cltcd} = '%')
+          AND b.wkactcd IS NULL THEN #{wkactcd} OR #{wkactcd} = '%')
+          AND (Case when a.compdate IS NULL THEN '1' else '2' end #{comp} OR #{comp} = '%')
+
+        ]]>
     </select>
 
 </mapper>

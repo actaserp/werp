@@ -89,7 +89,7 @@ public class App10RetrieveController {
     public Object App03001Tab02Form( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
-            , @RequestParam("actcontcdz") String contcd
+            , @RequestParam("custcdz") String contcd
             , Model model) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
@@ -124,9 +124,7 @@ public class App10RetrieveController {
 
     //save
     @RequestMapping(value = "/save")
-    public String memberSave(@RequestParam("compnumz") String compnum //seq
-//                             compdate 고장일자 = 등록일자
-            , @RequestParam("actperidz") String actperid //담당자 코드
+    public String memberSave(@RequestParam("actperidz") String actperid //담당자 코드
             , @RequestParam("peridz") String perid //처리자 코드
             , @RequestParam("arrivdatez") String arrivdate //도착일자
             , @RequestParam("actcompdatez") String compdate //고장일자
@@ -137,6 +135,8 @@ public class App10RetrieveController {
             , @RequestParam("remarkz") String remark //고객 요망사항
             , @RequestParam("resutimez") String resutime //대응시간
             , @RequestParam("resultckz") String resultck
+                             //            @RequestParam("compnumz") String compnum //seq
+//                             compdate 고장일자 = 등록일자
             , Model model, HttpServletRequest request){
 
         try{
@@ -150,11 +150,7 @@ public class App10RetrieveController {
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
             app10tDto.setInperid(userformDto.getPerid());
-            if(compnum == null || compnum.equals("")){
-                app10tDto.setCompnum(CountSeq(compdate));
-            }else{
-                app10tDto.setCompnum(compnum);
-            }
+
             app10tDto.setActperid(actperid);
             app10tDto.setPerid(perid);
             app10tDto.setArrivdate(arrivdate);
@@ -168,6 +164,12 @@ public class App10RetrieveController {
             app10tDto.setIndate(getToDate());
             app10tDto.setResultck(resultck);
             log.info(app10tDto); //consolelog에 app04Dto 호출
+            String compnum = app10tDto.getCompnum();
+            if(compnum == null || compnum.equals("")){
+                app10tDto.setCompnum(CountSeq(compdate));
+            }else{
+                app10tDto.setCompnum(compnum);
+            }
             boolean result = false;
             if(compnum == null || compnum.equals("")){
                 switch(app10tDto.getChangeop()) {
@@ -189,7 +191,7 @@ public class App10RetrieveController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        return "app10/p001tab01";
+        return "success";
     }
     public String CountSeq(String compdate){
         String ls_compnum = service.get10ManualMaxSeq(compdate);
