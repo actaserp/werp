@@ -46,8 +46,6 @@ public class App10ElvlrtDto {
     private String contremark;
     private String resunm;
     private String resuremark; //처리내용상세
-    private String jejak;
-    private String model;
     private String repernm;
     private String remonm;
     private String remoremark; //고장원인상세

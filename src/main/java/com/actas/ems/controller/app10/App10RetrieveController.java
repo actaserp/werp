@@ -8,6 +8,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App10ElvlrtService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
@@ -150,7 +151,6 @@ public class App10RetrieveController {
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
             app10tDto.setInperid(userformDto.getPerid());
-
             app10tDto.setActperid(actperid);
             app10tDto.setPerid(perid);
             app10tDto.setArrivdate(arrivdate);
@@ -193,14 +193,29 @@ public class App10RetrieveController {
         }
         return "success";
     }
+
+//    @Data
+//    public class paramop {
+//        private String userName;
+//        public void SetName (String name) {
+//            this.userName = name;
+//        }
+//
+//    }
     public String CountSeq(String compdate){
         String ls_compnum = service.get10ManualMaxSeq(compdate);
+
         int ll_compnum = 0;
         if(ls_compnum == null){
             ls_compnum = "001";
         }else{
             ll_compnum = Integer.parseInt(ls_compnum);
-            ls_compnum = Integer.toString(ll_compnum + 001);
+            log.info(ll_compnum);
+            if(ll_compnum > 8) {
+                ls_compnum = "0" + Integer.toString(ll_compnum + 01);
+            }else{
+                ls_compnum = "00" + Integer.toString(ll_compnum + 01);
+            }
         }
         return ls_compnum;
     }

@@ -41,12 +41,11 @@
     </select>
 
 
-<!--    //////////////////////////////수정중-->
 
-    <!--게시글 작성 전부 tb_e411에 있는 상황이고 이걸 icd hidden 으로 받아온 값을 받아야한다.-->
+    <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate, actperid, perid, arrivdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, resutime) values
-        ('ELVLRT', 'ZZ', next value for (id_ff), #{compdate}, #{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime})
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate, actperid, perid, arrivdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, resutime, "result") values
+        ('ELVLRT', 'ZZ', next value for id_ff, #{compdate}, #{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime}, '1')
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
@@ -76,11 +75,6 @@
         <if test="indate != null">indate=#{indate}</if>
         where compnum = #{compnum}
     </update>
-
-    <select id="Delete10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        delete from tb_e411 where compnum = #{compnum}
-    </select>
-
     <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
     <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
         select max(compnum) from tb_e411 where compdate = #{compdate}
@@ -103,12 +97,9 @@
                      a.recepernm,
                      a.pernm,
                      a.contnm,
-                     a.contremark,
+                     a.contremark,zxx
                      a.resunm,
                      a.resuremark,
-                     c.jejak,
-                     f.mdnm as model,
-                     c.yyyymm,
                      a.repernm,
                      a.faccd,
                      a.facnm,
@@ -126,7 +117,7 @@
                      a.resultnm,
                      a.hitchdate,
                      a.hitchhour,
-                     "기간 : " + :as_stdate + " ~ " + :as_enddate as gigan
+                     '기간:' + #{stdate} + '~' + #{enddate} as gigan
                  FROM
                      (
                      SELECT a.custcd,
@@ -154,7 +145,7 @@
                      b.remoremark,
                      k.greginm,
                      l.reginm,
-                     (case when isnull(b.result, '0') = '0' then '0' else b.result end) as result,
+                     (case when isnull(b.result, '0') = '0' then '0' else b.result end) as "result",
                      b.arrivdate,
                      b.arrivtime,
                      b.compdate,
@@ -186,14 +177,15 @@
                  WHERE a.custcd = b.custcd
                    AND a.spjangcd = b.spjangcd
                    AND a.actcd = b.actcd
-                   AND a.custcd = :as_custcd
-                   AND a.spjangcd = :as_spjangcd
-                   AND a.recedate BETWEEN :as_stdate AND :as_enddate
-                   AND (isnull(a.actcd, '') = #{cltcd} OR #{cltcd} = '%')
-                   AND (isnull(b.wkactcd, '') like '%' + :as_wkactcd + '%' OR :as_wkactcd = '%')
-                   AND (Case when isnull(a.compdate, '') = '' THEN '1' else '2' end = :as_comp OR :as_comp = '%')
-                   AND a.recetime BETWEEN :as_sttime AND :as_endtime
+                   AND a.custcd = #{custcd}
+                   AND a.spjangcd = #{spjangcd}
+                   AND a.recedate BETWEEN #{stdate} AND #{enddate}
+  --                 AND (isnull(a.actcd, '') = #{cltcd} OR #{cltcd} = '%')
+--                   AND (isnull(b.wkactcd, '') like '%'+ #{wkactcd} + '%' OR #{wkactcd} = '%')
+                   AND (Case when isnull(a.compdate, '') = '' THEN '1' else '2' end = #{comp} OR #{comp} = '%')
+                   AND a.recetime BETWEEN #{sttime} AND #{endtime}
         ]]>
     </select>
+<!--    &#45;&#45;                    AND a.compdate IS NULL THEN '1' else '2' end #{comp}-->
 
 </mapper>
