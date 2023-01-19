@@ -26,7 +26,7 @@ public class App10ElvlrtService {
     /** view page **/
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApp10List001(parm);}
 
-    /** 고장처리현황 tab **/
+    /** 고장처리현황 **/
     public List<App10ElvlrtDto> GetApptab10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApptab10List001(parm);}
 
 

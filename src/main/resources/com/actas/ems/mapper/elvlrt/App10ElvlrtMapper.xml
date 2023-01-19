@@ -82,13 +82,12 @@
 
 <!--    일자별-->
 
-    <select id="GetApptab10List001" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+    <select id="GetApptab10List001" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         <![CDATA[SELECT a.recedate,
                         a.recetime,
                      left(a.recedate, 6) as recemon,
                      left(a.compdate, 6) as compmon,
                      b.actnm,
-                     e.wkactnm as wkactcd,
                      c.equpnm,
                      b.qty as cnt,
                      a.ascnt,
@@ -97,7 +96,7 @@
                      a.recepernm,
                      a.pernm,
                      a.contnm,
-                     a.contremark,zxx
+                     a.contremark,
                      a.resunm,
                      a.resuremark,
                      a.repernm,
@@ -114,10 +113,7 @@
                      a.comptime,
                      convert(int, a.resutime) as resutime,
                      convert(int, a.resulttime) as resulttime,
-                     a.resultnm,
-                     a.hitchdate,
-                     a.hitchhour,
-                     '기간:' + #{stdate} + '~' + #{enddate} as gigan
+                     a.resultnm
                  FROM
                      (
                      SELECT a.custcd,
@@ -145,7 +141,7 @@
                      b.remoremark,
                      k.greginm,
                      l.reginm,
-                     (case when isnull(b.result, '0') = '0' then '0' else b.result end) as "result",
+                     isnull(b.result, '0')as "result",
                      b.arrivdate,
                      b.arrivtime,
                      b.compdate,
@@ -155,11 +151,11 @@
                      m.resultnm
 
                      FROM tb_e401 a WITH(NOLOCK)
-                     LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND 'p' + a.perid =  c.perid )
-                     LEFT OUTER JOIN tb_ja001 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND 'p' + a.reperid = h.perid )
+                     LEFT OUTER JOIN tb_ja001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.perid =  c.perid )
+                     LEFT OUTER JOIN tb_ja001 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND  a.reperid = h.perid )
                      LEFT OUTER JOIN tb_e010 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.contcd = f.contcd)
                      LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
-                     LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' + b.perid =  d.perid )
+                     LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND b.perid =  d.perid )
                      LEFT OUTER JOIN tb_jc002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
                      LEFT OUTER JOIN tb_e012 g WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = g.spjangcd AND b.resucd = g.resucd)
                      LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND b.remocd = i.remocd)
@@ -167,25 +163,18 @@
                      LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd)
                      LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND b.gregicd = l.gregicd AND b.regicd = l.regicd  )
                      LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND b.resultcd = m.resultcd)
-
-                     ) a LEFT OUTER JOIN tb_e611 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd and a.equpcd = c.equpcd)
+                     ) a
+                     LEFT OUTER JOIN tb_e611 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd and a.equpcd = c.equpcd)
                      LEFT OUTER JOIN tb_e006 f WITH(NOLOCK) ON (c.custcd = f.custcd AND c.spjangcd = f.spjangcd AND c.jejak = f.manucd AND c.model = f.mdcd),
                      tb_e601 b
-                     LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND 'p' +  b.perid =  d.perid )
-                     LEFT OUTER JOIN tb_e018_1 e WITH(NOLOCK) ON (b.custcd = e.custcd AND b.spjangcd = e.spjangcd AND b.wkactcd = e.wkactcd)
+                     LEFT OUTER JOIN tb_ja001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND +  b.perid =  d.perid )
 
                  WHERE a.custcd = b.custcd
                    AND a.spjangcd = b.spjangcd
-                   AND a.actcd = b.actcd
-                   AND a.custcd = #{custcd}
-                   AND a.spjangcd = #{spjangcd}
+                   AND a.custcd = 'ELVLRT'
+                   AND a.spjangcd = 'ZZ'
                    AND a.recedate BETWEEN #{stdate} AND #{enddate}
-  --                 AND (isnull(a.actcd, '') = #{cltcd} OR #{cltcd} = '%')
---                   AND (isnull(b.wkactcd, '') like '%'+ #{wkactcd} + '%' OR #{wkactcd} = '%')
-                   AND (Case when isnull(a.compdate, '') = '' THEN '1' else '2' end = #{comp} OR #{comp} = '%')
-                   AND a.recetime BETWEEN #{sttime} AND #{endtime}
-        ]]>
+                   AND  Case when isnull(a.compdate,'') = '' then '1' else '2' end like #{comp} ]]>
     </select>
-<!--    &#45;&#45;                    AND a.compdate IS NULL THEN '1' else '2' end #{comp}-->
 
 </mapper>

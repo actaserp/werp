@@ -351,11 +351,11 @@
         <input class="form-control form-control-sm"  type="hidden" id="resunmbtn" data-bs-toggle="modal" data-bs-target="#resunmmodal"  />
         <input class="form-control form-control-sm"  type="hidden" id="resultnmbtn" data-bs-toggle="modal" data-bs-target="#resultnmmodal"  />
         <input class="form-control form-control-sm"  type="hidden" id="actpernmbtn" data-bs-toggle="modal" data-bs-target="#actpernmmodal"  />
+        <input class="form-control form-control-sm"  type="hidden" id="pernmbtn" data-bs-toggle="modal" data-bs-target="#pernmmodal"  />
         <input class="form-control form-control-sm"  type="hidden" id="divinmbtn" data-bs-toggle="modal" data-bs-target="#divinmmodal"  />
-     
-
+        <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />
+        <input class="form-control form-control-sm"  type="hidden" id="equpnmbtn" data-bs-toggle="modal" data-bs-target="#equpnmmodal"  />
         <!--------------------------------------------------------------------------------------->   
-        <!-- 고장부위 Check MODAL FROM_현장명 검색으로 되어있음 -->  
         <div class="modal fade" id="greginmmodal" data-bs-keyboard="false"
         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
@@ -746,34 +746,20 @@
                             </div>
                             <div class="box_wrap">
                                 <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
-                                    <li style ="float:left; list-style-type:none; margin-left:20px;">
+                                    <li style ="float:left; list-style-type:none; margin-left:400px;">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" style="max-height:30px;">기간</span>
                                             <input type="text"  class="form-control datetimepicker" id="stdate" autocomplete="off"  placeholder="Y-m-d"     >
                                             <input type="text"  class="form-control datetimepicker" id="enddate" autocomplete="off"  placeholder="Y-m-d"     >
                                         </div>
-                                    </li>
-                                    <li style ="float:left; list-style-type:none; margin-left:30px;">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" style="max-height:30px;">현장명</span>
-                                            <input type="text" name="actnm" id="actnmz" placeholder="현장명">
-                                                <input type="hidden" name="actcd" id="actcdz">
-                                        </div>
-                                    </li>
-                                    <li style ="float:left; list-style-type:none; margin-left:30px;">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" style="max-height:30px;">호기명</span>
-                                            <input type="text" name="equpnm" id="equpnmz" placeholder="호기명">
-                                            <input type="hidden" name="equpcd" id="equpcdz">                                                
-                                        </div>
-                                    </li>
+                                    </li>                                    
                                     <li style ="float:left; list-style-type:none; margin-left:40px;">
                                         <div class="input-group mb-3" >
                                             <span class="input-group-text" style="max-height:30px;" >구분</span>
                                               <select class="form-control" id="comp">
                                                 <option value="%">전체</option>
-                                                <option value="1">모름</option>
-                                                <option value="2">일반</option>
+                                                <option value="1">미처리</option>
+                                                <option value="2">처리</option>
                                               </select>
                                         </div>
                                     </li>                                   
@@ -791,25 +777,7 @@
                                             <input class="form-control" type="text" placeholder="처리내용을 입력하세요" aria-label="actresunmz" id="actresunmz" aria-describedby="basic-addon1" />
                                             <input class="form-control form-control-sm"  type="hidden"  id="actresucdz"  />
                                           </div>
-                                        </li>
-                                        <li>
-                                          <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장요인</span>
-                                            <input class="form-control" type="text" placeholder="고장요인을 입력하세요" aria-label="actremonmz" id="actremonmz" aria-describedby="basic-addon1" />
-                                            <input class="form-control form-control-sm"  type="hidden"  id="actremocdz"  />
-                                          </div>
-                                        </li>
-                                        <li>                                          
-                                          <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장부위</span>
-                                            <input class="form-control" type="text" placeholder="고장부위를 입력하세요" aria-label="actgreginmz" id="actgreginmz" aria-describedby="basic-addon1" />
-                                            <input class="form-control form-control-sm"  type="hidden"  id="actgregicdz"  />
-                                          </div>
-                                        </li>
-                                        <li>                                       
-                                          <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리방법</span>
-                                            <input class="form-control" type="text" placeholder="처리방법을 입력하세요" aria-label="actresultnmz" id="actresultnmz" aria-describedby="basic-addon1" />
-                                            <input class="form-control form-control-sm"  type="hidden"  id="actresultcdz"  />
-                                          </div>
-                                        </li>
+                                        </li>                                       
                                       </ul>
                                   </div>                                  
                                 </div>     -->
@@ -835,84 +803,6 @@
             </div> 
         </div>  
 <!--------------------------------------------------------------------------------------->     
-<!--------------------------------------------------------------------------------------->   
-        <!-- 사람살려 row 2 MODAL FROM  -->  
-        <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                style="max-width: 500px">
-                <div class="modal-content border-0">
-                    <div class="modal-body p-0" > 
-                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                            <div class="search">
-                                <div class="input_wrap">
-                                    <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt1_rtn()}"
-                                    placeholder="고장부위사람살려상세조회 "     />                                      
-                                </div>
-                                <button id="wactnmBtn">
-                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                                </button>
-                            </div>  
-                        </div>   
-                        <div class="container-fluid"> 
-                            <div id="wactnmGrid_div" ></div>
-                            <div id="thePager11"></div>
-                        </div>   
-                    </div>  
-
-                    <div class="modal-footer">
-                        <div class="row g-1">
-                            <div class="col-auto">
-                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
-                            </div> 
-                        </div>
-                    </div>   
-
-                </div>
-            </div> 
-        </div>  
-<!--------------------------------------------------------------------------------------->   
-<!--------------------------------------------------------------------------------------->   
-        <!-- 고장부위상세만 row 2 MODAL FROM  -->  
-        <div class="modal fade" id="reginmmodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                style="max-width: 500px">
-                <div class="modal-content border-0">
-                    <div class="modal-body p-0" > 
-                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                            <div class="search">
-                                <div class="input_wrap">
-                                    <input class="form-control form-control-sm" id="searchTxtCode" type="text"   onkeyup="if(window.event.keyCode==13){searchtxt1_rtn()}"
-                                    placeholder="고장부위상세조회 "     />                                      
-                                </div>
-                                <button id="wreginmBtn">
-                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                                </button>
-                            </div>  
-                        </div>   
-                        <div class="container-fluid"> 
-                            <div id="wreginmGrid_div" ></div>
-                            <div id="thePager02"></div>
-                        </div>   
-                    </div>  
-
-                    <div class="modal-footer">
-                        <div class="row g-1">
-                            <div class="col-auto">
-                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="wreginmmodal_btn" data-bs-dismiss="modal">Close</button>
-                            </div> 
-                        </div>
-                    </div>   
-
-                </div>
-            </div> 
-        </div>  
-<!--------------------------------------------------------------------------------------->   
 
 <!--########################################자바 스크립트 시작-->
  <script>
@@ -1044,7 +934,6 @@ $.ajax({
          var view_pernmpage; 
          var wtab01Grid;
          var wtab02Grid; 
-         var wactnmGrid; 
          var wgreginmGrid;
          var wreginmGrid; 
          var wremonmGrid;
@@ -1139,7 +1028,7 @@ $.ajax({
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 sortDescriptions: ['recedate'],
                 groupDescriptions: ['recedate'],
-                pageSize: 20
+                pageSize: 25
             });
             // tab02 grid page
             new wijmo.input.CollectionViewNavigator('#thePager10', {
@@ -1157,7 +1046,7 @@ $.ajax({
                 columns: [    
                     
                     { binding: 'recedate', header: '접수일자', align: "center", width: 100 },
-                    { binding: 'recenum', header: '접수시간', align: "center", width: 100 },
+                    { binding: 'recetime', header: '접수시간', align: "center", width: 100 },
                     { binding: 'actnm', header: '현장명', align: "center", width: 100 },                      
                     { binding: 'equpnm', header: '동호기', align: "center", width: 100 },  
                     { binding: 'repernm', header: '접수자', align: "center", width: 100 }, 
@@ -1179,8 +1068,8 @@ $.ajax({
                     { binding: 'arrivtime', header: '도착시간', align: "center", width: 100 },
                     { binding: 'compdate', header: '완료일자', align: "center", width: 100 },
                     { binding: 'comptime', header: '완료시간', align: "center", width: 100 },
-                    { binding: 'resutime', header: '대응시간', align: "center", width: 100 },
-                    { binding: 'resulttime', header: '처리시간', align: "center", width: 100 },
+                    { binding: 'resutime', header: '대응시간', align: "center", width: 100,  aggregate: 'Sum' },
+                    { binding: 'resulttime', header: '처리시간', align: "center", width: 100,  aggregate: 'Sum' },
                     { binding: 'result', header: '진행내역', align: "center", width: 100 }
                 ], 
                 itemsSource: view_p01tab02page
@@ -1215,12 +1104,12 @@ $.ajax({
                 function getData_tab02(){    
                     var wtab2_data = []; 
                     var cnt = 1;
-                    for (var i = 0; i < 20; i++) {
+                    for (var i = 0; i < 25; i++) {
                         wtab2_data.push({
                             id: i, 
                             index: cnt,
                             recedate: "",
-                            recenum: "",
+                            recetime: "",
                             actnm: "",
                             equpnm: "",  
                             repernm: "",
@@ -1668,35 +1557,27 @@ function CahngeSlect(value){
         document.getElementById("wgreginmBtn").addEventListener("click",function(){ 
             searchpcode_rtn();
         })                            
-        // 고장부위상세 검색   
         document.getElementById("wreginmBtn").addEventListener("click",function(){ 
             searchtxt1_rtn();
         })  
-        // 고장요인검색 검색   
         document.getElementById("wremonmBtn").addEventListener("click",function(){ 
             searchtxt2_rtn();
         })        
-        // 고장원인검색 검색 막아둠  
         document.getElementById("wfacnmBtn").addEventListener("click",function(){ 
             searchtxt3_rtn();
         }) 
-        // 처리내용검색 검색 막아둠
         document.getElementById("wresunmBtn").addEventListener("click",function(){ 
             searchtxt4_rtn();
         })
-        // 처리결과 검색 막아둠
         document.getElementById("wresultnmBtn").addEventListener("click",function(){ 
             searchtxt5_rtn();
         })
-        // 담당자 검색 막아둠
         document.getElementById("wactpernmBtn").addEventListener("click",function(){ 
             searchtxt6_rtn();
         })
-         // 부서명 검색 막아둠
          document.getElementById("wdivinmBtn").addEventListener("click",function(){ 
             searchtxt7_rtn();
         })
-        // 처리자 검색 막아둠
         document.getElementById("wrpernmBtn").addEventListener("click",function(){ 
             searchtxt8_rtn();
         })
@@ -1850,13 +1731,8 @@ document.getElementById("gogogoBtn").addEventListener("click",function(){
 
 //조회시임.
 let ls_stdate = document.getElementById('stdate').value; //접수기간
-let ls_enddate = document.getElementById('enddate').value;   
-//let ls_cltcd = document.getElementById('cltcd').value;  // ? 현장명 actcd/actnm -- modal 없을시 cltcd로 받는다고?
-//let ls_wkactcd = document.getElementById('wkactcd').value;  //회사구분 회사명: wkactnm -- modal
-//let ls_comp = document.getElementById('comp').value;  //구분
+let ls_enddate = document.getElementById('enddate').value; 
 let ls_comp = comp[comp.selectedIndex].value;
-let ls_sttime = document.getElementById('sttime').value;  //접수시간
-let ls_endtime = document.getElementById('endtime').value; 
 
 if(ls_stdate == null || ls_stdate.length == 0 || ls_stdate == ""){                
     alert("시작일자를 입력하세요.")
@@ -1866,20 +1742,13 @@ if(ls_enddate == null || ls_enddate.length == 0 || ls_enddate == ""){
     alert("종료일자를 입력하세요.")
      return;                 
 }      
-if(ls_sttime == null || ls_sttime.length == 0 || ls_sttime == ""){                
-    alert("시작일자를 입력하세요.")
-     return;
-}  
-if(ls_endtime == null || ls_endtime.length == 0 || ls_endtime == ""){
-    alert("종료일자를 입력하세요.")
-     return;                 
-}                                 
-searchList2_rtn(ls_stdate, ls_enddate, ls_sttime, ls_endtime);
+                                
+searchList2_rtn(ls_stdate, ls_enddate, ls_comp);
 
 
 })   
 
-function searchList2_rtn(arg1, arg2, arg3, arg4){ 
+function searchList2_rtn(arg1, arg2, arg3){ 
 console.log(arg1);            
 $.ajax({
             url: '/app10/p001tab02',  
@@ -1887,8 +1756,7 @@ $.ajax({
             data: { 
                 "stdate"      : arg1,
                 "enddate"      : arg2,
-                "sttime"      : arg3,
-                "endtime"      : arg4,
+                "comp"      : arg3,               
                  
             }, 
             async:false,
@@ -1913,7 +1781,7 @@ for (var i = 0; i < wtab02Dto.length; i++) {
         id: i, 
         index: cnt,
         recedate: wtab02Dto[i]["recedate"].substr(2),
-        recenum: wtab02Dto[i]["recenum"],            
+        recetime: wtab02Dto[i]["recetime"],            
         actnm: wtab02Dto[i]["actnm"],
         equpnm : wtab02Dto[i]["equpnm"],
         repernm: wtab02Dto[i]["repernm"],                                                                                           
@@ -1942,170 +1810,173 @@ for (var i = 0; i < wtab02Dto.length; i++) {
     cnt++;
 }   
 
-// console.log(data); 
-// console.log(wtab02_data.length);
+console.log(data); 
+console.log(wtab02_data.length);
 
 wtab02Grid.columns.clear();  
 wtab02Grid.autoGenerateColumns = false; 
 view_p01tab02page.sourceCollection  = wtab02_data;
 
-        var cols = new wijmo.grid.Column(); 
+  
+            var cols = new wijmo.grid.Column(); 
             cols.binding = 'recedate';
             cols.header = '접수일자';
             cols.aggregate = 'Sum';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            console.log("cols", cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
-            cols.binding = 'recenum';
+            cols.binding = 'recetime';
             cols.header = '접수시간';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';            
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);     
+            wtab02Grid.columns.push(cols);     
             cols = new wijmo.grid.Column();
             cols.binding = 'equpnm';
             cols.header = '동호기';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'repernm';
             cols.header = '접수자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            console.log("cols", cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'recepernm';
             cols.header = '전달자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actpernm';
             cols.header = '담당자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'pernm';
             cols.header = '처리자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'divinm';
             cols.header = '부서명';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contnm';
             cols.header = '고장내용';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contremark';
             cols.header = '고장내용상세';
             cols.align = "center";
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            cols.width = 150;
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resunm';
             cols.header = '처리내용';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resuremark';
             cols.header = '처리내용상세';
             cols.align = "center";
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            cols.width = 150;
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remonm';
             cols.header = '고장요인';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remoremark';
             cols.header = '고장요인상세';
             cols.align = "center";
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            cols.width = 150;
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'facnm';
             cols.header = '고장원인';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'greginm';
             cols.header = '고장부위';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'reginm';
             cols.header = '고장부위상세';
             cols.align = "center";
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            cols.width = 150;
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resultnm';
             cols.header = '처리방법';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'arrivdate';
             cols.header = '도착일자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'arrivtime';
             cols.header = '도착시간';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'compdate';
             cols.header = '완료일자';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'comptime';
             cols.header = '완료시간';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resutime';
             cols.header = '대응시간';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resulttime';
             cols.header = '처리시간';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);
+            wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'result';
             cols.header = '진행내역';
             cols.align = "center";
             cols.width = 100;
-            wtab01Grid.columns.push(cols);            
+            wtab02Grid.columns.push(cols);            
 
 }        
 
@@ -2777,6 +2648,8 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             let ls_today = year + '-' + month + '-' + date 
             document.getElementById('frdate').value = ls_frday; //날짜 조회 현재 시간 쿼리
             document.getElementById('todate').value = ls_today;
+            document.getElementById('stdate').value = ls_today;
+            document.getElementById('enddate').value = ls_today;
         }
         function convert_time(timestamp){ 
             //현재시간
@@ -2851,7 +2724,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                 onShow: function (ct) {                                    
                     this.setOptions({
                         minDate: 0,
-                        // maxDate: $frdate.val() ? $frdate.val() : false
                     })
                 },
             });     
@@ -2863,8 +2735,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                 scrollInput: false,
                 onShow: function (ct) {                                    
                     this.setOptions({
-                        minDate: 0,
-                        // maxDate: $frdate.val() ? $frdate.val() : false
                     })
                 },
             }); 
@@ -2876,8 +2746,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                 scrollInput: false,
                 onShow: function (ct) {                                    
                     this.setOptions({
-                        minDate: 0,
-                        // maxDate: $frdate.val() ? $frdate.val() : false
                     })
                 },
             }); 
@@ -3058,7 +2926,7 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                                     compress: true,
                                     header: { declarative: { text: '\t&[Page] of &[Pages]' } },
                                     footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
-                                    info: { author: 'GrapeCity', title: 'FlexGrid' }
+                                    info: { author: 'Actas', title: 'FlexGrid' }
                                     },
                                     styles: {
                                     cellStyle: { backgroundColor: '#ffffff', borderColor: '#c6c6c6' },
