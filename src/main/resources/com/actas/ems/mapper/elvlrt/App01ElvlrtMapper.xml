@@ -12,16 +12,28 @@
     <!--      관제현황 / 접수현황LIST  -->
     <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
         <![CDATA[
-        SELECT   substring(a.recedate, 5,2) + '-' + substring(a.recedate, 7,2) as recedate,
+        SELECT   substring(a.recedate, 5,2) + '/' + substring(a.recedate, 7,2) as recedate,
+            Left(a.recedate,4) + '-' +  substring(a.recedate, 5,2) + '-' + substring(a.recedate, 7,2) as recedateyear,
+            Left(a.hitchdate,4) + '-' +  substring(a.hitchdate, 5,2) + '-' + substring(a.hitchdate, 7,2) as hitchdate,
             Left(a.recetime,2)+ ':' + substring(a.recetime, 3,2) as recetime,
+            Left(a.hitchhour,2)+ ':' + substring(a.hitchhour, 3,2) as hitchhour,
+            a.recenum,
+            a.actcd as actcd,
             substring(a.actnm,0,15) as actnm,
+            a.equpcd as equpcd,
             a.equpnm as equpnm,
             a.cnt as cnt,
             a.ascnt as ascnt,
             isnull(a.pernm,'') AS actpernm,
+            a.contcd as contcd,
             a.contnm as contnm,
             isnull(a.tel,'') as tel,
+            a.reperid as reperid,
             a.repernm as repernm,
+            a.perid as perid,
+            a.pernm as pernm,
+            a.contremark as contents,
+            a.remark as remark,
             isnull(a.addrtxt,'') as addrtxt
         FROM
             (
@@ -31,7 +43,10 @@
             a.actcd,
             a.equpcd,
             a.recedate,
+            a.recenum,
             a.recetime,
+            a.hitchdate,
+            a.hitchhour,
             q.actnm,
             m.equpnm,
             1 as cnt,
@@ -39,8 +54,11 @@
             a.contcd,
             p.contnm,
             a.contents as contremark,
+            a.reperid ,
             g.pernm as repernm,
+            a.perid,
             d.pernm,
+            a.remark,
             q.tel as tel,
             isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
             FROM tb_e401 a WITH(NOLOCK)

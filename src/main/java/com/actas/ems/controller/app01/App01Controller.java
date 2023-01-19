@@ -36,6 +36,7 @@ public class App01Controller {
     List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList02 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList03 = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList04 = new ArrayList<>();
     private final App01ElvlrtService service;
     protected Log log =  LogFactory.getLog(this.getClass());
 
@@ -51,8 +52,9 @@ public class App01Controller {
 //        userformDto.setFlag(flag);
 //        userformDto.setCalluserid(calluserid);
 //        userformDto.setCalluserpw(calluserpw);
-
-        model.addAttribute("userFormDto", userformDto);
+        model.addAttribute("userformDto", userformDto);
+        model.addAttribute("callid", userformDto.getCalluserid());
+        model.addAttribute("callpw", userformDto.getCalluserpw());
         return "app01/KtcallMAIN";
     }
 
@@ -62,16 +64,39 @@ public class App01Controller {
             , HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-//        userformDto.setUserid(userid);
-//        userformDto.setUsername(username);
-//        userformDto.setCltcd(cltcd);
-//        userformDto.setDbnm(dbnm);
-//        userformDto.setFlag(flag);
-//        userformDto.setCalluserid(calluserid);
-//        userformDto.setCalluserpw(calluserpw);
+        userformDto.setPagetree01("종합유지관리서비스");
+        userformDto.setPagenm("고객상담센터");
+        model.addAttribute("userformDto",userformDto);
 
-        model.addAttribute("userFormDto", userformDto);
-        return "app01/KtcallNew";
+
+
+        String todate = getToDate();
+        String frdate =  getToDate();
+        popParmDto.setFrdate(frdate);
+        popParmDto.setTodate(todate);
+        popParmDto.setActcd("%");
+
+        try {
+            app03DtoList01 = service.GetApp01List001(popParmDto);
+            model.addAttribute("app03DtoList01",app03DtoList01);
+            app03DtoList02 = service.GetApp01List002(popParmDto);
+            model.addAttribute("app03DtoList02",app03DtoList02);
+            app03DtoList03 = service.GetApp01List003(popParmDto);
+            model.addAttribute("app03DtoList03",app03DtoList03);
+            app03DtoList04 = service.GetApp01List001(popParmDto);
+            model.addAttribute("app03DtoList",app03DtoList04);
+        }catch (DataAccessException e) {
+            log.info("App03001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return "app01/appkt";
     }
 
     // 관제 dashboard
@@ -111,7 +136,6 @@ public class App01Controller {
         userformDto.setPagetree01("고객상담센터");
         userformDto.setPagenm("고장접수관제센터");
         model.addAttribute("userformDto",userformDto);
-        model.addAttribute("userFormDto", userformDto);
         return "app01/emcontrol";
     }
 
@@ -121,6 +145,7 @@ public class App01Controller {
     public Object App01001EmconlistForm( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
             , @RequestParam("actnmz") String actnmz
+            , @RequestParam("page")   String page
             , Model model) throws  Exception{
 
         String ls_yeare = frdate.substring(0,4);
@@ -148,7 +173,13 @@ public class App01Controller {
             log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
-        return "app01/emcontrollist01";
+        if (page.equals("encon")) {
+            return "app01/emcontrollist01";
+        }else if (page.equals("appkt")) {
+            return "app01/appktlist01";
+        } else {
+            return "app01/emcontrollist01";
+        }
     }
 
 

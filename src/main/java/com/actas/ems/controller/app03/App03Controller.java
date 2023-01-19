@@ -40,6 +40,8 @@ public class App03Controller {
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("통계관리");
+            userformDto.setPagenm("고장내용별현황");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

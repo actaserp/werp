@@ -1,256 +1,218 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko">
 <head th:replace="layouts/APPHeader/apphead :: headFragment" />
-
 <body style="background: #f5f9fa;">
     <header>
 
     </header>
     <div class="content flex">
-        
-            <div class="header on">
-                <div class="left">
-                    <div class="ham">
-                        <button type="button"><img th:src="@{/assets/images/ham.png}"   alt=""></button>
-                    </div>
-                    <div class="nav_bg"></div>
-              
-                        <!-- ################################ -->
-                        <!-- ## Left navigator include -->
-                        <th:block th:include="layouts/APPHeader/appLeftNav" />
+        <div class="header on">
+            <div class="left">
+                <div class="ham">
+                    <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
                 </div>
-                <div class="right">           
-                </div>
-            </div>
-            <div class="con">
-                <div class="header_top">
-                    <ul class="left">
-                        <li>
-                            <div class="logo">
-                                <a href="">
-                                    <img th:src="@{/assets/images/logo.png}" alt="">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="home">
-                            <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-                            <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-                        </li> 
-                        <li class="on">
-                            도면자료실
-                        </li>
-                        <!-- <li class="on">
-                            고장접수관제현황
-                        </li> -->
-                    </ul>
-                    <ul class="right">
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_call.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_bell.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_menu.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_que.png}" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img th:src="@{/assets/images/i_user.png}" alt="">
-                            </a>
-                        </li>
-                    </ul>
-                </div> 
+                <div class="nav_bg"></div> 
+           
+                <!-- ################################ -->
+                <!-- ## Left navigator include -->
+                <th:block th:include="layouts/APPHeader/appLeftNav" />
                 
-                <div class="infor_bar">
-                    <ul class="left">
-                        <li>
-                            <i><img th:src="@{/assets/images/i_circle1.png}" alt=""></i>
-                            <p>금일수신 <span>50</span></p>
-                        </li>
-                        <li>
-                            <i><img th:src="@{/assets/images/i_circle2.png}" alt=""></i>
-                            <p>고장접수 <span>50</span></p>
-                        </li>
-                        <li>
-                            <i><img th:src="@{/assets/images/i_circle3.png}" alt=""></i>
-                            <p>콜백예약 <span>50</span></p>
-                        </li>
-                        <li>
-                            <i><img th:src="@{/assets/images/i_circle4.png}" alt=""></i>
-                            <p>당일처리 <span>50</span></p>
-                        </li>
-                    </ul>
-                    <ul class="mid">
-                        <li>
-                            <button type="button" class="color2">
-                                전화번호 검색
-                            </button>
-                        </li>
-                        <li>
-                            <div class="input_wrap">
-                                <input type="text">
-                            </div>
-                            <button>
-                                <img th:src="@{/assets/images/call.png}" alt="">
-                            </button>
-                        </li>
-                    </ul>
-                    <!-- <div class="right">
+            </div>
+            <div class="right">           
+            </div>
+        </div>
+        <div class="con">
+
+            <!-- ################################ -->
+            <!-- ## header top include -->
+            <th:block th:include="layouts/APPHeader/appheadTopCall" />
+             
+            <div class="infor_bar">
+                <ul class="left"  >
+                    <li  >
+                        <i><img th:src="@{/assets/images/i_circle1.png}" alt=""></i>
+                        금일수신 &nbsp;<span th:text="${app03DtoList03[0].callcount}"> </span>   
+                    </li>
+                    <li>
+                        <i><img th:src="@{/assets/images/i_circle2.png}" alt=""></i>
+                        고장접수 &nbsp;<span th:text="${app03DtoList03[0].rececnt}"> </span>  
+                    </li>
+                    <li>
+                        <i><img th:src="@{/assets/images/i_circle3.png}" alt=""></i>
+                        콜백예약 &nbsp;<span th:text="${app03DtoList03[0].callback}"> </span>  
+                    </li>
+                    <li>
+                        <i><img th:src="@{/assets/images/i_circle4.png}" alt=""></i>
+                        당일처리 &nbsp;<span th:text="${app03DtoList03[0].compcnt}"> </span>  
+                    </li>
+                </ul>
+                <ul class="mid">
+                    <li>
+                        <button type="button" class="color2">
+                            승강기번호조회
+                        </button>
+                    </li>
+                    <li>
                         <div class="input_wrap">
-                            <h5>ID</h5>
                             <input type="text">
                         </div>
+                        <button>
+                            <img th:src="@{/assets/images/call.png}" alt=""> 
+                        </button>
+                    </li>
+                </ul>
+                    
+                <ul class="right">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button class="btn btn-secondary" type="button">전화번호목록</button>
+                        <button class="btn btn-secondary" type="button">보수현장조회</button>
+                        <button class="btn btn-secondary" type="button">콜백리스트</button>
+                      </div>
+                </ul>  
+            </div> 
+            <div class="section control">
+                <div class="sec_con" style="width: 20%;">
+                    <div class="date_wrap">
+                        <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                        <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+                    </div> 
+                    <div class="search">
                         <div class="input_wrap">
-                            <h5>PW</h5>
-                            <input type="password">
+                            <input type="text" placeholder="전화번호/현장명">
                         </div>
-                        <div class="button button1"><button><img th:src="@{/assets/images/in1.png}" alt=""></button></div>
-                        <div class="button button2"><button><img th:src="@{/assets/images/in2.png}" alt=""></button></div>
-                        <div class="modal_close cancerButton"><button><img th:src="@{/assets/images/modal_close.png}" alt=""></button></div>
+                        <button>
+                            <img th:src="@{/assets/images/i_search.png}" alt="">
+                        </button>
+                    </div>  
+                    <div class="box_wrap in_tit"   >
+                        <div class="tit">접수현황 LIST</div>
+                        1tit<br>
+                        1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>1tit<br>
+                    </div>
+                    <!-- <div id="retrieveDiv">
+                        1retrieveDiv
                     </div> -->
-    
-                </div>               
-                <div class="section ">                
-                    <div class="sec_con" style="width: 100%;">
-                        <div class="box_wrap">
-                            <form action="">
-                                 
-                                <div class="container-fluid">  
-                                </div>   
-
-                            </form>
-
-                        </div>
+                </div>
+                <div class="sec_con" style="width: 40%;">
+                    <div class="date_wrap">
+                         
                     </div>
+                    <div class="box_wrap in_tit"   >
+                        <div class="tit">고장접수</div> 
+                        <form action="">
+                            <div class="table table_style1">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                          <th>접수일자</th>
+                                          <td>
+                                            <div class="input_wrap date">
+                                                <input type="text">
+                                            </div>                                                            
+                                          </td>
+                                          <th>고장일자</th>
+                                          <td>
+                                            <div class="input_wrap date">
+                                                <input type="text">
+                                            </div>                                                            
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                            <th>현장명</th>
+                                            <td>
+                                                <div class="input_wrap table_search">
+                                                    <input type="text">
+                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                </div>                                                                
+                                            </td>
+                                            <th>호기명</th>
+                                            <td>
+                                                <div class="input_wrap table_search">
+                                                    <input type="text">
+                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                </div>                                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>접수자</th>
+                                            <td>
+                                                <div class="input_wrap table_search">
+                                                    <input type="text">
+                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                </div>                                                                
+                                            </td>
+                                            <th>통보자<br/>(담당기사)</th>
+                                            <td>
+                                                <div class="input_wrap table_search">
+                                                    <input type="text">
+                                                    <button class="btn1" type="button"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                </div>                                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>고장내용</th>
+                                            <td colspan="3">
+                                                <div class="input_wrap date">
+                                                    <input type="text" th:style="'background: url(' + @{/assets/images/i_cal.png} + ') no-repeat #fff 98% 50%/15px auto;'">
+                                                </div>                                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>갇힘<br/>사고 일자</th>
+                                            <td colspan="3">
+                                                <div class="input_wrap">
+                                                    <input type="text">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>비고</th>
+                                            <td colspan="3">
+                                                <div class="input_wrap">
+                                                    <input type="text">
+                                                </div>                                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="btns"> 
+                                    <button class="type1 color3 modal_step_open2" modal_step="Message"  style="min-width: 90px;" type="button">문자전송</button>
+                                    <button class="btn btn-falcon-danger me-1 mb-1" type="button">접수
+                                    </button>
+                                    <button class="btn btn-falcon-default me-1 mb-1" type="button">문자전송
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- <div id="retrieveDiv">
+                        2retrieveDiv
+                    </div> -->
+                </div> 
+                <div class="sec_con" style="width: 40%;">
+                     
                 </div>
             </div>
-
-
-
-
-                <!--------------------------------------------------------------------------------------->
-                <!-- ###########  자료등록 #############################################################-->
-                <!--------------------------------------------------------------------------------------->
-                 
-
-                <!--------------------------------------------------------------------------------------->
-                <!-- ###########  첨부파일 미리보기######################################################-->
-                <!--------------------------------------------------------------------------------------->
-                
-                 
+        </div> 
     </div>
+    <footer>
 
-
-    <script type="text/javascript" th:inline="javascript">
         
+    </footer>
 
-        function listUp(){ 
-            window.location.href = '/app04/index01';          
-            }
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-     
-
-        function getToday(){
-            let today = new Date();   
-
-            let year = today.getFullYear(); // 년도
-            let month = today.getMonth() + 1;  // 월
-            let date = today.getDate();  // 날짜
-            let day = today.getDay();  // 요일
-            if(date > 0 && date < 10) {date = "0" + date};
-            let ls_today = year + '-' + month + '-' + date 
-            document.getElementById('actminputdatez').value = ls_today;
+<script>
+        $(document).ready(function() { 
+            modal_init() 
+        })
+        function modal_init(){
+            console.log("kkkkkkkk"); 
         }
-
-        function convert_time(timestamp){ 
-            //현재시간
-            var date = new Date(timestamp); 
-            var year = date.getFullYear();
-            var month = ("0" + (1 + date.getMonth())).slice(-2);
-            var day = ("0" + date.getDate()).slice(-2); 
-            var hh = date.getHours();  
-            var min = ('0' + date.getMinutes()).slice(-2) 
-            time = year +  month +  day   ;
-            return time;  
-        }
-
-        function fn_egov_init_date(){
-            var $inputdate = $('#actminputdatez');
-            var $endDate = $('#endDate');
-            $inputdate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                        maxDate: $endDate.val() ? $endDate.val() : false
-                    })
-                },
-            });
-
-            $endDate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d H:i',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({
-                        minDate: $inputdate.val() ? $inputdate.val() : false
-                    })
-                }
-            });
-
-        }
-
-    </script>
-
-    <!------footer ------>
-    <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
+</script>    
 
 
-    <!-- modal -->
-    <!-- class="modal_step_open" modal_step="1" -->
-    
-    <div class="modal modal modal_step modal_step1 hidden">
-        <div class="modal_overlay">
-        </div>
-        <div class="modal_content modal_sm scrollbar">
-            <div class="layoutCont">  
-                <div class="modalContWrap">
-                    <!-- <div class="modal_close cancerButton">
-                      <img th:src="@{/assets/images/modal_close.png}" alt="모달 닫기버튼">
-                    </div>                       -->
-                    <div class="modal_head">
-                    </div>
-                    <div class="modal_con scrollbar">
-                      모든 정보를 입력하세요.                          
-                    </div>
-
-                </div>
-                <div class="modal_btn">
-                    <button class="cancerButton " type="button">확인</button>
-                </div>
-                <!-- <div class="modal_btn flex">
-                    <button class="cancerButton " type="button">확인</button>
-                    <button class="cancerButton " type="button">확인</button>                        
-                </div> -->
-            </div>
-        </div>
-    </div>
+</script>
+ 
+ 
     
 </body>
 </html>

@@ -8,8 +8,11 @@ public class App03ElvlrtDto {
     private String frdate;
     private String todate;
     private String recedate;
+    private String recedateyear;
     private String recenum;
     private String recetime;
+    private String hitchdate;
+    private String hitchhour;
     private String actcd;
     private String actnm;
     private String equpcd;
@@ -18,6 +21,7 @@ public class App03ElvlrtDto {
     private Long ascnt;
     private String actpernm;
     private String divinm;
+    private String perid;
     private String pernm;
     private String contcd;
     private String contnm;
@@ -27,6 +31,7 @@ public class App03ElvlrtDto {
     private String jejak;
     private String model;
     private String yyyymm;
+    private String reperid;
     private String repernm;
     private String remonm;
     private String remoremark;
@@ -49,4 +54,7 @@ public class App03ElvlrtDto {
     private Long rececnt;
     private Long callback;
     private Long compcnt;
+    private String contents;
+    private String remark;
+
 }

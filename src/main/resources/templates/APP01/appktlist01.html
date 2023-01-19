@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">  
+     
+    <div id="ktretrieveDiv">
+        <ul class="status_list scrollbar" style="overflow-y: scroll; height: 380px;">  
+            <li class="receipt" th:each="formdata: ${app03DtoList}" >
+              <div class="left">
+                    <div class="img">
+                        <a href="#" th:id="${formdata.actnm}" th:onclick="mod_fnc([[${formdata.recedateyear}]],[[${formdata.recenum}]],[[${formdata.recetime}]],[[${formdata.hitchdate}]],[[${formdata.hitchhour}]],[[${formdata.actcd}]],[[${formdata.actnm}]],[[${formdata.equpcd}]],[[${formdata.equpnm}]],[[${formdata.reperid}]],[[${formdata.repernm}]],[[${formdata.perid}]],[[${formdata.pernm}]],[[${formdata.contcd}]],[[${formdata.contnm}]],[[${formdata.contents}]],[[${formdata.remark}]])" >
+                            <i><img th:src="@{/assets/images/status1.png}" alt=""></i>                         
+                        </a>
+                        <p>고장접수</p>
+                    </div>
+                    <div class="number">
+                        <span th:text="${formdata.recedate}">23.01.01</span>(<span th:text="${formdata.recetime}">00:00</span>)&nbsp;&nbsp;
+                        <a href="#" th:id="${formdata.actnm}" th:onclick="mod_fnc([[${formdata.recedateyear}]],[[${formdata.recenum}]],[[${formdata.recetime}]],[[${formdata.hitchdate}]],[[${formdata.hitchhour}]],[[${formdata.actcd}]],[[${formdata.actnm}]],[[${formdata.equpcd}]],[[${formdata.equpnm}]],[[${formdata.reperid}]],[[${formdata.repernm}]],[[${formdata.perid}]],[[${formdata.pernm}]],[[${formdata.contcd}]],[[${formdata.contnm}]],[[${formdata.contents}]],[[${formdata.remark}]])" th:text="${formdata.actnm}"><h4 th:text="${formdata.actnm} ">삼성리더스타워</h4></a><br>
+                        <span th:text="${formdata.contnm}">고장내용</span><br>
+                        <span th:text="${formdata.contents}">고장내용</span>                        
+                        <hr>
+                    </div>
+                </div>
+                <div class="name"><span th:text="${formdata.tel}">02-6959-5020</span></div>                   
+            </li>              
+        </ul>
+
+ 
+    </div> 
+</html>
