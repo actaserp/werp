@@ -93,7 +93,7 @@
 
                                 <div class="input_wrap">
                                     <select  name="changeop" id="changeop" onchange="CahngeSlect(this.value)">
-                                        <option value="%"  >선택</option>
+                                        
                                         <option value="0">미처리</option>    
                                         <option value="1">처리</option> 
                                     </select>                                    
@@ -102,19 +102,14 @@
                             <!-- //여기서부터 그래프 -->
                             <div class="table table_style2">
                                 <div class="card-body bg-light">   
-                                    <!-- <input type="hidden" id="changeop2" value="A">                                                                                                                                     -->
                                       <div class="tab-content" >                                        
                                         <div class="tab-pane fade show active"  >  
-                                            <div class="container-fluid" id="opdefault" style="visibility: hidden">
-                                            </div>
-                                            <div class="container-fluid" id="op1" style="display: none"> 
+                                            <!-- <div class="container-fluid" id="opdefault" style="visibility: visible ">
+                                            </div> style="display: none"-->
+                                            <div class="container-fluid" id="op1" > 
                                                 <div id="wtab01Grid_div" ></div>
                                                 <div id="tab01Pager"></div>
-                                            </div>   
-                                            <!-- <div class="container-fluid" id="op2" style="display: none"> 
-                                                <div th:id="wtab01Grid_div" ></div>
-                                                <div th:id="tab01Pager"></div>
-                                            </div>  -->
+                                            </div>                                               
                                         </div>                                        
                                       </div>
                                 </div>
@@ -1545,10 +1540,7 @@ $.ajax({
 //onchange script
 
 function CahngeSlect(value){
-            var key = changeop.value; 
-            if (key == "%"){                
-                document.getElementById('op1').style.display="none";
-             }         
+            var key = changeop.value;                     
              if (key == "0"){                
                 document.getElementById('op1').style.display="block";
              } 
