@@ -103,10 +103,64 @@ public class App01RetrieveController {
         }
         return app03DtoList01;
     }
+
+    // 고객상담센터 > 승강기번호조회
+    @GetMapping(value="/getelvinfo")
+    public Object App01001GetElvInfoForm( @RequestParam("elvnum") String elvnum
+            , Model model) throws  Exception{
+        Object returnDto = "";
+        try {
+            String apikey = "ECeTFAnF2DoeYFYBFygeY%2BFt3GLMMzD9OsgSaEF2h0Qvw3KAhuNWCfczIDQgC4ucmlS6BbLWojlyYuhFRXgXcQ%3D%3D";
+            String text = URLEncoder.encode(elvnum, "UTF-8");
+            String apiURL = "http://openapi.elevator.go.kr/openapi/service/BuldElevatorService/getBuldElvtrList";
+            String postParams = "serviceKey=" + apikey;
+            postParams = postParams + "&elevator_no=" + text;
+            apiURL = apiURL.trim().toString() + "?" + postParams.trim().toString();
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            //http 요청에 필요한 타입 정의 실시
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestMethod("GET");
+//            con.setRequestProperty("Authorization", "serviceKey " + apikey);
+//            con.setRequestProperty("X-NCP-APIGW-API-KEY", clientSecret);
+
+
+            con.setDoOutput(true);
+           // DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+           // wr.writeBytes(postParams);
+           // wr.flush();
+           // wr.close();
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+//            System.out.println(response.toString());
+            returnDto = response.toString();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return returnDto;
+    }
+
+
+
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date      = new Date(System.currentTimeMillis());
 
         return formatter.format(date);
     }
+
+
+
+
 }

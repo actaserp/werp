@@ -226,6 +226,34 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    @RequestMapping(value = "/wequpcd")
+    public Object AppEqupcdList(Model model, HttpServletRequest request
+            ,@RequestParam("actcdz") String actcd
+            , @RequestParam("equpcdz") String equpcd){
+        if(equpcd.length() == 0){
+            equpcd = "%";
+        }
+        try{
+
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            model.addAttribute("userformDto", userformDto);
+
+            popParmDto.setActcd(actcd);
+            popParmDto.setEqupnm(equpcd);
+            poplistDto = appPopElvlrtService.GetEqupList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+            /*log.info(poplistDto);
+            log.info(userformDto.getActcd() + "1212");*/
+
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
     @RequestMapping(value = "/wequpnm")
     public Object AppEqupnmList(Model model, HttpServletRequest request, @RequestParam("equpnmz") String equpnm){
         if(equpnm.length() == 0){

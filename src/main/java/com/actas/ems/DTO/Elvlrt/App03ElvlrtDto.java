@@ -56,5 +56,20 @@ public class App03ElvlrtDto {
     private Long compcnt;
     private String contents;
     private String remark;
+    private String calldate;
+    private String calltime;
+    private String callnm;
+    private String custflag;
+    private String seq;
+    private String subcalldate;
+    private String subcalltime;
+    private String callnum;
+    private String flag;
+    private String callmemo;
+    private String rcvflag;
+    private String callendmemo;
+    private String callbackflag;
+    private String callbacktime;
+    private String callbackmemo;
 
 }

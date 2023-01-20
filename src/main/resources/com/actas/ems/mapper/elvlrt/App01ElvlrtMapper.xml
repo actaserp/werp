@@ -186,4 +186,19 @@
             order by  c.teltime
         ]]>
     </select>
+    <!--      고객상담센타 / 고객통화메모  -->
+    <select id="GetApp01List005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select  seq  , Left(calldate,4) + '-' +  substring(calldate, 5,2) + '-' + substring(calldate, 7,2) as calldate,
+            Left(calltime,2)+ ':' + substring(calltime, 3,2)  as calltime,  callnum, callnm, pernm, regdate, recedate, recenum ,
+                substring(calldate, 5,2) + '/' + substring(calldate, 7,2) as subcalldate,
+                Left(calltime,2)+ ':' + substring(calltime, 3,2) as subcalltime, flag, callmemo, rcvflag, callendmemo,
+                callbackflag, callbacktime, callbackmemo
+        from tb_callmain  with (nolock)
+        where calldate = #{frdate}
+        and isnull(callnm,'') Like concat('%',#{actcd},'%')
+        order by  calltime desc
+        ]]>
+    </select>
 </mapper>
+
