@@ -440,7 +440,7 @@
     }
     // 본문 data
     var inputdata = {
-      "actfseqz"    : ls_actfseqz ,
+      "actfseqz"    : ls_actfseqz.substr(0,4) + ls_actfseqz.substr(5,2) + ls_actfseqz.substr(8,3) ,
       "actfinputdatez"    : ls_actfinputdatez ,
       "actfgroupcdz"  : ls_actfgroupcdz,
       "actfnsubjectz"      : ls_actfnsubjectz ,
@@ -450,6 +450,7 @@
     }
     // 본문 data formdata 에 추가
     formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+
 
     $.ajax({
       url: '/app07mod/save',
@@ -560,7 +561,7 @@
           cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.attcnt}건 보기</b>',
             click: (e, ctx) => {
-              viewFilePage(ctx.item.fseq );
+              viewFilePage(ctx.item.fseq.substr(0,4)+ctx.item.fseq.substr(5,2)+ctx.item.fseq.substr(8,3));
             }
           }) } ,
         { binding: 'finputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
@@ -686,7 +687,7 @@
     document.getElementById('actfnsubjectz').value= arg3;
     document.getElementById('actfpernmz').value= arg4;
     // document.getElementById('actmfilenamez').value= arg5;
-    arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+    arg6 = arg6.substr(0,4)  + arg6.substr(4, 2)  + arg6.substr(6,9);
     document.getElementById('actfinputdatez').value= arg6;
     document.getElementById('actfgroupcdz').value= arg7;
     document.getElementById('actfmemoz').value= arg8;
@@ -698,7 +699,7 @@
       url: '/app07mod/flist',
       type:"POST",
       data: {
-        "actfseqz"     : arg1,
+        "actfseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
         "actflagz"     : "MF",
       },
       async:false,

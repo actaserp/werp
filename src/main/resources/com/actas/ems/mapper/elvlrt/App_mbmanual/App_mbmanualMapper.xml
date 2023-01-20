@@ -3,7 +3,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App_mbmanual.App_mbmanualMapper">
     <select id="GetMManulList" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
-        select bseq, binputdate, bgourpcd, bsubject, bfilename, bpernm, bmemo, bflag, (select com_cnam from tb_ca510 where com_cls = '015' and com_code=bgourpcd) as cnam,
+        select Left(bseq,4) + '-' + substring(bseq, 5,2) + '-' + substring(bseq, 7,3) as bseq, binputdate, bgourpcd, bsubject, bfilename, bpernm, bmemo, bflag, (select com_cnam from tb_ca510 where com_cls = '015' and com_code=bgourpcd) as cnam,
                (select Count(*) from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt
         from TB_MBMANUAL WITH (NOLOCK)
         Where 1 = 1

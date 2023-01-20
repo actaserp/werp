@@ -170,6 +170,9 @@ public class App07CrudController {
         }else{
             app04Dto.setFseq(fseq);
         }
+
+        log.info(app04Dto);
+
         app04Dto.setYyyymm(ls_yeare + ls_mm);
         if(fseq == null || fseq.equals("")) {
             boolean result = appService.InsertMManu(app04Dto);

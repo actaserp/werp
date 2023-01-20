@@ -3,7 +3,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper">
     <select id="GetMManulList" parameterType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto">
-        select fseq, finputdate, fgourpcd, fnsubject, ffilename, fpernm, fmemo, fflag, (select com_cnam from tb_ca510 where com_cls = '018' and com_code=fgourpcd) as cnam,
+        select Left(fseq,4) + '-' + substring(fseq, 5,2) + '-' + substring(fseq, 7,3) as fseq, finputdate, fgourpcd, fnsubject, ffilename, fpernm, fmemo, fflag, (select com_cnam from tb_ca510 where com_cls = '018' and com_code=fgourpcd) as cnam,
                (select Count(*) from TB_MATTACH_MF where flag='MF' and board_idx=fseq and delete_yn = 'N') as attcnt
         from TB_MFIXBBS WITH (NOLOCK)
         Where 1 = 1
