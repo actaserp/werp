@@ -72,6 +72,7 @@
              WHERE (LEFT(a.compdate, 8) between #{frdate} and #{todate})
                AND (q.actcd = #{actcd} OR #{actcd} = '%')
              GROUP BY a.compyear, a.equpnm, a.actnm) z
+             order by equpnm
 
     </select>
 

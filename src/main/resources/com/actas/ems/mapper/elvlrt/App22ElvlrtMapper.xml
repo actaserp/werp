@@ -6,7 +6,7 @@
 
     <!--      고장내용별현황 / 기간별 고장내용  -->
     <select id="GetApp22List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
-        select *, left((totalcnt / totalcnt2), 4) as per from
+        select *,  concat(left(convert(decimal(5,4),(totalcnt / totalcnt2)) *100, 5), '%') as per from
             (SELECT isnull(D.custcd,'') as custcd,
             isnull(D.spjangcd, '') as spjangcd,
             isnull(D.compyear, '총합') as compyear,

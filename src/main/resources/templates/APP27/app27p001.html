@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="layouts/APPHeader/apphead :: headFragment" />
-
+<style>
+  .modal_con .board .part1 .part1_bottom .title.toggle button img{
+    transform: rotate(180deg);
+  }
+  .modal_con .board .part1 .part1_bottom .title.toggle.on button img{
+    transform: rotate(0deg);
+  }
+</style>
 <body style="background: #f5f9fa;">
 <header>
 
@@ -55,7 +62,7 @@
     <div class="section">
       <div class="sec_con" style="width: 100%;">
         <div class="box_wrap">
-          <ul class="search_box">
+          <ul class="search_box" style="margin-bottom: 0rem;">
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -79,15 +86,15 @@
 
     <div class="modal_con">
     <div class="board">
-      <div class="part1" style="width: 80%;">
+      <div class="part1" style="width: 100%;">
         <div class="part1_bottom">
           <div class="modal_box">
             <div class="title toggle" style="cursor: pointer;">
-              <h5>조건추가</h5>
-              <button><img src="../images/toggle.png" alt=""></button>
+
+              <button><img src="../images/toggle.png" alt=""></button>검색조건
               </div>
             <div class="con_wrap toggle_box" style="display: none;">
-          <ul class="search_box">
+          <ul class="search_box" style="margin-bottom: 0rem;">
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">고장내용</span>
                 <input class="form-control" type="text" placeholder="고장내용을 입력하세요" aria-label="actcontnmz" id="actcontnmz" aria-describedby="basic-addon1" />
@@ -391,12 +398,7 @@
           <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
             <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
             <div class="search">
-              <div class="input_wrap">
-                <input class="form-control form-control-sm" id="searchpopup" type="text"/>
-              </div>
-              <button id="wrepopupBtn">
-                <img th:src="@{/assets/images/i_search.png}" alt="">
-              </button>
+
             </div>
           </div>
           <div class="container-fluid">
@@ -484,7 +486,7 @@
           {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
           {binding: "greginm", header: "고장부위명", width: 100, align: "center"},
           {binding: "reginm", header: "고장부위상세명", width: 150, align: "center"},
-          {binding: "result", header: "건수", width: 100, align: "center"},
+          {binding: "result", header: "건수", width: 110, align: "center"},
 
 
           {
@@ -623,7 +625,7 @@
             {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
             {binding: "contnm", header: "고장내용명", width: 100, align: "center"},
             {binding: "contents", header: "고장내용상세", width: 150, align: "center"},
-            {binding: "result", header: "건수", width: 100, align: "center"},
+            {binding: "result", header: "건수", width: 110, align: "center"},
 
             { header: "1월",
               align: "center",
@@ -762,11 +764,11 @@
 
         function getColumnGroups3(){
           return [
-            {binding: "compyear", header: "년도", width: 100, align: "center"},
-            {binding: "actnm", header: "현장명", width: 150, align: "center"},
-            {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
-            {binding: "remonm", header: "고장원인", width: 100, align: "center"},
-            {binding: "result", header: "건수", width: 100, align: "center"},
+            {binding: "compyear", header: "년도", width: 120, align: "center"},
+            {binding: "actnm", header: "현장명", width: 220, align: "center"},
+            {binding: "equpnm", header: "동·호기", width: 130, align: "center"},
+            {binding: "remonm", header: "고장원인", width: 130, align: "center"},
+            {binding: "result", header: "건수", width: 110, align: "center"},
 
             { header: "1월",
               align: "center",
@@ -897,11 +899,11 @@
 
         function getColumnGroups4(){
           return [
-            {binding: "compyear", header: "년도", width: 100, align: "center"},
-            {binding: "actnm", header: "현장명", width: 150, align: "center"},
-            {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
-            {binding: "resunm", header: "처리내용", width: 100, align: "center"},
-            {binding: "result", header: "건수", width: 100, align: "center"},
+            {binding: "compyear", header: "년도", width: 120, align: "center"},
+            {binding: "actnm", header: "현장명", width: 220, align: "center"},
+            {binding: "equpnm", header: "동·호기", width: 130, align: "center"},
+            {binding: "resunm", header: "처리내용", width: 130, align: "center"},
+            {binding: "result", header: "건수", width: 110, align: "center"},
 
             { header: "1월",
               align: "center",
@@ -1024,25 +1026,7 @@
         alternatingRowStep: 0,
         columns: [
           {binding: 'recedate', header: '접수일자', align: "center", width: 100},
-          /*{binding: 'recetime', header: '접수시간', align: "center", width: '1*'},
-          {binding: 'equpnm', header: '동호기', align: "center", width: '1*'},
-          {binding: 'actpernm', header: '담당사원', align: "center", width: '1*'},
-          {binding: 'divinm', header: '부서', align: "center", width: '1*'},
-          {binding: 'pernm', header: '처리자', align: "center", width: '1*'},
-          {binding: 'contnm', header: '고장내용', align: "center", width: '1*'},
-          {binding: 'contremark', header: '고장내용상세', align: "center", width: '1*'},
-          {binding: 'resunm', header: '처리내용', align: "center", width: '1*'},
-          {binding: 'resuremark', header: '처리내용상세', align: "center", width: '1*'},
-          {binding: 'repernm', header: '접수자', align: "center", width: '1*'},
-          {binding: 'remonm', header: '고장요인', align: "center", width: '1*'},
-          {binding: 'remoremark', header: '고장요인상세', align: "center", width: '1*'},
-          {binding: 'greginm', header: '고장부위', align: "center", width: '1*'},
-          {binding: 'reginm', header: '고장부위상세', align: "center", width: '1*'},
-          {binding: 'compdate', header: '처리일자', align: "center", width: '1*'},
-          {binding: 'comptime', header: '처리시간', align: "center", width: '1*'},
-          {binding: 'resutime', header: '대응시간', align: "center", width: '1*'},
-          {binding: 'resulttime', header: '처리시간', align: "center", width: '1*'},
-          {binding: 'resultnm', header: '진행내역', align: "center", width: '1*'},*/
+
         ],
         itemsSource: view_popup
       });
@@ -1050,35 +1034,7 @@
       function getData_pop(){
         var wpopup_data = [];
         var cnt =  1;
-        /*for(var i=0; i<12; i++){
-          wpopup_data.push({
-            id: 1,
-            index: cnt,
-           // recedate: "",
-           /!* recetime: "",
-            equpnm: "",
-            actpernm: "",
-            divinm: "",
-            pernm: "",
-            contnm: "",
-            contremark: "",
-            resunm: "",
-            resuremark: "",
-            repernm: "",
-            remonm: "",
-            remoremark: "",
-            greginm: "",
-            reginm: "",
-            compdate: "",
-            comptime: "",
-            resutime: "",
-            resulttime: "",
-            resultnm: "",*!/
 
-          });
-          cnt++;
-
-        }*/
         return wpopup_data;
       }
 
@@ -1328,7 +1284,7 @@
 
       let gridFormat =[
         {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+        {binding: "actnm", header: "현장명", width: 160, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.actnm}</b>',
             click: (e, ctx) => {
               modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
@@ -1722,7 +1678,7 @@
 
       let gridFormat2 =[
         {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center",cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+        {binding: "actnm", header: "현장명", width: 160, align: "center",cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.actnm}</b>',
             click: (e, ctx) => {
               modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
@@ -1884,17 +1840,17 @@
 
 
       let gridFormat3 =[
-        {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+        {binding: "compyear", header: "년도", width: 120, align: "center"},
+        {binding: "actnm", header: "현장명", width: 220, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.actnm}</b>',
             click: (e, ctx) => {
               modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
               //console.log(ctx.item.compyear, ctx.item.equpcd, ctx.item.greginm, ctx.item.reginm, ctx.item.contnm, ctx.item.remonm, ctx.item.resunm)
             }
           })},
-        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
-        {binding: "remonm", header: "고장원인", width:100, align: "center"},
-        {binding: "result", header: "건수", width:100, align: "center"},
+        {binding: "equpnm", header: "동·호기", width: 130, align: "center"},
+        {binding: "remonm", header: "고장원인", width:130, align: "center"},
+        {binding: "result", header: "건수", width:110, align: "center"},
 
 
         {
@@ -2046,8 +2002,8 @@
 
 
       let gridFormat4 =[
-        {binding: "compyear", header: "년도", width: 100, align: "center"},
-        {binding: "actnm", header: "현장명", width: 150, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
+        {binding: "compyear", header: "년도", width: 120, align: "center"},
+        {binding: "actnm", header: "현장명", width: 220, align: "center", cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.actnm}</b>',
             click: (e, ctx) => {
               modal_call(ctx.item.compyear, ctx.item.equpcd, ctx.item.gregicd, ctx.item.reginm, ctx.item.contcd, ctx.item.remonm, ctx.item.resunm, ctx.item.contents)
@@ -2055,9 +2011,9 @@
             }
           })
         },
-        {binding: "equpnm", header: "동·호기", width: 100, align: "center"},
-        {binding: "resunm", header: "처리내용", width:100, align: "center"},
-        {binding: "result", header: "건수", width:100, align: "center"},
+        {binding: "equpnm", header: "동·호기", width: 130, align: "center"},
+        {binding: "resunm", header: "처리내용", width:130, align: "center"},
+        {binding: "result", header: "건수", width:110, align: "center"},
 
 
         {

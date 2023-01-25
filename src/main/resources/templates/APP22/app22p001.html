@@ -15,7 +15,7 @@
             <div class="nav_bg"></div>
             <!-- ################################ -->
             <!-- ## Left navigator include -->
-            <th:block th:include="layouts/APPHeader/appLeftNav" />
+            <th:block th:include="layouts/APPHeader/appcareleft" />
         </div>
         <div class="right">
         </div>
@@ -25,7 +25,7 @@
             <ul class="left">
                 <li>
                     <div class="logo">
-                        <a href="">
+                        <a th:href="@{/auth/emmsdashboard}">
                             <img th:src="@{/assets/images/logo.png}" alt="">
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                     <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
                 </li>
                 <li>
-                    종합유지관리서비스
+                    고객지원센터
                 </li>
                 <li class="on">
                     승강기고장통계
@@ -777,7 +777,7 @@
             // barchart.itemsSource =  tab02_data;
 
             barchart = new wijmo.chart.FlexChart('#chartTabB', {
-                header: '승강기 년도별 통계',
+                header: '승강기 연도별 통계',
                 legend: {
                     position: wijmo.chart.Position.Bottom
                 },
@@ -788,7 +788,7 @@
                 palette: ['#0288D1',
                     '#FFC107',
                     '#FF7043',
-                    "#EF5350"]
+                    "#363533"]
             });
 
             ani = new wijmo.chart.animation.ChartAnimation(barchart);
@@ -1268,6 +1268,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
+            if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01'
             let ls_today = year + '-' + month + '-' + date
