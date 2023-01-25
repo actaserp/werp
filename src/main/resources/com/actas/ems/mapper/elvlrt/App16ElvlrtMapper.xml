@@ -6,7 +6,7 @@
 
     <!--      고장내용별현황 / 기간별 고장내용  -->
     <select id="GetApp16List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
-        select *, left(amp.totalcnt / amp.allcnt, 4) as per
+        select *,  concat(left(convert(decimal(5,4),(amp.totalcnt / amp.allcnt)) * 100, 4), '%') as per
         from
             (select  z.compyear,isnull(actnm, '') as actnm, isnull(z.equpnm,'') as equpnm,
             z.mon1,

@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="layouts/APPHeader/apphead :: headFragment" />
-
+<style>
+  .modal_con .board .part1 .part1_bottom .title.toggle button img{
+    transform: rotate(180deg);
+  }
+  .modal_con .board .part1 .part1_bottom .title.toggle.on button img{
+    transform: rotate(0deg);
+  }
+</style>
 <body style="background: #f5f9fa;">
 <header>
 
