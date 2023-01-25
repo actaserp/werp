@@ -892,7 +892,6 @@ function CahngeSlect(value){
             document.getElementById('equpnmz').value= ""; 
             if(ls_changeopp == "%"){
                 alert("초기화 됐습니다. 처리여부를 선택하세요.")
-                // return false; 
             }
         }
     
@@ -940,11 +939,11 @@ if(!ls_remoremarkz){
 } 
 if(!ls_resuremarkz){
     alert("처리내용상세를 입력하세요")
-    return false;
+    return;
 }  
 if(!ls_remarkz){
     alert("고객요망사항을 입력하세요")
-    return false;
+    return;
 }     
 
 var inputdata = {   
@@ -1758,8 +1757,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resunm, ctx.item.resultnm);
-                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.reperid, ctx.item.divicd, ctx.item.perid);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1779,8 +1777,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resunm, ctx.item.resultnm);
-                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.reperid, ctx.item.divicd, ctx.item.perid);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1802,32 +1799,25 @@ $.ajax({
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){            
-            // console.log(arg17)
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             // document.getElementById('recetimez').value = arg3;
-            var time =  document.getElementById('recetimez').value.substr(1,1);
-            console.log(time)
-            var min =  document.getElementById('recetimez').value.substr(3,5);
-            console.log(min)
-            var rerece = time +":"+ min;
-            rerece = arg3;
-            console.log(arg3)
+            // const t2me = document.getElementById('recetimez').value.substr(2);
+            // console.log(t2me)
+            // const m2n =  document.getElementById('recetimez').value.substr(2,3);
+            // console.log(m2n);
+            
+            document.getElementById('recetimez').value = arg3;
             document.getElementById('actnmz').value = arg4; 
             document.getElementById('actcdz').value = arg5; 
             document.getElementById('equpnmz').value = arg6;   
             document.getElementById('equpcdz').value = arg7;
-            document.getElementById('pernmz').value = arg8; 
-            document.getElementById('peridz').value = arg9;   
-            document.getElementById('contnmz').value = arg10;
-            document.getElementById('contentsz').value = arg11; 
-            document.getElementById('greginmz').value = arg12;           
-            document.getElementById('reginmz').value = arg13;           
-            document.getElementById('remonmz').value = arg14;           
-            document.getElementById('facnmz').value = arg15;           
-            document.getElementById('resunmz').value = arg16;           
-            document.getElementById('resultnmz').value = arg17;    
+            document.getElementById('contnmz').value = arg8; 
+            document.getElementById('contentsz').value = arg9;   
+            document.getElementById('peridz').value = arg10;
+            document.getElementById('divicdz').value = arg11; 
+            document.getElementById('actperidz').value = arg12;
         }     
        
         console.log(wactnmChk_a);
@@ -2144,7 +2134,7 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                     for (var i = 0; i < wgreginmDto.length; i++) {
                         wgreginm_data.push({
                             id: i, 
-                            index: cnt,                           
+                            index: cnt,                                                    
                             gregicd:wgreginmDto[i]["gregicd"],
                             greginm:wgreginmDto[i]["greginm"],
                                                                             
@@ -2196,10 +2186,12 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             if(searchText2 == null || searchText2.length == 0 || searchText2 == ""){
                 searchText2 = "%";
             }
+            var gg = document.getElementById("gregicdz").value;
             $.ajax({
                 url: '/pop01/wreginm',  
                 type:"POST",
                 data: { 
+                    "gregicdz": gg,
                     "reginmz"      : searchText2, 
                 }, 
                 success:function(data){ 

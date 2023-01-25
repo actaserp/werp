@@ -138,15 +138,19 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+
     //  고장부위상세
     @RequestMapping(value="/wreginm")
-    public Object AppreginmList(@RequestParam("reginmz") String reginm
+    public Object AppreginmList(@RequestParam("reginmz") String reginm,
+                                @RequestParam("gregicdz") String gregicd
             , Model model){
+
         if(reginm.length() == 0){
             reginm = "%";
         }
         try {
             popParmDto.setReginm(reginm);
+            popParmDto.setGregicd(gregicd);
             poplistDto = appPopElvlrtService.GetReginmList(popParmDto);
             model.addAttribute("poplistDto", poplistDto);
         }catch (IllegalStateException e){

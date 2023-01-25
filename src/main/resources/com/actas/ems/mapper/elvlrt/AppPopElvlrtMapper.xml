@@ -73,6 +73,22 @@
         ]]>
     </select>
 
+    <!-- 고장부위상세 -->
+    <select id="GetReginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT a.regicd    regicd  ,
+               a.reginm    reginm,
+               b.gregicd
+        FROM TB_E014 a WITH(NOLOCK)
+        LEFT OUTER JOIN tb_e013 b WITH(NOLOCK) ON (a.gregicd = b.gregicd)
+        WHERE 1 = 1
+          AND (isnull(b.gregicd , '') = #{gregicd})
+          AND (   isnull(reginm , '') Like concat('%',#{reginm},'%') )
+
+
+        ]]>
+    </select>
+
     <!-- 처리방법 -->
     <select id="GetResultnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
@@ -152,17 +168,7 @@
         ]]>
     </select>
 
-    <!-- 고장부위상세 -->
-    <select id="GetReginmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
-        <![CDATA[
-        SELECT a.regicd    regicd  ,
-               a.reginm    reginm
-        FROM TB_E014 a WITH(NOLOCK)
-        WHERE 1 = 1
-          AND (   isnull(reginm , '') Like concat('%',#{reginm},'%') )
-          AND A.useyn = '1'
-        ]]>
-    </select>
+
 
 
     <!-- 처리자 -->

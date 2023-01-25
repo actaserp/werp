@@ -137,6 +137,7 @@ public class App10RetrieveController {
             , @RequestParam("resutimez") String resutime //대응시간
             , @RequestParam("resultckz") String resultck
 //                             compdate 고장일자 = 등록일자
+                             // 작성 담당자 코드, 입력일자, 업데이트 일자 추가해야함
             , Model model, HttpServletRequest request){
 
         try{
