@@ -23,16 +23,19 @@ public interface App28ElvlrtMapper {
 //    public String getMaxSeq();
 //    public String SeqNext();
 
-    public List<App28ElvlrtDto>  GetMNoticeList(App28ElvlrtDto perm);
-    public List<App28ElvlrtDto> GetMNoticeBlankList();
+    public List<App28ElvlrtDto>  GetMSManualList(App28ElvlrtDto perm);
+    public List<App28ElvlrtDto> GetMSManualBlankList();
 
     public List<CommonDto> GetComm751List();
     public List<CommonDto> GetComm751BlankList();
 
-    public App28ElvlrtDto GetMNoticeView(String mSeq);
-    public int InsertMNotice(App28ElvlrtDto perm);
-    public int UpdateMNotice(App28ElvlrtDto perm);
-    public int DeleteMNotice(App28ElvlrtDto perm);
-    public String getMNoticeMaxSeq(String perm);
+    public App28ElvlrtDto GetMSManualView(String mSeq);
+    public int InsertMSManual(App28ElvlrtDto perm);
+    public int UpdateMSManual(App28ElvlrtDto perm);
+    public int DeleteMSManual(App28ElvlrtDto perm);
+    public String getMSManualMaxSeq(String perm);
 
+    public List<App28ElvlrtDto> getMSCommentList(App28ElvlrtDto perm);
+
+    public String GetMSCommentCount(String sseq);
 }

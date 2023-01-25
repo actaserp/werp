@@ -35,17 +35,13 @@ public class App28CrudController {
     protected Log log =  LogFactory.getLog(this.getClass());
 
     private static final Logger logger     = LoggerFactory.getLogger(App28CrudController.class);
-    private final String uploadPath = Paths.get("C:", "develop", "upload","mnotice", getToDate()).toString();
+    private final String uploadPath = Paths.get("C:", "develop", "upload","MSManual", getToDate()).toString();
 
     @RequestMapping(value="/saveboard")
-    public String memberSave(@RequestParam("actnseqz") String nseq
-            ,@RequestParam("actninputdatez") String ninputdate
-            , @RequestParam("actngroupcdz") String ngroupcd
-            , @RequestParam("actnsubjectz") String nsubject
-            , @RequestParam("actnfilenamez") String nfilename
-            , @RequestParam("actnpernmz") String npernm
-            , @RequestParam("actnmemoz") String memo
-            , @RequestParam("actnflagz") String nflag
+    public String memberSave(@RequestParam("actsseqz") String sseq
+            , @RequestParam("actsmemoz") String memo
+            , @RequestParam("actsflagz") String sflag
+            , @RequestParam("actssubkeyz") String subkey
             , Model model, HttpServletRequest request){
 
         try {
@@ -54,32 +50,30 @@ public class App28CrudController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String ls_yeare = ninputdate.substring(0,4);
-            String ls_mm = ninputdate.substring(5,7);
-            String ls_dd = ninputdate.substring(8,10);
-            ninputdate =  ls_yeare + ls_mm + ls_dd;
+            String sinputdate = getToDate();
+            String ls_yeare = sinputdate.substring(0,4);
+            String ls_mm = sinputdate.substring(4,6);
+            System.out.println("sinputdate ==>" + sinputdate);
+
 //        log.debug("ninputdate==>" + ninputdate);
             App28Dto.setCustcd(ls_custcd);
             App28Dto.setSpjangcd(ls_spjangcd);
-            if(nseq == null || nseq.equals("")){
-                App28Dto.setNseq(CountSeq(ls_yeare + ls_mm));
-            }else{
-                App28Dto.setNseq(nseq);
-            }
 
-            App28Dto.setNinputdate(ninputdate);
-            App28Dto.setNgourpcd(ngroupcd);
-            App28Dto.setNsubject(nsubject);
-            App28Dto.setNfilename(nfilename);
-            App28Dto.setNpernm(npernm);
-            App28Dto.setNmemo(memo);
-            App28Dto.setNflag(nflag);
-            App28Dto.setYyyymm(ls_yeare + ls_mm);
-            App28Dto.setNpernm(userformDto.getUsername());
-            if(nseq == null || nseq.equals("")){
-                appService.InsertMNotice(App28Dto);
+            if(sseq == null || sseq.equals("")){
+                App28Dto.setSseq(CountSeq(ls_yeare + ls_mm));
             }else{
-                appService.UpdateMNotice(App28Dto);
+                App28Dto.setSseq(sseq);
+            }
+            App28Dto.setSpernm(userformDto.getPernm());
+            App28Dto.setSmemo(memo);
+            App28Dto.setSflag(sflag);
+            App28Dto.setSpernm(userformDto.getUsername());
+            App28Dto.setSubkey(subkey);
+            App28Dto.setSinputdate(sinputdate);
+            if(sseq == null || sseq.equals("")){
+                appService.InsertMSManual(App28Dto);
+            }else{
+                appService.UpdateMSManual(App28Dto);
             }
             model.addAttribute("userformDto",userformDto);
 
@@ -87,8 +81,8 @@ public class App28CrudController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        String ls_nseq = App28Dto.getNseq();
-        return ls_nseq;
+        String ls_sseq = App28Dto.getSseq();
+        return ls_sseq;
     }
 
     /**
@@ -100,8 +94,8 @@ public class App28CrudController {
     }
 
     @RequestMapping(value="/save")
-    public String mnoticeUpload ( @RequestPart(value = "key") Map<String, Object> param,
-                                  @RequestPart(value = "file",required = false) List<MultipartFile> file
+    public String MSManualUpload ( @RequestPart(value = "key") Map<String, Object> param,
+                                   @RequestPart(value = "file",required = false) List<MultipartFile> file
             , Model model
             , HttpServletRequest request){
         String ls_fileName = "";
@@ -117,54 +111,48 @@ public class App28CrudController {
 
         param.forEach((key, values) -> {
             switch (key){
-                case "actnseqz":
-                    App28Dto.setNseq(values.toString());
+                case "actsseqz":
+                    App28Dto.setSseq(values.toString());
                     break;
-                case "actninputdatez":
-                    App28Dto.setNinputdate(values.toString());
+                case "actsinputdatez":
+                    App28Dto.setSinputdate(values.toString());
                     break;
-                case "actngroupcdz":
-                    App28Dto.setNgourpcd(values.toString());
+                case "actspernmz":
+                    App28Dto.setSpernm(values.toString());
                     break;
-                case "actnsubjectz":
-                    App28Dto.setNsubject(values.toString());
+                case "actsmemoz":
+                    App28Dto.setSmemo(values.toString());
                     break;
-                case "actnpernmz":
-                    App28Dto.setNpernm(values.toString());
-                    break;
-                case "actnmemoz":
-                    App28Dto.setNmemo(values.toString());
-                    break;
-                case "actnflagz":
-                    App28Dto.setNflag(values.toString());
+                case "actsflagz":
+                    App28Dto.setSflag(values.toString());
                     break;
                 default:
                     break;
             }
         });
-        String nseq = App28Dto.getNseq();
+        String sseq = App28Dto.getSseq();
         App28Dto.setCustcd(ls_custcd);
         App28Dto.setSpjangcd(ls_spjangcd);
-        App28Dto.setNpernm(userformDto.getUsername());
-        String ninputdate = App28Dto.getNinputdate();
-        String ls_yeare = ninputdate.substring(0,4);
-        String ls_mm = ninputdate.substring(5,7);
-        String ls_dd = ninputdate.substring(8,10);
-        ninputdate =  ls_yeare + ls_mm + ls_dd;
-        App28Dto.setNinputdate(ninputdate);
-        if(nseq == null || nseq.equals("")){
-            App28Dto.setNseq(CountSeq(ls_yeare + ls_mm));
+        App28Dto.setSpernm(userformDto.getUsername());
+        String sinputdate = App28Dto.getSinputdate();
+        String ls_yeare = sinputdate.substring(0,4);
+        String ls_mm = sinputdate.substring(5,7);
+        String ls_dd = sinputdate.substring(8,10);
+        sinputdate =  ls_yeare + ls_mm + ls_dd;
+        App28Dto.setSinputdate(sinputdate);
+        if(sseq == null || sseq.equals("")){
+            App28Dto.setSseq(CountSeq(ls_yeare + ls_mm));
         }else{
-            App28Dto.setNseq(nseq);
+            App28Dto.setSseq(sseq);
         }
         App28Dto.setYyyymm(ls_yeare + ls_mm);
-        if(nseq == null || nseq.equals("")){
-            boolean result = appService.InsertMNotice(App28Dto);
+        if(sseq == null || sseq.equals("")){
+            boolean result = appService.InsertMSManual(App28Dto);
             if(!result){
                 return  "error";
             }
         }else{
-            boolean result = appService.UpdateMNotice(App28Dto);
+            boolean result = appService.UpdateMSManual(App28Dto);
             if(!result){
                 return  "error";
             }
@@ -199,7 +187,7 @@ public class App28CrudController {
 
                 /* 파일 정보 저장 */
                 AttachDTO attach = new AttachDTO();
-                attach.setBoardIdx(nseq);
+                attach.setBoardIdx(sseq);
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
@@ -231,8 +219,8 @@ public class App28CrudController {
 
 
     @RequestMapping(value="/del")
-    public String mnoticeDelete(@RequestParam("actnseqz") String nseq
-            ,@RequestParam("actnflagz") String nflag
+    public String MSManualDelete(@RequestParam("actsseqz") String sseq
+            ,@RequestParam("actflagz") String nflag
             ,Model model, HttpServletRequest request){
 
         try {
@@ -241,14 +229,10 @@ public class App28CrudController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            App28Dto.setNseq(nseq);
-            App28Dto.setNflag(nflag);
+            App28Dto.setSseq(sseq);
+            App28Dto.setSflag(nflag);
 
-            boolean result = appService.DeleteMNotice(App28Dto);
-            if(!result){
-                return  "error";
-            }
-            result = false;
+            boolean result = appService.DeleteMSManual(App28Dto);
             if(!result){
                 return  "error";
             }
@@ -263,14 +247,14 @@ public class App28CrudController {
 
 
     @RequestMapping(value="/filedel")
-    public String mnoticeFileDelete(@RequestParam("actidxz") Long idx
-            ,@RequestParam("actnseqz") String nseq
+    public String MSManualFileDelete(@RequestParam("actidxz") Long idx
+            ,@RequestParam("actsseqz") String sseq
             ,@RequestParam("actnflagz") String nflag
             ,Model model, HttpServletRequest request){
 
         try {
             attachDTO.setIdx(idx);
-            attachDTO.setBoardIdx(nseq);
+            attachDTO.setBoardIdx(sseq);
             attachDTO.setFlag(nflag);
 
             boolean result = false;
@@ -286,7 +270,7 @@ public class App28CrudController {
 
 
     @RequestMapping(value="/flist")
-    public Object mnoticeFilelist(@RequestParam("actnseqz") String nseq
+    public Object MSManualFilelist(@RequestParam("actsseqz") String sseq
             ,@RequestParam("actnflagz") String nflag
             , Model model, HttpServletRequest request){
         List<AttachDTO>  attach =new ArrayList<>();
@@ -294,8 +278,8 @@ public class App28CrudController {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
-            App28Dto.setNseq(nseq);
-            App28Dto.setNflag(nflag);
+            App28Dto.setSseq(sseq);
+            App28Dto.setSflag(nflag);
             model.addAttribute("userformDto",userformDto);
             model.addAttribute("attachDto",attach);
 
@@ -307,15 +291,15 @@ public class App28CrudController {
     }
 
     public String CountSeq(String yyyymm){
-        String ls_nseq = appService.getMNoticeMaxSeq(yyyymm);
-        int ll_nseq = 0;
-        if(ls_nseq == null ){
-            ls_nseq = yyyymm + "001";
+        String ls_sseq = appService.getMSManualMaxSeq(yyyymm);
+        int ll_sseq = 0;
+        if(ls_sseq == null ){
+            ls_sseq = yyyymm + "001";
         }else{
-            ll_nseq = Integer.parseInt(ls_nseq);
-            ls_nseq = Integer.toString(ll_nseq + 1 );
+            ll_sseq = Integer.parseInt(ls_sseq);
+            ls_sseq = Integer.toString(ll_sseq + 1 );
         }
-        return ls_nseq;
+        return ls_sseq;
     }
 
 

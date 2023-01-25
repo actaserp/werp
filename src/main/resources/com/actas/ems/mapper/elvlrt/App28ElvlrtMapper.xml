@@ -3,64 +3,75 @@
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App28ElvlrtMapper">
-    <select id="GetMNoticeList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=ngourpcd) as cnam,
-        (select Count(*) from tb_mattach where flag='NN' and board_idx=nseq and delete_yn = 'N') as attcnt
-        from tb_mnotice WITH (NOLOCK)
-        Where 1 = 1
-        <!--        <if test="nsubject != null">-->
-        <!--            and nsubject like '%' + #{nsubject} + '%'-->
+    <select id="GetMSManualList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select sseq, sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
+        (select Count(*) from tb_mattach where flag='MS' and board_idx=sseq and delete_yn = 'N') as attcnt
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and subkey = 0 order by sseq desc
+        <!--        <if test="ssubject != null">-->
+        <!--            and ssubject like '%' + #{ssubject} + '%'-->
         <!--        </if>-->
-        <!--        <if test="nmemo != null">-->
-        <!--            and nmemo like '%' + #{nmemo} + '%'-->
+        <!--        <if test="smemo != null">-->
+        <!--            and smemo like '%' + #{smemo} + '%'-->
         <!--        </if>-->
     </select>
 
-    <select id="GetMNoticeBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select '' as nseq, '' as ninputdate, '' as ngourpcd, '' as nsubject, '' as nfilename, '' as npernm, '' as nmemo, '' as nflag
+    <select id="GetMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select spernm, smemo, count(sseq)
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and subkey = #{subkey}
+    </select>
+
+    <select id="GetMSCommentCount"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select count(*) as count
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and sseq = #{value}
+    </select>
+
+
+    <select id="GetMSManualBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select '' as sseq, '' as sinputdate, '' as sgourpcd, '' as ssubject, '' as sfilename, '' as spernm, '' as smemo, '' as sflag
         from dual
-        <!--        <if test="nsubject != null">-->
-        <!--            and nsubject like '%' + #{nsubject} + '%'-->
+        <!--        <if test="ssubject != null">-->
+        <!--            and ssubject like '%' + #{ssubject} + '%'-->
         <!--        </if>-->
-        <!--        <if test="nmemo != null">-->
-        <!--            and nmemo like '%' + #{nmemo} + '%'-->
+        <!--        <if test="smemo != null">-->
+        <!--            and smemo like '%' + #{smemo} + '%'-->
         <!--        </if>-->
     </select>
-    <select id="getMNoticeMaxSeq"  parameterType="string" resultType="java.lang.String">
-        select max(nseq) from tb_mnotice  where Left(nseq,6) = #{nseq}
+    <select id="getMSManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(sseq) from tb_msmanual  where Left(sseq,6) = #{sseq}
     </select>
 
 
-    <select id="GetMNoticeView" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag
-        from tb_mnotice where nseq = #{nseq}
+    <select id="GetMSManualView" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select sseq, sinputdate, sgourpcd, ssubject, sfilename, spernm, smemo, sflag
+        from tb_msmanual where sseq = #{sseq}
     </select>
 
-    <insert id="InsertMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" >
-        insert into tb_mnotice (custcd, spjangcd, nseq, ninputdate, ngourpcd, nsubject, nmemo, npernm, nflag) values (#{custcd}, #{spjangcd}, #{nseq}, #{ninputdate}, #{ngourpcd}, #{nsubject}, #{nmemo}, #{npernm}, #{nflag})
+    <insert id="InsertMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" >
+        insert into tb_msmanual (custcd, spjangcd, sseq, sinputdate, smemo, spernm, sflag, subkey) values (#{custcd}, #{spjangcd}, #{sseq}, #{sinputdate}, #{smemo}, #{spernm}, #{sflag}, #{subkey})
     </insert>
 
-    <update id="UpdateMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        update tb_mnotice set
-        ngourpcd = #{ngourpcd}
-        <if test="nsubject != null ">,</if>
-        <if test="nsubject != null">nsubject=#{nsubject}</if>
-        <if test="nfilename != null ">,</if>
-        <if test="nfilename != null">nfilename=#{nfilename}</if>
-        <if test="nmemo != null ">,</if>
-        <if test="nmemo != null">nmemo=#{nmemo}</if>
-        <if test="ninputdate != null ">,</if>
-        <if test="ninputdate != null">ninputdate=#{ninputdate}</if>
-        <if test="npernm != null ">,</if>
-        <if test="npernm != null">npernm=#{npernm}</if>
-        <if test="nflag != null ">,</if>
-        <if test="nflag != null">nflag=#{nflag}</if>
-        where nseq = #{nseq}
+    <update id="UpdateMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        update tb_msmanual set
+        sgourpcd = #{sgourpcd}
+        <if test="ssubject != null ">,</if>
+        <if test="ssubject != null">ssubject=#{ssubject}</if>
+        <if test="smemo != null ">,</if>
+        <if test="smemo != null">smemo=#{smemo}</if>
+        <if test="sinputdate != null ">,</if>
+        <if test="sinputdate != null">sinputdate=#{sinputdate}</if>
+        <if test="spernm != null ">,</if>
+        <if test="spernm != null">spernm=#{spernm}</if>
+        <if test="sflag != null ">,</if>
+        <if test="sflag != null">sflag=#{sflag}</if>
+        where sseq = #{sseq}
     </update>
 
 
-    <delete id="DeleteMNotice" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        delete from tb_mnotice where nseq = #{nseq}
+    <delete id="DeleteMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        delete from tb_msmanual where sseq = #{sseq}
     </delete>
 
 

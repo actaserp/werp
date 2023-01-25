@@ -30,6 +30,7 @@ public class App28Controller {
     List<App28ElvlrtDto> App28ListDto;
     List<CommonDto> com750Dto;
     App28ElvlrtDto App28Dto = new App28ElvlrtDto();
+    App28ElvlrtDto Comment = new App28ElvlrtDto();
 
 
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -51,25 +52,17 @@ public class App28Controller {
         SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
         String indate = endDate.format(nowData).toString();
         App28Dto.setYyyymm(indate.substring(0,6));
-        App28Dto.setNinputdate(indate);
+        App28Dto.setSinputdate(indate);
 //        if(bflag == "0"){
 //            App28Dto.setMsubject(search);
 //        }else{
 //            App28Dto.setMemo(search);
 //        }
         try {
-            App28ListDto = service.GetMNoticeList(App28Dto);
+            App28ListDto = service.GetMSManualList(App28Dto);
+
 //            log.debug("Exception =====>" + App28ListDto );
-            model.addAttribute("App28Dto",App28ListDto);
-        } catch (Exception ex) {
-//                dispatchException = ex;
-            log.debug("Exception =====>" + ex.toString() );
-        }
-        try {
-
-            com750Dto = service.GetComm751List();
-            model.addAttribute("com750Dto",com750Dto);
-
+            model.addAttribute("app28Dto",App28ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );

@@ -20,40 +20,44 @@ public class App28ElvlrtService {
     App28ElvlrtMapper app28ElvMapper;
     int queryResult = 1;
     /** 글 목록 */
-    public List<App28ElvlrtDto> GetMNoticeList(App28ElvlrtDto perm){return app28ElvMapper.GetMNoticeList(perm);}
-    public List<App28ElvlrtDto> GetMNoticeBlankList(App28ElvlrtDto perm){return app28ElvMapper.GetMNoticeList(perm);}
+    public List<App28ElvlrtDto> GetMSManualList(App28ElvlrtDto perm){return app28ElvMapper.GetMSManualList(perm);}
+    public List<App28ElvlrtDto> GetMSManualBlankList(App28ElvlrtDto perm){return app28ElvMapper.GetMSManualList(perm);}
 
     /** 글 조회 */
-    public App28ElvlrtDto GetMNoticeView(@RequestParam("nseq") String mSeq){return app28ElvMapper.GetMNoticeView(mSeq);}
+    public App28ElvlrtDto GetMSManualView(@RequestParam("nseq") String mSeq){return app28ElvMapper.GetMSManualView(mSeq);}
     /** 글 등록 */
-    public boolean InsertMNotice(App28ElvlrtDto perm){
-        queryResult = app28ElvMapper.InsertMNotice(perm);
+    public boolean InsertMSManual(App28ElvlrtDto perm){
+        queryResult = app28ElvMapper.InsertMSManual(perm);
         if(queryResult < 1){
             queryResult = 0;
         }
         return (queryResult > 0);
     }
     /** 글 수정 */
-    public boolean UpdateMNotice(App28ElvlrtDto perm){
-        queryResult = app28ElvMapper.UpdateMNotice(perm);
+    public boolean UpdateMSManual(App28ElvlrtDto perm){
+        queryResult = app28ElvMapper.UpdateMSManual(perm);
         if(queryResult < 1){
             queryResult = 0;
         }
         return (queryResult > 0);
     }
     /** 글 삭제 */
-    public boolean DeleteMNotice(App28ElvlrtDto perm){
-        queryResult = app28ElvMapper.DeleteMNotice(perm);
+    public boolean DeleteMSManual(App28ElvlrtDto perm){
+        queryResult = app28ElvMapper.DeleteMSManual(perm);
         if(queryResult < 1){
             queryResult = 0;
         }
         return (queryResult > 0);
     }
 
-    public String getMNoticeMaxSeq(String parm){ return app28ElvMapper.getMNoticeMaxSeq(parm);}
+    public String getMSManualMaxSeq(String parm){ return app28ElvMapper.getMSManualMaxSeq(parm);}
 
 
 
     public List<CommonDto> GetComm751List(){return app28ElvMapper.GetComm751List();}
     public List<CommonDto>  GetComm751BlankList(){return app28ElvMapper.GetComm751List();}
+
+    public List<App28ElvlrtDto> getMSCommentList(App28ElvlrtDto perm) {return app28ElvMapper.getMSCommentList(perm);}
+
+    public String GetMSCommentCount(String sseq) {return app28ElvMapper.GetMSCommentCount(sseq);}
 }

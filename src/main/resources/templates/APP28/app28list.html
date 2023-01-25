@@ -75,99 +75,224 @@
                 수리 Q&A
             </div>
         </div>
-        <div class="section ">
-            <div class="row g-3">
-                <div class="col-lg-8">
-                  <div class="card mb-3">
-                    <div class="card-header bg-light overflow-hidden">
-                      <div class="d-flex align-items-center">
-                        
-                        <div class="flex-1 ms-2">
-                          <h5 class="mb-0 fs-0">질문 작성</h5>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body p-0">
-                      <form>
-                        <textarea class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" placeholder="내용을 입력하세요." rows="4"></textarea>
-                        
-                        <div class="row g-0 justify-content-between mt-3 px-card pb-3">
-                          <div class="col">
-                            <button class="btn btn-light btn-sm rounded-pill shadow-none d-inline-flex align-items-center fs--1 mb-0 me-1" type="button"><img class="cursor-pointer" src="../../assets/img/icons/spot-illustrations/image.svg" width="17" alt="" /><span class="ms-2 d-none d-md-inline-block">이미지 첨부</span></button>
-                          </div>
-                          <div class="col-auto">
-                            
-                            <button class="btn btn-primary btn-sm px-4 px-sm-5" type="submit">질문 등록</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div class="card mb-3">
-                    <div class="card-header bg-light">
-                      <div class="row justify-content-between">
-                        <div class="col">
-                          <div class="d-flex">
-                            
-                            <div class="flex-1 align-self-center ms-2">
-                              <p class="mb-1 lh-1"><a class="fw-semi-bold" href="#!">Rowan Atkinson</a> 님이 작성하신 질문입니다.</p>
-                              <p class="mb-0 fs--1">11 시간 전</p>
+        <form action="">
+            <div class="section ">
+                <div class="row g-3">
+                    <div class="col-lg-8">
+                        <div class="card mb-3">
+                            <div class="card-header bg-light overflow-hidden">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-1 ms-2">
+                                <h5 class="mb-0 fs-0">질문 작성</h5>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="col-auto">
-                          <div class="dropdown font-sans-serif">
-                            <button class="btn btn-sm dropdown-toggle p-1 dropdown-caret-none" type="button" id="post-album-action" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
-                            <div class="dropdown-menu dropdown-menu-end py-3" aria-labelledby="post-album-action"><a class="dropdown-item" href="#!">수정</a>
-                              <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">삭제</a>
                             </div>
-                          </div>
+                            <div class="card-body p-0">
+                                <textarea class="shadow-none form-control rounded-0 resize-none px-card border-y-0 border-200" id="actsmemoz" placeholder="내용을 입력하세요." rows="4"></textarea>
+                                <input type="hidden" name="actsseqz" id="actsseqz" />
+                                <input type="hidden" name="actsflagz" id="actsflagz" value="Y" />
+                                <input type="hidden" name="actssubkeyz" id="actssubkeyz" value="0" />
+                                
+                                <div class="row g-0 justify-content-between mt-3 px-card pb-3">
+                                <div class="col">
+                                    <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+                                </div>
+                                <div class="col-auto">
+                                    
+                                    <button class="btn btn-primary btn-sm px-4 px-sm-5" type="button" onclick="save_btn()">질문 등록</button>
+                                </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="card-body overflow-hidden">
-                      <p>Rowan Sebastian Atkinson CBE is an English actor, comedian and screenwriter best known for his work on the sitcoms Blackadder and Mr. Bean.</p>
-                      <div class="row mx-n1">
-                        <div class="col-6 p-1"><a href="../../assets/img/generic/4.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/generic/4.jpg" alt="" /></a></div>
-                        <div class="col-6 p-1"><a href="../../assets/img/generic/5.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/generic/5.jpg" alt="" /></a></div>
-                        <div class="col-4 p-1"><a href="../../assets/img/gallery/4.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/4.jpg" alt="" /></a></div>
-                        <div class="col-4 p-1"><a href="../../assets/img/gallery/5.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/5.jpg" alt="" /></a></div>
-                        <div class="col-4 p-1"><a href="../../assets/img/gallery/3.jpg" data-gallery="gallery-1"><img class="img-fluid rounded" src="../../assets/img/gallery/3.jpg" alt="" /></a></div>
-                      </div>
-                    </div>
-                    <div class="card-footer bg-light pt-0">
-                      <div class="border-bottom border-200 fs--1 py-3"><a class="text-700" href="#!">댓글 34개</a>
-                      </div>
-                      <div class="row g-0 fw-semi-bold text-center py-2 fs--1">
-                        <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1">댓글</span></a></div>
-                      </div>
-                      <form class="d-flex align-items-center border-top border-200 pt-3">
-                        
-                        <input class="form-control rounded-pill ms-2 fs--1" type="text" placeholder="댓글을 입력하세요." />
-                      </form>
-                      <div class="d-flex mt-3">
-                        
-                        <div class="flex-1 ms-2 fs--1">
-                          <p class="mb-1 bg-200 rounded-3 p-2"><a class="fw-semi-bold" href="#!">Rowan Atkinson</a> She starred as Jane Porter in The <a href="#!">@Legend of Tarzan (2016)</a>, Tanya Vanderpoel in Whiskey Tango Foxtrot (2016) and as DC comics villain Harley Quinn in Suicide Squad (2016), for which she was nominated for a Teen Choice Award, and many other awards.</p>
-                          <div class="px-2"><a href="#!"><a href="#!">답글 달기</a> &bull; 23분 전 </div>
+                        <div th:each="question: ${app28Dto}">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <div class="row justify-content-between">
+                                    <div class="col">
+                                        <div class="d-flex">
+                                        <div class="flex-1 align-self-center ms-2">
+                                            <p class="mb-1 lh-1" th:text="|${question.spernm}님이 작성하신 질문입니다.|"></p>
+                                            <p class="mb-0 fs--1" th:text="${question.sinputdate}"></p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="dropdown font-sans-serif">
+                                        <button class="btn btn-sm dropdown-toggle p-1 dropdown-caret-none" type="button" id="post-album-action" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-3" aria-labelledby="post-album-action"><a class="dropdown-item" href="#!">수정</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" th:mySseq="${question.sseq}" th:onclick="del_btn(this.getAttribute('mySseq'))">삭제</a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="card-body overflow-hidden">
+                                    <div class="row mx-n1">
+                                    <div class="col-4 p-1"><img class="img-fluid rounded" alt="" /></a></div> <!--이미지 파일 들어갈 div--> 
+                                    <p th:text="${question.smemo}"></p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-light pt-0">
+                                    <div class="border-bottom border-200 fs--1 py-3"><a class="text-700" href="#!"></a>
+                                    </div>
+                                    <div class="row g-0 fw-semi-bold text-center py-2 fs--1">
+                                    <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1"></span></a></div>
+                                    </div>
+                                    <form class="d-flex align-items-center border-top border-200 pt-3" method="POST" action="">
+                                    
+                                    <input class="form-control rounded-pill ms-2 fs--1" type="text" placeholder="댓글을 입력하세요." />
+                                    <input type="hidden" th:id="|subComment${question.sseq}|" th:mySubkey="${question.sseq}" th:value="${question.sseq}"/>
+                                    
+                                    </form>
+                                    <div class="d-flex mt-3" id="CommentArea">
+                                    
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="d-flex mt-3">
-                        
-                        <div class="flex-1 ms-2 fs--1">
-                          <p class="mb-1 bg-200 rounded-3 p-2"><a class="fw-semi-bold" href="#!">Jessalyn Gilsig</a> Jessalyn Sarah Gilsig is a Canadian-American actress known for her roles in television series, e.g., as Lauren Davis in Boston Public, Gina Russo in Nip/Tuck, Terri Schuester in Glee, and as Siggy Haraldson on the History Channel series Vikings. 🏆</p>
-                          <div class="px-2"><a href="#!"><a href="#!">답글 달기</a> &bull; 3시간 전 </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-        </div>
+            </div>
+        </form>
     </div>
 
     
+    <!-- 자바 스크립트  -->
+<script>  
+    // <!-- 저장 스크립트 시작 -->
+    function save_btn(subkey){ 
+    
+        var ls_actsseqz   = document.getElementById('actsseqz').value; 
+        var ls_actsmemoz   = document.getElementById('actsmemoz').value;
+        var ls_actssubkeyz = document.getElementById('subComment').value;
+        var ls_actsflagz = "Y";
+    
+         
+        if(!ls_actsmemoz){
+            alert("질문을 입력하세요")
+            return 
+        }              
+            $.ajax({
+            url: '/app28mod/saveboard',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            type: "POST",
+                      data:{
+                    "actsseqz"    : ls_actsseqz ,
+                    "actsmemoz"   : ls_actsmemoz, 
+                    "actsflagz"   : ls_actsflagz,
+                    "actssubkeyz" : ls_actssubkeyz
+                    },       
+                    async:false,
+            success:function(data){
+                    if(data == "success"){
+                    alert("저장되었습니다.")
+                    console.log("save", data);
+                        listUp();
+                }else{
+                    alert("저장되었습니다.")
+                        listUp();
+                }
+            },error:function(e){
+                console.log('error',e);
+            }
+            }).done(function(fragment){
+               
+            }) 
+            
+            listUp(); 
+    }
 
+   
+    
+    function listUp(){
+        window.location.href = '/app28/index01';
+    }; 
+    
+    //조회 script
+    
+    function viewPage(arg1,arg2,arg3){
+            document.getElementById('actsseqz').value= arg1;
+            document.getElementById('actsmemoz').value= arg2;
+            document.getElementById('actsflagz').value= arg3;
+
+    }
+    
+    //삭제 script
+    
+    function del_btn(sseq){
+    
+        if (!confirm("삭제하시겠습니까?")) {
+                return ;
+            }       
+            console.log(sseq);
+            if(!sseq){
+                alert("삭제할 자료를 선택하세요")
+                return
+            }
+            $.ajax({
+                url: '/app28mod/del',
+                type:"POST",
+                data: {
+                    "actsseqz"    : sseq,
+                    "actflagz"    : "Y"
+                },
+                async:false,
+                success:function(data){
+                    if(data == "success"){
+                        alert("삭제되었습니다.")
+                        console.log("delete", data);
+                        listUp();
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+    
+            })
+    
+            listUp();
+    
+    
+    }
+
+    function find_comment(sseq){
+        var html;
+
+        $.ajax({
+                url: '/app28mod/comment',
+                type:"POST",
+                data: {
+                    "actsseqz"    : sseq,
+                    "actflagz"    : "Y"
+                },
+                async:false,
+                success:function(data){
+                    if(data == "success"){
+                        
+                        html = "<div class='flex-1 ms-2 fs--1'>"+
+                                    "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>댓글 작성자</a>댓글 내용</p>"+
+                                    "<div class='px-2'><a href='#!''>답글 달기</a> &null; 23분 전 </div>"+
+                                "</div>";
+                        $("#CommentArea").append(html);
+                        listUp();
+                    }else{
+                        alert("오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+    
+            })
+    }
+    
+
+        
+    </script>
 
     
       
