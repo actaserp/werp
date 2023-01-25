@@ -100,11 +100,12 @@
     <!-- 담당자 -->
     <select id="GetPernmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
-        SELECT a.perid    perid  ,
+        SELECT Substring(a.perid, 2, len(a.perid) )    perid  ,
                a.pernm    pernm
         FROM TB_JA001 a WITH(NOLOCK)
         WHERE 1 = 1
           AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+          AND a.rtclafi in ('001')
         ]]>
     </select>
 

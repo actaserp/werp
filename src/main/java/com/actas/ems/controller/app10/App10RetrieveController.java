@@ -86,24 +86,25 @@ public class App10RetrieveController {
 
     // 고장내용별현황 > 현장별 고장내용
     @GetMapping(value="/p001tab02")
-    public Object App03001Tab02Form( @RequestParam("frdate") String frdate
-            , @RequestParam("todate") String todate
-            , @RequestParam("actcdz") String actcd
-            , @RequestParam("custcdz") String contcd
+    public Object App03001Tab02Form( @RequestParam("stdate") String stdate
+            , @RequestParam("enddate") String enddate
+            , @RequestParam("custcdz") String custcd
+            , @RequestParam("spjangcdz") String spjangcd
+
             , Model model) throws  Exception{
 
-        String ls_yeare = frdate.substring(0,4);
-        String ls_mm = frdate.substring(5,7);
-        String ls_dd = frdate.substring(8,10);
-        frdate =  ls_yeare + ls_mm + ls_dd;
-        ls_yeare = todate.substring(0,4);
-        ls_mm = todate.substring(5,7);
-        ls_dd = todate.substring(8,10);
-        todate =  ls_yeare + ls_mm + ls_dd;
-        app10tDto.setFrdate(frdate);
-        app10tDto.setTodate(todate);
-        app10tDto.setActcd(actcd);
-        app10tDto.setContcd(contcd);
+        String ls_yeare = stdate.substring(0,4);
+        String ls_mm = stdate.substring(5,7);
+        String ls_dd = stdate.substring(8,10);
+        stdate =  ls_yeare + ls_mm + ls_dd;
+        ls_yeare = enddate.substring(0,4);
+        ls_mm = enddate.substring(5,7);
+        ls_dd = enddate.substring(8,10);
+        enddate =  ls_yeare + ls_mm + ls_dd;
+        app10tDto.setCustcd(custcd);
+        app10tDto.setSpjangcd(spjangcd);
+        app10tDto.setFrdate(stdate);
+        app10tDto.setTodate(enddate);
         try {
             app10DtoList = service.GetApptab10List001(app10tDto);
             model.addAttribute("app10DtoList",app10DtoList);
@@ -135,7 +136,6 @@ public class App10RetrieveController {
             , @RequestParam("remarkz") String remark //고객 요망사항
             , @RequestParam("resutimez") String resutime //대응시간
             , @RequestParam("resultckz") String resultck
-                             //            @RequestParam("compnumz") String compnum //seq
 //                             compdate 고장일자 = 등록일자
             , Model model, HttpServletRequest request){
 

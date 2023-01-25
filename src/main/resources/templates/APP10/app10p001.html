@@ -83,7 +83,7 @@
              <div class="section regist">
                 <div class="sec_con" style="width: 70%;">
                     <div class="box_wrap">
-                        <div class="box_input" >
+                        <div class="box_input" onload="retrieveBtn2()">
                             <div class="date_wrap">
                                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d">
                                 <span>-</span>
@@ -93,10 +93,10 @@
 
                                 <div class="input_wrap">
                                     <select  name="changeop" id="changeop" onchange="CahngeSlect(this.value)">
-                                        
                                         <option value="0">미처리</option>    
                                         <option value="1">처리</option> 
-                                    </select>                                    
+                                        <option value="%">선택</option>
+                                    </select>                                                                      
                                 </div>
                             </div>                              
                             <!-- //여기서부터 그래프 -->
@@ -134,7 +134,6 @@
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
                                                 <!-- <input type="hidden" id="inputdatez" placeholder="작성일자" disabled> -->
                                                 <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
-                                                <!-- <input type="hidden" name="resultck" id="resultckz"> -->
                                             </div>
                                         </td>
                                         <th>접수시간</th>
@@ -327,8 +326,11 @@
                                 </table>
                                 <div class="btn_wrap" >
                                     <button type="submit" id="save" onclick="save_btn()">저장</button>
-                                </div>
-
+                                    <div class="btns" style="float: left;">                                                        
+                                        <button class="btn btn-outline-danger"  type="button" onclick="new_rtn()">삭제<span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span></button>
+                                        <button class="btn btn-outline-info"  type="button" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신규</button>                                                                                                
+                                    </div>
+                                </div>                              
                             </div>                           
                         </form>
 
@@ -751,7 +753,10 @@
                                     <li style ="float:left; list-style-type:none; margin-left:40px;">
                                         <div class="input-group mb-3" >
                                             <span class="input-group-text" style="max-height:30px;" >구분</span>
-                                              <select class="form-control" id="comp">
+                                            <input type="hidden" id="actcdzz">
+                                            <input type="hidden" id="custcdz">  
+                                            <input type="hidden" id="spjangcdz">
+                                            <select class="form-control" id="comp">
                                                 <option value="%">전체</option>
                                                 <option value="1">미처리</option>
                                                 <option value="2">처리</option>
@@ -801,22 +806,79 @@
 
 <!--########################################자바 스크립트 시작-->
  <script>
+//onchange script
+
+function CahngeSlect(value){
+            let key = changeop.value;                     
+             if (key == "0"){                
+                document.getElementById('op1').style.display="block";
+             } 
+             if (key == "1"){
+                document.getElementById('op1').style.display="block";
+             }     
+            }
+
+    //delete function
+     function delete_btn(){             
+            if (!confirm("삭제하시겠습니까?")) {
+                return ; 
+            }  
+            var ls_actmseqz   = document.getElementById('actmseqz').value;  
+            if(!ls_actmseqz){
+                alert("삭제할 자료를 선택하세요")
+                 return 
+            }  
+            $.ajax({
+                url: '/app10/del',   
+                type:"POST", 
+                data: {
+                    "actmseqz"    : ls_actmseqz ,
+                    "actflagz"    : "MM" 
+                },
+                async:false,
+                success:function(data){ 
+                    if(data == "success"){  
+                        alert("삭제되었습니다.")
+                        console.log("delete", data);                     
+                        $("#CloseBtn").trigger("click"); 
+                        listUp();   
+                    }else{
+                        alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
+                    }   
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){           
+            })   
+        }
     
     //초기화 function
-
-    // 모달화면 컨트롤  Reset
     function clear_rtn(elem){
-            document.getElementById('actmseqz').value= ""; 
+
+            document.getElementById('recedatez').value= ""; 
+            document.getElementById('recenumz').value= ""; 
+            document.getElementById('inputperidz').value= ""; 
+            document.getElementById('recetimez').value= ""; 
+            document.getElementById('actpernmz').value= ""; 
+            document.getElementById('actperidz').value= ""; 
+            document.getElementById('actdivinmz').value= ""; 
+            document.getElementById('pernmz').value= ""; 
+            document.getElementById('contnmz').value= ""; 
+            document.getElementById('contentsz').value= ""; 
+            document.getElementById('greginmz').value= ""; 
+            document.getElementById('reginmz').value= "";
+            document.getElementById('remonmz').value= "";
+            document.getElementById('facnmz').value= "";
+            document.getElementById('resunmz').value= ""; 
+            document.getElementById('resultnmz').value= ""; 
             document.getElementById('peridz').value= "";   
-            document.getElementById('arrivdatez').value= "";   
-            document.getElementById('actcompdatez').value= "";   
             document.getElementById('actarrivtimez').value= "";   
             document.getElementById('actcomptimez').value= "";   
             document.getElementById('remoremarkz').value= "";   
             document.getElementById('resuremarkz').value= "";  
             document.getElementById('remarkz').value= "";  
             document.getElementById('resutimez').value= "";  
-            document.getElementById('changeop').value= "";  
+         var  ls_changeopp = document.getElementById('changeop').value= "%";  
             document.getElementById('gregicdz').value= "";   
             document.getElementById('regicdz').value= "";  
             document.getElementById('remocdz').value= "";  
@@ -828,7 +890,10 @@
             document.getElementById('actcdz').value= ""; 
             document.getElementById('equpcdz').value= ""; 
             document.getElementById('equpnmz').value= ""; 
-
+            if(ls_changeopp == "%"){
+                alert("초기화 됐습니다. 처리여부를 선택하세요.")
+                // return false; 
+            }
         }
     
     
@@ -861,46 +926,26 @@ var ls_actcdz   = document.getElementById('actcdz').value;
 var ls_equpcdz   = document.getElementById('equpcdz').value;  
 var ls_equpnmz   = document.getElementById('equpnmz').value;                                                                                                                                                 
 
-if(!ls_actperidz){
-    alert("담당자를 입력하세요")
-     
-} 
-if(!ls_peridz){
-    alert("처리자를 입력하세요")
-     
-} 
-if(!ls_arrivdatez){
-    alert("도착일자를 입력하세요")
-     
-} 
-if(!ls_actcompdatez){
-    alert("완료일자를 입력하세요")
-     
-}
-if(!ls_actarrivtimez){
+if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
     alert("도착시간을 입력하세요")
-     
+    return;
 } 
-if(!ls_actcomptimez){
+if(ls_actcomptimez == null || ls_actcomptimez.length == 0 || ls_actcomptimez == "" ){
     alert("완료시간을 입력하세요")
-     
+    return;
 } 
 if(!ls_remoremarkz){
     alert("고장상세원인을 입력하세요")
-     
+    return;
 } 
 if(!ls_resuremarkz){
     alert("처리내용상세를 입력하세요")
-     
+    return false;
 }  
 if(!ls_remarkz){
     alert("고객요망사항을 입력하세요")
-    // return 
+    return false;
 }     
-if(!ls_resutimez){
-    alert("대응시간을 입력하세요")
-    // return 
-} 
 
 var inputdata = {   
             "actperidz": ls_actperidz , 
@@ -959,7 +1004,6 @@ $.ajax({
         console.log('error',e);
     }
     })
-    clear_rtn();
     // listUp(); 
 }
 
@@ -1076,7 +1120,7 @@ $.ajax({
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 sortDescriptions: ['recedate'],
                 groupDescriptions: ['recedate'],
-                pageSize: 25
+                pageSize: 15
             });
             // tab02 grid page
             new wijmo.input.CollectionViewNavigator('#thePager10', {
@@ -1152,7 +1196,7 @@ $.ajax({
                 function getData_tab02(){    
                     var wtab2_data = []; 
                     var cnt = 1;
-                    for (var i = 0; i < 25; i++) {
+                    for (var i = 0; i < 15; i++) {
                         wtab2_data.push({
                             id: i, 
                             index: cnt,
@@ -1535,22 +1579,8 @@ $.ajax({
                 
      } //modal data 끝
 
-         // modal script, searchCode 모달 호출 스크립트
+
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 모달 검색@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//onchange script
-
-function CahngeSlect(value){
-            var key = changeop.value;                     
-             if (key == "0"){                
-                document.getElementById('op1').style.display="block";
-             } 
-             if (key == "1"){
-                document.getElementById('op1').style.display="block";
-             }             
-            
-            }
-
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //고장부위    
         document.getElementById("greginmz").addEventListener("click",function(){ 
@@ -1631,6 +1661,20 @@ function CahngeSlect(value){
 
         // ###########################################tab01 검색 조건
 
+        //초기화면
+        
+            // document.getElementById("retrieveBtn2").addEventListener("load", function(){
+            //     let op_frdate = document.getElementById('frdate').value; 
+            //     let op_todate = document.getElementById('todate').value;
+            //     var opz = cahngeop.value;
+            //     if(opz == "0"){
+            //     searchList_rtn(ls_frdate, ls_todate, ls_changeop);
+            //     } else{
+            //         return false;
+            //     }           
+
+            // })
+ 
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){ 
 
@@ -1714,7 +1758,7 @@ function CahngeSlect(value){
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents);
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resunm, ctx.item.resultnm);
                     
                 }
             });
@@ -1732,7 +1776,13 @@ function CahngeSlect(value){
             cols.header = '현장명';
             cols.align = "center";
             cols.width = '3*'; 
-            
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.actnm}</b>',
+                click: (e, ctx) => {
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.pernm, ctx.item.perid, ctx.item.contnm, ctx.item.contents, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resunm, ctx.item.resultnm);
+                    
+                }
+            });
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -1752,10 +1802,18 @@ function CahngeSlect(value){
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){            
+            // console.log(arg17)
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
-            document.getElementById('recetimez').value = arg3;
+            // document.getElementById('recetimez').value = arg3;
+            var time =  document.getElementById('recetimez').value.substr(1,1);
+            console.log(time)
+            var min =  document.getElementById('recetimez').value.substr(3,5);
+            console.log(min)
+            var rerece = time +":"+ min;
+            rerece = arg3;
+            console.log(arg3)
             document.getElementById('actnmz').value = arg4; 
             document.getElementById('actcdz').value = arg5; 
             document.getElementById('equpnmz').value = arg6;   
@@ -1763,10 +1821,16 @@ function CahngeSlect(value){
             document.getElementById('pernmz').value = arg8; 
             document.getElementById('peridz').value = arg9;   
             document.getElementById('contnmz').value = arg10;
-            document.getElementById('contentsz').value = arg11;           
-        }      
-        // console.log(wactnmChk_a);
-
+            document.getElementById('contentsz').value = arg11; 
+            document.getElementById('greginmz').value = arg12;           
+            document.getElementById('reginmz').value = arg13;           
+            document.getElementById('remonmz').value = arg14;           
+            document.getElementById('facnmz').value = arg15;           
+            document.getElementById('resunmz').value = arg16;           
+            document.getElementById('resultnmz').value = arg17;    
+        }     
+       
+        console.log(wactnmChk_a);
 // ####################################################################################################      
 
 // ###########################################tab02 검색 조건
@@ -1776,8 +1840,8 @@ document.getElementById("gogogoBtn").addEventListener("click",function(){
 
 //조회시임.
 let ls_stdate = document.getElementById('stdate').value; //접수기간
-let ls_enddate = document.getElementById('enddate').value; 
-let ls_comp = comp[comp.selectedIndex].value;
+let ls_enddate = document.getElementById('enddate').value;
+let ls_comp = comp[comp.selectedIndex].value; 
 
 if(ls_stdate == null || ls_stdate.length == 0 || ls_stdate == ""){                
     alert("시작일자를 입력하세요.")
@@ -1794,15 +1858,18 @@ searchList2_rtn(ls_stdate, ls_enddate, ls_comp);
 })   
 
 function searchList2_rtn(arg1, arg2, arg3){ 
-console.log(arg1);            
+console.log(arg1);    
+console.log(arg2); 
+console.log(arg3);         
+
+
 $.ajax({
             url: '/app10/p001tab02',  
             type:"POST",
             data: { 
                 "stdate"      : arg1,
                 "enddate"      : arg2,
-                "comp"      : arg3,               
-                 
+                "comp"      : arg3,                  
             }, 
             async:false,
             success:function(data){   
@@ -2043,7 +2110,14 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             // console.log(ac_result);             
             $("#resutimez").val(ac_result);
 
-            // console.log(ac_result);            
+            console.log(ac_result);      
+            if(isNaN(ac_result)){
+                //true 반환
+                alert("숫자를 입력하세요")
+            }else{
+                alert("나머지를 입력해주세요")
+                return false;
+            }      
                         
         }
         
@@ -2647,18 +2721,15 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             getToday()
             fn_egov_init_date()
             $('datetimepicker').datetimepicker({
-            });            
-
+            });           
             $("#frdate").change(function(e){ 
             })
             $("#todate").change(function(e){ 
-            })
-            
+            })            
             $("#arrivdatez").change(function(e){ 
             })
             $("#actcompdatez").change(function(e){ 
             })
-
             $("#actarrivtimez").change(function(e){ 
             })
             $("#actcomptimez").change(function(e){ 
@@ -2687,6 +2758,8 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             document.getElementById('todate').value = ls_today;
             document.getElementById('stdate').value = ls_today;
             document.getElementById('enddate').value = ls_today;
+            document.getElementById('arrivdatez').value = ls_today;
+            document.getElementById('actcompdatez').value = ls_today;
         }
         function convert_time(timestamp){ 
             //현재시간

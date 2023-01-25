@@ -27,6 +27,8 @@ public class App01ElvlrtService {
     public List<App03ElvlrtDto> GetApp01List003(PopupDto parm){return appMapper.GetApp01List003(parm);}
     /** 관제현황 / 기사 이동라인 리스트 */
     public List<App03ElvlrtDto> GetApp01List004(PopupDto parm){return appMapper.GetApp01List004(parm);}
+    /** 고객상담센터 / 전화메모 리스트 */
+    public List<App03ElvlrtDto> GetApp01List005(PopupDto parm){return appMapper.GetApp01List005(parm);}
 
 
 

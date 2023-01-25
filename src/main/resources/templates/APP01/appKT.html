@@ -167,9 +167,9 @@
                                     </li>
                                     <li>
                                         <div class="input_wrap">
-                                            <input type="text">
+                                            <input type="text" id="elvnum" name="elvnum">
                                         </div>
-                                        <button>
+                                        <button onclick="getElvnum();">
                                             <img th:src="@{/assets/images/call.png}" alt="">
                                         </button>
                                     </li>
@@ -386,7 +386,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="part1_bottom">
+                                    <!-- <div class="part1_bottom">
                                         <div class="modal_box">
                                             <div class="title toggle" style="cursor: pointer;">
                                                 <h5>KT CTI</h5>
@@ -475,7 +475,7 @@
 
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="part_hide_grid">
                                         <div class="modal_box">
                                             그리드 영역
@@ -490,124 +490,105 @@
                                         <div class="form">
                                             <form action="">
                                                 <div class="date_wrap">
-                                                    <h5>수신일자</h5>
-                                                    <input type="text">
+                                                    <h5>수신일자</h5> 
+                                                    <div class="input_wrap date">
+                                                        <input type="text"  class="form-control datetimepicker"  name="actcalldatez" id="actcalldatez" autocomplete="off"  placeholder="Y-m-d"  style="background: url(/assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;"   >                                                                    
+                                                    </div> 
+                                                    <div class="input_wrap date"> 
+                                                        <input type="time"  id="actcalltimez" autocomplete="off"  >
+                                                        <input type="hidden"  id="actseqz"   >
+                                                    </div> 
+                                                    <div>
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="min-width: 90px;" onclick="newcall_rtn()">신규</button> 
+                                                        </div>
+                                                    </div>    
+                                                    <div>
+                                                        <div class="btns"> 
+                                                            <button class="type1 color4" style="min-width: 90px;" type="submit">등록</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="input_wrap">
                                                     <h5>고객명</h5>
-                                                    <input type="text">
+                                                    <input type="text" name="actcallnmz" id="actcallnmz">
                                                 </div>
                                                 <div class="input_wrap">
+                                                    <h5>전화번호</h5>
+                                                    <input type="text" name="actcallnumz" id="actcallnumz">
+                                                </div> 
+                                                <div class="input_wrap">
                                                     <h5>콜백예약</h5>
-                                                    <input type="checkbox" id="reserv_chk">
-                                                    <label for="reserv_chk" class="check_style1 no_txt"></label>
-                                                    <input type="text">
+                                                    <input type="checkbox" id="callbackflag" value="1">
+                                                    <label for="callbackflag" class="check_style1 no_txt"></label>
+                                                    <input type="time"  id="actcallbacktimez" autocomplete="off"  >
                                                 </div>
-                                                <div class="date_wrap" style="margin-top: 10px;">
+                                                <div class="input_wrap" style="margin-top: 10px;">
                                                     <h5>콜백메모</h5>
-                                                    <input type="text">
+                                                    <input type="text" name="actcallbackmemoz" id="actcallbackmemoz">
                                                 </div>
                                                 <div class="input_wrap" style="margin-top: 10px;">
                                                     <h5>메모내용</h5>
-                                                    <textarea name="" id=""></textarea>
+                                                    <textarea name="actcallmemoz" id="actcallmemoz"></textarea>
                                                 </div>
-                                                <div class="btns">
-                                                    <button class="type1 color4" style="min-width: 90px;" type="submit">등록</button>
-                                                </div>
+                                                <!-- <div class="input_wrap" style="margin-top: 10px;">
+                                                    <h5>처리내용</h5>
+                                                    <input type="text" name="actcallendmemoz" id="actcallendmemoz"></textarea>
+                                                </div> -->
                                             </form>
                                         </div>
-                                        <div class="call_box">
+                                        <!-- <div class="call_box">
                                             고객통화메모현황
-                                        </div>
+                                        </div> -->
                                         <div class="message_list">
                                             <div class="top">
-                                                <h5>문자 전송 내역</h5>
-                                                <div class="btns">
-                                                    <button class="type1 color2" type="button">조회</button>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="input_wrap date">
+                                                                    <input type="text"  class="form-control datetimepicker" id="callfrdate" autocomplete="off"  placeholder="Y-m-d"  style="background: url(/assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;"   >
+                                                                </div>
+                                                            </td> 
+                                                            <td>
+                                                                <div class="search">
+                                                                    <div class="input_wrap">
+                                                                        <input type="text" placeholder="고객명" id="searchcallnmz" name="searchcallnmz">
+                                                                    </div> 
+                                                                </div>    
+                                                            </td>
+                                                            <td>
+
+                                                                <div class="btns">
+                                                                    <button class="type1 color2" type="button" onclick="searchtel_rtn()">조회</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr> 
+                                                        </tbody>
+                                                    </table>   
                                                 </div>
-                                            </div>
-                                            <ul class="client scrollbar" style="overflow-y: scroll; height: 217px;">
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+
+                                            </div>  
+                                            <div id="ktretrieveDiv02">
+                                                <ul class="client scrollbar" style="overflow-y: scroll; height: 257px;">
+                                                    <li  th:each="formdata: ${app03TelList}" >
+                                                        <div class="left">
+                                                            <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                                                            </div>
+                                                            <div class="txt">
+                                                                <h5><a href="#"  th:onclick="modtel_fnc([[${formdata.seq}]],[[${formdata.calldate}]],[[${formdata.calltime}]],[[${formdata.callnum}]],[[${formdata.callnm}]],[[${formdata.callmemo}]],[[${formdata.callbackflag}]],[[${formdata.callbacktime}]],[[${formdata.callbackmemo}]])" th:text="${formdata.callnm}">                                                                    
+                                                                    부천프루지</a></h5><h5 th:text="${formdata.subcalltime}">12:00</h5>
+                                                                <br><h5 th:text="${formdata.callmemo}">통화내용나오는곳 통화내용나오는곳  통화내용나오는곳  통화내용나오는곳  </h5>
+                                                            </div> 
                                                         </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="left">
-                                                        <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
-                                                        </div>
-                                                        <div class="txt">
-                                                            <p>
-                                                                김우기
-                                                            </p>
-                                                            <p>
-                                                                10.01 <span>(09:30)</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="txt">
-                                                            <h5>부천프루지오<br/><span>02-1234-5678</span></h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="state">
-                                                        통보
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                        <div class="state">
+                                                            <h5 th:text="${formdata.callnum}"> 02-1234-5678 </h5>
+                                                        </div> 
+                                                    </li> 
+                                                </ul>
+                                            </div> 
+
                                         </div>
                                     </div>
                                 </div>
@@ -739,7 +720,8 @@
         <input class="form-control form-control-sm"  type="hidden" id="contnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  /> 
         <input class="form-control form-control-sm"  type="hidden" id="repernmbtn" data-bs-toggle="modal" data-bs-target="#actrepernmmodal"  /> 
         <input class="form-control form-control-sm"  type="hidden" id="pernmbtn" data-bs-toggle="modal" data-bs-target="#actpernmmodal"  />                                 
-        <input class="form-control form-control-sm"  type="hidden" id="equpnmbtn" data-bs-toggle="modal" data-bs-target="#actequpnmmodal"  /> 
+        <input class="form-control form-control-sm"  type="hidden" id="equpnmbtn" data-bs-toggle="modal" data-bs-target="#actequpnmmodal"  />                               
+        <input class="form-control form-control-sm"  type="hidden" id="elvnumbtn" data-bs-toggle="modal" data-bs-target="#actelvnummodal"  /> 
         
         
     </div> 
@@ -807,8 +789,8 @@
                                     <input class="form-control form-control-sm" id="searchwcontnm" type="text"   onkeyup="if(window.event.keyCode==13){searchwcontnm_rtn()}"
                                     placeholder="고장내용 "     />                                      
                                 </div>
-                                <button id="wcontnmBtn">
-                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                <button id="wcontnmBtn" onclick="searchwcontnm_rtn()">
+                                    <img th:src="@{/assets/images/i_search.png}" alt="" > 
                                 </button>
                             </div>  
                         </div>   
@@ -848,7 +830,7 @@
                                     <input class="form-control form-control-sm" id="searchwrepernm" type="text"   onkeyup="if(window.event.keyCode==13){searchwrepernm_rtn()}"
                                     placeholder="접수자 "     />                                      
                                 </div>
-                                <button id="wrepernmBtn">
+                                <button id="wrepernmBtn" onclick="searchwrepernm_rtn()">
                                     <img th:src="@{/assets/images/i_search.png}" alt=""> 
                                 </button>
                             </div>  
@@ -889,7 +871,7 @@
                                     <input class="form-control form-control-sm" id="searchwpernm" type="text"   onkeyup="if(window.event.keyCode==13){searchwpernm_rtn()}"
                                     placeholder="통보자 "     />                                      
                                 </div>
-                                <button id="wpernmBtn">
+                                <button id="wpernmBtn" onclick="searchwpernm_rtn()">
                                     <img th:src="@{/assets/images/i_search.png}" alt=""> 
                                 </button>
                             </div>  
@@ -930,7 +912,7 @@
                                     <input class="form-control form-control-sm" id="searchwequpnm" type="text"   onkeyup="if(window.event.keyCode==13){searchwequpnm_rtn()}"
                                     placeholder="호기명 "     />                                      
                                 </div>
-                                <button id="wequpnmBtn">
+                                <button id="wequpnmBtn" onclick="searchwequpnm_rtn()">
                                     <img th:src="@{/assets/images/i_search.png}" alt=""> 
                                 </button>
                             </div>  
@@ -946,6 +928,44 @@
                             <div class="col-auto">
                                 <button class="badge-soft-primary dropdown-item rounded-1"
                                     type="button"  id="wequpnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                            </div> 
+                        </div>
+                    </div>   
+
+                </div>
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->  
+
+<!--------------------------------------------------------------------------------------->   
+        <!-- 승강기번호조회 MODAL FROM  -->  
+        <div class="modal fade" id="actelvnummodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                style="max-width: 500px">
+                <div class="modal-content border-0">
+                    <!-- <div class="modal-body p-0" >  
+                        <div class="card overflow-hidden" style="width: 20rem;">
+                            <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/img/generic/3.jpg}" alt="Card image cap" /></div>
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Cras justo odio</li>
+                              <li class="list-group-item">Dapibus ac facilisis in</li>
+                              <li class="list-group-item">Vestibulum at eros</li>
+                            </ul>
+                            <div class="card-body"><a class="card-link" href="#!">Card link</a><a class="card-link" href="#!">Another link</a></div>
+                          </div> 
+                    </div>   -->
+                    <div id="btnDiv" class="btn_wrap">
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="welvnummodal_btn" data-bs-dismiss="modal" >Close</button>
                             </div> 
                         </div>
                     </div>   
@@ -1036,7 +1056,7 @@
                 { binding: 'reperid', header: '코드', align: "center", width: '1*' }, 
                 { binding: 'repernm', header: '접수자', align: "center", width: '1*' },  
             ], 
-            itemsSource: view_contnmpage
+            itemsSource: view_repernmpage
         });   
 
         //통보자내용검색 popup list
@@ -1246,7 +1266,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.actcd}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm,"01");
                     }
                 });
                 wactnmGrid.columns.push(cols);    
@@ -1265,7 +1285,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.telno}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm);
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, "01");
                     }
                 });
                 wactnmGrid.columns.push(cols);  
@@ -1284,10 +1304,294 @@
         }) 
     }
 
-    function wactnmChk_2(arg1, arg2){
-        document.getElementById('actactcdz').value = arg1; 
-        document.getElementById('actactnmz').value = arg2;   
-        $("#wactnmmodal_btn").trigger("click");
+
+    function searchwcontnm_rtn(){
+            let searchText = '';  
+            searchText = document.getElementById('searchwcontnm').value;   
+            if(searchText == null || searchText.length == 0 || searchText == ""){
+                searchText = "%";
+            }
+            // console.log('ls_cltcd-->' + ls_cltcd);
+            $.ajax({
+                url: '/pop01/wcontnm',  
+                type:"POST",
+                data: { 
+                    "contnmz"      : searchText, 
+                }, 
+                success:function(data){ 
+                    console.log(data);
+                    var wcontnmDto  = data;    
+                    var wcontnm_data = [];
+                    var cnt = 1;
+                    for (var i = 0; i < wcontnmDto.length; i++) {
+                        wcontnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            contnm:wcontnmDto[i]["contnm"],
+                            contcd: wcontnmDto[i]["contcd"],                                             
+                        });
+                        cnt++;
+                    }   
+                    // console.log("wcontnm_data",wcontnm_data) 
+                    wcontnmGrid.columns.clear();  
+                    wcontnmGrid.autoGenerateColumns = false; 
+                    view_contnmpage.sourceCollection  = wcontnm_data;
+                    var cols = new wijmo.grid.Column(); 
+                    cols.binding = 'contcd';
+                    cols.header = '코드';
+                    cols.align = "center";
+                    cols.width = '*';
+                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.contcd}</b>',
+                        click: (e, ctx) => {
+                            wactnmChk_2(ctx.item.contcd, ctx.item.contnm, '02');
+                        }
+                    });
+                    wcontnmGrid.columns.push(cols);    
+                    // console.log("cols", cols);  
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'contnm';
+                    cols.header = '고장내용';
+                    cols.align = "left";
+                    cols.width = '*'; 
+                    wcontnmGrid.columns.push(cols);    
+                },error:function(e){
+                    alert(data.code);
+                    alert(data.message);
+                }
+            }).done(function(fragment){           
+
+            })  
+
+    }
+
+    function searchwrepernm_rtn(){
+        let searchText = '';  
+        searchText = document.getElementById('searchwrepernm').value;   
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+            searchText = "%";
+        }
+        // console.log('ls_cltcd-->' + ls_cltcd);
+        $.ajax({
+            url: '/pop01/wpernm',  
+            type:"POST",
+            data: { 
+                "actpernmz"      : searchText, 
+            }, 
+            success:function(data){ 
+                
+                var wcontnmDto  = data;    
+                var wcontnm_data = [];
+                var cnt = 1;
+                for (var i = 0; i < wcontnmDto.length; i++) {
+                    wcontnm_data.push({
+                        id: i, 
+                        index: cnt,
+                        reperid:wcontnmDto[i]["perid"],
+                        repernm: wcontnmDto[i]["pernm"],                                             
+                    });
+                    cnt++;
+                }   
+                // console.log("wcontnm_data",wcontnm_data)  
+                wrepernmGrid.columns.clear();  
+                wrepernmGrid.autoGenerateColumns = false; 
+                view_repernmpage.sourceCollection  = wcontnm_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'reperid';
+                cols.header = '코드';
+                cols.align = "center";
+                cols.width = '*';
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.reperid}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_2(ctx.item.reperid, ctx.item.repernm, '03');
+                    }
+                });
+                wrepernmGrid.columns.push(cols);    
+                // console.log("cols", cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'repernm';
+                cols.header = '접수자';
+                cols.align = "center";
+                cols.width = '*'; 
+                wrepernmGrid.columns.push(cols);    
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }
+
+
+    function searchwpernm_rtn(){
+        let searchText = '';  
+        searchText = document.getElementById('searchwpernm').value;   
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+            searchText = "%";
+        }
+        // console.log('ls_cltcd-->' + ls_cltcd);
+        $.ajax({
+            url: '/pop01/wpernm',  
+            type:"POST",
+            data: { 
+                "actpernmz"      : searchText, 
+            }, 
+            success:function(data){ 
+                
+                var wcontnmDto  = data;    
+                var wcontnm_data = [];
+                var cnt = 1;
+                for (var i = 0; i < wcontnmDto.length; i++) {
+                    wcontnm_data.push({
+                        id: i, 
+                        index: cnt,
+                        perid:wcontnmDto[i]["perid"],
+                        pernm: wcontnmDto[i]["pernm"],                                             
+                    });
+                    cnt++;
+                }   
+                // console.log("wcontnm_data",wcontnm_data)  
+                wpernmGrid.columns.clear();  
+                wpernmGrid.autoGenerateColumns = false; 
+                view_pernmpage.sourceCollection  = wcontnm_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'perid';
+                cols.header = '코드';
+                cols.align = "center";
+                cols.width = '*';
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.perid}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, '04');
+                    }
+                });
+                wpernmGrid.columns.push(cols);    
+                // console.log("cols", cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pernm';
+                cols.header = '통보자';
+                cols.align = "center";
+                cols.width = '*'; 
+                wpernmGrid.columns.push(cols);    
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }
+
+    function searchwequpnm_rtn(){
+        let searchText = '';    
+        let ls_actcd = '';    
+        ls_actcd = document.getElementById('actactcdz').value;  
+        searchText = document.getElementById('searchwequpnm').value;   
+        if(ls_actcd == null || ls_actcd.length == 0 || ls_actcd == ""){
+           alert("현장을 먼저 선택하세요");
+           return 
+        }        
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+            searchText = "%";
+        }
+        // console.log('ls_cltcd-->' + ls_cltcd);
+        $.ajax({
+            url: '/pop01/wequpcd',  
+            type:"POST",
+            data: { 
+                "actcdz"         : ls_actcd,
+                "equpcdz"      : searchText, 
+            }, 
+            success:function(data){ 
+                
+                var wcontnmDto  = data;    
+                var wcontnm_data = [];
+                var cnt = 1;
+                for (var i = 0; i < wcontnmDto.length; i++) {
+                    wcontnm_data.push({
+                        id: i, 
+                        index: cnt,
+                        equpcd:wcontnmDto[i]["equpcd"],
+                        equpnm: wcontnmDto[i]["equpnm"],                                             
+                    });
+                    cnt++;
+                }   
+                // console.log("wcontnm_data",wcontnm_data)  
+                wequpnmGrid.columns.clear();  
+                wequpnmGrid.autoGenerateColumns = false; 
+                view_equpnmpage.sourceCollection  = wcontnm_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'equpcd';
+                cols.header = '코드';
+                cols.align = "center";
+                cols.width = '*';
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.equpcd}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '05');
+                    }
+                });
+                wequpnmGrid.columns.push(cols);    
+                // console.log("cols", cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'equpnm';
+                cols.header = '호기명';
+                cols.align = "center";
+                cols.width = '*'; 
+                wequpnmGrid.columns.push(cols);    
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }    
+
+    function wactnmChk_2(arg1, arg2, flag){
+        console.log(flag);
+            switch(flag){
+                case "01": 
+                    // 현장검색 데이터 수집
+                    document.getElementById('actactcdz').value = arg1; 
+                    document.getElementById('actactnmz').value = arg2;   
+                    $("#wactnmmodal_btn").trigger("click");      
+                    break;
+                case "02":                 
+                    // 고장내용검색 데이터 수집  
+                    document.getElementById('actcontcdz').value = arg1; 
+                    document.getElementById('actcontnmz').value = arg2;   
+                    $("#wcontnmmodal_btn").trigger("click"); 
+                    break;
+                case "03":
+                    // 접수자검색 데이터 수집 
+                    document.getElementById('actreperidz').value = arg1; 
+                    document.getElementById('actrepernmz').value = arg2;   
+                    $("#wrepernmmodal_btn").trigger("click"); 
+                    break;                    
+                case "04":
+                    // 통보자검색 데이터 수집  
+                    document.getElementById('actperidz').value = arg1; 
+                    document.getElementById('actpernmz').value = arg2;   
+                    $("#wpernmmodal_btn").trigger("click"); 
+                    break;                    
+                case "05":
+                    // 호기검색 데이터 수집  
+                    document.getElementById('actequpcdz').value = arg1; 
+                    document.getElementById('actequpnmz').value = arg2;                       
+                    $("#wequpnmmodal_btn").trigger("click");  
+                    wequpnmGrid.columns.clear();  
+                    break;                    
+                default:
+                    break;    
+
+            }
+
     }
 
 
@@ -1307,9 +1611,23 @@
         document.getElementById('actcontnmz').value = ""; 
         document.getElementById('actcontentsz').value = ""; 
         document.getElementById('actremarkz').value = ""; 
+         
+        wequpnmGrid.columns.clear();  
         return 
     }
+    function newcall_rtn(){         
+        fn_egov_init_date()
+        document.getElementById('actcallnmz').value = "";
+        document.getElementById('actcallnumz').value = ""; 
+        document.getElementById('actcallmemoz').value = "";
+        document.getElementById('actcallbackmemoz').value = "";
+        document.getElementById('callbackflag').value = "0";
+        document.getElementById('actseqz').value = ""; 
+          
+        return 
+    }    
     function mod_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){
+        new_rtn()
         document.getElementById('actrecedatez').value = arg1;
         document.getElementById('actrecenumz').value = arg2;
         document.getElementById('actrecetimez').value = arg3;
@@ -1326,8 +1644,35 @@
         document.getElementById('actcontcdz').value = arg14; 
         document.getElementById('actcontnmz').value = arg15; 
         document.getElementById('actcontentsz').value = arg16; 
-        document.getElementById('actremarkz').value = arg17; 
+        document.getElementById('actremarkz').value = arg17;  
     }
+
+    function modtel_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9){
+        // newcall_rtn()
+         
+        if(arg6 == null || arg6.length == 0 || arg6 == ""){
+            arg6 = "";
+        }
+        if(arg7 == null || arg7.length == 0 || arg7 == ""){
+            arg7 = "0";
+        }
+        if(arg9 == null || arg9.length == 0 || arg9 == ""){
+            arg9 = "";
+        }
+        if(arg8 == null || arg8.length == 0 || arg8 == ""){
+            arg8 = "00:00";
+        } 
+        document.getElementById('actseqz').value = arg1; 
+        document.getElementById('actcalldatez').value = arg2;
+        document.getElementById('actcalltimez').value = arg3;
+        document.getElementById('actcallnumz').value = arg4;
+        document.getElementById('actcallnmz').value = arg5;
+        document.getElementById('actcallmemoz').value = arg6;
+        document.getElementById('callbackflag').value = arg7;
+        document.getElementById('actcallbacktimez').value = arg8;
+        document.getElementById('actcallbackmemoz').value = arg9;
+    }
+ 
     function search_rtn(){
         var ls_actnmz = document.getElementById('searchactnmz').value; 
         let ls_frdate = document.getElementById('frdate').value; 
@@ -1343,7 +1688,7 @@
             alert("종료 일자를 입력하세요")
             return 
         }  
-        console.log("ls_actnmz : " + ls_actnmz);
+        // console.log("ls_actnmz : " + ls_actnmz);
         $.ajax({
                 url: '/app01/emconlist',  
                 type:"POST",
@@ -1365,6 +1710,107 @@
             })       
     }  
 
+    function searchtel_rtn(){
+        var ls_callnm = document.getElementById('searchcallnmz').value; 
+        let ls_frdate = document.getElementById('callfrdate').value;           
+        if(ls_callnm == null || ls_callnm.length == 0 || ls_callnm == "" || ls_callnm == "%"){ 
+            ls_actnmz = "%";
+        }  
+        if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == "" || ls_frdate == "%"){ 
+            alert("일자를 입력하세요")
+            return 
+        }   
+        // console.log("ls_actnmz : " + ls_actnmz);
+        $.ajax({
+                url: '/app01/emtellist',  
+                type:"POST",
+                data: { 
+                    "frdate"      : ls_frdate,    
+                    "callnm"      : ls_callnm  
+                }, 
+                async:false,
+                success:function(data){   
+                    // console.log(data);                        
+                    $("#ktretrieveDiv02").replaceWith(data);  
+                },error:function(e){
+                    console.log("error"); 
+                }
+            }).done(function(fragment){           
+
+            })       
+    }  
+    function getElvnum(){
+
+        
+        let ls_elvnum = document.getElementById('elvnum').value;  
+        const fileDivs = $('div[data-name="fileDiv"]');
+        fileDivs.remove(); 
+        if( ls_elvnum == null || ls_elvnum.length == 0 || ls_elvnum == "" ){
+            alert("승강기 번호를 입력한 후 조회하세요")
+            return 
+        }
+
+            $.ajax({
+                url: '/app01mod/getelvinfo',  
+                type:"POST",
+                data: { 
+                    "elvnum"      : ls_elvnum 
+                }, 
+                async:false,
+                success:function(data){    
+                    var GeoDto  = JSON.parse(data); 
+                    // console.log("GeoDto");
+                    console.log(GeoDto.response.body.items.item[0])
+                    console.log(data.length)
+                    let ls_buldNm = GeoDto.response.body.items.item[0].buldNm;
+                    let ls_addr1  = GeoDto.response.body.items.item[0].address1;    
+                    let ls_addr2  = GeoDto.response.body.items.item[0].address2;    
+                    if( ls_addr2 == null || ls_addr2.length == 0 || ls_addr2 == "" ){
+                        ls_addr2 = "";
+                    }
+                    let ls_elevatorNo = GeoDto.response.body.items.item[0].elevatorNo;    
+                    let ls_elvtrDetailForm = GeoDto.response.body.items.item[0].elvtrDetailForm;    
+                    let ls_elvtrDivNm = GeoDto.response.body.items.item[0].elvtrDivNm;    
+                    let ls_elvtrForm = GeoDto.response.body.items.item[0].elvtrForm;    
+                    let ls_elvtrKindNm = GeoDto.response.body.items.item[0].elvtrKindNm;    
+                    let ls_elvtrSttsNm = GeoDto.response.body.items.item[0].elvtrSttsNm;    
+                    let ls_frstInstallationDe = GeoDto.response.body.items.item[0].frstInstallationDe;    
+                    let ls_sigunguNm = GeoDto.response.body.items.item[0].sigunguNm;    
+                    let ls_installationPlace = GeoDto.response.body.items.item[0].installationPlace;    
+                    const fileHtml = `
+                            <div data-name="fileDiv" class="modal-body p-0"  >  
+                                <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                    <h4 class="mb-1" id="tooltippopoversLabel">` + ls_buldNm + `( ` + ls_installationPlace + ` )</h4>
+                                </div>
+                                <div class="p-4 pb-0">
+                                    <div class="row">
+                                        <div class="col">
+                                        <h5><span class="badge me-1 py-2 badge-soft-success">` + ls_addr1 + ls_addr2 + `</span></h5>
+                                        <p> 
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">` + ls_elvtrDivNm + `</li>
+                                                <li class="list-group-item">` + ls_elvtrKindNm + `</li>
+                                                <li class="list-group-item">` + ls_frstInstallationDe + `</li>
+                                                <li class="list-group-item">` + ls_sigunguNm + `</li>
+                                            </ul>                                                 
+                                        </p>
+                                     </div>
+                                    </div>
+                                </div> 
+                            </div>  ` ;
+
+
+                     $('#btnDiv').before(fileHtml);
+
+                     document.getElementById("elvnumbtn").click();
+                },error:function(e){
+                    console.log("error"); 
+                }
+            }).done(function(fragment){           
+
+            })  
+
+    }   
 
     function menu01_btn(){  
                 var win = window.open("/app01/ktcall",   "codetab"); 
@@ -1410,6 +1856,9 @@
         document.getElementById('todate').value = ls_today;
         document.getElementById('actrecedatez').value = ls_today;
         document.getElementById('acthitchdatez').value = ls_today;
+        document.getElementById('actcalldatez').value = ls_today;
+        document.getElementById('callfrdate').value = ls_today;
+        
     }
 
     function convert_time(timestamp){ 
@@ -1429,13 +1878,18 @@
         var $todate = $('#todate');
         var $actrecedatez = $('#actrecedatez');
         var $acthitchdatez = $('#acthitchdatez'); 
-         
+        var $actcalldatez = $('#actcalldatez'); 
+        var $callfrdate = $('#callfrdate'); 
+        
+        
         var today = new Date();   
         var hours = ('0' + today.getHours()).slice(-2); 
         var minutes = ('0' + today.getMinutes()).slice(-2);
         document.getElementById('actrecetimez').value = hours + ':' + minutes;
         document.getElementById('acthitchhourz').value = hours + ':' + minutes; 
-
+        document.getElementById('actcalltimez').value = hours + ':' + minutes; 
+        document.getElementById('actcallbacktimez').value = hours + ':' + minutes; 
+        
 
         $frdate.datetimepicker({
             timepicker: false,
@@ -1489,6 +1943,32 @@
             }
         });
 
+        $actcalldatez.datetimepicker({
+            timepicker: false,
+            lang: 'ko',
+            format: 'Y-m-d',    //'Y-m-d H:i',
+            scrollMonth: false,
+            scrollInput: false,
+            onShow: function (ct) {
+                this.setOptions({
+                    // minDate: $todate.val() ? $todate.val() : false
+                })
+            }
+        });  
+
+        $callfrdate.datetimepicker({
+            timepicker: false,
+            lang: 'ko',
+            format: 'Y-m-d',    //'Y-m-d H:i',
+            scrollMonth: false,
+            scrollInput: false,
+            onShow: function (ct) {
+                this.setOptions({
+                    // minDate: $todate.val() ? $todate.val() : false
+                })
+            }
+        });        
+        
     }      
 
 </script>

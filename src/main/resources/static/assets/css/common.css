@@ -459,10 +459,10 @@ input[type=radio] {
     margin: 0 20px;
 }
 .modal .modal_con .board .part2 .message_list{
-    height: 327px;
+    height: 387px;
 }
 .modal .modal_con .board .part2 .message_list .top{
-    padding: 20px 10px;
+    padding: 10px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
