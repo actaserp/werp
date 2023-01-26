@@ -146,8 +146,9 @@
                                         <input type="hidden" id="actsflagz" name="actsflagz" value="Y">
                                         
                                     </form>
-                                    <div class="d-flex mt-3" id="CommentArea">
-                                        <a href="#!" id="commentlist" th:data-value="${question.sseq}">댓글 보기</a>
+                                    <a href="#!" id="commentlist" th:data-value="${question.sseq}">댓글 보기</a>
+                                    <div class="d-flex mt-3" id="CommentArea" style="flex-direction:column">
+                                        
                                     </div>
 
                                 </div>
@@ -269,7 +270,7 @@
             var html;
             var subkey = document.getElementById("commentlist").getAttribute('data-value');
 
-            console.log("click");
+            console.log("click"+subkey);
             $.ajax({
                     url: '/app28mod/commentlist',
                     type:"POST",
@@ -279,23 +280,17 @@
                     },
                     async:false,
                     success:function(data){
-                        if(data == "success"){
                             console.log("success");
-                            for(var i=0; i<data.length; i++){
-                                console.log(data[i]["spernm"]);
-                            }
+                            console.log(data);
 
                             for(var i=0; i<data.length; i++){
                                 html = "<div class='flex-1 ms-2 fs--1'>"+
-                                            "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>"+data[i]["smemo"]+"</p>"+
-                                            "<div class='px-2'><a href='#!''>답글 달기</a> &null; 23분 전 </div>"+
+                                            "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>  "+data[i]["smemo"]+"</p>"+
+                                            "<div class='px-2'><a href='#!''>답글 달기</a> 23분 전 </div>"+
                                         "</div>";
                                 $("#CommentArea").append(html);
                             }
                             
-                        }else{
-                            alert("오류가 발생했습니다. 관리자에게 문의하세요.")
-                        }
                     },error:function(e){
                         console.log('error',e);
                     }
