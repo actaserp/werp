@@ -129,47 +129,122 @@ public class App10RetrieveController {
 
     //save
     @RequestMapping(value = "/save")
-    public String memberSave(@RequestParam("actperidz") String actperid //담당자 코드
-            , @RequestParam("peridz") String perid //처리자 코드
-            , @RequestParam("arrivdatez") String arrivdate //도착일자
-            , @RequestParam("actcompdatez") String compdate //고장일자
-            , @RequestParam("actarrivtimez") String arrivtime //도착시간
-            , @RequestParam("actcomptimez") String comptime //완료시간
-            , @RequestParam("remoremarkz") String remoremark //고장상세원인
-            , @RequestParam("resuremarkz") String resuremark //처리내용상세
-            , @RequestParam("remarkz") String remark //고객 요망사항
-            , @RequestParam("resutimez") String resutime //대응시간
-            , @RequestParam("resultckz") String resultck
-//                             compdate 고장일자 = 등록일자
-                             // 작성 담당자 코드, 입력일자, 업데이트 일자 추가해야함
-            , Model model, HttpServletRequest request){
+    public String memberSave(@RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
 
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String recedate = getToDate(); //접수일자 recedate
+            String inperid = userformDto.getPerid();
+            String recedate = app10tDto.getRecedate();
             String ls_yeare = recedate.substring(0,4);
             String ls_mm = recedate.substring(4,6);
+            String ls_dd = recedate.substring(8,10);
+            recedate =  ls_yeare + ls_mm + ls_dd;
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
-            app10tDto.setInperid(userformDto.getPerid());
+            app10tDto.setRecedate(recedate);
 
-            app10tDto.setActperid(actperid);
-            app10tDto.setPerid(perid);
-            app10tDto.setArrivdate(arrivdate);
-            app10tDto.setCompdate(compdate);
-            app10tDto.setArrivtime(arrivtime);
-            app10tDto.setComptime(comptime);
-            app10tDto.setRemoremark(remoremark);
-            app10tDto.setResuremark(resuremark);
-            app10tDto.setRemark(remark);
             app10tDto.setInputdate(getToDate());
             app10tDto.setIndate(getToDate());
-            app10tDto.setResultck(resultck);
+            app10tDto.setInperid(inperid);
+
+            param.forEach((key, values) -> {
+                switch (key) {
+                    case "actcompdatez":
+                        app10tDto.setCompdate(values.toString());
+                        break;
+                    case "actcomptimez":
+                        app10tDto.setComptime(values.toString());
+                        break;
+                    case "arrivdatez":
+                        app10tDto.setArrivdate(values.toString());
+                        break;
+                    case "actarrivtimez":
+                        app10tDto.setArrivtime(values.toString());
+                        break;
+                    case "resutimez":
+                        app10tDto.setResutime(values.toString());
+                        break;
+                    case "resultcdz":
+                        app10tDto.setResultcd(values.toString());
+                        break;
+                    case "recenumz":
+                        app10tDto.setRecenum(values.toString());
+                        break;
+                    case "recetimez":
+                        app10tDto.setRecetime(values.toString());
+                        break;
+                    case "divicdz":
+                        app10tDto.setDivicd(values.toString());
+                        break;
+                    case "actperidz":
+                        app10tDto.setActperid(values.toString());
+                        break;
+                    case "peridz":
+                        app10tDto.setPerid(values.toString());
+                        break;
+                    case "pernmz":
+                        app10tDto.setPernm(values.toString());
+                        break;
+                    case "actcdz":
+                        app10tDto.setActcd(values.toString());
+                        break;
+                    case "actnmz":
+                        app10tDto.setActnm(values.toString());
+                        break;
+                    case "equpcdz":
+                        app10tDto.setEqupcd(values.toString());
+                        break;
+                    case "equpnmz":
+                        app10tDto.setEqupnm(values.toString());
+                        break;
+                    case "actcontcdz":
+                        app10tDto.setContcd(values.toString());
+                        break;
+                    case "contentsz":
+                        app10tDto.setContremark(values.toString());
+                        break;
+                    case "gregicdz":
+                        app10tDto.setGregicd(values.toString());
+                        break;
+                    case "regicdz":
+                        app10tDto.setRegicd(values.toString());
+                        break;
+                    case "remocdz":
+                        app10tDto.setRemocd(values.toString());
+                        break;
+                    case "faccdz":
+                        app10tDto.setFaccd(values.toString());
+                        break;
+                    case "resucdz":
+                        app10tDto.setResucd(values.toString());
+                        break;
+                    case "remoremarkz":
+                        app10tDto.setRemoremark(values.toString());
+                        break;
+                    case "remarkz":
+                        app10tDto.setRemark(values.toString());
+                        break;
+                    case "resuremarkz":
+                        app10tDto.setResuremark(values.toString());
+                        break;
+                    case "resultckz":
+                        app10tDto.setResult(values.toString());
+                        break;
+                    default:
+                        break;
+                }
+            });
+
             log.info(app10tDto); //consolelog에 app04Dto 호출
+
             String compnum = app10tDto.getCompnum();
+            String compdate = app10tDto.getCompdate();
+
             if(compnum == null || compnum.equals("")){
                 app10tDto.setCompnum(CountSeq(compdate));
             }else{
@@ -177,7 +252,7 @@ public class App10RetrieveController {
             }
             boolean result = false;
             if(compnum == null || compnum.equals("")){
-                switch(app10tDto.getChangeop()) {
+                switch(app10tDto.getResultck()) {
                     case "0":
                         result = service.Insert10Manu(app10tDto);
                         break;
@@ -196,12 +271,14 @@ public class App10RetrieveController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        return "success";
+        String ls_compnum = app10tDto.getCompnum();
+        return ls_compnum;
     }
 
     @RequestMapping("/del")
-    public String mmnualDelete(@RequestParam("") String compnum, Model model,
-                               HttpServletRequest request){
+    public String mmnualDelete(@RequestParam("compnum") String compnum
+                                , Model model
+                                , HttpServletRequest request){
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -224,19 +301,24 @@ public class App10RetrieveController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-
         return "success";
     }
 
 
     public String CountSeq(String compdate){
         String ls_compnum = service.get10ManualMaxSeq(compdate);
+
         int ll_compnum = 0;
         if(ls_compnum == null){
             ls_compnum = "001";
         }else{
             ll_compnum = Integer.parseInt(ls_compnum);
-            ls_compnum = Integer.toString(ll_compnum + 001);
+            log.info(ll_compnum);
+            if(ll_compnum > 8) {
+                ls_compnum = "0" + Integer.toString(ll_compnum + 01);
+            }else{
+                ls_compnum = "00" + Integer.toString(ll_compnum + 01);
+            }
         }
         return ls_compnum;
     }

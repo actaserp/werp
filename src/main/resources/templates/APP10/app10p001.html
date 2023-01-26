@@ -108,7 +108,7 @@
                                             </div> style="display: none"-->
                                             <div class="container-fluid" id="op1" > 
                                                 <div id="wtab01Grid_div" ></div>
-                                                <div id="tab01Pager"></div>
+                                                <div style="display: flex; margin: 0 auto;" id="tab01Pager"></div>
                                             </div>                                               
                                         </div>                                        
                                       </div>
@@ -123,7 +123,6 @@
                     <div class="box_wrap">
                         <form action="">
                             <div class="table table_style1">
-                                <input type="hidden" name="compnum" id="compnumz">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -132,8 +131,10 @@
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
-                                                <!-- <input type="hidden" id="inputdatez" placeholder="작성일자" disabled> -->
                                                 <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
+                                                <input type="hidden" name="compnum" id="compnumz">
+
+
                                             </div>
                                         </td>
                                         <th>접수시간</th>
@@ -154,6 +155,7 @@
                                             <div class="input_wrap">
                                                 <input type="text" name="actnm" id="actnmz" placeholder="현장명" disabled>
                                                 <input type="hidden" name="actcd" id="actcdz">
+                                                <input type="hidden" name="resultck" id="resultckz">
                                             </div>
                                         </td>
                                         <th>호기명</th>
@@ -176,7 +178,7 @@
                                         <th>도착일자</th>
                                         <td >
                                             <div class="input_wrap date">                                                
-                                                <input type="text" class="form-control datetimepicker" id="arrivdatez" autocomplete="off"  placeholder="Y-m-d">
+                                                <input type="text" class="form-control flatpickr" id="arrivdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>도착시간</th>
@@ -227,6 +229,8 @@
                                         <td colspan="6">
                                             <div class="input_wrap">
                                                 <input type="text" name="contnm" id="contnmz" placeholder="고장내용" disabled>
+                                                <input type="hidden" name="contcd" id="actcontcdz">
+
                                             </div>
                                         </td>
                                     </tr>
@@ -325,11 +329,12 @@
                                     </tbody>
                                 </table>
                                 <div class="btn_wrap" >
-                                    <button type="submit" id="save" onclick="save_btn()">저장</button>
+                                        <!-- type=button -->
+                                    <button type="button" id="save" onclick="save_btn()">저장</button>
                                     <div class="btns" style="float: left;">                                                        
                                         <button class="btn btn-outline-danger"  type="button" onclick="new_rtn()">삭제<span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span></button>
                                         <button class="btn btn-outline-info"  type="button" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신규</button>                                                                                                
-                                    </div>
+                                    </div>                                    
                                 </div>                              
                             </div>                           
                         </form>
@@ -715,7 +720,7 @@
         <div class="modal fade" id="gomodal" data-bs-keyboard="false"
         data-bs-backdrop="static" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id ="modalForm01" style="max-width: 90%">
+            <div class="modal-dialog modal-lg mt-6" role="document" id ="modalForm01" style="max-width: 80%">
                 <div class="modal-content">                   
                     <div class="modal-body p-0" > 
                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
@@ -743,7 +748,7 @@
                             </div>
                             <div class="box_wrap">
                                 <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
-                                    <li style ="float:left; list-style-type:none; margin-left:400px;">
+                                    <li style ="float:left; list-style-type:none; margin-left:300px;">
                                         <div class="input-group mb-3">                                           
                                             <span class="input-group-text" style="max-height:30px;">기간</span>
                                             <input type="text"  class="form-control datetimepicker" id="stdate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -783,7 +788,7 @@
                         </div>   
                         <div class="container-fluid"> 
                             <div id="wtab02Grid_div" ></div>
-                            <div id="thePager10"></div>
+                            <div style="display: flex; margin: 0 auto;" id="thePager10"></div>
                         </div>   
                     </div>  
 
@@ -820,16 +825,18 @@ function CahngeSlect(value){
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
             }  
-            var ls_actmseqz   = document.getElementById('actmseqz').value;  
-            if(!ls_actmseqz){
-                alert("삭제할 자료를 선택하세요")
-                 return 
-            }  
+            // var ls_actmseqz   = document.getElementById('actmseqz').value;  
+            // if(!ls_actmseqz){
+            //     alert("삭제할 자료를 선택하세요")
+            //      return 
+            // }  
+            var ls_compnumz   = document.getElementById('compnumz').value;                                                         
+
             $.ajax({
                 url: '/app10/del',   
                 type:"POST", 
                 data: {
-                    "actmseqz"    : ls_actmseqz ,
+                    "compnumz"    : ls_compnumz ,
                     "actflagz"    : "MM" 
                 },
                 async:false,
@@ -895,117 +902,144 @@ function CahngeSlect(value){
     
     let formData = new FormData(); 
     // <!-- 저장 스크립트 시작 -->
-    function save_btn(){ 
-
-var regexForslash = /-/g;
-// var ls_compnumz   = document.getElementById('compnumz').value; //순번 구분
-var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
-var ls_peridz   = document.getElementById('peridz').value; //담당자 
-var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
-var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
-var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
-var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
-var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
-var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
-var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
-var ls_resutimez = document.getElementById('resutimez').value; //대응시간
-var ls_resultckz = document.getElementById('changeop').value; //처리
-var ls_gregicdz   = document.getElementById('gregicdz').value;
-var ls_regicdz   = document.getElementById('regicdz').value;                                                            
-var ls_remocdz   = document.getElementById('remocdz').value;                                                         
-var ls_faccdz   = document.getElementById('faccdz').value;
-var ls_resucdz   = document.getElementById('resucdz').value;                                                            
-var ls_resultcdz   = document.getElementById('resultcdz').value;   
-var ls_divicdz   = document.getElementById('divicdz').value;  
-var ls_actnmz   = document.getElementById('actnmz').value;  
-var ls_actcdz   = document.getElementById('actcdz').value;  
-var ls_equpcdz   = document.getElementById('equpcdz').value;  
-var ls_equpnmz   = document.getElementById('equpnmz').value;                                                                                                                                                 
-
-if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
-    alert("도착시간을 입력하세요")
-    return;
-} 
-if(ls_actcomptimez == null || ls_actcomptimez.length == 0 || ls_actcomptimez == "" ){
-    alert("완료시간을 입력하세요")
-    return;
-} 
-if(!ls_remoremarkz){
-    alert("고장상세원인을 입력하세요")
-    return;
-} 
-if(!ls_resuremarkz){
-    alert("처리내용상세를 입력하세요")
-    return;
-}  
-if(!ls_remarkz){
-    alert("고객요망사항을 입력하세요")
-    return;
-}     
-
-var inputdata = {   
-            "actperidz": ls_actperidz , 
-            "peridz"   : ls_peridz, 
-            "arrivdatez"   : ls_arrivdatez, 
-            "actcompdatez": ls_actcompdatez , 
-            "actarrivtimez"   : ls_actarrivtimez, 
-            "actcomptimez"   : ls_actcomptimez,  
-            "remoremarkz": ls_remoremarkz , 
-            "resuremarkz"   : ls_resuremarkz, 
-            "remarkz"   : ls_remarkz,
-            "resutimez" : ls_resutimez,
-            "resultckz" : ls_resultckz,
-            "gregicdz" : ls_gregicdz,
-            "regicdz" :     ls_regicdz,
-            "remocdz":      ls_remocdz,
-            "faccdz":       ls_faccdz,
-            "resucdz" :     ls_resucdz,
-            "resultcdz" :  ls_resultcdz, 
-            "divicdz" : ls_divicdz,
-            "actnmz" : ls_actnmz,
-            "actcdz" : ls_actcdz,
-            "equpcdz" : ls_equpcdz,
-            "equpnmz" : ls_equpnmz
-                    
-           }
-           formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
-            
-$.ajax({
-        url: '/app10/save',
-        type: "POST",   
-        processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
-        contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
-        data: formData,                   
-        async:false,
-    success:function(data){
-            if(data == "success"){
-            alert("저장되었습니다.")
-            console.log(data);
-            
-            // $("#CloseBtn").trigger("click");
-            // listUp();
-        }else{ 
-            
-            for (var key of formData.keys()) {
-            console.log(key);
+    function save_btn(){            
+            var regexForslash = /-/g;
+            var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
+            var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
+            var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
+            var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
+            var ls_resutimez = document.getElementById('resutimez').value; //대응시간
+            var ls_resultcdz   = document.getElementById('resultcdz').value;   //처리결과코드
+            var ls_recedatez = document.getElementById('recedatez').value; //recedate ` 접수일자
+            var ls_recenumz = document.getElementById('recenumz').value; //recenum ` 접수번호
+            var ls_recetimez = document.getElementById('recetimez').value; //recetime ` 접수시간
+            var ls_divicdz   = document.getElementById('divicdz').value;  
+            var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
+            var ls_peridz   = document.getElementById('peridz').value; //담당자 
+            var ls_pernmz   = document.getElementById('pernmz').value;  
+            var ls_actcdz   = document.getElementById('actcdz').value;  
+            var ls_actnmz   = document.getElementById('actnmz').value;  
+            var ls_equpcdz   = document.getElementById('equpcdz').value;  
+            var ls_equpnmz   = document.getElementById('equpnmz').value;
+            var ls_actcontcdz   = document.getElementById('actcontcdz').value; //contcd ` 고장내용코드
+            var ls_contentsz   = document.getElementById('contentsz').value; //contremark ` 고장내용상세 ~ 인데 401에선 contents 임
+            var ls_gregicdz   = document.getElementById('gregicdz').value;
+            var ls_regicdz   = document.getElementById('regicdz').value;                                                            
+            var ls_remocdz   = document.getElementById('remocdz').value;                                                         
+            var ls_faccdz   = document.getElementById('faccdz').value;
+            var ls_resucdz   = document.getElementById('resucdz').value;                                                            
+            var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
+            var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
+            var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
+            var ls_resultckz = document.getElementById('resultckz').value;
+           //입력일자 ` inputdate	controller에서
+            //inperid ` 입력사원 controller에서
+            if (!confirm("저장하시겠습니까?")) {
+                    return ; 
+                }
+            if(ls_resultckz == "처리"){
+                document.getElementById('resultckz').value="1";
             }
-            for (var value of formData.values()) {
-            console.log(value);
+            if(ls_resultckz == "미처리"){
+                document.getElementById('resultckz').value="0";
             }
-            // alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                // listUp();
-                // console.log(data);
-        }
-    },error:function(e){
-        console.log('error',e);
-    }
-    })
-    // listUp(); 
-}
+            if(ls_resultckz == "%"){
+                alert("처리여부를 선택하세요.")
+                 
+            }                                                                                                                                                 
 
-// function listUp(){
-// window.location.href = '/app10/index01';
-// }; 
+            if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
+                alert("도착시간을 입력하세요")
+                 
+            } 
+            if(ls_actcomptimez == null || ls_actcomptimez.length == 0 || ls_actcomptimez == "" ){
+                alert("완료시간을 입력하세요")
+                 
+            } 
+            if(!ls_remoremarkz){
+                alert("고장상세원인을 입력하세요")
+                 
+            } 
+            if(!ls_resuremarkz){
+                alert("처리내용상세를 입력하세요")
+                 
+            }  
+            if(!ls_remarkz){
+                alert("고객요망사항을 입력하세요")
+                 
+            }     
+            if(isNaN(ls_resutimez)){
+                //true 반환
+                alert("대응시간을 입력하세요")   
+            }   
+            var inputdata = {   
+                "actperidz": ls_actcompdatez , 
+                "actcomptimez"   : ls_actcomptimez, 
+                "arrivdatez"   : ls_arrivdatez, 
+                "actarrivtimez": ls_actarrivtimez , 
+                "resutimez"   : ls_resutimez, 
+                "resultcdz"   : ls_resultcdz,  
+                "recedatez": ls_recedatez , 
+                "recenumz"   : ls_recenumz, 
+                "recetimez"   : ls_recetimez, 
+                "divicdz"   : ls_divicdz,
+                "actperidz" : ls_actperidz,
+                "peridz" : ls_peridz, 
+                "pernmz" : ls_pernmz,
+                "actcdz" : ls_actcdz,
+                "actnmz":  ls_actnmz,
+                "equpcdz":  ls_equpcdz,
+                "equpnmz" :  ls_equpnmz,
+                "actcontcdz" :  ls_actcontcdz, 
+                "contentsz" : ls_contentsz,
+                "gregicdz" : ls_gregicdz,
+                "regicdz" : ls_regicdz,
+                "remocdz" : ls_remocdz,
+                "faccdz" : ls_faccdz,
+                "resucdz" : ls_resucdz,
+                "remoremarkz" : ls_remoremarkz,
+                "remarkz" : ls_remarkz,
+                "resuremarkz" : ls_resuremarkz,
+                "resultckz" : ls_resultckz           
+            }
+
+        formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+                        console.log(formData);
+                        for (var key of formData.keys()) {
+                        console.log(key);
+                        }
+                        for (var value of formData.values()) {
+                        console.log(value);
+                        }
+        
+            $.ajax({
+                    url: '/app10/save',
+                    type: "POST",   
+                    processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+                    contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
+                    data: formData,                   
+                    async:false,
+                success:function(data){
+                    if(data == "success"){
+                        alert("저장되었습니다.")
+                        // console.log(formData);
+                        // listUp();              
+                    }else{                       
+                        alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                        // listUp();
+                        console.log(data);  
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+                })
+            // listUp(); 
+            // return false;
+         }
+
+function listUp(){
+window.location.href = '/app10/index01';
+}; 
 
     // 그리드 호출 window.onload
          var view_p01tab01page;
@@ -1733,6 +1767,7 @@ $.ajax({
                     contnm : wtab01Dto[i]["contnm"], 
                     contents : wtab01Dto[i]["contents"], 
                     reperid :  wtab01Dto[i]["reperid"],
+                    divinm :   wtab01Dto[i]["divinm"],
                     divicd :   wtab01Dto[i]["divicd"],
                     resultck : wtab01Dto[i]["resultck"]
                 });
@@ -1755,7 +1790,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1775,7 +1810,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1797,7 +1832,7 @@ $.ajax({
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1805,16 +1840,19 @@ $.ajax({
             document.getElementById('actcdz').value = arg5; 
             document.getElementById('equpnmz').value = arg6;   
             document.getElementById('equpcdz').value = arg7;
-            document.getElementById('contnmz').value = arg8; 
-            document.getElementById('contentsz').value = arg9;   
-            document.getElementById('actdivinmz').value = arg10; //부서명없음
-            document.getElementById('divicdz').value = arg11; 
-            document.getElementById('peridz').value = arg12; //처리자
-            document.getElementById('pernmz').value = arg13; 
-            document.getElementById('actperidz').value = arg14;
-            document.getElementById('actpernmz').value = arg15;
+            document.getElementById('actcontcdz').value = arg8; //contcd
+            document.getElementById('contnmz').value = arg9; 
+            document.getElementById('contentsz').value = arg10;   
+            document.getElementById('actdivinmz').value = arg11; 
+            document.getElementById('divicdz').value = arg12; 
+            document.getElementById('peridz').value = arg13; //처리자
+            document.getElementById('pernmz').value = arg14; 
+            document.getElementById('actperidz').value = arg15;
+            document.getElementById('actpernmz').value = arg16;
+            document.getElementById('resultckz').value = arg17;
+
             console.log(arg14);
-            console.log(arg15);
+            console.log(arg17);
             // $("#wgreginmmodal_btn").trigger("click"); 강제로 클릭하게 하는 trigger 값 넣었으니 모달 닫아주는 버튼이다.
 
         }     
@@ -1917,19 +1955,19 @@ $.ajax({
             cols.header = '접수일자';
             cols.aggregate = 'Sum';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 270;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'recetime';
             cols.header = '접수시간';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 80;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';            
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 400;
             wtab02Grid.columns.push(cols);     
             cols = new wijmo.grid.Column();
             cols.binding = 'equpnm';
@@ -1941,37 +1979,37 @@ $.ajax({
             cols.binding = 'repernm';
             cols.header = '접수자';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'recepernm';
             cols.header = '전달자';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'actpernm';
             cols.header = '담당자';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'pernm';
             cols.header = '처리자';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'divinm';
             cols.header = '부서명';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 60;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contnm';
             cols.header = '고장내용';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 150;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contremark';
@@ -1983,13 +2021,13 @@ $.ajax({
             cols.binding = 'resunm';
             cols.header = '처리내용';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 120;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resuremark';
             cols.header = '처리내용상세';
             cols.align = "center";
-            cols.width = 150;
+            cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remonm';
@@ -2001,7 +2039,7 @@ $.ajax({
             cols.binding = 'remoremark';
             cols.header = '고장요인상세';
             cols.align = "center";
-            cols.width = 150;
+            cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'facnm';
@@ -2019,13 +2057,13 @@ $.ajax({
             cols.binding = 'reginm';
             cols.header = '고장부위상세';
             cols.align = "center";
-            cols.width = 150;
+            cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resultnm';
             cols.header = '처리방법';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'arrivdate';
@@ -2037,7 +2075,7 @@ $.ajax({
             cols.binding = 'arrivtime';
             cols.header = '도착시간';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'compdate';
@@ -2049,25 +2087,25 @@ $.ajax({
             cols.binding = 'comptime';
             cols.header = '완료시간';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resutime';
             cols.header = '대응시간';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resulttime';
             cols.header = '처리시간';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'result';
             cols.header = '진행내역';
             cols.align = "center";
-            cols.width = 100;
+            cols.width = 70;
             wtab02Grid.columns.push(cols);            
 
 }        
@@ -2757,6 +2795,20 @@ $.ajax({
             var $actcompdatez = $('#actcompdatez'); //완료일자 
             var $stdate = $('#stdate'); //도착일
             var $enddate = $('#enddate'); //완료일자
+            
+            $arrivdatez.flatpickr({ 
+                enableTime: false,
+                dateFormat: 'Y-m-d',   
+                minDate: 'today',                    
+               
+            });
+            $actcompdatez.flatpickr({ 
+                enableTime: false,
+                dateFormat: 'Y-m-d',   
+                minDate: 'today',                    
+               
+            });
+
         }  
         
         

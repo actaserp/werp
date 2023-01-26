@@ -46,7 +46,7 @@
     <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         insert into tb_e411 (custcd, spjangcd, compnum, compdate, actperid, perid, arrivdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, resutime, "result") values
-        ('ELVLRT', 'ZZ', next value for id_ff, #{compdate}, #{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime}, '1')
+        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime}, '1')
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
@@ -60,6 +60,8 @@
         <if test="arrivdate != null">arrivdate=#{arrivdate}</if>
         <if test="arrivtime != null ">,</if>
         <if test="arrivtime != null">arrivtime=#{arrivtime}</if>
+        <if test="compdate != null ">,</if>
+        <if test="compdate != null">compdate=#{compdate}</if>
         <if test="comptime != null ">,</if>
         <if test="comptime != null">comptime=#{comptime}</if>
         <if test="remoremark != null ">,</if>
@@ -68,12 +70,10 @@
         <if test="resuremark != null">resuremark=#{resuremark}</if>
         <if test="remark != null ">,</if>
         <if test="remark != null">remark=#{remark}</if>
-        <if test="inputdate != null ">,</if>
-        <if test="inputdate != null">inputdate=#{inputdate}</if>
-        <if test="inperid != null ">,</if>
-        <if test="inperid != null">inperid=#{inperid}</if>
         <if test="indate != null ">,</if>
         <if test="indate != null">indate=#{indate}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
         where compnum = #{compnum}
     </update>
 
@@ -94,10 +94,12 @@
                         a.spjangcd spjangcd,
                         a.cltcd,
                         a.actcd,
+                        a.actnm,
                         a.equpcd,
                         a.equpnm,
-                        a.recedate,
-                        a.recetime,
+                        c.pernm as actpernm,
+                        Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
+                        Left(a.recetime,2) + ':' + substring(a.recetime, 2,2) as recetime,
                         a.hitchdate,
                         a.hitchhour,
                         1 as cnt,
@@ -116,11 +118,14 @@
                         b.remoremark,
                         k.greginm,
                         l.reginm,
-                        isnull(b.result, '0')as result,
-                        b.arrivdate,
-                        b.arrivtime,
-                        b.compdate,
-                        b.comptime,
+                      --  isnull(b.result, '0')as result,
+                        CASE b.result WHEN '1' THEN '처리'
+                                        WHEN '0' THEN '미처리'
+                            end as result,
+                        Left( b.arrivdate,4) + '-' + substring( b.arrivdate, 5,2)+ '-' + substring( b.arrivdate, 7,2)  as arrivdate,
+                        Left(b.arrivtime,2) + ':' + substring(b.arrivtime, 2,2) as arrivtime,
+                        Left( b.compdate,4) + '-' + substring( b.compdate, 5,2)+ '-' + substring(b.compdate, 7,2)  as compdate,
+                        Left(b.comptime,2) + ':' + substring(b.comptime, 2,2) as comptime,
                         b.resutime,
                         b.resulttime,
                         m.resultnm
