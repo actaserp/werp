@@ -16,10 +16,10 @@
         <!--        </if>-->
     </select>
 
-    <select id="GetMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select spernm, smemo, count(sseq)
+    <select id="getMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select spernm, smemo
         from tb_msmanual WITH (NOLOCK)
-        Where 1 = 1 and subkey = #{subkey}
+        Where 1 = 1 and subkey = #{sseq}
     </select>
 
     <select id="GetMSCommentCount"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">

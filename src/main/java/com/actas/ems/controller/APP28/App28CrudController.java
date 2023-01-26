@@ -34,14 +34,16 @@ public class App28CrudController {
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
+    List<App28ElvlrtDto> app28DtoList = new ArrayList<>();
+
     private static final Logger logger     = LoggerFactory.getLogger(App28CrudController.class);
     private final String uploadPath = Paths.get("C:", "develop", "upload","MSManual", getToDate()).toString();
 
     @RequestMapping(value="/saveboard")
-    public String memberSave(@RequestParam("actsseqz") String sseq
-            , @RequestParam("actsmemoz") String memo
-            , @RequestParam("actsflagz") String sflag
-            , @RequestParam("actssubkeyz") String subkey
+    public String memberSave(@RequestParam(value="actsseqz", required = false) String sseq
+            , @RequestParam(value="actsmemoz", required = false) String memo
+            , @RequestParam(value="actsflagz", required = false) String sflag
+            , @RequestParam(value="actssubkeyz", required = false) String subkey
             , Model model, HttpServletRequest request){
 
         try {
@@ -84,6 +86,86 @@ public class App28CrudController {
         String ls_sseq = App28Dto.getSseq();
         return ls_sseq;
     }
+
+    @RequestMapping(value="/savecomment")
+    public String commentSave(@RequestParam(value="actsseqz", required = false) String sseq
+            , @RequestParam(value="actsmemoz", required = false) String memo
+            , @RequestParam(value="actsflagz", required = false) String sflag
+            , @RequestParam(value="actssubkeyz", required = false) String subkey
+            , Model model, HttpServletRequest request){
+
+        try {
+
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            String ls_custcd = userformDto.getCustcd();
+            String ls_spjangcd = userformDto.getSpjangcd();
+            String sinputdate = getToDate();
+            String ls_yeare = sinputdate.substring(0,4);
+            String ls_mm = sinputdate.substring(4,6);
+            System.out.println("sinputdate ==>" + sinputdate);
+
+//        log.debug("ninputdate==>" + ninputdate);
+            App28Dto.setCustcd(ls_custcd);
+            App28Dto.setSpjangcd(ls_spjangcd);
+
+            if(sseq == null || sseq.equals("")){
+                App28Dto.setSseq(CountSeq(ls_yeare + ls_mm));
+            }else{
+                App28Dto.setSseq(sseq);
+            }
+            App28Dto.setSpernm(userformDto.getPernm());
+            App28Dto.setSmemo(memo);
+            App28Dto.setSflag(sflag);
+            App28Dto.setSpernm(userformDto.getUsername());
+            App28Dto.setSubkey(subkey);
+            App28Dto.setSinputdate(sinputdate);
+            if(sseq == null || sseq.equals("")){
+                appService.InsertMSManual(App28Dto);
+            }else{
+                appService.UpdateMSManual(App28Dto);
+            }
+            model.addAttribute("userformDto",userformDto);
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        String ls_sseq = App28Dto.getSseq();
+        return "redirect:app28/app28list";
+    }
+
+    @RequestMapping(value="/commentlist")
+    public Object getcomment(@RequestParam(value="actsseqz", required = false) String sseq
+            , @RequestParam(value="actsflagz", required = false) String sflag
+            , Model model, HttpServletRequest request){
+
+
+            App28Dto.setSseq(sseq);
+            App28Dto.setSflag(sflag);
+
+
+            try {
+                app28DtoList = appService.getMSCommentList(App28Dto);
+                model.addAttribute("app28DtoList",app28DtoList);
+            }catch (DataAccessException e) {
+                log.info("App28001Tab01Form DataAccessException ================================================================");
+                log.info(e.toString());
+                throw new AttachFileException(" DataAccessException to save");
+                //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+            }catch (Exception ex) {
+//                dispatchException = ex;
+                log.info("App28CommentList Exception ================================================================");
+                log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+            }
+
+        return app28DtoList;
+    }
+
+
+
+
 
     /**
      * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환

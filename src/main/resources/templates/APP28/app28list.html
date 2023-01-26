@@ -95,11 +95,11 @@
                                 
                                 <div class="row g-0 justify-content-between mt-3 px-card pb-3">
                                 <div class="col">
-                                    <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
+                                    <!-- <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />  파일 업로드 input(임시)-->
                                 </div>
                                 <div class="col-auto">
                                     
-                                    <button class="btn btn-primary btn-sm px-4 px-sm-5" type="button" onclick="save_btn()">질문 등록</button>
+                                    <button class="btn btn-primary btn-sm px-4 px-sm-5" type="button" onclick="save_btn(0)">질문 등록</button>
                                 </div>
                                 </div>
                             </div>
@@ -136,19 +136,20 @@
                                     <div class="border-bottom border-200 fs--1 py-3"><a class="text-700" href="#!"></a>
                                     </div>
                                     <div class="row g-0 fw-semi-bold text-center py-2 fs--1">
-                                    <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1"></span></a></div>
+                                        <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1"></span></a></div>
                                     </div>
-                                    <form class="d-flex align-items-center border-top border-200 pt-3" method="POST" action="">
+                                    <form class="d-flex align-items-center border-top border-200 pt-3" th:id="|commentform${question.sseq}|" method="POST" action="/app28mod/savecomment" >
                                     
-                                    <input class="form-control rounded-pill ms-2 fs--1" type="text" placeholder="댓글을 입력하세요." />
-                                    <input type="hidden" th:id="|subComment${question.sseq}|" th:mySubkey="${question.sseq}" th:value="${question.sseq}"/>
-                                    
+                                        <input class="form-control rounded-pill ms-2 fs--1" id="actsmemoz" name="actsmemoz" type="text" placeholder="댓글을 입력하세요." />
+                                        <input type="hidden" id="actssubkeyz" name="actssubkeyz" th:value="${question.sseq}"/>
+                                        <input type="hidden" id="actsseqz" name="actsseqz"/>
+                                        <input type="hidden" id="actsflagz" name="actsflagz" value="Y">
+                                        
                                     </form>
                                     <div class="d-flex mt-3" id="CommentArea">
-                                    
-                                        
+                                        <a href="#!" id="commentlist" th:data-value="${question.sseq}">댓글 보기</a>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -166,7 +167,10 @@
     
         var ls_actsseqz   = document.getElementById('actsseqz').value; 
         var ls_actsmemoz   = document.getElementById('actsmemoz').value;
-        var ls_actssubkeyz = document.getElementById('subComment').value;
+        var ls_actssubkeyz = subkey;
+        if(subkey != 0){
+            ls_actssubkeyz = document.getElementById('subComment').value;
+        }
         var ls_actsflagz = "Y";
     
          
@@ -259,36 +263,49 @@
     
     }
 
-    function find_comment(sseq){
-        var html;
-
-        $.ajax({
-                url: '/app28mod/comment',
-                type:"POST",
-                data: {
-                    "actsseqz"    : sseq,
-                    "actflagz"    : "Y"
-                },
-                async:false,
-                success:function(data){
-                    if(data == "success"){
-                        
-                        html = "<div class='flex-1 ms-2 fs--1'>"+
-                                    "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>댓글 작성자</a>댓글 내용</p>"+
-                                    "<div class='px-2'><a href='#!''>답글 달기</a> &null; 23분 전 </div>"+
-                                "</div>";
-                        $("#CommentArea").append(html);
-                        listUp();
-                    }else{
-                        alert("오류가 발생했습니다. 관리자에게 문의하세요.")
-                    }
-                },error:function(e){
-                    console.log('error',e);
-                }
-            }).done(function(fragment){
     
-            })
-    }
+    $(function (){
+        $("#commentlist").on("click", function(){
+            var html;
+            var subkey = document.getElementById("commentlist").getAttribute('data-value');
+
+            console.log("click");
+            $.ajax({
+                    url: '/app28mod/commentlist',
+                    type:"POST",
+                    data: {
+                        "actsseqz"    : subkey,
+                        "actflagz"    : "Y"
+                    },
+                    async:false,
+                    success:function(data){
+                        if(data == "success"){
+                            console.log("success");
+                            for(var i=0; i<data.length; i++){
+                                console.log(data[i]["spernm"]);
+                            }
+
+                            for(var i=0; i<data.length; i++){
+                                html = "<div class='flex-1 ms-2 fs--1'>"+
+                                            "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>"+data[i]["smemo"]+"</p>"+
+                                            "<div class='px-2'><a href='#!''>답글 달기</a> &null; 23분 전 </div>"+
+                                        "</div>";
+                                $("#CommentArea").append(html);
+                            }
+                            
+                        }else{
+                            alert("오류가 발생했습니다. 관리자에게 문의하세요.")
+                        }
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+                }).done(function(fragment){
+        
+                })
+        });
+
+    })
+    
     
 
         
