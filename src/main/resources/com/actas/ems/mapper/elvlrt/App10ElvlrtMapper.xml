@@ -32,7 +32,7 @@
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
                      LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
-                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.perid = e.perid)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
                      LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
                  WHERE
                      a.spjangcd = #{spjangcd}
@@ -76,6 +76,12 @@
         <if test="indate != null">indate=#{indate}</if>
         where compnum = #{compnum}
     </update>
+
+    <!--게시글 삭제-->
+    <delete id="Delete10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        DELETE FROM tb_e411 WHERE compnum= #{compnum};
+    </delete>
+
     <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
     <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
         select max(compnum) from tb_e411 where compdate = #{compdate}
@@ -84,8 +90,8 @@
 <!--    일자별-->
 
     <select id="GetApptab10List001" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        <![CDATA[SELECT a.custcd,
-                        a.spjangcd,
+        <![CDATA[SELECT a.custcd custcd,
+                        a.spjangcd spjangcd,
                         a.cltcd,
                         a.actcd,
                         a.equpcd,
@@ -110,7 +116,7 @@
                         b.remoremark,
                         k.greginm,
                         l.reginm,
-                        isnull(b.result, '0')as "result",
+                        isnull(b.result, '0')as result,
                         b.arrivdate,
                         b.arrivtime,
                         b.compdate,
@@ -137,8 +143,8 @@
                      a.custcd = b.custcd
                    AND a.spjangcd = b.spjangcd
                    and a.actcd = t.actcd
-                 --  AND a.custcd = #{custcd}
-                 --  AND a.spjangcd = #{spjangcd}
+                   AND a.custcd = #{custcd}
+                   AND a.spjangcd = #{spjangcd}
                    AND a.recedate BETWEEN  #{stdate} AND #{enddate}
                    AND  Case when isnull(b.compdate,'') = '' then '1' else '2' end like #{comp}]]>
     </select>

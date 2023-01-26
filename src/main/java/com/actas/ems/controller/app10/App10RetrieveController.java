@@ -84,15 +84,18 @@ public class App10RetrieveController {
     }
 
 
-    // 고장내용별현황 > 현장별 고장내용
+    // veiw page tb_401,601
     @GetMapping(value="/p001tab02")
     public Object App03001Tab02Form( @RequestParam("stdate") String stdate
             , @RequestParam("enddate") String enddate
-            , @RequestParam("custcdz") String custcd
-            , @RequestParam("spjangcdz") String spjangcd
+            , @RequestParam("comp") String comp
+            , Model model
+            , HttpServletRequest request) throws  Exception{
 
-            , Model model) throws  Exception{
-
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        String ls_custcd = userformDto.getCustcd();
+        String ls_spjangcd = userformDto.getSpjangcd();
         String ls_yeare = stdate.substring(0,4);
         String ls_mm = stdate.substring(5,7);
         String ls_dd = stdate.substring(8,10);
@@ -101,10 +104,12 @@ public class App10RetrieveController {
         ls_mm = enddate.substring(5,7);
         ls_dd = enddate.substring(8,10);
         enddate =  ls_yeare + ls_mm + ls_dd;
-        app10tDto.setCustcd(custcd);
-        app10tDto.setSpjangcd(spjangcd);
-        app10tDto.setFrdate(stdate);
-        app10tDto.setTodate(enddate);
+        app10tDto.setStdate(stdate);
+        app10tDto.setEnddate(enddate);
+        app10tDto.setComp(comp);
+        app10tDto.setCustcd(ls_custcd);
+        app10tDto.setSpjangcd(ls_spjangcd);
+
         try {
             app10DtoList = service.GetApptab10List001(app10tDto);
             model.addAttribute("app10DtoList",app10DtoList);
@@ -112,7 +117,6 @@ public class App10RetrieveController {
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
             throw new AttachFileException(" DataAccessException to save");
-            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         }catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App03001Tab01Form Exception ================================================================");
@@ -194,6 +198,37 @@ public class App10RetrieveController {
         }
         return "success";
     }
+
+    @RequestMapping("/del")
+    public String mmnualDelete(@RequestParam("") String compnum, Model model,
+                               HttpServletRequest request){
+        try{
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            String ls_custcd = userFormDto.getCustcd();
+            String ls_spjangcd = userFormDto.getSpjangcd();
+            app10tDto.setCompnum(compnum);
+
+            boolean result = service.Delete10Manu(app10tDto);
+            if(!result){
+                return "error";
+            }
+            if(compnum == null) {
+//                boolean result = service.Update10Manu(app10tDto);
+                if (!result) {
+                    return "error";
+                }
+            }
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+
+        return "success";
+    }
+
+
     public String CountSeq(String compdate){
         String ls_compnum = service.get10ManualMaxSeq(compdate);
         int ll_compnum = 0;

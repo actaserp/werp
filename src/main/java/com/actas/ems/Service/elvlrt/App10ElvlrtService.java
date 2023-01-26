@@ -26,7 +26,7 @@ public class App10ElvlrtService {
     /** view page **/
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApp10List001(parm);}
 
-    /** 고장처리현황 **/
+    /** view page2 **/
     public List<App10ElvlrtDto> GetApptab10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApptab10List001(parm);}
 
 
@@ -52,4 +52,13 @@ public class App10ElvlrtService {
         return (queryResult > 0);
     }
 
+    //글삭제
+    public boolean Delete10Manu(App10ElvlrtDto perm){
+        int queryResult = 1;
+        queryResult = app10ElvMapper.Delete10Manul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 }

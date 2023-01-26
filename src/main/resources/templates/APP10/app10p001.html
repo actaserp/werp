@@ -95,7 +95,7 @@
                                     <select  name="changeop" id="changeop" onchange="CahngeSlect(this.value)">
                                         <option value="0">미처리</option>    
                                         <option value="1">처리</option> 
-                                        <option value="%">선택</option>
+                                        <option value="%">처리여부선택</option>
                                     </select>                                                                      
                                 </div>
                             </div>                              
@@ -744,7 +744,7 @@
                             <div class="box_wrap">
                                 <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
                                     <li style ="float:left; list-style-type:none; margin-left:400px;">
-                                        <div class="input-group mb-3">
+                                        <div class="input-group mb-3">                                           
                                             <span class="input-group-text" style="max-height:30px;">기간</span>
                                             <input type="text"  class="form-control datetimepicker" id="stdate" autocomplete="off"  placeholder="Y-m-d"     >
                                             <input type="text"  class="form-control datetimepicker" id="enddate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -753,9 +753,6 @@
                                     <li style ="float:left; list-style-type:none; margin-left:40px;">
                                         <div class="input-group mb-3" >
                                             <span class="input-group-text" style="max-height:30px;" >구분</span>
-                                            <input type="hidden" id="actcdzz">
-                                            <input type="hidden" id="custcdz">  
-                                            <input type="hidden" id="spjangcdz">
                                             <select class="form-control" id="comp">
                                                 <option value="%">전체</option>
                                                 <option value="1">미처리</option>
@@ -1113,8 +1110,6 @@ $.ajax({
                     return wactnm_data;                                         
                 } 
 
-                // grid01 끝 ################################################################
-
                 //tab02 grid list
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 sortDescriptions: ['recedate'],
@@ -1134,8 +1129,7 @@ $.ajax({
                 // selectionMode: 'RowRange',
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
-                columns: [    
-                    
+                columns: [                        
                     { binding: 'recedate', header: '접수일자', align: "center", width: 100 },
                     { binding: 'recetime', header: '접수시간', align: "center", width: 100 },
                     { binding: 'actnm', header: '현장명', align: "center", width: 100 },                      
@@ -1189,9 +1183,7 @@ $.ajax({
             wtab02Grid.focus();
             wijmo.toggleClass(wtab02Grid.hostElement, 'highlightActive', true);
             wtab02Grid.focus();          
-           
-
-                // tab02검색 데이터 수집
+                  // tab02검색 데이터 수집
                 function getData_tab02(){    
                     var wtab2_data = []; 
                     var cnt = 1;
@@ -1206,10 +1198,8 @@ $.ajax({
                             repernm: "",
                             recepernm: "",
                             actpernm: "",
-                            resuname: "",
-                            pernm: "",
                             divinm: "",
-                            contnm: "",
+                            contnm: "",                           
                             contremark: "",
                             resunm: "",
                             resuremark: "",
@@ -1228,6 +1218,8 @@ $.ajax({
                             result: ""                     
                            
                         });
+                        console.log(wtab2_data);
+                        return;
                         cnt++;
                     }    
                     return wtab2_data;                                         
@@ -1732,18 +1724,24 @@ $.ajax({
                     actnm: wtab01Dto[i]["actnm"],
                     actcd : wtab01Dto[i]["actcd"],
                     equpnm: wtab01Dto[i]["equpnm"],                                                                                           
-                    equpcd : wtab01Dto[i]["equpcd"],                                                                                                       
+                    equpcd : wtab01Dto[i]["equpcd"],
+                    actperid:  wtab01Dto[i]["actperid"],  
+                    actpernm:  wtab01Dto[i]["actpernm"],                                                                                            
                     pernm : wtab01Dto[i]["pernm"],
                     perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                             
+                    contcd :  wtab01Dto[i]["contcd"],
                     contnm : wtab01Dto[i]["contnm"], 
                     contents : wtab01Dto[i]["contents"], 
-                    resultck : wtab01Dto[i]["resultck"] 
+                    reperid :  wtab01Dto[i]["reperid"],
+                    divicd :   wtab01Dto[i]["divicd"],
+                    resultck : wtab01Dto[i]["resultck"]
                 });
                 cnt++;
             }   
 
+            // recedate: wtab01Dto[i]["recedate"].substr(2)
             // console.log(data); 
-            // console.log(wtab01_data.length);
+            console.log(wtab01_data);
 
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
@@ -1757,7 +1755,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.reperid, ctx.item.divicd, ctx.item.perid);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1777,7 +1775,7 @@ $.ajax({
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.reperid, ctx.item.divicd, ctx.item.perid);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1799,15 +1797,9 @@ $.ajax({
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15){            
             document.getElementById('recedatez').value = arg1; 
             document.getElementById('recenumz').value = arg2;   
-            // document.getElementById('recetimez').value = arg3;
-            // const t2me = document.getElementById('recetimez').value.substr(2);
-            // console.log(t2me)
-            // const m2n =  document.getElementById('recetimez').value.substr(2,3);
-            // console.log(m2n);
-            
             document.getElementById('recetimez').value = arg3;
             document.getElementById('actnmz').value = arg4; 
             document.getElementById('actcdz').value = arg5; 
@@ -1815,109 +1807,109 @@ $.ajax({
             document.getElementById('equpcdz').value = arg7;
             document.getElementById('contnmz').value = arg8; 
             document.getElementById('contentsz').value = arg9;   
-            document.getElementById('peridz').value = arg10;
+            document.getElementById('actdivinmz').value = arg10; //부서명없음
             document.getElementById('divicdz').value = arg11; 
-            document.getElementById('actperidz').value = arg12;
+            document.getElementById('peridz').value = arg12; //처리자
+            document.getElementById('pernmz').value = arg13; 
+            document.getElementById('actperidz').value = arg14;
+            document.getElementById('actpernmz').value = arg15;
+            console.log(arg14);
+            console.log(arg15);
+            // $("#wgreginmmodal_btn").trigger("click"); 강제로 클릭하게 하는 trigger 값 넣었으니 모달 닫아주는 버튼이다.
+
         }     
-       
         console.log(wactnmChk_a);
 // ####################################################################################################      
 
-// ###########################################tab02 검색 조건
+        // ###########################################tab02 검색 조건
 
-// tab02 검색   
-document.getElementById("gogogoBtn").addEventListener("click",function(){ 
+        // tab02 검색   
+        document.getElementById("gogogoBtn").addEventListener("click",function(){ 
+                let ls_stdate = document.getElementById('stdate').value; 
+                let ls_enddate = document.getElementById('enddate').value;
+                let ls_comp = comp[comp.selectedIndex].value; 
 
-//조회시임.
-let ls_stdate = document.getElementById('stdate').value; //접수기간
-let ls_enddate = document.getElementById('enddate').value;
-let ls_comp = comp[comp.selectedIndex].value; 
-
-if(ls_stdate == null || ls_stdate.length == 0 || ls_stdate == ""){                
-    alert("시작일자를 입력하세요.")
-     return;
-}  
-if(ls_enddate == null || ls_enddate.length == 0 || ls_enddate == ""){
-    alert("종료일자를 입력하세요.")
-     return;                 
-}      
-                                
-searchList2_rtn(ls_stdate, ls_enddate, ls_comp);
+                if(ls_stdate == null || ls_stdate.length == 0 || ls_stdate == ""){                
+                    alert("시작일자를 입력하세요.")
+                    return;
+                }  
+                if(ls_enddate == null || ls_enddate.length == 0 || ls_enddate == ""){
+                    alert("종료일자를 입력하세요.")
+                    return;                 
+                }      
+                                                
+                searchList2_rtn(ls_stdate, ls_enddate, ls_comp);
 
 
-})   
+        })   
 
-function searchList2_rtn(arg1, arg2, arg3){ 
-console.log(arg1);    
-console.log(arg2); 
-console.log(arg3);         
+        function searchList2_rtn(arg1, arg2, arg3){ 
+        // console.log(arg1);    
+                $.ajax({
+                    url: '/app10/p001tab02',  
+                    type:"POST",
+                    data: { 
+                        "stdate"      : arg1,
+                        "enddate"      : arg2,
+                        "comp"      : arg3     
+                    }, 
+                    async:false,
+                    success:function(data){   
+                        tabB_grid(data);
+                    },error:function(e){
+                        console.log("error");                            
+                    }
+                }).done(function(fragment){           
 
+                })        
 
-$.ajax({
-            url: '/app10/p001tab02',  
-            type:"POST",
-            data: { 
-                "stdate"      : arg1,
-                "enddate"      : arg2,
-                "comp"      : arg3,                  
-            }, 
-            async:false,
-            success:function(data){   
-                tabB_grid(data);
-            },error:function(e){
-                console.log("error");                            
-            }
-        }).done(function(fragment){           
+        }        
 
-        })        
+        //  tab02 grid data 수집
+        function tabB_grid(data){
+        var wtab02Dto  = data;    
+        var wtab02_data = [];
+        var cnt = 1;
+        for (var i = 0; i < wtab02Dto.length; i++) {
+            wtab02_data.push({
+                id: i, 
+                index: cnt,
+                recedate: wtab02Dto[i]["recedate"],
+                recetime: wtab02Dto[i]["recetime"],            
+                actnm: wtab02Dto[i]["actnm"],
+                equpnm : wtab02Dto[i]["equpnm"],
+                repernm: wtab02Dto[i]["repernm"],                                                                                           
+                recepernm : wtab02Dto[i]["recepernm"],                                                                                                       
+                actpernm : wtab02Dto[i]["actpernm"],
+                pernm : wtab02Dto[i]["pernm"],
+                divinm : wtab02Dto[i]["divinm"],
+                contnm : wtab02Dto[i]["contnm"],                                                                                                                                                                                                             
+                contremark : wtab02Dto[i]["contremark"], 
+                resunm : wtab02Dto[i]["resunm"], 
+                resuremark : wtab02Dto[i]["resuremark"],
+                remonm : wtab02Dto[i]["remonm"],
+                remoremark : wtab02Dto[i]["remoremark"],
+                facnm : wtab02Dto[i]["facnm"],
+                greginm : wtab02Dto[i]["greginm"],
+                reginm : wtab02Dto[i]["reginm"],
+                resultnm : wtab02Dto[i]["resultnm"],
+                arrivdate : wtab02Dto[i]["arrivdate"],
+                arrivtime : wtab02Dto[i]["arrivtime"],
+                compdate : wtab02Dto[i]["compdate"],
+                comptime : wtab02Dto[i]["comptime"], 
+                resutime : wtab02Dto[i]["resutime"], 
+                resulttime : wtab02Dto[i]["resulttime"], 
+                result : wtab02Dto[i]["result"]        
+            });
+            cnt++;
+        }   
 
-}        
+        console.log(wtab02_data); 
+        console.log(wtab02_data.length);
 
-//  tab02 grid data 수집
-function tabB_grid(data){
-var wtab02Dto  = data;    
-var wtab02_data = [];
-var cnt = 1;
-for (var i = 0; i < wtab02Dto.length; i++) {
-    wtab02_data.push({
-        id: i, 
-        index: cnt,
-        recedate: wtab02Dto[i]["recedate"].substr(2),
-        recetime: wtab02Dto[i]["recetime"],            
-        actnm: wtab02Dto[i]["actnm"],
-        equpnm : wtab02Dto[i]["equpnm"],
-        repernm: wtab02Dto[i]["repernm"],                                                                                           
-        recepernm : wtab02Dto[i]["recepernm"],                                                                                                       
-        actpernm : wtab02Dto[i]["actpernm"],
-        pernm : wtab02Dto[i]["pernm"],
-        divinm : wtab02Dto[i]["divinm"],
-        contnm : wtab02Dto[i]["contnm"],                                                                                                                                                                                                             
-        contremark : wtab02Dto[i]["contremark"], 
-        resunm : wtab02Dto[i]["resunm"], 
-        resuremark : wtab02Dto[i]["resuremark"],
-        remonm : wtab02Dto[i]["remonm"],
-        remoremark : wtab02Dto[i]["remoremark"],
-        facnm : wtab02Dto[i]["facnm"],
-        greginm : wtab02Dto[i]["greginm"],
-        reginm : wtab02Dto[i]["reginm"],
-        resultnm : wtab02Dto[i]["resultnm"],
-        arrivdate : wtab02Dto[i]["arrivdate"],
-        arrivtime : wtab02Dto[i]["arrivtime"],
-        compdate : wtab02Dto[i]["compdate"],
-        comptime : wtab02Dto[i]["comptime"], 
-        resutime : wtab02Dto[i]["resutime"], 
-        resulttime : wtab02Dto[i]["resulttime"], 
-        result : wtab02Dto[i]["result"]        
-    });
-    cnt++;
-}   
-
-console.log(data); 
-console.log(wtab02_data.length);
-
-wtab02Grid.columns.clear();  
-wtab02Grid.autoGenerateColumns = false; 
-view_p01tab02page.sourceCollection  = wtab02_data;
+        wtab02Grid.columns.clear();  
+        wtab02Grid.autoGenerateColumns = false; 
+        view_p01tab02page.sourceCollection  = wtab02_data;
 
   
             var cols = new wijmo.grid.Column(); 
@@ -1926,7 +1918,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             cols.aggregate = 'Sum';
             cols.align = "center";
             cols.width = 100;
-            console.log("cols", cols);
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'recetime';
@@ -1951,7 +1942,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             cols.header = '접수자';
             cols.align = "center";
             cols.width = 100;
-            console.log("cols", cols);
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'recepernm';
@@ -2088,13 +2078,9 @@ view_p01tab02page.sourceCollection  = wtab02_data;
         function wactnresult_btn(){
             //대응시간
             var ac_HH1 = document.getElementById('actarrivtimez').value.slice(0,2); //start시간
-            // console.log(ac_HH1); 
             var ac_HH2 = document.getElementById('actcomptimez').value.slice(0,2); //end 시간
-            // console.log(ac_HH2); 
             var ac_MM1 = document.getElementById('actarrivtimez').value.substr(3);//start분
-            // console.log(ac_MM1); 
             var ac_MM2 = document.getElementById('actcomptimez').value.substr(3);//end분
-            // console.log(ac_MM2); 
             var ac_result = (parseInt(ac_HH1) - parseInt(ac_HH2))*60 + parseInt(ac_MM1) - parseInt(ac_MM2);
             ac_result = Math.abs(ac_result);  
             // console.log(ac_result);             
@@ -2113,7 +2099,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
         
       
         //모달검색 바디-푸터
-
         //고장부위 rtn
         function searchpcode_rtn(){
             let searchText = '';  
@@ -2712,8 +2697,7 @@ view_p01tab02page.sourceCollection  = wtab02_data;
         $(document).ready(function() {             
             getToday()
             fn_egov_init_date()
-            $('datetimepicker').datetimepicker({
-            });           
+      
             $("#frdate").change(function(e){ 
             })
             $("#todate").change(function(e){ 
@@ -2744,7 +2728,7 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             let day = today.getDay();  // 요일
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
-            let ls_frday = year + '-' + month + '-' + (date-5)
+            let ls_frday = year + '-' + month + '-' + date
             let ls_today = year + '-' + month + '-' + date 
             document.getElementById('frdate').value = ls_frday; //날짜 조회 현재 시간 쿼리
             document.getElementById('todate').value = ls_today;
@@ -2773,90 +2757,12 @@ view_p01tab02page.sourceCollection  = wtab02_data;
             var $actcompdatez = $('#actcompdatez'); //완료일자 
             var $stdate = $('#stdate'); //도착일
             var $enddate = $('#enddate'); //완료일자
-         
-            $frdate.datetimepicker({ //from
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({                        
-                        // maxDate: $frdate.val() ? $frdate.val() : false
-                    })
-                },
-            });
-
-            $todate.datetimepicker({ //untill
-                //from_untill date pick 끝
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',    //'Y-m-d H:i',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({
-                        
-                        // minDate: $todate.val() ? $todate.val() : false
-                    })
-                }
-            });        
-
-            $arrivdatez.datetimepicker({ //도착일자
-                //from_untill date pick 끝
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',    //'Y-m-d H:i',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({   
-                        minDate: 0,                     
-                        // minDate: $todate.val() ? $todate.val() : false
-                    })
-                }
-            });
-
-            $actcompdatez.datetimepicker({ //완료일자
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                        minDate: 0,
-                    })
-                },
-            });     
-            $stdate.datetimepicker({ //완료일자
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                    })
-                },
-            }); 
-            $enddate.datetimepicker({ //완료일자
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                    })
-                },
-            }); 
         }  
         
-        // <!--######################################## 시간 끝-->
-
-
-
+        
+        
+        
+        // <!--######################################## 그리드 메뉴-->
         class FlexGridContextMenu {
             constructor(grid) {
                 let host = grid.hostElement, menu = this._buildMenu(grid);
@@ -3082,10 +2988,6 @@ view_p01tab02page.sourceCollection  = wtab02_data;
                 <div class="modal_btn">
                     <button class="cancerButton " type="button">확인</button>
                 </div>
-                <!-- <div class="modal_btn flex">
-                    <button class="cancerButton " type="button">확인</button>
-                    <button class="cancerButton " type="button">확인</button>                        
-                </div> -->
             </div>
         </div>
     </div></div>
