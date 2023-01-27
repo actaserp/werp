@@ -114,12 +114,12 @@ public class App10RetrieveController {
             app10DtoList = service.GetApptab10List001(app10tDto);
             model.addAttribute("app10DtoList",app10DtoList);
         }catch (DataAccessException e) {
-            log.info("App03001Tab01Form DataAccessException ================================================================");
+            log.info("App10001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
             throw new AttachFileException(" DataAccessException to save");
         }catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("App10001Tab01Form Exception ================================================================");
             log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
@@ -172,14 +172,11 @@ public class App10RetrieveController {
                     case "divicdz":
                         app10tDto.setDivicd(values.toString());
                         break;
-                    case "actperidz":
-                        app10tDto.setActperid(values.toString());
-                        break;
                     case "peridz":
-                        app10tDto.setPerid(values.toString());
+                        app10tDto.setInperid(values.toString());
                         break;
-                    case "pernmz":
-                        app10tDto.setPernm(values.toString());
+                    case "actperidz":
+                        app10tDto.setActperid(values.toString()); //처리자 = inperid, perid로 되어있음
                         break;
                     case "actcdz":
                         app10tDto.setActcd(values.toString());
@@ -231,11 +228,10 @@ public class App10RetrieveController {
                 }
             });
 
-            log.info(app10tDto); //consolelog에 app04Dto 호출
-            String inperid = userformDto.getPerid();
+            log.info(app10tDto);
             String recedate = app10tDto.getRecedate();
             String ls_yeare = recedate.substring(0,4);
-            String ls_mm = recedate.substring(4,6);
+            String ls_mm = recedate.substring(5,7);
             String ls_dd = recedate.substring(8,10);
             recedate =  ls_yeare + ls_mm + ls_dd;
             app10tDto.setCustcd(ls_custcd);
@@ -244,32 +240,28 @@ public class App10RetrieveController {
 
             app10tDto.setInputdate(getToDate());
             app10tDto.setIndate(getToDate());
-            app10tDto.setInperid(inperid);
 
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
-
-            if(compnum == null || compnum.equals("")){
-                app10tDto.setCompnum(CountSeq(compdate));
-            }else{
-                app10tDto.setCompnum(compnum);
-            }
             boolean result = false;
             if(compnum == null || compnum.equals("")){
-                switch(app10tDto.getResultck()) {
-                    case "0":
-                        result = service.Insert10Manu(app10tDto);
-                        break;
-                    case "1":
-                        result = service.Update10Manu(app10tDto);
-                        break;
-                    default:
-                        break;
+                app10tDto.setCompnum(CountSeq(compdate));
+                result = service.Insert10Manu(app10tDto);
+                if(!result){
+                    return "error";
                 }
-                if (!result) {
+                result = service.Updateresult1(app10tDto);
+                if(!result){
+                    return "error";
+                }
+            }else{
+                app10tDto.setCompnum(compnum);
+                result =  service.Update10Manu(app10tDto);
+                if(!result){
                     return "error";
                 }
             }
+
             model.addAttribute("userformDto",userformDto);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
@@ -280,27 +272,28 @@ public class App10RetrieveController {
     }
 
     @RequestMapping("/del")
-    public String mmnualDelete(@RequestParam("compnum") String compnum
+    public String mmnualDelete(@RequestParam("compnumz") String compnum
+                               ,@RequestParam("compdatez") String compdate
                                 , Model model
                                 , HttpServletRequest request){
+        boolean result = false;
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userFormDto.getCustcd();
             String ls_spjangcd = userFormDto.getSpjangcd();
             app10tDto.setCompnum(compnum);
+            app10tDto.setCompdate(compdate);
 
-            boolean result = service.Delete10Manu(app10tDto);
+
+            result = service.Delete10Manu(app10tDto);
             if(!result){
                 return "error";
             }
-            if(compnum == null) {
-//                boolean result = service.Update10Manu(app10tDto);
-                if (!result) {
-                    return "error";
-                }
+            result = service.Updateresult0(app10tDto);
+            if(!result){
+                return "error";
             }
-
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";

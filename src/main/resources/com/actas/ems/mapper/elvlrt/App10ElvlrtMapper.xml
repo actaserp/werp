@@ -42,12 +42,28 @@
     </select>
 
 
+<!--//401 resultck 1처리-->
+    <update id="Updateresult11" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set resultck='1'
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recedate = #{recedate};
+    </update>
+    <update id="Updateresult10" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set resultck='0'
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recedate = #{recedate};
+    </update>
 
     <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, actperid, perid, pernm, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
-        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd}, #{perid}, #{actperid}, #{pernm}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, actperid, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
+        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd}, #{actperid},  #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
     </insert>
+
+    <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
+    <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
+        select max(compnum) from tb_e411 where compdate = #{compdate}
+    </select>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e411
@@ -66,8 +82,8 @@
         <if test="divicd != null">divicd=#{divicd}</if>
         <if test="actperid != null ">,</if>
         <if test="actperid != null">actperid=#{actperid}</if>
-        <if test="perid != null ">,</if>
-        <if test="perid != null">perid=#{perid}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
         <if test="pernm != null ">,</if>
         <if test="pernm != null">pernm=#{pernm}</if>
         <if test="contcd != null ">,</if>
@@ -80,8 +96,6 @@
         <if test="regicd != null">regicd=#{regicd}</if>
         <if test="remocd != null ">,</if>
         <if test="remocd != null">remocd=#{remocd}</if>
-        <if test="gregicd != null ">,</if>
-        <if test="gregicd != null">gregicd=#{gregicd}</if>
         <if test="faccd != null ">,</if>
         <if test="faccd != null">faccd=#{faccd}</if>
         <if test="resucd != null ">,</if>
@@ -92,22 +106,15 @@
         <if test="remark != null">remark=#{remark}</if>
         <if test="resuremark != null ">,</if>
         <if test="resuremark != null">resuremark=#{resuremark}</if>
-        <if test="resutime = 1 ">,</if>
-        <if test="resutime = 1">result = '1'</if>
-        <if test="resutime = null ">,</if>
-        <if test="resutime = null">result = '0'</if>
-        where compnum = #{compnum}
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate};
     </update>
 
     <!--게시글 삭제-->
     <delete id="Delete10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        DELETE FROM tb_e411 WHERE compnum= #{compnum};
+        DELETE FROM tb_e411 WHERE custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate};
     </delete>
 
-    <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
-    <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
-        select max(compnum) from tb_e411 where compdate = #{compdate}
-    </select>
+
 
 <!--    일자별-->
 

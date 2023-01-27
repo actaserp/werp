@@ -133,7 +133,7 @@
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
                                                 <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
                                                 <input type="hidden" name="compnum" id="compnumz">
-
+                                                <input type="hidden" name="compdate" id="compdatez">
 
                                             </div>
                                         </td>
@@ -824,20 +824,16 @@ function CahngeSlect(value){
      function delete_btn(){             
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
-            }  
-            // var ls_actmseqz   = document.getElementById('actmseqz').value;  
-            // if(!ls_actmseqz){
-            //     alert("삭제할 자료를 선택하세요")
-            //      return 
-            // }  
-            var ls_compnumz   = document.getElementById('compnumz').value;                                                         
+            }               
+            var ls_compnumz   = document.getElementById('compnumz').value;  
+            var ls_compdatez = document.getElementById('compdatez').value;                                                       
 
             $.ajax({
                 url: '/app10/del',   
                 type:"POST", 
                 data: {
                     "compnumz"    : ls_compnumz ,
-                    "actflagz"    : "MM" 
+                    "compdatez" : ls_compdatez
                 },
                 async:false,
                 success:function(data){ 
@@ -910,13 +906,12 @@ function CahngeSlect(value){
             var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
             var ls_resutimez = document.getElementById('resutimez').value; //대응시간
             var ls_resultcdz   = document.getElementById('resultcdz').value;   //처리결과코드
-            var ls_recedatez = document.getElementById('recedatez').value.replace(regexForslash, ''); //recedate ` 접수일자
+            var ls_recedatez = document.getElementById('recedatez').value; //recedate ` 접수일자
             var ls_recenumz = document.getElementById('recenumz').value; //recenum ` 접수번호
             var ls_recetimez = document.getElementById('recetimez').value.replace(":", ""); //recetime ` 접수시간
             var ls_divicdz   = document.getElementById('divicdz').value;  
-            var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
-            var ls_peridz   = document.getElementById('peridz').value; //담당자 
-            var ls_pernmz   = document.getElementById('pernmz').value;  
+            var ls_peridz   = document.getElementById('peridz').value; //처리자 
+            var ls_actperidz    = document.getElementById('actperidz').value; //담당자 
             var ls_actcdz   = document.getElementById('actcdz').value;  
             var ls_actnmz   = document.getElementById('actnmz').value;  
             var ls_equpcdz   = document.getElementById('equpcdz').value;  
@@ -982,9 +977,8 @@ function CahngeSlect(value){
                 "recenumz"   : ls_recenumz, 
                 "recetimez"   : ls_recetimez, 
                 "divicdz"   : ls_divicdz,
-                "actperidz" : ls_actperidz,
-                "peridz" : ls_peridz, 
-                "pernmz" : ls_pernmz,
+                "peridz" : ls_peridz,
+                "actperidz" : ls_actperidz, 
                 "actcdz" : ls_actcdz,
                 "actnmz":  ls_actnmz,
                 "equpcdz":  ls_equpcdz,
@@ -1026,7 +1020,7 @@ function CahngeSlect(value){
                     console.log('error',e);
                 }
                 })
-            // listUp(); 
+            listUp(); 
             // return false;
          }
 
@@ -1844,7 +1838,7 @@ window.location.href = '/app10/index01';
             document.getElementById('actperidz').value = arg15;
             document.getElementById('actpernmz').value = arg16;
             document.getElementById('resultckz').value = arg17;
-
+            console.log(arg2);
             console.log(arg14);
             console.log(arg17);
         }     
