@@ -25,6 +25,22 @@
                         e.pernm,
                         a.divicd,
                         f.divinm,
+                         g.arrivdate,
+                         g.arrivtime,
+                         g.compdate,
+                         g.compnum,
+                         g.comptime,
+                         g.resutime,
+                         g.resulttime,
+                         g.gregicd,
+                         g.regicd,
+                         g.remocd,
+                         g.faccd,
+                         g.resucd,
+                         g.resultcd,
+                         g.remoremark,
+                         g.resucd,
+                         g.resuremark,
                         CASE a.resultck WHEN '1' THEN '처리'
                                         WHEN '0' THEN '미처리'
                         end as resultck
@@ -34,6 +50,8 @@
                      LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
                      LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
                      LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
+                     LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+
                  WHERE
                      a.spjangcd = #{spjangcd}
                    AND a.resultck like CONCAT('%',#{changeop},'%')
@@ -46,18 +64,18 @@
     <update id="Updateresult11" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e401
         set resultck='1'
-        where custcd = #{custcd} and spjangcd = #{spjangcd} and recedate = #{recedate};
+        where recedate = #{recedate};
     </update>
     <update id="Updateresult10" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e401
-        set resultck='0'
-        where custcd = #{custcd} and spjangcd = #{spjangcd} and recedate = #{recedate};
+        set resultck = '0'
+        where recedate = #{recedate};
     </update>
 
     <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, actperid, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
-        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd}, #{actperid},  #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
+        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd},  #{actperid}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
     </insert>
 
     <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->
@@ -84,8 +102,6 @@
         <if test="actperid != null">actperid=#{actperid}</if>
         <if test="inperid != null ">,</if>
         <if test="inperid != null">inperid=#{inperid}</if>
-        <if test="pernm != null ">,</if>
-        <if test="pernm != null">pernm=#{pernm}</if>
         <if test="contcd != null ">,</if>
         <if test="contcd != null">contcd=#{contcd}</if>
         <if test="contremark != null ">,</if>
@@ -106,7 +122,7 @@
         <if test="remark != null">remark=#{remark}</if>
         <if test="resuremark != null ">,</if>
         <if test="resuremark != null">resuremark=#{resuremark}</if>
-        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate};
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum};
     </update>
 
     <!--게시글 삭제-->

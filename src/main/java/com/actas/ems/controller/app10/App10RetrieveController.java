@@ -237,25 +237,21 @@ public class App10RetrieveController {
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
             app10tDto.setRecedate(recedate);
-
             app10tDto.setInputdate(getToDate());
             app10tDto.setIndate(getToDate());
-
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
+            String recenum = app10tDto.getRecenum();
             boolean result = false;
             if(compnum == null || compnum.equals("")){
                 app10tDto.setCompnum(CountSeq(compdate));
                 result = service.Insert10Manu(app10tDto);
-                if(!result){
-                    return "error";
-                }
                 result = service.Updateresult1(app10tDto);
                 if(!result){
                     return "error";
                 }
             }else{
-                app10tDto.setCompnum(compnum);
+                app10tDto.setCompnum(CountSeq(compdate));
                 result =  service.Update10Manu(app10tDto);
                 if(!result){
                     return "error";
@@ -271,9 +267,16 @@ public class App10RetrieveController {
         return ls_compnum;
     }
 
+    //                if(recenum.equals("")){
+//                    result = service.Updateresult1(app10tDto);
+//                    if(!result){
+//                        return "error";
+//                    }
+//                }
+
     @RequestMapping("/del")
-    public String mmnualDelete(@RequestParam("compnumz") String compnum
-                               ,@RequestParam("compdatez") String compdate
+    public String mmnualDelete(
+                               @RequestParam("actcompdatez") String compdate
                                 , Model model
                                 , HttpServletRequest request){
         boolean result = false;
@@ -282,18 +285,21 @@ public class App10RetrieveController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userFormDto.getCustcd();
             String ls_spjangcd = userFormDto.getSpjangcd();
-            app10tDto.setCompnum(compnum);
+            String compnum = app10tDto.getCompnum();
+            String ls_yeare = compdate.substring(0,4);
+            String ls_mm = compdate.substring(5,7);
+            String ls_dd = compdate.substring(8,10);
+            compdate =  ls_yeare + ls_mm + ls_dd;
             app10tDto.setCompdate(compdate);
-
-
+            app10tDto.setCompnum(compnum);
+            app10tDto.setCustcd(ls_custcd);
+            app10tDto.setSpjangcd(ls_spjangcd);
             result = service.Delete10Manu(app10tDto);
-            if(!result){
-                return "error";
-            }
             result = service.Updateresult0(app10tDto);
             if(!result){
                 return "error";
             }
+
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
