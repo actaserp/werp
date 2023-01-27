@@ -39,7 +39,6 @@
                          g.resucd,
                          g.resultcd,
                          g.remoremark,
-                         g.resucd,
                          g.resuremark,
                         CASE a.resultck WHEN '1' THEN '처리'
                                         WHEN '0' THEN '미처리'

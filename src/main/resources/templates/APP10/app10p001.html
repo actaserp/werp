@@ -132,8 +132,8 @@
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
                                                 <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
-                                                <input type="hidden" name="compnum" id="compnumz">
-                                                <input type="hidden" name="compdate" id="compdatez">
+                                                <input type="text" name="compnum" id="compnumz">
+                                                <input type="text" name="compdate" id="compdatez">
 
                                             </div>
                                         </td>
@@ -156,6 +156,7 @@
                                                 <input type="text" name="actnm" id="actnmz" placeholder="현장명" disabled>
                                                 <input type="hidden" name="actcd" id="actcdz">
                                                 <input type="hidden" name="resultck" id="resultckz">
+
                                             </div>
                                         </td>
                                         <th>호기명</th>
@@ -169,6 +170,7 @@
                                         <td>
                                             <div class="input_wrap table_btn" style="width: 100%;">
                                                 <input type="text" class="control" name="resutime" id="resutimez" disabled>
+                                                <input type="hidden" class="control" name="resulttime" id="resulttimez" disabled>
                                                 <hr><b>분</b></hr>
                                             </div>      
                                                                               
@@ -213,6 +215,7 @@
                                         <td  >
                                             <div class="input_wrap ">
                                                 <input type="time"  class="form-control " name="actcomptime" id="actcomptimez" autocomplete="off" >
+                                                <input type="hidden"  class="form-control " name="actcomptime" id="comptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>처리자</th>
@@ -827,7 +830,7 @@ function CahngeSlect(value){
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
             }               
-            var ls_compdatez = document.getElementById('compdatez').value;
+            var ls_compdatez = document.getElementById('actcompdatez').value;
             var ls_compnumz = document.getElementById('compnumz').value;                                                       
                                                        
 
@@ -835,8 +838,8 @@ function CahngeSlect(value){
                 url: '/app10/del',   
                 type:"POST", 
                 data: {
-                    "compdatez" : ls_compdatez,
-                    "compnumz" : ls_compnumz
+                    "compdate" : ls_compdatez,
+                    "compnum" : ls_compnumz
                 },
                 async:false,
                 success:function(data){ 
@@ -844,7 +847,7 @@ function CahngeSlect(value){
                         alert("삭제되었습니다.")
                         console.log("delete", data);                     
                         $("#CloseBtn").trigger("click"); 
-                        listUp();   
+                        // listUp();   
                     }else{
                         alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")                             
                     }   
@@ -853,7 +856,7 @@ function CahngeSlect(value){
                 }
             }).done(function(fragment){           
             })
-            listUp();    
+            // listUp();    
         }
     
     //초기화 function
@@ -1762,7 +1765,18 @@ window.location.href = '/app10/index01';
                     divicd :   wtab01Dto[i]["divicd"],
                     resultck : wtab01Dto[i]["resultck"],
                     compnum : wtab01Dto[i]["compnum"],
-                    compdate : wtab01Dto[i]["compdate"]
+                    compdate : wtab01Dto[i]["compdate"],
+                    comptime : wtab01Dto[i]["comptime"], 
+                    resutime : wtab01Dto[i]["resutime"],
+                    resulttime : wtab01Dto[i]["resulttime"],
+                    gregicd : wtab01Dto[i]["gregicd"],
+                    regicd : wtab01Dto[i]["regicd"],
+                    remocd : wtab01Dto[i]["remocd"],
+                    faccd : wtab01Dto[i]["faccd"],
+                    resultcd : wtab01Dto[i]["resultcd"],
+                    remoremark : wtab01Dto[i]["remoremark"],
+                    resucd : wtab01Dto[i]["resucd"],
+                    resuremark : wtab01Dto[i]["resuremark"]
                 });
                 cnt++;
             }   
@@ -1783,7 +1797,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate, ctx.item.comtime, ctx.item.resutime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1803,7 +1817,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate, ctx.item.comtime, ctx.item.resutime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark);                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1825,30 +1839,38 @@ window.location.href = '/app10/index01';
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19){            
-            document.getElementById('recedatez').value = arg1; 
-            // document.getElementById('recedatez').value = arg1.substr(2); 
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30){            
+            document.getElementById('recedatez').value = arg1;  
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
             document.getElementById('actnmz').value = arg4; 
             document.getElementById('actcdz').value = arg5; 
             document.getElementById('equpnmz').value = arg6;   
             document.getElementById('equpcdz').value = arg7;
-            document.getElementById('actcontcdz').value = arg8; //contcd
+            document.getElementById('actcontcdz').value = arg8; 
             document.getElementById('contnmz').value = arg9; 
             document.getElementById('contentsz').value = arg10;   
             document.getElementById('actdivinmz').value = arg11; 
             document.getElementById('divicdz').value = arg12; 
-            document.getElementById('peridz').value = arg13; //처리자
+            document.getElementById('peridz').value = arg13; 
             document.getElementById('pernmz').value = arg14; 
             document.getElementById('actperidz').value = arg15;
             document.getElementById('actpernmz').value = arg16;
             document.getElementById('resultckz').value = arg17;
             document.getElementById('compnumz').value = arg18;
-            document.getElementById('compdatez').value = arg19;
-            console.log(arg2);
-            console.log(arg14);
-            console.log(arg17);
+            document.getElementById('compdatez').value = arg19; 
+            document.getElementById('comptimez').value = arg20;
+            document.getElementById('resutimez').value = arg21;
+            document.getElementById('resulttimez').value = arg22;
+            document.getElementById('gregicdz').value = arg23;
+            document.getElementById('regicdz').value = arg24;
+            document.getElementById('remocdz').value = arg25;
+            document.getElementById('faccdz').value = arg26;
+            document.getElementById('resultcdz').value = arg27;
+            document.getElementById('remoremarkz').value = arg28;
+            document.getElementById('resucdz').value = arg29;
+            document.getElementById('resuremarkz').value = arg30;
+            console.log(arg18);
         }     
         console.log(wactnmChk_a);
 // ####################################################################################################      

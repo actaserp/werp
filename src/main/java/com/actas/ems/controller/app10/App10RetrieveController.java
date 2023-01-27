@@ -275,8 +275,8 @@ public class App10RetrieveController {
 //                }
 
     @RequestMapping("/del")
-    public String mmnualDelete(
-                               @RequestParam("actcompdatez") String compdate
+    public String mmnualDelete(@RequestParam("compnum") String compnum,
+                               @RequestParam("compdate") String compdate
                                 , Model model
                                 , HttpServletRequest request){
         boolean result = false;
@@ -285,7 +285,6 @@ public class App10RetrieveController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userFormDto.getCustcd();
             String ls_spjangcd = userFormDto.getSpjangcd();
-            String compnum = app10tDto.getCompnum();
             String ls_yeare = compdate.substring(0,4);
             String ls_mm = compdate.substring(5,7);
             String ls_dd = compdate.substring(8,10);
@@ -295,6 +294,9 @@ public class App10RetrieveController {
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
             result = service.Delete10Manu(app10tDto);
+            if(!result){
+                return "error";
+            }
             result = service.Updateresult0(app10tDto);
             if(!result){
                 return "error";
