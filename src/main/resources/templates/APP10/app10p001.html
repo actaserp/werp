@@ -127,7 +127,7 @@
                                     <tbody>
                                         <tr>
                                         <th>접수일자</th>
-                                        <td >
+                                        <td colspan="4">
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
@@ -138,7 +138,7 @@
                                             </div>
                                         </td>
                                         <th>접수시간</th>
-                                        <td>
+                                        <td >
                                             <div class="input_wrap">                                               
                                                 <input type="text"  id="recetimez" autocomplete="off" placeholder="호출" disabled >
                                             </div>
@@ -151,7 +151,7 @@
                                         </tr>
                                     <tr>
                                         <th>현장명</th>
-                                        <td >
+                                        <td colspan="4">
                                             <div class="input_wrap">
                                                 <input type="text" name="actnm" id="actnmz" placeholder="현장명" disabled>
                                                 <input type="hidden" name="actcd" id="actcdz">
@@ -176,19 +176,19 @@
                                     </tr>                                                                                                                                                                                       
                                     <tr>                                        
                                         <th>도착일자</th>
-                                        <td >
+                                        <td colspan="4">
                                             <div class="input_wrap date">                                                
                                                 <input type="text" class="form-control flatpickr" id="arrivdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>도착시간</th>
-                                        <td >
+                                        <td>
                                             <div class="input_wrap">                                               
                                                 <input type="time"  id="actarrivtimez" autocomplete="off" >
                                             </div>
                                         </td>
                                         <th>담당자</th>
-                                        <td colspan="2" >
+                                        <td  >
                                             <div class="input_wrap table_search">
                                                 <input type="text" name="actpernm" id="actpernmz"autocomplete="off" placeholder="검색">
                                                 <input  type="hidden" id="actperidz"> 
@@ -204,19 +204,19 @@
                                     </tr>
                                     <tr>                                        
                                         <th>완료일자</th>
-                                        <td >
+                                        <td colspan="4">
                                             <div class="input_wrap date">
                                                 <input type="text"  class="form-control datetimepicker" name="actcompdate" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>완료시간</th>
-                                        <td >
+                                        <td  >
                                             <div class="input_wrap ">
                                                 <input type="time"  class="form-control " name="actcomptime" id="actcomptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>처리자</th>
-                                        <td colspan="2">
+                                        <td >
                                             <div class="input_wrap table_search">
                                                 <input type="text" name="pernm" id="pernmz" autocomplete="off" placeholder="처리자를 찾아주세요">
                                                 <input type="hidden" name="perid" id="peridz">
@@ -226,7 +226,7 @@
                                     </tr>
                                     <tr>
                                         <th>고장내용</th>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="input_wrap">
                                                 <input type="text" name="contnm" id="contnmz" placeholder="고장내용" disabled>
                                                 <input type="hidden" name="contcd" id="actcontcdz">
@@ -236,7 +236,7 @@
                                     </tr>
                                     <tr>
                                         <th>고장상세내용</th>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="input_wrap table_btn">
                                                 <input type="text" name="contents" id="contentsz" placeholder="고장상세내용" disabled>
                                                 <button class="btn2" type="button">유사사례 찾기</button>
@@ -245,7 +245,7 @@
                                     </tr>
                                     <tr>
                                         <th>고장부위</th>
-                                        <td colspan="2">
+                                        <td colspan="4">
                                             <div class="input_wrap table_search">
                                                 <input class="form-control" type="text" autocomplete="off" placeholder="고장부위를 입력하세요" id="greginmz" name="greginmz" aria-label="greginm" aria-describedby="basic-addon1">                                    
                                                 <input  type="hidden"  id="gregicdz"> 
@@ -266,7 +266,7 @@
                                     </tr>
                                     <tr>
                                         <th>고장요인</th>
-                                        <td colspan="2">
+                                        <td colspan="4">
                                             <div class="input_wrap table_search">
                                                 <input class="form-control" type="text" autocomplete="off" placeholder="고장요인을 입력하세요" id="remonmz" name="remonmz" aria-label="remonm" aria-describedby="basic-addon1">                                    
                                                 <input class="form-control form-control-sm"  type="hidden"  id="remocdz"> 
@@ -274,7 +274,7 @@
                                             </div>
                                         </td>
                                         <th>고장원인</th>
-                                        <td colspan="3">
+                                        <td colspan="4">
                                             <div class="input_wrap table_btn">
                                                 <div class="input_wrap table_search " style="width: 100%;">
                                                     <input class="form-control" type="text" autocomplete="off" placeholder="고장원인을 입력하세요" id="facnmz" name="facnmz" aria-label="facnm" aria-describedby="basic-addon1">                                    
@@ -286,7 +286,7 @@
                                     </tr>
                                     <tr>
                                         <th>처리내용</th>
-                                        <td colspan="2">
+                                        <td colspan="4">
                                             <div class="input_wrap table_search">
                                                 <input class="form-control" type="text" autocomplete="off" placeholder="처리내용을 입력하세요" id="resunmz" name="resunmz" aria-label="resunm" aria-describedby="basic-addon1">                                    
                                                 <input class="form-control form-control-sm"  type="hidden"  id="resucdz"> 
@@ -294,7 +294,7 @@
                                             </div>
                                         </td>
                                         <th>처리결과</th>
-                                        <td colspan="3">
+                                        <td colspan="4">
                                             <div class="input_wrap table_search">
                                                 <input class="form-control" type="text" autocomplete="off" placeholder="처리결과를 입력하세요" id="resultnmz" name="resultnmz" aria-label="resultnm" aria-describedby="basic-addon1">                                    
                                                 <input class="form-control form-control-sm"  type="hidden"  id="resultcdz"> 
@@ -304,7 +304,7 @@
                                     </tr>
                                     <tr>
                                         <th>고장상세원인</th>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="input_wrap">
                                                 <input type="text" name="remoremarkz" id="remoremarkz" autocomplete="off">
                                             </div>
@@ -312,7 +312,7 @@
                                     </tr>
                                     <tr>
                                         <th>처리내용상세</th>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="input_wrap">
                                                 <input type="text" name="resuremarkz" id="resuremarkz" autocomplete="off">
                                             </div>
@@ -320,7 +320,7 @@
                                     </tr>
                                     <tr>
                                         <th>고객요망사항</th>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="input_wrap">
                                                 <input type="text" name="remarkz" id="remarkz" autocomplete="off">                                                
                                             </div>
@@ -910,9 +910,9 @@ function CahngeSlect(value){
             var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
             var ls_resutimez = document.getElementById('resutimez').value; //대응시간
             var ls_resultcdz   = document.getElementById('resultcdz').value;   //처리결과코드
-            var ls_recedatez = document.getElementById('recedatez').value; //recedate ` 접수일자
+            var ls_recedatez = document.getElementById('recedatez').value.replace(regexForslash, ''); //recedate ` 접수일자
             var ls_recenumz = document.getElementById('recenumz').value; //recenum ` 접수번호
-            var ls_recetimez = document.getElementById('recetimez').value; //recetime ` 접수시간
+            var ls_recetimez = document.getElementById('recetimez').value.replace(":", ""); //recetime ` 접수시간
             var ls_divicdz   = document.getElementById('divicdz').value;  
             var ls_actperidz   = document.getElementById('actperidz').value; //처리자 
             var ls_peridz   = document.getElementById('peridz').value; //담당자 
@@ -932,8 +932,6 @@ function CahngeSlect(value){
             var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
             var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
             var ls_resultckz = document.getElementById('resultckz').value;
-           //입력일자 ` inputdate	controller에서
-            //inperid ` 입력사원 controller에서
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
                 }
@@ -972,8 +970,9 @@ function CahngeSlect(value){
                 //true 반환
                 alert("대응시간을 입력하세요")   
             }   
+            
             var inputdata = {   
-                "actperidz": ls_actcompdatez , 
+                "actcompdatez": ls_actcompdatez , 
                 "actcomptimez"   : ls_actcomptimez, 
                 "arrivdatez"   : ls_arrivdatez, 
                 "actarrivtimez": ls_actarrivtimez , 
@@ -1002,15 +1001,9 @@ function CahngeSlect(value){
                 "resuremarkz" : ls_resuremarkz,
                 "resultckz" : ls_resultckz           
             }
+            console.log(inputdata);
 
         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
-                        console.log(formData);
-                        for (var key of formData.keys()) {
-                        console.log(key);
-                        }
-                        for (var value of formData.values()) {
-                        console.log(value);
-                        }
         
             $.ajax({
                     url: '/app10/save',
@@ -1252,7 +1245,7 @@ window.location.href = '/app10/index01';
                             result: ""                     
                            
                         });
-                        console.log(wtab2_data);
+                        // console.log(wtab2_data);
                         return;
                         cnt++;
                     }    
@@ -1752,7 +1745,7 @@ window.location.href = '/app10/index01';
                 wtab01_data.push({
                     id: i, 
                     index: cnt,
-                    recedate: wtab01Dto[i]["recedate"].substr(2),
+                    recedate: wtab01Dto[i]["recedate"],
                     recenum: wtab01Dto[i]["recenum"],  
                     recetime : wtab01Dto[i]["recetime"],              
                     actnm: wtab01Dto[i]["actnm"],
@@ -1834,6 +1827,7 @@ window.location.href = '/app10/index01';
        
         function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){            
             document.getElementById('recedatez').value = arg1; 
+            // document.getElementById('recedatez').value = arg1.substr(2); 
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
             document.getElementById('actnmz').value = arg4; 
@@ -1853,8 +1847,6 @@ window.location.href = '/app10/index01';
 
             console.log(arg14);
             console.log(arg17);
-            // $("#wgreginmmodal_btn").trigger("click"); 강제로 클릭하게 하는 trigger 값 넣었으니 모달 닫아주는 버튼이다.
-
         }     
         console.log(wactnmChk_a);
 // ####################################################################################################      
@@ -2799,15 +2791,15 @@ window.location.href = '/app10/index01';
             $arrivdatez.flatpickr({ 
                 enableTime: false,
                 dateFormat: 'Y-m-d',   
-                minDate: 'today',                    
+                // minDate: 'today',                    
                
             });
-            $actcompdatez.flatpickr({ 
-                enableTime: false,
-                dateFormat: 'Y-m-d',   
-                minDate: 'today',                    
+            // $actcompdatez.flatpickr({ 
+            //     enableTime: false,
+            //     dateFormat: 'Y-m-d',   
+            //     minDate: 'today',                    
                
-            });
+            // });
 
         }  
         

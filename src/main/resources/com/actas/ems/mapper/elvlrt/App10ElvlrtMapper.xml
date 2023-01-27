@@ -45,35 +45,57 @@
 
     <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate, actperid, perid, arrivdate, arrivtime, comptime, remoremark, resuremark, remark, inputdate, inperid, resutime, "result") values
-        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{actperid}, #{perid}, #{arrivdate}, #{arrivtime}, #{comptime}, #{remoremark}, #{resuremark}, #{remark}, #{inputdate}, #{inperid}, #{resutime}, '1')
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, actperid, perid, pernm, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
+        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd}, #{perid}, #{actperid}, #{pernm}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
     </insert>
 
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e411
-        set inputdate = #{inputdate}
-        <if test="actperid != null ">,</if>
-        <if test="actperid != null">actperid=#{actperid}</if>
-        <if test="perid != null ">,</if>
-        <if test="perid != null">perid=#{perid}</if>
-        <if test="arrivdate != null ">,</if>
-        <if test="arrivdate != null">arrivdate=#{arrivdate}</if>
-        <if test="arrivtime != null ">,</if>
-        <if test="arrivtime != null">arrivtime=#{arrivtime}</if>
+        set indate = #{indate}
         <if test="compdate != null ">,</if>
         <if test="compdate != null">compdate=#{compdate}</if>
         <if test="comptime != null ">,</if>
         <if test="comptime != null">comptime=#{comptime}</if>
+        <if test="arrivdate != null ">,</if>
+        <if test="arrivdate != null">arrivdate=#{arrivdate}</if>
+        <if test="arrivtime != null ">,</if>
+        <if test="arrivtime != null">arrivtime=#{arrivtime}</if>
+        <if test="resutime != null ">,</if>
+        <if test="resutime != null">resutime=#{resutime}</if>
+        <if test="divicd != null ">,</if>
+        <if test="divicd != null">divicd=#{divicd}</if>
+        <if test="actperid != null ">,</if>
+        <if test="actperid != null">actperid=#{actperid}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="pernm != null ">,</if>
+        <if test="pernm != null">pernm=#{pernm}</if>
+        <if test="contcd != null ">,</if>
+        <if test="contcd != null">contcd=#{contcd}</if>
+        <if test="contremark != null ">,</if>
+        <if test="contremark != null">contremark=#{contremark}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="regicd != null ">,</if>
+        <if test="regicd != null">regicd=#{regicd}</if>
+        <if test="remocd != null ">,</if>
+        <if test="remocd != null">remocd=#{remocd}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="faccd != null ">,</if>
+        <if test="faccd != null">faccd=#{faccd}</if>
+        <if test="resucd != null ">,</if>
+        <if test="resucd != null">resucd=#{resucd}</if>
         <if test="remoremark != null ">,</if>
         <if test="remoremark != null">remoremark=#{remoremark}</if>
-        <if test="resuremark != null ">,</if>
-        <if test="resuremark != null">resuremark=#{resuremark}</if>
         <if test="remark != null ">,</if>
         <if test="remark != null">remark=#{remark}</if>
-        <if test="indate != null ">,</if>
-        <if test="indate != null">indate=#{indate}</if>
-        <if test="inperid != null ">,</if>
-        <if test="inperid != null">inperid=#{inperid}</if>
+        <if test="resuremark != null ">,</if>
+        <if test="resuremark != null">resuremark=#{resuremark}</if>
+        <if test="resutime = 1 ">,</if>
+        <if test="resutime = 1">result = '1'</if>
+        <if test="resutime = null ">,</if>
+        <if test="resutime = null">result = '0'</if>
         where compnum = #{compnum}
     </update>
 

@@ -138,19 +138,7 @@ public class App10RetrieveController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String inperid = userformDto.getPerid();
-            String recedate = app10tDto.getRecedate();
-            String ls_yeare = recedate.substring(0,4);
-            String ls_mm = recedate.substring(4,6);
-            String ls_dd = recedate.substring(8,10);
-            recedate =  ls_yeare + ls_mm + ls_dd;
-            app10tDto.setCustcd(ls_custcd);
-            app10tDto.setSpjangcd(ls_spjangcd);
-            app10tDto.setRecedate(recedate);
 
-            app10tDto.setInputdate(getToDate());
-            app10tDto.setIndate(getToDate());
-            app10tDto.setInperid(inperid);
 
             param.forEach((key, values) -> {
                 switch (key) {
@@ -171,6 +159,9 @@ public class App10RetrieveController {
                         break;
                     case "resultcdz":
                         app10tDto.setResultcd(values.toString());
+                        break;
+                    case "recedatez":
+                        app10tDto.setRecedate(values.toString());
                         break;
                     case "recenumz":
                         app10tDto.setRecenum(values.toString());
@@ -241,6 +232,19 @@ public class App10RetrieveController {
             });
 
             log.info(app10tDto); //consolelog에 app04Dto 호출
+            String inperid = userformDto.getPerid();
+            String recedate = app10tDto.getRecedate();
+            String ls_yeare = recedate.substring(0,4);
+            String ls_mm = recedate.substring(4,6);
+            String ls_dd = recedate.substring(8,10);
+            recedate =  ls_yeare + ls_mm + ls_dd;
+            app10tDto.setCustcd(ls_custcd);
+            app10tDto.setSpjangcd(ls_spjangcd);
+            app10tDto.setRecedate(recedate);
+
+            app10tDto.setInputdate(getToDate());
+            app10tDto.setIndate(getToDate());
+            app10tDto.setInperid(inperid);
 
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
