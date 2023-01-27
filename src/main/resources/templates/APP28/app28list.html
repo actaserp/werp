@@ -146,8 +146,9 @@
                                         <input type="hidden" id="actsflagz" name="actsflagz" value="Y">
                                         
                                     </form>
-                                    <a href="#!" id="commentlist" th:data-value="${question.sseq}">댓글 보기</a>
-                                    <div class="d-flex mt-3" id="CommentArea" style="flex-direction:column">
+                                    <a href="#!" th:mySseq="${question.sseq}" th:onclick="CommentList(this.getAttribute('mySseq'))">댓글 보기</a>
+
+                                    <div class="d-flex mt-3" th:id="|CommentArea${question.sseq}|" name="CommentArea" style="flex-direction:column">
                                         
                                     </div>
 
@@ -265,10 +266,44 @@
     }
 
     
-    $(function (){
-        $("#commentlist").on("click", function(){
+    // $(function (){
+    //     $("#commentlist").on("click", function(){
+    //         var html;
+    //         var subkey = document.getElementById("commentlist").getAttribute('data-value');
+
+    //         console.log("click"+subkey);
+    //         $.ajax({
+    //                 url: '/app28mod/commentlist',
+    //                 type:"POST",
+    //                 data: {
+    //                     "actsseqz"    : subkey,
+    //                     "actflagz"    : "Y"
+    //                 },
+    //                 async:false,
+    //                 success:function(data){
+    //                         console.log("success");
+    //                         console.log(data);
+
+    //                         for(var i=0; i<data.length; i++){
+    //                             html = "<div class='flex-1 ms-2 fs--1'>"+
+    //                                         "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>  "+data[i]["smemo"]+"</p>"+
+    //                                         "<div class='px-2'><a href='#!''>답글 달기</a> 23분 전 </div>"+
+    //                                     "</div>";
+    //                             $("#CommentArea").append(html);
+    //                         }
+                            
+    //                 },error:function(e){
+    //                     console.log('error',e);
+    //                 }
+    //             }).done(function(fragment){
+        
+    //             })
+    //     });
+
+    // })
+
+        function CommentList(subkey){
             var html;
-            var subkey = document.getElementById("commentlist").getAttribute('data-value');
 
             console.log("click"+subkey);
             $.ajax({
@@ -282,25 +317,25 @@
                     success:function(data){
                             console.log("success");
                             console.log(data);
-
-                            for(var i=0; i<data.length; i++){
-                                html = "<div class='flex-1 ms-2 fs--1'>"+
-                                            "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>  "+data[i]["smemo"]+"</p>"+
-                                            "<div class='px-2'><a href='#!''>답글 달기</a> 23분 전 </div>"+
-                                        "</div>";
-                                $("#CommentArea").append(html);
-                            }
-                            
+                            console.log(data.length);
+                            if(data.length == 0 ){
+                                alert("댓글이 없습니다.");
+                            }else{
+                                for(var i=0; i<data.length; i++){
+                                    html = "<div class='flex-1 ms-2 fs--1'>"+
+                                                "<p class='mb-1 bg-200 rounded-3 p-2'><a class='fw-semi-bold' href='#!'>"+data[i]["spernm"]+"</a>  "+data[i]["smemo"]+"</p>"+
+                                                "<div class='px-2'>"+data[i]["sinputdate"]+"</div>"+
+                                            "</div>";
+                                    $("#CommentArea"+subkey).append(html);
+                                }
+                            }    
                     },error:function(e){
                         console.log('error',e);
                     }
                 }).done(function(fragment){
         
                 })
-        });
-
-    })
-    
+        }
     
 
         

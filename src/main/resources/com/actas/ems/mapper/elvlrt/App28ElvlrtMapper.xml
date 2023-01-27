@@ -17,7 +17,7 @@
     </select>
 
     <select id="getMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select spernm, smemo
+        select spernm, smemo, sinputdate
         from tb_msmanual WITH (NOLOCK)
         Where 1 = 1 and subkey = #{sseq}
     </select>
