@@ -73,7 +73,6 @@ public class App10ElvlrtService {
 
     //글삭제
     public boolean Delete10Manu(App10ElvlrtDto perm){
-        int queryResult = 1;
         queryResult = app10ElvMapper.Delete10Manul(perm);
         if(queryResult < 1){
             queryResult = 0;

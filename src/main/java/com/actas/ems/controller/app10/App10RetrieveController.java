@@ -280,11 +280,12 @@ public class App10RetrieveController {
                                 , Model model
                                 , HttpServletRequest request){
         boolean result = false;
+
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-            String ls_custcd = userFormDto.getCustcd();
-            String ls_spjangcd = userFormDto.getSpjangcd();
+            String ls_custcd = userformDto.getCustcd();
+            String ls_spjangcd = userformDto.getSpjangcd();
             String ls_yeare = compdate.substring(0,4);
             String ls_mm = compdate.substring(5,7);
             String ls_dd = compdate.substring(8,10);
@@ -293,15 +294,17 @@ public class App10RetrieveController {
             app10tDto.setCompnum(compnum);
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
+//            if(compdate.equals("")|| compnum.equals("")) {
+//                    result = service.Updateresult0(app10tDto);
+//                    }
+//            if(!result){
+//                return  "error";
+//            }
             result = service.Delete10Manu(app10tDto);
             if(!result){
                 return "error";
             }
             result = service.Updateresult0(app10tDto);
-            if(!result){
-                return "error";
-            }
-
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";

@@ -120,9 +120,9 @@
                 </div>
                 <!-- 우측 전체 테이블 -->
                 <div class="sec_con" style="width: 65%;">
-                    <div class="box_wrap" >
+                    <div class="box_wrap" style="padding-bottom: 100px;">
                         <form action="">
-                            <div class="table table_style1" style="padding-bottom: 10px;">
+                            <div class="table table_style1" >
                                 <table>
                                     <tbody>
                                         <tr>
@@ -131,7 +131,8 @@
                                             <div class="input_wrap">
                                                 <input type="text" id="recedatez" placeholder="접수일자" disabled>
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
-                                                <input type="hidden" id="inputperidz" placeholder="작성자" disabled>
+                                                <input type="hidden" id="inperidz" placeholder="작성자" disabled>
+                                                <input type="hidden" id="indatez" placeholder="작성일" disabled>
                                                 <input type="text" name="compnum" id="compnumz">
                                                 <input type="text" name="compdate" id="compdatez">
 
@@ -186,7 +187,7 @@
                                         <th>도착시간</th>
                                         <td>
                                             <div class="input_wrap">                                               
-                                                <input type="time"  id="actarrivtimez" autocomplete="off" >
+                                                <input type="time" class="form-control" id="actarrivtimez" autocomplete="off" >
                                             </div>
                                         </td>
                                         <th>담당자</th>
@@ -208,14 +209,13 @@
                                         <th>완료일자</th>
                                         <td colspan="4">
                                             <div class="input_wrap date">
-                                                <input type="text"  class="form-control datetimepicker" name="actcompdate" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
+                                                <input type="text"  class="form-control flatpickr" name="actcompdate" id="actcompdatez" autocomplete="off"  placeholder="Y-m-d">
                                             </div>
                                         </td>
                                         <th>완료시간</th>
                                         <td  >
                                             <div class="input_wrap ">
                                                 <input type="time"  class="form-control " name="actcomptime" id="actcomptimez" autocomplete="off" >
-                                                <input type="hidden"  class="form-control " name="actcomptime" id="comptimez" autocomplete="off" >
                                             </div>
                                         </td> 
                                         <th>처리자</th>
@@ -309,7 +309,7 @@
                                         <th>고장상세원인</th>
                                         <td colspan="8">
                                             <div class="input_wrap">
-                                                <input type="text" name="remoremarkz" id="remoremarkz" autocomplete="off">
+                                                <input type="text" name="remoremarkz" id="remoremarkz" autocomplete="off" placeholder="고장상세원인을 입력하세요">
                                             </div>
                                         </td>
                                     </tr>
@@ -317,7 +317,7 @@
                                         <th>처리내용상세</th>
                                         <td colspan="8">
                                             <div class="input_wrap">
-                                                <input type="text" name="resuremarkz" id="resuremarkz" autocomplete="off">
+                                                <input type="text" name="resuremarkz" id="resuremarkz" autocomplete="off" placeholder="처리내용상세를 입력하세요">
                                             </div>
                                         </td>
                                     </tr>
@@ -325,22 +325,22 @@
                                         <th>고객요망사항</th>
                                         <td colspan="8">
                                             <div class="input_wrap">
-                                                <input type="text" name="remarkz" id="remarkz" autocomplete="off">                                                
+                                                <input type="text" name="remarkz" id="remarkz" autocomplete="off" placeholder="고객요망사항을 입력하세요">                                                
                                             </div>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div class="btn_wrap" style="float: right; ">
-                                    <div class="btns" style="float: inline-start; ">                                                        
-                                        <button class="btn btn-outline-danger me-1 mb-1"  type="button" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제</button>
-                                        <button class="btn btn-outline-info me-1 mb-1"  type="button" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신규</button>                                                                                                
-                                        <button class="btn btn-outline-warning me-1 mb-1 " type="button" id="save" onclick="save_btn()">저장</button>                                    
+                                    <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
+                                        <div class="btns" >                                                        
+                                            <button class="btn btn-outline-danger me-1 mb-1"  type="button" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제</button>
+                                            <button class="btn btn-outline-info me-1 mb-1"  type="button" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신규</button>                                                                                                
+                                            <button class="btn btn-outline-warning me-1 mb-1 " type="button" id="save" onclick="save_btn()">저장</button>                                    
 
-                                    </div>
-                                    
-                                    <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
-                                </div>                              
+                                        </div>
+                                        
+                                        <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
+                                    </div>                              
                             </div>                           
                         </form>
 
@@ -830,7 +830,7 @@ function CahngeSlect(value){
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
             }               
-            var ls_compdatez = document.getElementById('actcompdatez').value;
+            var ls_compdatez = document.getElementById('recedatez').value;
             var ls_compnumz = document.getElementById('compnumz').value;                                                       
                                                        
 
@@ -864,7 +864,8 @@ function CahngeSlect(value){
 
             document.getElementById('recedatez').value= ""; 
             document.getElementById('recenumz').value= ""; 
-            document.getElementById('inputperidz').value= ""; 
+            document.getElementById('inperidz').value= ""; 
+            document.getElementById('indatez').value= ""; 
             document.getElementById('recetimez').value= ""; 
             document.getElementById('actpernmz').value= ""; 
             document.getElementById('actperidz').value= ""; 
@@ -916,7 +917,9 @@ function CahngeSlect(value){
             var ls_recedatez = document.getElementById('recedatez').value; //recedate ` 접수일자
             var ls_recenumz = document.getElementById('recenumz').value; //recenum ` 접수번호
             var ls_recetimez = document.getElementById('recetimez').value.replace(":", ""); //recetime ` 접수시간
-            var ls_divicdz   = document.getElementById('divicdz').value;  
+            var ls_divicdz   = document.getElementById('divicdz').value; 
+            var ls_inperidz = document.getElementById('inperidz').value; 
+            var ls_indatez = document.getElementById('indatez').value; 
             var ls_peridz   = document.getElementById('peridz').value;  
             var ls_actperidz    = document.getElementById('actperidz').value;  
             var ls_actcdz   = document.getElementById('actcdz').value;  
@@ -1000,7 +1003,9 @@ function CahngeSlect(value){
                 "remoremarkz" : ls_remoremarkz,
                 "remarkz" : ls_remarkz,
                 "resuremarkz" : ls_resuremarkz,
-                "resultckz" : ls_resultckz           
+                "resultckz" : ls_resultckz,
+                "inperidz": ls_inperidz,
+                "indatez": ls_indatez           
             }
             console.log(inputdata);
 
@@ -1027,7 +1032,7 @@ function CahngeSlect(value){
                     console.log('error',e);
                 }
                 })
-            listUp(); 
+            // listUp(); 
             // return false;
          }
 
@@ -1754,13 +1759,10 @@ window.location.href = '/app10/index01';
                     equpnm: wtab01Dto[i]["equpnm"],                                                                                           
                     equpcd : wtab01Dto[i]["equpcd"],
                     actperid:  wtab01Dto[i]["actperid"],  
-                    actpernm:  wtab01Dto[i]["actpernm"],                                                                                            
-                    pernm : wtab01Dto[i]["pernm"],
-                    perid : wtab01Dto[i]["perid"].substr(1),                                                                                                                                                                                                             
+                    actpernm:  wtab01Dto[i]["actpernm"],                                                                                                                                                                                                                                                                                                       
                     contcd :  wtab01Dto[i]["contcd"],
                     contnm : wtab01Dto[i]["contnm"], 
                     contents : wtab01Dto[i]["contents"], 
-                    reperid :  wtab01Dto[i]["reperid"],
                     divinm :   wtab01Dto[i]["divinm"],
                     divicd :   wtab01Dto[i]["divicd"],
                     resultck : wtab01Dto[i]["resultck"],
@@ -1776,7 +1778,19 @@ window.location.href = '/app10/index01';
                     resultcd : wtab01Dto[i]["resultcd"],
                     remoremark : wtab01Dto[i]["remoremark"],
                     resucd : wtab01Dto[i]["resucd"],
-                    resuremark : wtab01Dto[i]["resuremark"]
+                    resuremark : wtab01Dto[i]["resuremark"],
+                    arrivdate : wtab01Dto[i]["arrivdate"],
+                    arrivtime : wtab01Dto[i]["arrivtime"],
+                    inperid : wtab01Dto[i]["inperid"],
+                    indate : wtab01Dto[i]["indate"],
+                    greginm : wtab01Dto[i]["greginm"],
+                    reginm : wtab01Dto[i]["reginm"],
+                    remonm : wtab01Dto[i]["remonm"],
+                    facnm : wtab01Dto[i]["facnm"],
+                    resultnm : wtab01Dto[i]["resultnm"],
+                    resunm  : wtab01Dto[i]["resunm"],
+                    pernm : wtab01Dto[i]["pernm"],
+                    perid : wtab01Dto[i]["perid"].substr(1),  
                 });
                 cnt++;
             }   
@@ -1797,7 +1811,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate, ctx.item.comtime, ctx.item.resutime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm );                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1817,7 +1831,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.comdate, ctx.item.comtime, ctx.item.resutime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark);                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm );                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1839,7 +1853,7 @@ window.location.href = '/app10/index01';
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40){            
             document.getElementById('recedatez').value = arg1;  
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1858,19 +1872,30 @@ window.location.href = '/app10/index01';
             document.getElementById('actpernmz').value = arg16;
             document.getElementById('resultckz').value = arg17;
             document.getElementById('compnumz').value = arg18;
-            document.getElementById('compdatez').value = arg19; 
-            document.getElementById('comptimez').value = arg20;
+            document.getElementById('actcompdatez').value = arg19; 
+            document.getElementById('actcomptimez').value = arg20;
             document.getElementById('resutimez').value = arg21;
             document.getElementById('resulttimez').value = arg22;
             document.getElementById('gregicdz').value = arg23;
-            document.getElementById('regicdz').value = arg24;
+            document.getElementById('regicdz').value = arg24; 
             document.getElementById('remocdz').value = arg25;
             document.getElementById('faccdz').value = arg26;
             document.getElementById('resultcdz').value = arg27;
             document.getElementById('remoremarkz').value = arg28;
             document.getElementById('resucdz').value = arg29;
             document.getElementById('resuremarkz').value = arg30;
-            console.log(arg18);
+            document.getElementById('arrivdatez').value = arg31;
+            document.getElementById('actarrivtimez').value = arg32;
+            document.getElementById('inperidz').value = arg33; 
+            document.getElementById('indatez').value = arg34;
+            document.getElementById('greginmz').value = arg35;
+            document.getElementById('reginmz').value = arg36;
+            document.getElementById('remonmz').value = arg37;
+            document.getElementById('facnmz').value = arg38;
+            document.getElementById('resultnmz').value = arg39;
+            document.getElementById('resunmz').value = arg40;
+            console.log(arg31);
+            console.log(arg32);
         }     
         console.log(wactnmChk_a);
 // ####################################################################################################      
@@ -2770,10 +2795,10 @@ window.location.href = '/app10/index01';
             })       
         })       
       
-        function timeFunction() {
-            var actarrivtimez = document.getElementById("#actarrivtimez").value;
-            var actcomptimez = document.getElementById("#actcomptimez").value;
-        }
+        // function timeFunction() {
+        //     var actarrivtimez = document.getElementById("#actarrivtimez").value;
+        //     var actcomptimez = document.getElementById("#actcomptimez").value;
+        // }
         function getToday(){
             let today = new Date();   
             let year = today.getFullYear(); // 년도
@@ -2811,19 +2836,31 @@ window.location.href = '/app10/index01';
             var $actcompdatez = $('#actcompdatez'); //완료일자 
             var $stdate = $('#stdate'); //도착일
             var $enddate = $('#enddate'); //완료일자
-            
-            $arrivdatez.flatpickr({ 
+            var $actcomptimez = $('#actcomptimez'); 
+            var $actarrivtimez = $('#actarrivtimez'); 
+
+            $actcompdatez.flatpickr({ 
                 enableTime: false,
                 dateFormat: 'Y-m-d',   
-                // minDate: 'today',                    
                
             });
-            // $actcompdatez.flatpickr({ 
-            //     enableTime: false,
-            //     dateFormat: 'Y-m-d',   
-            //     minDate: 'today',                    
+            $arrivdatez.flatpickr({ 
+                enableTime: false,
+                dateFormat: 'Y-m-d',
                
-            // });
+            });
+            $actcomptimez.flatpickr({ 
+                enableTime: true,
+                noCalendar : true,
+                timeFormat: 'HH:ii',  
+               
+            });
+            $actarrivtimez.flatpickr({ 
+                enableTime: true,
+                noCalendar : true,
+                timeFormat: 'HH:ii',   
+               
+            });
 
         }  
         
