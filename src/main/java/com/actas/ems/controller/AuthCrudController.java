@@ -154,9 +154,6 @@ public class AuthCrudController {
         session.setAttribute("userformDto",userformDto);
 
 
-
-
-
         return userReturnDto;
     }
 
@@ -227,7 +224,7 @@ public class AuthCrudController {
 
     @RequestMapping(value = "/wrongpasswd", method = RequestMethod.POST)
     public Object Login_fail(@RequestParam("loginid") String loginid
-                             , @RequestParam("logpass") String logpass)throws Exception {
+                             , @RequestParam("logpass") String logpass, Model model)throws Exception {
             System.out.printf("--loginfail 진입");
 
             UserFormDto user = new UserFormDto();
@@ -235,14 +232,19 @@ public class AuthCrudController {
             user.setUserid(loginid);
             user.setPasswd1(logpass);
 
-            user = authService.GetUserInfoDto(user);
 
+            user = authService.GetUserInfoDto(user);
+            if(user == null){
+                return "null";
+            }
             if(user.getWrongnum().equals("3")){
 
-            }else{
+            } else{
                 authService.TB_XUSERS_LOGFAIL(user);
                 user = authService.GetUserInfo(user);
             }
+
+
 
             return user;
 

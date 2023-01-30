@@ -48,11 +48,16 @@ public class AuthController {
 
 
         model.addAttribute("userFormDto", userformDto);
+
         if (ls_flag.equals("AA")){
             return "mainframe";
-        }else{
+        } else if (userformDto == null) {
+            model.addAttribute("msg", "로그인실패");
+            return "/";
+        } else{
             return "mainframcustom";
         }
+
     }
 
 }

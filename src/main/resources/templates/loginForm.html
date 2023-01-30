@@ -191,10 +191,16 @@
           var ListDto = userFormDto;
           var ls_wrongnum = userFormDto["wrongnum"];
           var ls_useyn = userFormDto["useyn"];
+
           if(ls_wrongnum < 3 && ls_useyn == "Y"){
             alert("비밀번호를 "+ls_wrongnum+"회 틀렸습니다. 로그인 3회 실패 시 사용 중지됩니다.");
           }else{
-            alert("사용 중지된 계정입니다. 관리자에게 문의하세요.");
+            if(userFormDto == "null"){
+              alert("등록되지 않은 사용자입니다.")
+            }else {
+              alert("사용 중지된 계정입니다. 관리자에게 문의하세요.");
+              console.log(userFormDto);
+            }
           }
         }
       });
