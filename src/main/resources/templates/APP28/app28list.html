@@ -138,14 +138,13 @@
                                     <div class="row g-0 fw-semi-bold text-center py-2 fs--1">
                                         <div class="col-auto"><a class="rounded-2 d-flex align-items-center me-3" href="#!"><img src="../../assets/img/icons/spot-illustrations/comment-active.png" width="20" alt="" /><span class="ms-1"></span></a></div>
                                     </div>
-                                    <form class="d-flex align-items-center border-top border-200 pt-3" th:id="|commentform${question.sseq}|" method="POST" action="/app28mod/savecomment" >
                                     
-                                        <input class="form-control rounded-pill ms-2 fs--1" id="actsmemoz" name="actsmemoz" type="text" placeholder="댓글을 입력하세요." />
-                                        <input type="hidden" id="actssubkeyz" name="actssubkeyz" th:value="${question.sseq}"/>
-                                        <input type="hidden" id="actsseqz" name="actsseqz"/>
-                                        <input type="hidden" id="actsflagz" name="actsflagz" value="Y">
+                                        <input class="form-control rounded-pill ms-2 fs--1" th:id="|actsmemoz${question.sseq}|" name="actsmemoz" type="text" placeholder="댓글을 입력하세요."  />
+                                        <input type="hidden" th:id="|actssubkeyz${question.sseq}|" name="actssubkeyz" th:value="${question.sseq}"/>
+                                        <input type="hidden" th:id="|actsseqz${question.sseq}|" name="actsseqz"/>
+                                        <input type="hidden" th:id="|actsflagz${question.sseq}|" name="actsflagz" value="Y">
+                                        <a href="#!" th:mySseq="${question.sseq}" th:onclick="save_comment(this.getAttribute('mySseq'))">댓글 저장</a><br>
                                         
-                                    </form>
                                     <a href="#!" th:mySseq="${question.sseq}" th:onclick="CommentList(this.getAttribute('mySseq'))">댓글 보기</a>
 
                                     <div class="d-flex mt-3" th:id="|CommentArea${question.sseq}|" name="CommentArea" style="flex-direction:column">
@@ -337,10 +336,43 @@
         
                 })
         }
+
+        function save_comment(subkey){
+            $(function(){
+                
+                    var comment = document.getElementById("actsmemoz"+subkey).value;
+                    var flag = document.getElementById("actsflagz"+subkey).value;
+
+                    if(comment == "" || comment == null){
+                        alert("댓글을 입력해주세요.");
+                        
+                    }else{
+                        $.ajax({
+                            url: '/app28mod/savecomment',
+                            type:"POST",
+                            data: {
+                                "actsmemoz"     : comment,
+                                "actssubkeyz"   : subkey,
+                                "actflagz"      : "Y"
+                            },
+                            success: function (data) {
+                                alert("success");
+                                listUp();
+                            },error:function(e){
+
+                            console.log('error',e);
+                            }
+                        });
+   
+                    }
+
+            });
+            
+        }
     
 
         
-    </script>
+</script>
 
     
       
