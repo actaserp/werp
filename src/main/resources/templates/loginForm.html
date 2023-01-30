@@ -105,6 +105,7 @@
           var ls_loginid   = document.getElementById('loginid').value;
           var ls_logpass   = document.getElementById('logpass').value;
           var ls_ipaddr    = document.getElementById('ipaddr').value;
+          var ls_select  = document.getElementById('select').value;
           $.ajax({
               url: '/authcrud/login',
               type:"POST",
@@ -112,6 +113,7 @@
                   "loginid"    : ls_loginid ,
                   "logpass"  : ls_logpass,
                   "ipaddr"  : ls_ipaddr,
+                  "flag"    : ls_select,
               },
               async:false,
               success:function(userFormDto){
@@ -126,6 +128,12 @@
                 var ls_url = 'userid=' + ls_userid
                 var ls_useyn = userFormDto["useyn"]
                 var ls_wrongnum = userFormDto["wrongnum"]
+
+
+                if(userFormDto == "" || userFormDto == null){
+                  alert("사용자 구분을 확인하세요.");
+                  return false;
+                }
 
                 if(ls_wrongnum == 3 || ls_useyn == "N"){
                   wrongPasswd();

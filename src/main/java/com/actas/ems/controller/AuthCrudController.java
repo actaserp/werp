@@ -101,6 +101,7 @@ public class AuthCrudController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object memberLoginForm(@RequestParam("loginid") String loginid
             , @RequestParam("logpass") String logpass
+            , @RequestParam("flag") String select
             , Model model
             , HttpServletRequest request) throws Exception{
         userformDto.setUserid(loginid);
@@ -155,8 +156,14 @@ public class AuthCrudController {
         HttpSession session = request.getSession();
         session.setAttribute("userformDto",userformDto);
 
+        if(select.equals(userformDto.getFlag()) == false){
+            userReturnDto = null;
+            return userReturnDto;
+        }else {
 
-        return userReturnDto;
+
+            return userReturnDto;
+        }
     }
 
     @RequestMapping(value = "/useriddupchk", method = RequestMethod.POST)
