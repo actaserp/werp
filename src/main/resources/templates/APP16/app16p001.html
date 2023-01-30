@@ -69,7 +69,7 @@
                 <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
                        th:disabled="${result == false}"/>
 
-                <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  />
+                <input class="form-control form-control-sm"  type="hidden"  id="actcdz" th:name="${result} ? 'AA' : 'CC' "/>
               </div>
             </li>
             <li>
@@ -200,12 +200,23 @@
     window.onload = function() {
       localStorage.setItem("setpage", "app16p001");
 
+      let ls_name = document.getElementById('actcdz').name;
+
+      if(ls_name != "CC"){
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+
         sortDescriptions: ['actnm'],
         groupDescriptions: ['actnm'],
         pageSize: 12
       });
+      }else {
+        view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
 
+          sortDescriptions: ['equpnm'],
+          groupDescriptions: ['equpnm'],
+          pageSize: 12
+        });
+      }
       new wijmo.input.CollectionViewNavigator('#tab01Pager', {
         byPage: true,
         headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
@@ -503,8 +514,7 @@
           tabA_grid(data);
         },error:function(e){
           console.log("error");
-          // alert(data.code);
-          // alert(data.message);
+
         }
       }).done(function(fragment){
 

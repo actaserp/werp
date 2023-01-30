@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="layouts/APPHeader/apphead :: headFragment" />
-
+<style>
+  .modal_con .board .part1 .part1_bottom .title.toggle button img{
+    transform: rotate(180deg);
+  }
+  .modal_con .board .part1 .part1_bottom .title.toggle.on button img{
+    transform: rotate(0deg);
+  }
+</style>
 <body style="background: #f5f9fa;">
 <header>
 
@@ -15,7 +22,7 @@
       <div class="nav_bg"></div>
       <!-- ################################ -->
       <!-- ## Left navigator include -->
-      <th:block th:include="layouts/APPHeader/appLeftNav" />
+      <th:block th:include="layouts/APPHeader/appcareleft" />
     </div>
     <div class="right">
     </div>
@@ -25,7 +32,7 @@
       <ul class="left">
         <li>
           <div class="logo">
-            <a href="">
+            <a th:href="@{/auth/emmsdashboard}">
               <img th:src="@{/assets/images/logo.png}" alt="">
             </a>
           </div>
@@ -35,7 +42,7 @@
           <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
         </li>
         <li>
-          통계관리
+          고객지원센터
         </li>
         <li class="on">
           호기별고장현황
@@ -102,7 +109,7 @@
     <div class="section">
       <div class="sec_con" style="width: 100%;">
         <div class="box_wrap">
-          <ul class="search_box">
+          <ul class="search_box" style="margin-bottom: 0rem;">
             <li>
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">기간</span>
                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -122,7 +129,18 @@
                 </div>
             </li>
           </ul>
-          <ul class="search_box">
+
+          <div class="modal_con">
+            <div class="board">
+              <div class="part1" style="width: 100%;">
+                <div class="part1_bottom">
+                  <div class="modal_box">
+                    <div class="title toggle" style="cursor: pointer;">
+
+                      <button><img src="../images/toggle.png" alt=""></button>검색조건
+                    </div>
+                    <div class="con_wrap toggle_box" style="display: none;">
+          <ul class="search_box" style="margin-bottom: 0rem;">
             <li>
               <!--tb_e012-->
               <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">처리내용</span>
@@ -151,6 +169,12 @@
               </div>
             </li>
           </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -161,7 +185,7 @@
             <div class="card-body bg-light">
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')"></a>
+                  <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">호기별고장현황</a>
                 </li>
 
                 <input type="hidden" id="tabvalue" value="A">

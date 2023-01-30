@@ -198,23 +198,23 @@
     var view_resunmpage;
 
     window.onload = function() {
-      //localStorage.setItem("setpage", "app19p001");
 
-      //tab02 차트그리기
-      // Tab02Chartinit()
+      let ls_name = document.getElementById('actcdz').name;
 
-      //tab03 차트그리기
-      /*Tab03Chartinit()*/
-
-      console.log(document.getElementById('actcdz').value + "123")
-
-
+      if(ls_name != "CC"){
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
         sortDescriptions: ['actnm'],
         groupDescriptions: ['actnm'],
         pageSize: 12
       });
-
+      }
+      else {
+        view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+          sortDescriptions: ['equpnm'],
+          groupDescriptions: ['equpnm'],
+          pageSize: 12
+        });
+      }
       new wijmo.input.CollectionViewNavigator('#tab01Pager', {
         byPage: true,
         headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
