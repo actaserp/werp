@@ -71,7 +71,9 @@ public class AuthCrudController {
 
             String ls_cltnmInfo = authService.GetClientInfo(userformDto);
             userformDto.setCltcd(ls_cltnmInfo);
-            userformDto.setActcd(ls_cltnmInfo);
+            userformDto.setActcd(actcd);
+            /*userformDto.setActcd(ls_cltnmInfo);
+            */
             String ls_cltnmInfoName = authService.GetClientInfoName(userformDto);
             userformDto.setActnm(ls_cltnmInfoName);
 
