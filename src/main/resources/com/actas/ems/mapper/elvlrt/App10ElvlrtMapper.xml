@@ -20,16 +20,16 @@
                      a.contcd,
                      d.contnm,
                      a.contents,
-                     Left(a.recetime,2) + ':' + substring(a.recetime, 2,2) as recetime,
+                     Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
                      a.perid,
                      e.pernm,
                      a.divicd,
                      f.divinm,
-                     case when (Left(g.arrivdate,4) + '-' + substring(g.arrivdate, 5,2)+ '-' + substring(g.arrivdate, 7,2)) is null then 'data x' else arrivdate end as arrivdate,
-                     Left(g.arrivtime,2) + ':' + substring(g.arrivtime, 2,2) as arrivtime,
-					case when  Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2) is null then 'data x' else compdate end as compdate,
+                     Left(g.arrivdate,4) + '-' + substring(g.arrivdate, 5,2)+ '-' + substring(g.arrivdate, 7,2) as arrivdate,
+                     Left(g.arrivtime,2) + ':' + substring(g.arrivtime, 3,2) as arrivtime,
+                     Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2) as compdate,
                      g.compnum,
-                     Left(g.comptime,2) + ':' + substring( g.comptime, 2,2) as comptime,
+                     Left(g.comptime,2) + ':' + substring( g.comptime, 3,2) as comptime,
                      g.resutime,
                      g.resulttime,
                      g.gregicd,
@@ -46,6 +46,9 @@
                      k.greginm,
                      l.reginm,
                      m.resultnm,
+					 g.remark,
+                     a.inperid,
+                     a.indate,
                      CASE a.resultck WHEN '1' THEN '처리'
                      WHEN '0' THEN '미처리'
                      end as resultck
@@ -81,11 +84,16 @@
         set resultck = '0'
         where recedate = #{recedate};
     </update>
+    <update id="Updateresult100" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e411
+        set "result" = '0'
+        where recedate = #{recedate};
+    </update>
 
     <!--result를 1로 고정시킨 후 insert-->
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, actperid, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
-        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd},  #{actperid}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  arrivdate, arrivtime, resultcd, recedate, recenum, recetime, divicd, perid, actperid, actcd, actnm, equpcd, equpnm, resutime, comptime, contcd, contremark, gregicd, regicd, remocd, faccd, resucd, remoremark, remark, resuremark, inputdate, inperid, "result") values
+        (#{custcd}, #{spjangcd}, #{compnum}, #{compdate}, #{arrivdate}, #{arrivtime}, #{resultcd}, ${recedate}, #{recenum}, #{recetime}, #{divicd}, #{perid}, #{actperid}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{resutime}, #{comptime}, #{contcd}, #{contremark}, #{gregicd}, #{regicd}, #{remocd}, #{faccd}, #{resucd}, #{remoremark}, #{remark}, #{resuremark}, #{inputdate}, #{inperid}, '1')
     </insert>
 
     <!-- seq set, 6개 포맷으로 가져온다는 뜻임-->

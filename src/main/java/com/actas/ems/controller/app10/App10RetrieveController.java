@@ -142,41 +142,14 @@ public class App10RetrieveController {
 
             param.forEach((key, values) -> {
                 switch (key) {
-                    case "actcompdatez":
-                        app10tDto.setCompdate(values.toString());
-                        break;
-                    case "actcomptimez":
-                        app10tDto.setComptime(values.toString());
-                        break;
-                    case "arrivdatez":
-                        app10tDto.setArrivdate(values.toString());
-                        break;
-                    case "actarrivtimez":
-                        app10tDto.setArrivtime(values.toString());
-                        break;
-                    case "resutimez":
-                        app10tDto.setResutime(values.toString());
-                        break;
-                    case "resultcdz":
-                        app10tDto.setResultcd(values.toString());
-                        break;
                     case "recedatez":
                         app10tDto.setRecedate(values.toString());
-                        break;
-                    case "recenumz":
-                        app10tDto.setRecenum(values.toString());
                         break;
                     case "recetimez":
                         app10tDto.setRecetime(values.toString());
                         break;
-                    case "divicdz":
-                        app10tDto.setDivicd(values.toString());
-                        break;
-                    case "peridz":
-                        app10tDto.setInperid(values.toString());
-                        break;
-                    case "actperidz":
-                        app10tDto.setActperid(values.toString()); //처리자 = inperid, perid로 되어있음
+                    case "recenumz":
+                        app10tDto.setRecenum(values.toString());
                         break;
                     case "actcdz":
                         app10tDto.setActcd(values.toString());
@@ -193,8 +166,41 @@ public class App10RetrieveController {
                     case "actcontcdz":
                         app10tDto.setContcd(values.toString());
                         break;
+                    case "contnmz":
+                        app10tDto.setContnm(values.toString());
+                        break;
                     case "contentsz":
-                        app10tDto.setContremark(values.toString());
+                        app10tDto.setContents(values.toString());
+                        break;
+                    case "peridz":
+                        app10tDto.setPerid(values.toString());
+                        break;
+                    case "actperidz":
+                        app10tDto.setActperid(values.toString());
+                        break;
+                    case "inperidz":
+                        app10tDto.setInperid(values.toString());
+                        break;
+                    case "indatez":
+                        app10tDto.setIndate(values.toString());
+                        break;
+                    case "actcompdatez":
+                        app10tDto.setCompdate(values.toString());
+                        break;
+                    case "actcomptimez":
+                        app10tDto.setComptime(values.toString());
+                        break;
+                    case "resutimez":
+                        app10tDto.setResutime(values.toString());
+                        break;
+                    case "resultcdz":
+                        app10tDto.setResultcd(values.toString());
+                        break;
+                    case "arrivdatez":
+                        app10tDto.setArrivdate(values.toString());
+                        break;
+                    case "actarrivtimez":
+                        app10tDto.setArrivtime(values.toString());
                         break;
                     case "gregicdz":
                         app10tDto.setGregicd(values.toString());
@@ -202,11 +208,14 @@ public class App10RetrieveController {
                     case "regicdz":
                         app10tDto.setRegicd(values.toString());
                         break;
-                    case "remocdz":
-                        app10tDto.setRemocd(values.toString());
+                    case "divicdz":
+                        app10tDto.setDivicd(values.toString());
                         break;
                     case "faccdz":
                         app10tDto.setFaccd(values.toString());
+                        break;
+                    case "remocdz":
+                        app10tDto.setRemocd(values.toString());
                         break;
                     case "resucdz":
                         app10tDto.setResucd(values.toString());
@@ -214,14 +223,29 @@ public class App10RetrieveController {
                     case "remoremarkz":
                         app10tDto.setRemoremark(values.toString());
                         break;
-                    case "remarkz":
-                        app10tDto.setRemark(values.toString());
-                        break;
                     case "resuremarkz":
                         app10tDto.setResuremark(values.toString());
                         break;
-                    case "resultckz":
-                        app10tDto.setResult(values.toString());
+                    case "greginmz":
+                        app10tDto.setGreginm(values.toString());
+                        break;
+                    case "reginmz":
+                        app10tDto.setReginm(values.toString());
+                        break;
+                    case "remonmz":
+                        app10tDto.setRemonm(values.toString());
+                        break;
+                    case "facnmz":
+                        app10tDto.setFacnm(values.toString());
+                        break;
+                    case "resultnmz":
+                        app10tDto.setResultnm(values.toString());
+                        break;
+                    case "resunmz":
+                        app10tDto.setResunm(values.toString());
+                        break;
+                    case "remarkz":
+                        app10tDto.setRemark(values.toString());
                         break;
                     default:
                         break;
@@ -229,19 +253,46 @@ public class App10RetrieveController {
             });
 
             log.info(app10tDto);
-            String recedate = app10tDto.getRecedate();
-            String ls_yeare = recedate.substring(0,4);
-            String ls_mm = recedate.substring(5,7);
-            String ls_dd = recedate.substring(8,10);
-            recedate =  ls_yeare + ls_mm + ls_dd;
+//            String recedate = app10tDto.getRecedate();
+//            String ls_yeare = recedate.substring(0,4);
+//            String ls_mm = recedate.substring(5,4);
+//            String ls_dd = recedate.substring(8,10);
+//            recedate =  ls_yeare + ls_mm + ls_dd;
+//            String recetime = app10tDto.getRecetime();
+//            String ls_HH = recetime.substring(0,2);
+//            String ls_ii = recetime.substring(3,5);
+//            recetime = ls_HH + ls_ii;
+//            String arrivdate = app10tDto.getArrivdate();
+//            String ls_yeare2 = arrivdate.substring(0,4);
+//            String ls_mm2 = arrivdate.substring(5,7);
+//            String ls_dd2 = arrivdate.substring(8,10);
+//            arrivdate =  ls_yeare2 + ls_mm2 + ls_dd2;
+//            String arrivtime = app10tDto.getArrivtime();
+//            String ls_HH2 = arrivtime.substring(0,2);
+//            String ls_ii2 = arrivtime.substring(3,5);
+//            arrivtime = ls_HH2 + ls_ii2;
+//            String compdate = app10tDto.getCompdate();
+//            String ls_yeare3 = compdate.substring(0,4);
+//            String ls_mm3 = compdate.substring(5,7);
+//            String ls_dd3 = compdate.substring(8,10);
+//            compdate =  ls_yeare3 + ls_mm3 + ls_dd3;
+//            String comptime = app10tDto.getComptime();
+//            String ls_HH3 = comptime.substring(0,2);
+//            String ls_ii3 = comptime.substring(3,5);
+//            comptime = ls_HH3 + ls_ii3;
+
+
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
-            app10tDto.setRecedate(recedate);
+//            app10tDto.setRecedate(recedate);
+//            app10tDto.setRecedate(recetime);
+//            app10tDto.setRecedate(arrivdate);
+//            app10tDto.setRecedate(arrivtime);
+//            app10tDto.setRecedate(compdate);
+//            app10tDto.setRecedate(comptime);
             app10tDto.setInputdate(getToDate());
-            app10tDto.setIndate(getToDate());
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
-            String recenum = app10tDto.getRecenum();
             boolean result = false;
             if(compnum == null || compnum.equals("")){
                 app10tDto.setCompnum(CountSeq(compdate));
@@ -251,7 +302,6 @@ public class App10RetrieveController {
                     return "error";
                 }
             }else{
-                app10tDto.setCompnum(CountSeq(compdate));
                 result =  service.Update10Manu(app10tDto);
                 if(!result){
                     return "error";
@@ -266,14 +316,6 @@ public class App10RetrieveController {
         String ls_compnum = app10tDto.getCompnum();
         return ls_compnum;
     }
-
-    //                if(recenum.equals("")){
-//                    result = service.Updateresult1(app10tDto);
-//                    if(!result){
-//                        return "error";
-//                    }
-//                }
-
     @RequestMapping("/del")
     public String mmnualDelete(@RequestParam("compnum") String compnum,
                                @RequestParam("compdate") String compdate
@@ -286,10 +328,10 @@ public class App10RetrieveController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-            String ls_yeare = compdate.substring(0,4);
-            String ls_mm = compdate.substring(5,7);
-            String ls_dd = compdate.substring(8,10);
-            compdate =  ls_yeare + ls_mm + ls_dd;
+//            String ls_yeare = compdate.substring(0,4);
+//            String ls_mm = compdate.substring(5,7);
+//            String ls_dd = compdate.substring(8,10);
+//            compdate =  ls_yeare + ls_mm + ls_dd;
             app10tDto.setCompdate(compdate);
             app10tDto.setCompnum(compnum);
             app10tDto.setCustcd(ls_custcd);
