@@ -133,9 +133,7 @@
                                                 <input type="hidden" id="recenumz" placeholder="접수번호" disabled>
                                                 <input type="hidden" id="inperidz" placeholder="작성자" disabled>
                                                 <input type="hidden" id="indatez" placeholder="작성일" disabled>
-                                                <input type="text" name="compnum" id="compnumz">
-                                                <input type="text" name="compdate" id="compdatez">
-
+                                                <input type="hidden" name="compnum" id="compnumz">
                                             </div>
                                         </td>
                                         <th>접수시간</th>
@@ -170,7 +168,7 @@
                                         <th>대응시간<button class="btn1" type="button" onclick="wactnresult_btn()"><img th:src="@{/assets/images/i_search2.png}" alt=""></i></button></th>
                                         <td>
                                             <div class="input_wrap table_btn" style="width: 100%;">
-                                                <input type="text" class="control" name="resutime" id="resutimez" disabled>
+                                                <input type="text" class="control" name="resutime" id="resutimez" placeholder="입력해주세요" disabled>
                                                 <input type="hidden" class="control" name="resulttime" id="resulttimez" disabled>
                                                 <hr><b>분</b></hr>
                                             </div>      
@@ -830,7 +828,9 @@ function CahngeSlect(value){
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
             }               
-            var ls_compdatez = document.getElementById('recedatez').value;
+            var regexForslash = /-/g;
+
+            var ls_compdatez = document.getElementById('actcompdatez').value.replace(regexForslash, '');
             var ls_compnumz = document.getElementById('compnumz').value;                                                       
                                                        
 
@@ -861,45 +861,50 @@ function CahngeSlect(value){
     
     //초기화 function
     function clear_rtn(elem){
-
-            document.getElementById('recedatez').value= ""; 
-            document.getElementById('recenumz').value= ""; 
-            document.getElementById('inperidz').value= ""; 
-            document.getElementById('indatez').value= ""; 
-            document.getElementById('recetimez').value= ""; 
-            document.getElementById('actpernmz').value= ""; 
-            document.getElementById('actperidz').value= ""; 
-            document.getElementById('actdivinmz').value= ""; 
-            document.getElementById('pernmz').value= ""; 
+        document.getElementById('recedatez').value= ""; 
+            document.getElementById('recenumz').value= "";   
+            document.getElementById('recetimez').value= "";
+            document.getElementById('actnmz').value= ""; 
+            document.getElementById('actcdz').value= ""; 
+            document.getElementById('equpnmz').value= "";   
+            document.getElementById('equpcdz').value= "";
+            document.getElementById('actcontcdz').value= ""; 
             document.getElementById('contnmz').value= ""; 
-            document.getElementById('contentsz').value= ""; 
-            document.getElementById('greginmz').value= ""; 
+            document.getElementById('contentsz').value= "";   
+            document.getElementById('actdivinmz').value= ""; 
+            document.getElementById('divicdz').value= ""; 
+            document.getElementById('peridz').value= ""; 
+            document.getElementById('pernmz').value= ""; 
+            document.getElementById('actperidz').value= "";
+            document.getElementById('actpernmz').value= "";
+            document.getElementById('resultckz').value= "";
+            document.getElementById('compnumz').value= "";
+            document.getElementById('actcompdatez').value= "";
+            document.getElementById('actcomptimez').value= "";;
+            document.getElementById('resutimez').value= "";;
+            document.getElementById('resulttimez').value= "";
+            document.getElementById('gregicdz').value= "";
+            document.getElementById('regicdz').value= ""; 
+            document.getElementById('remocdz').value= "";
+            document.getElementById('faccdz').value= "";
+            document.getElementById('resultcdz').value= "";
+            document.getElementById('resucdz').value= "";
+            document.getElementById('remoremarkz').value= "";
+            document.getElementById('resuremarkz').value= "";
+            document.getElementById('arrivdatez').value= "";
+            document.getElementById('actarrivtimez').value= "";
+            document.getElementById('inperidz').value= "";
+            document.getElementById('indatez').value= "";
+            document.getElementById('greginmz').value= "";
             document.getElementById('reginmz').value= "";
             document.getElementById('remonmz').value= "";
             document.getElementById('facnmz').value= "";
-            document.getElementById('resunmz').value= ""; 
-            document.getElementById('resultnmz').value= ""; 
-            document.getElementById('peridz').value= "";   
-            document.getElementById('actarrivtimez').value= "";   
-            document.getElementById('actcomptimez').value= "";   
-            document.getElementById('remoremarkz').value= "";   
-            document.getElementById('resuremarkz').value= "";  
-            document.getElementById('remarkz').value= "";  
-            document.getElementById('resutimez').value= "";  
+            document.getElementById('resultnmz').value= "";
+            document.getElementById('resunmz').value= "";
+            document.getElementById('remarkz').value= "";
          var  ls_changeopp = document.getElementById('changeop').value= "%";  
-            document.getElementById('gregicdz').value= "";   
-            document.getElementById('regicdz').value= "";  
-            document.getElementById('remocdz').value= "";  
-            document.getElementById('faccdz').value= "";  
-            document.getElementById('resucdz').value= ""; 
-            document.getElementById('resultcdz').value= ""; 
-            document.getElementById('divicdz').value= ""; 
-            document.getElementById('actnmz').value= ""; 
-            document.getElementById('actcdz').value= ""; 
-            document.getElementById('equpcdz').value= ""; 
-            document.getElementById('equpnmz').value= ""; 
             if(ls_changeopp == "%"){
-                alert("초기화 됐습니다. 처리여부를 선택하세요.")
+                alert("초기화 됐습니다.")
             }
         }
     
@@ -907,49 +912,45 @@ function CahngeSlect(value){
     let formData = new FormData(); 
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){            
-            var regexForslash = /-/g;
-            var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
-            var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
-            var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
-            var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
-            var ls_resutimez = document.getElementById('resutimez').value; //대응시간
-            var ls_resultcdz   = document.getElementById('resultcdz').value;   //처리결과코드
-            var ls_recedatez = document.getElementById('recedatez').value; //recedate ` 접수일자
+        var regexForslash = /-/g;
+            var ls_recedatez = document.getElementById('recedatez').value.replace(regexForslash, ''); //recedate ` 접수일자
             var ls_recenumz = document.getElementById('recenumz').value; //recenum ` 접수번호
             var ls_recetimez = document.getElementById('recetimez').value.replace(":", ""); //recetime ` 접수시간
-            var ls_divicdz   = document.getElementById('divicdz').value; 
-            var ls_inperidz = document.getElementById('inperidz').value; 
-            var ls_indatez = document.getElementById('indatez').value; 
-            var ls_peridz   = document.getElementById('peridz').value;  
-            var ls_actperidz    = document.getElementById('actperidz').value;  
             var ls_actcdz   = document.getElementById('actcdz').value;  
             var ls_actnmz   = document.getElementById('actnmz').value;  
             var ls_equpcdz   = document.getElementById('equpcdz').value;  
             var ls_equpnmz   = document.getElementById('equpnmz').value;
             var ls_actcontcdz   = document.getElementById('actcontcdz').value; 
-            var ls_contentsz   = document.getElementById('contentsz').value; //contremark ` 고장내용상세 ~ 인데 401에선 contents 임
+            var ls_contnmz   = document.getElementById('contnmz').value; 
+            var ls_contentsz   = document.getElementById('contentsz').value;
+            var ls_peridz   = document.getElementById('peridz').value;  
+            var ls_actperidz    = document.getElementById('actperidz').value;  
+            var ls_inperidz = document.getElementById('inperidz').value; 
+            var ls_indatez = document.getElementById('indatez').value; 
+            var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
+            var ls_actcomptimez   = document.getElementById('actcomptimez').value.replace(":", ""); //완료시간
+            var ls_resutimez = document.getElementById('resutimez').value; //대응시간
+            var ls_resultcdz   = document.getElementById('resultcdz').value;   //처리결과코드
+            var ls_arrivdatez   = document.getElementById('arrivdatez').value.replace(regexForslash, ''); //도착일자
+            var ls_actarrivtimez   = document.getElementById('actarrivtimez').value.replace(":", ""); //도착시간
             var ls_gregicdz   = document.getElementById('gregicdz').value;
-            var ls_regicdz   = document.getElementById('regicdz').value;                                                            
+            var ls_regicdz   = document.getElementById('regicdz').value;  
+            var ls_divicdz   = document.getElementById('divicdz').value;
+            var ls_faccdz   = document.getElementById('faccdz').value;                                                           
             var ls_remocdz   = document.getElementById('remocdz').value;                                                         
-            var ls_faccdz   = document.getElementById('faccdz').value;
             var ls_resucdz   = document.getElementById('resucdz').value;                                                            
             var ls_remoremarkz   = document.getElementById('remoremarkz').value; //고장상세원인
-            var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
             var ls_resuremarkz   = document.getElementById('resuremarkz').value; //처리내용상세
-            var ls_resultckz = document.getElementById('resultckz').value;
+            var ls_greginmz   = document.getElementById('greginmz').value= "";
+            var ls_reginmz   =  document.getElementById('reginmz').value= "";
+            var ls_remonmz   = document.getElementById('remonmz').value= "";
+            var ls_facnmz   = document.getElementById('facnmz').value= "";
+            var ls_resultnmz   = document.getElementById('resultnmz').value= "";
+            var ls_resunmz   = document.getElementById('resunmz').value= "";
+            var ls_remarkz   = document.getElementById('remarkz').value; //고객요망사항
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
-                }
-            if(ls_resultckz == "처리"){
-                document.getElementById('resultckz').value="1";
-            }
-            if(ls_resultckz == "미처리"){
-                document.getElementById('resultckz').value="0";
-            }
-            if(ls_resultckz == "%"){
-                alert("처리여부를 선택하세요.")
-                 
-            }                                                                                                                                                 
+                }                                                                                                                                          
 
             if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
                 alert("도착시간을 입력하세요")
@@ -977,35 +978,42 @@ function CahngeSlect(value){
             }   
             
             var inputdata = {   
-                "actcompdatez": ls_actcompdatez , 
-                "actcomptimez"   : ls_actcomptimez, 
-                "arrivdatez"   : ls_arrivdatez, 
-                "actarrivtimez": ls_actarrivtimez , 
-                "resutimez"   : ls_resutimez, 
-                "resultcdz"   : ls_resultcdz,  
                 "recedatez": ls_recedatez , 
                 "recenumz"   : ls_recenumz, 
                 "recetimez"   : ls_recetimez, 
-                "divicdz"   : ls_divicdz,
-                "peridz" : ls_peridz,
-                "actperidz" : ls_actperidz, 
                 "actcdz" : ls_actcdz,
                 "actnmz":  ls_actnmz,
                 "equpcdz":  ls_equpcdz,
                 "equpnmz" :  ls_equpnmz,
                 "actcontcdz" :  ls_actcontcdz, 
-                "contentsz" : ls_contentsz,
+                "contnmz" :  ls_contnmz, 
+                "contentsz" :  ls_contentsz, 
+                "peridz" :  ls_peridz, 
+                "actperidz" :  ls_actperidz, 
+                "inperidz" :  ls_inperidz, 
+                "indatez" :  ls_indatez, 
+                "actcompdatez": ls_actcompdatez , 
+                "actcomptimez"   : ls_actcomptimez, 
+                "resutimez"   : ls_resutimez, 
+                "resultcdz"   : ls_resultcdz, 
+                "arrivdatez"   : ls_arrivdatez, 
+                "actarrivtimez": ls_actarrivtimez , 
                 "gregicdz" : ls_gregicdz,
                 "regicdz" : ls_regicdz,
-                "remocdz" : ls_remocdz,
+                "divicdz"   : ls_divicdz,
                 "faccdz" : ls_faccdz,
+                "remocdz" : ls_remocdz,
                 "resucdz" : ls_resucdz,
                 "remoremarkz" : ls_remoremarkz,
-                "remarkz" : ls_remarkz,
-                "resuremarkz" : ls_resuremarkz,
-                "resultckz" : ls_resultckz,
-                "inperidz": ls_inperidz,
-                "indatez": ls_indatez           
+                "resuremarkz" : ls_resuremarkz, 
+                "greginmz" : ls_greginmz, 
+                "reginmz" : ls_reginmz, 
+                "remonmz" : ls_remonmz, 
+                "facnmz" : ls_facnmz, 
+                "resultnmz" : ls_resultnmz, 
+                "resunmz" : ls_resunmz, 
+                "remarkz" : ls_remarkz
+          
             }
             console.log(inputdata);
 
@@ -1779,6 +1787,7 @@ window.location.href = '/app10/index01';
                     remoremark : wtab01Dto[i]["remoremark"],
                     resucd : wtab01Dto[i]["resucd"],
                     resuremark : wtab01Dto[i]["resuremark"],
+                    remark : wtab01Dto[i]["remark"],
                     arrivdate : wtab01Dto[i]["arrivdate"],
                     arrivtime : wtab01Dto[i]["arrivtime"],
                     inperid : wtab01Dto[i]["inperid"],
@@ -1811,7 +1820,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm );                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm, ctx.item.remark );                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1831,7 +1840,7 @@ window.location.href = '/app10/index01';
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm );                    
+                    wactnmChk_a(ctx.item.recedate, ctx.item.recenum, ctx.item.recetime, ctx.item.actnm, ctx.item.actcd, ctx.item.equpnm, ctx.item.equpcd, ctx.item.contcd, ctx.item.contnm, ctx.item.contents, ctx.item.divinm, ctx.item.divicd, ctx.item.perid, ctx.item.pernm, ctx.item.actperid, ctx.item.actpernm, ctx.item.resultck, ctx.item.compnum, ctx.item.compdate, ctx.item.comptime, ctx.item.resutime, ctx.item.resuttime, ctx.item.gregicd, ctx.item.regicd, ctx.item.remocd, ctx.item.faccd, ctx.item.resultcd, ctx.item.remoremark, ctx.item.resucd, ctx.item.resuremark, ctx.item.arrivdate, ctx.item.arrivtime, ctx.item.inperid, ctx.item.indate, ctx.item.greginm, ctx.item.reginm, ctx.item.remonm, ctx.item.facnm, ctx.item.resultnm, ctx.item.resunm, ctx.item.remark );                    
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1853,7 +1862,7 @@ window.location.href = '/app10/index01';
         }        
 
        
-        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40){            
+        function wactnmChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41){            
             document.getElementById('recedatez').value = arg1;  
             document.getElementById('recenumz').value = arg2;   
             document.getElementById('recetimez').value = arg3;
@@ -1894,6 +1903,7 @@ window.location.href = '/app10/index01';
             document.getElementById('facnmz').value = arg38;
             document.getElementById('resultnmz').value = arg39;
             document.getElementById('resunmz').value = arg40;
+            document.getElementById('remarkz').value = arg41;
             console.log(arg31);
             console.log(arg32);
         }     
@@ -2594,7 +2604,6 @@ window.location.href = '/app10/index01';
                     var cnt = 1;
                     for (var i = 0; i < wactpernmDto.length; i++) {
                         // console.log("actpernm=",wactpernmDto[i]["actpernm"]);
-                        // console.log("actperid=",wactpernmDto[i]["actperid"]);
                         wactpernm_data.push({                            
                             id: i, 
                             index: cnt,

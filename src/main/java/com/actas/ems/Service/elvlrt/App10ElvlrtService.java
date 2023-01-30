@@ -70,6 +70,14 @@ public class App10ElvlrtService {
         }
         return (queryResult > 0);
     }
+    @Transactional
+    public boolean Updateresult00(App10ElvlrtDto perm){
+        queryResult = app10ElvMapper.Updateresult100(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 
     //글삭제
     public boolean Delete10Manu(App10ElvlrtDto perm){
