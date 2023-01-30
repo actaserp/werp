@@ -315,6 +315,7 @@
                     },
                     async:false,
                     success:function(data){
+                            $("#CommentArea"+subkey).children().remove();
                             console.log("success");
                             console.log(data);
                             console.log(data.length);

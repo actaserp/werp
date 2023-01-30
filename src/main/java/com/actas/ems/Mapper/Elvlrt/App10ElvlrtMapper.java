@@ -24,6 +24,9 @@ public interface App10ElvlrtMapper {
 
     public int Delete10Manul(App10ElvlrtDto perm);
 
+    public int Updateresult11(App10ElvlrtDto perm);
+    public int Updateresult10(App10ElvlrtDto perm);
+
 
     public String get10ManualMaxSeq(String perm);
 
