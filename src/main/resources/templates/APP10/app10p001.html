@@ -829,17 +829,20 @@ function CahngeSlect(value){
                 return ; 
             }               
             var regexForslash = /-/g;
-
             var ls_compdatez = document.getElementById('actcompdatez').value.replace(regexForslash, '');
             var ls_compnumz = document.getElementById('compnumz').value;                                                       
-                                                       
+            var ls_recenumz = document.getElementById('recenumz').value;
+            var ls_recedatez = document.getElementById('recedatez').value.replace(regexForslash, '');                                          
+                                          
 
             $.ajax({
                 url: '/app10/del',   
                 type:"POST", 
                 data: {
                     "compdate" : ls_compdatez,
-                    "compnum" : ls_compnumz
+                    "compnum" : ls_compnumz,
+                    "recenum" : ls_recenumz,
+                    "recedate" : ls_recedatez
                 },
                 async:false,
                 success:function(data){ 
