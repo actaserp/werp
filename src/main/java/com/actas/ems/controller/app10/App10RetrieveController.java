@@ -133,7 +133,7 @@ public class App10RetrieveController {
             , Model model
             , HttpServletRequest request){
 
-        try{
+        try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
@@ -260,16 +260,17 @@ public class App10RetrieveController {
             String compdate = app10tDto.getCompdate();
             boolean result = false;
 
-            if(compnum == null || compnum.equals("")){
+            if (compnum == null || compnum.equals("")) {
                 app10tDto.setCompnum(CountSeq(compdate));
                 result = service.Insert10Manu(app10tDto);
-                if(!result){
+                if (!result) {
                     return "error";
                 }
-                result =  service.Update10Manu(app10tDto);
+            } else {
+                app10tDto.setCompnum(compnum);
+                result = service.Update10Manu(app10tDto);
             }
             result = service.Updateresult1(app10tDto);
-
 
             model.addAttribute("userformDto",userformDto);
         }catch (IllegalStateException e){
