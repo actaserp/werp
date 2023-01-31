@@ -266,9 +266,9 @@ public class App10RetrieveController {
                 if(!result){
                     return "error";
                 }
-                result = service.Updateresult1(app10tDto);
+                result =  service.Update10Manu(app10tDto);
             }
-            result =  service.Update10Manu(app10tDto);
+            result = service.Updateresult1(app10tDto);
 
 
             model.addAttribute("userformDto",userformDto);
