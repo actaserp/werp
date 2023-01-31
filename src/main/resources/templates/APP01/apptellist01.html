@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">  
+      
+    <div id="ktretrieveDiv02">
+        <ul class="client scrollbar" style="overflow-y: scroll; height: 257px;">
+            <li  th:each="formdata: ${app03TelList}" >
+                <div class="left">
+                    <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
+                    </div>
+                    <div class="txt">
+                        <h5><a href="#"  th:onclick="modtel_fnc([[${formdata.seq}]],[[${formdata.calldate}]],[[${formdata.calltime}]],[[${formdata.callnum}]],[[${formdata.callnm}]],[[${formdata.callmemo}]],[[${formdata.callbackflag}]],[[${formdata.callbacktime}]],[[${formdata.callbackmemo}]])" th:text="${formdata.callnm}">                                                                    
+                            부천프루지</a></h5><h5 th:text="${formdata.subcalltime}">12:00</h5>
+                        <br><h5 th:text="${formdata.callmemo}">통화내용나오는곳 통화내용나오는곳  통화내용나오는곳  통화내용나오는곳  </h5>
+                    </div> 
+                </div>
+                <div class="state"><a href="#">
+                    <h5 th:text="${formdata.callnum}" th:onclick="modtel_fnc([[${formdata.seq}]],[[${formdata.calldate}]],[[${formdata.calltime}]],[[${formdata.callnum}]],[[${formdata.callnm}]],[[${formdata.callmemo}]],[[${formdata.callbackflag}]],[[${formdata.callbacktime}]],[[${formdata.callbackmemo}]])">                                                               
+                        02-1234-5678  </h5></a>
+                </div> 
+            </li> 
+        </ul>
+    </div> 
+</html>
