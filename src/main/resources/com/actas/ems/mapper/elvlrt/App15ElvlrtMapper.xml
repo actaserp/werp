@@ -49,4 +49,105 @@
                  LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
         GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, m.equpnm
     </select>
+
+    <!--메인화면 당월 점검현황-->
+    <select id="GetApp00List002" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        SELECT
+            a.plandate as plandate,
+            a.plantime as plantime,
+            c.actnm as actnm,
+            a.equpcd as equpcd,
+            h.equpnm as equpnm,
+            a.gubun as gubun,
+            a.kcpernm as kcpernm,
+            a.qty as qty,
+            a.remark as remark,
+            a.kcspnm as kcspnm
+        FROM TB_E073 a
+                 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)
+            LEFT OUTER JOIN TB_E601 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd)
+        WHERE left(a.plandate, 6) = CONVERT(varchar(6), DATEADD(m, -0, getdate()), 112)
+        order by a.plandate desc
+    </select>
+
+    <!--메인화면 당일 계약만료현장-->
+    <select id="GetApp00List003" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select a.actcd as actcd,
+        q. actnm as actnm,
+        a.contdate as contdate,
+        a.stdate as stdate,
+        a.enddate as enddate
+        from tb_e101 a WITH(NOLOCK)
+        LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+        LEFT OUTER JOIN TB_E018 y WITH(NOLOCK) ON (a.custcd = y.custcd AND a.spjangcd = y.spjangcd AND a.cls = y.outcd)
+        , (select custcd, spjangcd, cltcd, actcd, max(contdate) as contdate
+        from tb_e101 WITH(NOLOCK)
+        group by custcd, spjangcd, cltcd, actcd) b
+        WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
+
+        AND a.enddate = CONVERT(varchar(8), GETDATE(),112)
+        aND a.contg <> '04'
+        and Len(a.stdate) > 0
+        ]]>
+    </select>
+
+    <!--메인화면 30일 후 계약만료현장-->
+    <select id="GetApp00List004" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select a.actcd as actcd,
+               q. actnm as actnm,
+               a.contdate as contdate,
+               a.stdate as stdate,
+               a.enddate as enddate
+
+        from tb_e101 a WITH(NOLOCK)
+      LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E018 y WITH(NOLOCK) ON (a.custcd = y.custcd AND a.spjangcd = y.spjangcd AND a.cls = y.outcd)
+            , (select custcd, spjangcd, cltcd, actcd, max(contdate) as contdate
+            from tb_e101 WITH(NOLOCK)
+            group by custcd, spjangcd, cltcd, actcd) b
+        WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
+
+          AND a.enddate = CONVERT(varchar(8), DATEADD(DAY, 30, GETDATE()), 112)
+          aND a.contg <> '04'
+          and Len(a.stdate) > 0
+        ]]>
+    </select>
+    <!--메인화면 당월 고장접수-->
+    <select id="GetApp00List005" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT a.actcd as actcd,
+               a.actnm as actnm,
+               a.equpcd as equpcd,
+               a.equpnm as equpnm,
+               a.pernm as pernm,
+               a.contnm as contnm,
+               a.contents as contents,
+            LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+            EOMONTH(GETDATE()) as  enddate
+        FROM (SELECT a.actcd,
+            q.actnm,
+            a.equpcd,
+            m.equpnm,
+            count(a.recedate) as qty,
+            max(a.perid) as perid,
+            d.pernm,
+            max(a.contcd) as contcd,
+            p.contnm,
+            max(convert(varchar(100), a.contents)) as contents,
+            max(a.remark) as remark
+            FROM tb_e401 a
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            WHERE  a.recedate BETWEEN replace(LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01', '-', '') AND replace(EOMONTH(GETDATE()),'-','')
+            AND q.actnm like CONCAT('%','%','%')
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+        WHERE a.qty >= 0
+          AND a.perid like CONCAT('%','%','%')
+        ]]>
+    </select>
 </mapper>

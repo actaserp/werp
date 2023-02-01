@@ -65,7 +65,8 @@ public class App05CrudController {
             String ls_mm = ninputdate.substring(5,7);
             String ls_dd = ninputdate.substring(8,10);
             ninputdate =  ls_yeare + ls_mm + ls_dd;
-//        log.debug("ninputdate==>" + ninputdate);
+
+
             App05Dto.setCustcd(ls_custcd);
             App05Dto.setSpjangcd(ls_spjangcd);
             if(nseq == null || nseq.equals("")){
@@ -190,6 +191,8 @@ public class App05CrudController {
 //                log.info("upload file name : " + multipartFile.getOriginalFilename());
 //                log.info("upload file name : " + multipartFile.getSize());
                 ls_fileName = multipartFile.getOriginalFilename();
+
+
                 /* 파일이 비어있으면 비어있는 리스트 반환 */
                 if (multipartFile.getSize() < 1) {
                     ls_errmsg = "success";
@@ -203,10 +206,10 @@ public class App05CrudController {
                 /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
                 File target = new File(uploadPath, saveName);
                 multipartFile.transferTo(target);
-
+                String nseq1 = App05Dto.getNseq();
                 /* 파일 정보 저장 */
                 AttachDTO attach = new AttachDTO();
-                attach.setBoardIdx(nseq);
+                attach.setBoardIdx(nseq1);
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
@@ -225,10 +228,10 @@ public class App05CrudController {
             throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
             //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/App05/App05list/", Method.GET, model);
         } catch (Exception  e){
-            log.info("memberUpload Exception ================================================================");
+            /*log.info("memberUpload Exception ================================================================");
             log.info(e.toString());
             ls_errmsg = "[" + ls_fileName + "] failed to save";
-            throw new AttachFileException("[" + ls_fileName + "] failed to save");
+            throw new AttachFileException("[" + ls_fileName + "] failed to save");*/
             //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app05/App05list/", Method.GET, model);
         }
 

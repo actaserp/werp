@@ -43,30 +43,18 @@ public class App05Controller {
     // 도면자료실 index
     @GetMapping(value="/index01")
     public String App05Form(Model model, HttpServletRequest request) throws  Exception{
-//        userformDto.setUserid(userid);
-//        userformDto.setUsername(username);
-//        userformDto.setCltcd(cltcd);
-//        userformDto.setDbnm(dbnm);
-//        userformDto.setFlag(flag);
-//        userformDto.setCalluserid(calluserid);
-//        userformDto.setCalluserpw(calluserpw);
-//        userformDto.setCustcd(custcd);
-//        userformDto.setSpjangcd(spjangcd);
+
 
         Date nowData = new Date();
         SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
         String indate = endDate.format(nowData).toString();
         App05Dto.setYyyymm(indate.substring(0,6));
         App05Dto.setNinputdate(indate);
-//        if(bflag == "0"){
-//            App05Dto.setMsubject(search);
-//        }else{
-//            App05Dto.setMemo(search);
-//        }
+
         try {
-            App05ListDto = service.GetMNoticeList(App05Dto);
+
 //            log.debug("Exception =====>" + App05ListDto );
-            model.addAttribute("App05Dto",App05ListDto);
+            model.addAttribute("App05Dto",service.GetMNoticeList(App05Dto));
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );

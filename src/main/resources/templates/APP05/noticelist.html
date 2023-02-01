@@ -78,6 +78,7 @@
                 <li>
                     <button  class="color4" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="listmodal_btn" onclick="clear_rtn(this)" >공지등록 </button>
                     <button  class="color4" type="button" visible="false" data-bs-toggle="modal" data-bs-target="#fileBackdrop" id="filemodal_btn" onclick="clear_rtn(this)" >미리보기 </button>
+
                 </li>
             </ul>
 
@@ -438,7 +439,7 @@
 
             }
             var inputdata = {
-                    "actnseqz"    : ls_actnseqz ,
+                    "actnseqz"    : ls_actnseqz.substr(0,4) + ls_actnseqz.substr(5,2) + ls_actnseqz.substr(8,3) ,
                     "actninputdatez"    : ls_actninputdatez ,
                     "actngroupcdz"  : ls_actngroupcdz,
                     "actnsubjectz"      : ls_actnsubjectz ,
@@ -476,42 +477,6 @@
 
             })
 
-
-            // $.ajax({
-            //     url: '/app05mod/save',
-            //     type:"POST",
-            //     data: {
-            //         "actnseqz"    : ls_actnseqz ,
-            //         "actninputdatez"    : ls_actninputdatez ,
-            //         "actngroupcdz"  : ls_actngroupcdz,
-            //         "actnsubjectz"      : ls_actnsubjectz ,
-            //         "actnfilenamez" : ls_actnfilenamez ,
-            //         "actnpernmz"   : ls_actnpernmz   ,
-            //         "actnmemoz"   : ls_actnmemoz,
-            //         "actnflagz"   : ls_actnflagz
-            //     },
-            //     async:false,
-            //     success:function(data){
-            //         // console.log("등록OK", data);
-            //         if(data != "error"){
-            //             ls_actnseqz = data
-            //             console.log("actnseqz2", data);
-            //             // $("#CloseBtn").trigger("click");
-
-            //         }
-
-            //     },error:function(e){
-            //         console.log('error',e);
-            //         return
-            //     }
-            // }).done(function(fragment){
-
-            // })
-
-
-
-
-
         }
         function delete_btn(){
 
@@ -529,7 +494,7 @@
                 url: '/app05mod/del',
                 type:"POST",
                 data: {
-                    "actnseqz"    : ls_actnseqz ,
+                    "actnseqz"    : ls_actnseqz.replaceAll("-",""),
                     "actnflagz"    : "NN"
                 },
                 async:false,
@@ -541,6 +506,7 @@
                         listUp();
                     }else{
                         alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+
                     }
                 },error:function(e){
                     console.log('error',e);
@@ -591,7 +557,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
                         click: (e, ctx) => {
-                            viewFilePage(ctx.item.nseq );
+                            viewFilePage(ctx.item.nseq.substr(0,4) + ctx.item.nseq.substr(5,2) + ctx.item.nseq.substr(8,3));
                         }
                     }) } ,
                 { binding: 'ninputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
@@ -625,7 +591,7 @@
                     nsubject: mapp05Dto[i]["nsubject"],
                     npernm:   mapp05Dto[i]["npernm"],
                     attcnt : mapp05Dto[i]["attcnt"] ,
-                    ninputdate : mapp05Dto[i]["ninputdate"] ,
+                    ninputdate : mapp05Dto[i]["ninputdate"].substr(0,4) + "-" + mapp05Dto[i]["ninputdate"].substr(4,2)+"-"+mapp05Dto[i]["ninputdate"].substr(6,2) ,
                     ngourpcd : mapp05Dto[i]["ngourpcd"]     ,
                     nmemo : mapp05Dto[i]["nmemo"]     ,
                     nflag : mapp05Dto[i]["nflag"]
@@ -719,7 +685,7 @@
                 document.getElementById('actnsubjectz').value= arg3;
                 document.getElementById('actnpernmz').value= arg4;
                 // document.getElementById('actnfilenamez').value= arg5;
-                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                arg6 = arg6.substr(0,4) +  arg6.substr(4, 2) + arg6.substr(6,9);
                 document.getElementById('actninputdatez').value= arg6;
                 document.getElementById('actngroupcdz').value= arg7;
                 document.getElementById('actnmemoz').value= arg8;
@@ -730,7 +696,7 @@
                         url: '/app05mod/flist',
                         type:"POST",
                         data: {
-                            "actnseqz"     : arg1,
+                            "actnseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
                             "actnflagz"     : "NN",
                         },
                         async:false,
@@ -812,6 +778,7 @@
             let month = today.getMonth() + 1;  // 월
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
+            if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_today = year + '-' + month + '-' + date
             document.getElementById('actninputdatez').value = ls_today;

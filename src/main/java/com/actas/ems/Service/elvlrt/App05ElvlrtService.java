@@ -21,7 +21,7 @@ public class App05ElvlrtService {
     App05ElvlrtMapper app05ElvMapper;
     int queryResult = 1;
     /** 글 목록 */
-    public List<App05ElvlrtDto> GetMNoticeList(App05ElvlrtDto perm){return app05ElvMapper.GetMNoticeList(perm);}
+    public Object GetMNoticeList(App05ElvlrtDto perm){return app05ElvMapper.GetMNoticeList(perm);}
     public List<App05ElvlrtDto> GetMNoticeBlankList(App05ElvlrtDto perm){return app05ElvMapper.GetMNoticeList(perm);}
 
     /** 글 조회 */

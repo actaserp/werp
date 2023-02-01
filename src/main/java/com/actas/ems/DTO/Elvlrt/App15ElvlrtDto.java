@@ -27,6 +27,28 @@ public class App15ElvlrtDto {
     private String equpnm;
 
 
+    //메인화면 당월점검현황
+    private String plandate;
+    private String plantime;
+    private String actnm;
+    private String gubun;
+    private String kcpernm;
+    private String remark;
+    private String kcspnm;
+
+
+    //메인화면 계약만료현장
+    private String contdate;
+    private String stdate;
+    private String enddate;
+
+    // 메인화면 고장다발현장
+    private String pernm;
+    private String contnm;
+    private String contents;
+
+
+
 
 
 }

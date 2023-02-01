@@ -36,7 +36,7 @@ public class App15RetrieveController {
                                     @RequestParam("todate") String todate,
                                     @RequestParam("actcdz") String actcd,
                                     Model model
-                                    ) throws Exception {
+    ) throws Exception {
         String ls_yeare = frdate.substring(0, 4);
         String ls_mm = frdate.substring(5, 7);
         String ls_dd = frdate.substring(8, 10);

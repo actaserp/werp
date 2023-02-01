@@ -499,7 +499,7 @@
       url: '/app07mod/del',
       type:"POST",
       data: {
-        "actfseqz"    : ls_actfseqz ,
+        "actfseqz"    : ls_actfseqz.replaceAll("-","") ,
         "actflagz"    : "MF"
       },
       async:false,
