@@ -31,7 +31,16 @@ public class App22Controller {
         try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+            boolean result = true;
+            if(userformDto.getFlag().equals("CC")){
+                result = false;
+            }
+
             model.addAttribute("userformDto", userformDto);
+            model.addAttribute("result", result);
+            String actnm = userformDto.getActnm();
+            model.addAttribute("actnm", actnm);
 
         }catch (Exception ex){
             log.debug("Exception12 ==========>" + ex.toString());

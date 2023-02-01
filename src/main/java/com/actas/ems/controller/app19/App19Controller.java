@@ -43,6 +43,9 @@ public class App19Controller {
             model.addAttribute("userformDto", userformDto);
             model.addAttribute("result", result);
 
+            String actnm = userformDto.getActnm();
+            model.addAttribute("actnm", actnm);
+
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString());

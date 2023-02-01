@@ -33,6 +33,9 @@ public class App27Controller {
             userformDto.setPagetree01("고객지원센터");
             userformDto.setPagenm("고장구분별현황");
             model.addAttribute("userformDto", userformDto);
+            String actnm = userformDto.getActnm();
+            model.addAttribute("actnm", actnm);
+
             log.info(userformDto.getActcd());
 
         }catch (Exception ex) {

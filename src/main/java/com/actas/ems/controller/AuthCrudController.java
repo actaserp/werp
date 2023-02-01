@@ -44,7 +44,6 @@ public class AuthCrudController {
             , @RequestParam("passwd2") String passwd2
             , @RequestParam("phone") String phone
             , @RequestParam("actcd") String actcd
-            , @RequestParam("actnm") String actnm
             , Model model,   HttpServletRequest request){
 
         try {
@@ -74,7 +73,7 @@ public class AuthCrudController {
             userformDto.setActcd(actcd);
             /*userformDto.setActcd(ls_cltnmInfo);
             */
-            String ls_cltnmInfoName = authService.GetClientInfoName(userformDto);
+            String ls_cltnmInfoName = authService.TB_XCLIENT_ACTCD_SELECT(userformDto);
             userformDto.setActnm(ls_cltnmInfoName);
 
             switch (ls_cltnmInfo){

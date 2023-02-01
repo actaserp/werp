@@ -45,6 +45,9 @@ public class App25Controller {
            }
            model.addAttribute("userformDto", userformDto);
            model.addAttribute("result", result);
+           String actnm = userformDto.getActnm();
+           model.addAttribute("actnm", actnm);
+
 
         }catch (Exception ex)
         {

@@ -62,7 +62,7 @@
                         </li>
                         <li>
                             <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">현장명</span>
-                                <input class="form-control" type="text" placeholder="현장명을 입력하세요" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
+                                <input class="form-control" type="text" th:value="${actnm}" id="actnmz" name="actnmz" aria-label="actnmz"  aria-describedby="basic-addon1"
                                        th:disabled="${result == false}"/>
 
                                 <input class="form-control form-control-sm"  type="hidden"  id="actcdz"  th:name="${result} ? 'AA' : 'CC' "/>

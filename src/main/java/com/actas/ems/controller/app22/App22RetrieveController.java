@@ -13,6 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,7 @@ public class App22RetrieveController {
     @GetMapping(value = "/p001tab01")
     public Object App2201TabForm(@RequestParam("frdate") String frdate,
                                  @RequestParam("todate") String todate,
-                                 @RequestParam("actcdz") String actcd,
-                                 Model model)throws Exception{
+                                 Model model, HttpServletRequest request)throws Exception{
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -44,9 +45,13 @@ public class App22RetrieveController {
         ls_dd = todate.substring(8,10);
         todate = ls_yeare + ls_mm + ls_dd;
        /* dwdwdwdwdwdwdwa (ArrayList 찾기)*/
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
+        popParmDto.setActcd(userformDto.getActcd());
         try{
             app16DtoList = service.GetApp22List(popParmDto);
             model.addAttribute("app16DtoList", app16DtoList);
@@ -66,8 +71,12 @@ public class App22RetrieveController {
     @GetMapping(value = "/p001tab02")
     public Object App22001Tab02Form( @RequestParam("frdate") String frdate
             , @RequestParam("todate") String todate
-            , @RequestParam("actcdz") String actcd
-            , Model model) throws  Exception{
+
+            , Model model, HttpServletRequest request) throws  Exception{
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -79,7 +88,7 @@ public class App22RetrieveController {
         todate =  ls_yeare + ls_mm + ls_dd;
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        popParmDto.setActcd(actcd);
+        popParmDto.setActcd(userformDto.getActcd());
         try {
             app16DtoList = service.GetApp22List002(popParmDto);
             model.addAttribute("app22DtoList",app16DtoList);
