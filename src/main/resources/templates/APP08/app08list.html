@@ -498,7 +498,7 @@
       url: '/app08mod/del',
       type:"POST",
       data: {
-        "actbseqz"    : ls_actbseqz ,
+        "actbseqz"    : ls_actbseqz.replaceAll("-","") ,
         "actflagz"    : "MB"
       },
       async:false,
