@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -312,7 +313,11 @@ public class App28CrudController {
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
             App28Dto.setSseq(sseq);
+            App28Dto.setSpernm(userformDto.getUsername());
             App28Dto.setSflag(nflag);
+
+            System.out.println(App28Dto.getSseq());
+            System.out.println(App28Dto.getSpernm());
 
             boolean result = appService.DeleteMSManual(App28Dto);
             if(!result){

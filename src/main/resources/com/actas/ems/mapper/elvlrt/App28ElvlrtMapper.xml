@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App28ElvlrtMapper">
     <select id="GetMSManualList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select sseq, sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
+        select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
         (select Count(*) from tb_mattach where flag='MS' and board_idx=sseq and delete_yn = 'N') as attcnt
         from tb_msmanual WITH (NOLOCK)
         Where 1 = 1 and subkey = 0 order by sseq desc
@@ -17,9 +17,9 @@
     </select>
 
     <select id="getMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        select spernm, smemo, sinputdate
+        select sseq, spernm, smemo, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, subkey
         from tb_msmanual WITH (NOLOCK)
-        Where 1 = 1 and subkey = #{sseq}
+        Where 1 = 1 and subkey != 0
     </select>
 
     <select id="GetMSCommentCount"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
@@ -71,7 +71,7 @@
 
 
     <delete id="DeleteMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
-        delete from tb_msmanual where sseq = #{sseq}
+        delete from tb_msmanual where sseq = #{sseq} and spernm = #{spernm}
     </delete>
 
 
