@@ -271,12 +271,12 @@
                         k.greginm,
                         l.reginm,
                         a.resultck ,
-                         CASE a.resultck WHEN '1' THEN '처리'
-                         WHEN '0' THEN '미처리'
-                         end as result,
-                      --  CASE a.resultck WHEN '1' THEN '처리'
-                       --                 WHEN '0' THEN '미처리'
-                       --     end as result,
+                        -- CASE a.resultck WHEN '1' THEN '처리'
+                        -- WHEN '0' THEN '미처리'
+                        -- end as result,
+                        CASE b.result WHEN '1' THEN '처리'
+                                        WHEN '0' THEN '미처리'
+                            end as result,
                         Left( b.arrivdate,4) + '-' + substring( b.arrivdate, 5,2)+ '-' + substring( b.arrivdate, 7,2)  as arrivdate,
                         Left(b.arrivtime,2) + ':' + substring(b.arrivtime, 2,2) as arrivtime,
                         Left( b.compdate,4) + '-' + substring( b.compdate, 5,2)+ '-' + substring(b.compdate, 7,2)  as compdate,
@@ -307,7 +307,7 @@
                    AND a.spjangcd = #{spjangcd}
                    AND a.recedate BETWEEN  #{stdate} AND #{enddate}
                    AND  Case when b.compdate is null then '1' else '2' end like #{comp}
-                   AND a.resultck = '0'
+                  -- AND a.resultck = '0'
                    ]]>
     </select>
 

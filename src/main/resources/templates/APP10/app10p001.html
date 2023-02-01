@@ -801,20 +801,23 @@
 
 <!--########################################자바 스크립트 시작-->
  <script th:inline="javascript">
-//onchange script
+// onchange script
 
-// function CahngeSlect(value){
-//             let key = changeop.value;                     
-//              if (key == "0"){                
-//                 document.getElementById('op1').style.display="block";
-//              } 
-//              if (key == "1"){
-//                 document.getElementById('op1').style.display="block";
-//              }     
-//             }
+function CahngeSlect(value){
+            let key = changeop.value;                     
+             if (key == "0"){                
+                document.getElementById('op1').style.display="block";
+             } 
+             if (key == "1"){
+                document.getElementById('op1').style.display="block";
+             }     
+            }
 function delX(){
             let key = document.getElementById('resultckz').value; 
-            console.log(key)                    
+            console.log(key)    
+            if (key == "처리"){                
+                document.getElementById('delete').style.display="inline";
+             }                 
              if (key == "미처리"){                
                 document.getElementById('delete').style.display="none";
              } 
@@ -905,11 +908,6 @@ function delX(){
             document.getElementById('remarkz').value= "";
          var  ls_changeopp = document.getElementById('changeop').value= "%";  
         }
-
-
-
-    
-    
     let formData = new FormData(); 
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
@@ -948,7 +946,6 @@ function delX(){
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
                 }                                                                                                                                          
-
             if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
                 alert("도착시간을 입력하세요")
                  
@@ -957,15 +954,25 @@ function delX(){
                 alert("완료시간을 입력하세요")
                  
             } 
-            if(!ls_remoremarkz){
-                alert("고장상세원인을 입력하세요")
-                 
+            if(!ls_gregicdz){
+                alert("고장부위를 입력하세요")
             } 
-            if(!ls_resuremarkz){
-                alert("처리내용상세를 입력하세요")
-                 
-            }                  
-            if(isNaN(ls_resutimez)){
+            if(!ls_regicdz){
+                alert("고장부위상세를 입력하세요")                 
+            }             
+            if(!ls_remocdz){
+                alert("고장요인을 입력하세요")                 
+            }
+            if(!ls_faccdz){
+                alert("고장원인을 입력하세요")                 
+            }
+            if(!ls_resucdz){
+                alert("처리내용을 입력하세요")                 
+            }   
+            if(!ls_resultcdz){
+                alert("처리결과를 입력하세요")                 
+            }             
+            if(ls_resutimez == "시간을 입력하세요"){
                 alert("대응시간을 입력하세요")   
             }     
             
@@ -1034,7 +1041,7 @@ window.location.href = '/app10/index01';
 }; 
 
     // 그리드 호출 window.onload
-        var view_p01tab00page;
+         var view_p01tab03page;
          var view_p01tab01page;
          var view_p01tab02page; 
          var view_wactnmpage;
@@ -1047,7 +1054,7 @@ window.location.href = '/app10/index01';
          var view_actpernmpage; 
          var view_divinmpage;
          var view_pernmpage; 
-         var wtab00Grid;
+         var wtab03Grid;
          var wtab01Grid;        
          var wtab02Grid; 
          var wgreginmGrid;
@@ -1067,8 +1074,10 @@ window.location.href = '/app10/index01';
                 // wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true); 참고해서 적용 true = 오름차순, false=내림차순임
             window.onload = function() {  
             localStorage.setItem("setpage", "app10p001");
+            // **************구분!!***********************************************************************
             //tab01 grid list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+                sortDescriptions: [new wijmo.collections.SortDescription("recedate", false)],
                 pageSize: 21
             });
             // tab01 grid page
@@ -1087,8 +1096,8 @@ window.location.href = '/app10/index01';
                 columns: [    
                     { binding: 'recedate', header: '접수일자', align: "center", width: '*' },
                     { binding: 'recenum', header: '접수번호', align: "center", width: '*' },  
-                    { binding: 'actnm', header: '현장명', align: "right", width: '*' },                      
-                    { binding: 'equpnm', header: '호기명', align: "right", width: '*' },  
+                    { binding: 'actnm', header: '현장명', align: "left", width: '*' },                      
+                    { binding: 'equpnm', header: '호기명', align: "left", width: '*' },  
                     { binding: 'resultck', header: '처리여부', align: "center", width: '*' },                     
                     
                 ], 
@@ -1139,7 +1148,7 @@ window.location.href = '/app10/index01';
                 } 
                 //tab02 grid list
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
-                sortDescriptions: ['recedate'],
+                sortDescriptions: [new wijmo.collections.SortDescription("recedate", false)],
                 groupDescriptions: ['recedate'],
                 pageSize: 15
             });
@@ -1159,22 +1168,22 @@ window.location.href = '/app10/index01';
                 columns: [                        
                     { binding: 'recedate', header: '접수일자', align: "center", width: 100 },
                     { binding: 'recetime', header: '접수시간', align: "center", width: 100 },
-                    { binding: 'actnm', header: '현장명', align: "right", width: 100 },                      
+                    { binding: 'actnm', header: '현장명', align: "left", width: 100 },                      
                     { binding: 'equpnm', header: '동호기', align: "center", width: 100 },  
                     { binding: 'repernm', header: '접수자', align: "center", width: 100 }, 
                     { binding: 'recepernm', header: '전달자', align: "center", width: 100 }, 
                     { binding: 'actpernm', header: '담당자', align: "center", width: 100 },                      
                     { binding: 'pernm', header: '처리자', align: "center", width: 100 }, 
                     { binding: 'divinm', header: '부서명', align: "center", width: 100 }, 
-                    { binding: 'contnm', header: '고장내용', align: "right", width: 100 }, 
-                    { binding: 'contremark', header: '고장내용상세', align: "right", width: 100 }, 
-                    { binding: 'resunm', header: '처리내용', align: "right", width: 100 }, 
-                    { binding: 'resuremark', header: '처리내용상세', align: "right", width: 100 },
-                    { binding: 'remonm', header: '고장요인', align: "right", width: 100 },
-                    { binding: 'remoremark', header: '고장요인상세', align: "right", width: 100 },
+                    { binding: 'contnm', header: '고장내용', align: "left", width: 100 }, 
+                    { binding: 'contremark', header: '고장내용상세', align: "left", width: 100 }, 
+                    { binding: 'resunm', header: '처리내용', align: "left", width: 100 }, 
+                    { binding: 'resuremark', header: '처리내용상세', align: "left", width: 100 },
+                    { binding: 'remonm', header: '고장요인', align: "left", width: 100 },
+                    { binding: 'remoremark', header: '고장요인상세', align: "left", width: 100 },
                     { binding: 'facnm', header: '고장원인', align: "center", width: 100 },
-                    { binding: 'greginm', header: '고장부위', align: "right", width: 100 },
-                    { binding: 'reginm', header: '고장부위상세', align: "right", width: 100 },
+                    { binding: 'greginm', header: '고장부위', align: "left", width: 100 },
+                    { binding: 'reginm', header: '고장부위상세', align: "left", width: 100 },
                     { binding: 'resultnm', header: '처리방법', align: "center", width: 100 },                    
                     { binding: 'arrivdate', header: '도착일자', align: "center", width: 100 },
                     { binding: 'arrivtime', header: '도착시간', align: "center", width: 100 },
@@ -1591,36 +1600,7 @@ window.location.href = '/app10/index01';
                         cnt++;
                     }
                     return wpernm_data;
-                }
-                
-                // //초기화면 구성
-                // $(document).ready(function(){
-                //     document.getElementById('frdate').value = ls_today;
-                //     document.getElementById('todate').value = ls_today;
-                //     document.getElementById('changeop').value = '0';
-                //     first();
-                // });
-                // function retrieveBtn2(){
-                //     document.getElementById("retrieveBtn").click();
-                // }
-                // // 초기화면                                       
-                // function first(){
-                    
-                //             $.ajax({
-                //                         url: 'app10/p001tab00',  
-                //                         type:"POST",                                        
-                //                         async:false,
-                //                         success:function(data){   
-                //                             tabA_grid(data);
-                //                         },error:function(e){
-                //                             console.log("error");                            
-                //                         }
-                //                     }).done(function(fragment){           
-
-                //                     });
-                //               retrieveBtn2()
-                //                 }
-                     
+                }                    
 
 
      } //window 호출 끝
@@ -1827,7 +1807,7 @@ window.location.href = '/app10/index01';
                 cnt++;
             }   
 
-            console.log(wtab01_data);
+            // console.log(wtab01_data);
 
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
@@ -1857,7 +1837,7 @@ window.location.href = '/app10/index01';
             cols = new wijmo.grid.Column(); 
             cols.binding = 'actnm';
             cols.header = '현장명';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = '3*'; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.actnm}</b>',
@@ -1871,7 +1851,7 @@ window.location.href = '/app10/index01';
             cols = new wijmo.grid.Column(); 
             cols.binding = 'equpnm';
             cols.header = '호기명';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = '*';                  
             wtab01Grid.columns.push(cols);  
 
@@ -2048,7 +2028,7 @@ window.location.href = '/app10/index01';
             cols = new wijmo.grid.Column();
             cols.binding = 'actnm';
             cols.header = '현장명';            
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 400;
             wtab02Grid.columns.push(cols);     
             cols = new wijmo.grid.Column();
@@ -2090,37 +2070,37 @@ window.location.href = '/app10/index01';
             cols = new wijmo.grid.Column();
             cols.binding = 'contnm';
             cols.header = '고장내용';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 150;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'contremark';
             cols.header = '고장내용상세';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 150;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resunm';
             cols.header = '처리내용';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 120;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'resuremark';
             cols.header = '처리내용상세';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remonm';
             cols.header = '고장요인';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 100;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'remoremark';
             cols.header = '고장요인상세';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -2132,13 +2112,13 @@ window.location.href = '/app10/index01';
             cols = new wijmo.grid.Column();
             cols.binding = 'greginm';
             cols.header = '고장부위';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 100;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
             cols.binding = 'reginm';
             cols.header = '고장부위상세';
-            cols.align = "right";
+            cols.align = "left";
             cols.width = 400;
             wtab02Grid.columns.push(cols);
             cols = new wijmo.grid.Column();
@@ -2211,10 +2191,15 @@ window.location.href = '/app10/index01';
                 //true 반환
                 document.getElementById('resutimez').value = "시간을 입력하세요";
                 alert("시간을 입력하세요")
-            }else{
-                alert("나머지를 입력해주세요")
-                return false;
-            }      
+            }
+            if(ac_result == "0"){
+                document.getElementById('resutimez').value = "시간을 입력하세요";
+                alert("시간을 입력하세요")
+            }
+            // else{
+            //     alert("나머지를 입력해주세요")
+            //     return false;
+            // }      
                         
         }
         
@@ -2334,7 +2319,7 @@ window.location.href = '/app10/index01';
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'reginm';
                     cols.header = '고장부위상세';
-                    cols.align = "right";
+                    cols.align = "left";
                     cols.width = '*'; 
                     wreginmGrid.columns.push(cols);    
                 },error:function(e){

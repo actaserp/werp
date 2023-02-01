@@ -43,19 +43,17 @@ public class App10RetrieveController {
     public Object App01001Tab00Form(
             Model model
             , HttpServletRequest request) throws  Exception{
-
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_spjangcd = userformDto.getSpjangcd();
         app10tDto.setFrdate(getToDate());
         app10tDto.setTodate(getToDate());
         app10tDto.setSpjangcd(ls_spjangcd);
-
+        app10tDto.setResult("1");
 
         try {
             app10DtoList = service.GetApp10List002(app10tDto);
-            model.addAttribute("app10DtoList",app10DtoList);
-
+            model.addAttribute("app10DtoList2",app10DtoList);
         }catch (DataAccessException e) {
             log.info("App01001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());
