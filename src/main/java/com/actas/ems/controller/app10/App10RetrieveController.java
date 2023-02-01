@@ -133,7 +133,7 @@ public class App10RetrieveController {
             , Model model
             , HttpServletRequest request){
 
-        try{
+        try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
@@ -253,60 +253,24 @@ public class App10RetrieveController {
             });
 
             log.info(app10tDto);
-//            String recedate = app10tDto.getRecedate();
-//            String ls_yeare = recedate.substring(0,4);
-//            String ls_mm = recedate.substring(5,4);
-//            String ls_dd = recedate.substring(8,10);
-//            recedate =  ls_yeare + ls_mm + ls_dd;
-//            String recetime = app10tDto.getRecetime();
-//            String ls_HH = recetime.substring(0,2);
-//            String ls_ii = recetime.substring(3,5);
-//            recetime = ls_HH + ls_ii;
-//            String arrivdate = app10tDto.getArrivdate();
-//            String ls_yeare2 = arrivdate.substring(0,4);
-//            String ls_mm2 = arrivdate.substring(5,7);
-//            String ls_dd2 = arrivdate.substring(8,10);
-//            arrivdate =  ls_yeare2 + ls_mm2 + ls_dd2;
-//            String arrivtime = app10tDto.getArrivtime();
-//            String ls_HH2 = arrivtime.substring(0,2);
-//            String ls_ii2 = arrivtime.substring(3,5);
-//            arrivtime = ls_HH2 + ls_ii2;
-//            String compdate = app10tDto.getCompdate();
-//            String ls_yeare3 = compdate.substring(0,4);
-//            String ls_mm3 = compdate.substring(5,7);
-//            String ls_dd3 = compdate.substring(8,10);
-//            compdate =  ls_yeare3 + ls_mm3 + ls_dd3;
-//            String comptime = app10tDto.getComptime();
-//            String ls_HH3 = comptime.substring(0,2);
-//            String ls_ii3 = comptime.substring(3,5);
-//            comptime = ls_HH3 + ls_ii3;
-
-
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
-//            app10tDto.setRecedate(recedate);
-//            app10tDto.setRecedate(recetime);
-//            app10tDto.setRecedate(arrivdate);
-//            app10tDto.setRecedate(arrivtime);
-//            app10tDto.setRecedate(compdate);
-//            app10tDto.setRecedate(comptime);
             app10tDto.setInputdate(getToDate());
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
             boolean result = false;
-            if(compnum == null || compnum.equals("")){
+
+            if (compnum == null || compnum.equals("")) {
                 app10tDto.setCompnum(CountSeq(compdate));
                 result = service.Insert10Manu(app10tDto);
-                result = service.Updateresult1(app10tDto);
-                if(!result){
+                if (!result) {
                     return "error";
                 }
-            }else{
-                result =  service.Update10Manu(app10tDto);
-                if(!result){
-                    return "error";
-                }
+            } else {
+                app10tDto.setCompnum(compnum);
+                result = service.Update10Manu(app10tDto);
             }
+            result = service.Updateresult1(app10tDto);
 
             model.addAttribute("userformDto",userformDto);
         }catch (IllegalStateException e){
@@ -318,7 +282,9 @@ public class App10RetrieveController {
     }
     @RequestMapping("/del")
     public String mmnualDelete(@RequestParam("compnum") String compnum,
-                               @RequestParam("compdate") String compdate
+                               @RequestParam("compdate") String compdate,
+                               @RequestParam("recenum") String recenum,
+                               @RequestParam("recedate") String recedate
                                 , Model model
                                 , HttpServletRequest request){
         boolean result = false;
@@ -328,20 +294,13 @@ public class App10RetrieveController {
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             String ls_custcd = userformDto.getCustcd();
             String ls_spjangcd = userformDto.getSpjangcd();
-//            String ls_yeare = compdate.substring(0,4);
-//            String ls_mm = compdate.substring(5,7);
-//            String ls_dd = compdate.substring(8,10);
-//            compdate =  ls_yeare + ls_mm + ls_dd;
             app10tDto.setCompdate(compdate);
             app10tDto.setCompnum(compnum);
+            app10tDto.setRecenum(recenum);
+            app10tDto.setRecedate(recedate);
             app10tDto.setCustcd(ls_custcd);
             app10tDto.setSpjangcd(ls_spjangcd);
-//            if(compdate.equals("")|| compnum.equals("")) {
-//                    result = service.Updateresult0(app10tDto);
-//                    }
-//            if(!result){
-//                return  "error";
-//            }
+
             result = service.Delete10Manu(app10tDto);
             if(!result){
                 return "error";
