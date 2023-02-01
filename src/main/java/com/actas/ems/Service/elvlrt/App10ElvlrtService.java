@@ -22,6 +22,8 @@ public class App10ElvlrtService {
     App10ElvlrtMapper  app10ElvMapper;
     int queryResult = 1;
 
+    /** pin page **/
+    public List<App10ElvlrtDto> GetApp10List002(App10ElvlrtDto parm){return app10ElvMapper.GetApp10List002(parm);}
 
     /** view page **/
     public List<App10ElvlrtDto> GetApp10List001(App10ElvlrtDto parm){return app10ElvMapper.GetApp10List001(parm);}
@@ -33,7 +35,7 @@ public class App10ElvlrtService {
     /** 글 등록 */
     public boolean Insert10Manu(App10ElvlrtDto perm){
         queryResult = app10ElvMapper.Insert10Manul(perm);
-        if(queryResult < 1){
+        if(queryResult < 1){  //값 확인
             queryResult = 0;
         }
         return (queryResult > 0);
