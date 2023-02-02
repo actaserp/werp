@@ -51,7 +51,7 @@
              a.indate,
              CASE a.resultck WHEN '1' THEN '처리'
              WHEN '0' THEN '미처리'
-    end as resultck
+             end as resultck
     FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
@@ -132,7 +132,7 @@
                      CASE a.resultck WHEN '1' THEN '처리'
                      WHEN '0' THEN '미처리'
                      end as resultck
-    FROM tb_e401 a WITH(NOLOCK)
+                     FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
                      LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)

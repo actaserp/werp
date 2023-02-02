@@ -84,7 +84,8 @@
                     
             </div>           
             
-             <!-- contents body 시작-->
+             <!-- contents body 시작--> 
+             <!-- form 또는 action 으로 받아오기  -->
              <div class="section regist">
                 <div class="sec_con" style="width: 80%;">
                     <div class="box_wrap">
@@ -109,13 +110,9 @@
                                 <div class="card-body bg-light">   
                                       <div class="tab-content" >                                        
                                         <div class="tab-pane fade show active"  >  
-                                            <!-- <div class="container-fluid" id="opdefault" style="visibility: visible ">
-                                            </div> style="display: none"-->
-                                            <div class="container-fluid" id="op1" >
-                                                <!-- <div id="wtab00Grid_div" style="visibility: visible"></div>  -->
+                                                <div class="container-fluid" id="op1" >
                                                 <div id="wtab01Grid_div" ></div>
                                                 <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div>
-                                                <!-- <div style="display: flex; margin: 0 auto; visibility: visible" id="tab00Pager"></div> -->
                                             </div>                                               
                                         </div>                                        
                                       </div>
@@ -911,7 +908,7 @@ function delX(){
     let formData = new FormData(); 
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
-        clear_rtn();         
+               
         var regexForslash = /-/g;
             var ls_actcompnumz = document.getElementById('compnumz').value; //완료일자
             var ls_actcompdatez   = document.getElementById('actcompdatez').value.replace(regexForslash, ''); //완료일자
@@ -946,14 +943,14 @@ function delX(){
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
                 }                                                                                                                                          
-            if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
-                alert("도착시간을 입력하세요")
+            // if(ls_actarrivtimez == null || ls_actarrivtimez.length == 0 || ls_actarrivtimez == ""){
+            //     alert("도착시간을 입력하세요")
                  
-            } 
-            if(ls_actcomptimez == null || ls_actcomptimez.length == 0 || ls_actcomptimez == "" ){
-                alert("완료시간을 입력하세요")
+            // } 
+            // if(ls_actcomptimez == null || ls_actcomptimez.length == 0 || ls_actcomptimez == "" ){
+            //     alert("완료시간을 입력하세요")
                  
-            } 
+            // } 
             if(!ls_gregicdz){
                 alert("고장부위를 입력하세요")
             } 
@@ -972,7 +969,7 @@ function delX(){
             if(!ls_resultcdz){
                 alert("처리결과를 입력하세요")                 
             }             
-            if(ls_resutimez == "시간을 입력하세요"){
+            if(ls_resutimez == "시간을 계산하세요"){
                 alert("대응시간을 입력하세요")   
             }     
             
@@ -1071,10 +1068,10 @@ window.location.href = '/app10/index01';
          let barchart;
          let ani;
          var wseries_data = [0]; 
-                // wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true); 참고해서 적용 true = 오름차순, false=내림차순임
             window.onload = function() {  
             localStorage.setItem("setpage", "app10p001");
             // **************구분!!***********************************************************************
+            console.log("[window onload] : [start]");
             //tab01 grid list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                 sortDescriptions: [new wijmo.collections.SortDescription("recedate", false)],
@@ -1127,25 +1124,32 @@ window.location.href = '/app10/index01';
                 wtab01Grid.focus();
                 wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
                 wtab01Grid.focus();
+
                 // tab01검색 데이터 수집
                 function getData_tab01(){                     
-                    var wactnm_data = []; 
+                    var wactnm_data = [[${app04Dto}]]; 
                     var cnt = 1;
-                    for (var i = 0; i < 21; i++) {
+                    for (var i = 0; i < wactnm_data.length; i++) {
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            recedate: "", //접수일자
-                            recenum: "", //접수번호
-                            actnm: "", //현장명
-                            equpnm: "", //호기명 
-                            resultck: "", //처리여부       
+                            recedate: "",
+                            recenum: "", 
+                            actnm: "", 
+                            equpnm: "", 
+                            resultck: "",        
                            
                         });
                         cnt++;
                     }    
+                    console.log(wactnm_data);
                     return wactnm_data;                                         
                 } 
+
+
+
+
+
                 //tab02 grid list
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 sortDescriptions: [new wijmo.collections.SortDescription("recedate", false)],
@@ -1640,7 +1644,7 @@ window.location.href = '/app10/index01';
          document.getElementById("actdivinmz").addEventListener("click",function(){ 
             document.getElementById("divinmbtn").click();
         });
-        //처리자 onclick   
+        //처리자 onclick 고장남  
         document.getElementById("pernmz").addEventListener("click",function(){ 
             document.getElementById("pernmbtn").click();
         });
@@ -2189,12 +2193,12 @@ window.location.href = '/app10/index01';
             console.log(ac_result);      
             if(isNaN(ac_result)){
                 //true 반환
-                document.getElementById('resutimez').value = "시간을 입력하세요";
-                alert("시간을 입력하세요")
+                document.getElementById('resutimez').value = "시간을 계산하세요";
+                alert("시간을 계산하세요")
             }
             if(ac_result == "0"){
-                document.getElementById('resutimez').value = "시간을 입력하세요";
-                alert("시간을 입력하세요")
+                document.getElementById('resutimez').value = "시간을 계산하세요";
+                alert("시간을 계산하세요")
             }
             // else{
             //     alert("나머지를 입력해주세요")
@@ -2794,7 +2798,7 @@ window.location.href = '/app10/index01';
         function wactnmChk_9(arg1, arg2){
                 document.getElementById('peridz').value = arg1; 
                 document.getElementById('pernmz').value = arg2; 
-                
+                $("#wpernmmodal_btn").trigger("click");
             }  
         
 // 날짜 및 시간 표현 script     
@@ -2835,6 +2839,7 @@ window.location.href = '/app10/index01';
             let minutes = today.getMinutes();
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
+            if(minutes > 0 && minutes < 10) {minutes = "0" + minutes};
             let ls_time = hours + ':' + minutes
             let ls_dddd = year + '-' + month + '-' + '01'
             let ls_frday = year + '-' + month + '-' + date
@@ -3009,8 +3014,10 @@ window.location.href = '/app10/index01';
                     return true;
                     },
                     // 메뉴 명령 실행
+                    
                     executeCommand: (cmd) => {
                         let view = grid.collectionView, cols = grid.columns, col = cols[grid.selection.col], sd = view.sortDescriptions, gd = view.groupDescriptions;
+                                           
                         switch (cmd) {
                             case 'SRT_ASC':
                             case 'SRT_DESC':
@@ -3070,14 +3077,20 @@ window.location.href = '/app10/index01';
                                 wijmo.saveFile(csv, 'FlexGrid.csv');
                                 break;
                             case 'X_XLSX':
-                                wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, null, 'FlexGrid.xlsx');
+                                //엑셀수정
+                                wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, { includeColumnHeaders: true }, 'FlexGrid.xlsx');
                                 break;
                             case 'X_PDF':
-                                wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 'FlexGrid.pdf', {
+                                wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 
+                                'FlexGrid.pdf', {
                                     maxPages: 10,
                                     scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
+                                    // exportMode = wijmo.grid.pdf.ExportMode.All,
                                     documentOptions: {
-                                    compress: true,
+                                        compress: true,
+                                        pageSettings: {
+                                        layout: orientation
+                                        },
                                     header: { declarative: { text: '\t&[Page] of &[Pages]' } },
                                     footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
                                     info: { author: 'Actas', title: 'FlexGrid' }
@@ -3087,8 +3100,51 @@ window.location.href = '/app10/index01';
                                     altCellStyle: { backgroundColor: '#f9f9f9' },
                                     groupCellStyle: { backgroundColor: '#dddddd' },
                                     headerCellStyle: { backgroundColor: '#eaeaea' }
+                                    },
+                                    embeddedFonts: 
+                                    {
+                                    // source: 'resources/fira/FiraSans-Regular.ttf',
+                                    source: 'https://assets.codepen.io/975719/FiraSans-Regular.ttf',
+                                    name: 'fira',
+                                    style: 'normal',
+                                    weight: 'normal',
+                                    sansSerif: true
                                     }
                                 });
+                                // let doc = new pdf.PdfDocument({
+                                // header: {
+                                //     declarative: {
+                                //         text: '\t&[Page]\\&[Pages]'
+                                //     }
+                                // },
+                                // footer: {
+                                //     declarative: {
+                                //         text: '\t&[Page]\\&[Pages]'
+                                //     }
+                                // },
+                                // ended: (sender, args) => pdf.saveBlob(args.blob, 'FlexGrid.pdf')
+                                // });
+                                // let settings = {
+                                // styles: {
+                                //     cellStyle: {
+                                //         backgroundColor: '#ffffff',
+                                //         borderColor: '#c6c6c6'
+                                //     },
+                                //     altCellStyle: {
+                                //         backgroundColor: '#f9f9f9'
+                                //     },
+                                //     groupCellStyle: {
+                                //         backgroundColor: '#dddddd'
+                                //     },
+                                //     headerCellStyle: {
+                                //         backgroundColor: '#eaeaea'
+                                //     }
+                                // }}
+                                // doc.drawText('This grid is drawn in its original size using the draw method and is split into multiple pages.', 0, 400);
+                                // doc.moveDown();
+                                // gridPdf.FlexGridPdfConverter.draw(flexGrid, doc, null, null, settings);
+                                // //
+                                // doc.end();
                                 break;
                         }
                         // 활성화 그리드 셀에 포커스 복원
@@ -3109,6 +3165,10 @@ window.location.href = '/app10/index01';
         //모달 끝
 // 자바 끝
  </script>
+
+
+    
+</script>
     
     <!------ html footer ------>
     <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
@@ -3136,7 +3196,7 @@ window.location.href = '/app10/index01';
                 </div>
             </div>
         </div>
-    </div></div>
+    </div>
 
 </body>
 </html>

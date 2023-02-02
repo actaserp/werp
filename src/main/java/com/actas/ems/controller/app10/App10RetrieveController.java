@@ -38,35 +38,33 @@ public class App10RetrieveController {
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
 
-    // pin page
-    @GetMapping(value="/p001tab00")
-    public Object App01001Tab00Form(
-            Model model
-            , HttpServletRequest request) throws  Exception{
-        HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-        String ls_spjangcd = userformDto.getSpjangcd();
-        app10tDto.setFrdate(getToDate());
-        app10tDto.setTodate(getToDate());
-        app10tDto.setSpjangcd(ls_spjangcd);
-        app10tDto.setResult("1");
-
-        try {
-            app10DtoList = service.GetApp10List002(app10tDto);
-            model.addAttribute("app10DtoList2",app10DtoList);
-        }catch (DataAccessException e) {
-            log.info("App01001Tab01Form DataAccessException ================================================================");
-            log.info(e.toString());
-            throw new AttachFileException(" DataAccessException to save");
-            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-        }catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("App01001Tab01Form Exception ================================================================");
-            log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-        }
-        return app10DtoList;
-    }
+//    // pin page
+//    @GetMapping(value="/p001tab00")
+//    public Object App01001Tab00Form(Model model
+//            , HttpServletRequest request) throws  Exception{
+//        HttpSession session = request.getSession();
+//        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+//        String ls_spjangcd = userformDto.getSpjangcd();
+//        app10tDto.setFrdate(getToDate());
+//        app10tDto.setTodate(getToDate());
+//        app10tDto.setSpjangcd(ls_spjangcd);
+//        try {
+//
+//            app10DtoList = service.GetApp10List002(app10tDto);
+//            model.addAttribute("app10DtoList2",app10DtoList);
+//
+//        }catch (DataAccessException e) {
+//            log.info("App01001Tab01Form DataAccessException ================================================================");
+//            log.info(e.toString());
+//            throw new AttachFileException(" DataAccessException to save");
+//            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+//        }catch (Exception ex) {
+////                dispatchException = ex;
+//            log.info("App01001Tab01Form Exception ================================================================");
+//            log.info("Exception =====>" + ex.toString());
+//        }
+//        return  "/app10/app10p001";
+//    }
 
 
 
