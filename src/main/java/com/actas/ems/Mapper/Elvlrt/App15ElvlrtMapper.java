@@ -21,6 +21,11 @@ public interface App15ElvlrtMapper {
 
     public List<App15ElvlrtDto> GetApp00List005(App15ElvlrtDto parm);
 
+    public List<App15ElvlrtDto> GetApp00List006(PopupDto parm);
+
+    public List<App15ElvlrtDto> GetApp00List007(PopupDto parm);
+
+
 
 
 }

@@ -31,6 +31,11 @@ public class MainController {
         req.setAttribute("select", select);
 
 
+        session.invalidate();
+
+        log.info(req.isRequestedSessionIdValid());
+
+
 
 
         return "/loginForm"; //"index";

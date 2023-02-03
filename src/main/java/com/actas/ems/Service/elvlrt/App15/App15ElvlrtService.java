@@ -33,6 +33,12 @@ public class App15ElvlrtService {
     //메인화면 당월 고장다발현장
     public List<App15ElvlrtDto> GetApp15List005(App15ElvlrtDto parm){return app15ElvlrtMapper.GetApp00List005(parm);}
 
+    //고객사용자 메인화면 당월 고장다발현장
+    public List<App15ElvlrtDto> GetApp15List006(PopupDto parm){return app15ElvlrtMapper.GetApp00List006(parm);}
+
+
+    //고객사용자 메인화면 당월 고장다발현장 그래프
+    public List<App15ElvlrtDto> GetApp15List007(PopupDto parm){return app15ElvlrtMapper.GetApp00List007(parm);}
 
 
 

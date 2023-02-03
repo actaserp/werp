@@ -126,7 +126,8 @@
                a.contnm as contnm,
                a.contents as contents,
             LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
-            EOMONTH(GETDATE()) as  enddate
+            EOMONTH(GETDATE()) as  enddate,
+            a.qty as qty
         FROM (SELECT a.actcd,
             q.actnm,
             a.equpcd,
@@ -148,6 +149,86 @@
             GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
         WHERE a.qty >= 0
           AND a.perid like CONCAT('%','%','%')
+        ]]>
+    </select>
+
+    <!--고객회원 메인화면 당월 고장접수-->
+    <select id="GetApp00List006" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT a.actcd as actcd,
+               a.actnm as actnm,
+               a.equpcd as equpcd,
+               a.equpnm as equpnm,
+               a.pernm as pernm,
+               a.contnm as contnm,
+               a.contents as contents,
+            LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+            EOMONTH(GETDATE()) as  enddate,
+            a.qty
+        FROM (SELECT a.actcd,
+            q.actnm,
+            a.equpcd,
+            m.equpnm,
+            count(a.recedate) as qty,
+            max(a.perid) as perid,
+            d.pernm,
+            max(a.contcd) as contcd,
+            p.contnm,
+            max(convert(varchar(100), a.contents)) as contents,
+            max(a.remark) as remark
+            FROM tb_e401 a
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            WHERE  a.recedate BETWEEN #{frdate} AND #{todate}
+            AND q.actcd like CONCAT('%',#{actcd},'%')
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+        WHERE a.qty >= 0
+          AND a.perid like CONCAT('%','%','%')
+        ]]>
+    </select>
+
+    <!--고객회원 메인화면 당월 고장접수 그래프-->
+    <select id="GetApp00List007" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select
+            sum(h.qty) as cnt,
+            h.contnm as contnm,
+            h.equpnm as equpnm
+        from
+            (SELECT a.actcd as actcd,
+                    a.actnm as actnm,
+                    a.equpcd as equpcd,
+                    a.equpnm as equpnm,
+                    a.pernm as pernm,
+                    a.contnm as contnm,
+                    a.contents as contents,
+                 LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+                 EOMONTH(GETDATE()) as  enddate,
+                 a.qty
+             FROM (SELECT a.actcd,
+                 q.actnm,
+                 a.equpcd,
+                 m.equpnm,
+                 count(a.recedate) as qty,
+                 max(a.perid) as perid,
+                 d.pernm,
+                 max(a.contcd) as contcd,
+                 p.contnm,
+                 max(convert(varchar(100), a.contents)) as contents,
+                 max(a.remark) as remark
+                 FROM tb_e401 a
+                 LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+                 LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+                 WHERE  a.recedate BETWEEN #{frdate} AND #{todate}
+                 AND q.actcd like CONCAT('%',#{actcd},'%')
+                 GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+             WHERE a.qty >= 0
+               ) h
+        group by h.equpnm, h.contnm
         ]]>
     </select>
 </mapper>

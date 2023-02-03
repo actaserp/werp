@@ -4,7 +4,9 @@ import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App15ElvlrtDto;
+import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
+import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
 import com.actas.ems.Service.elvlrt.App15.App15ElvlrtService;
@@ -12,12 +14,14 @@ import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -34,10 +38,15 @@ public class AuthController {
     private final App15ElvlrtService service2;
     App15ElvlrtDto App15Dto = new App15ElvlrtDto();
 
+    PopupDto popParmDto = new PopupDto();
+
+
     List<CommonDto> com750Dto;
 
     List<App15ElvlrtDto> app15DtoList = new ArrayList<>();
     List<App15ElvlrtDto> app15DtoList2 = new ArrayList<>();
+    List<App15ElvlrtDto> app15DtoList3 = new ArrayList<>();
+
     App05ElvlrtDto App05Dto = new App05ElvlrtDto();
 
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -114,9 +123,58 @@ public class AuthController {
             model.addAttribute("msg", "로그인실패");
             return "/";
         } else{
+
+            //현재날짜기준 월초(1일) 구하기
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            Date date  = new Date(System.currentTimeMillis());
+            String time = formatter.format(date);
+            String time2 = time.substring(0,6) + "01";
+            log.info(time2);
+
+
+            //현재날짜기준 당월말일 구하기
+             String year = time.substring(0,4);
+            String month = time.substring(4,6);
+            String day = time.substring(6,8);
+
+
+            int year1 = Integer.parseInt(year);
+            int month1 = Integer.parseInt(month);
+            int day1 = Integer.parseInt(day);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(year1, month1-1, day1);
+
+
+            String lastday1 = String.valueOf(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            String lastday = year+month+lastday1;
+            log.info(lastday);
+
+            /*popParmDto.setFrdate(time2);
+            popParmDto.setTodate(lastday);*/
+            popParmDto.setFrdate(time2);
+            popParmDto.setTodate(lastday);
+
+            log.info(time2);
+            log.info(lastday);
+
+            /*popParmDto.setActcd("%");*/
+            popParmDto.setActcd(userformDto.getActcd());
+
+            app15DtoList2 = service2.GetApp15List006(popParmDto);
+            app15DtoList3 = service2.GetApp15List007(popParmDto);
+
+            model.addAttribute("app15DtoList2", app15DtoList2);
+            model.addAttribute("app15DtoList3", app15DtoList3);
+
+
+
             return "mainframcustom";
         }
 
+
     }
+
+
 
 }

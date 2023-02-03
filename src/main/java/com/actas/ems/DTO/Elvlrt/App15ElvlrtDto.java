@@ -47,6 +47,10 @@ public class App15ElvlrtDto {
     private String contnm;
     private String contents;
 
+    //고객메인화면 고장다발현장그래프
+    private int cnt;
+
+
 
 
 
