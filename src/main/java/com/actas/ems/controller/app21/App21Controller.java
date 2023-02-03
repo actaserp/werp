@@ -31,6 +31,20 @@ public class App21Controller {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             model.addAttribute("userformDto",userformDto);
+
+            boolean result = true;
+            if(userformDto.getFlag().equals("CC")){
+
+                result = false;
+            }
+
+
+            model.addAttribute("userformDto", userformDto);
+            model.addAttribute("result", result);
+
+            String actnm = userformDto.getActnm();
+            model.addAttribute("actnm", actnm);
+
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );

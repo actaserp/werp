@@ -55,13 +55,9 @@
 
     <update id="UpdateMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
         update tb_msmanual set
-        sgourpcd = #{sgourpcd}
-        <if test="ssubject != null ">,</if>
-        <if test="ssubject != null">ssubject=#{ssubject}</if>
+        ssubject=#{ssubject}
         <if test="smemo != null ">,</if>
         <if test="smemo != null">smemo=#{smemo}</if>
-        <if test="sinputdate != null ">,</if>
-        <if test="sinputdate != null">sinputdate=#{sinputdate}</if>
         <if test="spernm != null ">,</if>
         <if test="spernm != null">spernm=#{spernm}</if>
         <if test="sflag != null ">,</if>

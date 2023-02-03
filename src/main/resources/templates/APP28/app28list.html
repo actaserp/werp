@@ -97,7 +97,8 @@
                                     <!-- <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />  파일 업로드 input(임시)-->
                                 </div>
                                 <div class="col-auto">
-                                    <input type="checkbox" id="actsflagz" />회원사공유
+                                    <input type="checkbox" id="actsflagz" value="" checked="">
+                                    <label for="actsflagz" class="check_style1 no_txt"></label>회원사공유
                                     <button class="btn btn-primary btn-sm px-4 px-sm-5" type="button" onclick="save_btn(document.getElementById('actsseqz').value)">등록</button>
                                 </div>
                                 </div>
@@ -128,7 +129,7 @@
                                 <div class="card-body overflow-hidden">
                                     <div class="row mx-n1">
                                     <div class="col-4 p-1"><img class="img-fluid rounded" alt="" /></a></div> <!--이미지 파일 들어갈 div--> 
-                                    <p th:id="|smemo${question.sseq}|" th:text="${question.smemo}"></p>
+                                        <p th:id="|smemo${question.sseq}|" th:text="${question.smemo}"></p>
                                     </div>
                                 </div>
                                 <div class="card-footer bg-light pt-0">
@@ -149,7 +150,7 @@
 
                                         <div class='flex-1 ms-2 fs--1' th:each="comment: ${app28CommentDto}">
                                             <p class='mb-1 bg-200 rounded-3 p-2' th:if="${question.sseq == comment.subkey}" th:text="|${comment.spernm} ${comment.smemo}|"><a class='fw-semi-bold' href='#!' th:if="${question.sseq == comment.subkey}" th:text="${comment.spernm}"></a> </p>
-                                            <div class='px-2' th:if="${question.sseq == comment.subkey}" th:text="${comment.sinputdate}"></div><a th:if="${comment.spernm == userformDto.username}" th:mySseq="${comment.sseq}" th:onclick="del_btn(this.getAttribute('mySseq'))"> 삭제 </a>
+                                            <div class='px-2' th:if="${question.sseq == comment.subkey}" th:text="${comment.sinputdate}"></div><a th:if="${question.sseq == comment.subkey && comment.spernm == userformDto.username}" th:mySseq="${comment.sseq}" th:onclick="del_btn(this.getAttribute('mySseq'))"> 삭제 </a>
                                             
                                         </div>
                                     </div>
@@ -171,20 +172,22 @@
         var ls_actsseqz   = document.getElementById('actsseqz').value; 
         var ls_actsmemoz   = document.getElementById('actsmemoz').value;
         var ls_actssubkeyz = subkey;
-        if(subkey != 0){
-            ls_actssubkeyz = document.getElementById('subComment').value;
-        }
-        var ls_actsflagz = "Y";
+        var ls_actsflagz
+        if(document.getElementById('actsflagz').checked){
+            ls_actsflagz = "Y"
+        }else{
+            ls_actsflagz = "N"
+        };
     
          
         if(!ls_actsmemoz){
             return 
-        }              
+        }
             $.ajax({
             url: '/app28mod/saveboard',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8;",  // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
             type: "POST",
-                      data:{
+                    data:{
                     "actsseqz"    : ls_actsseqz ,
                     "actsmemoz"   : ls_actsmemoz, 
                     "actsflagz"   : ls_actsflagz,
@@ -262,12 +265,16 @@
 
     function modify_btn(sseq){
 
-        var smemo = document.getElementById("smemo"+sseq).value;
+        var smemo = document.getElementById("smemo"+sseq).innerText;
 
         document.getElementById("actsmemoz").value = smemo;
         document.getElementById("actsseqz").value = sseq;
+
+        document.getElementById("actsmemoz").focus();
     
-    }   
+    }
+
+    
 
     
     // $(function (){

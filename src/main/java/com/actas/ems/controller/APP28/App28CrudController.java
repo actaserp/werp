@@ -136,6 +136,8 @@ public class App28CrudController {
         return "redirect:app28/app28list";
     }
 
+
+
     @RequestMapping(value="/commentlist")
     public Object getcomment(@RequestParam(value="actsseqz", required = false) String sseq
             , @RequestParam(value="actsflagz", required = false) String sflag
