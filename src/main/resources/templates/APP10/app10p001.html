@@ -2008,8 +2008,8 @@ window.location.href = '/app10/index01';
             cnt++;
         }   
 
-        console.log(wtab02_data); 
-        console.log(wtab02_data.length);
+        // console.log(wtab02_data); 
+        // console.log(wtab02_data.length);
 
         wtab02Grid.columns.clear();  
         wtab02Grid.autoGenerateColumns = false; 
@@ -2840,6 +2840,7 @@ window.location.href = '/app10/index01';
             if(month > 0 && month < 10) {month = "0" + month};
             if(date > 0 && date < 10) {date = "0" + date};
             if(minutes > 0 && minutes < 10) {minutes = "0" + minutes};
+            if(hours > 0 && hours < 10) {hours = "0" + hours};
             let ls_time = hours + ':' + minutes
             let ls_dddd = year + '-' + month + '-' + '01'
             let ls_frday = year + '-' + month + '-' + date
