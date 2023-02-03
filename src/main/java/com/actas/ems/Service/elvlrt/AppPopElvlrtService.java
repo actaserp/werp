@@ -33,6 +33,9 @@ public class AppPopElvlrtService {
     /** 담당자 조회 */
     public List<PopupDto> GetPernmList(PopupDto parm){return appPopElvMapper.GetPernmList(parm);}
 
+    public List<PopupDto> GetPernmList2(PopupDto parm){return appPopElvMapper.GetPernmList2(parm);}
+
+
     /** 고장원인 조회 */
     public List<PopupDto> GetFacnmList(PopupDto parm){return appPopElvMapper.GetFacnmList(parm);}
 
