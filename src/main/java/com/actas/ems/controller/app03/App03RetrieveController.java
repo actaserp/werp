@@ -47,7 +47,9 @@ public class App03RetrieveController {
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -84,7 +86,9 @@ public class App03RetrieveController {
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
@@ -120,7 +124,9 @@ public class App03RetrieveController {
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);

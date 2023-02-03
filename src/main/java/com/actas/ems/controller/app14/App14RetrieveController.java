@@ -12,6 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,9 @@ public class App14RetrieveController {
     public Object App03001Tab01Form( @RequestParam("actdivicdz") String divicd,
                                      @RequestParam("actperidz") String perid,
                                      @RequestParam("actrtclafiz") String rtclafi
-            , Model model) throws  Exception{
-
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         popParmDto.setDivicd("AA"+divicd);
         popParmDto.setPerid('p'+perid);
         popParmDto.setRtclafi(rtclafi);

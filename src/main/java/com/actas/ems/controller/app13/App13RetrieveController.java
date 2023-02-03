@@ -13,6 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +42,9 @@ public class App13RetrieveController {
                                     @RequestParam("actremocd") String remocd,
                                     @RequestParam("actgregicd") String gregicd,
                                     @RequestParam("actresultcd") String resultcd,
-                                    Model model) throws Exception {
+                                    Model model, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0, 4);
         String ls_mm = frdate.substring(5, 7);
         String ls_dd = frdate.substring(8, 10);

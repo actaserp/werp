@@ -13,6 +13,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,7 +40,9 @@ public class App12RetrieveController {
             , @RequestParam("actremocdz") String remocd
             , @RequestParam("actgregicdz") String gregicd
             , @RequestParam("actresultcdz") String resultcdz
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -80,8 +84,9 @@ public class App12RetrieveController {
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
-            , Model model) throws  Exception{
-
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -116,8 +121,9 @@ public class App12RetrieveController {
             , @RequestParam("todate") String todate
             , @RequestParam("actcdz") String actcd
             , @RequestParam("actcontcdz") String contcd
-            , Model model) throws  Exception{
-
+            , Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);

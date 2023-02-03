@@ -72,13 +72,6 @@ public class App09CrudController {
             app09Dto.setYyyymm(ls_yeare + ls_mm);
             app09Dto.setFpernm(userformDto.getUsername());
             log.info(app09Dto); //consolelog에 app04Dto 호출
-
-//            if(fseq == null || fseq.equals("")){
-//                appService.InsertMManu(app04Dto);
-//            }else{
-//                appService.UpdateMManu(app04Dto);
-//            }
-
             if(fseq == null || fseq.equals("")){
                 boolean result = appService.InsertFQManu(app09Dto);
                 if (!result) {
