@@ -274,33 +274,33 @@ public class App10RetrieveController {
             app10tDto.setInputdate(getToDate());
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
-            boolean result = false;
+//            boolean result = false;
 
             if (compnum == null || compnum.equals("")) {
                 app10tDto.setCompnum(CountSeq(compdate));
-                result = service.Insert10Manu(app10tDto);
+                boolean result = service.Insert10Manu(app10tDto);
                 if (!result) {
                     return "error";
                 }
             } else {
                 app10tDto.setCompnum(compnum);
-                result = service.Update10Manu(app10tDto);
+                boolean  result = service.Update10Manu(app10tDto);
                 if (!result) {
                     return "error";
                 }
             }
-            result = service.Updateresult1(app10tDto);
+            boolean result = service.Updateresult1(app10tDto);
             if (!result) {
                 return "error";
             }
-
             model.addAttribute("userformDto",userformDto);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-        String ls_compnum = app10tDto.getCompnum();
-        return ls_compnum;
+//        String ls_compnum = app10tDto.getCompnum();
+//        return ls_compnum;
+        return "success";
     }
     @RequestMapping("/del")
     public String mmnualDelete(@RequestParam("compnum") String compnum,

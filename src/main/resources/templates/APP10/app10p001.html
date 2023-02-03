@@ -1019,7 +1019,7 @@ function delX(){
                     if(data == "success"){
                         alert("저장되었습니다.")
                         // console.log(formData);
-                        // listUp();              
+                        listUp();              
                     }else{                       
                         alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                         // listUp();
@@ -3082,8 +3082,7 @@ window.location.href = '/app10/index01';
                                 wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, { includeColumnHeaders: true }, 'FlexGrid.xlsx');
                                 break;
                             case 'X_PDF':
-                                wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 
-                                'FlexGrid.pdf', {
+                                wijmo.grid.pdf.FlexGridPdfConverter.export(grid,'FlexGrid.pdf', {
                                     maxPages: 10,
                                     scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
                                     // exportMode = wijmo.grid.pdf.ExportMode.All,
