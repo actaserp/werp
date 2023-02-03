@@ -29,17 +29,17 @@ public class GaonDataBaseConfig {
     }
 
     @Bean(name="gaonSqlSessionFactory")
-    public SqlSessionFactory elvlrtSqlSessionFactory(@Qualifier("gaonDataSource") DataSource elvlrtDataSource, ApplicationContext applicationContext) throws Exception{
+    public SqlSessionFactory gaonSqlSessionFactory(@Qualifier("gaonDataSource") DataSource gaonDataSource, ApplicationContext applicationContext) throws Exception{
         //세션 생성 시, 빌드된 DataSource를 세팅하고 SQL문을 관리할 mapper.xml의 경로를 알려준다.
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(elvlrtDataSource);
+        sqlSessionFactoryBean.setDataSource(gaonDataSource);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:com/actas/ems/mapper/gaon/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     @Bean(name="gaonSqlSessionTemplate")
-    public SqlSessionTemplate elvlrtSqlSessionTemplate(SqlSessionFactory elvlrtSqlSessionFactory) throws Exception{
-        return new SqlSessionTemplate(elvlrtSqlSessionFactory);
+    public SqlSessionTemplate gaonSqlSessionTemplate(SqlSessionFactory gaonSqlSessionFactory) throws Exception{
+        return new SqlSessionTemplate(gaonSqlSessionFactory);
     }
 
 }
