@@ -28,9 +28,8 @@ public class App28Controller {
     private final App28ElvlrtService service;
     private final SessionManager sessionManager;
     List<App28ElvlrtDto> App28ListDto;
-    List<CommonDto> com750Dto;
+    List<App28ElvlrtDto> Comment;
     App28ElvlrtDto App28Dto = new App28ElvlrtDto();
-    App28ElvlrtDto Comment = new App28ElvlrtDto();
 
 
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -60,9 +59,11 @@ public class App28Controller {
 //        }
         try {
             App28ListDto = service.GetMSManualList(App28Dto);
+            Comment = service.getMSCommentList(App28Dto);
 
 //            log.debug("Exception =====>" + App28ListDto );
             model.addAttribute("app28Dto",App28ListDto);
+            model.addAttribute("app28CommentDto", Comment);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.debug("Exception =====>" + ex.toString() );

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App10ElvlrtMobMapper">
+<!--      조회  -->
+    <select id="GetAppMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob001tDto">
+        <![CDATA[sELECT
+                     Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
+                     isnull(a.recenum, '' ) as recenum,
+                     isnull(a.actcd, '' ) as actcd,
+                     isnull(b.actnm, '' ) as actnm,
+                     isnull(e.pernm, '' ) as actpernm,
+                     isnull(a.equpcd, '' ) as equpcd,
+                     isnull(c.equpnm, '' ) as equpnm,
+                     isnull(a.contcd, '' ) as contcd,
+                     isnull(d.contnm, '' ) as contnm,
+                     isnull(a.contents, '' ) as contents,
+                     Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
+                     isnull(e.pernm, '' ) as pernm
+                 FROM tb_e401 a WITH(NOLOCK)
+                     LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+                     LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
+                     LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
+                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
+                     LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+                     LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+                     LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+                     LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND g.faccd = j.faccd)
+                     LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+                     LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+                     LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND g.resultcd = m.resultcd)
+                 WHERE
+                     a.spjangcd = #{spjangcd}
+                   AND a.resultck like CONCAT('%',#{changeop},'%')
+                   AND a.recedate BETWEEN #{frdate} AND #{todate}
+        ]]>
+    </select>
+
+
+</mapper>
