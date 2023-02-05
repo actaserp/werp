@@ -3079,7 +3079,19 @@ window.location.href = '/app10/index01';
                                 break;
                             case 'X_XLSX':
                                 //엑셀수정
-                                wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, { includeColumnHeaders: true }, 'FlexGrid.xlsx');
+                                const gridView = grid.collectionView;
+                                let oldPgSize = gridView.pageSize, oldPgIndex = gridView.pageIndex;
+
+                                grid.beginUpdate();
+                                gridView.pageSize = 0;
+
+                                wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, {includeCellStyles: true, includeColumnHeaders: true}, 'FlexGrid.xlsx',
+                                saved => {
+                                gridView.pageSize = oldPgSize;
+                                gridView.moveToPage(oldPgIndex);
+                                grid.endUpdate();
+                                }, null
+                                );                          
                                 break;
                             case 'X_PDF':
                                 wijmo.grid.pdf.FlexGridPdfConverter.export(grid,'FlexGrid.pdf', {
