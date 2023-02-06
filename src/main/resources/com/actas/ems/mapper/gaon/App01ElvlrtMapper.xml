@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App01ElvlrtMapper">
+    <select id="GetCallXenv" parameterType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto">
+        select callflag, calluserid, calluserpw
+        from TB_XENV where spjangcd = 'ZZ'
+    </select>
+
+
+    <!--      관제현황 / 접수현황LIST  -->
+    <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT   substring(a.recedate, 5,2) + '/' + substring(a.recedate, 7,2) as recedate,
+            Left(a.recedate,4) + '-' +  substring(a.recedate, 5,2) + '-' + substring(a.recedate, 7,2) as recedateyear,
+            Left(a.hitchdate,4) + '-' +  substring(a.hitchdate, 5,2) + '-' + substring(a.hitchdate, 7,2) as hitchdate,
+            Left(a.recetime,2)+ ':' + substring(a.recetime, 3,2) as recetime,
+            Left(a.hitchhour,2)+ ':' + substring(a.hitchhour, 3,2) as hitchhour,
+            a.recenum,
+            a.actcd as actcd,
+            substring(a.actnm,0,15) as actnm,
+            a.equpcd as equpcd,
+            a.equpnm as equpnm,
+            a.cnt as cnt,
+            a.ascnt as ascnt,
+            isnull(a.pernm,'') AS actpernm,
+            a.contcd as contcd,
+            a.contnm as contnm,
+            isnull(a.tel,'') as tel,
+            a.reperid as reperid,
+            a.repernm as repernm,
+            a.perid as perid,
+            a.pernm as pernm,
+            a.contremark as contents,
+            a.remark as remark,
+            isnull(a.addrtxt,'') as addrtxt
+        FROM
+            (
+            SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            a.equpcd,
+            a.recedate,
+            a.recenum,
+            a.recetime,
+            a.hitchdate,
+            a.hitchhour,
+            q.actnm,
+            m.equpnm,
+            1 as cnt,
+            1 as ascnt,
+            a.contcd,
+            p.contnm,
+            a.contents as contremark,
+            a.reperid ,
+            g.pernm as repernm,
+            a.perid,
+            d.pernm,
+            a.remark,
+            q.tel as tel,
+            isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
+            FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND  isnull(a.actnm,'') Like concat('%',#{actcd},'%')
+          ORDER BY A.recedate desc, A.recetime desc
+        ]]>
+    </select>
+
+
+
+
+    <!--      관제현황 / 기사현황LIST  -->
+    <select id="GetApp01List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select distinct  Z.pernm  ,
+                        Z.divinm,
+                        (Z.actnm) as actnm,
+                        max(Z.teltime) as teltime,
+                        max(Z.telxcoordi) as telxcoordi,
+                        max(Z.telycodrdi) as telycodrdi,
+                        Z.handphone,
+                        Left(Z.recetime,2)+ ':' + substring(Z.recetime, 3,2) as recetime,
+                        isnull(Z.addrtxt, '') as addrtxt
+        FROM (
+                 select A.pernm  , b.divinm,  '' as actnm, '' as teltime, '' as telxcoordi, '' as telycodrdi, a.handphone as handphone, '' as recetime, '' as addrtxt
+                 from tb_ja001 a with (nolock) ,
+		              tb_jc002 b with (nolock)
+                 where a.divicd = b.divicd
+                   and a.rtclafi ='001'
+                 union
+                 select  A.pernm  , c.divinm as divinm,  substring(d.actnm,0,20) AS actnm, '' as teltime, '' as telxcoordi, '' as telycodrdi, a.handphone as handphone, max(b.recetime) as recetime,
+                     isnull(d.anaddress, '') + ' ' + isnull(d.anaddress2, '') as addrtxt
+                 from tb_ja001 a with (nolock) ,
+                     tb_e401 b with (nolock)  ,
+                     tb_jc002 c with (nolock)  ,
+                     tb_e601 d with (nolock)
+                 where  a.perid = 'p' + b.perid
+                   and b.recedate =  #{frdate}
+                   and a.divicd = c.divicd
+                   and b.actcd = d.actcd
+                   and a.rtclafi ='001'
+                 group by A.pernm  , c.divinm, d.actnm, a.handphone, d.anaddress, d.anaddress2
+                 union
+                 select   A.pernm  , b.divinm, '' as actnm,  c.teltime,  c.telxcoordi, c.telycodrdi, a.handphone as handphone, '' as recetime, '' as addrtxt
+                 from tb_ja001 a with (nolock),
+                     tb_mcoordinate c with (nolock)   ,
+                     tb_jc002 b with (nolock)
+                 where a.divicd = b.divicd
+                   and a.rtclafi ='001'
+                   and c.inputdate = #{frdate}
+                   and a.handphone=c.telnumber
+                   and c.teltime in (select top 1 max(teltime) from tb_mcoordinate where inputdate = #{frdate} group by inputdate )
+             ) Z
+
+        group by Z.pernm  , Z.divinm , Z.handphone  , Z.actnm, Z.recetime, Z.addrtxt
+        order by  Z.pernm
+        ]]>
+    </select>
+
+    <!--      관제현황/ 상단통계   -->
+    <select id="GetApp01List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT SUM(Z.callcount) AS callcount,
+               SUM(Z.recenum) as rececnt,
+               SUM(Z.callback) as callback,
+               SUM(Z.compnum) as compcnt
+        FROM
+            (
+                SELECT '0' as flag,
+                       COUNT(*) AS callcount,
+                       0 as recenum,
+                       0 as callback,
+                       0 as compnum
+                FROM TB_CALLMAIN WITH (NOLOCK)
+                WHERE CALLDATE = #{frdate}
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    COUNT(*) as recenum,
+                    0 as callback,
+                    0 as compnum
+                FROM TB_E401 WITH (NOLOCK)
+                WHERE RECEDATE = #{frdate}
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    0 as recenum,
+                    COUNT(*) as callback,
+                    0 as compnum
+                FROM TB_CALLMAIN WITH (NOLOCK)
+                WHERE CALLDATE = #{frdate} AND RCVFLAG = 'Y'
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    0 as recenum,
+                    0 as callback,
+                    COUNT(*) as compnum
+                FROM TB_E411 WITH (NOLOCK)
+                WHERE compdate = #{frdate}
+            ) Z
+        GROUP BY Z.flag
+
+        ]]>
+    </select>
+
+    <!--      관제현황 / 기사 이동라인  -->
+    <select id="GetApp01List004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+            select   A.pernm  , b.divinm,  c.teltime,  c.telxcoordi, c.telycodrdi, a.handphone as handphone
+            from tb_ja001 a with (nolock),
+            tb_mcoordinate c with (nolock)   ,
+            tb_jc002 b with (nolock)
+            where a.divicd = b.divicd
+            and a.rtclafi ='001'
+            and c.inputdate = #{frdate}
+            and a.handphone=c.telnumber
+            and c.telnumber= #{handphone}
+            order by  c.teltime
+        ]]>
+    </select>
+    <!--      고객상담센타 / 고객통화메모  -->
+    <select id="GetApp01List005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select  seq  , Left(calldate,4) + '-' +  substring(calldate, 5,2) + '-' + substring(calldate, 7,2) as calldate,
+            Left(calltime,2)+ ':' + substring(calltime, 3,2)  as calltime,  callnum, callnm, pernm, regdate, recedate, recenum ,
+                substring(calldate, 5,2) + '/' + substring(calldate, 7,2) as subcalldate,
+                Left(calltime,2)+ ':' + substring(calltime, 3,2) as subcalltime, flag, callmemo, rcvflag, callendmemo,
+                callbackflag, callbacktime, callbackmemo
+        from tb_callmain  with (nolock)
+        where calldate = #{frdate}
+        and isnull(callnm,'') Like concat('%',#{actcd},'%')
+        order by  calltime desc
+        ]]>
+    </select>
+</mapper>
+

@@ -29,17 +29,17 @@ public class KyDataBaseConfig {
     }
 
     @Bean(name="kyoungSqlSessionFactory")
-    public SqlSessionFactory elvlrtSqlSessionFactory(@Qualifier("elvlrtDataSource") DataSource elvlrtDataSource, ApplicationContext applicationContext) throws Exception{
+    public SqlSessionFactory kyoungSqlSessionFactory(@Qualifier("kyoungDataSource") DataSource kyoungDataSource, ApplicationContext applicationContext) throws Exception{
         //세션 생성 시, 빌드된 DataSource를 세팅하고 SQL문을 관리할 mapper.xml의 경로를 알려준다.
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(elvlrtDataSource);
+        sqlSessionFactoryBean.setDataSource(kyoungDataSource);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:com/actas/ems/mapper/kyoung/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     @Bean(name="kyoungSqlSessionTemplate")
-    public SqlSessionTemplate elvlrtSqlSessionTemplate(SqlSessionFactory elvlrtSqlSessionFactory) throws Exception{
-        return new SqlSessionTemplate(elvlrtSqlSessionFactory);
+    public SqlSessionTemplate kyoungSqlSessionTemplate(SqlSessionFactory kyoungSqlSessionFactory) throws Exception{
+        return new SqlSessionTemplate(kyoungSqlSessionFactory);
     }
 
 }

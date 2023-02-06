@@ -72,10 +72,10 @@ public class AuthCrudMController {
 
 
         userformDto =  authService.GetUserInfoDto(userformDto);
-        App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
-        userformDto.setCallflag(app01data.getCallflag());
-        userformDto.setCalluserid(app01data.getCalluserid());
-        userformDto.setCalluserpw(app01data.getCalluserpw());
+//        App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
+//        userformDto.setCallflag(app01data.getCallflag());
+//        userformDto.setCalluserid(app01data.getCalluserid());
+//        userformDto.setCalluserpw(app01data.getCalluserpw());
 
         String dbnm = userformDto.getDbnm();
         String ls_custcd = "";

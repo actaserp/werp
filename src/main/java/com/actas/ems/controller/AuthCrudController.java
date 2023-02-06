@@ -8,15 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.lang.reflect.Field;
 
 @RestController
 @RequiredArgsConstructor
@@ -125,10 +122,16 @@ public class AuthCrudController {
 
         userformDto.setUserid(loginid);
         userformDto =  authService.GetUserInfoDto(userformDto);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto",userformDto);
+
         App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
-        userformDto.setCallflag(app01data.getCallflag());
-        userformDto.setCalluserid(app01data.getCalluserid());
-        userformDto.setCalluserpw(app01data.getCalluserpw());
+        if(app01data.getCallflag() != null){
+            userformDto.setCallflag(app01data.getCallflag());
+            userformDto.setCalluserid(app01data.getCalluserid());
+            userformDto.setCalluserpw(app01data.getCalluserpw());
+        }
 
         String dbnm = userformDto.getDbnm();
         String ls_custcd = "";
@@ -152,8 +155,6 @@ public class AuthCrudController {
         userformDto.setCustcd(ls_custcd);
         userformDto.setSpjangcd(ls_spjangcd);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("userformDto",userformDto);
 
         if(select.equals(userformDto.getFlag()) == false){
             userReturnDto = null;

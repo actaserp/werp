@@ -6,11 +6,13 @@ import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
+import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtMobService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtService;
+import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadServiceImpl;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbmanualService;
@@ -41,9 +43,12 @@ import java.util.*;
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
     private final App10ElvlrtMobService service;
+    private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
+    PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
+    List<PopupDto> poplistDto = new ArrayList<>();
     protected Log log =  LogFactory.getLog(this.getClass());
     String ls_custcd = "";
     String ls_spjangcd = "";
@@ -113,6 +118,43 @@ public class AppMobileCrudController {
         }
 
         return appMobDtoList;
+    }
+
+    //  고장내용조회
+
+    @RequestMapping(value = "/wcontnm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppContnmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_contnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "contnm":
+                    popParmDto.setContnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_contnm.length() == 0){
+            ls_contnm = "%";
+        }
+        try {
+            popParmDto.setContnm(ls_contnm);
+            poplistDto = appPopElvlrtService.GetContnmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
     }
 
     private String getToDate() {
