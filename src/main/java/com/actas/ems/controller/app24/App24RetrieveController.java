@@ -75,7 +75,9 @@ public class App24RetrieveController {
     public Object App24001Tab02Form(@RequestParam("frdate") String frdate,
                                     @RequestParam("todate") String todate,
                                     @RequestParam("actcdz") String actcd,
-                                    Model model)throws Exception{
+                                    Model model, HttpServletRequest request)throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);

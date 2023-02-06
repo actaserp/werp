@@ -25,7 +25,7 @@
       <ul class="left">
         <li>
           <div class="logo">
-            <a href="">
+            <a th:href="@{/auth/emmsdashboard}">
               <img th:src="@{/assets/images/logo.png}" alt="">
             </a>
           </div>
@@ -1253,8 +1253,20 @@
                   wijmo.saveFile(csv, 'FlexGrid.csv');
                   break;
                 case 'X_XLSX':
-                  wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, null, 'FlexGrid.xlsx');
-                  break;
+                const gridView = grid.collectionView;
+                                let oldPgSize = gridView.pageSize, oldPgIndex = gridView.pageIndex;
+
+                                grid.beginUpdate();
+                                gridView.pageSize = 0;
+
+                                wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, {includeCellStyles: true, includeColumnHeaders: true}, 'FlexGrid.xlsx',
+                                saved => {
+                                gridView.pageSize = oldPgSize;
+                                gridView.moveToPage(oldPgIndex);
+                                grid.endUpdate();
+                                }, null
+                                );                                
+                                break;
                 case 'X_PDF':
                   wijmo.grid.pdf.FlexGridPdfConverter.export(grid, 'FlexGrid.pdf', {
                     maxPages: 10,

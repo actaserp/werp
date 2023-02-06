@@ -12,6 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +39,9 @@ public class App26RetrieveController {
             ,@RequestParam("actdivicdz") String divicd
             ,@RequestParam("actcontgubunz") String contgubun
             ,@RequestParam("actgubunz") String gubun
-            ,Model model) throws  Exception{
-
+            ,Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -85,8 +88,9 @@ public class App26RetrieveController {
             ,@RequestParam("actdivicdz") String divicd
             ,@RequestParam("actcontgubunz") String contgubun
             ,@RequestParam("actgubunz") String gubun
-            ,Model model) throws  Exception{
-
+            ,Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -122,8 +126,9 @@ public class App26RetrieveController {
             ,@RequestParam("actdivicdz") String divicd
             ,@RequestParam("actcontgubunz") String contgubun
             ,@RequestParam("actgubunz") String gubun
-            ,Model model) throws  Exception{
-
+            ,Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
@@ -170,15 +175,13 @@ public class App26RetrieveController {
             ,@RequestParam("actdivicdz") String divicd
             ,@RequestParam("actcontgubunz") String contgubun
             ,@RequestParam("actgubunz") String gubun
-            ,Model model) throws  Exception{
-
+            ,Model model, HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         String ls_yeare = frdate.substring(0,4);
         String ls_mm = frdate.substring(5,7);
         String ls_dd = frdate.substring(8,10);
         frdate =  ls_yeare + ls_mm + ls_dd;
-
-
-
         popParmDto.setFrdate(frdate);
         popParmDto.setActcd(actcd);
         popParmDto.setWkactcd(wkactcd);

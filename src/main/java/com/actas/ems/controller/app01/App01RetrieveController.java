@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -45,9 +47,13 @@ public class App01RetrieveController {
     // 관제현황 > 접수조회
     @GetMapping(value="/getgeocode")
     public Object App01001GetgeoForm( @RequestParam("addrtext") String addrtext
-            , Model model) throws  Exception{
+            , Model model, HttpServletRequest request) throws  Exception{
         Object returnDto = "";
         try {
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+
             String text = URLEncoder.encode(addrtext, "UTF-8");
             String apiURL = "https://dapi.kakao.com/v2/local/search/address.json";
             URL url = new URL(apiURL);

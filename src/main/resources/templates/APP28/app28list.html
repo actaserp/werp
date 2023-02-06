@@ -26,7 +26,7 @@
             <ul class="left">
                 <li>
                     <div class="logo">
-                        <a href="">
+                        <a th:href="@{/auth/emmsdashboard}">
                             <img th:src="@{/assets/images/logo.png}" alt="">
                         </a>
                     </div>
@@ -150,7 +150,7 @@
 
                                         <div class='flex-1 ms-2 fs--1' th:each="comment: ${app28CommentDto}">
                                             <p class='mb-1 bg-200 rounded-3 p-2' th:if="${question.sseq == comment.subkey}" th:text="|${comment.spernm} ${comment.smemo}|"><a class='fw-semi-bold' href='#!' th:if="${question.sseq == comment.subkey}" th:text="${comment.spernm}"></a> </p>
-                                            <div class='px-2' th:if="${question.sseq == comment.subkey}" th:text="${comment.sinputdate}"></div><a th:if="${question.sseq == comment.subkey && comment.spernm == userformDto.username}" th:mySseq="${comment.sseq}" th:onclick="del_btn(this.getAttribute('mySseq'))"> 삭제 </a>
+                                            <div class='px-2' th:if="${question.sseq == comment.subkey}" th:text="${comment.sinputdate}"></div><a th:if="${question.sseq == comment.subkey && comment.spernm == userformDto.username}" th:mySseq="${comment.sseq}" th:onclick="del_btn(this.getAttribute('mySseq'))" href="#!"> 삭제 </a>
                                             
                                         </div>
                                     </div>

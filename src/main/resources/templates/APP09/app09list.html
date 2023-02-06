@@ -12,7 +12,7 @@
                     <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
                 </div>
                 <div class="nav_bg"></div>
-                <!-- ################################ -->
+                
                 <!-- ## Left navigator include -->
                 <th:block th:include="layouts/APPHeader/appLeftNav" />
             </div>
@@ -24,7 +24,7 @@
                 <ul class="left">
                     <li>
                         <div class="logo">
-                            <a href="/auth/emmsdashboard">
+                            <a th:href="@{/auth/emmsdashboard}">
                                 <img th:src="@{/assets/images/logo.png}" alt="">
                             </a>
                         </div>

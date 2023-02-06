@@ -212,6 +212,23 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    @RequestMapping(value="/wpernm3")
+    public Object ApppernmList2(@RequestParam("actpernmz") String pernm
+            , Model model){
+        if(pernm.length() == 0){
+            pernm = "%";
+        }
+        try {
+            popParmDto.setPernm(pernm);
+            poplistDto = appPopElvlrtService.GetPernmList2(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
     //처리자
     @RequestMapping(value="/wpernm2")
     public Object Apppernm2List(@RequestParam("pernmz") String pernm

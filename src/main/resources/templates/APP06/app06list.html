@@ -717,7 +717,7 @@
                 document.getElementById('acthsubjectz').value= arg3;
                 document.getElementById('acthpernmz').value= arg4;
                 // document.getElementById('acthfilenamez').value= arg5;
-                arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
+                //arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
                 document.getElementById('acthinputdatez').value= arg6;
                 document.getElementById('acthgroupcdz').value= arg7;
                 document.getElementById('acthmemoz').value= arg8;
@@ -811,6 +811,7 @@
             let date = today.getDate();  // 날짜
             let day = today.getDay();  // 요일
             if(date > 0 && date < 10) {date = "0" + date};
+            if(month > 0 && month < 10) {month = "0" + month};
             let ls_today = year + '-' + month + '-' + date
             document.getElementById('acthinputdatez').value = ls_today;
         }
