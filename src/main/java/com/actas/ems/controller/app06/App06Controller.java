@@ -90,6 +90,8 @@ public class App06Controller {
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("기술자료실");
+            userformDto.setPagenm("수리노하우");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

@@ -74,6 +74,8 @@ public class App05Controller {
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("공지사항");
+            userformDto.setPagenm("공지사항");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

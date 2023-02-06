@@ -61,6 +61,8 @@ public class AppMbController {
         }try{
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("기술자료실");
+            userformDto.setPagenm("부품가이드");
             model.addAttribute("userformDto",userformDto);
 
         }catch (Exception ex) {

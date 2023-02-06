@@ -48,9 +48,15 @@ public class App09Controller {
         app09Dto.setYyyymm(indate.substring(0, 6));
         app09Dto.setFinputdate(indate);
 
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
         try{
             app09DtoList = service.GetFQManulList(app09Dto);
             model.addAttribute("app09Dto", app09DtoList);
+            userformDto.setPagetree01("공지사항");
+            userformDto.setPagenm("FaQ");
+            model.addAttribute("userformDto", userformDto);
         }catch (Exception ex){
             log.debug("Exception =====>" + ex.toString() );
         }
@@ -65,10 +71,16 @@ public class App09Controller {
         String indate = endDate.format(nowData).toString();
         app09Dto.setYyyymm(indate.substring(0, 6));
         app09Dto.setFinputdate(indate);
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
         try{
             app09DtoList = service.GetFQManulList(app09Dto);
             model.addAttribute("app09Dto", app09DtoList);
+
+            userformDto.setPagetree01("공지사항");
+            userformDto.setPagenm("FaQ");
+            model.addAttribute("userformDto", userformDto);
         }catch (Exception ex){
             log.debug("Exception =====>" + ex.toString() );
         }

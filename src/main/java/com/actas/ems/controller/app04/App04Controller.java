@@ -111,6 +111,8 @@ public class App04Controller {
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("기술자료실");
+            userformDto.setPagenm("부품메뉴얼");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
@@ -152,6 +154,8 @@ public class App04Controller {
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("기술자료실");
+            userformDto.setPagenm(" 기타자료실");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

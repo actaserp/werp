@@ -22,54 +22,7 @@
         </div>
         <!-- nav 끝 contents 시작 -->
     <div class="con">
-        <div class="header_top">
-            <ul class="left">
-                <li>
-                    <div class="logo">
-                        <a th:href="@{/auth/emmsdashboard}">
-                            <img th:src="@{/assets/images/logo.png}" alt="">
-                        </a>
-                    </div>
-                </li>
-                <li class="home">
-                    <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-                    <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-                </li>
-                <li class="on">
-                    기타자료실
-                </li>
-                <!-- <li class="on">
-                    고장접수관제현황
-                </li> -->
-            </ul>
-            <ul class="right">
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_call.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_bell.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_menu.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_que.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_user.png}" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <th:block th:include="layouts/APPHeader/appheadTop"/>
         <div class="infor_bar type2">
             <div class="left">
                 기타자료실

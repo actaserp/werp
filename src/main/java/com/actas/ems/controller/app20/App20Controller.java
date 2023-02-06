@@ -30,6 +30,12 @@ public class App20Controller {
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            if(userformDto.getFlag().equals("CC")){
+                userformDto.setPagetree01("고객지원센터");
+            }else{
+                userformDto.setPagetree01("통계관리");
+            }
+            userformDto.setPagenm("현장별고장현황");
 
             boolean result = true;
             if(userformDto.getFlag().equals("CC")){

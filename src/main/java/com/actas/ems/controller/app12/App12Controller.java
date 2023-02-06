@@ -40,6 +40,12 @@ public class App12Controller {
         try {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            if(userformDto.getFlag().equals("CC")){
+                userformDto.setPagetree01("고객지원센터");
+            }else{
+                userformDto.setPagetree01("통계관리");
+            }
+            userformDto.setPagenm("고장별수리현황");
             model.addAttribute("userformDto",userformDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
