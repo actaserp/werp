@@ -10,6 +10,7 @@
     <title>ACTAS Elevator 고객센터</title>
 </head>
 <body style="background: #f5f9fa">
+<input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
 <div class="content flex">
     <div class="header">
         <div class="left">
@@ -44,31 +45,17 @@
                 </li> -->
             </ul>
             <ul class="right">
-                <li>
-                    <a href="">
-                        <img src="/images/i_call.png" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="/images/i_bell.png" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="/images/i_menu.png" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="/images/i_que.png" alt="">
-                    </a>
-                </li>
+
                 <li>
                     <a th:href="@{/}">
+                        <img src="/images/in2.png" alt="">
+                    </a>
+                </li>
+                <li>
+                    <button id="userinfo">
                         <!--members/loginForm-->
                         <img src="/images/i_user.png" alt="">
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -214,6 +201,52 @@
         </div>
     </div>
 </div>
+
+
+<input class="form-control form-control-sm"  type="hidden" id="userinfobtn" data-bs-toggle="modal" data-bs-target="#userinfomodal"  />
+
+<!--------------------------------------------------------------------------------------->
+<!-- 마이페이지 MODAL FROM  -->
+<div class="modal fade" id="userinfomodal" data-bs-keyboard="false"
+     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+         style="max-width: 500px">
+        <div class="modal-content border-0">
+            <div class="modal-body p-0" >
+                <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                    <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                    <label>비밀번호</label>
+                    <input class="form-control form-control-sm" type="text"  th:value="${userFormDto.passwd1}" id="actpasswdz" onchange="check_pw()">
+                    <label>이름</label>
+                    <input class="form-control form-control-sm" type="text"  th:value="${userFormDto.username}" id="actnamez">
+                    <label>핸드폰번호</label>
+                    <input class="form-control form-control-sm" type="text"  th:value="${userFormDto.phone}" id="actphonez">
+                    <!--<input class="form-control form-control-sm" type="text"  th:value="${userFormDto.userid}">-->
+
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="row g-1">
+                    <div class="col-auto">
+                        <button class="badge-soft-primary dropdown-item rounded-1"
+                                type="button"  id="wpernmmodal_btn2" data-bs-dismiss="modal" onclick="save_btn3()">수정</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="badge-soft-primary dropdown-item rounded-1"
+                                type="button"  id="wuserinfomodal_btn" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------->
+<!-- modal -->
 
 
 <script type="text/javascript" th:inline="javascript">
@@ -658,6 +691,67 @@
         cols.width = 100;
         wtab01Grid.columns.push(cols);
     }
+
+
+    document.getElementById("userinfo").addEventListener("click", function () {
+        document.getElementById("userinfobtn").click();
+    });
+
+    function save_btn3(){
+        var ls_passwd = document.getElementById('actpasswdz').value;
+        var ls_name = document.getElementById('actnamez').value;
+        var ls_phone = document.getElementById('actphonez').value;
+        var ls_userid = document.getElementById('actuseridz').value;
+
+        if(!ls_passwd){
+            alert("공백은 불가합니다.")
+            return
+        }
+        if(!ls_name){
+            alert("공백은 불가합니다.")
+            return
+        }
+        if(!ls_phone){
+            alert("공백은 불가합니다.")
+            return
+        }
+
+        $.ajax({
+            url: '/authcrud/update',
+            type: "POST",
+            data: {
+                "passwd1" : ls_passwd,
+                "passwd2" : ls_passwd,
+                "phone" : ls_phone,
+                "username" : ls_name,
+                "userid" : ls_userid
+            },
+            async: false,
+            success:function (data) {
+                alert("성공")
+            },error:function (e) {
+                alert("오류발생");
+                console.log('error', e)
+            }
+        }).done(function(fragment){
+
+        })
+
+
+    }
+
+    function check_pw(){
+        var pw = document.getElementById('actpasswdz').value;
+
+        const pattern_pwd = /(?=.*\d{1,20})(?=.*[~`!@#$%\^&*()-+=]{1,20})(?=.*[a-zA-Z]{1,20}).{8,20}$/;
+
+        if(!(pattern_pwd.test(pw))){
+            window.alert('영문+숫자+특수문자 조합으로 8자리 이상 비밀번호를 입력해주세요.');
+            document.getElementById('actpasswdz').value="";
+            document.getElementById('actpasswdz').focus();
+        }
+    }
+
 </script>
 <script>
     $(document).ready(function() {
