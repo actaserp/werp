@@ -31,5 +31,8 @@ public interface AuthDBMapper {
 
     public void TB_XUSERS_LOGSUCC(UserFormDto Parm);
 
+    public void TB_XUSER_UPDATE(UserFormDto Parm);
+
+
 
 }

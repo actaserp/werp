@@ -8,12 +8,15 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.lang.reflect.Field;
 
 @RestController
 @RequiredArgsConstructor
@@ -91,6 +94,32 @@ public class AuthCrudController {
             throw new RuntimeException(e);
         }
         return "success";
+    }
+
+
+    @RequestMapping(value="/update")
+    public void memberUpdate(
+            @RequestParam("passwd1") String passwd1,
+             @RequestParam("passwd2") String passwd2,
+             @RequestParam("phone") String phone,
+             @RequestParam("userid") String userid,
+             @RequestParam("username") String username,
+
+             Model model,   HttpServletRequest request){
+
+
+        userformDto.setPasswd1(passwd1);
+        userformDto.setPasswd2(passwd2);
+        userformDto.setPhone(phone);
+        userformDto.setUsername(username);
+        userformDto.setUserid(userformDto.getUserid());
+
+         authService.TB_XUSER_UPDATE(userformDto);
+
+        model.addAttribute("userformDto", userformDto);
+
+
+
     }
 
 

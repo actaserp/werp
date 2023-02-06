@@ -20,6 +20,8 @@ public class AuthService {
     @Autowired
     hanyangsMapper hanyangsMapper;
 
+    int queryResult = 1;
+
     public void authInsert(UserFormDto parm){authMapper.TBXUSERS_Insert(parm);}
     public UserFormDto GetUserInfo(UserFormDto parm){return authMapper.GetUserInfo(parm);}
     public UserFormDto GetUserInfoDto(UserFormDto parm){return authMapper.GetUserInfoDto(parm);}
@@ -67,4 +69,6 @@ public class AuthService {
     }
 
     public String TB_XUSER_DBNM(UserFormDto parm) {return authMapper.TB_XUSER_DBNM(parm);}
+
+    public void TB_XUSER_UPDATE(UserFormDto dto) {authMapper.TB_XUSER_UPDATE(dto);}
 }
