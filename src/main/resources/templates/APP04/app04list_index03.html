@@ -601,7 +601,7 @@
 
                         const fileHtml = `
                                     <div data-name="filelistDiv" class="form-group filebox bs3-primary">                                         
-                                        <a href="/appx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=DD" target="_blank" > ${originalName} 다운로드 </a>
+                                        <a href="/appx/download?actidxz=${idx}&actboardz=${boardIdx}&actflagz=EE" target="_blank" > ${originalName} 다운로드 </a>
                                     </div>   
                                     `;
                         $('#btnDiv02').before(fileHtml);
@@ -643,26 +643,12 @@
     }
 
 
-    viewPage(ctx.item.eseq,  
-            ctx.item.cnam, 
-            ctx.item.esubject,
-            ctx.item.epernm, 
-            ctx.item.efilename, 
-            ctx.item.einputdate ,
-            ctx.item.egroupcd ,
-            ctx.item.ememo,
-            ctx.item.eflag );
-                       
-
-
     // 본문내용 표시할 모달 호출
     function viewPage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){
         $("#listmodal_btn").trigger("click");
         document.getElementById('actmseqz').value= arg1;
         document.getElementById('actmsubjectz').value= arg3;
         document.getElementById('actmpernmz').value= arg4;
-        // document.getElementById('actmfilenamez').value= arg5;
-        //arg6 = arg6.substr(0,4) + '-' + arg6.substr(4, 2) + '-' + arg6.substr(6,9);
         document.getElementById('actminputdatez').value= arg6;
         document.getElementById('actmgroupcdz').value= arg7;
         document.getElementById('actmemoz').value= arg8;

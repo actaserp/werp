@@ -86,11 +86,6 @@ public class App04Controller {
         String indate = endDate.format(nowData).toString();
         app04Dto.setYyyymm(indate.substring(0,6));
         app04Dto.setMinputdate(indate);
-//        if(bflag == "0"){
-//            app04Dto.setMsubject(search);
-//        }else{
-//            app04Dto.setMemo(search);
-//        }
         try {
 //            app04ListDto = service.GetMManulList(app04Dto);
 //            log.debug("Exception =====>" + app04ListDto );

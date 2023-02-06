@@ -51,6 +51,12 @@ public class FileDownload {
             case "MM":
                 mflag = "mmanul";
                 break;
+            case "DD":
+                mflag = "mdevmanual";
+                break;
+            case "EE":
+                mflag = "metcmanual";
+                break;
             default:
                 mflag = "mmanul";
                 break;
