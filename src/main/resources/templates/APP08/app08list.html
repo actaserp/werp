@@ -440,7 +440,7 @@
     }
     // 본문 data
     var inputdata = {
-      "actbseqz"    : ls_actbseqz.substr(0,4) + ls_actbseqz.substr(5,2) + ls_actbseqz.substr(8,3) ,
+      "actbseqz"    : ls_actbseqz ,
       "actbinputdatez"    : ls_actbinputdatez ,
       "actbgroupcdz"  : ls_actbgroupcdz,
       "actbsubjectz"      : ls_actbsubjectz ,
@@ -498,7 +498,7 @@
       url: '/app08mod/del',
       type:"POST",
       data: {
-        "actbseqz"    : ls_actbseqz.replaceAll("-","") ,
+        "actbseqz"    : ls_actbseqz ,
         "actflagz"    : "MB"
       },
       async:false,
@@ -560,7 +560,7 @@
           cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.attcnt}건 보기</b>',
             click: (e, ctx) => {
-              viewFilePage(ctx.item.bseq.substr(0,4)+ctx.item.bseq.substr(5,2)+ctx.item.bseq.substr(8,3) );
+              viewFilePage(ctx.item.bseq );
             }
           }) } ,
         { binding: 'binputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
@@ -686,7 +686,7 @@
     document.getElementById('actbsubjectz').value= arg3;
     document.getElementById('actbpernmz').value= arg4;
     // document.getElementById('actmfilenamez').value= arg5;
-    arg6 = arg6.substr(0,4) + arg6.substr(4, 2) + arg6.substr(6,9);
+    arg6 = arg6.substr(0,4)  + arg6.substr(4, 2) + arg6.substr(6,9);
     document.getElementById('actbinputdatez').value= arg6;
     document.getElementById('actbgroupcdz').value= arg7;
     document.getElementById('actbmemoz').value= arg8;
@@ -698,7 +698,7 @@
       url: '/app08mod/flist',
       type:"POST",
       data: {
-        "actbseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
+        "actbseqz"     : arg1,
         "actflagz"     : "MB",
       },
       async:false,
@@ -780,8 +780,9 @@
     let month = today.getMonth() + 1;  // 월
     let date = today.getDate();  // 날짜
     let day = today.getDay();  // 요일
-    if(month > 0 && month < 10) {month = "0" + month};
     if(date > 0 && date < 10) {date = "0" + date};
+    if(month > 0 && month < 10) {month = "0" + month};
+
     let ls_today = year + '-' + month + '-' + date
     document.getElementById('actbinputdatez').value = ls_today;
   }

@@ -95,6 +95,7 @@ public class App07CrudController {
                 appService.UpdateMManu(app04Dto);
             }
             model.addAttribute("userformDto",userformDto);
+            log.info("sibab");
 
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
@@ -170,9 +171,6 @@ public class App07CrudController {
         }else{
             app04Dto.setFseq(fseq);
         }
-
-        log.info(app04Dto);
-
         app04Dto.setYyyymm(ls_yeare + ls_mm);
         if(fseq == null || fseq.equals("")) {
             boolean result = appService.InsertMManu(app04Dto);
@@ -228,10 +226,12 @@ public class App07CrudController {
 
 
             }
-
+            log.info("true");
 
             boolean result = appServiceImpl.registerMManu(app04Dto, attachList);
-
+            if(result) {
+                log.info("true");
+            }
             if (!result) {
                 return "error";
             }
@@ -241,11 +241,11 @@ public class App07CrudController {
             throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
             //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         } catch (Exception  e){
-           // log.info("memberUpload Exception ================================================================");
-           // log.info(attachDTO);
-           // log.info(e.toString());
-           // ls_errmsg = "[" + ls_fileName + "] failed to save";
-           // throw new AttachFileException("[" + ls_fileName + "] failed to save");
+            // log.info("memberUpload Exception ================================================================");
+            // log.info(attachDTO);
+            // log.info(e.toString());
+            // ls_errmsg = "[" + ls_fileName + "] failed to save";
+            // throw new AttachFileException("[" + ls_fileName + "] failed to save");
             //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
         }/*
         finally {

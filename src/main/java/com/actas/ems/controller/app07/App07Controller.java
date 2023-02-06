@@ -62,6 +62,7 @@ public class App07Controller {
             log.debug("Exception =====>" + ex.toString() );
         }try{
             HttpSession session = request.getSession();
+            /*session.setMaxInactiveInterval(10);*/
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             model.addAttribute("userformDto",userformDto);
 

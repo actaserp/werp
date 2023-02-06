@@ -24,7 +24,7 @@
       <ul class="left">
         <li>
           <div class="logo">
-            <a th:href="@{/auth/emmsdashboard}">
+            <a href="">
               <img th:src="@{/assets/images/logo.png}" alt="">
             </a>
           </div>
@@ -440,7 +440,7 @@
     }
     // 본문 data
     var inputdata = {
-      "actfseqz"    : ls_actfseqz.substr(0,4) + ls_actfseqz.substr(5,2) + ls_actfseqz.substr(8,3) ,
+      "actfseqz"    : ls_actfseqz ,
       "actfinputdatez"    : ls_actfinputdatez ,
       "actfgroupcdz"  : ls_actfgroupcdz,
       "actfnsubjectz"      : ls_actfnsubjectz ,
@@ -450,7 +450,6 @@
     }
     // 본문 data formdata 에 추가
     formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
-
 
     $.ajax({
       url: '/app07mod/save',
@@ -464,7 +463,8 @@
         // console.log("등록OK", data);
         if(data == "success"){
           alert("저장되었습니다.")
-         // console.log("save", data);
+
+          // console.log("save", data);
           $("#CloseBtn").trigger("click");
           listUp();
         }else{
@@ -499,7 +499,7 @@
       url: '/app07mod/del',
       type:"POST",
       data: {
-        "actfseqz"    : ls_actfseqz.replaceAll("-","") ,
+        "actfseqz"    : ls_actfseqz ,
         "actflagz"    : "MF"
       },
       async:false,
@@ -561,7 +561,7 @@
           cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
             text: '<b>${item.attcnt}건 보기</b>',
             click: (e, ctx) => {
-              viewFilePage(ctx.item.fseq.substr(0,4)+ctx.item.fseq.substr(5,2)+ctx.item.fseq.substr(8,3));
+              viewFilePage(ctx.item.fseq );
             }
           }) } ,
         { binding: 'finputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
@@ -603,7 +603,7 @@
         cnt++;
 
       }
-       console.log(data01);
+      console.log(data01);
       return data01
     }
   }
@@ -699,7 +699,7 @@
       url: '/app07mod/flist',
       type:"POST",
       data: {
-        "actfseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
+        "actfseqz"     : arg1,
         "actflagz"     : "MF",
       },
       async:false,
@@ -781,8 +781,8 @@
     let month = today.getMonth() + 1;  // 월
     let date = today.getDate();  // 날짜
     let day = today.getDay();  // 요일
-    if(month > 0 && month < 10) {month = "0" + month};
     if(date > 0 && date < 10) {date = "0" + date};
+    if(month > 0 && month < 10) {month = "0" + month};
     let ls_today = year + '-' + month + '-' + date
     document.getElementById('actfinputdatez').value = ls_today;
   }

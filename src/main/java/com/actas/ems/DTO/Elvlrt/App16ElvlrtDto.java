@@ -39,29 +39,29 @@ public class App16ElvlrtDto {
     private String contcd;
 
 
-    private String mon1;
-    private String mon2;
-    private String mon3;
-    private String mon4;
-    private String mon5;
-    private String mon6;
-    private String mon7;
-    private String mon8;
-    private String mon9;
-    private String mon01;
-    private String mon02;
-    private String mon03;
-    private String mon04;
-    private String mon05;
-    private String mon06;
-    private String mon07;
-    private String mon08;
-    private String mon09;
-    private String mon10;
-    private String mon11;
-    private String mon12;
-    private String totalcnt;
-    private String per;
+    private Integer mon1;
+    private Integer mon2;
+    private Integer mon3;
+    private Integer mon4;
+    private Integer mon5;
+    private Integer mon6;
+    private Integer mon7;
+    private Integer mon8;
+    private Integer mon9;
+    private Integer mon01;
+    private Integer mon02;
+    private Integer mon03;
+    private Integer mon04;
+    private Integer mon05;
+    private Integer mon06;
+    private Integer mon07;
+    private Integer mon08;
+    private Integer mon09;
+    private Integer mon10;
+    private Integer mon11;
+    private Integer mon12;
+    private Integer totalcnt; //전체고장수
+    private String per;  //
     private Long qty;
     private Long avg;
 

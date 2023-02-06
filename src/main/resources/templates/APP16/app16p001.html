@@ -103,7 +103,7 @@
                 <div class="tab-pane fade show active" id="step01">
                   <div class="container-fluid">
 
-
+                    <div id="theGroupPanel"></div>
                     <div id="theGrid" class="animated"></div>
                     <div id="tab01Pager"></div>
                   </div>
@@ -161,9 +161,10 @@
             </div>
           </div>
           <div class="container-fluid">
-            <div id="theGroupPanel"></div>
+
             <div id="wactnmGrid_div" ></div>
             <div id="thePager01"></div>
+
           </div>
         </div>
 
@@ -204,7 +205,6 @@
 
       if(ls_name != "CC"){
       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-
         sortDescriptions: ['actnm'],
         groupDescriptions: ['actnm'],
         pageSize: 12
@@ -268,6 +268,7 @@
                 width: 80,
                 cssClass: "main-column",
                 align: "center",
+                aggregate: 'Sum'
               },
             ]
           },
@@ -276,7 +277,7 @@
             align: "center",
 
             columns: [
-              {binding: "2월.mon2", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "2월.mon2", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -285,7 +286,7 @@
             align: "center",
 
             columns: [
-              {binding: "3월.mon3", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "3월.mon3", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -294,7 +295,7 @@
             align: "center",
 
             columns: [
-              {binding: "4월.mon4", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "4월.mon4", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -303,7 +304,7 @@
             align: "center",
 
             columns: [
-              {binding: "5월.mon5", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "5월.mon5", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -312,7 +313,7 @@
             align: "center",
 
             columns: [
-              {binding: "6월.mon6", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "6월.mon6", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -321,7 +322,7 @@
             align: "center",
 
             columns: [
-              {binding: "7월.mon7", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "7월.mon7", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -330,7 +331,7 @@
             align: "center",
 
             columns: [
-              {binding: "8월.mon8", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "8월.mon8", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -339,7 +340,7 @@
             align: "center",
 
             columns: [
-              {binding: "9월.mon9", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "9월.mon9", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -348,7 +349,7 @@
             align: "center",
 
             columns: [
-              {binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "10월.mon10", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -357,7 +358,7 @@
             align: "center",
 
             columns: [
-              {binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center"},
+              {binding: "11월.mon11", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'},
 
             ]
           },
@@ -367,7 +368,7 @@
 
             columns: [
               {
-                binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center"
+                binding: "12월.mon12", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'
               },
 
             ]
@@ -378,7 +379,7 @@
 
             columns: [
               {
-                binding: "전체고장수.totalcnt", header: "처리", format: "a0", width: 80, align: "center"
+                binding: "전체고장수.totalcnt", header: "처리", format: "a0", width: 80, align: "center",aggregate: 'Sum'
               },
 
             ]
@@ -389,7 +390,7 @@
 
             columns: [
               {
-                binding: "고장률(전체고장수/기간동안전체고장수합).per", header: "처리", format: "a0", width: 280, align: "center"
+                binding: "고장률(전체고장수/기간동안전체고장수합).per", header: "처리", format: "a0", width: 280, align: "center",aggregate: 'Sum'
               },
 
             ]
@@ -403,6 +404,7 @@
 
       //검색 데이터 수집
       function getData_tab01() {
+
         return [
           {
             actnm: "",
@@ -583,28 +585,28 @@
           align: "center",
           columns: [
 
-            { binding: "1월.mon1", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "1월.mon1", align: "center", header: "처리", format: "a0", width: 80 , aggregate: 'Sum'},
           ]
         },
         {
           header: "2월",
           align: "center",
           columns: [
-            { binding: "2월.mon2", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "2월.mon2", align: "center", header: "처리", format: "a0", width: 80 , aggregate: 'Sum'},
           ]
         },
         {
           header: "3월",
           align: "center",
           columns: [
-            { binding: "3월.mon3", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "3월.mon3", align: "center", header: "처리", format: "a0", width: 80 , aggregate: 'Sum'},
           ]
         },
         {
           header: "4월",
           align: "center",
           columns: [
-            { binding: "4월.mon4", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "4월.mon4", align: "center", header: "처리", format: "a0", width: 80 , aggregate: 'Sum'},
           ]
         }
         ,
@@ -612,14 +614,14 @@
           header: "5월",
           align: "center",
           columns: [
-            { binding: "5월.mon5", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "5월.mon5", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "6월",
           align: "center",
           columns: [
-            { binding: "6월.mon6", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "6월.mon6", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         }
         ,
@@ -627,7 +629,7 @@
           header: "7월",
           align: "center",
           columns: [
-            { binding: "7월.mon7", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "7월.mon7", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         }
         ,
@@ -635,42 +637,42 @@
           header: "8월",
           align: "center",
           columns: [
-            { binding: "8월.mon8", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "8월.mon8", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "9월",
           align: "center",
           columns: [
-            { binding: "9월.mon9", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "9월.mon9", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "10월",
           align: "center",
           columns: [
-            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "10월.mon10", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "11월",
           align: "center",
           columns: [
-            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "11월.mon11", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "12월",
           align: "center",
           columns: [
-            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "12월.mon12", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
           header: "전체고장수",
           align: "center",
           columns: [
-            { binding: "전체고장수.totalcnt", align: "center", header: "처리", format: "a0", width: 80 },
+            { binding: "전체고장수.totalcnt", align: "center", header: "처리", format: "a0", width: 80 ,aggregate: 'Sum'},
           ]
         },
         {
