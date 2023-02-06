@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,8 +44,21 @@ public class App01Controller {
 
     // kt call dashboard
     @GetMapping(value="/ktcall")
-    public String App01Form(  Model model , HttpServletRequest request){
+    public String App01Form(Model model , HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
+        if(!request.isRequestedSessionIdValid()){
+            try {
+                response.setContentType("text/html; charset=utf-8");
+                PrintWriter w = response.getWriter();
+                w.write("<script>alert('로그인세션이 만료됐습니다.');</script>");
+                w.flush();
+                w.close();
+                throw new Exception(); //강제 에러 출력
+            } catch(Exception e) {
+                e.printStackTrace();
+                return "loginForm";
+            }
+        }
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 //        userformDto.setUserid(userid);
 //        userformDto.setUsername(username);

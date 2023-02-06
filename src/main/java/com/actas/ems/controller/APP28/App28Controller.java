@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +38,7 @@ public class App28Controller {
 
     // 도면자료실 index
     @GetMapping(value="/index01")
-    public String App28Form(Model model, HttpServletRequest request) throws  Exception{
+    public String App28Form(Model model, HttpServletRequest request, HttpServletResponse response) throws  Exception{
 //        userformDto.setUserid(userid);
 //        userformDto.setUsername(username);
 //        userformDto.setCltcd(cltcd);
@@ -73,6 +75,19 @@ public class App28Controller {
         try {
 
             HttpSession session = request.getSession();
+            if(!request.isRequestedSessionIdValid()){
+                try {
+                    response.setContentType("text/html; charset=utf-8");
+                    PrintWriter w = response.getWriter();
+                    w.write("<script>alert('로그인세션이 만료됐습니다.');</script>");
+                    w.flush();
+                    w.close();
+                    throw new Exception(); //강제 에러 출력
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    return "loginForm";
+                }
+            }
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             userformDto.setPagetree01("수리노하우");
             userformDto.setPagenm("수리 Q&A");

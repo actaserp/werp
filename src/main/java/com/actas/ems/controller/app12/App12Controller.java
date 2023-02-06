@@ -18,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,9 +38,22 @@ public class App12Controller {
 
     // 고장내용별현황 index
     @GetMapping(value="/index01")
-    public String App03IndexForm(Model model, HttpServletRequest request) throws  Exception{
+    public String App03IndexForm(Model model, HttpServletRequest request, HttpServletResponse response) throws  Exception{
         try {
             HttpSession session = request.getSession();
+            if(!request.isRequestedSessionIdValid()){
+                try {
+                    response.setContentType("text/html; charset=utf-8");
+                    PrintWriter w = response.getWriter();
+                    w.write("<script>alert('로그인세션이 만료됐습니다.');</script>");
+                    w.flush();
+                    w.close();
+                    throw new Exception(); //강제 에러 출력
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    return "loginForm";
+                }
+            }
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             if(userformDto.getFlag().equals("CC")){
                 userformDto.setPagetree01("고객지원센터");
