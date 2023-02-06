@@ -51,6 +51,7 @@ public class Email {
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
+        props.put("mail.smtp.timeout", "5000");
 
         try {
             // 메일 서버  인증 계정 설정

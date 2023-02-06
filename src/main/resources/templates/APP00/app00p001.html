@@ -21,54 +21,7 @@
     </div>
   </div>
   <div class="con">
-    <div class="header_top">
-      <ul class="left">
-        <li>
-          <div class="logo">
-            <a href="">
-              <img th:src="@{/assets/images/logo.png}" alt="">
-            </a>
-          </div>
-        </li>
-        <li class="home">
-          <a><img th:src="@{/assets/images/i_home.png}" alt=""></a>
-          <a><img th:src="@{/assets/images/i_home_on.png}" alt=""></a>
-        </li>
-        <li>
-          종합유지관리서비스
-        </li>
-        <li class="on">
-          현장별월별통계
-        </li>
-      </ul>
-      <ul class="right">
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_call.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_bell.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_menu.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_que.png}" alt="">
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <img th:src="@{/assets/images/i_user.png}" alt="">
-          </a>
-        </li>
-      </ul>
-    </div>
+    <th:block th:include="layouts/APPHeader/appheadTop"/>
     <div class="infor_bar type2">
       <ul class="right" style="visibility: hidden; opacity: 0;">
         <li>
