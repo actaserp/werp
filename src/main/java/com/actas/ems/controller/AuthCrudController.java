@@ -145,6 +145,8 @@ public class AuthCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":      //한국엘레텍
                 break;
+            case "KYOUNG":
+                break;
             default:
                 break;
         }
@@ -156,6 +158,9 @@ public class AuthCrudController {
         session.setAttribute("userformDto",userformDto);
 
         App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
+        System.out.println(app01data.getCallflag());
+        System.out.println(app01data.getCalluserid());
+        System.out.println(app01data.getCalluserpw());
         if(app01data.getCallflag() != null){
             userformDto.setCallflag(app01data.getCallflag());
             userformDto.setCalluserid(app01data.getCalluserid());

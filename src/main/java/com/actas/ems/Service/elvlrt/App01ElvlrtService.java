@@ -25,24 +25,31 @@ public class App01ElvlrtService {
     App01KyoungMapper appMapperK;
     @Autowired
     App01NmMapper     appMapperN;
+
     public App01ElvlrtDto GetCallXenv(App01ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){
             case "ELV_LRT":
+                System.out.println("ELV_LRT 로그인");
                 return  appMapper.GetCallXenv(parm);
             case "ELV_KYOUNG":
+                System.out.println("ELV_KYOUNG 로그인");
                 return  appMapperK.GetCallXenv(parm);
             case "ELV_GAON":
+                System.out.println("ELV_GAON 로그인");
                 return  appMapperG.GetCallXenv(parm);
             case "nmyang":
+                System.out.println("ELV_NMYANG 로그인");
                 return  appMapperN.GetCallXenv(parm);
             case "hanyangs":
+                System.out.println("ELV_HANYANGS 로그인");
                 return  appMapper.GetCallXenv(parm);
             default:
-                break;
+                System.out.println("default 로그인");
+                App01ElvlrtDto Object = null;
+                return Object;
         }
-        App01ElvlrtDto Object = null;
-        return Object;
+
     }
 
     /** 관제현황 / 접수현황 리스트 */
