@@ -392,7 +392,7 @@
 
             }
             var inputdata = {
-                    "actnseqz"    : ls_actnseqz.substr(0,4) + ls_actnseqz.substr(5,2) + ls_actnseqz.substr(8,3) ,
+                    "actnseqz"    : ls_actnseqz ,
                     "actninputdatez"    : ls_actninputdatez ,
                     "actngroupcdz"  : ls_actngroupcdz,
                     "actnsubjectz"      : ls_actnsubjectz ,
@@ -447,7 +447,7 @@
                 url: '/app05mod/del',
                 type:"POST",
                 data: {
-                    "actnseqz"    : ls_actnseqz.replaceAll("-",""),
+                    "actnseqz"    : ls_actnseqz,
                     "actnflagz"    : "NN"
                 },
                 async:false,
@@ -510,7 +510,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
                         click: (e, ctx) => {
-                            viewFilePage(ctx.item.nseq.substr(0,4) + ctx.item.nseq.substr(5,2) + ctx.item.nseq.substr(8,3));
+                            viewFilePage(ctx.item.nseq );
                         }
                     }) } ,
                 { binding: 'ninputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
@@ -649,7 +649,7 @@
                         url: '/app05mod/flist',
                         type:"POST",
                         data: {
-                            "actnseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
+                            "actnseqz"     : arg1,
                             "actnflagz"     : "NN",
                         },
                         async:false,
@@ -717,8 +717,7 @@
             });
 
             $("#actninputdatez").change(function(e){
-                // console.log("달력클릭");
-                // console.log(convert_time(e.timestamp));
+
             })
 
         })

@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper">
     <select id="GetMNoticeList"  parameterType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App05ElvlrtDto">
-        select Left(nseq,4) + '-' + substring(nseq, 5,2) + '-' + substring(nseq, 7,3) as nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=ngourpcd) as cnam,
+        select  nseq, ninputdate, ngourpcd, nsubject, nfilename, npernm, nmemo, nflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=ngourpcd) as cnam,
         (select Count(*) from tb_mattach where flag='NN' and board_idx=nseq and delete_yn = 'N') as attcnt
         from tb_mnotice WITH (NOLOCK)
         Where 1 = 1

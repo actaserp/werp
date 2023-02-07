@@ -823,7 +823,7 @@ function chk(){
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
                         text: '<b>${item.attcnt}건 보기</b>',
                         click: (e, ctx) => {
-                            viewFilePage(ctx.item.nseq.substr(0,4) + ctx.item.nseq.substr(5,2) + ctx.item.nseq.substr(8,3));
+                            viewFilePage(ctx.item.nseq);
                         }
                     })
                      } ,
@@ -969,7 +969,7 @@ function chk(){
             url: '/app05mod/flist',
             type:"POST",
             data: {
-                "actnseqz"     : arg1.substr(0,4)+arg1.substr(5,2)+arg1.substr(8,3),
+                "actnseqz"     : arg1,
                 "actnflagz"     : "NN",
             },
             async:false,
