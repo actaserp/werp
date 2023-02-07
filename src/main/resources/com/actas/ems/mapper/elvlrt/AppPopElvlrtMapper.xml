@@ -34,6 +34,7 @@
         WHERE 1 = 1
           AND (   isnull(contnm , '') Like concat('%',#{contnm},'%') )
           AND A.useyn = '1'
+        order by a.contnm
         ]]>
     </select>
 
@@ -46,6 +47,7 @@
         WHERE 1 = 1
           AND (   isnull(remonm , '') Like concat('%',#{remonm},'%') )
           AND A.useyn = '1'
+        order by a.remonm
         ]]>
     </select>
 
@@ -58,6 +60,7 @@
         WHERE 1 = 1
           AND (   isnull(resunm , '') Like concat('%',#{resunm},'%') )
           AND A.useyn = '1'
+        order by a.resunm
         ]]>
     </select>
 
@@ -70,6 +73,7 @@
         WHERE 1 = 1
           AND (   isnull(greginm , '') Like concat('%',#{greginm},'%') )
           AND A.useyn = '1'
+        order by a.greginm
         ]]>
     </select>
 
@@ -84,12 +88,12 @@
         WHERE 1 = 1
           AND (isnull(b.gregicd , '') = #{gregicd})
           AND (   isnull(reginm , '') Like concat('%',#{reginm},'%') )
-
+        order by a.reginm
 
         ]]>
     </select>
 
-    <!-- 처리방법 -->
+    <!-- 처리결과 -->
     <select id="GetResultnmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
         SELECT a.resultcd    resultcd  ,
@@ -98,6 +102,7 @@
         WHERE 1 = 1
           AND (   isnull(resultnm , '') Like concat('%',#{resultnm},'%') )
           AND A.useyn = '1'
+        order by a.resultcd
         ]]>
     </select>
 
@@ -133,6 +138,7 @@
         FROM TB_JA001 a WITH(NOLOCK)
         WHERE 1 = 1
           AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+        order by a.pernm
         ]]>
     </select>
 

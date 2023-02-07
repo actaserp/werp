@@ -121,7 +121,6 @@ public class AppMobileCrudController {
     }
 
     //  고장내용조회
-
     @RequestMapping(value = "/wcontnm", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -156,6 +155,249 @@ public class AppMobileCrudController {
         }
         return poplistDto;
     }
+
+
+    //  고장부위조회
+    @RequestMapping(value = "/wgreginm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppGreginmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_greginm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "greginm":
+                    popParmDto.setContnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_greginm.length() == 0){
+            ls_greginm = "%";
+        }
+        try {
+            popParmDto.setGreginm(ls_greginm);
+            poplistDto = appPopElvlrtService.GetGreginmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
+
+    //  고장부위상세조회
+    @RequestMapping(value = "/wreginm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppReginmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_gregicd = "";
+        String ls_reginm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "gregicd":
+                    popParmDto.setGregicd(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_reginm.length() == 0){
+            ls_reginm = "%";
+        }
+        try {
+            ls_gregicd = popParmDto.getGregicd();
+            int stCnt = ls_gregicd.indexOf('[') + 1 ;
+            int etCnt = ls_gregicd.indexOf(']');
+
+            ls_gregicd = ls_gregicd.substring(stCnt, etCnt);
+            popParmDto.setGregicd(ls_gregicd);
+            popParmDto.setReginm(ls_reginm);
+            poplistDto = appPopElvlrtService.GetReginmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
+
+    //  처리내용조회
+    @RequestMapping(value = "/wresunm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppResunmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_resunm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "resunm":
+                    popParmDto.setContnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_resunm.length() == 0){
+            ls_resunm = "%";
+        }
+        try {
+            popParmDto.setResunm(ls_resunm);
+            poplistDto = appPopElvlrtService.GetResunmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
+    //  처리결과조회
+    @RequestMapping(value = "/wresultnm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppResultnmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_resultnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "resultnm":
+                    popParmDto.setContnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_resultnm.length() == 0){
+            ls_resultnm = "%";
+        }
+        try {
+            popParmDto.setResultnm(ls_resultnm);
+            poplistDto = appPopElvlrtService.GetResultnmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
+
+    //  고장부위조회
+    @RequestMapping(value = "/savee411", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppE411SaveList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_gregicd = "";
+        String ls_regicd = "";
+        String ls_resucd = "";
+        String ls_resultcd = "";
+        String ls_resuremark = "";
+        String ls_comptime = "";
+        String ls_compdate = "";
+        App10ElvlrtDto app10tDto = new App10ElvlrtDto();
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "recedate":
+                    app10tDto.setRecedate(values.toString());
+                case "recenum":
+                    app10tDto.setRecenum(values.toString());
+                case "compdate":
+                    app10tDto.setCompdate(values.toString());
+                case "comptime":
+                    app10tDto.setComptime(values.toString());
+                case "gregicd":
+                    app10tDto.setGregicd(values.toString());
+                case "regicd":
+                    app10tDto.setRegicd(values.toString());
+                case "resucd":
+                    app10tDto.setResucd(values.toString());
+                case "resultcd":
+                    app10tDto.setResultcd(values.toString());
+                case "resuremark":
+                    app10tDto.setResuremark(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_gregicd = app10tDto.getGregicd();
+        ls_regicd = app10tDto.getRegicd();
+        ls_resucd = app10tDto.getResucd();
+        ls_resultcd = app10tDto.getResultcd();
+        ls_resuremark = app10tDto.getResuremark();
+        ls_compdate = app10tDto.getCompdate();
+        ls_comptime = app10tDto.getComptime();
+        int stCnt = ls_gregicd.indexOf('[') + 1 ;
+        int etCnt = ls_gregicd.indexOf(']');
+        ls_gregicd = ls_gregicd.substring(stCnt, etCnt);
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_regicd.indexOf('[') + 1 ;
+        etCnt = ls_regicd.indexOf(']');
+        ls_regicd = ls_regicd.substring(stCnt, etCnt);
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resucd.indexOf('[') + 1 ;
+        etCnt = ls_resucd.indexOf(']');
+        ls_resucd = ls_resucd.substring(stCnt, etCnt);
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resultcd.indexOf('[') + 1 ;
+        etCnt = ls_resultcd.indexOf(']');
+        ls_resultcd = ls_resultcd.substring(stCnt, etCnt);
+        app10tDto.setGregicd(ls_gregicd);
+        app10tDto.setRegicd(ls_regicd);
+        app10tDto.setResucd(ls_resucd);
+        app10tDto.setResultcd(ls_resultcd);
+
+        try {
+            //poplistDto = appPopElvlrtService.GetGreginmList(popParmDto);
+            //model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
 
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
