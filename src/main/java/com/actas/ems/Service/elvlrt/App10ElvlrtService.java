@@ -41,8 +41,9 @@ public class App10ElvlrtService {
         return (queryResult > 0);
     }
 
-
+    //처리등록 compnum
     public String get10ManualMaxSeq(String parm){return app10ElvMapper.get10ManualMaxSeq(parm);}
+
 
     //글수정
     @Transactional

@@ -373,9 +373,9 @@
                                                                 <!-- <button class="type1 color3 modal_step_open2" modal_step="Message"  style="min-width: 90px;" type="button">문자전송</button> -->
                                                                 <!-- <button class="type1 color2" style="min-width: 90px;"  onclick="new_rtn()">신규</button> -->
                                                                 <button class="btn btn-outline-secondary me-1 mb-1"  type="button" onclick="new_rtn()">문자전송</button>
-                                                                <button class="btn btn-outline-danger me-1 mb-1"  type="button" onclick="new_rtn()">삭&nbsp;&nbsp;제<span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span></button>
+                                                                <button class="btn btn-outline-danger me-1 mb-1"  type="button" onclick="delE401_rtn()">삭&nbsp;&nbsp;제<span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span></button>
                                                                 <button class="btn btn-outline-info me-1 mb-1"  type="button" onclick="new_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신&nbsp;&nbsp;규</button>                                                                
-                                                                <button class="btn btn-outline-warning me-1 mb-1"  type="button" onclick="new_rtn()">저&nbsp;&nbsp;장</button>
+                                                                <button class="btn btn-outline-warning me-1 mb-1"  type="button" onclick="saveE401_rtn()">저&nbsp;&nbsp;장</button>
                                                                 <!-- <button class="type1 color4" style="min-width: 90px;" >저장</button>         -->
                                                                 
                                                                 
@@ -497,17 +497,22 @@
                                                     <div class="input_wrap date"> 
                                                         <input type="time"  id="actcalltimez" autocomplete="off"  >
                                                         <input type="hidden"  id="actseqz"   >
-                                                    </div> 
+                                                    </div>  
+                                                    <!-- <div>
+                                                        <div class="btns"> 
+                                                            <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="delCall_rtn()">삭제</button>
+                                                        </div>
+                                                    </div>   
                                                     <div>
                                                         <div class="btns">
-                                                            <button class="type1 color3" style="min-width: 90px;" onclick="newcall_rtn()">신규</button> 
+                                                            <button class="type1 color3" style="min-width: 90px;"  type="button"  onclick="newcall_rtn()">신규</button> 
                                                         </div>
-                                                    </div>    
+                                                    </div>   
                                                     <div>
                                                         <div class="btns"> 
-                                                            <button class="type1 color4" style="min-width: 90px;" type="submit">등록</button>
+                                                            <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="saveCall_rtn()">등록</button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="input_wrap">
                                                     <h5>고객명</h5>
@@ -531,10 +536,27 @@
                                                     <h5>메모내용</h5>
                                                     <textarea name="actcallmemoz" id="actcallmemoz"></textarea>
                                                 </div>
-                                                <!-- <div class="input_wrap" style="margin-top: 10px;">
+                                                <div class="input_wrap"  >
                                                     <h5>처리내용</h5>
                                                     <input type="text" name="actcallendmemoz" id="actcallendmemoz"></textarea>
-                                                </div> -->
+                                                </div>
+                                                <div class="input_wrap"  > 
+                                                    <div>
+                                                        <div class="btns"> 
+                                                            <button class="type1 color2" style="min-width: 90px;"  type="button"  onclick="delCall_rtn()">삭제</button>
+                                                        </div>
+                                                    </div>   
+                                                    <div>
+                                                        <div class="btns">
+                                                            <button class="type1 color3" style="min-width: 90px;"  type="button"  onclick="newcall_rtn()">신규</button> 
+                                                        </div>
+                                                    </div>   
+                                                    <div>
+                                                        <div class="btns"> 
+                                                            <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="saveCall_rtn()">등록</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         <!-- <div class="call_box">
@@ -987,6 +1009,7 @@
     var wrepernmGrid; 
     var wpernmGrid; 
     var wequpnmGrid; 
+    let formData = new FormData(); 
 
     window.onload = function() {  
         //현장검색 popup list
@@ -1175,10 +1198,281 @@
             }
             return wactnm_data;                                      
         } 
+    }
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //고장접수등록
+    function saveE401_rtn(){
+        var ls_actrecedatez  = document.getElementById('actrecedatez').value; 
+        var ls_actrecenumz   = document.getElementById('actrecenumz').value; 
+        var ls_actrecetimez  = document.getElementById('actrecetimez').value;  
+        var ls_acthitchdatez = document.getElementById('acthitchdatez').value; 
+        var ls_acthitchhourz = document.getElementById('acthitchhourz').value; 
+        var ls_actactcdz    = document.getElementById('actactcdz').value; 
+        var ls_actequpcdz   = document.getElementById('actequpcdz').value; 
+        var ls_actreperidz  = document.getElementById('actreperidz').value; 
+        var ls_actperidz    = document.getElementById('actperidz').value; 
+        var ls_actcontcdz   = document.getElementById('actcontcdz').value; 
+        var ls_actcontentsz = document.getElementById('actcontentsz').value; 
+        var ls_actremarkz   = document.getElementById('actremarkz').value;    
+        
+        if(ls_actrecedatez == null || ls_actrecedatez.length == 0 || ls_actrecedatez == ""){
+           alert("접수일자를 등록하세요");
+           return
+        }       
+        if(ls_actrecetimez == null || ls_actrecetimez.length == 0 || ls_actrecetimez == ""){
+           alert("접수시간을 등록하세요");
+           return
+        }else{
+            ls_actrecetimez = ls_actrecetimez.substr(0,2) + ls_actrecetimez.substr(3,2);
+        }       
+        if(ls_acthitchhourz == null || ls_acthitchhourz.length == 0 || ls_acthitchhourz == ""){
+           alert("고장시간을 등록하세요");
+           return
+        }else{
+            ls_acthitchhourz = ls_acthitchhourz.substr(0,2) + ls_acthitchhourz.substr(3,2);
+        }    
+        if(ls_actactcdz == null || ls_actactcdz.length == 0 || ls_actactcdz == ""){
+           alert("보수현장을 등록하세요");
+           return
+        }       
+        if(ls_actequpcdz == null || ls_actequpcdz.length == 0 || ls_actequpcdz == ""){
+           alert("호기를 등록하세요");
+           return
+        }      
+        if(ls_actreperidz == null || ls_actreperidz.length == 0 || ls_actreperidz == ""){
+           alert("접수자를 등록하세요");
+           return
+        }      
+        if(ls_actperidz == null || ls_actperidz.length == 0 || ls_actperidz == ""){
+           alert("통보자를 등록하세요");
+           return
+        }       
+        if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == ""){
+           alert("고장내용을 등록하세요");
+           return
+        }            
 
+
+        // 본문 data    
+        var inputdata = {   
+                "actrecedatez"    : ls_actrecedatez ,
+                "actrecenumz"    : ls_actrecenumz ,
+                "actrecetimez"    : ls_actrecetimez ,
+                "acthitchdatez"  : ls_acthitchdatez,
+                "acthitchhourz"      : ls_acthitchhourz , 
+                "actactcdz"   :  ls_actactcdz   ,
+                "actequpcdz"   :  ls_actequpcdz, 
+                "actperidz"   :  ls_actperidz, 
+                "actreperidz"   :  ls_actreperidz, 
+                "actcontcdz"   :  ls_actcontcdz, 
+                "actcontentsz"   :  ls_actcontentsz, 
+                "actremarkz"   :  ls_actremarkz, 
+                
+            }  
+        formData.delete("key");    
+        // 본문 data formdata 에 추가
+        formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
+
+        $.ajax({
+            url: '/app01mod/savee401',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+            data: formData,
+            async:false,
+            success:function(data){
+                // console.log("등록OK", data);
+                if(data == "success"){
+                    alert("저장되었습니다.") 
+                    search_rtn();
+                }else{
+                    console.log(data);
+                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        })  
+        return ;
+    }
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //고장접수삭제
+    function delE401_rtn(){
+        if (!confirm(" 접수내용을 삭제하시겠습니까?")) {
+        return ;
+        }
+        var ls_actrecedatez  = document.getElementById('actrecedatez').value; 
+        var ls_actrecenumz   = document.getElementById('actrecenumz').value;  
+        
+        if(ls_actrecedatez == null || ls_actrecedatez.length == 0 || ls_actrecedatez == ""){
+           alert("접수일자를 등록하세요");
+           return
+        }       
+        if(ls_actrecenumz == null || ls_actrecenumz.length == 0 || ls_actrecenumz == ""){
+           alert("왼쪽 고장접수현장을 선택하세요.");
+           return
+        }          
  
+        $.ajax({
+        url: '/app01mod/deletee401',
+        type:"POST",
+        data: {
+            "actrecedatez"     : ls_actrecedatez ,
+            "actrecenumz"      : ls_actrecenumz 
+        },
+        async:false,
+        success:function(data){
+            if(data == "success"){ 
+                alert("삭제되었습니다.")     
+                search_rtn();     
+                new_rtn()      
+            }else{
+                console.log('error',e);
+                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+            }
+        },error:function(e){
+            console.log('error',e);
+        }
+        }).done(function(fragment){
+
+        }) 
+
+        return ;
+    }
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //통화메모등록
+    function saveCall_rtn(){
+        var ls_actcalldatez  = document.getElementById('actcalldatez').value; 
+        var ls_actcalltimez   = document.getElementById('actcalltimez').value; 
+        var ls_actseqz  = document.getElementById('actseqz').value;  
+        var ls_actcallnmz = document.getElementById('actcallnmz').value; 
+        var ls_actcallnumz = document.getElementById('actcallnumz').value;  
+        var ls_actcallbacktimez   = document.getElementById('actcallbacktimez').value; 
+        var ls_actcallbackmemoz  = document.getElementById('actcallbackmemoz').value; 
+        var ls_actcallmemoz    = document.getElementById('actcallmemoz').value;  
+        var ls_actcallendmemoz    = document.getElementById('actcallendmemoz').value;  
+        
+        const callbackflag = document.getElementById('callbackflag'); 
+        const is_checked = callbackflag.checked;
+        console.log(is_checked);
+        if (is_checked){
+            ls_callbackflag = "1"
+        }else{
+            ls_callbackflag = "0"
+        }
+        console.log(ls_callbackflag);
+        if(ls_actcalldatez == null || ls_actcalldatez.length == 0 || ls_actcalldatez == ""){
+           alert("수신일자를 등록하세요");
+           return
+        }       
+        if(ls_actcalltimez == null || ls_actcalltimez.length == 0 || ls_actcalltimez == ""){
+           alert("수신시간을 등록하세요");
+           return
+        }else{
+            ls_actcalltimez = ls_actcalltimez.substr(0,2) + ls_actcalltimez.substr(3,2);
+        }  
+        if(ls_callbackflag == "1" ){     
+            if(ls_actcallbacktimez == null || ls_actcallbacktimez.length == 0 || ls_actcallbacktimez == ""){
+                alert("콜백시간을 등록하세요");
+                return
+            }else{
+                ls_actcallbacktimez = ls_actcallbacktimez.substr(0,2) + ls_actcallbacktimez.substr(3,2);
+            }    
+        }else{
+            ls_actcallbacktimez = "";
+        }             
 
 
+        // 본문 data    
+        var inputdata = {   
+                "actcalldatez"    : ls_actcalldatez ,
+                "actcalltimez"    : ls_actcalltimez ,
+                "actseqz"    : ls_actseqz ,
+                "actcallnmz"  : ls_actcallnmz,
+                "actcallnumz"      : ls_actcallnumz , 
+                "callbackflag"   :  ls_callbackflag   ,
+                "actcallbacktimez"   :  ls_actcallbacktimez, 
+                "actcallbackmemoz"   :  ls_actcallbackmemoz, 
+                "actcallmemoz"   :  ls_actcallmemoz,  
+                "actcallendmemoz"   :  ls_actcallendmemoz,  
+                
+            }  
+        formData.delete("key");    
+        // 본문 data formdata 에 추가
+        formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+        console.log(inputdata); 
+
+        $.ajax({
+            url: '/app01mod/savecall',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+            data: formData,
+            async:false,
+            success:function(data){
+                // console.log("등록OK", data);
+                if(data == "success"){
+                    alert("저장되었습니다.") 
+                    searchtel_rtn();
+                }else{
+                    console.log(data);
+                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        })  
+        return ;
+    }
+    
+
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //통화메모삭제
+    function delCall_rtn(){
+        if (!confirm(" 수신내용을 삭제하시겠습니까?")) {
+        return ;
+        }
+        var ls_actseqz  = document.getElementById('actseqz').value;   
+        
+        if(ls_actseqz == null || ls_actseqz.length == 0 || ls_actseqz == ""){
+           alert("하단 리스트를 선택하세요");
+           return
+        }           
+ 
+        $.ajax({
+        url: '/app01mod/deletecall',
+        type:"POST",
+        data: {
+            "actseqz"     : ls_actseqz 
+        },
+        async:false,
+        success:function(data){
+            if(data == "success"){ 
+                alert("삭제되었습니다.")     
+                search_rtn();     
+                newcall_rtn()      
+            }else{
+                console.log('error',e);
+                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")
+            }
+        },error:function(e){
+            console.log('error',e);
+        }
+        }).done(function(fragment){
+
+        }) 
+
+        return ;
     }
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1318,8 +1612,7 @@
                 data: { 
                     "contnmz"      : searchText, 
                 }, 
-                success:function(data){ 
-                    console.log(data);
+                success:function(data){  
                     var wcontnmDto  = data;    
                     var wcontnm_data = [];
                     var cnt = 1;
@@ -1554,7 +1847,7 @@
     }    
 
     function wactnmChk_2(arg1, arg2, flag){
-        console.log(flag);
+        // console.log(flag);
             switch(flag){
                 case "01": 
                     // 현장검색 데이터 수집
@@ -1627,7 +1920,7 @@
         return 
     }    
     function mod_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){
-        new_rtn()
+        // new_rtn()
         document.getElementById('actrecedatez').value = arg1;
         document.getElementById('actrecenumz').value = arg2;
         document.getElementById('actrecetimez').value = arg3;
@@ -1646,10 +1939,9 @@
         document.getElementById('actcontentsz').value = arg16; 
         document.getElementById('actremarkz').value = arg17;  
     }
-
-    function modtel_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9){
-        // newcall_rtn()
-         
+    
+    function modtel_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10){
+        // newcall_rtn() 
         if(arg6 == null || arg6.length == 0 || arg6 == ""){
             arg6 = "";
         }
@@ -1661,16 +1953,29 @@
         }
         if(arg8 == null || arg8.length == 0 || arg8 == ""){
             arg8 = "00:00";
+        }else{
+            arg8 = arg8.substr(0,2) + ":" + arg8.substr(2,2)
         } 
-        document.getElementById('actseqz').value = arg1; 
-        document.getElementById('actcalldatez').value = arg2;
-        document.getElementById('actcalltimez').value = arg3;
-        document.getElementById('actcallnumz').value = arg4;
-        document.getElementById('actcallnmz').value = arg5;
-        document.getElementById('actcallmemoz').value = arg6;
-        document.getElementById('callbackflag').value = arg7;
-        document.getElementById('actcallbacktimez').value = arg8;
-        document.getElementById('actcallbackmemoz').value = arg9;
+        document.getElementById('actseqz').value = arg1;            //seq
+        document.getElementById('actcalldatez').value = arg2;       //calldate
+        document.getElementById('actcalltimez').value = arg3;       //calltime
+        document.getElementById('actcallnumz').value = arg4;        //callnum
+        document.getElementById('actcallnmz').value = arg5;         // callnm   
+        document.getElementById('actcallmemoz').value = arg6;       //callmemo      
+        // document.getElementById('callbackflag').value = arg7;       //callbackflag
+        document.getElementById('actcallbacktimez').value = arg8;   //callbacktime
+        document.getElementById('actcallbackmemoz').value = arg9;   //callbackmemo
+        document.getElementById('actcallendmemoz').value = arg10;   //callendmemo  
+        
+         
+        const callbackflag = document.getElementById('callbackflag'); 
+        if(arg7 == "1"){
+            callbackflag.checked = true; 
+        }else{
+            callbackflag.checked = false  
+        } 
+
+
     }
  
     function search_rtn(){
@@ -1681,18 +1986,18 @@
             ls_actnmz = "%";
         }  
         if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == "" || ls_frdate == "%"){ 
-            alert("시작 일자를 입력하세요")
-            return 
+            //alert("시작 일자를 입력하세요")
+            //return 
         }  
         if(ls_todate == null || ls_todate.length == 0 || ls_todate == "" || ls_todate == "%"){ 
-            alert("종료 일자를 입력하세요")
-            return 
+            //alert("종료 일자를 입력하세요")
+           // return 
         }  
-        // console.log("ls_actnmz : " + ls_actnmz);
+        // console.log("ls_actnmz 2222: " + ls_actnmz);
         $.ajax({
                 url: '/app01/emconlist',  
                 type:"POST",
-                data: { 
+                data: {   
                     "frdate"      : ls_frdate,  
                     "todate"      : ls_todate ,  
                     "actnmz"      : ls_actnmz ,
@@ -1711,14 +2016,15 @@
     }  
 
     function searchtel_rtn(){
+        let today = new Date();    
         var ls_callnm = document.getElementById('searchcallnmz').value; 
         let ls_frdate = document.getElementById('callfrdate').value;           
         if(ls_callnm == null || ls_callnm.length == 0 || ls_callnm == "" || ls_callnm == "%"){ 
-            ls_actnmz = "%";
+            ls_callnm = "%";
         }  
         if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == "" || ls_frdate == "%"){ 
-            alert("일자를 입력하세요")
-            return 
+            //alert("일자를 입력하세요")
+           // return 
         }   
         // console.log("ls_actnmz : " + ls_actnmz);
         $.ajax({
@@ -1760,8 +2066,8 @@
                 success:function(data){    
                     var GeoDto  = JSON.parse(data); 
                     // console.log("GeoDto");
-                    console.log(GeoDto.response.body.items.item[0])
-                    console.log(data.length)
+                    // console.log(GeoDto.response.body.items.item[0])
+                    // console.log(data.length)
                     let ls_buldNm = GeoDto.response.body.items.item[0].buldNm;
                     let ls_addr1  = GeoDto.response.body.items.item[0].address1;    
                     let ls_addr2  = GeoDto.response.body.items.item[0].address2;    
@@ -1819,6 +2125,13 @@
     $(document).ready(function() {  
         getToday()
         fn_egov_init_date()
+        search_rtn()
+        searchtel_rtn() 
+        // searchwactnm_rtn()
+        // searchwcontnm_rtn()
+        // searchwrepernm_rtn()
+        // searchwpernm_rtn()
+        setTimeout(searchtel_rtn, 10000);  //10초
         $('datetimepicker').datetimepicker({
             
         });  
@@ -1885,89 +2198,90 @@
         var today = new Date();   
         var hours = ('0' + today.getHours()).slice(-2); 
         var minutes = ('0' + today.getMinutes()).slice(-2);
+        // console.log(hours + ':' + minutes);
         document.getElementById('actrecetimez').value = hours + ':' + minutes;
         document.getElementById('acthitchhourz').value = hours + ':' + minutes; 
         document.getElementById('actcalltimez').value = hours + ':' + minutes; 
         document.getElementById('actcallbacktimez').value = hours + ':' + minutes; 
-        
+    
 
-        $frdate.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {                              
-                this.setOptions({
-                    // maxDate: $frdate.val() ? $frdate.val() : false
-                })
-            },
-        });
+        // $frdate.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {                              
+        //         this.setOptions({
+        //             // maxDate: $frdate.val() ? $frdate.val() : false
+        //         })
+        //     },
+        // });
 
-        $todate.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',    //'Y-m-d H:i',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {
-                this.setOptions({
-                    // minDate: $todate.val() ? $todate.val() : false
-                })
-            }
-        });
+        // $todate.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',    //'Y-m-d H:i',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {
+        //         this.setOptions({
+        //             // minDate: $todate.val() ? $todate.val() : false
+        //         })
+        //     }
+        // });
 
-        $actrecedatez.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',    //'Y-m-d H:i',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {
-                this.setOptions({
-                    // minDate: $todate.val() ? $todate.val() : false
-                })
-            }
-        });
+        // $actrecedatez.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',    //'Y-m-d H:i',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {
+        //         this.setOptions({
+        //             // minDate: $todate.val() ? $todate.val() : false
+        //         })
+        //     }
+        // });
 
-        $acthitchdatez.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',    //'Y-m-d H:i',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {
-                this.setOptions({
-                    // minDate: $todate.val() ? $todate.val() : false
-                })
-            }
-        });
+        // $acthitchdatez.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',    //'Y-m-d H:i',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {
+        //         this.setOptions({
+        //             // minDate: $todate.val() ? $todate.val() : false
+        //         })
+        //     }
+        // });
 
-        $actcalldatez.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',    //'Y-m-d H:i',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {
-                this.setOptions({
-                    // minDate: $todate.val() ? $todate.val() : false
-                })
-            }
-        });  
+        // $actcalldatez.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',    //'Y-m-d H:i',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {
+        //         this.setOptions({
+        //             // minDate: $todate.val() ? $todate.val() : false
+        //         })
+        //     }
+        // });  
 
-        $callfrdate.datetimepicker({
-            timepicker: false,
-            lang: 'ko',
-            format: 'Y-m-d',    //'Y-m-d H:i',
-            scrollMonth: false,
-            scrollInput: false,
-            onShow: function (ct) {
-                this.setOptions({
-                    // minDate: $todate.val() ? $todate.val() : false
-                })
-            }
-        });        
+        // $callfrdate.datetimepicker({
+        //     timepicker: false,
+        //     lang: 'ko',
+        //     format: 'Y-m-d',    //'Y-m-d H:i',
+        //     scrollMonth: false,
+        //     scrollInput: false,
+        //     onShow: function (ct) {
+        //         this.setOptions({
+        //             // minDate: $todate.val() ? $todate.val() : false
+        //         })
+        //     }
+        // });        
         
     }      
 

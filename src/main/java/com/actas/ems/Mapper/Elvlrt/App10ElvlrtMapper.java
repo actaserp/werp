@@ -34,5 +34,4 @@ public interface App10ElvlrtMapper {
     public String get10ManualMaxSeq(String perm);
 
 
-
 }

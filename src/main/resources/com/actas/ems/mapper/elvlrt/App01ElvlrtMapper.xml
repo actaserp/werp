@@ -200,5 +200,89 @@
         order by  calltime desc
         ]]>
     </select>
+
+
+    <select id="get10RecenumMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(recenum) from tb_e401 where recedate = #{recedate}
+    </select>
+
+    <insert id="InsertE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >
+        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, recetime, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate) values
+            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime}, #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate})
+    </insert>
+
+
+    <update id="UpdateE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set indate = #{indate}
+        <if test="recedate != null ">,</if>
+        <if test="recedate != null">recedate=#{recedate}</if>
+        <if test="recetime != null ">,</if>
+        <if test="recetime != null">recetime=#{recetime}</if>
+        <if test="hitchdate != null ">,</if>
+        <if test="hitchdate != null">hitchdate=#{hitchdate}</if>
+        <if test="hitchhour != null ">,</if>
+        <if test="hitchhour != null">hitchhour=#{hitchhour}</if>
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+        <if test="contcd != null ">,</if>
+        <if test="contcd != null">contcd=#{contcd}</if>
+        <if test="contents != null ">,</if>
+        <if test="contents != null">contents=#{contents}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="reperid != null ">,</if>
+        <if test="reperid != null">reperid=#{reperid}</if>
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
+    </update>
+
+    <delete id="DeleteE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        delete from tb_e401 where recedate = #{recedate} and recenum=#{recenum}
+    </delete>
+
+
+
+    <select id="getCllMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(seq) from tb_callmain where left(seq,6) = #{seq}
+    </select>
+
+    <insert id="InsertCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into tb_callmain (  calldate, calltime, seq, callnm, callnum, regdate,  callmemo,  callbackflag, callbacktime, callbackmemo, pernm, callendmemo ) values
+            (#{calldate}, #{calltime},  #{seq}, #{callnm}, #{callnum}, #{regdate}, #{callmemo}, #{callbackflag}, #{callbacktime}, #{callbackmemo}, #{pernm}, #{callendmemo})
+    </insert>
+
+    <update id="UpdateCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        update tb_callmain
+        set regdate = #{regdate}
+        <if test="calldate != null ">,</if>
+        <if test="calldate != null">calldate=#{calldate}</if>
+        <if test="calltime != null ">,</if>
+        <if test="calltime != null">calltime=#{calltime}</if>
+        <if test="callnm != null ">,</if>
+        <if test="callnm != null">callnm=#{callnm}</if>
+        <if test="callnum != null ">,</if>
+        <if test="callnum != null">callnum=#{callnum}</if>
+        <if test="callmemo != null ">,</if>
+        <if test="callmemo != null">callmemo=#{callmemo}</if>
+        <if test="callbackflag != null ">,</if>
+        <if test="callbackflag != null">callbackflag=#{callbackflag}</if>
+        <if test="callbacktime != null ">,</if>
+        <if test="callbacktime != null">callbacktime=#{callbacktime}</if>
+        <if test="callbackmemo != null ">,</if>
+        <if test="callbackmemo != null">callbackmemo=#{callbackmemo}</if>
+        <if test="callendmemo != null ">,</if>
+        <if test="callendmemo != null">callendmemo=#{callendmemo}</if>
+        where seq = #{seq}
+    </update>
+
+    <delete id="DeleteCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from tb_callmain where seq = #{seq}
+    </delete>
+
+
 </mapper>
 

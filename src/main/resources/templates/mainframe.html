@@ -74,7 +74,7 @@ function chk(){
                     고장접수관제현황
                 </li>
             </ul>
-            <ul class="mid">
+            <!-- <ul class="mid">
                 <li>
                     <i><img src="/images/i_circle1.png" alt=""></i>
                     <p>계약현장 <span>50</span></p>
@@ -91,7 +91,7 @@ function chk(){
                     <i><img src="/images/i_circle4.png" alt=""></i>
                     <p>금일고장접수 <span>50</span></p>
                 </li>
-            </ul>
+            </ul> -->
             <ul class="right">
 
                 <li>
@@ -115,102 +115,10 @@ function chk(){
             </ul>
 
         </div>
-        <div class="section section1">
-
+        <div class="section section1"> 
             <div class="sec_con" style="width: 40%;">
                 <div class="calender box_wrap">
-                    <div class="cal_top">
-                        <div class="pager">
-                            <button type="button"><img src="/images/arrow_left.png" alt=""></button>
-                            <p>2022.10</p>
-                            <button type="button"><img src="/images/arrow_right.png" alt=""></button>
-                        </div>
-                        <div class="add_cal">
-                            <button>+일정추가</button>
-                        </div>
-                    </div>
-                    <div class="cal_bottom">
-                        <div class="cal_table_box">
-                            <table class="cal_table">
-                                <tr>
-                                    <th>Sun</th>
-                                    <th>Mon</th>
-                                    <th>Tue</th>
-                                    <th>Wed</th>
-                                    <th>Thu</th>
-                                    <th>Fri</th>
-                                    <th>Set</th>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><p>1</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p>2</p></td>
-                                    <td><p>3</p></td>
-                                    <td><p>4</p></td>
-                                    <td><p>5</p></td>
-                                    <td class="on"><!-- 클래스 on 활성화 -->
-                                        <p>6</p>
-                                        <div class="todo">
-                                            <h5><i><img src="/images/i_dot.png" alt=""></i>10시 AM 일정</h5>
-                                            <h5><i><img src="/images/i_dot.png" alt=""></i>3시 PM 일정</h5>
-                                        </div>
-                                    </td>
-                                    <td><p>7</p></td>
-                                    <td><p>8</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p>9</p></td>
-                                    <td><p>10</p></td>
-                                    <td><p>11</p></td>
-                                    <td>
-                                        <p>12</p>
-                                        <div class="todo">
-                                            <h5><i><img src="/images/i_dot.png" alt=""></i>10시 AM 일정</h5>
-                                            <h5><i><img src="/images/i_dot.png" alt=""></i>3시 PM 일정</h5>
-                                        </div>
-                                    </td>
-                                    <td><p>13</p></td>
-                                    <td><p>14</p></td>
-                                    <td><p>15</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p>16</p></td>
-                                    <td><p>17</p></td>
-                                    <td><p>18</p></td>
-                                    <td><p>19</p></td>
-                                    <td><p>20</p></td>
-                                    <td><p>21</p></td>
-                                    <td><p>22</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p>23</p></td>
-                                    <td><p>24</p></td>
-                                    <td><p>25</p></td>
-                                    <td><p>26</p></td>
-                                    <td><p>27</p></td>
-                                    <td><p>28</p></td>
-                                    <td><p>29</p></td>
-                                </tr>
-                                <tr>
-                                    <td><p>30</p></td>
-                                    <td><p>31</p></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
+                    <div data-calendar='{"events":[{"title":"Bootcamp","start":"2021-09-19"}]}'></div> 
                 </div>
 
             </div>
@@ -317,7 +225,7 @@ function chk(){
         <div class="section section2">
             <div class="sec_con" style="width: 33.3333%;">
                 <div class="sec_con_tit">
-                    <span>당일계약만료현장</span>
+                    <span>당월계약만료현장</span>
                 </div>
                 <div class="box_wrap with_tit" style="padding: 0px;">
                     <div class="container-fluid" style="padding: 0px;">
@@ -328,7 +236,7 @@ function chk(){
             </div>
             <div class="sec_con" style="width: 33.3333%;">
                 <div class="sec_con_tit">
-                    <span>30일후 계약만료현장</span>
+                    <span>익월계약만료현장</span>
                 </div>
                 <div class="box_wrap with_tit" style="padding: 0px;">
                     <div class="container-fluid" style="padding: 0px;">
@@ -577,7 +485,7 @@ function chk(){
         document.getElementById("filemodal_btn").style.display="none";
         <!--고장다발현장-->
         view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
-            pageSize: 12
+            pageSize: 10
         });
 
         new wijmo.input.CollectionViewNavigator('#tabPager04', {
@@ -634,13 +542,13 @@ function chk(){
             }
             return wactnm_data;
         }
-        <!--고장다발현장 끝-->
+        // <!--고장다발현장 끝-->
 
 
 
-        <!--30일후 계약만료현장-->
+        // <!--30일후 계약만료현장-->
         view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
-            pageSize: 12
+            pageSize: 10
         });
 
         new wijmo.input.CollectionViewNavigator('#tabPager03', {
@@ -682,13 +590,29 @@ function chk(){
                 });
                 cnt++;
             }
+            
+            if (mapp15Dto.length <= 10){
+
+                    for (var i = 0; i < 10 - mapp15Dto.length; i++) {
+                        wactnm_data.push({
+                        id: cnt,
+                        index: cnt,
+                        actcd: '',
+                        actnm: '',
+                        contdate: '',
+                        stdate:  '',
+                        enddate:  '',
+                    });
+                    cnt++;
+                }
+            }
             return wactnm_data;
         }
-        <!--30일후 계약만료현장-->
+        // <!--30일후 계약만료현장-->
 
-        <!--당일계약만료현장 시작-->
+        // <!--당일계약만료현장 시작-->
         view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
-            pageSize: 12
+            pageSize: 10
         });
 
         new wijmo.input.CollectionViewNavigator('#tabPager02', {
@@ -729,14 +653,30 @@ function chk(){
                     enddate: mapp15Dto[i]["enddate"],
               });
                 cnt++;
+            } 
+            if (mapp15Dto.length <= 10){
+
+                    for (var i = 0; i < 10 - mapp15Dto.length; i++) {
+                        wactnm_data.push({
+                        id: cnt,
+                        index: cnt,
+                        actcd: '',
+                        actnm: '',
+                        contdate: '',
+                        stdate:  '',
+                        enddate:  '',
+                    });
+                    cnt++;
+                }
             }
+
             return wactnm_data;
         }
-        <!--당일계약만료현장 시작-->
+        //<!--당일계약만료현장 시작-->
 
-        <!--당월 점검현황 시작-->
+        //<!--당월 점검현황 시작-->
         view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-            pageSize: 12
+            pageSize: 16
         });
 
         new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -787,14 +727,34 @@ function chk(){
                 });
                 cnt++;
             }
+            
+            if (mapp15Dto.length <= 16){
+
+                    for (var i = 0; i < 16 - mapp15Dto.length; i++) {
+                        wactnm_data.push({
+                        id: cnt,
+                        index: cnt,
+                        plandate: '',
+                        plantime: '',
+                        actnm: '',
+                        equpnm: '',
+                        gubun: '',
+                        kcpernm: '',
+                        qty: '',
+                        remark: '',
+                        kcspnm: '',
+                    });
+                    cnt++;
+                }
+            }
             return wactnm_data;
         }
-        <!--당월점검현황 끝-->
+        //<!--당월점검현황 끝-->
 
 
-        <!--공지사항 -->
+        //<!--공지사항 -->
         var view_Mnoticepage = new wijmo.collections.CollectionView(getData_wlist(), {
-            pageSize: 12
+            pageSize: 16
         });
 
         new wijmo.input.CollectionViewNavigator('#tabPager01', {
@@ -807,8 +767,8 @@ function chk(){
             selectionMode: 'RowRange',
             alternatingRowStep: 0,
             columns: [
-
-                { binding: 'nseq', header: '번호', width: 100, format: '*' , align:"center", isReadOnly: true},
+                { binding: 'ninputdate', header: '등록일자', width: 100,   align:"center",  isReadOnly: true },
+                // { binding: 'nseq', header: '번호', width: 100, format: '*' , align:"center", isReadOnly: true},
                 { binding: 'cnam', header: '분류', width: 100, format: '*', align:"center", isReadOnly: true },
                 { binding: 'nsubject',width: 100, header: '제목', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
@@ -827,7 +787,7 @@ function chk(){
                         }
                     })
                      } ,
-                { binding: 'ninputdate', header: '등록일자', width: 100,   align:"center",  isReadOnly: true }
+                
 
             ],
             itemsSource: view_Mnoticepage
@@ -847,8 +807,6 @@ function chk(){
             var mapp05Dto = [[${App05Dto}]];
             var data01 = [];
             var cnt = 1;
-
-            console.log(mapp05Dto);
             for (var i = 0; i < mapp05Dto.length; i++) {
                 data01.push({
                     id: i,
@@ -865,11 +823,29 @@ function chk(){
                 });
                 cnt++;
             }
-            console.log(data01);
+            if (mapp05Dto.length <= 16){
+
+                    for (var i = 0; i < 16 - mapp05Dto.length; i++) {
+                    data01.push({
+                        id: cnt,
+                        index: cnt,
+                        nseq:     '',
+                        cnam:     '',
+                        nsubject: '',
+                        npernm:   '',
+                        attcnt : '' ,
+                        ninputdate : '',
+                        ngourpcd : '' ,
+                        nmemo : '' ,
+                        nflag : ''
+                    });
+                    cnt++;
+                }
+            }
             return data01
         }
 
-        <!--공지사항 끝-->
+        
 
     } ////////////////////////////////////////////////////////////////////////////////////////////////////////////onload 끝
 

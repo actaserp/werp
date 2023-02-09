@@ -46,6 +46,7 @@ public class App10ElvlrtDto {
     private String contremark;
     private String resunm;
     private String resuremark; //처리내용상세
+    private String reperid;
     private String repernm;
     private String remonm;
     private String remoremark; //고장원인상세
@@ -97,8 +98,5 @@ public class App10ElvlrtDto {
     private String sttime;
     private String endtime;
     private String comp;
-
-
-
 
 }

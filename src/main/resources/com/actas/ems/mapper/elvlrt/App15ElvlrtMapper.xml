@@ -77,8 +77,8 @@
         select a.actcd as actcd,
         q. actnm as actnm,
         a.contdate as contdate,
-        a.stdate as stdate,
-        a.enddate as enddate
+        Left(a.stdate,4) + '-' + substring(a.stdate, 5,2) + '-' + substring(a.stdate, 7,2)  as stdate,
+        Left(a.enddate,4) + '-' + substring(a.enddate, 5,2) + '-' + substring(a.enddate, 7,2)   as enddate
         from tb_e101 a WITH(NOLOCK)
         LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
         LEFT OUTER JOIN TB_E018 y WITH(NOLOCK) ON (a.custcd = y.custcd AND a.spjangcd = y.spjangcd AND a.cls = y.outcd)
@@ -86,10 +86,10 @@
         from tb_e101 WITH(NOLOCK)
         group by custcd, spjangcd, cltcd, actcd) b
         WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
-
-        AND a.enddate = CONVERT(varchar(8), GETDATE(),112)
+        AND left(a.enddate,6) = left(CONVERT(varchar(8), GETDATE(),112),6)
         aND a.contg <> '04'
         and Len(a.stdate) > 0
+        order by   q. actnm
         ]]>
     </select>
 
@@ -98,9 +98,9 @@
         <![CDATA[
         select a.actcd as actcd,
                q. actnm as actnm,
-               a.contdate as contdate,
-               a.stdate as stdate,
-               a.enddate as enddate
+            Left(a.contdate,4) + '-' + substring(a.contdate, 5,2) + '-' + substring(a.contdate, 7,2) as contdate,
+            Left(a.stdate,4) + '-' + substring(a.stdate, 5,2) + '-' + substring(a.stdate, 7,2)  as stdate,
+            Left(a.enddate,4) + '-' + substring(a.enddate, 5,2) + '-' + substring(a.enddate, 7,2)   as enddate
 
         from tb_e101 a WITH(NOLOCK)
       LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
@@ -109,10 +109,10 @@
             from tb_e101 WITH(NOLOCK)
             group by custcd, spjangcd, cltcd, actcd) b
         WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
-
-          AND a.enddate = CONVERT(varchar(8), DATEADD(DAY, 30, GETDATE()), 112)
+          AND left(a.enddate,6) = left(CONVERT(varchar(8), DATEADD(DAY, 30, GETDATE()), 112),6)
           aND a.contg <> '04'
           and Len(a.stdate) > 0
+          order by   q. actnm
         ]]>
     </select>
     <!--메인화면 당월 고장접수-->

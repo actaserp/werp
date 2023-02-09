@@ -2,6 +2,8 @@ package com.actas.ems.Service.elvlrt;
 
 import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App01ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App01GaonMapper;
@@ -159,7 +161,17 @@ public class App01ElvlrtService {
         return Object;
     }
 
-//    /** 관제현황 / 접수현황 리스트 */
+
+    public String get10RecenumMaxSeq(String parm){return appMapper.get10RecenumMaxSeq(parm);}
+    public int InsertE401(App10ElvlrtDto parm){  return appMapper.InsertE401(parm);}
+    public int UpdateE401(App10ElvlrtDto parm){return appMapper.UpdateE401(parm);}
+    public int DeleteE401(App10ElvlrtDto parm){return appMapper.DeleteE401(parm);}
+    public String getCllMaxSeq(String parm){return appMapper.getCllMaxSeq(parm);}
+    public int InsertCall(AppCallElvlrtDto parm){  return appMapper.InsertCall(parm);}
+    public int UpdateCall(AppCallElvlrtDto parm){return appMapper.UpdateCall(parm);}
+    public int DeleteCall(AppCallElvlrtDto parm){return appMapper.DeleteCall(parm);}
+
+
 //    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){return appMapper.GetApp01List001(parm);}
 //    /** 관제현황 / 수리기사 리스트 */
 //    public List<App03ElvlrtDto> GetApp01List002(PopupDto parm){return appMapper.GetApp01List002(parm);}

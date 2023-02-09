@@ -183,6 +183,7 @@
         select max(compnum) from tb_e411 where compdate = #{compdate}
     </select>
 
+
     <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e411
         set indate = #{indate}
