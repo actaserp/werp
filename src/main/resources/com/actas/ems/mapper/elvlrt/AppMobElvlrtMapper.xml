@@ -38,5 +38,28 @@
         ]]>
     </select>
 
+    <select id="GetApp06MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+        <![CDATA[ select
+                      isnull(hseq, '' ) as hseq,
+                      Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
+                      isnull(hgroupcd, '' ) as hgroupcd,
+                      isnull(hsubject, '' ) as hsubject,
+                      isnull(hpernm, '' ) as hpernm,
+                      isnull(hmemo, '' ) as hmemo,
+                      isnull(hflag, '' ) as hflag,
+    -- (select com_cnam from tb_ca510 where com_cls = '751' and com_code=hgroupcd) as cnam,
+    --(select Count(*) from tb_mattach where flag='NN' and board_idx=hseq and delete_yn = 'N') as attcnt
+                  from tb_mhmanual WITH (NOLOCK)
+                  Where spjangcd = #{spjangcd}
+        ]]>
+    </select>
+
+    <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '751') AND (com_code <> '00')
+        ]]>
+    </select>
 
 </mapper>

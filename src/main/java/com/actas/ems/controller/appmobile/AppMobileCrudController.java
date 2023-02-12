@@ -2,15 +2,13 @@ package com.actas.ems.controller.appmobile;
 
 
 import com.actas.ems.DTO.AttachDTO;
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
-import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
+import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtMobService;
+import com.actas.ems.Service.elvlrt.App06ElvlrtMobService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadService;
@@ -43,11 +41,18 @@ import java.util.*;
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
     private final App10ElvlrtMobService service;
+    private final App06ElvlrtMobService service06;
     private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
+
+    App06ElvlrtDto app06Dto = new App06ElvlrtDto();
+
     PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
+
+    List<AppMob003tDto> appMob003tDtoList = new ArrayList<>();
+
     List<PopupDto> poplistDto = new ArrayList<>();
     protected Log log =  LogFactory.getLog(this.getClass());
     String ls_custcd = "";
@@ -118,6 +123,61 @@ public class AppMobileCrudController {
         }
 
         return appMobDtoList;
+    }
+
+    @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object mhListForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                app06Dto.setCustcd(ls_custcd);
+                app06Dto.setSpjangcd(ls_spjangcd);
+
+                try {
+                    appMob003tDtoList = service06.GetApp06MobList001(app06Dto);
+                    model.addAttribute("appMobDtoList",appMobDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return appMob003tDtoList;
     }
 
     //  고장내용조회
