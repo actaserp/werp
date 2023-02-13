@@ -7,7 +7,7 @@
         select hseq, hinputdate, hgroupcd, hsubject, hpernm, hmemo, hflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=hgroupcd) as cnam,
         (select Count(*) from tb_mattach where flag='NN' and board_idx=hseq and delete_yn = 'N') as attcnt
         from tb_mhmanual WITH (NOLOCK)
-        Where 1 = 1
+        Where 1 = 1 order by hseq desc
         <!--        <if test="hsubject != null">-->
         <!--            and hsubject like '%' + #{hsubject} + '%'-->
         <!--        </if>-->
