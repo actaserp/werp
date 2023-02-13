@@ -1,8 +1,10 @@
 package com.actas.ems.Mapper.Elvlrt;
 
 
+import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.AppMob003tDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,7 @@ public interface App10ElvlrtMobMapper {
 
     public List<AppMob001tDto> GetAppMobList001(App10ElvlrtDto parm) ;
 
+    public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm) ;
 
 
 }

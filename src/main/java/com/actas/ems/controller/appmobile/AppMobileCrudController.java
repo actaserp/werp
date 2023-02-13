@@ -132,6 +132,8 @@ public class AppMobileCrudController {
             , Model model
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
+        String ls_hseq = "";
+        String ls_hflag = "";
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -142,16 +144,18 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+
+        ls_hflag = "NN";
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
                 app06Dto.setCustcd(ls_custcd);
                 app06Dto.setSpjangcd(ls_spjangcd);
 
+
                 try {
-                    appMob003tDtoList = service06.GetApp06MobList001(app06Dto);
+                    appMob003tDtoList = service.GetApp06MobList001(app06Dto);
                     model.addAttribute("appMob003tDtoList",appMob003tDtoList);
 
                 }catch (DataAccessException e) {
@@ -179,6 +183,8 @@ public class AppMobileCrudController {
 
         return appMob003tDtoList;
     }
+
+
 
     //  고장내용조회
     @RequestMapping(value = "/wcontnm", method = RequestMethod.POST,

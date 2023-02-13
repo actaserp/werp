@@ -16,9 +16,5 @@ public class AppMob003tDto {
     private String hpernm;
     private String hmemo;
     private String hflag;
-    private String yyyymm;
-    private String cnam;
-    private int attcnt;
-
 
 }

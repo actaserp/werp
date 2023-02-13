@@ -18,7 +18,6 @@ public class App06ElvlrtMobService {
     App06ElvlrtMobMapper app06ElvMobMapper;
     int queryResult = 1;
 
-
     /** view page **/
     public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm){return app06ElvMobMapper.GetApp06MobList001(parm);}
 
