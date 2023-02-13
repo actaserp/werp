@@ -152,7 +152,7 @@ public class AppMobileCrudController {
 
                 try {
                     appMob003tDtoList = service06.GetApp06MobList001(app06Dto);
-                    model.addAttribute("appMobDtoList",appMobDtoList);
+                    model.addAttribute("appMob003tDtoList",appMob003tDtoList);
 
                 }catch (DataAccessException e) {
                     log.info("App01001Tab01Form DataAccessException ================================================================");
