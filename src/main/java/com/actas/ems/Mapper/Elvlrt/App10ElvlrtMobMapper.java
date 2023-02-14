@@ -7,6 +7,8 @@ import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppMob003tDto;
 import com.actas.ems.DTO.Popup.PopupDto;
+import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
+import com.actas.ems.DTO.Elvlrt.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,7 @@ public interface App10ElvlrtMobMapper {
     public List<AppMob001tDto> GetAppMobList001(App10ElvlrtDto parm) ;
 
     public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm) ;
+    public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
 
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);

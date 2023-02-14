@@ -41,8 +41,12 @@
     <select id="GetApp06MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
         <![CDATA[ select
                       isnull(hseq, '' ) as hseq,
-                      isnull(hinputdate, '' ) as hinputdate,
-                      isnull(hgroupcd, '' ) as hgroupcd,
+                      Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
+                      Case when hgroupcd is null then ''
+                           when hgroupcd = '01' then '사내공지'
+                           when hgroupcd = '02' then '고객공지'
+                           else hgroupcd
+                          end as hgroupcd,
                       isnull(hsubject, '' ) as hsubject,
                       isnull(hpernm, '' ) as hpernm,
                       isnull(hmemo, '' ) as hmemo,
@@ -52,6 +56,43 @@
                         and custcd = #{custcd}
         ]]>
     </select>
+
+    <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.app08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
+        <![CDATA[ select
+                      isnull(bseq, '' ) as bseq,
+                      Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
+                      Case when bgourpcd is null then ''
+                      when bgourpcd = '01' then '부품교체'
+                      when bgourpcd = '002' then '수리공사'
+                      when bgourpcd = '03' then '인건비'
+                      when bgourpcd = '04' then '무상처리'
+                      else bgourpcd
+                      end as bgourpcd,
+                      isnull(bsubject, '' ) as bsubject,
+                      isnull(bpernm, '' ) as bpernm,
+                      isnull(bmemo, '' ) as bmemo,
+                      isnull(bflag, '' ) as bflag
+                  from TB_MBMANUAL WITH (NOLOCK)
+                  Where spjangcd = #{spjangcd}
+                and custcd = #{custcd}
+        ]]>
+    </select>
+
+<!--    <select id="GetApp06MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AttachDTO">-->
+<!--        <![CDATA[ 			SELECT  isnull(idx, '' ) as idx,-->
+<!--                                 board_idx as boardIdx-->
+<!--                                  , original_name as originalName-->
+<!--                                  , save_name as saveName-->
+<!--                                  , size-->
+<!--                                  , flag-->
+<!--                                  , insert_time as inserttime-->
+<!--                             FROM-->
+<!--                                 tb_mattach with (nolock)-->
+<!--                             WHERE-->
+<!--                                 seq = #{hseq}-->
+<!--                                 and flag  = 'MH'-->
+<!--                    ]]>-->
+<!--    </select>-->
 
     <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
         <![CDATA[
