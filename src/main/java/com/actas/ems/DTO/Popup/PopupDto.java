@@ -29,6 +29,7 @@ public class PopupDto {
     private String resucd;      //처리내용
     private int qty;
     private String perid;
+    private String wperid;
     private String handphone;
     private String resultcd;
     private String divicd;
@@ -36,6 +37,7 @@ public class PopupDto {
     private String resultnm;        //처리방법
     private String divinm;          //담당부서명
     private String pernm;           //사원명
+    private String wpernm;           //사원명
     private String custcd;
     private String spjangcd;
     private String actperid; //담당자코드

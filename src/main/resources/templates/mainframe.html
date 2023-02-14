@@ -68,11 +68,11 @@ function chk(){
                     <a><img src="/images/i_home_on.png" alt=""></a>
                 </li>
                 <li>
-                    고객상담센터
+                    고객상담센터 대시보드
                 </li>
-                <li>
+                <!-- <li>
                     고장접수관제현황
-                </li>
+                </li> -->
             </ul>
             <!-- <ul class="mid">
                 <li>
@@ -245,7 +245,10 @@ function chk(){
                     </div>
                 </div>
             </div>
-            <div class="sec_con" style="width: 33.3333%;">
+            <div class="sec_con" style="width: 33.3333%;">  
+                <div class="container-fluid">
+                    <div id="chart"></div>
+                  </div>
                 <div class="sec_con_tit">
                     <span>당월 현장별/호기별 고장접수 현황</span>
                 </div>
@@ -453,37 +456,14 @@ function chk(){
 <script type="text/javascript" th:inline="javascript">
 
     let formData = new FormData();
-    function clear_rtn(elem){
-        console.log("clear rtn");
-        document.getElementById('actnseqz').value= "";
-        document.getElementById('actnsubjectz').value= "";
-        document.getElementById('actnpernmz').value= "";
-        // document.getElementById('actnfilenamez').value= "";
-        document.getElementById('actninputdatez').value= "";
-        document.getElementById('actngroupcdz').value= "";
-        document.getElementById('actnmemoz').value= "";
-        document.getElementById('actnflagz').value= "";
-        const target = $(elem).parents('div[data-name="fileDiv"]');
-        fileIdx = 0;
-        const fileDivs = $('div[data-name="fileDiv"]');
-        fileDivs.remove();
-        getToday()
-    }
-
-
     var view_p01tab01page;
     var view_p01tab02page;
     var view_p01tab03page;
     var view_p01tab04page;
     var wtab01Grid;
 
-
-
-    window.onload = function () {
-
-
-        document.getElementById("filemodal_btn").style.display="none";
-        <!--고장다발현장-->
+ 
+        // <!--고장다발현장-->
         view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
             pageSize: 10
         });
@@ -847,7 +827,7 @@ function chk(){
 
         
 
-    } ////////////////////////////////////////////////////////////////////////////////////////////////////////////onload 끝
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////onload 끝
 
     //공지사항 파일 미리보기
     // 첨부파일 보기 modal 호출

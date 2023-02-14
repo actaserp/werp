@@ -122,11 +122,17 @@
     <select id="GetPernmList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
         <![CDATA[
         SELECT Substring(a.perid, 2, len(a.perid) )    perid  ,
-               a.pernm    pernm
-        FROM TB_JA001 a WITH(NOLOCK)
-        WHERE 1 = 1
-          AND (   isnull(pernm , '') Like concat('%',#{pernm},'%') )
+               a.pernm    pernm ,
+               b.divicd as divicd,
+               b.divinm as divinm,
+               Substring(a.perid, 2, len(a.perid) )    wperid  ,
+               a.pernm    wpernm ,
+               isnull(a.handphone, '') as handphone
+        FROM TB_JA001 a WITH(NOLOCK) , TB_JC002 b WITH (NOLOCK)
+        WHERE a.divicd = b.divicd
+          AND (   isnull(a.pernm , '') Like concat('%',#{pernm},'%') )
           AND a.rtclafi in ('001')
+        order by pernm
         ]]>
     </select>
 

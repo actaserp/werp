@@ -264,8 +264,12 @@
                 "addrtext"      : addr 
             }, 
             async:false,
-            success:function(data){    
+            success:function(data){     
                 var GeoDto  = JSON.parse(data);
+                if(data.length < 100) {
+                    alert("해당 현장이 조회되지 않습니다.")
+                    return 
+                }
                 var lngY = GeoDto.documents[0].y;
                 var lngX = GeoDto.documents[0].x;
                 // console.log(GeoDto.documents[0].x) ;  

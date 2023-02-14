@@ -7,6 +7,7 @@ import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App03ElvlrtService;
+import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -35,11 +36,13 @@ public class App01Controller {
     private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     PopupDto popParmDto = new PopupDto();
+    List<PopupDto> poplistDto = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList02 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList03 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList04 = new ArrayList<>();
     private final App01ElvlrtService service;
+    private final AppPopElvlrtService appPopElvlrtService;
     protected Log log =  LogFactory.getLog(this.getClass());
 
     // kt call dashboard
@@ -70,6 +73,7 @@ public class App01Controller {
         model.addAttribute("userformDto", userformDto);
         model.addAttribute("callid", userformDto.getCalluserid());
         model.addAttribute("callpw", userformDto.getCalluserpw());
+
         return "app01/KtcallMAIN";
     }
 
@@ -90,6 +94,7 @@ public class App01Controller {
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
         popParmDto.setActcd("%");
+        popParmDto.setPernm("%");
 
         try {
             app03DtoList01 = service.GetApp01List001(popParmDto);
@@ -100,6 +105,8 @@ public class App01Controller {
             model.addAttribute("app03DtoList03",app03DtoList03);
             app03DtoList04 = service.GetApp01List001(popParmDto);
             model.addAttribute("app03DtoList",app03DtoList04);
+            poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
+            model.addAttribute("wperidDto", poplistDto);
         }catch (DataAccessException e) {
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headFragment"> 
     <meta charset="UTF-8">
-    <!--  컨텐츠 페이지의 title 들어감-->
+    <!--  컨텐츠 페이지의 title 들어감 apphead-->
     <th:block layout:fragment="titile"></th:block>
  
     <!-- ===============================================-->
@@ -43,10 +43,7 @@
  
     <!-- script -->
     <script  th:src="@{/assets/scripts/jquery-3.1.1.min.js}"  ></script>
-    <script  th:src="@{/assets/scripts/script.js}"  ></script>
-
-
-  
+    <script  th:src="@{/assets/scripts/script.js}"  ></script> 
     
     
     <!-- falcon--> 
@@ -109,8 +106,8 @@
     <script th:src="@{/wijimo/controls/wijmo.grid.grouppanel.min.js}"></script> 
     <script th:src="@{/wijimo/controls/wijmo.grid.xlsx.min.js}"></script> 
     <script th:src="@{/wijimo/controls/wijmo.xlsx.min.js}"></script> 
-    <script th:src="@{/wijimo/controls/wijmo.grid.pdf.min.js}"></script> 
     <script th:src="@{/wijimo/controls/wijmo.pdf.min.js}"></script>   
+    <script th:src="@{/wijimo/controls/wijmo.grid.pdf.min.js}"></script> 
     <script th:src="@{/wijimo/controls/wijmo.grid.sheet.min.js}"></script>
     <script th:src="@{/wijimo/controls/wijmo.grid.cellmaker.min.js}"></script>
     <script th:src="@{/wijimo/controls/wijmo.grid.selector.min.js}"></script>
@@ -119,11 +116,23 @@
     <script th:src="@{/wijimo/controls/wijmo.chart.min.js}"></script>    
     <script th:src="@{/wijimo/controls/wijmo.chart.min.js}"></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+    
 
     <!-- Wijmo custom culture (옵션, 원하는 문화권을 추가) -->
     <script th:src="@{/wijimo/controls/cultures/wijmo.culture.ko.min.js}"></script> 
-    <script src="https://cdn.grapecity.com/wijmo/5.20221.842/controls/wijmo.grid.cellmaker.min.js"></script>
+    <!-- <script src="https://cdn.grapecity.com/wijmo/5.20221.842/controls/wijmo.grid.cellmaker.min.js"></script> -->    
+    <!-- <script src="https://cdn.grapecity.com/wijmo/5.20211.781/controls/wijmo.pdf.min.js"></script> -->
 
+    <!-- https://cdn.grapecity.com/wijmo/5.20211.781/styles/wijmo.min.css
+    https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css
+    https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+    EXTERNAL JAVASCRIPT
+    https://cdn.grapecity.com/wijmo/5.20211.781/controls/wijmo.min.js
+    https://cdn.grapecity.com/wijmo/5.20211.781/controls/wijmo.grid.min.js
+    https://www.grapecity.co.kr/files/license/Wijmo/CodePen_License.js
+    https://cdn.grapecity.com/wijmo/5.20211.781/controls/wijmo.grid.selector.min.js -->
+
+    
     <!-- Wijmo 배포라이선스키 적용 (배포 시 필요) -->
     <script>
       wijmo.setLicenseKey('emmsg.co.kr,173371689525245#B0IdMwSZzxWYmpjIyNHZisnOiwmbBJye0ICRiwiI34TQKFkWzU6btlWZwhjRhZEWDlXdQNjev4mWqZVVXZEeHBjUvZ4d6kzSwtGetNncl96VmJmViJDbKdlYDZFdTN4U8RnRkNUZJlTTZ5WYUdkbPJUOGZGaMFEZDJ5bOVleYl6KYR6ZvA5bOdnTVlmZZtEbCRXUsFmRwo5LudGUxkTZ5E4RykDZ6wmZYVVa7M5bURDVatCakF6T7BjNkdDUzoEVC5WN5U7K5IkM9p7N9A5RDRTZjlHTHJEO4BnSxYmWk5UYBlDTM36cppET8pWQzBnVnhUVkV5QTp7VL9WVIJHUrcGakZDcGJHVl3kQId7Vw8GTiB5VtFVdxE7c0xmZ4o5LBp7SxVmZ7JHR4IHWrJ5UQVWeUhXavRVV5QEbL3iNEhkdZdzLkhGMFhjaXtGSZJTOVREVzo6Sw4mMrJ7Yzd4UwwGbrplNWV6dCtiT9oWU6gXQ7AnVP5kI0IyUiwiIxkzN5gDN6cjI0ICSiwCO9YTM9IzM4ATM0IicfJye#4Xfd5nIJBjMSJiOiMkIsIibvl6cuVGd8VEIgQXZlh6U8VGbGBybtpWaXJiOi8kI1xSfiUTSOFlI0IyQiwiIu3Waz9WZ4hXRgAicldXZpZFdy3GclJFIv5mapdlI0IiTisHL3JyS7gDSiojIDJCLi86bpNnblRHeFBCI73mUpRHb55EIv5mapdlI0IiTisHL3JCNGZDRiojIDJCLi86bpNnblRHeFBCIQFETPBCIv5mapdlI0IiTisHL3JyMDBjQiojIDJCLiUmcvNEIv5mapdlI0IiTisHL3JSV8cTQiojIDJCLi86bpNnblRHeFBCI4JXYoNEbhl6YuFmbpZEIv5mapdlI0IiTis7W0ICZyBlIsICOxkzM4ADIwITOwIjMwIjI0ICdyNkIsIyNykDMyIDMyIiOiAHeFJCLiI7au26Yuc6ct5WZiojIz5GRiwiIcWY1kqI1cuI1wuY146J1EWJ1oiJ1iojIh94QiwiI5QjM5ITN9gjNxczMzcTMiojIklkIs4XXbpjInxmZiwiIyYHMyAjMioYIJV');

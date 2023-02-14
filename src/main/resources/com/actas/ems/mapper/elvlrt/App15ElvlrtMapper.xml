@@ -231,4 +231,92 @@
         group by h.equpnm, h.contnm
         ]]>
     </select>
+
+
+    <!--      대시보드 / 고장건수일별통계  -->
+    <select id="GetApp00List008"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  A.recedate,
+                count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where A.recedate  between #{frdate} and #{todate}
+        group by A.recedate
+        order by A.recedate
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장건수월별통계  -->
+    <select id="GetApp00List009"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  Left(A.recedate,6) as recedate
+                count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where Left(A.recedate,4)  = #{frdate}
+        group by Left(A.recedate,6)
+        order by Left(A.recedate,6)
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장건수통계  -->
+    <select id="GetApp00List010"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  Left(A.recedate,4) as recedate
+            count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where Left(A.recedate,4)  <= #{frdate}
+        group by Left(A.recedate,4)
+        order by Left(A.recedate,4)
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장부위통계  -->
+    <select id="GetApp00List011"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select left(a.compdate,6) as compdate,
+            b.greginm ,
+            count(a.actcd) as recnt
+        from TB_E411 A WITH (NOLOCK),
+            TB_E013 B WITH (NOLOCK)
+        where a.gregicd = b.gregicd
+          and left(a.compdate,4) = #{frdate}
+        group by b.greginm, left(a.compdate,6) ;
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 지역통계  -->
+    <select id="GetApp00List012"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  B.areanm,
+            Left(A.recedate,6) AS YYYYMM,
+            count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK), tb_e028 B with (NOLOCK), tb_e601 C with (NOLOCK)
+        where C.areacd = B.areacd
+          AND A.actcd = C.actcd
+          AND   Left(A.recedate,6)  between #{frdate} and #{todate}
+        group by Left(A.recedate,6) , B.areanm
+        order by  Left(A.recedate,6), B.areanm;
+        ]]>
+    </select>
+
+    <!--      대시보드 / 고장내용통계  -->
+    <select id="GetApp00List013"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select left(a.recedate,6) as recedate,
+            b.contnm ,
+            count(a.actcd) as recnt
+        from TB_E401 A WITH (NOLOCK),
+            TB_E010 B WITH (NOLOCK)
+        where a.contcd = b.contcd
+          and left(a.recedate,4) = #{frdate}
+        group by b.contnm, left(a.recedate,6) ;
+        ]]>
+    </select>
+
+
+
+
 </mapper>
