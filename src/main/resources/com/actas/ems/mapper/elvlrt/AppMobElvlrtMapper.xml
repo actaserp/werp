@@ -60,5 +60,46 @@
         WHERE  (com_cls = '751') AND (com_code <> '00')
         ]]>
     </select>
+    <select id="GetAppMobList_002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        <![CDATA[ sELECT top(50)
+                    b.actnm as actnm,
+                    d.contnm as contnm,
+                    a.recedate as recedate,
+                    a.contents as contents,
+                    h.resunm as resunm,
+                    k.greginm as greginm,
+                    l.reginm as reginm,
+                    i.remonm as remonm,
+                    g.remoremark as remoremark,
+                    g.resuremark as resuremark,
+                    e.pernm as pernm,
+                    CASE when g.compdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
+                    else Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2)
+                    end as compdate
+                    FROM tb_e401 a WITH(NOLOCK)
+                     LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+                     LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
+                     LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
+                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
+                     LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+                     LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+                     LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+                     LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND g.faccd = j.faccd)
+                     LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+                     LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+                     LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND g.resultcd = m.resultcd)
+                 WHERE
+
+                     a.spjangcd = #{spjangcd}
+    AND a.resultck like CONCAT('%','1','%')
+    AND a.actnm like CONCAT('%',#{actnm},'%')
+    AND d.contnm like CONCAT('%',#{contnm},'%')
+    AND k.greginm like CONCAT('%',#{greginm},'%')
+    AND i.remonm like CONCAT('%',#{remonm},'%')
+    AND a.recedate BETWEEN #{frdate} AND #{todate}
+        ]]>
+    </select>
+
 
 </mapper>

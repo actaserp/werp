@@ -37,6 +37,12 @@ public class App16ElvlrtDto {
     private String recetime;
     private String remoremark;
     private String contcd;
+    private String spjangcd;
+    private String custcd;
+    private String resunm;
+    private String compdate;
+
+
 
 
     private Integer mon1;
@@ -66,10 +72,10 @@ public class App16ElvlrtDto {
     private Long avg;
 
     private Long cnt;
-    private String compdate;
+
     private Long allcnt;
     private Long compcnt;
-    private String resunm;
+
 
 
 

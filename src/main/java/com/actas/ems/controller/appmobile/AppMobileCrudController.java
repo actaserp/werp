@@ -10,6 +10,7 @@ import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtMobService;
 import com.actas.ems.Service.elvlrt.App06ElvlrtMobService;
 import com.actas.ems.Service.elvlrt.App10ElvlrtService;
+import com.actas.ems.Service.elvlrt.App27.App27ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadServiceImpl;
@@ -41,15 +42,21 @@ import java.util.*;
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
     private final App10ElvlrtMobService service;
+
     private final App06ElvlrtMobService service06;
     private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
 
+    App16ElvlrtDto app16tDto = new App16ElvlrtDto();
+
     App06ElvlrtDto app06Dto = new App06ElvlrtDto();
 
     PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
+
+    List<App16ElvlrtDto> app16DtoList = new ArrayList<>();
+
 
     List<AppMob003tDto> appMob003tDtoList = new ArrayList<>();
 
@@ -123,6 +130,114 @@ public class AppMobileCrudController {
         }
 
         return appMobDtoList;
+    }
+
+    //현장별고장부위별현황 ,박광열
+    @RequestMapping(value = "/e411list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object E411ListForm(@RequestParam Map<String, String> param,
+                               Model model, HttpServletRequest request) throws Exception{
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+
+
+        String minusYear = AddDate(time, -2, 0, 0);
+
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+                    if(values.toString() == ""){
+                        values = "dkssud";
+                    }
+                    popParmDto.setActnm(values.toString());
+                    break;
+                case "contnm":
+                    if(values == ""){
+                        values = "skfnsa";
+                    }
+                    popParmDto.setContnm(values.toString());
+                    popParmDto.setGreginm("%");
+                    popParmDto.setRemonm("%");
+                    break;
+                case "greginm":
+                    if(values == ""){
+                        values = "skfnsa";
+                    }
+                    popParmDto.setGreginm(values.toString());
+                    popParmDto.setContnm("%");
+                    popParmDto.setRemonm("%");
+                    break;
+                case "remonm":
+                    if(values == ""){
+                        values = "skfnsa";
+                    }
+                    popParmDto.setRemonm(values.toString());
+                    popParmDto.setContnm("%");
+                    popParmDto.setGreginm("%");
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        String frdate = minusYear;
+        String todate = time;
+
+
+
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setFrdate(frdate);    //2년전날짜
+                popParmDto.setTodate(todate);    //현재날짜
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+
+
+
+                try{
+                    app16DtoList = service.GetAppMobList_002(popParmDto);
+                    model.addAttribute("app16DtoList", app16DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app16DtoList;
     }
 
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
@@ -470,6 +585,23 @@ public class AppMobileCrudController {
         Date date      = new Date(System.currentTimeMillis());
 
         return formatter.format(date);
+    }
+
+    private static String AddDate(String strDate, int year, int month, int day) throws Exception {
+
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+
+        Calendar cal = Calendar.getInstance();
+
+        Date dt = dtFormat.parse(strDate);
+
+        cal.setTime(dt);
+
+        cal.add(Calendar.YEAR,  year);
+        cal.add(Calendar.MONTH, month);
+        cal.add(Calendar.DATE,  day);
+
+        return dtFormat.format(cal.getTime());
     }
 
 
