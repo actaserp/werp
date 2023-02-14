@@ -39,7 +39,7 @@
     </select>
 
     <select id="GetApp06MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
-        <![CDATA[ select
+        select
                       isnull(hseq, '' ) as hseq,
                       Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
                       Case when hgroupcd is null then ''
@@ -54,15 +54,17 @@
                   from tb_mhmanual WITH (NOLOCK)
                   Where spjangcd = #{spjangcd}
                         and custcd = #{custcd}
-        ]]>
+                    order by hinputdate DESC
+
     </select>
 
-    <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.app08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
-        <![CDATA[ select
+    <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
+        select
                       isnull(bseq, '' ) as bseq,
                       Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
                       Case when bgourpcd is null then ''
                       when bgourpcd = '01' then '부품교체'
+                      when bgourpcd = '02' then '수리공사'
                       when bgourpcd = '002' then '수리공사'
                       when bgourpcd = '03' then '인건비'
                       when bgourpcd = '04' then '무상처리'
@@ -75,7 +77,7 @@
                   from TB_MBMANUAL WITH (NOLOCK)
                   Where spjangcd = #{spjangcd}
                 and custcd = #{custcd}
-        ]]>
+                order by binputdate DESC
     </select>
 
 <!--    <select id="GetApp06MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AttachDTO">-->
