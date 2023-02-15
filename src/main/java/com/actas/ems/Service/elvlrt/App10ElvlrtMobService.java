@@ -39,5 +39,8 @@ public class App10ElvlrtMobService {
     /**박광열, 현장별고장부위(모바일), view page**/
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_002(parm);}
 
+    /** 박광열, 직원정보조회(모바일)**/
+    public List<App14ElvlrtDto> GetAppMobList_003(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_003(parm);}
+
 
 }

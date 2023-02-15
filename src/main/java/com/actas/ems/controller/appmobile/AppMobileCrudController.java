@@ -50,6 +50,8 @@ public class AppMobileCrudController {
     AttachDTO attachDTO = new AttachDTO();
     App16ElvlrtDto app16tDto = new App16ElvlrtDto();
 
+    List<App14ElvlrtDto> app14DtoList = new ArrayList<>();
+
     App06ElvlrtDto app06Dto = new App06ElvlrtDto();
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
@@ -240,6 +242,71 @@ public class AppMobileCrudController {
         }
         return app16DtoList;
     }
+
+
+    /**박광열 직원정보 리스트 **/
+    @RequestMapping(value = "/ja001list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object JA001ListForm(@RequestParam Map<String, String> param,
+                                Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "pernm":
+                    if(values.toString() == ""){
+                        values = "dkssud";
+                    }
+                    popParmDto.setPernm(values.toString());
+                    break;
+                case "divinm":
+                    popParmDto.setDivinm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    app14DtoList = service.GetAppMobList_003(popParmDto);
+                    model.addAttribute("app14DtoList", app14DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app14DtoList;
+    }
+
 
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
