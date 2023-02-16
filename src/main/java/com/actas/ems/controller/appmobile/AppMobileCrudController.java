@@ -6,12 +6,8 @@ import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
-import com.actas.ems.Service.elvlrt.App01ElvlrtService;
-import com.actas.ems.Service.elvlrt.App10ElvlrtMobService;
-import com.actas.ems.Service.elvlrt.App06ElvlrtMobService;
-import com.actas.ems.Service.elvlrt.App10ElvlrtService;
+import com.actas.ems.Service.elvlrt.*;
 import com.actas.ems.Service.elvlrt.App27.App27ElvlrtService;
-import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadService;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadServiceImpl;
 import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbmanualService;
@@ -50,9 +46,11 @@ public class AppMobileCrudController {
     App16ElvlrtDto app16tDto = new App16ElvlrtDto();
 
     List<App14ElvlrtDto> app14DtoList = new ArrayList<>();
+    List<App26ElvlrtDto> app26DtoList = new ArrayList<>();
+    List<App07ElvlrtDto> app07DtoList = new ArrayList<>();
+    App07ElvlrtDto app07Dto = new App07ElvlrtDto();
 
     App06ElvlrtDto app06Dto = new App06ElvlrtDto();
-    App28ElvlrtDto app28Dto = new App28ElvlrtDto();
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
@@ -311,6 +309,181 @@ public class AppMobileCrudController {
         return app14DtoList;
     }
 
+    /**박광열 현장정보 리스트 **/
+    @RequestMapping(value = "/tbe601list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object TBE601ListForm(@RequestParam Map<String, String> param,
+                                Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+
+                    popParmDto.setActnm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    app26DtoList = service.GetAppMobListr_004(popParmDto);
+                    model.addAttribute("app26DtoList", app26DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app26DtoList;
+    }
+    /**박광열 고장이력 **/
+    @RequestMapping(value = "/tbe401list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object TBE401ListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+
+                    popParmDto.setActnm(values.toString());
+                    break;
+
+                case "equpnm":
+
+                    popParmDto.setEqupnm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    app16DtoList = service.GetAppMobListr_005(popParmDto);
+                    model.addAttribute("app16DtoList", app16DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app16DtoList;
+    }
+
+    /**박광열 점검조치사항 **/
+    @RequestMapping(value = "/mfixlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object MFIXListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        Object app07  = service2.GetMManulList(app07Dto);
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    model.addAttribute("app07Dto", service2.GetMManulList(app07Dto));
+                    model.addAttribute("app16DtoList", app16DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app07;
+    }
+
+
 
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
@@ -430,7 +603,6 @@ public class AppMobileCrudController {
         return appMob003tDtoList;
     }
 
-    //부품 자료실
     @RequestMapping(value = "/Blist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

@@ -36,5 +36,13 @@ public interface App10ElvlrtMobMapper {
     /**박광열 모바일 직원리스트 */
     public List<App14ElvlrtDto> GetAppMobList_003(PopupDto parm);
 
+    /**박광열 모바일 보수현장리스트*/
+    public List<App26ElvlrtDto> GetAppMobListr_004(PopupDto parm);
+
+    /**박광열 모바일 고장이력*/
+    public List<App16ElvlrtDto> GetAppMobListr_005(PopupDto parm);
+
+
+
 
 }

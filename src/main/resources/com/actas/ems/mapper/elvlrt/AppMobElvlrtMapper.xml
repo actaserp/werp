@@ -214,6 +214,71 @@ Where spjangcd = #{spjangcd}
         ]]>
     </select>
 
+    <!--박광열, 보수현장정보-->
+    <select id="GetAppMobListr_004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+            CASE WHEN ISNULL(b.elno,'') = ''
+		THEN '미기입'
+		ELSE b.elno
+        END elno,
+					b.equpnm as equpnm,
+					a.actnm as actnm,
+					isnull(a.address, '') + isnull(a.address2, '') as actaddr ,
+					isnull(a.tel, '') as tel,
+					isnull(a.hp, '') as hp,
+                    isnull((select pernm from tb_ja001 where spjangcd=a.spjangcd and perid='p'+a.perid), '') as pernm ,
+                    isnull((select top 1 isnull(emtelnum, '') from tb_e611 where spjangcd=a.spjangcd and actcd=a.actcd order by emtelnum desc), '') as emtelnum
+                    from
+                    TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+					on a.actcd=b.actcd
+					where a.actnm  like CONCAT('%',#{actnm},'%')
+
+        ]]>
+    </select>
+
+    <!--박광열, 고장이력-->
+    <select id="GetAppMobListr_005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        <![CDATA[
+        select top(100)
+            CONVERT(int, a.recedate) as recedate,
+                CASE when g.compdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
+            else Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2)
+        end as compdate,
+	   a.actnm as actnm,
+	  CASE WHEN ISNULL(a.equpnm,'') = ''
+		THEN '미기입'
+		ELSE a.equpnm
+        END equpnm,
+	   a.hitchdate as hitchdate,
+	   a.indate as indate,
+	   CASE WHEN ISNULL(d.contnm,'') = ''
+		THEN '미기입'
+		ELSE d.contnm
+        END contnm,
+	   isnull(a.contents,'미기입') as contents,
+	   isnull(k.greginm,'미기입') as greginm,
+	   isnull(l.reginm, '미기입') as reginm,
+	   isnull(i.remonm, '미기입')as remonm,
+	   isnull(g.remoremark, '미기입') as remoremark,
+	   isnull(h.resunm, '미기입') as resunm
+
+from
+TB_E401 a
+LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+where a.actnm like CONCAT('%',#{actnm},'%')
+and a.equpnm like CONCAT('%',#{equpnm},'%')
+order by recedate desc;
+        ]]>
+    </select>
+
     <select id="GetAppMobList_004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
     select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
     (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
