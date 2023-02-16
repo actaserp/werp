@@ -59,6 +59,8 @@ public class AppMobileCrudController {
 
     List<App16ElvlrtDto> app16DtoList = new ArrayList<>();
 
+    List<App04ElvlrtDto> app04DtoList = new ArrayList<>();
+
 
     List<AppMob003tDto> appMob003tDtoList = new ArrayList<>();
     List<AppMob004tDto> appMob004tDtoList = new ArrayList<>();
@@ -878,6 +880,258 @@ public class AppMobileCrudController {
         cal.add(Calendar.DATE,  day);
 
         return dtFormat.format(cal.getTime());
+    }
+
+    @RequestMapping(value = "/mlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object MListForm(@RequestParam Map<String, String> param,
+                               Model model, HttpServletRequest request) throws Exception{
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+
+
+        String minusYear = AddDate(time, -2, 0, 0);
+
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "subject":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setSubject(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        String frdate = minusYear;
+        String todate = time;
+
+
+
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setFrdate(frdate);    //2년전날짜
+                popParmDto.setTodate(todate);    //현재날짜
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+
+
+
+                try{
+                    app04DtoList = service.GetAppMobList_004(popParmDto);
+                    model.addAttribute("app04DtoList", app04DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app04DtoList;
+    }
+
+    @RequestMapping(value = "/elist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object EListForm(@RequestParam Map<String, String> param,
+                            Model model, HttpServletRequest request) throws Exception{
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+
+
+        String minusYear = AddDate(time, -2, 0, 0);
+
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "subject":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setSubject(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        String frdate = minusYear;
+        String todate = time;
+
+
+
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setFrdate(frdate);    //2년전날짜
+                popParmDto.setTodate(todate);    //현재날짜
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+
+
+
+                try{
+                    app04DtoList = service.GetAppMobList_e(popParmDto);
+                    model.addAttribute("app04DtoList", app04DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app04DtoList;
+    }
+
+    @RequestMapping(value = "/dlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object DListForm(@RequestParam Map<String, String> param,
+                            Model model, HttpServletRequest request) throws Exception{
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+
+
+        String minusYear = AddDate(time, -2, 0, 0);
+
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "subject":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setSubject(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        String frdate = minusYear;
+        String todate = time;
+
+
+
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setFrdate(frdate);    //2년전날짜
+                popParmDto.setTodate(todate);    //현재날짜
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+
+
+
+                try{
+                    app04DtoList = service.GetAppMobList_d(popParmDto);
+                    model.addAttribute("app04DtoList", app04DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app04DtoList;
     }
 
 

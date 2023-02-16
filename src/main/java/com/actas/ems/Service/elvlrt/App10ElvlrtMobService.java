@@ -1,9 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
-import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App16ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
-import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMapper;
 import com.actas.ems.DTO.AttachDTO;
@@ -46,5 +43,9 @@ public class App10ElvlrtMobService {
     /** 박광열, 직원정보조회(모바일)**/
     public List<App14ElvlrtDto> GetAppMobList_003(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_003(parm);}
 
+    public List<App04ElvlrtDto> GetAppMobList_004(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_004(parm);}
 
+    public List<App04ElvlrtDto> GetAppMobList_e(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_e(parm);}
+
+    public List<App04ElvlrtDto> GetAppMobList_d(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_d(parm);}
 }

@@ -51,6 +51,8 @@ public class PopupDto {
     private String contgubun;
     private String gubun;
 
+    private String subject;
+
 
 
 

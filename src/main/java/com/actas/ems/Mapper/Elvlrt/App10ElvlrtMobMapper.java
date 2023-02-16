@@ -1,11 +1,7 @@
 package com.actas.ems.Mapper.Elvlrt;
 
 
-import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App16ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
-import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppMob003tDto;
+import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
 import com.actas.ems.DTO.Elvlrt.*;
@@ -30,11 +26,15 @@ public interface App10ElvlrtMobMapper {
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);
 
+    public List<App04ElvlrtDto> GetAppMobList_004(PopupDto parm);
+
+    public List<App04ElvlrtDto> GetAppMobList_e(PopupDto parm);
+
+    public List<App04ElvlrtDto> GetAppMobList_d(PopupDto parm);
+
 
     /**박광열 모바일 직원리스트 */
     public List<App14ElvlrtDto> GetAppMobList_003(PopupDto parm);
-
-
 
 
 }
