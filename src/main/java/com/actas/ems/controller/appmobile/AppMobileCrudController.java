@@ -38,12 +38,15 @@ import java.util.*;
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
     private final App10ElvlrtMobService service;
+    private final App07ElvlrtService service2;
     private final App06ElvlrtMobService service06;
     private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
+    App28ElvlrtDto app28Dto = new App28ElvlrtDto();
     AttachDTO attachDTO = new AttachDTO();
     App16ElvlrtDto app16tDto = new App16ElvlrtDto();
+
 
     List<App14ElvlrtDto> app14DtoList = new ArrayList<>();
     List<App26ElvlrtDto> app26DtoList = new ArrayList<>();
