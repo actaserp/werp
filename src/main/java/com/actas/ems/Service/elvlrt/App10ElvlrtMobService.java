@@ -28,8 +28,12 @@ public class App10ElvlrtMobService {
     /** view page **/
     public List<AppMob001tDto> GetAppMobList001(App10ElvlrtDto parm){return app10ElvMobMapper.GetAppMobList001(parm);}
 
+    /** app03-05 view page **/
     public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm){return app10ElvMobMapper.GetApp06MobList001(parm);}
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm){return app10ElvMobMapper.GetApp0bMobList001(parm);}
+    public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm){return app10ElvMobMapper.GetApp28MobList001(parm);}
+    public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm){return app10ElvMobMapper.GetApp28MobList002(parm);}
+
 
 //    public List<AttachDTO> GetApp06MobList002(AttachDTO parm){
 

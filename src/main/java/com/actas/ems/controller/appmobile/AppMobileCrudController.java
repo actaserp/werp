@@ -42,7 +42,6 @@ import java.util.*;
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
     private final App10ElvlrtMobService service;
-
     private final App06ElvlrtMobService service06;
     private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
@@ -53,6 +52,7 @@ public class AppMobileCrudController {
     List<App14ElvlrtDto> app14DtoList = new ArrayList<>();
 
     App06ElvlrtDto app06Dto = new App06ElvlrtDto();
+    App28ElvlrtDto app28Dto = new App28ElvlrtDto();
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
@@ -62,6 +62,8 @@ public class AppMobileCrudController {
 
     List<AppMob003tDto> appMob003tDtoList = new ArrayList<>();
     List<AppMob004tDto> appMob004tDtoList = new ArrayList<>();
+
+    List<AppMob005tDto> appMob005tDtoList = new ArrayList<>();
 
     List<PopupDto> poplistDto = new ArrayList<>();
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -426,6 +428,7 @@ public class AppMobileCrudController {
         return appMob003tDtoList;
     }
 
+    //부품 자료실
     @RequestMapping(value = "/Blist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -477,6 +480,101 @@ public class AppMobileCrudController {
         }
 
         return appMob004tDtoList;
+    }
+
+    //FnQ
+    @RequestMapping(value = "/SSlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object sListForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app28Dto.setCustcd(ls_custcd);
+                app28Dto.setSpjangcd(ls_spjangcd);
+
+                try {
+                    appMob005tDtoList = service.GetApp28MobList001(app28Dto);
+                    model.addAttribute("appMob005tDtoList",appMob005tDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+
+        return appMob005tDtoList;
+    }
+
+    //  고장내용조회
+    @RequestMapping(value = "/comslist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object MobcomList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_subkey = "";
+        String ls_custcd = "";
+        String ls_spjangcd = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "subkey":
+                    app28Dto.setSubkey(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_subkey = app28Dto.getSubkey();
+        ls_spjangcd = "ZZ";
+        ls_custcd = "ELVLRT";
+
+        try {
+            app28Dto.setCustcd(ls_custcd);
+            app28Dto.setSpjangcd(ls_spjangcd);
+            app28Dto.setSubkey(ls_subkey);
+            appMob005tDtoList = service.GetApp28MobList002(app28Dto);
+            model.addAttribute("appMob005tDtoList", appMob005tDtoList);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return appMob005tDtoList;
     }
 
     //  고장내용조회

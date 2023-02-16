@@ -80,21 +80,33 @@
                 order by binputdate DESC
     </select>
 
-<!--    <select id="GetApp06MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AttachDTO">-->
-<!--        <![CDATA[ 			SELECT  isnull(idx, '' ) as idx,-->
-<!--                                 board_idx as boardIdx-->
-<!--                                  , original_name as originalName-->
-<!--                                  , save_name as saveName-->
-<!--                                  , size-->
-<!--                                  , flag-->
-<!--                                  , insert_time as inserttime-->
-<!--                             FROM-->
-<!--                                 tb_mattach with (nolock)-->
-<!--                             WHERE-->
-<!--                                 seq = #{hseq}-->
-<!--                                 and flag  = 'MH'-->
-<!--                    ]]>-->
-<!--    </select>-->
+<select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
+select
+    sseq,
+    Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
+    spernm,
+    smemo,
+    Case when  sflag is null then '' else sflag end as sflag
+from tb_msmanual
+Where spjangcd = #{spjangcd}
+  and custcd = #{custcd}
+ and 1 = 1 and subkey = 0
+order by sseq desc
+</select>
+    <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
+    select
+        sseq,
+        Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
+        spernm,
+        smemo,
+        Case when  sflag is null then '' else sflag end as sflag,
+        isnull(subkey, '' ) as subkey
+from tb_msmanual
+Where spjangcd = #{spjangcd}
+    and custcd = #{custcd}
+    and subkey != 0 and subkey = #{subkey}
+    order by sseq asc
+    </select>
 
     <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
         <![CDATA[
