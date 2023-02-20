@@ -17,4 +17,6 @@ public class AppMob003tDto {
     private String hmemo;
     private String hflag;
 
+    private int attcnt;
+
 }

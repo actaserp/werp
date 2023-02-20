@@ -15,5 +15,6 @@ public class AppMob004tDto {
     private String bpernm;
     private String bmemo;
     private String bflag;
+    private int attcnt;
 
 }

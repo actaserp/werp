@@ -50,6 +50,7 @@
                       isnull(hsubject, '' ) as hsubject,
                       isnull(hpernm, '' ) as hpernm,
                       isnull(hmemo, '' ) as hmemo,
+                    ( select isnull(Count(*),'') from tb_mattach where flag='MH' and board_idx=hseq and delete_yn = 'N') as attcnt,
                       Case when hflag = 'Y' then 'MH'
                        end as hflag
             from tb_mhmanual WITH (NOLOCK)
@@ -79,24 +80,26 @@
 
     <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
         select
-                      isnull(bseq, '' ) as bseq,
-                      Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
-                      Case when bgourpcd is null then ''
-                      when bgourpcd = '01' then '부품교체'
-                      when bgourpcd = '02' then '수리공사'
-                      when bgourpcd = '002' then '수리공사'
-                      when bgourpcd = '03' then '인건비'
-                      when bgourpcd = '04' then '무상처리'
-                      else bgourpcd
-                      end as bgourpcd,
+            isnull(bseq, '' ) as bseq,
+            Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
+            Case when bgourpcd = '' then ''
+            when bgourpcd = '01' then '부품교체'
+            when bgourpcd = '02' then '수리공사'
+            when bgourpcd = '002' then '수리공사'
+            when bgourpcd = '03' then '인건비'
+            when bgourpcd = '04' then '무상처리'
+            else bgourpcd
+        end as bgourpcd,
+
+                     ( select isnull(Count(*),'') from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt,
                       isnull(bsubject, '' ) as bsubject,
                       isnull(bpernm, '' ) as bpernm,
                       isnull(bmemo, '' ) as bmemo,
                       isnull(bflag, '' ) as bflag
                   from TB_MBMANUAL WITH (NOLOCK)
-                  Where spjangcd = #{spjangcd}
-                and custcd = #{custcd}
-                order by binputdate DESC
+				  Where spjangcd = #{spjangcd}
+        and custcd = #{custcd}
+        order by binputdate DESC, bseq ASC
     </select>
 
 <select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
