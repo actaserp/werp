@@ -204,7 +204,7 @@ public class App06CrudController {
 
                 /* 파일 정보 저장 */
                 AttachDTO attach = new AttachDTO();
-                attach.setBoardIdx(hseq);
+                attach.setBoardIdx(App06Dto.getHseq());
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());

@@ -60,6 +60,7 @@ public class PopupDto {
     private String sms_ps;
     private String agnertel1;
 
+    private String subject;
 
 
 

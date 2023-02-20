@@ -8,6 +8,7 @@
         (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
         from tb_mmanual WITH (NOLOCK)
         Where 1 = 1
+        order by  mseq desc
         <!--        <if test="msubject != null">-->
         <!--            and msubject like '%' + #{msubject} + '%'-->
         <!--        </if>-->
@@ -21,6 +22,7 @@
         (select Count(*) from tb_mattach where flag='DD' and board_idx=dseq and delete_yn = 'N') as attcnt
         from tb_mdevmanual WITH (NOLOCK)
         Where 1 = 1
+        order by  dseq desc
         <!--        <if test="msubject != null">-->
         <!--            and msubject like '%' + #{msubject} + '%'-->
         <!--        </if>-->
@@ -33,6 +35,7 @@
         (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
         from tb_metcmanual WITH (NOLOCK)
         Where 1 = 1
+        order by  eseq desc
         <!--        <if test="msubject != null">-->
         <!--            and msubject like '%' + #{msubject} + '%'-->
         <!--        </if>-->

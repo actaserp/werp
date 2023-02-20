@@ -508,8 +508,8 @@
             selectionMode: 'RowRange',
             alternatingRowStep: 0,
             columns: [
-
-                { binding: 'eseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
+                { binding: 'einputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true },
+                // { binding: 'eseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
                 { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },
                 { binding: 'esubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
@@ -528,7 +528,6 @@
                             viewFilePage(ctx.item.eseq);
                         }
                     }) } ,
-                { binding: 'einputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
 
             ],
             itemsSource: view_Mmanualpage
