@@ -42,7 +42,7 @@
         select
                       isnull(hseq, '' ) as hseq,
                       Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
-                      Case when hgroupcd is null then ''
+                      Case when  hgroupcd = '' then ''
                            when hgroupcd = '01' then '사내공지'
                            when hgroupcd = '02' then '고객공지'
                            else hgroupcd
@@ -50,12 +50,31 @@
                       isnull(hsubject, '' ) as hsubject,
                       isnull(hpernm, '' ) as hpernm,
                       isnull(hmemo, '' ) as hmemo,
-                      isnull(hflag, '' ) as hflag
-                  from tb_mhmanual WITH (NOLOCK)
+                      Case when hflag = 'Y' then 'MH'
+                       end as hflag
+            from tb_mhmanual WITH (NOLOCK)
                   Where spjangcd = #{spjangcd}
                         and custcd = #{custcd}
-                    order by hinputdate DESC
+                    order by hinputdate  DESC , hseq ASC
 
+    </select>
+
+    <select id="select06AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+            board_idx as boardIdx
+             , original_name as originalName
+             , save_name as saveName
+             , size
+             , flag
+             , delete_yn as deleteyn
+             , insert_time as inserttime
+             , delete_time as deletetime
+        FROM
+            tb_mattach with (nolock)
+        WHERE
+            delete_yn = 'N'
+          AND board_idx = #{boardIdx}
+          and flag  = #{flag}
     </select>
 
     <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
@@ -86,7 +105,8 @@ select
     Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
     spernm,
     smemo,
-    Case when  sflag is null then '' else sflag end as sflag
+    Case when  sflag is null then '' else sflag end as sflag,
+        isnull(subkey, '' ) as subkey
 from tb_msmanual
 Where spjangcd = #{spjangcd}
   and custcd = #{custcd}
@@ -101,11 +121,11 @@ order by sseq desc
         smemo,
         Case when  sflag is null then '' else sflag end as sflag,
         isnull(subkey, '' ) as subkey
-from tb_msmanual
-Where spjangcd = #{spjangcd}
-    and custcd = #{custcd}
-    and subkey != 0 and subkey = #{subkey}
-    order by sseq asc
+        from tb_msmanual
+        Where spjangcd = #{spjangcd}
+            and custcd = #{custcd}
+            and subkey != 0
+            order by sseq asc
     </select>
 
     <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">

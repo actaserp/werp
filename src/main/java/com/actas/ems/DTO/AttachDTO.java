@@ -35,4 +35,7 @@ public class AttachDTO extends CommonDto{
     /** 삭제일자  */
     private String deletetime;
 
+    private String custcd;
+    private String spjangcd;
+
 }

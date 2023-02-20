@@ -37,9 +37,10 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/appmobile", method = RequestMethod.POST)
 public class AppMobileCrudController {
+
+    private final AppM03UploadServiceImpl appServiceImpl03;
     private final App10ElvlrtMobService service;
     private final App07ElvlrtService service2;
-    private final App06ElvlrtMobService service06;
     private final AppPopElvlrtService appPopElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
@@ -496,7 +497,6 @@ public class AppMobileCrudController {
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
         String ls_hseq = "";
-        String ls_hflag = "";
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -508,7 +508,6 @@ public class AppMobileCrudController {
         });
         ls_dbnm = userformDto.getDbnm();
 
-        ls_hflag = "NN";
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -547,6 +546,7 @@ public class AppMobileCrudController {
         return appMob003tDtoList;
     }
 
+    //app06 to 03 첨부파일리스트
     @RequestMapping(value = "/attachMH", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -555,33 +555,38 @@ public class AppMobileCrudController {
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
         String ls_hseq = "";
+        String ls_hflag = "";
+        List<AttachDTO>  attach =new ArrayList<>();
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
                     userformDto.setDbnm(values.toString());
                     break;
-                case "hseq":
-                    app06Dto.setHseq(values.toString());
+                case "flag":
+                    attachDTO.setFlag(values.toString());
+                    break;
+                case "boardIdx":
+                    attachDTO.setBoardIdx(values.toString());
                     break;
                 default:
                     break;
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        ls_hseq = attachDTO.getBoardIdx();
+        ls_hflag = attachDTO.getFlag();
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app06Dto.setCustcd(ls_custcd);
-                app06Dto.setSpjangcd(ls_spjangcd);
-                app06Dto.setHseq(ls_hseq);
-
                 try {
-//                    appMob003tDtoList = service.GetApp06MobList002(attachDTO);
-                    model.addAttribute("appMob003tDtoList",appMob003tDtoList);
+                    attachDTO.setBoardIdx(ls_hseq);
+                    attachDTO.setFlag(ls_hflag);
+                    attach = appServiceImpl03.select06to03AttachList(attachDTO);
+                    model.addAttribute("attachDto",attach);
 
                 }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info("App06MobForm DataAccessException ================================================================");
                     log.info(e.toString());
                     throw new AttachFileException(" DataAccessException to save");
                     //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
@@ -603,7 +608,7 @@ public class AppMobileCrudController {
 
         }
 
-        return appMob003tDtoList;
+        return attach;
     }
 
     @RequestMapping(value = "/Blist", method = RequestMethod.POST,
@@ -722,8 +727,6 @@ public class AppMobileCrudController {
             , HttpServletRequest request){
         String ls_dbnm = "";
         String ls_subkey = "";
-        String ls_custcd = "";
-        String ls_spjangcd = "";
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -744,7 +747,6 @@ public class AppMobileCrudController {
         try {
             app28Dto.setCustcd(ls_custcd);
             app28Dto.setSpjangcd(ls_spjangcd);
-            app28Dto.setSubkey(ls_subkey);
             appMob005tDtoList = service.GetApp28MobList002(app28Dto);
             model.addAttribute("appMob005tDtoList", appMob005tDtoList);
         }catch (IllegalStateException e){
@@ -812,6 +814,7 @@ public class AppMobileCrudController {
                     break;
             }
         });
+
         ls_dbnm = userformDto.getDbnm();
         if(ls_greginm.length() == 0){
             ls_greginm = "%";
