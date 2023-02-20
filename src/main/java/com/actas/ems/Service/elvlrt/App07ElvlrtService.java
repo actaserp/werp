@@ -1,13 +1,10 @@
 package com.actas.ems.Service.elvlrt;
 
 import com.actas.ems.DTO.CommonDto;
-import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;

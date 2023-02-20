@@ -34,5 +34,11 @@ public interface App01ElvlrtMapper {
     public int DeleteCall(AppCallElvlrtDto parm) ;
 
 
+    public int InsertE401Sms(AppCallElvlrtDto datainfo);
+
+    public String getSmsMaxSeq(String parm);
+
+    public List<App03ElvlrtDto> GetApp01List006(PopupDto parm) ;
+
 
 }

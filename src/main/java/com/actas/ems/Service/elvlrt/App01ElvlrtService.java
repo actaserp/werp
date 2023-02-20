@@ -162,6 +162,27 @@ public class App01ElvlrtService {
     }
 
 
+    /** 고객상담센터 / 문자전송 리스트 */
+    public List<App03ElvlrtDto> GetApp01List006(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  appMapper.GetApp01List006(parm);
+            case "ELV_KYOUNG":
+                return  appMapperK.GetApp01List005(parm);
+            case "ELV_GAON":
+                return  appMapper.GetApp01List005(parm);
+            case "nmyang":
+                return  appMapperN.GetApp01List005(parm);
+            case "hanyangs":
+                return  appMapper.GetApp01List005(parm);
+            default:
+                break;
+        }
+        List<App03ElvlrtDto> Object = null;
+        return Object;
+    }
+
     public String get10RecenumMaxSeq(String parm){return appMapper.get10RecenumMaxSeq(parm);}
     public int InsertE401(App10ElvlrtDto parm){  return appMapper.InsertE401(parm);}
     public int UpdateE401(App10ElvlrtDto parm){return appMapper.UpdateE401(parm);}
@@ -171,6 +192,10 @@ public class App01ElvlrtService {
     public int UpdateCall(AppCallElvlrtDto parm){return appMapper.UpdateCall(parm);}
     public int DeleteCall(AppCallElvlrtDto parm){return appMapper.DeleteCall(parm);}
 
+
+    public int InsertE401Sms(AppCallElvlrtDto parm){return appMapper.InsertE401Sms(parm);}
+
+    public String getSmsMaxSeq(String parm){return appMapper.getSmsMaxSeq(parm);}
 
 //    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){return appMapper.GetApp01List001(parm);}
 //    /** 관제현황 / 수리기사 리스트 */

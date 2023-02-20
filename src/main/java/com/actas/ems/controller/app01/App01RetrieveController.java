@@ -1,20 +1,19 @@
 package com.actas.ems.controller.app01;
 
 
-import com.actas.ems.DTO.AttachDTO;
 import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
-import com.actas.ems.Service.elvlrt.App10ElvlrtService;
+import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
+import com.actas.ems.Service.elvlrt.AppSmsMcsService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,16 +24,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.sun.el.lang.ELArithmetic.isNumber;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/app01mod", method = RequestMethod.POST)
 public class App01RetrieveController {
     private final App01ElvlrtService service;
+    private final AppSmsMcsService serviceSMS;
+    private final AppPopElvlrtService appPopElvlrtService;
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
     AppCallElvlrtDto appCalltDto = new AppCallElvlrtDto();
 
@@ -376,6 +376,135 @@ public class App01RetrieveController {
         }
     }
 
+    // 고장접수현황 > 통화메모등록
+    @RequestMapping(value="/savesms01")
+    public String saveSMS01Rtn ( @RequestPart(value = "smsdata") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+
+        try {
+
+            int queryResult = 1;
+            param.forEach((key, values) -> {
+                switch (key) {
+                    case "smscaller":
+                        appCalltDto.setSmscaller(FillString(10, values.toString(), "R"));
+                        break;
+                    case "smstel":
+                        appCalltDto.setSmshandphone(values.toString());
+                        appCalltDto.setSmstel(FillNumber(values.toString()));
+                        break;
+                    case "smschk":
+                        appCalltDto.setSmschk(values.toString());
+                        break;
+                    case "smsrepernm":
+                        appCalltDto.setSmsrepernm(values.toString());
+                        break;
+                    case "smspernm":
+                        appCalltDto.setSmspernm(values.toString());
+                        break;
+                    case "smssubject":
+                        appCalltDto.setSmssubject(values.toString());
+                        break;
+                    case "smsmsg":
+                        appCalltDto.setSmstext(values.toString());
+                        appCalltDto.setSmsmsg(FillString(80, values.toString(), "R"));
+                        break;
+                    case "recedate":
+                        appCalltDto.setSmsrecedate(values.toString());
+                        break;
+                    case "recenum":
+                        appCalltDto.setSmsrecenum(values.toString());
+                        break;
+                    case "actactcdz":
+                        appCalltDto.setSmsactcd(values.toString());
+                        break;
+                    case "actequpcdz":
+                        appCalltDto.setSmsequpcd(values.toString());
+                        break;
+                    case "actrecetimez":
+                        appCalltDto.setSmsrecetime(values.toString());
+                        break;
+
+                    default:
+                        break;
+                }
+            });
+
+            popParmDto = appPopElvlrtService.GetSmsInfoList(popParmDto);
+            appCalltDto.setCustcd(userformDto.getCustcd());
+            appCalltDto.setSpjangcd(userformDto.getSpjangcd());
+            appCalltDto.setRegdate(getToDate());
+            appCalltDto.setPernm(userformDto.getUsername());
+            appCalltDto.setMsgtype("01");
+            appCalltDto.setMsglen("0144");
+            appCalltDto.setSmsid(FillString(10, popParmDto.getSms_id(), "R"));
+            appCalltDto.setSmsps(FillString(10, popParmDto.getSms_ps(), "R"));
+            appCalltDto.setSmsip(popParmDto.getSms_ip());
+            appCalltDto.setSmssetcolumn("sms_text");
+            appCalltDto.setSmsfport(popParmDto.getSms_fport());
+            appCalltDto.setSmsfport(popParmDto.getSms_tport());
+            appCalltDto.setSmscallback(FillNumber(appCalltDto.getSmscaller()));
+            appCalltDto.setSmsdestinfo(appCalltDto.getSmspernm() + "^" + appCalltDto.getSmstel() + "|");
+
+
+            Integer ll_end = 0, ll_cnt = 1, ll_rnd = 0, ll_fport = 0;
+            String [] ls_port = {"7191","7192","7193","7194","7195"};
+            String ls_recedate = "";
+            Random random = new Random();
+
+            ls_recedate = appCalltDto.getSmsrecedate();
+            String ls_yeare = ls_recedate.substring(0,4);
+            String ls_mm = ls_recedate.substring(5,7);
+            String ls_dd = ls_recedate.substring(8,10);
+            ls_recedate =  ls_yeare + ls_mm + ls_dd;
+            appCalltDto.setSmsrecedate(ls_recedate);
+            appCalltDto.setCalldate(ls_recedate + appCalltDto.getSmsrecetime());
+
+
+
+            ll_fport = Integer.parseInt(popParmDto.getSms_fport());
+            ll_end = Integer.parseInt(popParmDto.getSms_tport()) - Integer.parseInt(popParmDto.getSms_fport()) + 1;
+            if(ll_end == 1){
+                appCalltDto.setSmsport(popParmDto.getSms_fport());
+            }else {
+                ll_rnd = random.nextInt(5);
+                appCalltDto.setSmsport(ls_port[ll_rnd]);
+            }
+
+            appCalltDto.setSmsredata01(userformDto.getSpjangcd() + "^" + appCalltDto.getSmsrecedate() + appCalltDto.getSmsrecenum() );
+            appCalltDto.setSmsredata02(userformDto.getSpjangcd() + "^" + "W|" + appCalltDto.getSmsactcd());
+            appCalltDto.setSmsredata03(appCalltDto.getSmspernm());
+            appCalltDto.setSmsredata04(userformDto.getSpjangcd() + "^" + appCalltDto.getSmspernm() );
+            appCalltDto.setSmsredata05(appCalltDto.getSmsrepernm());
+            if(appCalltDto.getSmschk().equals("S")){
+                queryResult = serviceSMS.InsertShortSms(appCalltDto);
+            }else{
+                queryResult = serviceSMS.InsertLongSms(appCalltDto);
+            }
+            appCalltDto.setSmsresult(Integer.toString(queryResult));
+
+            if (queryResult == 1){
+                appCalltDto.setSmsmsgid(CountSmsSeq(ls_yeare + ls_mm));
+                queryResult = service.InsertE401Sms(appCalltDto);
+                if (queryResult == 1){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+            }else{
+                return "fail";
+            }
+
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+
 
     // 고장접수현황 >  전화수신삭제
     @GetMapping(value="/deletecall")
@@ -434,6 +563,68 @@ public class App01RetrieveController {
 
         }
         return ls_seq;
+    }
+
+    public String CountSmsSeq(String yyyymm){
+        String ls_seq = "";
+        ls_seq = service.getSmsMaxSeq(yyyymm);
+        int ll_mseq = 0;
+        if(ls_seq == null ){
+            ls_seq = yyyymm + "0001";
+        }else{
+            ll_mseq = Integer.parseInt(ls_seq);
+            ls_seq = Integer.toString(ll_mseq + 1 );
+
+        }
+        return ls_seq;
+    }
+
+
+    public String FillString(Integer as_len, String as_str, String as_flag){
+        String result = "", ls_str = "";
+
+        if(as_str.length() >= as_len){
+            if (as_flag == "R"){
+                result = as_str.substring(0, as_len) + ls_str;
+            }else{
+                result = ls_str + as_str.substring(0, as_len) ;
+            }
+        }else{
+            int cnt = as_len - as_str.length();
+            for (int h= 0; h < cnt; h++){
+                ls_str += " ";
+            }
+            if (as_flag == "R"){
+                result = as_str + ls_str;
+            }else{
+                result =  ls_str + as_str;
+            }
+        }
+        return result  ;
+    }
+    public String FillNumber(String as_str){
+        String result = "", ls_numchk = "";
+        Integer ll_len = as_str.length();
+        CheckNum chkrtn = new CheckNum();
+        for (int i = 0; i < ll_len; i++ ){
+            ls_numchk = as_str.substring(i, i+1);
+            if( chkrtn.isNumber(ls_numchk) ){
+                result = result + ls_numchk;
+            }
+        }
+        return result  ;
+    }
+
+    class CheckNum{
+        public boolean isNumber(String str_num) {
+            try {
+                double str = Double.parseDouble(str_num);
+            }
+            catch(NumberFormatException e) {
+                return false;
+            }
+            return true;
+        }
     }
 
     private String getToDate() {

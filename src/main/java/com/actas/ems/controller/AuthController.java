@@ -1,20 +1,15 @@
 package com.actas.ems.controller;
 
 import com.actas.ems.DTO.CommonDto;
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App15ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
-import com.actas.ems.Exception.AttachFileException;
-import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
 import com.actas.ems.Service.elvlrt.App15.App15ElvlrtService;
-import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +41,7 @@ public class AuthController {
     List<App15ElvlrtDto> app15DtoList = new ArrayList<>();
     List<App15ElvlrtDto> app15DtoList2 = new ArrayList<>();
     List<App15ElvlrtDto> app15DtoList3 = new ArrayList<>();
+    List<App15ElvlrtDto> app15DtoList4 = new ArrayList<>();
 
     App05ElvlrtDto App05Dto = new App05ElvlrtDto();
 
@@ -103,7 +99,9 @@ public class AuthController {
             model.addAttribute("App05Dto",service.GetMNoticeList(App05Dto));
 
             //당월점검현황
-            app15DtoList = service2.GetApp15List002(App15Dto);
+//            app15DtoList = service2.GetApp15List002(App15Dto);
+            //당월근태 현황
+            app15DtoList = service2.GetApp00List014(App15Dto);
             model.addAttribute("app15DtoList", app15DtoList);
 
             //당일계약만료현장
@@ -111,12 +109,12 @@ public class AuthController {
             model.addAttribute("app15DtoList2", app15DtoList2);
 
             //30일후 계약만료현장
-            app15DtoList2 = service2.GetApp15List004(App15Dto);
-            model.addAttribute("app15DtoList3", app15DtoList2);
+            app15DtoList3 = service2.GetApp15List004(App15Dto);
+            model.addAttribute("app15DtoList3", app15DtoList3);
 
             //
-            app15DtoList2 = service2.GetApp15List005(App15Dto);
-            model.addAttribute("app15DtoList4", app15DtoList2);
+            app15DtoList4 = service2.GetApp15List005(App15Dto);
+            model.addAttribute("app15DtoList4", app15DtoList4);
 
             return "mainframe";
         } else if (userformDto == null) {

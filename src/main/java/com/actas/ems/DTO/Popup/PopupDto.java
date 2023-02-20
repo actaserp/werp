@@ -50,10 +50,18 @@ public class PopupDto {
     private String wkactnm; //회사구분명
     private String contgubun;
     private String gubun;
+    private String yyyymm;
+
+
+    private String sms_ip;
+    private String sms_fport;
+    private String sms_tport;
+    private String sms_id;
+    private String sms_ps;
+    private String agnertel1;
+
 
     private String subject;
-
-
 
 
 

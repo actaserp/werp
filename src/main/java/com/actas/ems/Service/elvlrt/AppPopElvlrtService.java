@@ -57,4 +57,9 @@ public class AppPopElvlrtService {
     public List<PopupDto> GetPernm2List(PopupDto parm){return appPopElvMapper.GetPernm2List(parm);}
 
     public List<PopupDto> GetWkactList(PopupDto parm) {return appPopElvMapper.GetWkactList(parm);}
+//   sms 정보조회 */
+    public PopupDto GetSmsInfoList(PopupDto parm) {return appPopElvMapper.GetSmsInfoList(parm);}
+
+
+
 }

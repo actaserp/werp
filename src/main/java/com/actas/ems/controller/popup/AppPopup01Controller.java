@@ -1,20 +1,20 @@
 package com.actas.ems.controller.popup;
 
-import com.actas.ems.DTO.AttachDTO;
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,10 +23,12 @@ import java.util.List;
 public class AppPopup01Controller {
     private final AuthService authService;
     private final AppPopElvlrtService appPopElvlrtService;
+    private final App01ElvlrtService service;
     UserFormDto userformDto = new UserFormDto();
     PopupDto popParmDto = new PopupDto();
-
     List<PopupDto> poplistDto = new ArrayList<>();
+    PopupDto popSmsinfoDto = new PopupDto();
+    List<App03ElvlrtDto> app03DtoList05 = new ArrayList<>();
     //  현장조회
     @RequestMapping(value="/wactnm")
     public Object AppActnmList(@RequestParam("actnmz") String actnm
@@ -336,7 +338,42 @@ public class AppPopup01Controller {
         return poplistDto;
     }
 
+    @RequestMapping(value="/wsmsinfo")
+    public Object AppwSmsinfo( Model model){
+
+        try {
+            popSmsinfoDto = appPopElvlrtService.GetSmsInfoList(popParmDto);
+            model.addAttribute("popSmsinfoDto", popSmsinfoDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return popSmsinfoDto;
+    }
 
 
+    @RequestMapping(value="/wsmslist")
+    public Object AppSMSList( @RequestParam("wpernm") String pernm
+            , Model model){
 
+        try {
+            String frdate =  getToDate();
+            popParmDto.setYyyymm(frdate.substring(0,4));
+            popParmDto.setPernm("%");
+            app03DtoList05 = service.GetApp01List006(popParmDto);
+            model.addAttribute("appSMSDtoList",app03DtoList05);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return app03DtoList05;
+    }
+
+
+    private String getToDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date      = new Date(System.currentTimeMillis());
+
+        return formatter.format(date);
+    }
 }

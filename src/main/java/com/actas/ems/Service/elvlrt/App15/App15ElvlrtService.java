@@ -42,4 +42,9 @@ public class App15ElvlrtService {
 
 
 
+    //고객사용자 메인화면 당일 직원 근태현황
+    public List<App15ElvlrtDto> GetApp00List014(App15ElvlrtDto parm){return app15ElvlrtMapper.GetApp00List014(parm);}
+
+
+
 }

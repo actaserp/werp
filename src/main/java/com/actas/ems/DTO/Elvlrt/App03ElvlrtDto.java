@@ -71,5 +71,8 @@ public class App03ElvlrtDto {
     private String callbackflag;
     private String callbacktime;
     private String callbackmemo;
+    private String sms_tel;
+    private String sms_caller;
+    private String sms_text;
 
 }

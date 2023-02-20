@@ -1,14 +1,11 @@
 package com.actas.ems.controller.app01;
 
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
-import com.actas.ems.Service.elvlrt.App03ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
-import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,10 +34,13 @@ public class App01Controller {
     UserFormDto userformDto = new UserFormDto();
     PopupDto popParmDto = new PopupDto();
     List<PopupDto> poplistDto = new ArrayList<>();
+    PopupDto popsmsinfoDto = new PopupDto();
+
     List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList02 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList03 = new ArrayList<>();
     List<App03ElvlrtDto> app03DtoList04 = new ArrayList<>();
+    List<App03ElvlrtDto> app03DtoList05 = new ArrayList<>();
     private final App01ElvlrtService service;
     private final AppPopElvlrtService appPopElvlrtService;
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -107,6 +107,13 @@ public class App01Controller {
             model.addAttribute("app03DtoList",app03DtoList04);
             poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
             model.addAttribute("wperidDto", poplistDto);
+            popsmsinfoDto = appPopElvlrtService.GetSmsInfoList(popParmDto);
+            model.addAttribute("popsmsinfoDto", popsmsinfoDto);
+            popParmDto.setYyyymm(frdate.substring(0,4));
+            popParmDto.setPernm("%");
+            app03DtoList05 = service.GetApp01List006(popParmDto);
+            model.addAttribute("appSMSDtoList",app03DtoList05);
+
         }catch (DataAccessException e) {
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());

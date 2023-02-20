@@ -41,8 +41,8 @@ public class App16ElvlrtDto {
     private String custcd;
     private String resunm;
     private String compdate;
-    private String hitchdate;
-    private String indate;
+
+
 
 
     private Integer mon1;

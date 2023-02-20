@@ -32,6 +32,7 @@
             a.repernm as repernm,
             a.perid as perid,
             a.pernm as pernm,
+            a.handphone as handphone,
             a.contremark as contents,
             a.remark as remark,
             isnull(a.addrtxt,'') as addrtxt
@@ -58,6 +59,7 @@
             g.pernm as repernm,
             a.perid,
             d.pernm,
+            d.handphone,
             a.remark,
             q.tel as tel,
             isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
@@ -186,6 +188,8 @@
             order by  c.teltime
         ]]>
     </select>
+
+
     <!--      고객상담센타 / 고객통화메모  -->
     <select id="GetApp01List005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
         <![CDATA[
@@ -282,6 +286,45 @@
     <delete id="DeleteCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
         delete from tb_callmain where seq = #{seq}
     </delete>
+
+
+    <select id="getSmsMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(msgid) from tb_e401_sms WITH (NOLOCK) where Left(msgid,6) = #{recedate}
+    </select>
+
+
+    <insert id="InsertE401Sms" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into tb_e401_sms (  custcd, 					spjangcd, 					receipdate, 					recedate, 					recenum,
+                                   cltcd,						actcd, 					 	equpcd, 							perid,						sms_ip,
+                                   sms_port, 					sms_id, 						sms_ps, 							sms_tel, 					sms_num,
+                                   sms_caller, 			   sms_text, 					result,							pernm,						reperid,
+                                   repernm,				   flag, 						msgid ) values
+            (#{custcd}, #{spjangcd},  getdate(), #{smsrecedate}, #{smsrecenum},
+             null, #{smsactcd},  #{smsequpcd}, null, #{smsip},
+             #{smsport}, #{smsid} , #{smsps} , #{smstel} , #{smshandphone},
+             #{smscaller}, #{smstext} , #{smsresult}, #{smspernm} , null,
+             #{smsrepernm} , '1', #{smsmsgid}   )
+    </insert>
+
+
+    <!--      고객상담센타 / 문자발송내역  -->
+    <select id="GetApp01List006"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select TOP 50     substring(convert(varchar(8), receipdate, 112), 5,2) + '/' + substring(convert(varchar(8), receipdate, 112), 7,2)  as recedate,
+                convert(varchar(8), receipdate, 114) as recetime,
+                pernm,
+                sms_tel,
+                repernm,
+                sms_caller,
+                sms_text,
+                result,
+                flag
+        from tb_e401_sms  with (nolock)
+        where Left( convert(varchar(8), receipdate, 112) , 4) =   #{yyyymm}
+          and isnull(pernm,'') Like concat('%',#{pernm},'%')
+        order by  receipdate desc
+        ]]>
+    </select>
 
 
 </mapper>

@@ -1,10 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
-import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App09ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
-import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

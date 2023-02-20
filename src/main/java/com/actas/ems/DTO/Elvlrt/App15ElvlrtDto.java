@@ -37,6 +37,15 @@ public class App15ElvlrtDto {
     private String kcspnm;
 
 
+    //메인화면 근태현황
+    private String flag;
+    private String atdnm;
+    private String vafrdate;
+    private String vatodate;
+    private Integer daynum;
+    private String telnum;
+
+
     //메인화면 계약만료현장
     private String contdate;
     private String stdate;

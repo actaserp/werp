@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.SmsMcs.AppSmsMcsMapper">
+    <insert id="InsertShortSms" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into SDK_SMS_SEND (  USER_ID,			SCHEDULE_TYPE,			SUBJECT,			SMS_MSG,					NOW_DATE,
+                                    SEND_DATE,		CALLBACK,				DEST_COUNT,		DEST_INFO,				KT_OFFICE_CODE,
+                                    CDR_ID,			RESERVED1,				RESERVED2,		RESERVED3,				RESERVED4,
+                                    RESERVED5,		CALLBACK_URL ) values
+            (#{smsid}, 0,  #{smssubject}, #{smsmsg}, #{regdate},
+             #{calldate}, #{smscallback}, 1, #{smsdestinfo}, null,
+             null, #{smsredata01} , #{smsredata02} , #{smsredata03} , #{smsredata04},
+             #{smsredata05}, null)
+    </insert>
+
+
+    <insert id="InsertLongSms" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into SDK_MMS_SEND (  USER_ID,			SCHEDULE_TYPE,			SUBJECT,			MMS_MSG,					NOW_DATE,
+                                    SEND_DATE,		CALLBACK,				DEST_COUNT,		DEST_INFO,				KT_OFFICE_CODE,
+                                    CDR_ID,			RESERVED1,				RESERVED2,		RESERVED3,				RESERVED4,
+                                    RESERVED5,		CONTENT_DATA ) values
+            (#{smsid}, 0,  #{smssubject}, #{smsmsg}, #{regdate},
+             #{calldate}, #{smscallback}, 1, #{smsdestinfo}, null,
+             null, #{smsredata01} , #{smsredata02} , #{smsredata03} , #{smsredata04},
+             #{smsredata05}, null)
+    </insert>
+
+
+
+
+
+</mapper>
+

@@ -71,6 +71,8 @@
         order by a.plandate desc
     </select>
 
+
+
     <!--메인화면 당일 계약만료현장-->
     <select id="GetApp00List003" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
         <![CDATA[
@@ -317,6 +319,35 @@
     </select>
 
 
+    <!--메인화면 직원 근태 현황-->
+    <select id="GetApp00List014" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT  case when len(isnull(f.vafrdate,'')) > 0 then '휴가'  ELSE '점검' END as flag   ,
+        a.pernm,
+        (select atdnm from tb_pb002 where atdcd=f.atdcd) as atdnm,
+        substring(f.vafrdate, 5,2) + '/' + substring(f.vafrdate, 7,2)  as vafrdate ,
+        substring(f.vatodate, 5,2) + '/' + substring(f.vatodate, 7,2)  as vatodate,
+        f.daynum,
+        f.telnum,
+        substring(d.plandate, 5,2) + '/' + substring(d.plandate, 7,2) as plandate,
+        d.plantime as plantime,
+        c.actnm as actnm,
+        d.equpcd as equpcd,
+        h.equpnm as equpnm,
+        d.gubun as gubun,
+        d.kcpernm as kcpernm,
+        d.qty as qty,
+        d.remark as remark,
+        d.kcspnm as kcspnm
+        FROM TB_JA001 a
+        LEFT OUTER JOIN TB_E073 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND d.perid = substring(a.perid, 2, 10) and d.plandate  = CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112) )
+        LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND d.actcd = h.actcd AND d.equpcd = h.equpcd)
+        LEFT OUTER JOIN TB_E601 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND d.actcd = c.actcd)
+        LEFT OUTER JOIN TB_PB204 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND f.perid = substring(a.perid, 2, 10) and f.vafrdate >= CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112) and f.vatodate <= CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112)  and left(f.vafrdate,2) = '20' )
+        WHERE a.rtclafi = '001' and (   len(f.vafrdate) > 0  or len(d.plandate) > 0 )
+        order by a.pernm;
+        ]]>
+    </select>
 
 
 </mapper>
