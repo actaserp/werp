@@ -266,9 +266,7 @@ public class AppMobileCrudController {
                     userformDto.setDbnm(values.toString());
                     break;
                 case "pernm":
-                    if(values.toString() == ""){
-                        values = "dkssud";
-                    }
+
                     popParmDto.setPernm(values.toString());
                     break;
                 case "divinm":
@@ -448,6 +446,8 @@ public class AppMobileCrudController {
                 case "dbnm":
                     userformDto.setDbnm(values.toString());
                     break;
+                case "fnsubject":
+                    app07Dto.setFnsubject(values.toString());
                 default:
                     break;
 
