@@ -45,6 +45,5 @@ public interface App10ElvlrtMobMapper {
     public List<App16ElvlrtDto> GetAppMobListr_005(PopupDto parm);
 
 
-
-
+    public List<AttachDTO> GetMobThumbList_001(PopupDto parm);
 }
