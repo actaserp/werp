@@ -3,7 +3,6 @@ package com.actas.ems.controller.app06;
 import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App06ElvlrtService;
-import com.actas.ems.controller.EncryptionController;
 import com.actas.ems.controller.SessionManager;
 import com.actas.ems.DTO.CommonDto;
 
@@ -14,11 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;

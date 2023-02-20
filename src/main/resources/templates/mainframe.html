@@ -124,7 +124,7 @@ function chk(){
             </div>
             <div class="sec_con" style="width: 30%;">
                 <div class="sec_con_tit">
-                    <span>당월점검현황</span>
+                    <span>당일 휴가 및 점검현황</span>
                 </div>
                 <div class="box_wrap with_tit" style="padding: 0px;">
                     <div class="container-fluid" style="padding: 0px;">
@@ -672,15 +672,20 @@ function chk(){
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [
+                { binding: 'flag', header: '상태', align: "center", width: 60 },
+                { binding: 'pernm', header: '사원명', align: "center", width: 80 },
+                { binding: 'atdnm', header: '구분', align: "center", width: 60 },
+                { binding: 'vafrdate', header: '시작', align: "center", width: 80 },
+                { binding: 'vatodate', header: '종료', align: "center", width: 80 },                
+                { binding: 'gubun', header: '구분', align: "center", width: 100 },
                 { binding: 'plandate', header: '점검일자', align: "center", width: 100 },
                 { binding: 'plantime', header: '점검시간', align: "center", width: 100 },
                 { binding: 'actnm', header: '현장명', align: "center", width: 120},
-                { binding: 'equpnm', header: '호기명', align: "center", width: 100 },
-                { binding: 'gubun', header: '구분', align: "center", width: 100 },
-                { binding: 'kcpernm', header: '검사자', align: "center", width: 100 },
+                { binding: 'equpnm', header: '호기명', align: "center", width: 100 },                
                 { binding: 'qty', header: '대수', align: "center", width: 100 },
                 { binding: 'remark', header: '기타호기', align: "center", width: 100 },
-                { binding: 'kcspnm', header: '검사기관', align: "center", width: 100 }
+                { binding: 'kcspnm', header: '검사기관', align: "center", width: 100 },
+                { binding: 'kcpernm', header: '검사자', align: "center", width: 100 }
 
             ],
             itemsSource: view_p01tab01page
@@ -690,11 +695,18 @@ function chk(){
         function getData_tab01(){
             var mapp15Dto = [[${app15DtoList}]];
             var wactnm_data = [];
+            console.log("-------------");
+            console.log(mapp15Dto);
             var cnt = 1;
             for (var i = 0; i < mapp15Dto.length; i++) {
                 wactnm_data.push({
                     id: i,
                     index: cnt,
+                    flag: mapp15Dto[i]["flag"],
+                    pernm: mapp15Dto[i]["pernm"],
+                    atdnm: mapp15Dto[i]["atdnm"],
+                    vafrdate: mapp15Dto[i]["vafrdate"],
+                    vatodate: mapp15Dto[i]["vatodate"],
                     plandate: mapp15Dto[i]["plandate"],
                     plantime: mapp15Dto[i]["plantime"],
                     actnm: mapp15Dto[i]["actnm"],
@@ -714,6 +726,11 @@ function chk(){
                         wactnm_data.push({
                         id: cnt,
                         index: cnt,
+                        flag: '',
+                        pernm: '',
+                        atdnm: '',
+                        vafrdate: '',
+                        vatodate: '',
                         plandate: '',
                         plantime: '',
                         actnm: '',
@@ -785,7 +802,7 @@ function chk(){
         function getData_wlist(){
 
             var mapp05Dto = [[${App05Dto}]];
-            var data01 = [];
+            var data01 = []; 
             var cnt = 1;
             for (var i = 0; i < mapp05Dto.length; i++) {
                 data01.push({

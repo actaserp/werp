@@ -61,9 +61,6 @@ public class PopupDto {
     private String agnertel1;
 
 
-    private String subject;
-
-
 
 
 

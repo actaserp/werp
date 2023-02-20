@@ -227,4 +227,15 @@
         ]]>
     </select>
 
+
+    <!-- SMS INFO -->
+    <select id="GetSmsInfoList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT TOP 1 sms_ip,     sms_fport,  sms_tport,  sms_id,     sms_ps,     agnertel1
+        FROM tb_xa011   WITH(NOLOCK)
+        WHERE 1 = 1
+        ]]>
+    </select>
+
+
 </mapper>

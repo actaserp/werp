@@ -8,8 +8,6 @@ import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App06ElvlrtService;
 import com.actas.ems.Service.elvlrt.App06UploadService;
 import com.actas.ems.Service.elvlrt.App06UploadServiceImpl;
-import com.actas.ems.util.FilsUtils;
-import com.actas.ems.util.Method;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

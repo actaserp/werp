@@ -253,7 +253,7 @@
                                                                 </div>
                                                                 <div class="number">
                                                                     <span th:text="${formdata.recedate}">23.01.01</span>(<span th:text="${formdata.recetime}">00:00</span>)&nbsp;&nbsp;
-                                                                    <a href="#" th:id="${formdata.actnm}" th:onclick="mod_fnc([[${formdata.recedateyear}]],[[${formdata.recenum}]],[[${formdata.recetime}]],[[${formdata.hitchdate}]],[[${formdata.hitchhour}]],[[${formdata.actcd}]],[[${formdata.actnm}]],[[${formdata.equpcd}]],[[${formdata.equpnm}]],[[${formdata.reperid}]],[[${formdata.repernm}]],[[${formdata.perid}]],[[${formdata.pernm}]],[[${formdata.contcd}]],[[${formdata.contnm}]],[[${formdata.contents}]],[[${formdata.remark}]])" th:text="${formdata.actnm}"><h4 th:text="${formdata.actnm} ">삼성리더스타워</h4></a><br>
+                                                                    <a href="#" th:id="${formdata.actnm}" th:onclick="mod_fnc([[${formdata.recedateyear}]],[[${formdata.recenum}]],[[${formdata.recetime}]],[[${formdata.hitchdate}]],[[${formdata.hitchhour}]],[[${formdata.actcd}]],[[${formdata.actnm}]],[[${formdata.equpcd}]],[[${formdata.equpnm}]],[[${formdata.reperid}]],[[${formdata.repernm}]],[[${formdata.perid}]],[[${formdata.pernm}]],[[${formdata.contcd}]],[[${formdata.contnm}]],[[${formdata.contents}]],[[${formdata.remark}]],[[${formdata.handphone}]])" th:text="${formdata.actnm}"><h4 th:text="${formdata.actnm} ">삼성리더스타워</h4></a><br>
                                                                     <span th:text="${formdata.contnm}">고장내용</span><br>
                                                                     <span th:text="${formdata.contents}">고장내용</span>
                                                                 </div>
@@ -480,7 +480,18 @@
                                     </div> -->
                                     <div class="part_hide_grid">
                                         <div class="modal_box">
-                                            문자전송내역 
+                                            <div class="title">
+                                                <div class="btns"> 
+                                                    <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="searchwSMS_rtn()">문자전송내역</button>
+                                                </div>        
+                                            </div>  
+                                        
+                                            <div class="box_wrap with_tit" style="padding: 0px;">
+                                                <div class="container-fluid" style="padding: 0px;">
+                                                    <div id="wsmsGrid_div" ></div>
+                                                    <div id="tabPager01"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -492,14 +503,17 @@
                                         <div class="form">
                                             <form action="">
                                                 <div class="date_wrap">
-                                                    <h5>수신일자</h5> 
+                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수신일자</span>                                                        
+                                                        <input type="text"  class="form-control datetimepicker"  name="actcalldatez" id="actcalldatez" autocomplete="off"  placeholder="Y-m-d"  style="background: url(/assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;"   > 
+                                                    </div>
+                                                    <!-- <h5>수신일자</h5> 
                                                     <div class="input_wrap date">
                                                         <input type="text"  class="form-control datetimepicker"  name="actcalldatez" id="actcalldatez" autocomplete="off"  placeholder="Y-m-d"  style="background: url(/assets/images/i_cal.png) no-repeat #fff 98% 50%/15px auto;"   >                                                                    
-                                                    </div> 
-                                                    <div class="input_wrap date"> 
+                                                    </div>  -->
+                                                    <!-- <div class="input_wrap date"> 
                                                         <input type="time"  id="actcalltimez" autocomplete="off"  >
                                                         <input type="hidden"  id="actseqz"   >
-                                                    </div>  
+                                                    </div>   -->
                                                     <!-- <div>
                                                         <div class="btns"> 
                                                             <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="delCall_rtn()">삭제</button>
@@ -515,33 +529,33 @@
                                                             <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="saveCall_rtn()">등록</button>
                                                         </div>
                                                     </div> -->
-                                                </div>
-                                                <div class="input_wrap">
-                                                    <h5>고객명</h5>
-                                                    <input type="text" name="actcallnmz" id="actcallnmz">
-                                                </div>
-                                                <div class="input_wrap">
-                                                    <h5>전화번호</h5>
-                                                    <input type="text" name="actcallnumz" id="actcallnumz">
                                                 </div> 
-                                                <div class="input_wrap">
-                                                    <h5>콜백예약</h5>
-                                                    <input type="checkbox" id="callbackflag" value="1">
-                                                    <label for="callbackflag" class="check_style1 no_txt"></label>
-                                                    <input type="time"  id="actcallbacktimez" autocomplete="off"  >
-                                                </div>
-                                                <div class="input_wrap" style="margin-top: 10px;">
-                                                    <h5>콜백메모</h5>
-                                                    <input type="text" name="actcallbackmemoz" id="actcallbackmemoz">
-                                                </div>
-                                                <div class="input_wrap" style="margin-top: 10px;">
-                                                    <h5>메모내용</h5>
-                                                    <textarea name="actcallmemoz" id="actcallmemoz"></textarea>
-                                                </div>
-                                                <div class="input_wrap"  >
-                                                    <h5>처리내용</h5>
-                                                    <input type="text" name="actcallendmemoz" id="actcallendmemoz"></textarea>
-                                                </div>
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수신시간</span>
+                                                    <input type="time" class="form-control"  id="actcalltimez" autocomplete="off"  >
+                                                    <input type="hidden"  id="actseqz"   >                                                        
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">고객명</span> 
+                                                    <input type="text" class="form-control" name="actcallnmz" id="actcallnmz">                                                    
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">전화번호</span> 
+                                                    <input type="text" class="form-control"  name="actcallnumz" id="actcallnumz">                                               
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">콜백예약</span> 
+                                                    <input type="checkbox" id="callbackflag" value="1">  
+                                                    <label for="callbackflag" class="check_style1 no_txt"></label>                   
+                                                </div>   
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">예약시간</span>
+                                                    <input type="time" class="form-control" id="actcallbacktimez" autocomplete="off"  >
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">콜백메모</span> 
+                                                    <input type="text" class="form-control"  name="actcallbackmemoz" id="actcallbackmemoz">                                               
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">메모내용</span>  
+                                                    <textarea class="form-control" id="actcallmemoz" rows="3"></textarea>                                              
+                                                </div>   
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">처리내용</span> 
+                                                    <input type="text" class="form-control"  name="actcallendmemoz" id="actcallendmemoz">                                               
+                                                </div>  
                                                 <div class="input_wrap"  > 
                                                     <div>
                                                         <div class="btns"> 
@@ -1008,7 +1022,7 @@
         <div class="modal fade" id="actsmsmodal01" data-bs-keyboard="false"
         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 600px">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
                 <div class="modal-content border-0"> 
                     <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
                         <div class="layoutCont">
@@ -1021,37 +1035,54 @@
                                 </div>
                                 <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
                                     <div class="message_form">
-                                        <div class="input_wrap">
-                                            <h5>발신번호</h5>
-                                            <select name="" id="">
-                                                <option value="">
-                                                    전체
-                                                </option>
-                                            </select>
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">발신번호</span>
+                                            <input class="form-control" type="text"   name="smscaller" id="smscaller"    th:value="${popsmsinfoDto.agnertel1}" disabled aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
                                         </div>
-                                        <div class="input_wrap">
-                                            <h5>수신번호</h5>
-                                            <input type="text">
-                                        </div>
-                                        <div class="input_wrap">
-                                            <h5>구분</h5>
-                                            <select name="" id="" >
-                                                <option value="">단문</option>
-                                            </select>
-                                            <div class="btns">
-                                                <!-- <button class="type1 color3" style="height: 31px;">선택</button> -->
-                                                <button> 한건전송</button>
+
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수신번호</span>
+                                                        <input class="form-control" type="text"  name="smstel" id="smstel"    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                                                    </div>              
+                                                </div>
+                                                <div class="col-4">
+                                                    <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="smsshot_rtn()">한건전송
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div> 
-                                        <div class="input_wrap">
-                                            <h5>제목</h5>
-                                            <input type="text">
+                                        </div>      
+
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-auto">
+                                                    <select  name="smschk" id="smschk" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                        <!-- <option selected=""  >전송구분</option> -->
+                                                        <option value="S" selected>단문</option>
+                                                        <option value="M">장문</option>
+                                                      </select> 
+                                                </div>    
+                                                <div class="col-4">
+                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">발신자</span>
+                                                        <input class="form-control" type="text"   name="smsrepernm" id="smsrepernm"      aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                                                    </div>  
+                                                </div>      
+                                                <div class="col-4">
+                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수신자</span>
+                                                        <input class="form-control" type="text"  name="smspernm" id="smspernm"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                                                    </div>   
+                                                </div>    
+                                            </div>
                                         </div>
-                                        <div class="input_wrap">
-                                            <h5>전송내용</h5>
-                                            <textarea name="actsmsmemoz" id="actsmsmemoz"></textarea>
-                                        </div> 
-                                        
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
+                                            <input class="form-control" type="text"  name="smssubject" id="smssubject"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                                        </div>  
+                                        <div class="input-group"><span class="input-group-text">전송내용</span>
+                                            <textarea   name="smsmsg" id="smsmsg"  class="form-control" aria-label="With textarea" ></textarea>
+                                        </div>   
+                            
                                         <div class="input_wrap">
                                             <!-- <h5>부서</h5> -->
                                             <input type ="text" placeholder="부서를 선택하세요" name="" id=""  visible="false" disabled>
@@ -1106,16 +1137,55 @@
     var view_pernmpage;
     var view_equpnmpage;
     var view_wperidpage;
+    var view_wsmspage;
     let viewtest;
     var wactnmGrid;
     var wcontnmGrid; 
     var wrepernmGrid; 
     var wpernmGrid; 
     var wequpnmGrid; 
-    var wperidGrid;
+    var wsmsGrid; 
+    // var wperidGrid;
     let formData = new FormData(); 
+    let formSMSData = new FormData();
+   
 
     window.onload = function() {  
+
+        //<!--문자전송내역  -->
+        view_wsmspage = new wijmo.collections.CollectionView(getData_wlist("06"), {
+            pageSize: 7
+        });
+
+        new wijmo.input.CollectionViewNavigator('#tabPager01', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_wsmspage
+        });
+        wsmsGrid = new wijmo.grid.FlexGrid('#wsmsGrid_div', {
+            autoGenerateColumns: false,
+            isReadOnly: true, 
+            allowSorting: 'MultiColumn',
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [
+                { binding: 'result', header: '결과',    align:"center",  isReadOnly: true,  width: '1*' }, 
+                { binding: 'recedate', header: '일자', format: '*', align:"center", isReadOnly: true,  width: '1*' },
+                { binding: 'recetime', header: '시간', align:"center",  isReadOnly: true ,  width: '1*'},
+                { binding: 'pernm', header: '수신자명',   align:"center", isReadOnly: true , width: '1*'} ,
+                { binding: 'sms_tel', header: '발신번호',    align:"center", isReadOnly: true,   width: '*'} ,
+                { binding: 'flag', header: '수신확인',    align:"center", isReadOnly: true,  width: '1*' } ,                
+                { binding: 'sms_text', header: '내용',    align:"left", isReadOnly: true,   width: '*'} ,
+            ],
+            itemsSource: view_wsmspage
+        }); 
+
+        //========================================================================================================
+
+
+
+
+
         //현장검색 popup list
         view_actnmpage = new wijmo.collections.CollectionView(getData_wlist("01"), {
             pageSize: 12
@@ -1234,7 +1304,7 @@
         //SMS 수리기사 검색 popup list
         let view_wperidpage = new wijmo.collections.CollectionView(getData_wperid()); 
         setGroups(true);
-            wperidGrid = new wijmo.grid.FlexGrid('#wperidGrid_div', {
+          let  wperidGrid = new wijmo.grid.FlexGrid('#wperidGrid_div', {
             deferResizing: true,
             showMarquee: true, 
             alternatingRowStep: 0,
@@ -1276,7 +1346,7 @@
                 showCheckedCount();
             }
         }); 
-        console.log(selector)
+        // console.log(selector)
         // 그룹 전환
         setGroups(true);
         // document.getElementById('groups').addEventListener('click', e => {
@@ -1471,6 +1541,23 @@
                         });
                         cnt++;
                     }      
+                    break;                     
+                case "06":
+                    // 문자전송내역 데이터 수집
+                    for (var i = 0; i < 12; i++) {
+                        wactnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            result: "",
+                            recedate: "", 
+                            recetime: "", 
+                            pernm: "", 
+                            sms_tel: "", 
+                            flag: "", 
+                            sms_text: "", 
+                        });
+                        cnt++;
+                    }   
                     break;                    
                 default:
                     break;    
@@ -1478,6 +1565,102 @@
             }
             return wactnm_data;                                      
         } 
+    }
+
+
+    
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //단건문자발송
+    function smsshot_rtn(){
+        
+ 
+        var ls_smscaller  = document.getElementById('smscaller').value; 
+        var ls_smstel  = document.getElementById('smstel').value; 
+        var ls_smschk  = document.getElementById('smschk').value; 
+        var ls_smsrepernm  = document.getElementById('smsrepernm').value; 
+        var ls_smspernm  = document.getElementById('smspernm').value; 
+        var ls_smssubject  = document.getElementById('smssubject').value; 
+        var ls_smsmsg  = document.getElementById('smsmsg').value; 
+        var ls_recedate  = document.getElementById('actrecedatez').value; 
+        var ls_recenum  = document.getElementById('actrecenumz').value;  
+        var ls_actactcdz  = document.getElementById('actactcdz').value; 
+        var ls_actequpcdz  = document.getElementById('actequpcdz').value; 
+        var ls_actrecetimez  = document.getElementById('actrecetimez').value; 
+        
+        
+
+        if(ls_smscaller == null || ls_smscaller.length == 0 || ls_smscaller == ""){
+           alert("발신번호를 ERP 환경설정에 등록하세요");
+           return
+        }        
+        if(ls_smstel == null || ls_smstel.length == 0 || ls_smstel == ""){
+           alert("수신번호를 등록하세요");
+           return
+        }        
+        if(ls_smsrepernm == null || ls_smsrepernm.length == 0 || ls_smsrepernm == ""){
+           alert("발신자를 등록하세요");
+           return
+        }        
+        if(ls_smspernm == null || ls_smspernm.length == 0 || ls_smspernm == ""){
+           alert("수신자를 등록하세요");
+           return
+        }        
+        if(ls_smsmsg == null || ls_smsmsg.length == 0 || ls_smsmsg == ""){
+           alert("발송내용을 등록하세요");
+           return
+        }    
+        if(ls_actrecetimez != null && ls_smsmsg.length > 0 && ls_smsmsg != ""){
+            ls_actrecetimez = ls_actrecetimez.substr(0,2) + ls_actrecetimez.substr(3,2);
+        }else{
+            ls_actrecetimez = " ";
+        }            
+        // 본문 data    
+        var inputdata = {   
+                "smscaller"    : ls_smscaller ,
+                "smstel"    : ls_smstel ,
+                "smschk"    : ls_smschk ,
+                "smsrepernm"  : ls_smsrepernm,
+                "smspernm"      : ls_smspernm , 
+                "smssubject"   :  ls_smssubject   , 
+                "smsmsg"   :  ls_smsmsg,  
+                "recedate" : ls_recedate, 
+                "recenum" : ls_recenum, 
+                "actactcdz" : ls_actactcdz, 
+                "actequpcdz" : ls_actequpcdz, 
+                "actrecetimez" : ls_actrecetimez
+                
+            }  
+            formSMSData.delete("smsdata");   
+        // 본문 data formdata 에 추가
+        formSMSData.append("smsdata", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));   
+        $.ajax({
+            url: '/app01mod/savesms01',
+            processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+            contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게
+            enctype : 'multipart/form-data',
+            type: "POST",
+            data: formSMSData,
+            async:false,
+            success:function(data){
+                // console.log("등록OK", data);
+                if(data == "success"){
+                    alert("전송되었습니다.")      
+                    searchwSMS_rtn()                
+                    $("#wsmsmodal_btn").trigger("click");  
+                }else{
+                    console.log(data);
+                    alert("전송중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        })  
+        return ;
+
+
     }
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //고장접수등록
@@ -1844,7 +2027,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.actcd}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm,"01");
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, '',  "01");
                     }
                 });
                 wactnmGrid.columns.push(cols);    
@@ -1863,7 +2046,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.telno}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, "01");
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, '',  "01");
                     }
                 });
                 wactnmGrid.columns.push(cols);  
@@ -1921,7 +2104,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.contcd}</b>',
                         click: (e, ctx) => {
-                            wactnmChk_2(ctx.item.contcd, ctx.item.contnm, '02');
+                            wactnmChk_2(ctx.item.contcd, ctx.item.contnm,  '',  '02');
                         }
                     });
                     wcontnmGrid.columns.push(cols);    
@@ -1965,7 +2148,7 @@
                         id: i, 
                         index: cnt,
                         reperid:wcontnmDto[i]["perid"],
-                        repernm: wcontnmDto[i]["pernm"],                                             
+                        repernm: wcontnmDto[i]["pernm"]                                          
                     });
                     cnt++;
                 }   
@@ -1981,7 +2164,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.reperid}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.reperid, ctx.item.repernm, '03');
+                        wactnmChk_2(ctx.item.reperid, ctx.item.repernm, '' , '03');
                     }
                 });
                 wrepernmGrid.columns.push(cols);    
@@ -2026,11 +2209,12 @@
                         id: i, 
                         index: cnt,
                         perid:wcontnmDto[i]["perid"],
-                        pernm: wcontnmDto[i]["pernm"],                                             
+                        pernm: wcontnmDto[i]["pernm"],
+                        handphone: wcontnmDto[i]["handphone"]                                         
                     });
                     cnt++;
                 }   
-                // console.log("wcontnm_data",wcontnm_data)  
+                console.log("wcontnm_data",wcontnm_data)  
                 wpernmGrid.columns.clear();  
                 wpernmGrid.autoGenerateColumns = false; 
                 view_pernmpage.sourceCollection  = wcontnm_data;
@@ -2042,7 +2226,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.perid}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, '04');
+                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, ctx.item.handphone, '04');
                     }
                 });
                 wpernmGrid.columns.push(cols);    
@@ -2109,7 +2293,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.equpcd}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '05');
+                        wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '', '05');
                     }
                 });
                 wequpnmGrid.columns.push(cols);    
@@ -2130,7 +2314,110 @@
 
     }    
 
-    function wactnmChk_2(arg1, arg2, flag){
+    
+    function searchwSMS_rtn(){
+        let searchText = '';    
+        let ls_actcd = '';     
+        $.ajax({
+            url: '/pop01/wsmslist',  
+            type:"POST",
+            data: { 
+                "wpernm"         : ""
+            },  
+            success:function(data){ 
+                var wSMSDto  = data;    
+                var wsms_data = [];
+                var cnt = 1;
+                for (var i = 0; i < wSMSDto.length; i++) {
+                    wsms_data.push({
+                        id: i, 
+                        index: cnt,
+                        recedate:wSMSDto[i]["recedate"],
+                        recetime: wSMSDto[i]["recetime"],  
+                        pernm: wSMSDto[i]["pernm"],  
+                        sms_tel: wSMSDto[i]["sms_tel"],  
+                        sms_caller: wSMSDto[i]["sms_caller"],  
+                        sms_text: wSMSDto[i]["sms_text"],  
+                        result: wSMSDto[i]["result"],      
+                        flag: wSMSDto[i]["flag"],                                             
+                    });
+                    cnt++;
+                }   
+                wsmsGrid.columns.clear();  
+                wsmsGrid.autoGenerateColumns = false; 
+                view_wsmspage.sourceCollection  = wsms_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'result';
+                cols.header = '결과';
+                cols.align = "center";
+                cols.width = 60;
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.result}</b>',
+                    click: (e, ctx) => {
+                        // wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '', '05');
+                    }
+                });
+                wsmsGrid.columns.push(cols);    
+                // console.log("cols", cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'recedate';
+                cols.header = '일자';
+                cols.align = "center";
+                cols.width = 80; 
+                wsmsGrid.columns.push(cols);     
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'recetime';
+                cols.header = '시간';
+                cols.align = "center";
+                cols.width = 100;; 
+                wsmsGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pernm';
+                cols.header = '수신자명';
+                cols.align = "center";
+                cols.width = 120; 
+                wsmsGrid.columns.push(cols);       
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'sms_tel';
+                cols.header = '수신번호';
+                cols.align = "center";
+                cols.width = 120; 
+                wsmsGrid.columns.push(cols);  
+                // cols = new wijmo.grid.Column(); 
+                // cols.binding = 'repernm';
+                // cols.header = '발신자명';
+                // cols.align = "center";
+                // cols.width = '*'; 
+                // wsmsGrid.columns.push(cols);     
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'sms_caller';
+                cols.header = '발신번호';
+                cols.align = "center";
+                cols.width = 120; 
+                wsmsGrid.columns.push(cols);    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'flag';
+                cols.header = '수신';
+                cols.align = "center";
+                cols.width = 60;; 
+                wsmsGrid.columns.push(cols);     
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'sms_text';
+                cols.header = '내용';
+                cols.align = "left";
+                cols.width = '*'; 
+                wsmsGrid.columns.push(cols);        
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }    
+
+    function wactnmChk_2(arg1, arg2, arg3, flag){
         // console.log(flag);
             switch(flag){
                 case "01": 
@@ -2148,13 +2435,18 @@
                 case "03":
                     // 접수자검색 데이터 수집 
                     document.getElementById('actreperidz').value = arg1; 
-                    document.getElementById('actrepernmz').value = arg2;   
+                    document.getElementById('actrepernmz').value = arg2;  
+                    document.getElementById('smsrepernm').value = arg2;   
                     $("#wrepernmmodal_btn").trigger("click"); 
                     break;                    
                 case "04":
                     // 통보자검색 데이터 수집  
+                    console.log('arg3');
+                    console.log(arg3);
                     document.getElementById('actperidz').value = arg1; 
-                    document.getElementById('actpernmz').value = arg2;   
+                    document.getElementById('actpernmz').value = arg2;  
+                    document.getElementById('smstel').value = arg3;    
+                    document.getElementById('smspernm').value = arg2;   
                     $("#wpernmmodal_btn").trigger("click"); 
                     break;                    
                 case "05":
@@ -2203,7 +2495,7 @@
           
         return 
     }    
-    function mod_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17){
+    function mod_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18){
         // new_rtn()
         document.getElementById('actrecedatez').value = arg1;
         document.getElementById('actrecenumz').value = arg2;
@@ -2222,6 +2514,13 @@
         document.getElementById('actcontnmz').value = arg15; 
         document.getElementById('actcontentsz').value = arg16; 
         document.getElementById('actremarkz').value = arg17;  
+        document.getElementById('smsmsg').value =   arg3 + " " + arg15 + '/' + arg16;  
+        document.getElementById('smsrepernm').value = arg11;  
+        document.getElementById('smspernm').value = arg13;    
+        document.getElementById('smstel').value = arg18;     
+        document.getElementById('smssubject').value = arg7 + '(' + arg9 + ')';  
+        
+        
     }
     
     function modtel_fnc(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10){
@@ -2329,6 +2628,46 @@
 
             })       
     }  
+
+
+    function search_sms_rtn(){
+        var ls_actnmz = document.getElementById('searchactnmz').value; 
+        let ls_frdate = document.getElementById('frdate').value; 
+        let ls_todate = document.getElementById('todate').value;             
+        if(ls_actnmz == null || ls_actnmz.length == 0 || ls_actnmz == "" || ls_actnmz == "%"){ 
+            ls_actnmz = "%";
+        }  
+        if(ls_frdate == null || ls_frdate.length == 0 || ls_frdate == "" || ls_frdate == "%"){ 
+            //alert("시작 일자를 입력하세요")
+            //return 
+        }  
+        if(ls_todate == null || ls_todate.length == 0 || ls_todate == "" || ls_todate == "%"){ 
+            //alert("종료 일자를 입력하세요")
+           // return 
+        }  
+        // console.log("ls_actnmz 2222: " + ls_actnmz);
+        $.ajax({
+                url: '/app01/emconlist',  
+                type:"POST",
+                data: {   
+                    "frdate"      : ls_frdate,  
+                    "todate"      : ls_todate ,  
+                    "actnmz"      : ls_actnmz ,
+                    "page"        : "appkt" 
+                }, 
+                async:false,
+                success:function(data){   
+                    // console.log(data);                        
+                    $("#ktretrieveDiv").replaceWith(data);  
+                },error:function(e){
+                    console.log("error"); 
+                }
+            }).done(function(fragment){           
+
+            })       
+    }  
+
+
     function getElvnum(){
 
         
@@ -2411,6 +2750,7 @@
         fn_egov_init_date()
         search_rtn()
         searchtel_rtn() 
+        // searchwSMS_rtn()
         // searchwactnm_rtn()
         // searchwcontnm_rtn()
         // searchwrepernm_rtn()

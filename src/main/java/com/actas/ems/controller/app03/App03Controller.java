@@ -1,18 +1,10 @@
 package com.actas.ems.controller.app03;
 
-import com.actas.ems.DTO.CommonDto;
-import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
-import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
-import com.actas.ems.Exception.AttachFileException;
-import com.actas.ems.Service.elvlrt.App03ElvlrtService;
-import com.actas.ems.Service.elvlrt.App04ElvlrtService;
 import com.actas.ems.controller.SessionManager;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 @RequestMapping(value = "/app03", method = RequestMethod.POST)
