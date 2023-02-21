@@ -47,6 +47,7 @@ public class PGYMbController {
 
     AttachDTO attachDTO = new AttachDTO();
     private final App07ElvlrtService appService;
+    private final App07UploadServiceImpl appservice2;
     App07ElvlrtDto app07Dto = new App07ElvlrtDto();
 
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
@@ -144,6 +145,13 @@ public class PGYMbController {
                     break;
                 case "fseq":
                     app07Dto.setFseq(values.toString());
+                    break;
+                case "fgourpcd":
+                    app07Dto.setFgourpcd(values.toString());
+                    break;
+                case "fflag":
+                    app07Dto.setFflag(values.toString());
+
                 default:
                     break;
             }
@@ -160,6 +168,70 @@ public class PGYMbController {
             System.out.println(e);
         }
         return "success";
+    }
+
+
+    /**파일 첨부*/
+    //app06 to 03 첨부파일리스트
+    @RequestMapping(value = "/attachMB", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object mhListAttach(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        String ls_fseq = "";
+        String ls_fflag = "";
+        List<AttachDTO>  attach =new ArrayList<>();
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "fflag":
+                    app07Dto.setFflag(values.toString());
+                    break;
+                case "fseq":
+                    app07Dto.setFseq(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                try {
+
+                    attach = appservice2.MManuFilelist(app07Dto);
+                    model.addAttribute("attachDto",attach);
+
+                }catch (DataAccessException e) {
+                    log.info("App06MobForm DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return attach;
     }
 
 

@@ -30,4 +30,9 @@ public class App26ElvlrtDto {
     private String hp;
     private String contdate;
 
+    private String equpnm;
+    private String elno;
+    private String actaddr;
+    private String emtelnum;
+
 }
