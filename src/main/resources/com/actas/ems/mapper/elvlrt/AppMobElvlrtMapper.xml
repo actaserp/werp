@@ -310,6 +310,12 @@ order by recedate desc;
     <if test="subject != null">
     and msubject like '%' + #{subject} + '%'
     </if>
+    <if test="memo != null">
+        and memo like '%' + #{memo} + '%'
+    </if>
+    <if test="groupcd != null">
+        and mgourpcd like '%' + #{groupcd} + '%'
+    </if>
     </select>
 
     <select id="GetAppMobList_e"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
@@ -323,6 +329,15 @@ order by recedate desc;
         <!--        <if test="memo != null">-->
         <!--            and memo like '%' + #{memo} + '%'-->
         <!--        </if>-->
+        <if test="subject != null">
+            and esubject like '%' + #{subject} + '%'
+        </if>
+        <if test="memo != null">
+            and ememo like '%' + #{memo} + '%'
+        </if>
+        <if test="groupcd != null">
+            and egroupcd like '%' + #{groupcd} + '%'
+        </if>
     </select>
 
     <select id="GetAppMobList_d"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
@@ -336,6 +351,15 @@ order by recedate desc;
         <!--        <if test="memo != null">-->
         <!--            and memo like '%' + #{memo} + '%'-->
         <!--        </if>-->
+        <if test="subject != null">
+            and dsubject like '%' + #{subject} + '%'
+        </if>
+        <if test="memo != null">
+            and dmemo like '%' + #{memo} + '%'
+        </if>
+        <if test="groupcd != null">
+            and dgourpcd like '%' + #{groupcd} + '%'
+        </if>
     </select>
 
     <select id="GetMobThumbList_001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.AttachDTO">

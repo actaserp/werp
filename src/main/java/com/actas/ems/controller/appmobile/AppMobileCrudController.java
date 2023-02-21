@@ -1089,6 +1089,18 @@ public class AppMobileCrudController {
                     }
                     popParmDto.setSubject(values.toString());
                     break;
+                case "memo":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setMemo(values.toString());
+                    break;
+                case "groupcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setGroupcd(values.toString());
+                    break;
                 default:
                     break;
 
@@ -1173,6 +1185,18 @@ public class AppMobileCrudController {
                     }
                     popParmDto.setSubject(values.toString());
                     break;
+                case "memo":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setMemo(values.toString());
+                    break;
+                case "groupcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setGroupcd(values.toString());
+                    break;
                 default:
                     break;
 
@@ -1256,6 +1280,18 @@ public class AppMobileCrudController {
                         values = "%";
                     }
                     popParmDto.setSubject(values.toString());
+                    break;
+                case "memo":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setMemo(values.toString());
+                    break;
+                case "groupcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setGroupcd(values.toString());
                     break;
                 default:
                     break;
