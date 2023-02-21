@@ -1312,6 +1312,99 @@ public class AppMobileCrudController {
         return app04DtoList;
     }
 
+    @RequestMapping(value = "/fileThumblist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object thumbListForm(@RequestParam Map<String, String> param,
+                            Model model, HttpServletRequest request) throws Exception{
+
+        List<AttachDTO> attachDTOList = new ArrayList<>();
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+
+
+        String minusYear = AddDate(time, -2, 0, 0);
+
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "flag":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setFlag(values.toString());
+                    break;
+                case "boardIdx":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setSeq(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        String frdate = minusYear;
+        String todate = time;
+
+
+
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setFrdate(frdate);    //2년전날짜
+                popParmDto.setTodate(todate);    //현재날짜
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+
+
+
+                try{
+                    attachDTOList = service.GetMobThumbList_001(popParmDto);
+                    model.addAttribute("attachDTOList", attachDTOList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return attachDTOList;
+    }
+
 
 
 }

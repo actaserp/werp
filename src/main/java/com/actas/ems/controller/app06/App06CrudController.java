@@ -111,6 +111,7 @@ public class App06CrudController {
             , HttpServletRequest request){
         String ls_fileName = "";
         String ls_errmsg = "";
+        boolean result = false;
         /* 업로드 파일 정보를 담을 비어있는 리스트 */
         List<AttachDTO> attachList = new ArrayList<>();
 
@@ -159,17 +160,18 @@ public class App06CrudController {
         App06Dto.setHinputdate(hinputdate);
         if(hseq == null || hseq.equals("")){
             App06Dto.setHseq(CountSeq(ls_yeare + ls_mm));
+            //System.out.println(App06Dto.getHseq());
         }else{
             App06Dto.setHseq(hseq);
         }
         App06Dto.setYyyymm(ls_yeare + ls_mm);
         if(hseq == null || hseq.equals("")){
-            boolean result = appService.InsertMHManual(App06Dto);
+            result = appService.InsertMHManual(App06Dto);
             if(!result){
                 return  "error";
             }
         }else{
-            boolean result = appService.UpdateMHManual(App06Dto);
+            result = appService.UpdateMHManual(App06Dto);
             if(!result){
                 return  "error";
             }
@@ -204,7 +206,7 @@ public class App06CrudController {
 
                 /* 파일 정보 저장 */
                 AttachDTO attach = new AttachDTO();
-                attach.setBoardIdx(hseq);
+                attach.setBoardIdx(App06Dto.getHseq());
                 attach.setOriginalName(multipartFile.getOriginalFilename());
                 attach.setSaveName(saveName);
                 attach.setSize(multipartFile.getSize());
@@ -212,7 +214,7 @@ public class App06CrudController {
                 /* 파일 정보 추가 */
                 attachList.add(attach);
             }
-            boolean result  = appServiceImpl.registerMHManual(App06Dto, attachList);
+            result  = appServiceImpl.registerMHManual(App06Dto, attachList);
             if(!result){
                 return  "error";
             }
@@ -302,8 +304,6 @@ public class App06CrudController {
             App06Dto.setHseq(hseq);
             App06Dto.setHflag(hflag);
             attach = appServiceImpl.MHManualFilelist(App06Dto);
-
-            System.out.println(attach.get(0).getOriginalName());
 
             model.addAttribute("userformDto",userformDto);
             model.addAttribute("attachDto",attach);

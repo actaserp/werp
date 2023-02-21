@@ -338,5 +338,23 @@ order by recedate desc;
         <!--        </if>-->
     </select>
 
+    <select id="GetMobThumbList_001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+        board_idx as boardIdx
+        , original_name as originalName
+        , save_name as saveName
+        , size
+        , flag
+        , delete_yn as deleteyn
+        , insert_time as inserttime
+        , delete_time as deletetime
+        FROM
+        tb_mattach with (nolock)
+        WHERE
+        delete_yn = 'N'
+        AND board_idx = #{seq}
+        and flag  = #{flag}
+    </select>
+
 
 </mapper>

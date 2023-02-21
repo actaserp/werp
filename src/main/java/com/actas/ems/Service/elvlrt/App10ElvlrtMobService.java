@@ -59,4 +59,6 @@ public class App10ElvlrtMobService {
     public List<App04ElvlrtDto> GetAppMobList_e(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_e(parm);}
 
     public List<App04ElvlrtDto> GetAppMobList_d(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_d(parm);}
+
+    public List<AttachDTO> GetMobThumbList_001(PopupDto parm) {return app10ElvMobMapper.GetMobThumbList_001(parm);}
 }

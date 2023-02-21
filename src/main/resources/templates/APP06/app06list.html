@@ -68,7 +68,7 @@
         <div class="modal-content border-0">
           <div class="modal-body p-0" >
             <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-              <h4 class="mb-1" id="staticBackdropLabel">공지등록</h4>
+              <h4 class="mb-1" id="staticBackdropLabel">수리노하우</h4>
             </div>
             <div class="section ">
 
@@ -528,8 +528,8 @@
             selectionMode: 'RowRange',
             alternatingRowStep: 0,
             columns: [
-
-                { binding: 'hseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
+                { binding: 'hinputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true },
+                // { binding: 'hseq', header: '번호', width: '*', format: '*' , align:"center", isReadOnly: true},
                 { binding: 'cnam', header: '분류', width: '*', format: '*', align:"center", isReadOnly: true },
                 { binding: 'hsubject',width: '*', header: '제목', width: '*', align:"left", format: '*' ,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({
@@ -547,7 +547,7 @@
                             viewFilePage(ctx.item.hseq );
                         }
                     }) } ,
-                { binding: 'hinputdate', header: '등록일자', width: '*',   align:"center",  isReadOnly: true }
+                
 
             ],
             itemsSource: view_Mhmanualpage
