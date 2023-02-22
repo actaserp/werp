@@ -611,6 +611,71 @@ public class AppMobileCrudController {
         return attach;
     }
 
+    //app06 to 03 첨부파일리스트
+    @RequestMapping(value = "/attachMB", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object mbListAttach(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        String ls_hseq = "";
+        String ls_hflag = "";
+        List<AttachDTO>  attach =new ArrayList<>();
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "flag":
+                    attachDTO.setFlag(values.toString());
+                    break;
+                case "boardIdx":
+                    attachDTO.setBoardIdx(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        ls_hseq = attachDTO.getBoardIdx();
+        ls_hflag = attachDTO.getFlag();
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                try {
+                    attachDTO.setBoardIdx(ls_hseq);
+                    attachDTO.setFlag(ls_hflag);
+                    attach = appServiceImpl03.select08tombAttachList(attachDTO);
+                    model.addAttribute("attachDto",attach);
+
+                }catch (DataAccessException e) {
+                    log.info("App06MobForm DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return attach;
+    }
+
     @RequestMapping(value = "/Blist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

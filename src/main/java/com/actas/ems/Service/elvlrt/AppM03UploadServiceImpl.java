@@ -23,4 +23,9 @@ public class AppM03UploadServiceImpl {
         return attachDto;
     }
 
+    public List<AttachDTO> select08tombAttachList(AttachDTO parm){
+        List<AttachDTO> attachDto = attachMapper.select08AttachList(parm);
+        return attachDto;
+    }
+
 }

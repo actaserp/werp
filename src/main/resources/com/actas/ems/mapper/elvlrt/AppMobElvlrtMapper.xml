@@ -78,6 +78,24 @@
           and flag  = #{flag}
     </select>
 
+    <select id="select08AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+            board_idx as boardIdx
+             , original_name as originalName
+             , save_name as saveName
+             , size
+             , flag
+             , delete_yn as deleteyn
+             , insert_time as inserttime
+             , delete_time as deletetime
+        FROM
+            TB_MATTACH_MF with (nolock)
+        WHERE
+            delete_yn = 'N'
+          AND board_idx = #{boardIdx}
+          and flag  = #{flag}
+    </select>
+
     <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
         select
             isnull(bseq, '' ) as bseq,
@@ -95,7 +113,8 @@
                       isnull(bsubject, '' ) as bsubject,
                       isnull(bpernm, '' ) as bpernm,
                       isnull(bmemo, '' ) as bmemo,
-                      isnull(bflag, '' ) as bflag
+                      Case when bflag = 'Y' then 'MB'
+                        end as bflag
                   from TB_MBMANUAL WITH (NOLOCK)
 				  Where spjangcd = #{spjangcd}
         and custcd = #{custcd}
@@ -116,6 +135,7 @@ Where spjangcd = #{spjangcd}
  and 1 = 1 and subkey = 0
 order by sseq desc
 </select>
+
     <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
     select
         sseq,

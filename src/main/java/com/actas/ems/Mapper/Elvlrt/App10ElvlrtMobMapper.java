@@ -21,6 +21,8 @@ public interface App10ElvlrtMobMapper {
     // app03-05까지 mapper
     public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm) ;
     public List<AttachDTO> select06AttachList(AttachDTO parm) ;
+    public List<AttachDTO> select08AttachList(AttachDTO parm) ;
+
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
