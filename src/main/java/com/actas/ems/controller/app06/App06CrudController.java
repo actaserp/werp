@@ -178,6 +178,11 @@ public class App06CrudController {
         }
         model.addAttribute("userformDto",userformDto);
 
+        if (file == null) {
+            ls_errmsg = "success";
+            return ls_errmsg;
+        }
+
         /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
         File dir = new File(uploadPath);
         if (dir.exists() == false) {
@@ -257,7 +262,7 @@ public class App06CrudController {
             }
             result = appServiceImpl.registerMHManualDel(App06Dto);
             if(!result){
-                return  "error";
+                System.out.println("파일이 삭제되지 않았습니다.");
             }
             model.addAttribute("userformDto",userformDto);
 
