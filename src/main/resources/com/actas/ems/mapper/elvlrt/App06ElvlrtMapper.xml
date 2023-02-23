@@ -4,7 +4,7 @@
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App06ElvlrtMapper">
     <select id="GetMHManualList"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto">
-        select hseq, hinputdate, hgroupcd, hsubject, hpernm, hmemo, hflag, (select com_cnam from tb_ca510 where com_cls = '751' and com_code=hgroupcd) as cnam,
+        select hseq, hinputdate, hgroupcd, hsubject, hpernm, hmemo, hflag, (select com_cnam from tb_ca510 where com_cls = '754' and com_code=hgroupcd) as cnam,
         (select Count(*) from tb_mattach where flag='MH' and board_idx=hseq and delete_yn = 'N') as attcnt
         from tb_mhmanual WITH (NOLOCK)
         Where 1 = 1 order by hseq desc

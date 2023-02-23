@@ -198,7 +198,7 @@
                                 <div class="part1" style="width: 65%;">
                                     <ul class="btn_list">
                                         <li>
-                                            <button class="type1 color1 modal_step_open2" type="button">고장접수관제현황</button>
+                                            <button class="type1 color1 modal_step_open2" type="button" id="wcallbackBtn">콜백리스트</button>
                                         </li>
                                         <li>
                                             <button class="type1" type="button">전화번호부</button>
@@ -615,13 +615,13 @@
                                                             <div class="user_icon" style="background: url(/assets/images/user.png) no-repeat center center;">
                                                             </div>
                                                             <div class="txt">
-                                                                <h5><a href="#"  th:onclick="modtel_fnc([[${formdata.seq}]],[[${formdata.calldate}]],[[${formdata.calltime}]],[[${formdata.callnum}]],[[${formdata.callnm}]],[[${formdata.callmemo}]],[[${formdata.callbackflag}]],[[${formdata.callbacktime}]],[[${formdata.callbackmemo}]])" th:text="${formdata.callnm}">                                                                    
+                                                                <!-- <h5><a href="#"  th:onclick="modtel_fnc([[${formdata.seq}]],[[${formdata.calldate}]],[[${formdata.calltime}]],[[${formdata.callnum}]],[[${formdata.callnm}]],[[${formdata.callmemo}]],[[${formdata.callbackflag}]],[[${formdata.callbacktime}]],[[${formdata.callbackmemo}]])" th:text="${formdata.callnm}">                                                                    
                                                                     부천프루지</a></h5><h5 th:text="${formdata.subcalltime}">12:00</h5>
-                                                                <br><h5 th:text="${formdata.callmemo}">통화내용나오는곳 통화내용나오는곳  통화내용나오는곳  통화내용나오는곳  </h5>
+                                                                <br><h5 th:text="${formdata.callmemo}">통화내용나오는곳 통화내용나오는곳  통화내용나오는곳  통화내용나오는곳  </h5> -->
                                                             </div> 
                                                         </div>
                                                         <div class="state">
-                                                            <h5 th:text="${formdata.callnum}"> 02-1234-5678 </h5>
+                                                            <!-- <h5 th:text="${formdata.callnum}"> 02-1234-5678 </h5> -->
                                                         </div> 
                                                     </li> 
                                                 </ul>
@@ -760,7 +760,8 @@
         <input class="form-control form-control-sm"  type="hidden" id="pernmbtn" data-bs-toggle="modal" data-bs-target="#actpernmmodal"  />                                 
         <input class="form-control form-control-sm"  type="hidden" id="equpnmbtn" data-bs-toggle="modal" data-bs-target="#actequpnmmodal"  />                               
         <input class="form-control form-control-sm"  type="hidden" id="elvnumbtn" data-bs-toggle="modal" data-bs-target="#actelvnummodal"  />                              
-        <input class="form-control form-control-sm"  type="hidden" id="smsbtn" data-bs-toggle="modal" data-bs-target="#actsmsmodal01"  /> 
+        <input class="form-control form-control-sm"  type="hidden" id="smsbtn" data-bs-toggle="modal" data-bs-target="#actsmsmodal01"  />                               
+        <input class="form-control form-control-sm"  type="hidden" id="callbackbtn" data-bs-toggle="modal" data-bs-target="#actcallbackmodal"  /> 
         
         
     </div> 
@@ -1129,6 +1130,174 @@
         </div>  
 <!--------------------------------------------------------------------------------------->     
 
+
+
+    <!--------------------------------------------------------------------------------------->   
+        <!--  CALL BACK MODAL FROM  -->  
+        <div class="modal fade" id="actcallbackmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
+                <div class="modal-content border-0"> 
+                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
+                        <div class="layoutCont">
+                            <div class="modalContWrap">
+                                <!-- <div class="modal_close2 cancerButton">
+                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
+                                </div>   -->
+                                <div class="modal_head">
+                                    콜백리스트
+                                </div>
+                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                    <div class="modal-body p-0" > 
+                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                            <div class="search">
+                                                <div class="input_wrap">
+                                                    <input class="form-control form-control-sm" id="searchwcallbk" type="text"   onkeyup="if(window.event.keyCode==13){searchwcallbk_rtn()}"
+                                                    placeholder="호기명 "     />                                      
+                                                </div>
+                                                <button id="wcallbkBtn" onclick="searchwcallbk_rtn()">
+                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                                </button>
+                                            </div>  
+                                        </div>   
+                                        <div class="container-fluid"> 
+                                            <div id="wcallbkGrid_div" ></div>
+                                            <div id="thePager06"></div>
+                                        </div>   
+                                    </div>  
+                
+                                    <div class="modal-footer">
+                                        <div class="row g-1">
+                                            <div class="col-auto">
+                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                    type="button"  id="wcallbkmodal_btn" data-bs-dismiss="modal">Close</button>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->  
+
+
+
+    <!--------------------------------------------------------------------------------------->   
+        <!--  전화번호부 MODAL FROM  -->  
+        <div class="modal fade" id="actphonebookmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
+                <div class="modal-content border-0"> 
+                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
+                        <div class="layoutCont">
+                            <div class="modalContWrap">
+                                <!-- <div class="modal_close2 cancerButton">
+                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
+                                </div>   -->
+                                <div class="modal_head">
+                                    전화번호부
+                                </div>
+                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                    <div class="modal-body p-0" > 
+                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                            <div class="search">
+                                                <div class="input_wrap">
+                                                    <input class="form-control form-control-sm" id="searchwphonebook" type="text"   onkeyup="if(window.event.keyCode==13){searchwphonebook_rtn()}"
+                                                    placeholder="호기명 "     />                                      
+                                                </div>
+                                                <button id="wphonebookBtn" onclick="searchwphonebook_rtn()">
+                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                                </button>
+                                            </div>  
+                                        </div>   
+                                        <div class="container-fluid"> 
+                                            <div id="wphonebookGrid_div" ></div>
+                                            <div id="thePager07"></div>
+                                        </div>   
+                                    </div>  
+                
+                                    <div class="modal-footer">
+                                        <div class="row g-1">
+                                            <div class="col-auto">
+                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                    type="button"  id="wphonebookmodal_btn" data-bs-dismiss="modal">Close</button>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->  
+
+
+
+    <!--------------------------------------------------------------------------------------->   
+        <!--  보수현장조회 MODAL FROM  -->  
+        <div class="modal fade" id="actactlistmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
+                <div class="modal-content border-0"> 
+                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
+                        <div class="layoutCont">
+                            <div class="modalContWrap">
+                                <!-- <div class="modal_close2 cancerButton">
+                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
+                                </div>   -->
+                                <div class="modal_head">
+                                    보수현장조회
+                                </div>
+                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                    <div class="modal-body p-0" > 
+                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                            <div class="search">
+                                                <div class="input_wrap">
+                                                    <input class="form-control form-control-sm" id="searchwactlist" type="text"   onkeyup="if(window.event.keyCode==13){searchwactlist_rtn()}"
+                                                    placeholder="호기명 "     />                                      
+                                                </div>
+                                                <button id="wactlistBtn" onclick="searchwactlist_rtn()">
+                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                                </button>
+                                            </div>  
+                                        </div>   
+                                        <div class="container-fluid"> 
+                                            <div id="wactlistGrid_div" ></div>
+                                            <div id="thePager08"></div>
+                                        </div>   
+                                    </div>  
+                
+                                    <div class="modal-footer">
+                                        <div class="row g-1">
+                                            <div class="col-auto">
+                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                    type="button"  id="wactlistmodal_btn" data-bs-dismiss="modal">Close</button>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->  
+
 <script type="text/javascript" th:inline="javascript">
          
     var view_actnmpage;
@@ -1151,7 +1320,7 @@
    
 
     window.onload = function() {  
-
+        
         //<!--문자전송내역  -->
         view_wsmspage = new wijmo.collections.CollectionView(getData_wlist("06"), {
             pageSize: 7
@@ -1963,7 +2132,11 @@
     document.getElementById("wsmsBtn").addEventListener("click",function(){ 
         document.getElementById("smsbtn").click();
     });
-
+    //콜백리슽
+    document.getElementById("wcallbackBtn").addEventListener("click",function(){ 
+        document.getElementById("callbackbtn").click();
+    });    
+    
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     // 현장 검색   
     document.getElementById("wactnmBtn").addEventListener("click",function(){ 
@@ -2609,7 +2782,7 @@
             //alert("일자를 입력하세요")
            // return 
         }   
-        // console.log("ls_actnmz : " + ls_actnmz);
+        //  console.log("kkkkkkkkkkkk");
         $.ajax({
                 url: '/app01/emtellist',  
                 type:"POST",
@@ -2755,7 +2928,8 @@
         // searchwcontnm_rtn()
         // searchwrepernm_rtn()
         // searchwpernm_rtn()
-        setTimeout(searchtel_rtn, 10000);  //10초
+        // setTimeout(searchtel_rtn, 10000);  //10초
+        setInterval(() => searchtel_rtn(), 2000);  //2초 
         // $('datetimepicker').datetimepicker({
             
         // });  

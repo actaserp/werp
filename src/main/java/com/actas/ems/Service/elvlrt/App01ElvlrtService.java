@@ -1,9 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App01ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App01GaonMapper;
@@ -194,8 +191,18 @@ public class App01ElvlrtService {
 
 
     public int InsertE401Sms(AppCallElvlrtDto parm){return appMapper.InsertE401Sms(parm);}
+    public int InsertE601CALL(AppCall601ElvlrtDto parm){return appMapper.InsertE601CALL(parm);}
+    public int InsertE601CALL01(AppCall601ElvlrtDto parm){return appMapper.InsertE601CALL01(parm);}
+
 
     public String getSmsMaxSeq(String parm){return appMapper.getSmsMaxSeq(parm);}
+    public String getE601CallNM(String parm){return appMapper.getE601CallNM(parm);}
+
+    public String gete601CallMaxSeq(String parm){return appMapper.gete601CallMaxSeq(parm);}
+
+
+
+
 
 //    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){return appMapper.GetApp01List001(parm);}
 //    /** 관제현황 / 수리기사 리스트 */

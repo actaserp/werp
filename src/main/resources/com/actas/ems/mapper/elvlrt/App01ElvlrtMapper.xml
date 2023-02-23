@@ -327,5 +327,29 @@
     </select>
 
 
+    <select id="getE601CallNM" parameterType="string"  resultType="java.lang.String">
+        select actmail from TB_E601CALL A  WITH (NOLOCK) , TB_E601CALL_01 B WITH (NOLOCK)
+        where a.actcd    = b.actcd AND b.tel in (#{callnum})
+    </select>
+
+
+    <insert id="InsertE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        insert into TB_E601CALL (  custcd, 					spjangcd, 					actcd, 					seq, 					tel,
+                                   actmail,						regdate, 					 	regflag) values
+            (#{custcd}, #{spjangcd}, #{actcd}, #{seq}, #{tel},
+             #{actmail}, #{regdate}, '3'    )
+    </insert>
+
+    <insert id="InsertE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        insert into TB_E601CALL_01 (  custcd, 					spjangcd, 					actcd, 					seq, 					tel,
+                                  	indate ) values
+            (#{custcd}, #{spjangcd}, #{actcd}, #{seq}, #{tel},
+               #{regdate}  )
+    </insert>
+
+    <select id="gete601CallMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(actcd) from TB_E601CALL WITH (NOLOCK)
+    </select>
+
 </mapper>
 

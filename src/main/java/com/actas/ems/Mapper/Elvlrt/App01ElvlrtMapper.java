@@ -2,10 +2,7 @@ package com.actas.ems.Mapper.Elvlrt;
 
 
 
-import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
-import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,6 +29,8 @@ public interface App01ElvlrtMapper {
     public int InsertCall(AppCallElvlrtDto parm) ;
     public int UpdateCall(AppCallElvlrtDto parm) ;
     public int DeleteCall(AppCallElvlrtDto parm) ;
+    public int InsertE601CALL(AppCall601ElvlrtDto parm) ;
+    public int InsertE601CALL01(AppCall601ElvlrtDto parm) ;
 
 
     public int InsertE401Sms(AppCallElvlrtDto datainfo);
@@ -39,6 +38,12 @@ public interface App01ElvlrtMapper {
     public String getSmsMaxSeq(String parm);
 
     public List<App03ElvlrtDto> GetApp01List006(PopupDto parm) ;
+
+    public String getE601CallNM(String parm);
+
+
+    public String gete601CallMaxSeq(String parm);
+
 
 
 }

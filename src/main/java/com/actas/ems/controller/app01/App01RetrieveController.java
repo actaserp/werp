@@ -3,6 +3,7 @@ package com.actas.ems.controller.app01;
 
 import com.actas.ems.DTO.Elvlrt.App03ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
@@ -37,7 +38,7 @@ public class App01RetrieveController {
     private final AppPopElvlrtService appPopElvlrtService;
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
     AppCallElvlrtDto appCalltDto = new AppCallElvlrtDto();
-
+    AppCall601ElvlrtDto app601callDto = new AppCall601ElvlrtDto();
     PopupDto popParmDto = new PopupDto();
     List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
 
@@ -365,6 +366,31 @@ public class App01RetrieveController {
                 queryResult = service.UpdateCall(appCalltDto);
             }
             if (queryResult == 1){
+
+                String ls_callnm = service.getE601CallNM(appCalltDto.getCallnum());
+                if(ls_callnm == null || ls_callnm.equals("")){
+                    if(appCalltDto.getCallnm().length() > 0){
+                        app601callDto.setCustcd(userformDto.getCustcd());
+                        app601callDto.setSpjangcd(userformDto.getSpjangcd());
+                        app601callDto.setActcd(CountCall601Seq(ls_calldate.substring(0,6)));
+                        app601callDto.setSeq("01");
+                        app601callDto.setRegdate(getToDate());
+                        app601callDto.setTel(appCalltDto.getCallnum());
+                        app601callDto.setActmail(appCalltDto.getCallnm());
+                        queryResult = service.InsertE601CALL(app601callDto);
+                        if (queryResult == 1){
+                            queryResult = service.InsertE601CALL01(app601callDto);
+                            if (queryResult == 1){
+                                return "success";
+                            }else{
+                                return "fail";
+                            }
+                        }else{
+                            return "fail";
+                        }
+                    }
+
+                }
                 return "success";
             }else{
                 return "fail";
@@ -376,7 +402,7 @@ public class App01RetrieveController {
         }
     }
 
-    // 고장접수현황 > 통화메모등록
+    // 고장접수현황 > 문자전송등록
     @RequestMapping(value="/savesms01")
     public String saveSMS01Rtn ( @RequestPart(value = "smsdata") Map<String, Object> param
             , Model model
@@ -571,6 +597,21 @@ public class App01RetrieveController {
         int ll_mseq = 0;
         if(ls_seq == null ){
             ls_seq = yyyymm + "0001";
+        }else{
+            ll_mseq = Integer.parseInt(ls_seq);
+            ls_seq = Integer.toString(ll_mseq + 1 );
+
+        }
+        return ls_seq;
+    }
+
+
+    public String CountCall601Seq(String yyyymm){
+        String ls_seq = "";
+        ls_seq = service.gete601CallMaxSeq(yyyymm);
+        int ll_mseq = 0;
+        if(ls_seq == null ){
+            ls_seq = "30000001";
         }else{
             ll_mseq = Integer.parseInt(ls_seq);
             ls_seq = Integer.toString(ll_mseq + 1 );
