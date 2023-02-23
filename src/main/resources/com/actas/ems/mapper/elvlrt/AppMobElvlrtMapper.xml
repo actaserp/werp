@@ -127,28 +127,23 @@ select
     Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
     spernm,
     smemo,
-    Case when  sflag is null then '' else sflag end as sflag,
-        isnull(subkey, '' ) as subkey
-from tb_msmanual
-Where spjangcd = #{spjangcd}
-  and custcd = #{custcd}
- and 1 = 1 and subkey = 0
-order by sseq desc
+    isnull(sflag, '' ) as sflag,
+    isnull(subkey, '' ) as subkey
+    from tb_msmanual
+    Where spjangcd = #{spjangcd}
+      and custcd = #{custcd}
+      and subkey = 0
+     order by sseq desc
 </select>
 
     <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
-    select
-        sseq,
-        Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
-        spernm,
-        smemo,
-        Case when  sflag is null then '' else sflag end as sflag,
-        isnull(subkey, '' ) as subkey
-        from tb_msmanual
-        Where spjangcd = #{spjangcd}
-            and custcd = #{custcd}
-            and subkey != 0
-            order by sseq asc
+    select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
+           subkey,
+           (select Count(*) from tb_mattach where flag='MS' and board_idx=sseq and delete_yn = 'N') as attcnt
+    from tb_msmanual WITH (NOLOCK)
+    Where
+        len(isnull(subkey,'')) > 4
+    order by subkey desc
     </select>
 
     <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">

@@ -791,21 +791,16 @@ public class AppMobileCrudController {
             , Model model
             , HttpServletRequest request){
         String ls_dbnm = "";
-        String ls_subkey = "";
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
                     userformDto.setDbnm(values.toString());
-                    break;
-                case "subkey":
-                    app28Dto.setSubkey(values.toString());
                     break;
                 default:
                     break;
             }
         });
         ls_dbnm = userformDto.getDbnm();
-        ls_subkey = app28Dto.getSubkey();
         ls_spjangcd = "ZZ";
         ls_custcd = "ELVLRT";
 
