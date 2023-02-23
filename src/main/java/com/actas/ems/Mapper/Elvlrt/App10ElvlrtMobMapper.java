@@ -48,4 +48,9 @@ public interface App10ElvlrtMobMapper {
 
 
     public List<AttachDTO> GetMobThumbList_001(PopupDto parm);
+
+    /**박광열 고장처리등록*/
+    public int Insert10Manul(App10ElvlrtDto perm);
+
+    public int Update10Manul(App10ElvlrtDto perm);
 }

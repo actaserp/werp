@@ -62,7 +62,7 @@ public class App07Controller {
             /*session.setMaxInactiveInterval(10);*/
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
-                userformDto.setPagetree01("기술자료실");
+            userformDto.setPagetree01("기술자료실");
 
             userformDto.setPagenm("점검조치사항");
             model.addAttribute("userformDto",userformDto);

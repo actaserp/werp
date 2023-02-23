@@ -12,6 +12,7 @@ import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMobMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -61,4 +62,24 @@ public class App10ElvlrtMobService {
     public List<App04ElvlrtDto> GetAppMobList_d(PopupDto parm) {return app10ElvMobMapper.GetAppMobList_d(parm);}
 
     public List<AttachDTO> GetMobThumbList_001(PopupDto parm) {return app10ElvMobMapper.GetMobThumbList_001(parm);}
+
+
+    /**고장처리 등록**/
+    public boolean Insert10Manu(App10ElvlrtDto perm){
+        queryResult = app10ElvMobMapper.Insert10Manul(perm);
+        if(queryResult < 1){  //값 확인
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
+
+
+    @Transactional
+    public boolean Update10Manu(App10ElvlrtDto perm){
+        queryResult = app10ElvMobMapper.Update10Manul(perm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 }

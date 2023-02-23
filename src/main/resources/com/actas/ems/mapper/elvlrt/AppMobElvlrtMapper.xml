@@ -395,5 +395,45 @@ order by recedate desc;
         and flag  = #{flag}
     </select>
 
+    <!--박광열-->
+
+    <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,  arrivtime,  actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result") values
+            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{arrivtime}, #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1')
+    </insert>
+
+
+    <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e411
+        set indate = #{indate}
+        <if test="compdate != null ">,</if>
+        <if test="compdate != null">compdate=#{compdate}</if>
+
+
+        <if test="resultcd != null ">,</if>
+        <if test="resultcd != null">resultcd=#{resultcd}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="regicd != null ">,</if>
+        <if test="regicd != null">regicd=#{regicd}</if>
+        <if test="resucd != null ">,</if>
+        <if test="resucd != null">resucd=#{resucd}</if>
+        <if test="resuremark != null ">,</if>
+        <if test="resuremark != null">resuremark=#{resuremark}</if>
+        <if test="remonm != null ">,</if>
+        <if test="remonm != null">remonm=#{remonm}</if>
+        <if test="facnm != null ">,</if>
+        <if test="facnm != null">facnm=#{facnm}</if>
+        <if test="resultnm != null ">,</if>
+        <if test="resultnm != null">resultnm=#{resultnm}</if>
+        <if test="resunm != null ">,</if>
+        <if test="resunm != null">resunm=#{resunm}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum}
+    </update>
+
+    <!--박광열 끝-->
+
 
 </mapper>
