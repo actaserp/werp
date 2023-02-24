@@ -222,6 +222,13 @@ public class App01ElvlrtService {
     public int InsertE601CALL01(AppCall601ElvlrtDto parm){return appMapper.InsertE601CALL01(parm);}
 
 
+    public int UpdateE601CALL(AppCall601ElvlrtDto parm){return appMapper.UpdateE601CALL(parm);}
+    public int UpdateE601CALL01(AppCall601ElvlrtDto parm){return appMapper.UpdateE601CALL01(parm);}
+    public int DeleteE601CALL(AppCall601ElvlrtDto parm){return appMapper.DeleteE601CALL(parm);}
+    public int DeleteE601CALL01(AppCall601ElvlrtDto parm){return appMapper.DeleteE601CALL01(parm);}
+
+
+
     public String getSmsMaxSeq(String parm){return appMapper.getSmsMaxSeq(parm);}
     public String getE601CallNM(String parm){return appMapper.getE601CallNM(parm);}
 

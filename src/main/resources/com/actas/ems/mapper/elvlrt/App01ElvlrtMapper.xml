@@ -347,6 +347,38 @@
                #{regdate}  )
     </insert>
 
+
+    <update id="UpdateE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        update TB_E601CALL
+        set regdate = #{regdate}
+        <if test="tel != null ">,</if>
+        <if test="tel != null">tel=#{tel}</if>
+        <if test="actmail != null ">,</if>
+        <if test="actmail != null">actmail=#{actmail}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where actcd = #{actcd} and seq = #{seq}
+
+    </update>
+
+    <update id="UpdateE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        update TB_E601CALL_01
+        set  indate = #{regdate}
+        <if test="tel != null ">,</if>
+        <if test="tel != null">tel=#{tel}</if>
+        where actcd = #{actcd} and seq = #{seq}
+
+    </update>
+
+    <delete id="DeleteE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from TB_E601CALL where actcd not in (select actcd from TB_E601CALL_01 )
+    </delete>
+
+    <delete id="DeleteE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from TB_E601CALL_01 where actcd = #{actcd} and seq = #{seq}
+    </delete>
+
+
     <select id="gete601CallMaxSeq" parameterType="string"  resultType="java.lang.String">
         select max(actcd) from TB_E601CALL WITH (NOLOCK)
     </select>

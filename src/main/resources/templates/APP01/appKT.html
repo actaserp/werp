@@ -1222,7 +1222,7 @@
                                                 <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="acttelz"/>
                                             </div>    
                                             <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">비고</span>
-                                                <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actremarkz"/>
+                                                <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actpbookremarkz"/>
                                             </div>    
                                             <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="wphonebookDelBtn">삭제
                                             </button>   
@@ -2923,9 +2923,9 @@
         ls_actactcdz = document.getElementById('actactcdz').value; 
         ls_actseqz = document.getElementById('actseqz').value; 
         ls_acttelz = document.getElementById('acttelz').value; 
-        ls_actremarkz = document.getElementById('actremarkz').value;     
+        ls_actremarkz = document.getElementById('actpbookremarkz').value;     
         $.ajax({
-            url: '/app01mod/wpbooklist',  
+            url: '/app01mod/updatepbook',  
             type:"POST",
             data: {  
                 "actactmailz"      : ls_actactmailz, 
@@ -2935,7 +2935,8 @@
                 "actremarkz"      : ls_actremarkz, 
             }, 
             success:function(data){   
-                 
+                 alert("저장되었습니다.")
+                 searchwphonebook_rtn()
             },error:function(e){
                 alert(data.code);
                 alert(data.message);
@@ -2945,6 +2946,36 @@
         })  
     }  
     
+
+   
+    function newphonebookdel_rtn(){ 
+        let searchText = '';    
+        let ls_flag = '';      
+        ls_actactcdz = document.getElementById('actactcdz').value; 
+        ls_actseqz = document.getElementById('actseqz').value;      
+        ls_actactmailz = document.getElementById('actactmailz').value;                           
+        if (!confirm(ls_actactmailz + " : 삭제 하시겠습니까?")) {
+            return ;
+        }
+        $.ajax({
+            url: '/app01mod/deletepbook',  
+            type:"POST",
+            data: {   
+                "actactcdz"      : ls_actactcdz, 
+                "actseqz"      : ls_actseqz,  
+            }, 
+            success:function(data){  
+                 alert("삭제되었습니다.")  
+                 searchwphonebook_rtn()
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+    }  
+        
     
 
     function wactnmChk_2(arg1, arg2, arg3, flag){
@@ -3025,7 +3056,7 @@
         document.getElementById('actseqz').value = arg2; 
         document.getElementById('actactmailz').value = arg3; 
         document.getElementById('acttelz').value = arg4; 
-        document.getElementById('actremarkz').value = arg5;    
+        document.getElementById('actpbookremarkz').value = arg5;    
 
     }
 
@@ -3065,7 +3096,7 @@
         document.getElementById('actactcdz').value = ""; 
         document.getElementById('actseqz').value = "";
         document.getElementById('acttelz').value = "";
-        document.getElementById('actremarkz').value = "";
+        document.getElementById('actpbookremarkz').value = "";
           
         return 
     }    

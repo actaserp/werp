@@ -614,9 +614,7 @@ public class App01RetrieveController {
     }
 
 
-
-
-    //  고객상담 > 콜백리스트
+    //  고객상담 > 전화번호부리스트
     @GetMapping(value="/wpbooklist")
     public Object App01PhoneBooklistForm( @RequestParam("searchtxt") String actmail
             , Model model) throws  Exception{
@@ -637,6 +635,93 @@ public class App01RetrieveController {
         }
         return app601callListDto;
 
+    }
+
+
+    // 고장접수현황 >  전화번호수정
+    @GetMapping(value="/updatepbook")
+    public Object updatePhoneBookRtn( @RequestParam("actactmailz") String actmail
+            ,@RequestParam("actactcdz") String actcd
+            ,@RequestParam("actseqz") String seq
+            ,@RequestParam("acttelz") String tel
+            ,@RequestParam("actremarkz") String remark
+            , Model model
+            , HttpServletRequest request) throws  Exception{
+        try {
+
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            int queryResult = 1;
+            String ls_today = getToDate();
+            app601callDto.setActmail(actmail);
+            app601callDto.setActcd(actcd);
+            app601callDto.setSeq(seq);
+            app601callDto.setTel(tel);
+            app601callDto.setRemark(remark);
+            app601callDto.setRegdate(ls_today);
+            String ls_seq = app601callDto.getSeq();
+            if(ls_seq == null || ls_seq.equals("")){
+                app601callDto.setCustcd(userformDto.getCustcd());
+                app601callDto.setSpjangcd(userformDto.getSpjangcd());
+                app601callDto.setActcd(CountCall601Seq(ls_today.substring(0,6)));
+                app601callDto.setSeq("01");
+                app601callDto.setRegdate(getToDate());
+                queryResult = service.InsertE601CALL(app601callDto);
+                if (queryResult == 1){
+                    queryResult = service.InsertE601CALL01(app601callDto);
+                    if (queryResult == 1){
+                        return "success";
+                    }else{
+                        return "fail";
+                    }
+                }else{
+                    return "fail";
+                }
+            }else{
+                queryResult = service.UpdateE601CALL(app601callDto);
+                if (queryResult == 1){
+                    queryResult = service.UpdateE601CALL01(app601callDto);
+                    if (queryResult == 1){
+                        return "success";
+                    }else{
+                        return "fail";
+                    }
+                }else{
+                    return "fail";
+                }
+
+            }
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    // 고장접수현황 >  전화번호삭제
+    @GetMapping(value="/deletepbook")
+    public Object deletePhoneBookRtn( @RequestParam("actactcdz") String actcd
+            ,@RequestParam("actseqz") String seq
+            , Model model
+            , HttpServletRequest request) throws  Exception{
+        try {
+            int queryResult = 1;
+            app601callDto.setActcd(actcd);
+            app601callDto.setSeq(seq);
+            queryResult = service.DeleteE601CALL01(app601callDto);
+            if (queryResult == 1){
+                queryResult = service.DeleteE601CALL(app601callDto);
+                if (queryResult == 1){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+            }else{
+                return "fail";
+            }
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return e.getMessage();
+        }
     }
 
 
