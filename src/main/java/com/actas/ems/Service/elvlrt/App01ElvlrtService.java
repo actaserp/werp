@@ -180,6 +180,33 @@ public class App01ElvlrtService {
         return Object;
     }
 
+
+    /** 고객상담센터 / 콜백 리스트 */
+    public List<AppCallElvlrtDto> GetCallBackList(AppCallElvlrtDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  appMapper.GetCallBackList(parm);
+            default:
+                break;
+        }
+        List<AppCallElvlrtDto> Object = null;
+        return Object;
+    }
+
+    /** 고객상담센터 /  전화번호부 리스트 */
+    public List<AppCall601ElvlrtDto> GetPhonebookList(AppCall601ElvlrtDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  appMapper.GetPhonebookList(parm);
+            default:
+                break;
+        }
+        List<AppCall601ElvlrtDto> Object = null;
+        return Object;
+    }
+
     public String get10RecenumMaxSeq(String parm){return appMapper.get10RecenumMaxSeq(parm);}
     public int InsertE401(App10ElvlrtDto parm){  return appMapper.InsertE401(parm);}
     public int UpdateE401(App10ElvlrtDto parm){return appMapper.UpdateE401(parm);}

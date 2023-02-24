@@ -201,10 +201,10 @@
                                             <button class="type1 color1 modal_step_open2" type="button" id="wcallbackBtn">콜백리스트</button>
                                         </li>
                                         <li>
-                                            <button class="type1" type="button">전화번호부</button>
+                                            <button class="type1" type="button" id="wphonebookBtn">전화번호부</button>
                                         </li>
                                         <li>
-                                            <button class="type1 color1 modal_step_open2" modal_step="Inquiry" type="button">보수현장조회</button>
+                                            <button class="type1 color1 modal_step_open2" modal_step="Inquiry" type="button"  id="wactcdlistBtn">보수현장조회</button>
                                         </li>
                                     </ul>
 
@@ -762,6 +762,8 @@
         <input class="form-control form-control-sm"  type="hidden" id="elvnumbtn" data-bs-toggle="modal" data-bs-target="#actelvnummodal"  />                              
         <input class="form-control form-control-sm"  type="hidden" id="smsbtn" data-bs-toggle="modal" data-bs-target="#actsmsmodal01"  />                               
         <input class="form-control form-control-sm"  type="hidden" id="callbackbtn" data-bs-toggle="modal" data-bs-target="#actcallbackmodal"  /> 
+        <input class="form-control form-control-sm"  type="hidden" id="phonebookbtn" data-bs-toggle="modal" data-bs-target="#actphonebookmodal"  /> 
+        
         
         
     </div> 
@@ -1130,116 +1132,124 @@
         </div>  
 <!--------------------------------------------------------------------------------------->     
 
-
-
-    <!--------------------------------------------------------------------------------------->   
-        <!--  CALL BACK MODAL FROM  -->  
-        <div class="modal fade" id="actcallbackmodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
-                <div class="modal-content border-0"> 
-                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
-                        <div class="layoutCont">
-                            <div class="modalContWrap">
-                                <!-- <div class="modal_close2 cancerButton">
-                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
-                                </div>   -->
-                                <div class="modal_head">
-                                    콜백리스트
-                                </div>
-                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
-                                    <div class="modal-body p-0" > 
-                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-                                            <div class="search">
-                                                <div class="input_wrap">
-                                                    <input class="form-control form-control-sm" id="searchwcallbk" type="text"   onkeyup="if(window.event.keyCode==13){searchwcallbk_rtn()}"
-                                                    placeholder="호기명 "     />                                      
-                                                </div>
-                                                <button id="wcallbkBtn" onclick="searchwcallbk_rtn()">
-                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                                                </button>
-                                            </div>  
-                                        </div>   
-                                        <div class="container-fluid"> 
-                                            <div id="wcallbkGrid_div" ></div>
-                                            <div id="thePager06"></div>
-                                        </div>   
-                                    </div>  
-                
-                                    <div class="modal-footer">
-                                        <div class="row g-1">
-                                            <div class="col-auto">
-                                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                                    type="button"  id="wcallbkmodal_btn" data-bs-dismiss="modal">Close</button>
-                                            </div> 
-                                        </div>
+ 
+<!--------------------------------------------------------------------------------------->   
+    <!--  CALL BACK MODAL FROM  -->  
+    <div class="modal fade" id="actcallbackmodal" data-bs-keyboard="false"
+    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 750px">
+            <div class="modal-content border-0"> 
+               
+                     
+                        <div class="modalContWrap"> 
+                            <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                <div class="modal-body p-0" > 
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                        <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                        <div class="search">
+                                            <div class="input_wrap">
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ddcallflag">                                                    
+                                                    <option value="%">전체</option>
+                                                    <option value="1" selected>콜백대기</option>
+                                                    <option value="0">콜백처리</option>
+                                                  </select>                        
+                                            </div>
+                                            <button id="wcallbkBtn"  >
+                                                <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                            </button>
+                                        </div>  
                                     </div>   
-                                </div>
-
+                                    <div class="container-fluid"> 
+                                        <div id="wcallbkGrid_div" ></div>
+                                        <div id="thePager06"></div>
+                                    </div>   
+                                </div>  
+            
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button"  id="wcallbkmodal_btn" data-bs-dismiss="modal">Close</button>
+                                        </div> 
+                                    </div>
+                                </div>   
                             </div>
+
                         </div>
-                    </div>
-                </div> 
+                    
+              
             </div> 
-        </div>  
+        </div> 
+    </div>  
 <!--------------------------------------------------------------------------------------->  
 
 
 
-    <!--------------------------------------------------------------------------------------->   
-        <!--  전화번호부 MODAL FROM  -->  
-        <div class="modal fade" id="actphonebookmodal" data-bs-keyboard="false"
-        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
-                <div class="modal-content border-0"> 
-                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
-                        <div class="layoutCont">
-                            <div class="modalContWrap">
-                                <!-- <div class="modal_close2 cancerButton">
-                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
-                                </div>   -->
-                                <div class="modal_head">
-                                    전화번호부
-                                </div>
-                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
-                                    <div class="modal-body p-0" > 
-                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
-                                            <div class="search">
-                                                <div class="input_wrap">
-                                                    <input class="form-control form-control-sm" id="searchwphonebook" type="text"   onkeyup="if(window.event.keyCode==13){searchwphonebook_rtn()}"
-                                                    placeholder="호기명 "     />                                      
-                                                </div>
-                                                <button id="wphonebookBtn" onclick="searchwphonebook_rtn()">
-                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                                                </button>
-                                            </div>  
-                                        </div>   
-                                        <div class="container-fluid"> 
-                                            <div id="wphonebookGrid_div" ></div>
-                                            <div id="thePager07"></div>
-                                        </div>   
-                                    </div>  
-                
-                                    <div class="modal-footer">
-                                        <div class="row g-1">
-                                            <div class="col-auto">
-                                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                                    type="button"  id="wphonebookmodal_btn" data-bs-dismiss="modal">Close</button>
-                                            </div> 
-                                        </div>
+<!--------------------------------------------------------------------------------------->   
+    <!--  전화번호부 MODAL FROM  -->  
+    <div class="modal fade" id="actphonebookmodal" data-bs-keyboard="false"
+    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
+            <div class="modal-content border-0"> 
+                        <div class="modalContWrap"> 
+                            <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                <div class="modal-body p-0" > 
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                                        
+                                        <div class="search">
+                                            <div class="input_wrap">
+                                                <input class="form-control form-control-sm" id="searchText" type="text"   onkeyup="if(window.event.keyCode==13){searchwphonebook_rtn()}"
+                                                placeholder="고객명 / 전화번호 "     />                                      
+                                            </div>                                        
+                                            <button id="wphonebookBtn" onclick="searchwphonebook_rtn()">
+                                                <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                            </button>
+                                        </div>  
                                     </div>   
-                                </div>
-
+                                    <div class="container-fluid"> 
+                                        <div id="wphonebookGrid_div" ></div>
+                                        <div id="thePager07"></div>
+                                    </div>   
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                                        
+                                      
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">고객명</span>
+                                                <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actactmailz"/>
+                                                <input class="form-control" type="hidden" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actactcdz"/>
+                                                <input class="form-control" type="hidden" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actseqz"/>
+                                            </div>
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">전화번호</span>
+                                                <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="acttelz"/>
+                                            </div>    
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">비고</span>
+                                                <input class="form-control" type="text" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="actremarkz"/>
+                                            </div>    
+                                            <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="wphonebookDelBtn">삭제
+                                            </button>   
+                                            <button class="btn btn-falcon-info me-1 mb-1" type="button" id="wphonebookNewBtn">신규
+                                            </button>                                       
+                                            <button class="btn btn-falcon-primary  me-1 mb-1" type="button" id="wphonebookSaveBtn">저장
+                                            </button>
+                                        
+                                    </div>   
+                                </div>  
+            
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button"  id="wphonebookmodal_btn" data-bs-dismiss="modal">Close</button>
+                                        </div> 
+                                    </div>
+                                </div>   
                             </div>
+
                         </div>
-                    </div>
-                </div> 
+                     
+                
             </div> 
-        </div>  
+        </div> 
+    </div>  
 <!--------------------------------------------------------------------------------------->  
 
 
@@ -1307,6 +1317,8 @@
     var view_equpnmpage;
     var view_wperidpage;
     var view_wsmspage;
+    var view_callbackpage;
+    var view_phonebookpage;
     let viewtest;
     var wactnmGrid;
     var wcontnmGrid; 
@@ -1314,6 +1326,8 @@
     var wpernmGrid; 
     var wequpnmGrid; 
     var wsmsGrid; 
+    var wcallbkGrid;
+    var wphbookGrid;
     // var wperidGrid;
     let formData = new FormData(); 
     let formSMSData = new FormData();
@@ -1468,6 +1482,63 @@
             ], 
             itemsSource: view_equpnmpage
         });  
+
+
+
+        //콜백리스트 popup list
+        view_callbackpage = new wijmo.collections.CollectionView(getData_wlist("07"), {
+            pageSize: 10
+        });
+        //콜백리스트 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager06', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_callbackpage
+        });     
+        wcallbkGrid = new wijmo.grid.FlexGrid('#wcallbkGrid_div', {  
+            autoGenerateColumns: false,
+            isReadOnly: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+                { binding: 'callbackflag', header: '구분', align: "center", width: '1*' }, 
+                { binding: 'callbacktime', header: '예약시간', align: "center", width: '1*' }, 
+                { binding: 'callbackmemo', header: '콜백메모', align: "center", width: '1*' }, 
+                { binding: 'callnm', header: '고객명', align: "center", width: '1*' }, 
+                { binding: 'callnum', header: '연락처', align: "center", width: '1*' }, 
+                { binding: 'calltime', header: '상담시간', align: "center", width: '1*' }, 
+                { binding: 'callmemo', header: '상담내용', align: "center", width: '1*' }, 
+            ], 
+            itemsSource: view_callbackpage
+        });  
+
+
+
+
+        //전화번호부리스트 popup list
+        view_phonebookpage = new wijmo.collections.CollectionView(getData_wlist("08"), {
+            pageSize: 10
+        });
+        //전화번호부리스트 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager07', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_phonebookpage
+        });     
+        wphbookGrid = new wijmo.grid.FlexGrid('#wphonebookGrid_div', {  
+            autoGenerateColumns: false,
+            isReadOnly: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+                { binding: 'actcd', header: '코드', align: "center", width: '1*' }, 
+                { binding: 'seq', header: '순번', align: "center", width: '1*' }, 
+                { binding: 'actmail', header: '고객명', align: "center", width: '1*' }, 
+                { binding: 'tel', header: '전화번호', align: "center", width: '1*' }, 
+                { binding: 'remark', header: '비고', align: "center", width: '1*' },  
+            ], 
+            itemsSource: view_phonebookpage
+        });          
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //SMS 수리기사 검색 popup list
@@ -1724,6 +1795,40 @@
                             sms_tel: "", 
                             flag: "", 
                             sms_text: "", 
+                        });
+                        cnt++;
+                    }   
+                    break;                        
+                case "07":
+                    // 콜백리스트
+                    for (var i = 0; i < 12; i++) {
+                        wactnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            seq: "",
+                            callbackflag: "", 
+                            callbacktime: "", 
+                            callbackmemo: "", 
+                            callnm: "", 
+                            callnum: "", 
+                            calldate: "", 
+                            calltime: "", 
+                            callmemo: "", 
+                        });
+                        cnt++;
+                    }   
+                    break;                          
+                case "08":
+                    // 전화번호부
+                    for (var i = 0; i < 12; i++) {
+                        wactnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            actcd: "",
+                            seq: "", 
+                            actmail: "", 
+                            tel: "", 
+                            remark: "", 
                         });
                         cnt++;
                     }   
@@ -2111,7 +2216,11 @@
     //현장 검색   
     document.getElementById("actactnmz").addEventListener("click",function(){ 
         document.getElementById("actnmbtn").click();
+    }); 
+    document.getElementById("wactcdlistBtn").addEventListener("click",function(){ 
+        document.getElementById("actnmbtn").click();
     });
+    
     //고장내용 검색   
     document.getElementById("actcontnmz").addEventListener("click",function(){ 
         document.getElementById("contnmbtn").click();
@@ -2132,10 +2241,27 @@
     document.getElementById("wsmsBtn").addEventListener("click",function(){ 
         document.getElementById("smsbtn").click();
     });
-    //콜백리슽
+    //콜백리스트
     document.getElementById("wcallbackBtn").addEventListener("click",function(){ 
         document.getElementById("callbackbtn").click();
-    });    
+    }); 
+    //전화번호부리스트
+    document.getElementById("wphonebookBtn").addEventListener("click",function(){ 
+        document.getElementById("phonebookbtn").click();
+    });  
+    //전화번호부 신규
+    document.getElementById("wphonebookNewBtn").addEventListener("click",function(){ 
+        newphonebook_rtn()
+    });  
+    //전화번호부 저장
+    document.getElementById("wphonebookSaveBtn").addEventListener("click",function(){ 
+        newphonebooksave_rtn()
+    });  
+    //전화번호부 삭제
+    document.getElementById("wphonebookDelBtn").addEventListener("click",function(){ 
+        newphonebookdel_rtn()
+    });  
+
     
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     // 현장 검색   
@@ -2157,6 +2283,10 @@
     // 호기내용 검색   
     document.getElementById("wequpnmBtn").addEventListener("click",function(){ 
         searchwequpnm_rtn();
+    })                      
+    // 호기내용 검색   
+    document.getElementById("wcallbkBtn").addEventListener("click",function(){ 
+        searchwcallbk_rtn();
     })
 
     function searchwactnm_rtn(){
@@ -2542,7 +2672,7 @@
                 cols.binding = 'recetime';
                 cols.header = '시간';
                 cols.align = "center";
-                cols.width = 100;; 
+                cols.width = 100; 
                 wsmsGrid.columns.push(cols);   
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'pernm';
@@ -2590,6 +2720,233 @@
 
     }    
 
+
+    function searchwcallbk_rtn(){
+        let searchText = '';    
+        let ls_flag = '';     
+        searchText = document.getElementById('ddcallflag').value;    
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+            searchText = "%";
+        } 
+        $.ajax({
+            url: '/app01mod/wcallbacklist',  
+            type:"POST",
+            data: {  
+                "searchtxt"      : searchText, 
+            }, 
+            success:function(data){  
+                var wcontnmDto  = data;    
+                var wcontnm_data = [];
+                var cnt = 1; 
+                for (var i = 0; i < wcontnmDto.length; i++) {
+                    if(wcontnmDto[i]["callbackflag"] == "1") {
+                     ls_flag = "미처리"   
+                    }else{
+                     ls_flag = "처리"   
+                    }
+                    wcontnm_data.push({
+                        id: i, 
+                        index: cnt,
+                        seq:wcontnmDto[i]["seq"],
+                        callbackflag: wcontnmDto[i]["callbackflag"],   
+                        callbacktime: wcontnmDto[i]["callbacktime"],   
+                        callbackmemo: wcontnmDto[i]["callbackmemo"],   
+                        callnm: wcontnmDto[i]["callnm"],   
+                        callnum: wcontnmDto[i]["callnum"],   
+                        calldate: wcontnmDto[i]["calldate"],   
+                        calltime: wcontnmDto[i]["calltime"],   
+                        callmemo: wcontnmDto[i]["callmemo"],   
+                        flag: ls_flag,                                               
+                    });
+                    cnt++;
+                }   
+                // // console.log("wcontnm_data",wcontnm_data)  
+                wcallbkGrid.columns.clear();  
+                wcallbkGrid.autoGenerateColumns = false; 
+                view_callbackpage.sourceCollection  = wcontnm_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'flag';
+                cols.header = '구분';
+                cols.align = "center";
+                cols.width = 60; 
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.flag}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_2(ctx.item.seq, '','',  '06');
+                    }
+                });
+                wcallbkGrid.columns.push(cols);    
+                // console.log("cols", cols);    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'calldate';
+                cols.header = '상담일자';
+                cols.align = "center";
+                cols.width = 90; 
+                wcallbkGrid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'callbacktime';
+                cols.header = '예약시간';
+                cols.align = "center";
+                cols.width = 80; 
+                wcallbkGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'callbackmemo';
+                cols.header = '콜백메모';
+                cols.align = "left";
+                cols.width = 150; 
+                wcallbkGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'callnm';
+                cols.header = '고객명';
+                cols.align = "left";
+                cols.width = 100; 
+                wcallbkGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'callnum';
+                cols.header = '연락처';
+                cols.align = "center";
+                cols.width = 150; 
+                wcallbkGrid.columns.push(cols);    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'calltime';
+                cols.header = '상담시간';
+                cols.align = "center";
+                cols.width = 90; 
+                wcallbkGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column();   
+                cols.binding = 'callmemo';
+                cols.header = '상담내용';
+                cols.align = "left";
+                cols.width = 100; 
+                wcallbkGrid.columns.push(cols);   
+                 
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }    
+
+
+
+    function searchwphonebook_rtn(){
+        let searchText = '';    
+        let ls_flag = '';     
+        searchText = document.getElementById('searchText').value;    
+        if(searchText == null || searchText.length == 0 || searchText == ""){
+            searchText = "%";
+        } 
+        $.ajax({
+            url: '/app01mod/wpbooklist',  
+            type:"POST",
+            data: {  
+                "searchtxt"      : searchText, 
+            }, 
+            success:function(data){  
+                var wcontnmDto  = data;    
+                var wcontnm_data = [];
+                var cnt = 1; 
+                
+                for (var i = 0; i < wcontnmDto.length; i++) { 
+                    wcontnm_data.push({
+                        id: i, 
+                        index: cnt,
+                        actcd:wcontnmDto[i]["actcd"],
+                        seq:wcontnmDto[i]["seq"],
+                        actmail: wcontnmDto[i]["actmail"],   
+                        tel: wcontnmDto[i]["tel"],   
+                        remark: wcontnmDto[i]["remark"],                         
+                    });
+                    cnt++;
+                }   
+                // // console.log("wcontnm_data",wcontnm_data)  
+                wphbookGrid.columns.clear();  
+                wphbookGrid.autoGenerateColumns = false; 
+                view_phonebookpage.sourceCollection  = wcontnm_data;
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'actcd';
+                cols.header = '코드';
+                cols.align = "center";
+                cols.width = 60; 
+                wphbookGrid.columns.push(cols);    
+                // console.log("cols", cols);    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'seq';
+                cols.header = '순번';
+                cols.align = "center";
+                cols.width = 50; 
+                wphbookGrid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'actmail';
+                cols.header = '고객명';
+                cols.align = "left";
+                cols.width = 150; 
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.actmail}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_3(ctx.item.actcd, ctx.item.seq, ctx.item.actmail, ctx.item.tel,ctx.item.remark,);
+                    }
+                });
+                wphbookGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'tel';
+                cols.header = '전화번호';
+                cols.align = "left";
+                cols.width = "*";  
+                wphbookGrid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'remark';
+                cols.header = '비고';
+                cols.align = "left";
+                cols.width = "*"; 
+                wphbookGrid.columns.push(cols);   
+                 
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }    
+    
+
+   
+    function newphonebooksave_rtn(){  
+        let searchText = '';    
+        let ls_flag = '';     
+        ls_actactmailz = document.getElementById('actactmailz').value; 
+        ls_actactcdz = document.getElementById('actactcdz').value; 
+        ls_actseqz = document.getElementById('actseqz').value; 
+        ls_acttelz = document.getElementById('acttelz').value; 
+        ls_actremarkz = document.getElementById('actremarkz').value;     
+        $.ajax({
+            url: '/app01mod/wpbooklist',  
+            type:"POST",
+            data: {  
+                "actactmailz"      : ls_actactmailz, 
+                "actactcdz"      : ls_actactcdz, 
+                "actseqz"      : ls_actseqz, 
+                "acttelz"      : ls_acttelz, 
+                "actremarkz"      : ls_actremarkz, 
+            }, 
+            success:function(data){   
+                 
+            },error:function(e){
+                alert(data.code);
+                alert(data.message);
+            }
+        }).done(function(fragment){           
+
+        })  
+    }  
+    
+    
+
     function wactnmChk_2(arg1, arg2, arg3, flag){
         // console.log(flag);
             switch(flag){
@@ -2628,6 +2985,34 @@
                     document.getElementById('actequpnmz').value = arg2;                       
                     $("#wequpnmmodal_btn").trigger("click");  
                     wequpnmGrid.columns.clear();  
+                    break;                     
+                case "06":
+                    // 콜백처리                      
+                    if (!confirm("처리로 상태를 변경하시겠습니까?")) {
+                        return ;
+                    }
+                    $.ajax({
+                        url: '/app01mod/wcallbackflag',
+                        type:"POST",
+                        data: {
+                            "seq"     : arg1  
+                        },
+                        async:false,
+                        success:function(data){
+                            if(data == "success"){ 
+                                alert("처리되었습니다.")
+                                searchwcallbk_rtn();       
+                                $("#wcallbkmodal_btn").trigger("click"); 
+                            }else{
+                                console.log('error');
+                                alert("치리중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                            }
+                        },error:function(e){
+                            console.log('error',e);
+                        }
+                    }).done(function(fragment){
+
+                    }) 
                     break;                 
                 default:
                     break;    
@@ -2635,7 +3020,14 @@
             }
 
     }
+    function wactnmChk_3(arg1, arg2, arg3, arg4, arg5){
+        document.getElementById('actactcdz').value = arg1; 
+        document.getElementById('actseqz').value = arg2; 
+        document.getElementById('actactmailz').value = arg3; 
+        document.getElementById('acttelz').value = arg4; 
+        document.getElementById('actremarkz').value = arg5;    
 
+    }
 
 
     function new_rtn(){         
@@ -2665,6 +3057,15 @@
         document.getElementById('actcallbackmemoz').value = "";
         document.getElementById('callbackflag').value = "0";
         document.getElementById('actseqz').value = ""; 
+          
+        return 
+    }    
+    function newphonebook_rtn(){  
+        document.getElementById('actactmailz').value = "";
+        document.getElementById('actactcdz').value = ""; 
+        document.getElementById('actseqz').value = "";
+        document.getElementById('acttelz').value = "";
+        document.getElementById('actremarkz').value = "";
           
         return 
     }    

@@ -44,6 +44,8 @@ public interface App01ElvlrtMapper {
 
     public String gete601CallMaxSeq(String parm);
 
+    public List<AppCallElvlrtDto> GetCallBackList(AppCallElvlrtDto datainfo) ;
+    public List<AppCall601ElvlrtDto> GetPhonebookList(AppCall601ElvlrtDto datainfo) ;
 
 
 }

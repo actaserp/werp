@@ -351,5 +351,31 @@
         select max(actcd) from TB_E601CALL WITH (NOLOCK)
     </select>
 
+
+
+
+    <!-- CALLBAKC LIST -->
+    <select id="GetCallBackList" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        <![CDATA[
+        SELECT seq, callbackflag, substring (callbacktime,0,3) + ':' + substring(callbacktime,3,3) as callbacktime ,
+             substring(calldate, 5,2) + '/' + substring(calldate, 7,2)  as calldate,
+               callbackmemo, callnm, callnum,  substring (calltime,0,3) + ':' + substring(calltime,3,3) as calltime, callmemo
+        FROM tb_callmain   WITH(NOLOCK)
+        WHERE ISNULL(callbackflag,'') Like concat('%',#{callbackflag},'%') AND LEN(callbackflag) > 0 and len(isnull(callbacktime,'')) > 0
+        order by seq desc
+        ]]>
+    </select>
+
+    <!-- 전화번호보 LIST -->
+    <select id="GetPhonebookList" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto">
+        <![CDATA[
+        SELECT A.actcd, B.seq, A.actmail, B.tel, A.remark
+        FROM TB_E601CALL A  WITH(NOLOCK), TB_E601CALL_01 B WITH (NOLOCK)
+        WHERE A.actcd = B.actcd
+        and ( ISNULL(A.actmail,'') Like concat('%',#{actmail},'%')   or ISNULL(B.tel,'') Like concat('%',#{actmail},'%') )
+        order by A.actmail
+    ]]>
+    </select>
+
 </mapper>
 

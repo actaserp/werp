@@ -7,12 +7,14 @@ import com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
+import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
 import com.actas.ems.Service.elvlrt.AppSmsMcsService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +41,11 @@ public class App01RetrieveController {
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
     AppCallElvlrtDto appCalltDto = new AppCallElvlrtDto();
     AppCall601ElvlrtDto app601callDto = new AppCall601ElvlrtDto();
+    List<AppCall601ElvlrtDto>  app601callListDto = new ArrayList<>();
     PopupDto popParmDto = new PopupDto();
     List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
+    AppCallElvlrtDto appCallDto = new AppCallElvlrtDto();
+    List<AppCallElvlrtDto> appCallDtoList = new ArrayList<>();
 
     UserFormDto userFormDto = new UserFormDto();
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -551,6 +556,89 @@ public class App01RetrieveController {
             return e.getMessage();
         }
     }
+
+
+
+
+    //  고객상담 > 콜백리스트
+    @GetMapping(value="/wcallbacklist")
+    public Object App01CallBacklistForm( @RequestParam("searchtxt") String callflag
+            , Model model) throws  Exception{
+
+        appCallDto.setCallbackflag(callflag);
+        try {
+            appCallDtoList = service.GetCallBackList(appCallDto);
+            model.addAttribute("app03TelList",appCallDtoList);
+        }catch (DataAccessException e) {
+            log.info("App01CallBacklistForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01CallBacklistForm Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return appCallDtoList;
+
+    }
+
+
+    //  고객상담 > 콜백업데이트
+    @GetMapping(value="/wcallbackflag")
+    public String App01CallBackUpdateForm( @RequestParam("seq") String seq
+            , Model model) throws  Exception{
+        appCallDto.setSeq(seq);
+        appCallDto.setCallbackflag("0");
+        try {
+            int queryResult = service.UpdateCall(appCallDto);
+            if(queryResult == 1){
+                return "success";
+            }else{
+                return "fail";
+            }
+        }catch (DataAccessException e) {
+            log.info("App01CallBacklistForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01CallBacklistForm Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return "success";
+
+    }
+
+
+
+
+    //  고객상담 > 콜백리스트
+    @GetMapping(value="/wpbooklist")
+    public Object App01PhoneBooklistForm( @RequestParam("searchtxt") String actmail
+            , Model model) throws  Exception{
+        app601callDto.setActmail(actmail);
+        try {
+            app601callListDto = service.GetPhonebookList(app601callDto);
+            model.addAttribute("app601callListDto",app601callListDto);
+        }catch (DataAccessException e) {
+            log.info("App01CallBacklistForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01CallBacklistForm Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        return app601callListDto;
+
+    }
+
 
     public String CountSeq(String yyyymm){
         String ls_recenum = "";
