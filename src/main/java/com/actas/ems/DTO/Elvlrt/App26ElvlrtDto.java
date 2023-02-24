@@ -29,10 +29,12 @@ public class App26ElvlrtDto {
     private String tel;
     private String hp;
     private String contdate;
-
-    private String equpnm;
     private String elno;
+    private String equpnm;
     private String actaddr;
     private String emtelnum;
+
+
+
 
 }

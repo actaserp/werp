@@ -98,5 +98,8 @@ public class App10ElvlrtDto {
     private String sttime;
     private String endtime;
     private String comp;
+    private String datetime;
+    private String datetime2;
+
 
 }

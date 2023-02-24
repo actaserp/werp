@@ -65,6 +65,7 @@ public class App10ElvlrtMobService {
 
 
     /**고장처리 등록**/
+
     public boolean Insert10Manu(App10ElvlrtDto perm){
         queryResult = app10ElvMobMapper.Insert10Manul(perm);
         if(queryResult < 1){  //값 확인

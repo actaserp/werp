@@ -438,9 +438,15 @@ public class PGYMbController {
         String ls_regicd = "";
         String ls_resucd = "";
         String ls_resultcd = "";
-        String ls_resuremark = "";
+        String ls_resulttime = "";
         String ls_comptime = "";
-        String ls_compdate = "";
+        Integer ls_comptime2;
+        String ls_arrivtime = "";
+        Integer ls_arrivtime2;
+
+        String ls_actperid = "";
+        String ls_remocd = "";
+
 
         param.forEach((key, values) -> {
             switch (key) {
@@ -500,6 +506,31 @@ public class PGYMbController {
                 case "recetime":
                     String via = values.replaceAll(":","");
                     app10tDto.setRecetime(via);
+                case "cltcd":
+                    app10tDto.setCltcd(values.toString());
+                    break;
+                case "divicd":
+                    app10tDto.setDivicd(values.toString());
+                    break;
+                case "remocd":
+                    app10tDto.setRemocd(values.toString());
+                    break;
+                case "actperid":
+                    app10tDto.setActperid(values.toString());
+                    break;
+                case "remoremark":
+                    app10tDto.setRemoremark(values.toString());
+                    break;
+                case "resulttime":
+                    app10tDto.setResulttime(values.toString());
+                    break;
+                case "comptime":
+
+                    app10tDto.setComptime(values.toString());
+                    break;
+                case "arrivtime":
+                    app10tDto.setArrivtime(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -510,6 +541,13 @@ public class PGYMbController {
         ls_regicd = app10tDto.getRegicd();
         ls_resucd = app10tDto.getResucd();
         ls_resultcd = app10tDto.getResultcd();
+        ls_actperid = app10tDto.getActperid();
+        ls_remocd = app10tDto.getRemocd();
+        ls_comptime = app10tDto.getComptime();
+        ls_arrivtime = app10tDto.getArrivtime();
+
+
+
 
         int stCnt = ls_gregicd.indexOf('[') + 1 ;
         int etCnt = ls_gregicd.indexOf(']');
@@ -530,10 +568,111 @@ public class PGYMbController {
         etCnt = ls_resultcd.indexOf(']');
         ls_resultcd = ls_resultcd.substring(stCnt, etCnt);
 
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_actperid.indexOf('[') + 1;
+        etCnt = ls_actperid.indexOf(']');
+        ls_actperid = ls_actperid.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_remocd.indexOf('[') + 1;
+        etCnt = ls_remocd.indexOf(']');
+        ls_remocd = ls_remocd.substring(stCnt, etCnt);
+
+
+
+
+        if(ls_comptime.contains("PM")){
+            if (ls_comptime.substring(0, 2).equals("12")) {
+                ls_comptime = ls_comptime.replace(":","");
+                ls_comptime = ls_comptime.substring(0,4);
+            }else{
+                ls_comptime = ls_comptime.replace(":","");
+                ls_comptime = ls_comptime.substring(0,4);
+                ls_comptime2 = Integer.parseInt(ls_comptime) + 1200;
+                ls_comptime = ls_comptime2.toString();
+            }
+        }else if (ls_comptime.contains("AM")){
+            if(ls_comptime.substring(0,2).equals("12")){
+                ls_comptime = ls_comptime.replace(":","");
+                ls_comptime = "00" + ls_comptime.substring(2,4);
+            }else {
+                ls_comptime = ls_comptime.replace(":", "");
+                ls_comptime = ls_comptime.substring(0, 4);
+            }
+        }
+
+        /**내가 짠 쓰레기 코드**/
+       /* if(ls_arrivtime.contains("PM")){
+            if (ls_arrivtime.substring(0, 2).equals("12")) {
+                ls_arrivtime = ls_arrivtime.replace(":","");
+                ls_arrivtime = ls_arrivtime.substring(0,4);
+            }else{
+                ls_arrivtime = ls_arrivtime.replace(":","");
+                ls_arrivtime = ls_arrivtime.substring(0,4);
+                ls_arrivtime2 = Integer.parseInt(ls_arrivtime) + 1200;
+                ls_arrivtime = ls_arrivtime2.toString();
+            }
+        }else if (ls_arrivtime.contains("AM")){
+            if(ls_arrivtime.substring(0,2).equals("12")){
+                ls_arrivtime = ls_arrivtime.replace(":","");
+                ls_arrivtime = "00" + ls_arrivtime.substring(2,4);
+            }else {
+                ls_arrivtime = ls_arrivtime.replace(":", "");
+                ls_arrivtime = ls_arrivtime.substring(0, 4);
+            }
+        }*/
+
+        /**GPT가 짠 코드**/
+        final int PM_HOUR_OFFSET = 1200;
+        final int MILITARY_TIME_LENGTH = 4;
+        final String MIDNIGHT = "00";
+
+        if(ls_arrivtime.contains("PM")){
+            int hour = Integer.parseInt(ls_arrivtime.substring(0, 2));
+            ls_arrivtime = ls_arrivtime.replace(":", "");
+            ls_arrivtime = ls_arrivtime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_arrivtime) + PM_HOUR_OFFSET;
+                ls_arrivtime = String.valueOf(militaryTime);
+            }
+        } else if (ls_arrivtime.contains("AM")) {
+            int hour = Integer.parseInt(ls_arrivtime.substring(0, 2));
+            ls_arrivtime = ls_arrivtime.replace(":", "");
+            ls_arrivtime = ls_arrivtime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour == 12) {
+                ls_arrivtime = MIDNIGHT + ls_arrivtime.substring(2, 4);
+            }
+        }
+
+
+
+        SimpleDateFormat sdfYMD = new SimpleDateFormat("HH:mm");
+        String hour = ls_comptime.substring(0,2) + ":" + ls_comptime.substring(2,4);
+        Date date = sdfYMD.parse(hour);
+        String hour2 = ls_arrivtime.substring(0,2) + ":" + ls_arrivtime.substring(2,4);
+        Date date2 = sdfYMD.parse(hour2);
+
+
+        long diffMin = (date.getTime() - date2.getTime()) / 60000; //분 차이
+
+
+        ls_resulttime = Long.toString(diffMin);
+
         app10tDto.setGregicd(ls_gregicd);
         app10tDto.setRegicd(ls_regicd);
         app10tDto.setResucd(ls_resucd);
         app10tDto.setResultcd(ls_resultcd);
+        app10tDto.setActperid(ls_actperid);
+        app10tDto.setRemocd(ls_remocd);
+        app10tDto.setArrivdate(app10tDto.getCompdate());
+        app10tDto.setDatetime(app10tDto.getCompdate().substring(0,4) + "-" + app10tDto.getCompdate().substring(4,6) + "-" + app10tDto.getCompdate().substring(6,8) + " 00:00:00.000");
+        app10tDto.setDatetime2(app10tDto.getCompdate().substring(0,4) + "-" + app10tDto.getCompdate().substring(4,6) + "-" + app10tDto.getCompdate().substring(6,8) + " 00:00:00.000");
+        app10tDto.setComptime(ls_comptime);
+        app10tDto.setArrivtime(ls_arrivtime);
+
+        app10tDto.setIndate(getToDate());
+        app10tDto.setResulttime(ls_resulttime);
+
 
 
         try {
@@ -546,18 +685,30 @@ public class PGYMbController {
 
             String compnum = app10tDto.getCompnum();
             String compdate = app10tDto.getCompdate();
+
+            /*if(app10tDto.getComptime().length() == 3){
+                ls_comptime2 = app10tDto.getComptime().substring(0,2) + "0" + app10tDto.getComptime().substring(2,3);
+                app10tDto.setComptime(ls_comptime2);
+            }*/
 //            boolean result = false;
 
-            log.info(app10tDto.getPerid());
-            log.info(app10tDto.getContcd());
-            log.info(app10tDto.getActcd());
-            log.info(app10tDto.getEqupcd());
-            log.info(app10tDto.getEqupnm());
+           /* log.info(app10tDto.getDivicd());
+            log.info(app10tDto.getCltcd());
+            log.info(app10tDto.getActperid());
+            log.info(app10tDto.getRemocd());
+            log.info(app10tDto.getRemoremark());
+            log.info(app10tDto.getRecenum());
             log.info(app10tDto.getRecetime());
+            log.info(app10tDto.getArrivtime());
 
+            log.info(app10tDto.getArrivdate());
+            log.info(app10tDto.getDatetime());
+            log.info(app10tDto.getDatetime2());
+            log.info(app10tDto.getComptime());
+            log.info(app10tDto.getArrivtime());
+            log.info(ls_resulttime);
 
-
-
+*/
             if (compnum == null || compnum.equals("")) {
                 app10tDto.setCompnum(CountSeq(compdate));
                 boolean result = app10ElvlrtMobService.Insert10Manu(app10tDto);

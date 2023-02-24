@@ -17,7 +17,11 @@
                      isnull(d.contnm, '' ) as contnm,
                      isnull(a.contents, '' ) as contents,
                      Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
-                     isnull(e.pernm, '' ) as pernm
+                     isnull(e.pernm, '' ) as pernm,
+                     isnull(e.pernm, '' ) as pernm,
+                     isnull(a.perid, '') as perid ,
+                     isnull(a.cltcd, '') as cltcd,
+                     isnull(a.divicd, '') as divicd
                  FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
@@ -34,7 +38,9 @@
                  WHERE
                      a.spjangcd = #{spjangcd}
                    AND a.resultck like CONCAT('%',#{changeop},'%')
+                   AND b.actnm like CONCAT('%',#{actnm},'%')
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
+                 ORDER BY a.recedate desc
         ]]>
     </select>
 
@@ -398,8 +404,8 @@ order by recedate desc;
     <!--박광열-->
 
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,  arrivtime,  actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result") values
-            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{arrivtime}, #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1')
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,    actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result", cltcd, divicd, remocd, actperid, remoremark, arrivdate, datetime, datetime2, comptime, indate, arrivtime, resulttime) values
+            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1', #{cltcd}, #{divicd}, #{remocd}, #{actperid}, #{remoremark}, #{arrivdate}, #{datetime}, #{datetime2}, #{comptime}, #{indate}, #{arrivtime}, #{resulttime})
     </insert>
 
 
@@ -432,6 +438,7 @@ order by recedate desc;
         <if test="remark != null">remark=#{remark}</if>
         where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum}
     </update>
+
 
     <!--박광열 끝-->
 

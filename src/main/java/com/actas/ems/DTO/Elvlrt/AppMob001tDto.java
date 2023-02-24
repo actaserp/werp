@@ -26,6 +26,7 @@ public class AppMob001tDto {
     private String contcd;
     private String contnm;
     private String contremark;
-
+    private String cltcd;
+    private String divicd;
 
 }

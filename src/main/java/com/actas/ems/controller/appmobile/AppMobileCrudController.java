@@ -86,6 +86,8 @@ public class AppMobileCrudController {
                 case "dbnm":
                     userformDto.setDbnm(values.toString());
                     break;
+                case "actnm":
+                    app10tDto.setActnm(values.toString());
                 default:
                     break;
             }
@@ -166,31 +168,23 @@ public class AppMobileCrudController {
                     userformDto.setDbnm(values.toString());
                     break;
                 case "actnm":
-                    if(values.toString() == ""){
-                        values = "dkssud";
-                    }
+
                     popParmDto.setActnm(values.toString());
                     break;
                 case "contnm":
-                    if(values == ""){
-                        values = "skfnsa";
-                    }
+
                     popParmDto.setContnm(values.toString());
                     popParmDto.setGreginm("%");
                     popParmDto.setRemonm("%");
                     break;
                 case "greginm":
-                    if(values == ""){
-                        values = "skfnsa";
-                    }
+
                     popParmDto.setGreginm(values.toString());
                     popParmDto.setContnm("%");
                     popParmDto.setRemonm("%");
                     break;
                 case "remonm":
-                    if(values == ""){
-                        values = "skfnsa";
-                    }
+
                     popParmDto.setRemonm(values.toString());
                     popParmDto.setContnm("%");
                     popParmDto.setGreginm("%");
@@ -1499,6 +1493,83 @@ public class AppMobileCrudController {
                 break;
         }
         return attachDTOList;
+    }
+
+
+
+
+    //  고장요인
+    @RequestMapping(value = "/wremonm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppRemonmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_remonm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "remonm":
+                    popParmDto.setRemonm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_remonm.length() == 0){
+            ls_remonm = "%";
+        }
+        try {
+            popParmDto.setRemonm(ls_remonm);
+            poplistDto = appPopElvlrtService.GetRemonmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
+    }
+
+
+    //  담당자
+    @RequestMapping(value = "/wpernm", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object AppPernmList(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_pernm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "wpernm":
+                    popParmDto.setWpernm(values.toString());
+                    popParmDto.setPernm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_pernm.length() == 0){
+            ls_pernm = "%";
+        }
+        try {
+            popParmDto.setWpernm(ls_pernm);
+            poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
+            model.addAttribute("poplistDto", poplistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return poplistDto;
     }
 
 
