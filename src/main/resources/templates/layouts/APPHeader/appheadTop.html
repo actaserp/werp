@@ -19,8 +19,8 @@
         <ul class="right">
 
             <li>
-                <a th:href="@{/}">                   
-                    <img th:src="@{/assets/images/in2.png}" alt="">
+                <a href="#">
+                    <img src="/images/in2.png" alt="" onclick="logout()">
                 </a>
             </li>
             <li>
@@ -139,6 +139,12 @@
             }
         }
 
+    function logout(){   
+            if (!confirm("로그아웃하시겠습니까?") ){
+             return    
+            }
+            location.href = "/" ;
+        }  
     </script>
 
 </html>

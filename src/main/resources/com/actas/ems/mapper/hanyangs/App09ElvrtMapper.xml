@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App09GaonMapper">
+    <select id="GetFQManulList" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        select fseq , finputdate , fgroupcd , fsubject, ffilename , fpernm , fmemo, fflag, (select com_cnam from tb_ca510 where com_cls = '018' and com_code=fgroupcd) as cnam,
+               (select Count(*) from TB_MATTACH where flag='FQ' and board_idx=fseq and delete_yn = 'N') as attcnt
+        from tb_mfmanual WITH (NOLOCK)
+        Where 1 = 1
+        order by fseq desc;
+
+        /*
+        select fseq, fgroupcd, ffilename, fflag,  finputdate,fsubject,fpernm,fmemo
+        from TB_MFIXBBS order by fseq asc;
+         */
+    </select>
+    <!--뭔지 알수 없음-->
+    <select id="GetFQManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        select '' as fseq, '' as finputdate, '' as fgroupcd, '' as fsubject, '' as ffilename, '' as fpernm, '' as fmemo, '' as fflag
+        from dual
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <!-- 알수 없음-->
+    <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
+        select max(fseq) from tb_mfmanual where Left(fseq,6) = #{fseq}
+    </select>
+
+    <!--게시글 상세조회-->
+    <select id="GetFQManulView" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        SELECT fseq, finputdate, fgroupcd, fpernm, fsubject, ffilename, fflag, fmemo FROM tb_mfmanual where fseq = #{fseq};
+    </select>
+
+
+    <!--게시글 작성-->
+    <insert id="InsertFQManul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+
+        insert into tb_mfmanual (custcd, spjangcd, fseq, finputdate, fgroupcd, fsubject, fmemo, fpernm, fflag) values (#{custcd}, #{spjangcd}, #{fseq}, #{finputdate}, #{fgroupcd}, #{fsubject}, #{fmemo}, #{fpernm}, #{fflag})
+
+    </insert>
+
+
+    <!--게시글 수정-->
+    <update id="UpdateFQManul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        update tb_mfmanual
+        set fgroupcd = #{fgroupcd}
+        <if test="fseq != null ">,</if>
+        <if test="fseq != null">fseq=#{fseq}</if>
+        <if test="fsubject != null ">,</if>
+        <if test="fsubject != null">fsubject=#{fsubject}</if>
+        <if test="fmemo != null ">,</if>
+        <if test="fmemo != null">fmemo=#{fmemo}</if>
+        <if test="fflag != null ">,</if>
+        <if test="fflag != null">fflag=#{fflag}</if>
+        where fseq = #{fseq}
+    </update>
+
+    <!--게시글 삭제-->
+    <delete id="DeleteFQManul" parameterType="com.actas.ems.DTO.Elvlrt.App09ElvlrtDto">
+        DELETE FROM tb_mfmanual WHERE fseq= #{fseq};
+    </delete>
+
+
+
+    <select id="GetComm750List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '018') AND (com_code <> '00')
+        ]]>
+    </select>
+
+
+    <select id="GetComm750BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+</mapper>

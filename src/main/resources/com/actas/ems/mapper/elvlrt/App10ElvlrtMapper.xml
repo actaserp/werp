@@ -5,7 +5,7 @@
 <mapper namespace="com.actas.ems.Mapper.Elvlrt.App10ElvlrtMapper">
     <!--     pin page -->
     <select id="GetApp10List002"  parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-<![CDATA[sELECT
+<![CDATA[sELECT TOP 100
              Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
              a.custcd,
              a.spjangcd,
@@ -74,7 +74,7 @@
 
 <!--      조회  -->
     <select id="GetApp10List001"  parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        <![CDATA[sELECT
+        <![CDATA[sELECT TOP 100
                      Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
                      a.custcd,
                      a.spjangcd,

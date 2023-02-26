@@ -1,6 +1,8 @@
 package com.actas.ems.Service.master;
 
 import com.actas.ems.Mapper.Elvlrt.ElvactcdMapper;
+import com.actas.ems.Mapper.gaon.ElvactcdGaonMapper;
+import com.actas.ems.Mapper.kyoung.ElvactcdKyoungMapper;
 import com.actas.ems.Mapper.Hanyangs.hanyangsMapper;
 import com.actas.ems.Mapper.master.AuthDBMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,14 @@ public class AuthService {
 
     @Autowired
     ElvactcdMapper elvactcdMapper;
+    @Autowired
+    ElvactcdGaonMapper elvactcdMapperG;
+    @Autowired
+    ElvactcdKyoungMapper elvactcdMapperK;
+    @Autowired
+    ElvactcdMapper elvactcdMapperN;
+    @Autowired
+    ElvactcdMapper elvactcdMapperH;
 
     @Autowired
     hanyangsMapper hanyangsMapper;
@@ -55,17 +65,22 @@ public class AuthService {
             case "ELV_LRT":
                 return elvactcdMapper.TB_XCLIENT_ACTCD_SELECT(parm);
 
+            case "ELV_GAON":
+                return elvactcdMapperG.TB_XCLIENT_ACTCD_SELECT(parm);
+
+            case "nmyang":
+                return elvactcdMapperN.TB_XCLIENT_ACTCD_SELECT(parm);
+
             case "ELV_KYOUNG":
-                break;
+                return elvactcdMapperK.TB_XCLIENT_ACTCD_SELECT(parm);
             case "hanyangs":
-                break;
+                return elvactcdMapperH.TB_XCLIENT_ACTCD_SELECT(parm);
             //return hanyangsMapper.TB_XCLIENT_ACTCD_SELECT(parm);
             default:
-                break;
+                return "";
 
         }
         //return hanyangsMapper.TB_XCLIENT_ACTCD_SELECT(parm);
-        return elvactcdMapper.TB_XCLIENT_ACTCD_SELECT(parm);
     }
 
     public String TB_XUSER_DBNM(UserFormDto parm) {return authMapper.TB_XUSER_DBNM(parm);}

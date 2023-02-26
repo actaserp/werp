@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
-<mapper namespace="com.actas.ems.Mapper.Elvlrt.App00ElvlrtMapper">
+<mapper namespace="com.actas.ems.Mapper.kyoung.App00KyoungMapper">
 
     <!--      고장내용별현황 / 기간별 고장내용  -->
     <select id="GetApp00List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App00ElvlrtDto">
@@ -64,7 +64,8 @@
                    LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) on (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
                WHERE  a.recedate between #{frdate} and #{todate}
                GROUP BY a.custcd, a.spjangcd, a.actcd, left(a.recedate, 6), q.actnm) a
-        WHERE  a.spjangcd = 'ZZ'
+        WHERE a.custcd = 'ELVLRT'
+          AND a.spjangcd = 'ZZ'
           AND a.actnm like CONCAT('%',#{actnm},'%')
         GROUP BY actnm
     </select>

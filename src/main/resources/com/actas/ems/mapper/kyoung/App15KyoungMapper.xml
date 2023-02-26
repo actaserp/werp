@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.kyoung.App15KyoungMapper">
+
+    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <select id="GetApp00List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        SELECT m.equpnm,
+               a.actcd,
+               a.equpcd,
+               sum(comp1) as comp1,
+               sum(comp2) as comp2,
+               sum(comp3) as comp3,
+               sum(comp4) as comp4,
+               sum(comp5) as comp5,
+               sum(comp6) as comp6,
+               sum(comp7) as comp7,
+               sum(comp8) as comp8,
+               sum(comp9) as comp9,
+               sum(comp10) as comp10,
+               sum(comp11) as comp11,
+               sum(comp12) as comp12,
+               sum(a.qty) as qty
+        FROM (SELECT custcd,
+                     spjangcd,
+                  left(compdate, 6) as compmon,
+                  actcd,
+                  equpcd,
+                  COUNT(equpcd) as qty,
+                  (Case when right(left(compdate, 6),2) = '01' Then count(compdate) ELSE 0 END) as comp1,
+                  (Case when right(left(compdate, 6),2) = '02' Then count(compdate) ELSE 0 END) as comp2,
+                  (Case when right(left(compdate, 6),2) = '03' Then count(compdate) ELSE 0 END) as comp3,
+                  (Case when right(left(compdate, 6),2) = '04' Then count(compdate) ELSE 0 END) as comp4,
+                  (Case when right(left(compdate, 6),2) = '05' Then count(compdate) ELSE 0 END) as comp5,
+                  (Case when right(left(compdate, 6),2) = '06' Then count(compdate) ELSE 0 END) as comp6,
+                  (Case when right(left(compdate, 6),2) = '07' Then count(compdate) ELSE 0 END) as comp7,
+                  (Case when right(left(compdate, 6),2) = '08' Then count(compdate) ELSE 0 END) as comp8,
+                  (Case when right(left(compdate, 6),2) = '09' Then count(compdate) ELSE 0 END) as comp9,
+                  (Case when right(left(compdate, 6),2) = '10' Then count(compdate) ELSE 0 END) as comp10,
+                  (Case when right(left(compdate, 6),2) = '11' Then count(compdate) ELSE 0 END) as comp11,
+                  (Case when right(left(compdate, 6),2) = '12' Then count(compdate) ELSE 0 END) as comp12
+
+
+              FROM tb_e411
+              WHERE  left(compdate, 8) BETWEEN #{frdate} and #{todate}
+                AND (actcd = #{actcd} OR #{actcd} = '%')
+              GROUP BY custcd, spjangcd, left(compdate, 6), actcd, equpcd) a
+                 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+        GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, m.equpnm
+    </select>
+
+    <!--메인화면 당월 점검현황-->
+    <select id="GetApp00List002" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        SELECT
+            a.plandate as plandate,
+            a.plantime as plantime,
+            c.actnm as actnm,
+            a.equpcd as equpcd,
+            h.equpnm as equpnm,
+            a.gubun as gubun,
+            a.kcpernm as kcpernm,
+            a.qty as qty,
+            a.remark as remark,
+            a.kcspnm as kcspnm
+        FROM TB_E073 a
+                 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)
+            LEFT OUTER JOIN TB_E601 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd)
+        WHERE left(a.plandate, 6) = CONVERT(varchar(6), DATEADD(m, -0, getdate()), 112)
+        order by a.plandate desc
+    </select>
+
+
+
+    <!--메인화면 당일 계약만료현장-->
+    <select id="GetApp00List003" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select a.actcd as actcd,
+        q. actnm as actnm,
+        a.contdate as contdate,
+        Left(a.stdate,4) + '-' + substring(a.stdate, 5,2) + '-' + substring(a.stdate, 7,2)  as stdate,
+        Left(a.enddate,4) + '-' + substring(a.enddate, 5,2) + '-' + substring(a.enddate, 7,2)   as enddate
+        from tb_e101 a WITH(NOLOCK)
+        LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+        LEFT OUTER JOIN TB_E018 y WITH(NOLOCK) ON (a.custcd = y.custcd AND a.spjangcd = y.spjangcd AND a.cls = y.outcd)
+        , (select custcd, spjangcd, cltcd, actcd, max(contdate) as contdate
+        from tb_e101 WITH(NOLOCK)
+        group by custcd, spjangcd, cltcd, actcd) b
+        WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
+        AND left(a.enddate,6) = left(CONVERT(varchar(8), GETDATE(),112),6)
+        aND a.contg <> '04'
+        and Len(a.stdate) > 0
+        order by   q. actnm
+        ]]>
+    </select>
+
+    <!--메인화면 30일 후 계약만료현장-->
+    <select id="GetApp00List004" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select a.actcd as actcd,
+               q. actnm as actnm,
+            Left(a.contdate,4) + '-' + substring(a.contdate, 5,2) + '-' + substring(a.contdate, 7,2) as contdate,
+            Left(a.stdate,4) + '-' + substring(a.stdate, 5,2) + '-' + substring(a.stdate, 7,2)  as stdate,
+            Left(a.enddate,4) + '-' + substring(a.enddate, 5,2) + '-' + substring(a.enddate, 7,2)   as enddate
+
+        from tb_e101 a WITH(NOLOCK)
+      LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E018 y WITH(NOLOCK) ON (a.custcd = y.custcd AND a.spjangcd = y.spjangcd AND a.cls = y.outcd)
+            , (select custcd, spjangcd, cltcd, actcd, max(contdate) as contdate
+            from tb_e101 WITH(NOLOCK)
+            group by custcd, spjangcd, cltcd, actcd) b
+        WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate =b.contdate
+          AND left(a.enddate,6) = left(CONVERT(varchar(8), DATEADD(DAY, 30, GETDATE()), 112),6)
+          aND a.contg <> '04'
+          and Len(a.stdate) > 0
+          order by   q. actnm
+        ]]>
+    </select>
+    <!--메인화면 당월 고장접수-->
+    <select id="GetApp00List005" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT a.actcd as actcd,
+               a.actnm as actnm,
+               a.equpcd as equpcd,
+               a.equpnm as equpnm,
+               a.pernm as pernm,
+               a.contnm as contnm,
+               a.contents as contents,
+            LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+            EOMONTH(GETDATE()) as  enddate,
+            a.qty as qty
+        FROM (SELECT a.actcd,
+            q.actnm,
+            a.equpcd,
+            m.equpnm,
+            count(a.recedate) as qty,
+            max(a.perid) as perid,
+            d.pernm,
+            max(a.contcd) as contcd,
+            p.contnm,
+            max(convert(varchar(100), a.contents)) as contents,
+            max(a.remark) as remark
+            FROM tb_e401 a
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            WHERE  a.recedate BETWEEN replace(LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01', '-', '') AND replace(EOMONTH(GETDATE()),'-','')
+            AND q.actnm like CONCAT('%','%','%')
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+        WHERE a.qty >= 0
+          AND a.perid like CONCAT('%','%','%')
+        ]]>
+    </select>
+
+    <!--고객회원 메인화면 당월 고장접수-->
+    <select id="GetApp00List006" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT a.actcd as actcd,
+               a.actnm as actnm,
+               a.equpcd as equpcd,
+               a.equpnm as equpnm,
+               a.pernm as pernm,
+               a.contnm as contnm,
+               a.contents as contents,
+            LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+            EOMONTH(GETDATE()) as  enddate,
+            a.qty
+        FROM (SELECT a.actcd,
+            q.actnm,
+            a.equpcd,
+            m.equpnm,
+            count(a.recedate) as qty,
+            max(a.perid) as perid,
+            d.pernm,
+            max(a.contcd) as contcd,
+            p.contnm,
+            max(convert(varchar(100), a.contents)) as contents,
+            max(a.remark) as remark
+            FROM tb_e401 a
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            WHERE  a.recedate BETWEEN #{frdate} AND #{todate}
+            AND q.actcd like CONCAT('%',#{actcd},'%')
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+        WHERE a.qty >= 0
+          AND a.perid like CONCAT('%','%','%')
+        ]]>
+    </select>
+
+    <!--고객회원 메인화면 당월 고장접수 그래프-->
+    <select id="GetApp00List007" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select
+            sum(h.qty) as cnt,
+            h.contnm as contnm,
+            h.equpnm as equpnm
+        from
+            (SELECT a.actcd as actcd,
+                    a.actnm as actnm,
+                    a.equpcd as equpcd,
+                    a.equpnm as equpnm,
+                    a.pernm as pernm,
+                    a.contnm as contnm,
+                    a.contents as contents,
+                 LEFT(CONVERT(NVARCHAR,DATEADD(m,-0, GETDATE()),121), 7) + '-01' as  stdate,
+                 EOMONTH(GETDATE()) as  enddate,
+                 a.qty
+             FROM (SELECT a.actcd,
+                 q.actnm,
+                 a.equpcd,
+                 m.equpnm,
+                 count(a.recedate) as qty,
+                 max(a.perid) as perid,
+                 d.pernm,
+                 max(a.contcd) as contcd,
+                 p.contnm,
+                 max(convert(varchar(100), a.contents)) as contents,
+                 max(a.remark) as remark
+                 FROM tb_e401 a
+                 LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+                 LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+                 WHERE  a.recedate BETWEEN #{frdate} AND #{todate}
+                 AND q.actcd like CONCAT('%',#{actcd},'%')
+                 GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
+             WHERE a.qty >= 0
+               ) h
+        group by h.equpnm, h.contnm
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장건수일별통계  -->
+    <select id="GetApp00List008"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  A.recedate,
+                count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where A.recedate  between #{frdate} and #{todate}
+        group by A.recedate
+        order by A.recedate
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장건수월별통계  -->
+    <select id="GetApp00List009"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  Left(A.recedate,6) as recedate
+                count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where Left(A.recedate,4)  = #{frdate}
+        group by Left(A.recedate,6)
+        order by Left(A.recedate,6)
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장건수통계  -->
+    <select id="GetApp00List010"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  Left(A.recedate,4) as recedate
+            count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK)
+        where Left(A.recedate,4)  <= #{frdate}
+        group by Left(A.recedate,4)
+        order by Left(A.recedate,4)
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 고장부위통계  -->
+    <select id="GetApp00List011"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select left(a.compdate,6) as compdate,
+            b.greginm ,
+            count(a.actcd) as recnt
+        from TB_E411 A WITH (NOLOCK),
+            TB_E013 B WITH (NOLOCK)
+        where a.gregicd = b.gregicd
+          and left(a.compdate,4) = #{frdate}
+        group by b.greginm, left(a.compdate,6) ;
+        ]]>
+    </select>
+
+
+    <!--      대시보드 / 지역통계  -->
+    <select id="GetApp00List012"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select  B.areanm,
+            Left(A.recedate,6) AS YYYYMM,
+            count(a.actcd) as rececnt
+        from tb_e401 A  with (NOLOCK), tb_e028 B with (NOLOCK), tb_e601 C with (NOLOCK)
+        where C.areacd = B.areacd
+          AND A.actcd = C.actcd
+          AND   Left(A.recedate,6)  between #{frdate} and #{todate}
+        group by Left(A.recedate,6) , B.areanm
+        order by  Left(A.recedate,6), B.areanm;
+        ]]>
+    </select>
+
+    <!--      대시보드 / 고장내용통계  -->
+    <select id="GetApp00List013"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        select left(a.recedate,6) as recedate,
+            b.contnm ,
+            count(a.actcd) as recnt
+        from TB_E401 A WITH (NOLOCK),
+            TB_E010 B WITH (NOLOCK)
+        where a.contcd = b.contcd
+          and left(a.recedate,4) = #{frdate}
+        group by b.contnm, left(a.recedate,6) ;
+        ]]>
+    </select>
+
+
+    <!--메인화면 직원 근태 현황-->
+    <select id="GetApp00List014" parameterType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App15ElvlrtDto">
+        <![CDATA[
+        SELECT  case when len(isnull(f.vafrdate,'')) > 0 then '휴가'  ELSE '점검' END as flag   ,
+        a.pernm,
+        (select atdnm from tb_pb002 where atdcd=f.atdcd) as atdnm,
+        substring(f.vafrdate, 5,2) + '/' + substring(f.vafrdate, 7,2)  as vafrdate ,
+        substring(f.vatodate, 5,2) + '/' + substring(f.vatodate, 7,2)  as vatodate,
+        f.daynum,
+        f.telnum,
+        substring(d.plandate, 5,2) + '/' + substring(d.plandate, 7,2) as plandate,
+        d.plantime as plantime,
+        c.actnm as actnm,
+        d.equpcd as equpcd,
+        h.equpnm as equpnm,
+        d.gubun as gubun,
+        d.kcpernm as kcpernm,
+        d.qty as qty,
+        d.remark as remark,
+        d.kcspnm as kcspnm
+        FROM TB_JA001 a
+        LEFT OUTER JOIN TB_E073 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND d.perid = substring(a.perid, 2, 10) and d.plandate  = CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112) )
+        LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND d.actcd = h.actcd AND d.equpcd = h.equpcd)
+        LEFT OUTER JOIN TB_E601 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND d.actcd = c.actcd)
+        LEFT OUTER JOIN TB_PB204 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND f.perid = substring(a.perid, 2, 10) and f.vafrdate >= CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112) and f.vatodate <= CONVERT(varchar(8), DATEADD(m, -0, getdate()), 112)  and left(f.vafrdate,2) = '20' )
+        WHERE a.rtclafi = '001' and (   len(f.vafrdate) > 0  or len(d.plandate) > 0 )
+        order by a.pernm;
+        ]]>
+    </select>
+
+
+</mapper>

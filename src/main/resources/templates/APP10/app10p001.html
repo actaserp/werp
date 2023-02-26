@@ -1022,9 +1022,9 @@ window.location.href = '/app10/index01';
          let ani;
          var wseries_data = [0]; 
             window.onload = function() {  
-            localStorage.setItem("setpage", "app10p001");
+            // localStorage.setItem("setpage", "app10p001");
             // **************구분!!***********************************************************************
-            console.log("[window onload] : [start]");
+            // console.log("[window onload] : [start]");
             //tab01 grid list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                 sortDescriptions: [new wijmo.collections.SortDescription("recedate", false)],
@@ -1081,8 +1081,8 @@ window.location.href = '/app10/index01';
                 // tab01검색 데이터 수집
                 function getData_tab01(){                     
                     var wactnm_data = [[${app04Dto}]]; 
-                    var cnt = 1;
-                    for (var i = 0; i < wactnm_data.length; i++) {
+                    var cnt = 1;   
+                    for (var i = 0; i < 21; i++) {
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
@@ -1094,8 +1094,8 @@ window.location.href = '/app10/index01';
                            
                         });
                         cnt++;
-                    }    
-                    console.log(wactnm_data);
+                    }     
+                    console.log("xxxxxxxxxxxx")
                     return wactnm_data;                                         
                 } 
 

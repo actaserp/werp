@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.App22GaonMapper">
+
+    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <select id="GetApp22List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        select *,  concat(left(convert(decimal(5,4),(totalcnt / totalcnt2)) *100, 5), '%') as per from
+            (SELECT isnull(D.custcd,'') as custcd,
+            isnull(D.spjangcd, '') as spjangcd,
+            isnull(D.compyear, '총합') as compyear,
+            max( D.qty ) AS qty,
+            SUM(D.mon1) as mon1,
+            SUM(D.mon2) as mon2,
+            SUM(D.mon3) as mon3,
+            SUM(D.mon4) as mon4,
+            SUM(D.mon5) as mon5,
+            SUM(D.mon6) as mon6,
+            SUM(D.mon7) as mon7,
+            SUM(D.mon8) as mon8,
+            SUM(D.mon9) as mon9,
+            SUM(D.mon10) as mon10,
+            SUM(D.mon11) as mon11,
+            SUM(D.mon12) as mon12,
+            SUM(mon1+mon2+mon3+mon4+mon5+mon6+mon7+mon8+mon9+mon10+mon11+mon12) as totalcnt,
+            (SUM(mon1+mon2+mon3+mon4+mon5+mon6+mon7+mon8+mon9+mon10+mon11+mon12) / 12 ) as avg,
+            CONVERT(FLOAT, ((SUM(SUM(mon1+mon2+mon3+mon4+mon5+mon6+mon7+mon8+mon9+mon10+mon11+mon12)) over() ) / 2 ))as totalcnt2
+
+            FROM (SELECT A.custcd,
+            A.spjangcd,
+            A.actcd,
+            B.actnm,
+            A.equpcd,
+            B.qty,
+            LEFT(A.compdate, 4) as compyear,
+            LEFT(A.compdate, 6) as compmon,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '01' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon1,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '02' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon2,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '03' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon3,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '04' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon4,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '05' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon5,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '06' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon6,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '07' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon7,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '08' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon8,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '09' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon9,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '10' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon10,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '11' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon11,
+            (CASE WHEN LEFT(A.compdate, 6) = LEFT(A.compdate, 4) + '12' THEN COUNT(LEFT(A.compdate, 6)) ELSE 0 END) as mon12
+            FROM tb_e411 A WITH(NOLOCK) , TB_E601 B WITH (NOLOCK)
+            WHERE A.spjangcd = B.spjangcd
+            and  A.actcd = B.actcd
+            GROUP BY A.custcd, A.spjangcd, A.actcd, B.actnm, LEFT(A.compdate, 4), LEFT(A.compdate, 6), A.equpcd, B.qty) D
+            WHERE  D.compyear between left(#{frdate}, 4) AND left(#{todate}, 4)
+            AND (D.actcd = #{actcd} OR #{actcd} = '%')
+            GROUP BY
+            rollup((D.custcd, D.spjangcd, D.compyear))) h
+    </select>
+    <select id="GetApp22List002" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        <![CDATA[
+        SELECT a.compyear,
+               a.compmon,
+               sum(a.compcnt) as compcnt
+        FROM (SELECT a.custcd,
+                     a.spjangcd,
+                     q.actnm,
+                  LEFT(a.compdate, 4) + '년' as compyear,
+                  substring(a.compdate, 5, 2) +'월' as compmon,
+                  count(LEFT(a.compdate, 6)) as compcnt
+              FROM tb_e411 a WITH(NOLOCK)
+                  LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+              WHERE LEFT(a.compdate, 4) BETWEEN left(#{frdate}, 4) and left(#{todate}, 4)
+                AND a.actcd = #{actcd}
+              GROUP BY a.custcd, a.spjangcd,  a.actcd, LEFT(a.compdate, 4), LEFT(a.compdate, 6), substring(a.compdate, 5, 2), q.actnm) a
+        GROUP BY a.compyear, a.compmon
+        ]]>
+    </select>
+</mapper>

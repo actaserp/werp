@@ -178,15 +178,15 @@
                                 </ul>
                                 <div class="right">
                                     <div class="input_wrap">
-                                        <h5>KT API ID</h5>
-                                        <input type="text" id="calluserid" th:value="${userformDto.calluserid}">
+                                        <h5>콜 API ID</h5>
+                                        <input type="text" id="calluserid" th:value="${userformDto.calluserid}"  disabled>
                                     </div>
                                     <div class="input_wrap">
                                         <h5>PW</h5>
-                                        <input type="password" id="calluserpw" th:value="${userformDto.calluserpw}">
+                                        <input type="password" id="calluserpw" th:value="${userformDto.calluserpw}" disabled>
                                     </div>
-                                    <div class="button button1"><button onclick="menu01_btn();"><img th:src="@{/assets/images/in1.png}" alt=""></button></div>
-                                    <!-- <div class="button button2"><button><img th:src="@{/assets/images/in2.png}" alt=""></button></div> -->
+                                    <!-- <div class="button button1"><button onclick="menu01_btn();"><img th:src="@{/assets/images/in1.png}" alt=""></button></div> -->
+                                    <div class="button button2"><button><img th:src="@{/assets/images/in2.png}" alt="로그아웃하시겠습니까?" onclick="logout()"></button></div>
                                     <!-- <div class="modal_close cancerButton"><button><img th:src="@{/assets/images/modal_close.png}" alt=""></button></div> -->
 
                                 </div>
@@ -3346,9 +3346,15 @@
 
     }   
 
-    function menu01_btn(){  
-                var win = window.open("/app01/ktcall",   "codetab"); 
+    function logout(){   
+            if (!confirm("로그아웃하시겠습니까?") ){
+             return    
+            }
+            location.href = "/" ;
         }  
+    // function menu01_btn(){  
+    //             var win = window.open("/app01/ktcall",   "codetab"); 
+    //     }  
 
     $(document).ready(function() {  
         getToday()
