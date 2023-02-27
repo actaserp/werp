@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.Elvlrt.AppE038ElvlrtMapper">
+
+    <select id="GetE038List"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        SELECT A.custcd,
+        A.spjangcd,
+        A.rptdate,
+        A.perid,
+        A.rptnum,
+        A.cltcd,
+        a.actcd,
+        a.actnm,
+        a.equpcd,
+        m.equpnm,
+        a.carcd,
+        r.carnum,
+        r.model,
+        A.wkcd,
+        t.businm AS wktext,
+        A.frtime,
+        A.totime,
+        isnull(A.km,0) as km ,
+        A.remark,
+        A.startkm,
+        A.endkm,
+        convert(numeric, dbo.df_nm_rtn1('tb_e037_km', a.custcd, a.perid, a.rptdate, '')) as monkm,
+        convert(numeric, dbo.df_nm_rtn1('tb_e411_daycount', a.custcd, a.perid, a.rptdate, '')) as daycount,
+        convert(numeric, dbo.df_nm_rtn1('tb_e411_moncount', a.custcd, a.perid, a.rptdate, '')) as compcount
+        FROM TB_E038 A WITH(NOLOCK)
+        LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+        LEFT OUTER JOIN tb_e047 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.carcd = r.carcd)
+        LEFT OUTER JOIN tb_e021 t WITH(NOLOCK) ON (a.custcd = t.custcd AND a.spjangcd = t.spjangcd AND a.wkcd = t.busicd)
+        WHERE A.custcd = #{custcd}
+        AND A.spjangcd = #{spjangcd}
+        AND A.rptdate like '%#{rptdate}%'
+
+    </select>
+
+</mapper>

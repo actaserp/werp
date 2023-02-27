@@ -67,6 +67,7 @@ public class PopupDto {
     private String memo;
     private String groupcd;
 
+    private String rptdate;
 
 
 

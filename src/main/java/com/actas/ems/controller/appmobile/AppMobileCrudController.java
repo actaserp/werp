@@ -1163,6 +1163,8 @@ public class AppMobileCrudController {
     )
     public Object MListForm(@RequestParam Map<String, String> param,
                                Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -1259,6 +1261,8 @@ public class AppMobileCrudController {
     )
     public Object EListForm(@RequestParam Map<String, String> param,
                             Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -1355,6 +1359,9 @@ public class AppMobileCrudController {
     )
     public Object DListForm(@RequestParam Map<String, String> param,
                             Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
