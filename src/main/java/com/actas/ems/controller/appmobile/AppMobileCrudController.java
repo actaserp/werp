@@ -151,6 +151,9 @@ public class AppMobileCrudController {
     public Object E411ListForm(@RequestParam Map<String, String> param,
                                Model model, HttpServletRequest request) throws Exception{
 
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date  = new Date(System.currentTimeMillis());
@@ -252,7 +255,12 @@ public class AppMobileCrudController {
     public Object JA001ListForm(@RequestParam Map<String, String> param,
                                 Model model, HttpServletRequest request) throws Exception{
 
+
+
         String ls_dbnm = "";
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         param.forEach((key, values) -> {
             switch (key){
@@ -315,6 +323,12 @@ public class AppMobileCrudController {
 
         String ls_dbnm = "";
 
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -371,6 +385,10 @@ public class AppMobileCrudController {
                                  Model model, HttpServletRequest request) throws Exception{
 
         String ls_dbnm = "";
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
 
         param.forEach((key, values) -> {
             switch (key){
@@ -432,6 +450,10 @@ public class AppMobileCrudController {
     )
     public Object MFIXListForm(@RequestParam Map<String, String> param,
                                  Model model, HttpServletRequest request) throws Exception{
+
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         String ls_dbnm = "";
 
@@ -1526,6 +1548,9 @@ public class AppMobileCrudController {
     public Object AppRemonmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
         String ls_dbnm = "";
         String ls_remonm = "";
         param.forEach((key, values) -> {
@@ -1565,6 +1590,12 @@ public class AppMobileCrudController {
             , HttpServletRequest request){
         String ls_dbnm = "";
         String ls_pernm = "";
+
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":

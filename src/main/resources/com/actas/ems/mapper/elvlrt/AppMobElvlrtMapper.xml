@@ -266,7 +266,9 @@ select
 		THEN '미기입'
 		ELSE b.elno
         END elno,
+                    b.equpcd as equpcd,
 					b.equpnm as equpnm,
+                    a.actcd as actcd,
 					a.actnm as actnm,
 					isnull(a.address, '') + isnull(a.address2, '') as actaddr ,
 					isnull(a.tel, '') as tel,

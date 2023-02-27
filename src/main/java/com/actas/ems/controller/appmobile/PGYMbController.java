@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.File;
@@ -87,6 +88,9 @@ public class PGYMbController {
     public Object JA001ListForm(@RequestParam Map<String, String> param,
                                 Model model, HttpServletRequest request) throws Exception{
 
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
 
         String elvnum = (String) param.get("elvnum");
 
@@ -144,6 +148,9 @@ public class PGYMbController {
     public String UpdateListForm(@RequestParam Map<String, String> param,
                                  Model model, HttpServletRequest request) throws Exception{
 
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
 
         /*업로드 파일 정보를 담을 리스트*/
         List<AttachDTO> attachList = new ArrayList<>();
@@ -196,6 +203,11 @@ public class PGYMbController {
         String ls_fseq = "";
         String ls_fflag = "";
         List<AttachDTO>  attach =new ArrayList<>();
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -256,9 +268,12 @@ public class PGYMbController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
     )
     public Object MNOTICEListForm(@RequestParam Map<String, String> param,
-                                  Model model, HttpServletRequest request) throws Exception{
+                                  Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         String ls_dbnm = "";
+
+
+
 
         param.forEach((key, values) -> {
             switch (key){
@@ -272,6 +287,10 @@ public class PGYMbController {
 
             }
         });
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
         ls_dbnm = userformDto.getDbnm();
         Object app05  = app05Service.GetMNoticeList(app05Dto);
         switch (ls_dbnm){
@@ -280,6 +299,8 @@ public class PGYMbController {
 
 
                 try{
+
+                    log.info(userformDto.getUserid() + "chkeck!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     model.addAttribute("app05Dto", app05Service.GetMNoticeList(app05Dto));
 
                 }catch (DataAccessException e){
@@ -321,6 +342,10 @@ public class PGYMbController {
         String ls_dbnm = "";
         String ls_fseq = "";
         String ls_fflag = "";
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
         List<AttachDTO>  attach =new ArrayList<>();
         param.forEach((key, values) -> {
             switch (key){
@@ -388,6 +413,10 @@ public class PGYMbController {
         /*업로드 파일 정보를 담을 리스트*/
         List<AttachDTO> attachList = new ArrayList<>();
 
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         param.forEach((key, values) -> {
             switch (key){
                 case "nsubject":
@@ -433,6 +462,9 @@ public class PGYMbController {
     )
     public String e_411listSaveForm(@RequestParam Map<String, String> param,
                                     Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         String ls_dbnm = "";
         String ls_gregicd = "";
@@ -742,6 +774,11 @@ public class PGYMbController {
     public Object PLANlistForm(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         param.forEach((key, values) -> {
             switch (key){
@@ -834,6 +871,10 @@ public class PGYMbController {
     )
     public String mfixlistSaveForm(@RequestParam Map<String, String> param,
                                    Model model, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
 
         String ls_dbnm = "";
 
