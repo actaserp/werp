@@ -98,7 +98,6 @@ public class AuthCrudMController {
         ls_spjangcd = "ZZ";
         userformDto.setCustcd(ls_custcd);
         userformDto.setSpjangcd(ls_spjangcd);
-
         HttpSession session = request.getSession();
         session.setAttribute("userformDto",userformDto);
 

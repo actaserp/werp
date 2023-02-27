@@ -491,6 +491,8 @@ public class AppMobileCrudController {
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
         String ls_hseq = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -501,7 +503,7 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
-
+        session.setAttribute("userformDto",userformDto);
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -536,7 +538,6 @@ public class AppMobileCrudController {
                 break;
 
         }
-
         return appMob003tDtoList;
     }
 
