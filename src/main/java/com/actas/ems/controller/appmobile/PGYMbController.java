@@ -53,7 +53,7 @@ public class PGYMbController {
 
     private final App10ElvlrtService app10ElvlrtServiceservice;
 
-
+    AppMobPlanDto appMobPlanDto = new AppMobPlanDto();
     private final App10ElvlrtMobService app10ElvlrtMobService;
 
     private final App05ElvlrtService app05Service;
@@ -61,6 +61,7 @@ public class PGYMbController {
     App07ElvlrtDto app07Dto = new App07ElvlrtDto();
 
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
+    List<AppMobPlanDto> appMobplanDtoList = new ArrayList<>();
 
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
@@ -735,6 +736,69 @@ public class PGYMbController {
 
 
 
+    @RequestMapping(value = "/planlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object PLANlistForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actcd":
+                    appMobPlanDto.setActcd(values.toString());
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                appMobPlanDto.setCustcd(ls_custcd);
+                appMobPlanDto.setSpjangcd(ls_spjangcd);
+
+                try {
+                    appMobplanDtoList = app10ElvlrtMobService.GetplanList(appMobPlanDto);
+                    model.addAttribute("appMobplanDtoList",appMobplanDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return appMobplanDtoList;
+    }
+
+
+
 
 
     public String CountSeq(String compdate){
@@ -759,6 +823,168 @@ public class PGYMbController {
         Date date = new Date(System.currentTimeMillis());
 
         return formatter.format(date);
+    }
+
+
+
+    /**박광열 점검계획 저장 **/
+    @RequestMapping(value = "/mfixsave", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String mfixlistSaveForm(@RequestParam Map<String, String> param,
+                                   Model model, HttpServletRequest request) throws Exception {
+
+        String ls_dbnm = "";
+
+        String ls_perid;
+        String ls_pernm;
+
+
+        param.forEach((key, values) -> {
+            switch (key) {
+
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+
+                case "plandate":
+                    String via = values.replaceAll("-","");
+                    appMobPlanDto.setPlandate(via);
+                    break;
+
+                case "actcd":
+                    appMobPlanDto.setActcd(values.toString());
+                    break;
+                case "actnm":
+                    appMobPlanDto.setActnm(values.toString());
+                    break;
+                case "equpcd":
+                    appMobPlanDto.setEqupcd(values.toString());
+                    break;
+                case "equpnm":
+                    appMobPlanDto.setEqupnm(values.toString());
+                    break;
+
+                case "perid":
+                    appMobPlanDto.setPerid(values.toString());
+                    break;
+
+
+                case "kcpernm":
+                    appMobPlanDto.setKcpernm(values.toString());
+
+                case "remark":
+                    appMobPlanDto.setRemark(values.toString());
+                    break;
+                case "qty":
+                    appMobPlanDto.setQty(values);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        ls_dbnm = userformDto.getDbnm();
+        ls_perid = appMobPlanDto.getPerid();
+        ls_pernm = appMobPlanDto.getKcpernm();
+
+
+
+        int stCnt = ls_perid.indexOf('[') + 1 ;
+        int etCnt = ls_perid.indexOf(']');
+        ls_perid = ls_perid.substring(stCnt, etCnt);
+
+        ls_pernm = ls_pernm.substring(0, ls_pernm.indexOf('[')).trim();
+
+
+        appMobPlanDto.setPerid(ls_perid);
+        appMobPlanDto.setKcpernm(ls_pernm);
+       /* stCnt = 0; etCnt = 0;
+        stCnt = ls_regicd.indexOf('[') + 1 ;
+        etCnt = ls_regicd.indexOf(']');
+        ls_regicd = ls_regicd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resucd.indexOf('[') + 1 ;
+        etCnt = ls_resucd.indexOf(']');
+        ls_resucd = ls_resucd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resultcd.indexOf('[') + 1 ;
+        etCnt = ls_resultcd.indexOf(']');
+        ls_resultcd = ls_resultcd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_actperid.indexOf('[') + 1;
+        etCnt = ls_actperid.indexOf(']');
+        ls_actperid = ls_actperid.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_remocd.indexOf('[') + 1;
+        etCnt = ls_remocd.indexOf(']');
+        ls_remocd = ls_remocd.substring(stCnt, etCnt);*/
+
+
+        switch (ls_dbnm){
+
+            case "ELV_LRT":
+                try {
+
+                    app10tDto.setCustcd("ELVLRT");
+                    app10tDto.setSpjangcd("ZZ");
+
+                    log.info(userformDto.getDbnm());
+                    log.info(appMobPlanDto.getPlandate());
+                    log.info(appMobPlanDto.getActcd());
+                    log.info(appMobPlanDto.getActnm());
+                    log.info(appMobPlanDto.getEqupcd());
+                    log.info(appMobPlanDto.getEqupnm());
+                    log.info(appMobPlanDto.getPerid());
+                    log.info(appMobPlanDto.getKcpernm());
+                    log.info(appMobPlanDto.getRemark());
+                    log.info(appMobPlanDto.getQty());
+
+
+           /* log.info(app10tDto.getDivicd());
+            log.info(app10tDto.getCltcd());
+            log.info(app10tDto.getActperid());
+            log.info(app10tDto.getRemocd());
+            log.info(app10tDto.getRemoremark());
+            log.info(app10tDto.getRecenum());
+            log.info(app10tDto.getRecetime());
+            log.info(app10tDto.getArrivtime());
+
+            log.info(app10tDto.getArrivdate());
+            log.info(app10tDto.getDatetime());
+            log.info(app10tDto.getDatetime2());
+            log.info(app10tDto.getComptime());
+            log.info(app10tDto.getArrivtime());
+            log.info(ls_resulttime);
+
+*/
+
+
+                /*boolean result = app10ElvlrtMobService.Insertplan(appMobPlanDto);
+                if (!result) {
+                    return "error";
+                }*/
+
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return "success";
     }
 
 }

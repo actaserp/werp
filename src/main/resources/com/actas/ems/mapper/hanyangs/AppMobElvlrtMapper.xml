@@ -442,5 +442,36 @@ order by recedate desc;
 
     <!--박광열 끝-->
 
+    <!--점검계획 조회-->
+    <select id="GetplanList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        SELECT isnull(a.custcd, '') as custcd,
+               isnull(a.spjangcd, '') as spjangcd,
+               isnull(a.plandate, '') as plandate,
+               isnull(a.cltcd, '') as cltcd,
+               isnull(a.actcd, '') as actcd,
+               isnull(a.actnm, '') as actnm,
+               isnull(a.equpcd, '') as equpcd,
+               isnull(h.equpnm, '') as equpnm,
+               isnull(a.perid, '') as perid,
+               isnull(d.pernm, '') as pernm,
+               isnull(a.remark, '') as remark,
+               isnull(a.kcpernm, '') as kcpernm,
+               isnull(a.kcspnm, '') as kcspnm,
+               isnull(a.indate, '') as indate,
+               isnull(CONVERT(varchar, a.qty), '') as qty
+        FROM tb_e073 a WITH(NOLOCK)
+						 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)
+        WHERE a.custcd like CONCAT('%',#{custcd},'%')
+          AND a.spjangcd like CONCAT('%',#{spjangcd},'%')
+          AND a.actcd like CONCAT('%',#{actcd},'%')
+        order by plandate asc
+    </select>
+
+    <!--점검계획 등록-->
+    <insert id="Insertplan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        insert into TB_E073 (custcd, spjangcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate) values (#{custcd}, #{spjangcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate})
+    </insert>
+
 
 </mapper>

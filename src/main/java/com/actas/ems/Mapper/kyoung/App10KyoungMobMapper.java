@@ -51,4 +51,10 @@ public interface App10KyoungMobMapper {
     public int Insert10Manul(App10ElvlrtDto perm);
 
     public int Update10Manul(App10ElvlrtDto perm);
+
+
+    public List<AppMobPlanDto> GetplanList(AppMobPlanDto parm);
+
+    /**박광열 점검계획 등록*/
+    public int Insertplan(AppMobPlanDto perm);
 }

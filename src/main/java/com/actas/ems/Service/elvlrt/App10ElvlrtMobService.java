@@ -391,4 +391,25 @@ public class App10ElvlrtMobService {
         }
         return true;
     }
+
+
+    /**점검계획*/
+    public List<AppMobPlanDto> GetplanList(AppMobPlanDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetplanList(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetplanList(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetplanList(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetplanList(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetplanList(parm);
+            default:
+                List<AppMobPlanDto> object = null;
+                return object;
+        }
+    }
 }
