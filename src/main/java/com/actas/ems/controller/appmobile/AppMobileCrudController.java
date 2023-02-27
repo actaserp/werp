@@ -551,6 +551,8 @@ public class AppMobileCrudController {
         String ls_dbnm = "";
         String ls_hseq = "";
         String ls_hflag = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         List<AttachDTO>  attach =new ArrayList<>();
         param.forEach((key, values) -> {
             switch (key){
@@ -568,6 +570,8 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
         ls_hseq = attachDTO.getBoardIdx();
         ls_hflag = attachDTO.getFlag();
         ls_spjangcd = "ZZ";
@@ -616,6 +620,8 @@ public class AppMobileCrudController {
         String ls_dbnm = "";
         String ls_hseq = "";
         String ls_hflag = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         List<AttachDTO>  attach =new ArrayList<>();
         param.forEach((key, values) -> {
             switch (key){
@@ -633,6 +639,8 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
         ls_hseq = attachDTO.getBoardIdx();
         ls_hflag = attachDTO.getFlag();
         ls_spjangcd = "ZZ";
@@ -678,6 +686,8 @@ public class AppMobileCrudController {
             , Model model
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -688,6 +698,8 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -700,7 +712,7 @@ public class AppMobileCrudController {
                     model.addAttribute("appMob004tDtoList",appMob004tDtoList);
 
                 }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(" DataAccessException ================================================================");
                     log.info(e.toString());
                     throw new AttachFileException(" DataAccessException to save");
                     //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
@@ -732,6 +744,8 @@ public class AppMobileCrudController {
             , Model model
             , HttpServletRequest request) throws Exception{
         String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -742,6 +756,8 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -778,7 +794,7 @@ public class AppMobileCrudController {
         return appMob005tDtoList;
     }
 
-    //  고장내용조회
+    //  댓글내용조회
     @RequestMapping(value = "/comslist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -786,6 +802,8 @@ public class AppMobileCrudController {
             , Model model
             , HttpServletRequest request){
         String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
         param.forEach((key, values) -> {
             switch (key){
                 case "dbnm":
@@ -796,6 +814,8 @@ public class AppMobileCrudController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
         ls_spjangcd = "ZZ";
         ls_custcd = "ELVLRT";
 
