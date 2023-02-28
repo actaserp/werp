@@ -474,4 +474,15 @@ order by recedate desc;
     </insert>
 
 
+    <!--사업자 코드 조회-->
+    <select id="GetcltnmList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        select isnull(cltcd, ''),
+               isnull(cltnm, ''),
+               isnull(saupnum, ''),
+               isnull(prenm, '')
+        from TB_XCLIENT
+        where cltnm like CONCAT('%',#{cltnm},'%')
+    </select>
+
+
 </mapper>

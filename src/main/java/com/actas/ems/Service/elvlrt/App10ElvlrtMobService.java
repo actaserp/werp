@@ -96,7 +96,7 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
-//    {return app10ElvMobMapper.GetApp0bMobList001(parm);}
+    //    {return app10ElvMobMapper.GetApp0bMobList001(parm);}
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){
@@ -115,7 +115,7 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
-//    {return app10ElvMobMapper.GetApp28MobList001(parm);}
+    //    {return app10ElvMobMapper.GetApp28MobList001(parm);}
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){
@@ -412,4 +412,68 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
+
+    /**점검계획 등록*/
+    public boolean Insertplan(AppMobPlanDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.Insertplan(parm);
+                if(queryResult < 1){  //값 확인
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            default:
+                break;
+        }
+        return true;
+    }
+
+
+
+    /**사업자 조회*/
+    public List<AppMobPlanDto> GetcltnmList(AppMobPlanDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetcltnmList(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetcltnmList(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetcltnmList(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetcltnmList(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetcltnmList(parm);
+            default:
+                List<AppMobPlanDto> object = null;
+                return object;
+        }
+    }
+
 }

@@ -183,7 +183,7 @@ public class App10ElvlrtService {
 
     @Transactional
     public boolean Updateresult1(App10ElvlrtDto parm){
-        int queryResult = 1;
+
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){
             case "ELV_LRT":

@@ -80,6 +80,10 @@ public class AppMobileCrudController {
     public Object E401ListForm(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
         String ls_dbnm = "";
         param.forEach((key, values) -> {
             switch (key){
@@ -860,6 +864,11 @@ public class AppMobileCrudController {
     public Object AppContnmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         String ls_contnm = "";
         param.forEach((key, values) -> {
@@ -897,6 +906,11 @@ public class AppMobileCrudController {
     public Object AppGreginmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         String ls_greginm = "";
         param.forEach((key, values) -> {
@@ -936,6 +950,11 @@ public class AppMobileCrudController {
     public Object AppReginmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         String ls_gregicd = "";
         String ls_reginm = "";
@@ -981,6 +1000,11 @@ public class AppMobileCrudController {
     public Object AppResunmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         String ls_resunm = "";
         param.forEach((key, values) -> {
@@ -1018,6 +1042,11 @@ public class AppMobileCrudController {
     public Object AppResultnmList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
         String ls_dbnm = "";
         String ls_resultnm = "";
         param.forEach((key, values) -> {
@@ -1056,6 +1085,10 @@ public class AppMobileCrudController {
     public Object AppE411SaveList(@RequestParam Map<String, String> param
             , Model model
             , HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
         String ls_dbnm = "";
         String ls_gregicd = "";
         String ls_regicd = "";

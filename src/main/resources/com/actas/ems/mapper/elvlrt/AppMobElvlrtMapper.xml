@@ -406,8 +406,8 @@ order by recedate desc;
     <!--박광열-->
 
     <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,    actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result", cltcd, divicd, remocd, actperid, remoremark, arrivdate, datetime, datetime2, comptime, indate, arrivtime, resulttime) values
-            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1', #{cltcd}, #{divicd}, #{remocd}, #{actperid}, #{remoremark}, #{arrivdate}, #{datetime}, #{datetime2}, #{comptime}, #{indate}, #{arrivtime}, #{resulttime})
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,    actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result", remocd, actperid, remoremark, arrivdate, datetime, datetime2, comptime, indate, arrivtime, resulttime) values
+            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1', #{remocd}, #{actperid}, #{remoremark}, #{arrivdate}, #{datetime}, #{datetime2}, #{comptime}, #{indate}, #{arrivtime}, #{resulttime})
     </insert>
 
 
@@ -468,13 +468,24 @@ order by recedate desc;
         WHERE a.custcd like CONCAT('%',#{custcd},'%')
           AND a.spjangcd like CONCAT('%',#{spjangcd},'%')
           AND a.actcd like CONCAT('%',#{actcd},'%')
-        order by plandate asc
+        order by plandate desc
     </select>
 
     <!--점검계획 등록-->
     <insert id="Insertplan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
-        insert into TB_E073 (custcd, spjangcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate) values (#{custcd}, #{spjangcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate})
+        insert into TB_E073 (custcd, spjangcd, cltcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate) values (#{custcd}, #{spjangcd}, #{cltcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate})
     </insert>
 
+
+    <!--사업자 코드 조회-->
+    <select id="GetcltnmList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        select isnull(cltcd, '') as cltcd,
+               isnull(cltnm, '') as cltnm,
+               isnull(saupnum, '') as saupnum,
+               isnull(prenm, '') as prenm
+        from TB_XCLIENT
+        where cltnm like CONCAT('%',#{cltnm},'%')
+
+    </select>
 
 </mapper>

@@ -474,5 +474,15 @@ order by recedate desc;
         insert into TB_E073 (custcd, spjangcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate) values (#{custcd}, #{spjangcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate})
     </insert>
 
+    <!--사업자 코드 조회-->
+    <select id="GetcltnmList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        select isnull(cltcd, ''),
+               isnull(cltnm, ''),
+               isnull(saupnum, ''),
+               isnull(prenm, '')
+        from TB_XCLIENT
+        where cltnm like CONCAT('%',#{cltnm},'%')
+    </select>
+
 
 </mapper>

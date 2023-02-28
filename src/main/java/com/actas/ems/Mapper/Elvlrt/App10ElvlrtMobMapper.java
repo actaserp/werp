@@ -58,4 +58,8 @@ public interface App10ElvlrtMobMapper {
 
     /**박광열 점검계획 등록*/
     public int Insertplan(AppMobPlanDto perm);
+
+    /**사업자명 조회*/
+    public List<AppMobPlanDto> GetcltnmList(AppMobPlanDto parm);
+
 }

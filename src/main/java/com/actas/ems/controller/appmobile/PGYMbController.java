@@ -463,8 +463,7 @@ public class PGYMbController {
     public String e_411listSaveForm(@RequestParam Map<String, String> param,
                                     Model model, HttpServletRequest request) throws Exception{
 
-        HttpSession session = request.getSession();
-        session.setAttribute("userformDto", userformDto);
+
 
         String ls_dbnm = "";
         String ls_gregicd = "";
@@ -479,6 +478,10 @@ public class PGYMbController {
 
         String ls_actperid = "";
         String ls_remocd = "";
+
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
 
         param.forEach((key, values) -> {
@@ -921,6 +924,8 @@ public class PGYMbController {
                 case "qty":
                     appMobPlanDto.setQty(values);
                     break;
+                case "cltcd":
+                    appMobPlanDto.setCltcd(values.toString());
                 default:
                     break;
             }
@@ -972,8 +977,8 @@ public class PGYMbController {
             case "ELV_LRT":
                 try {
 
-                    app10tDto.setCustcd("ELVLRT");
-                    app10tDto.setSpjangcd("ZZ");
+                    appMobPlanDto.setCustcd("ELVLRT");
+                    appMobPlanDto.setSpjangcd("ZZ");
 
                     log.info(userformDto.getDbnm());
                     log.info(appMobPlanDto.getPlandate());
@@ -985,35 +990,16 @@ public class PGYMbController {
                     log.info(appMobPlanDto.getKcpernm());
                     log.info(appMobPlanDto.getRemark());
                     log.info(appMobPlanDto.getQty());
+                    log.info(appMobPlanDto.getCltcd());
 
-
-           /* log.info(app10tDto.getDivicd());
-            log.info(app10tDto.getCltcd());
-            log.info(app10tDto.getActperid());
-            log.info(app10tDto.getRemocd());
-            log.info(app10tDto.getRemoremark());
-            log.info(app10tDto.getRecenum());
-            log.info(app10tDto.getRecetime());
-            log.info(app10tDto.getArrivtime());
-
-            log.info(app10tDto.getArrivdate());
-            log.info(app10tDto.getDatetime());
-            log.info(app10tDto.getDatetime2());
-            log.info(app10tDto.getComptime());
-            log.info(app10tDto.getArrivtime());
-            log.info(ls_resulttime);
-
-*/
-
-
-                /*boolean result = app10ElvlrtMobService.Insertplan(appMobPlanDto);
-                if (!result) {
-                    return "error";
-                }*/
+                    boolean result = app10ElvlrtMobService.Insertplan(appMobPlanDto);
+                    if (!result) {
+                        return "error";
+                    }
 
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("1231321321231231321321");
                 }
                 break;
             case "ELV_KYOUNG":
@@ -1026,6 +1012,73 @@ public class PGYMbController {
                 break;
         }
         return "success";
+    }
+
+
+
+    /**사업자 조회*/
+    @RequestMapping(value = "/cltnmlist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object EListForm(@RequestParam Map<String, String> param,
+                            Model model, HttpServletRequest request) throws Exception{
+
+
+        String ls_dbnm = "";
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "cltnm":
+                    appMobPlanDto.setCltnm(values.toString());
+                    break;
+
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                try{
+                    appMobplanDtoList = app10ElvlrtMobService.GetcltnmList(appMobPlanDto);
+                    model.addAttribute("appMobplanDtoList", appMobplanDtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return appMobplanDtoList;
     }
 
 }
