@@ -35,7 +35,9 @@
         LEFT OUTER JOIN tb_e021 t WITH(NOLOCK) ON (a.custcd = t.custcd AND a.spjangcd = t.spjangcd AND a.wkcd = t.busicd)
         WHERE A.custcd = #{custcd}
         AND A.spjangcd = #{spjangcd}
-        AND A.rptdate like '%#{rptdate}%'
+        <if test="rptdate != null">
+        AND A.rptdate = #{rptdate}
+        </if>
 
     </select>
 
