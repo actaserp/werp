@@ -2,6 +2,7 @@ package com.actas.ems.controller.appmobile;
 
 
 import com.actas.ems.DTO.AttachDTO;
+import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
@@ -52,8 +53,9 @@ public class AppMobileCrudController {
     List<App14ElvlrtDto> app14DtoList = new ArrayList<>();
     List<App26ElvlrtDto> app26DtoList = new ArrayList<>();
     List<App07ElvlrtDto> app07DtoList = new ArrayList<>();
+    CommonDto CommonDto  = new CommonDto();;
+    List<CommonDto> comlistDto = new ArrayList<>();
     App07ElvlrtDto app07Dto = new App07ElvlrtDto();
-
     App06ElvlrtDto app06Dto = new App06ElvlrtDto();
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
@@ -508,6 +510,91 @@ public class AppMobileCrudController {
     }
 
 
+
+/** 수리노하우 popup 조회부터 ~ Com754 **/
+
+//  수리
+@RequestMapping(value = "/Com754to00", method = RequestMethod.POST,
+        headers = ("content-type=multipart/*"),
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+public Object com0List(@RequestParam Map<String, String> param
+        , Model model
+        , HttpServletRequest request){
+    String ls_dbnm = "";
+    String ls_code = "";
+    String ls_cnam = "";
+    HttpSession session = request.getSession();
+    session.setAttribute("userformDto", userformDto);
+    param.forEach((key, values) -> {
+        switch (key){
+            case "dbnm":
+                userformDto.setDbnm(values.toString());
+                break;
+            case "code":
+                CommonDto.setCode(values.toString());
+                break;
+            default:
+                break;
+        }
+    });
+    ls_dbnm = userformDto.getDbnm();
+    if(ls_cnam.length() == 0){
+        ls_cnam = "%";
+    }
+    try {
+        ls_code = CommonDto.getCode();
+        CommonDto.setCode(ls_code);
+        CommonDto.setCnam(ls_cnam);
+        comlistDto = service.code754get06List();
+        model.addAttribute("CommonDto", comlistDto);
+    }catch (IllegalStateException e){
+        model.addAttribute("errorMessage", e.getMessage());
+        return "error";
+    }
+    return comlistDto;
+}
+
+    //  부품
+    @RequestMapping(value = "/Com754to01", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object com1List(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        String ls_code = "";
+        String ls_cnam = "";
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "code":
+                    CommonDto.setCode(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        if(ls_cnam.length() == 0){
+            ls_cnam = "%";
+        }
+        try {
+            ls_code = CommonDto.getCode();
+            CommonDto.setCode(ls_code);
+            CommonDto.setCnam(ls_cnam);
+            comlistDto = service.code754get08List();
+            model.addAttribute("CommonDto", comlistDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return comlistDto;
+    }
 
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),

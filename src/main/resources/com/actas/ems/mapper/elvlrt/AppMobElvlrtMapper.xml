@@ -49,8 +49,8 @@
                       isnull(hseq, '' ) as hseq,
                       Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
                       Case when  hgroupcd = '' then ''
-                           when hgroupcd = '01' then '사내공지'
-                           when hgroupcd = '02' then '고객공지'
+                           when hgroupcd = '00' then '수리노하우'
+                           when hgroupcd = '01' then '부품노하우'
                            else hgroupcd
                           end as hgroupcd,
                       isnull(hsubject, '' ) as hsubject,
@@ -107,11 +107,7 @@
             isnull(bseq, '' ) as bseq,
             Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
             Case when bgourpcd = '' then ''
-            when bgourpcd = '01' then '부품교체'
-            when bgourpcd = '02' then '수리공사'
-            when bgourpcd = '002' then '수리공사'
-            when bgourpcd = '03' then '인건비'
-            when bgourpcd = '04' then '무상처리'
+            when bgourpcd = '01' then '공통'
             else bgourpcd
         end as bgourpcd,
 
@@ -152,13 +148,20 @@ select
     order by subkey desc
     </select>
 
-    <select id="GetComm751List"  resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+    <select id="code754get06List"  resultType="com.actas.ems.DTO.CommonDto">
         <![CDATA[
-        SELECT  com_code AS code, com_cnam AS cnam
-        FROM     dbo.tb_ca510 WITH (NOLOCK)
-        WHERE  (com_cls = '751') AND (com_code <> '00')
+        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '754'
+                                                                               order by com_cls
+
         ]]>
     </select>
+    <select id="code754get08List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '755'
+                                                                              AND (com_code <> '00') order by com_cls
+        ]]>
+    </select>
+
     <select id="GetAppMobList_002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
         <![CDATA[ sELECT top(50)
                     b.actnm as actnm,

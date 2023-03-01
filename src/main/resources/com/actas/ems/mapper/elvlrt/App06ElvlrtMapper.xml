@@ -68,7 +68,7 @@
         <![CDATA[
             SELECT  com_code AS code, com_cnam AS cnam
             FROM     dbo.tb_ca510 WITH (NOLOCK)
-            WHERE  (com_cls = '751') AND (com_code <> '00')
+            WHERE  (com_cls = '754')
          ]]>
     </select>
     <select id="GetComm751BlankList"  resultType="com.actas.ems.DTO.CommonDto">

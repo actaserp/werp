@@ -2,6 +2,7 @@ package com.actas.ems.Mapper.Elvlrt;
 
 
 import com.actas.ems.DTO.AttachDTO;
+import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
@@ -26,6 +27,8 @@ public interface App10ElvlrtMobMapper {
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
+    public List<CommonDto> code754get06List() ;
+    public List<CommonDto> code754get08List();
 
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);

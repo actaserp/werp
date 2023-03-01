@@ -1,5 +1,6 @@
 package com.actas.ems.Service.elvlrt;
 
+import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.DTO.Elvlrt.App06ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App16ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.AppMob001tDto;
@@ -134,13 +135,45 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
-//    {return app10ElvMobMapper.GetApp28MobList002(parm);}
 
+    /** app03-04 codenum **/
+    public List<CommonDto> code754get06List(){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.code754get06List();
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.code754get06List();
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.code754get06List();
+            case "nmyang":
+                return  app10ElvMobMapperN.code754get06List();
+            case "hanyangs":
+                return  app10ElvMobMapperH.code754get06List();
+            default:
+                List<CommonDto> object = null;
+                return object;
+        }
+    }
 
-//    public List<AttachDTO> GetApp06MobList002(AttachDTO parm){
-
-//        return app10ElvMobMapper.GetApp06MobList002(parm);
-//    }
+    public List<CommonDto> code754get08List(){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.code754get08List();
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.code754get08List();
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.code754get08List();
+            case "nmyang":
+                return  app10ElvMobMapperN.code754get08List();
+            case "hanyangs":
+                return  app10ElvMobMapperH.code754get08List();
+            default:
+                List<CommonDto> object = null;
+                return object;
+        }
+    }
 
     /**박광열, 현장별고장부위(모바일), view page**/
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm){
