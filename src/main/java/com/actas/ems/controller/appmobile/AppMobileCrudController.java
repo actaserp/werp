@@ -512,8 +512,6 @@ public class AppMobileCrudController {
 
 
 /** 수리노하우 popup 조회부터 ~ Com754 **/
-
-//  수리
 @RequestMapping(value = "/Com754to00", method = RequestMethod.POST,
         headers = ("content-type=multipart/*"),
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -595,6 +593,104 @@ public Object com0List(@RequestParam Map<String, String> param
         }
         return comlistDto;
     }
+    /** app03~05 저장 **/
+
+    public String CountSeq(String yyyymm){
+        String ls_nseq = service.getMHManualMaxSeq(yyyymm);
+        int ll_nseq = 0;
+        if(ls_nseq == null ){
+            ls_nseq = yyyymm + "001";
+        }else{
+            ll_nseq = Integer.parseInt(ls_nseq);
+            ls_nseq = Integer.toString(ll_nseq + 1 );
+        }
+        return ls_nseq;
+    }
+
+    @RequestMapping(value = "/saveeMh", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object MHlUpload(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        boolean result = false;
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "hinputdate":
+                    app06Dto.setHinputdate(values.toString());
+                    break;
+                case "hpernm":
+                    app06Dto.setHpernm(values.toString());
+                    break;
+                case "hmemo":
+                    app06Dto.setHmemo(values.toString());
+                    break;
+                case "hsubject":
+                    app06Dto.setHsubject(values.toString());
+                    break;
+                case "hgroupcd":
+                    app06Dto.setHgroupcd(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
+
+        String hinputdate = app06Dto.getHinputdate();
+        String ls_yeare = hinputdate.substring(0,4);
+        String ls_mm = hinputdate.substring(5,7);
+        String ls_dd = hinputdate.substring(8,10);
+        hinputdate =  ls_yeare + ls_mm + ls_dd;
+        app06Dto.setHinputdate(hinputdate);
+        String hseq = app06Dto.getHseq();
+        ls_spjangcd = "ZZ";
+        try{
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app06Dto.setCustcd(ls_custcd);
+                app06Dto.setSpjangcd(ls_spjangcd);
+
+                                if(hseq == null || hseq.equals("")){
+                                    app06Dto.setHseq(CountSeq(ls_yeare + ls_mm));
+                                    //System.out.println(App06Dto.getHseq());
+                                }else{
+                                    app06Dto.setHseq(hseq);
+                                }
+                app06Dto.setYyyymm(ls_yeare + ls_mm);
+                    /**업데이트 없음**/
+
+                    if(hseq == null || hseq.equals("")){
+                        result = service.InsertMHManual(app06Dto);
+                        if(!result){
+                            return  "error";
+                        }  }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+                    }
+                }
+        catch (DataAccessException e){
+            log.info("문제있음 DataAccessException ================================================================");
+        }
+
+        return "success";
+    }
 
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
@@ -623,8 +719,6 @@ public Object com0List(@RequestParam Map<String, String> param
                 ls_custcd = "ELVLRT";
                 app06Dto.setCustcd(ls_custcd);
                 app06Dto.setSpjangcd(ls_spjangcd);
-
-
                 try {
                     appMob003tDtoList = service.GetApp06MobList001(app06Dto);
                     model.addAttribute("appMob003tDtoList",appMob003tDtoList);
@@ -633,12 +727,9 @@ public Object com0List(@RequestParam Map<String, String> param
                     log.info("App01001Tab01Form DataAccessException ================================================================");
                     log.info(e.toString());
                     throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
                 }catch (Exception ex) {
-//                dispatchException = ex;
                     log.info("App01001Tab01Form Exception ================================================================");
                     log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
                 }
                 break;
             case "ELV_KYOUNG":

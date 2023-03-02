@@ -65,7 +65,12 @@
                     order by hinputdate  DESC , hseq ASC
 
     </select>
-
+    <insert id="InsertMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" >
+        insert into tb_mhmanual (custcd, spjangcd, hseq, hinputdate, hgroupcd, hsubject, hmemo, hpernm) values (#{custcd}, #{spjangcd}, #{hseq}, #{hinputdate}, #{hgroupcd}, #{hsubject}, #{hmemo}, #{hpernm})
+    </insert>
+    <select id="getMHManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(hseq) from tb_mhmanual  where Left(hseq,6) = #{hseq}
+    </select>
     <select id="select06AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
         SELECT idx,
             board_idx as boardIdx
@@ -137,6 +142,8 @@ select
       and subkey = 0
      order by sseq desc
 </select>
+
+
 
     <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
     select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
