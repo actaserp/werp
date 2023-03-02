@@ -53,7 +53,7 @@ public class PGYMbController {
     private  final App05UploadServiceImpl app05UploadService;
 
     private final App10ElvlrtService app10ElvlrtServiceservice;
-
+    List<AttachDTO>  attach =new ArrayList<>();
     AppMobPlanDto appMobPlanDto = new AppMobPlanDto();
     private final App10ElvlrtMobService app10ElvlrtMobService;
 
@@ -202,10 +202,10 @@ public class PGYMbController {
         String ls_dbnm = "";
         String ls_fseq = "";
         String ls_fflag = "";
-        List<AttachDTO>  attach =new ArrayList<>();
+
 
         HttpSession session = request.getSession();
-        session.setAttribute("userformDto", userformDto);
+        userformDto.setDbnm(ls_dbnm);
 
 
         param.forEach((key, values) -> {
@@ -224,6 +224,7 @@ public class PGYMbController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -486,6 +487,10 @@ public class PGYMbController {
 
         param.forEach((key, values) -> {
             switch (key) {
+
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
 
                 case "compdate":
                     app10tDto.setCompdate(values.replaceAll("-",""));
@@ -788,8 +793,8 @@ public class PGYMbController {
                 case "dbnm":
                     userformDto.setDbnm(values.toString());
                     break;
-                case "actcd":
-                    appMobPlanDto.setActcd(values.toString());
+                case "actnm":
+                    appMobPlanDto.setActnm(values.toString());
                 default:
                     break;
             }
@@ -926,6 +931,10 @@ public class PGYMbController {
                     break;
                 case "cltcd":
                     appMobPlanDto.setCltcd(values.toString());
+                    break;
+                case "kcspnm":
+                    appMobPlanDto.setKcspnm(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -946,25 +955,11 @@ public class PGYMbController {
 
         appMobPlanDto.setPerid(ls_perid);
         appMobPlanDto.setKcpernm(ls_pernm);
+
        /* stCnt = 0; etCnt = 0;
         stCnt = ls_regicd.indexOf('[') + 1 ;
         etCnt = ls_regicd.indexOf(']');
         ls_regicd = ls_regicd.substring(stCnt, etCnt);
-
-        stCnt = 0; etCnt = 0;
-        stCnt = ls_resucd.indexOf('[') + 1 ;
-        etCnt = ls_resucd.indexOf(']');
-        ls_resucd = ls_resucd.substring(stCnt, etCnt);
-
-        stCnt = 0; etCnt = 0;
-        stCnt = ls_resultcd.indexOf('[') + 1 ;
-        etCnt = ls_resultcd.indexOf(']');
-        ls_resultcd = ls_resultcd.substring(stCnt, etCnt);
-
-        stCnt = 0; etCnt = 0;
-        stCnt = ls_actperid.indexOf('[') + 1;
-        etCnt = ls_actperid.indexOf(']');
-        ls_actperid = ls_actperid.substring(stCnt, etCnt);
 
         stCnt = 0; etCnt = 0;
         stCnt = ls_remocd.indexOf('[') + 1;
@@ -979,6 +974,7 @@ public class PGYMbController {
 
                     appMobPlanDto.setCustcd("ELVLRT");
                     appMobPlanDto.setSpjangcd("ZZ");
+                    appMobPlanDto.setIndate(getToDate());
 
                     log.info(userformDto.getDbnm());
                     log.info(appMobPlanDto.getPlandate());
@@ -1079,6 +1075,277 @@ public class PGYMbController {
                 break;
         }
         return appMobplanDtoList;
+    }
+
+
+    /**박광열 점검조치사항 삭제 **/
+    @RequestMapping(value = "/delete", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String DeleteListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        /*업로드 파일 정보를 담을 리스트*/
+        List<AttachDTO> attachList = new ArrayList<>();
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "fseq":
+                    app07Dto.setFseq(values.toString());
+
+                default:
+                    break;
+            }
+        });
+
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+
+
+        try {
+
+            boolean result = appService.DeleteMManu(app07Dto);
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+        return "success";
+    }
+
+
+    /**박광열 점검계획 삭제 **/
+    @RequestMapping(value = "/mfixdelete", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String DeleteListForm2(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        /*업로드 파일 정보를 담을 리스트*/
+        List<AttachDTO> attachList = new ArrayList<>();
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "plandate":
+                    appMobPlanDto.setPlandate(values.toString());
+                    break;
+                case "actcd":
+                    appMobPlanDto.setActcd(values.toString());
+                    break;
+                case "equpcd":
+                    appMobPlanDto.setEqupcd(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+
+
+                try {
+
+                    boolean result = app10ElvlrtMobService.DeletePlan(appMobPlanDto);
+
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+        return "success";
+    }
+
+
+
+
+    /**박광열 점검계획 수정 **/
+    @RequestMapping(value = "/updateplan", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String UpdatePlanForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        String ls_dbnm = "";
+        String ls_perid = "";
+        String ls_pernm = "";
+
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "plandate":
+                    String via = values.replaceAll("-","");
+                    appMobPlanDto.setPlandate(via);
+                    break;
+                case "cltcd":
+                    appMobPlanDto.setCltcd(values.toString());
+                    break;
+                case "actcd":
+                    appMobPlanDto.setActcd(values.toString());
+                    break;
+                case "actnm":
+                    appMobPlanDto.setActnm(values.toString());
+                    break;
+                case "equpcd":
+                    appMobPlanDto.setEqupcd(values.toString());
+                    break;
+                case "equpnm":
+                    appMobPlanDto.setEqupnm(values.toString());
+                    break;
+                case "kcpernm":
+                    appMobPlanDto.setKcpernm(values.toString());
+                    break;
+                case "kcspnm":
+                    appMobPlanDto.setKcspnm(values.toString());
+                    break;
+                case "remark":
+                    appMobPlanDto.setRemark(values.toString());
+                    break;
+                case "perid":
+                    appMobPlanDto.setPerid(values.toString());
+                    break;
+                case "indate":
+                    appMobPlanDto.setIndate(values.toString());
+                    break;
+                case "qty":
+                    appMobPlanDto.setQty(values.toString());
+                    break;
+                case "plandate2":
+                    appMobPlanDto.setPlandate2(values.toString());
+                    break;
+                case "cltcd2":
+                    appMobPlanDto.setCltcd2(values.toString());
+                    break;
+                case "actcd2":
+                    appMobPlanDto.setActcd2(values.toString());
+                    break;
+                case "equpcd2":
+                    appMobPlanDto.setEqupcd2(values.toString());
+                    break;
+
+
+
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+
+        ls_perid = appMobPlanDto.getPerid();
+        ls_pernm = appMobPlanDto.getKcpernm();
+
+
+
+        int stCnt = ls_perid.indexOf('[') + 1 ;
+        int etCnt = ls_perid.indexOf(']');
+        ls_perid = ls_perid.substring(stCnt, etCnt);
+
+        ls_pernm = ls_pernm.substring(0, ls_pernm.indexOf('[')).trim();
+
+
+        appMobPlanDto.setPerid(ls_perid);
+        appMobPlanDto.setKcpernm(ls_pernm);
+        appMobPlanDto.setIndate(getToDate());
+
+
+        switch (ls_dbnm) {
+            case "ELV_LRT" :
+            try {
+
+            /*    log.info(appMobPlanDto.getPlandate());
+                log.info(appMobPlanDto.getCltcd());
+                log.info(appMobPlanDto.getActcd());
+                log.info(appMobPlanDto.getActnm());
+                log.info(appMobPlanDto.getEqupcd());
+                log.info(appMobPlanDto.getEqupnm());
+                log.info(appMobPlanDto.getKcpernm());
+                log.info(appMobPlanDto.getKcspnm());
+                log.info(appMobPlanDto.getRemark());
+                log.info(appMobPlanDto.getPerid());
+                log.info(appMobPlanDto.getIndate());
+                log.info(appMobPlanDto.getQty());
+                log.info(appMobPlanDto.getPlandate2());
+                log.info(appMobPlanDto.getCltcd2());
+                log.info(appMobPlanDto.getActcd2());
+                log.info(appMobPlanDto.getEqupcd2());
+*/
+
+                appMobPlanDto.setCustcd("ELVLRT");
+                appMobPlanDto.setSpjangcd("ZZ");
+
+                boolean result = app10ElvlrtMobService.UpdatePlan(appMobPlanDto);
+
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+
+        return "success";
+
     }
 
 }

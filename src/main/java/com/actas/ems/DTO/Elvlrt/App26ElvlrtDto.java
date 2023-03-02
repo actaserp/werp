@@ -35,6 +35,7 @@ public class App26ElvlrtDto {
     private String equpcd;
     private String actaddr;
     private String emtelnum;
+    private String cltcd;
 
 
 

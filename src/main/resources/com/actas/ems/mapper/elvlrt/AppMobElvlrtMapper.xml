@@ -280,6 +280,7 @@ select
 					b.equpnm as equpnm,
                     a.actcd as actcd,
 					a.actnm as actnm,
+                     a.cltcd as cltcd,
 					isnull(a.address, '') + isnull(a.address2, '') as actaddr ,
 					isnull(a.tel, '') as tel,
 					isnull(a.hp, '') as hp,
@@ -331,6 +332,7 @@ LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = 
 LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
 where a.actnm like CONCAT('%',#{actnm},'%')
 and a.equpnm like CONCAT('%',#{equpnm},'%')
+and compdate <　GETDATE()
 order by recedate desc;
         ]]>
     </select>
@@ -477,13 +479,13 @@ order by recedate desc;
             LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)
         WHERE a.custcd like CONCAT('%',#{custcd},'%')
           AND a.spjangcd like CONCAT('%',#{spjangcd},'%')
-          AND a.actcd like CONCAT('%',#{actcd},'%')
+          AND a.actnm like CONCAT('%',#{actnm},'%')
         order by plandate desc
     </select>
 
     <!--점검계획 등록-->
     <insert id="Insertplan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
-        insert into TB_E073 (custcd, spjangcd, cltcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate) values (#{custcd}, #{spjangcd}, #{cltcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate})
+        insert into TB_E073 (custcd, spjangcd, cltcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate, kcspnm) values (#{custcd}, #{spjangcd}, #{cltcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate}, #{kcspnm})
     </insert>
 
 
@@ -498,4 +500,49 @@ order by recedate desc;
 
     </select>
 
+    <!--점검계획 삭제-->
+    <delete id="DeletePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        delete from TB_E073 where plandate = #{plandate} and actcd like CONCAT('%',#{actcd},'%') and equpcd like CONCAT('%',#{equpcd},'%')
+    </delete>
+
+
+    <!--점검계획 수정-->
+    <update id="UpdatePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        update TB_E073
+        set plandate = #{plandate}
+
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+
+
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+
+        <if test="actnm != null ">,</if>
+        <if test="actnm != null">actnm=#{actnm}</if>
+
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+
+        <if test="equpnm != null ">,</if>
+        <if test="equpnm != null">equpnm=#{equpnm}</if>
+
+        <if test="kcpernm != null ">,</if>
+        <if test="kcpernm != null">kcpernm=#{kcpernm}</if>
+
+        <if test="kcspnm != null ">,</if>
+        <if test="kcspnm != null">kcspnm=#{kcspnm}</if>
+
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and plandate = #{plandate2} and cltcd = #{cltcd2} and actcd = #{actcd2} and equpcd = #{equpcd2}
+    </update>
 </mapper>

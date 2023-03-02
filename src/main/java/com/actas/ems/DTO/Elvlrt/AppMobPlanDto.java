@@ -25,7 +25,10 @@ public class AppMobPlanDto {
     private String cltnm;
     private String saupnum;
     private String prenm;
-
+    private String plandate2;
+    private String cltcd2;
+    private String actcd2;
+    private String equpcd2;
 
 
 

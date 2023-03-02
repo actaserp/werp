@@ -66,4 +66,10 @@ public interface App10ElvlrtMobMapper {
     /**사업자명 조회*/
     public List<AppMobPlanDto> GetcltnmList(AppMobPlanDto parm);
 
+    /**점검계획 삭제*/
+    public int DeletePlan(AppMobPlanDto perm);
+
+    /**점검계획 수정*/
+    public int UpdatePlan(AppMobPlanDto perm);
+
 }

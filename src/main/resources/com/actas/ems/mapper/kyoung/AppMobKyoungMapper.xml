@@ -484,5 +484,50 @@ order by recedate desc;
         where cltnm like CONCAT('%',#{cltnm},'%')
     </select>
 
+    <!--점검계획 삭제-->
+    <delete id="DeletePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        delete from TB_E073 where plandate = #{plandate} and actcd like CONCAT('%',#{actcd},'%') and equpcd like CONCAT('%',#{equpcd},'%')
+    </delete>
+
+    <!--점검계획 수정-->
+    <update id="UpdatePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        update TB_E073
+        set plandate = #{plandate}
+
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+
+
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+
+        <if test="actnm != null ">,</if>
+        <if test="actnm != null">actnm=#{actnm}</if>
+
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+
+        <if test="equpnm != null ">,</if>
+        <if test="equpnm != null">equpnm=#{equpnm}</if>
+
+        <if test="kcpernm != null ">,</if>
+        <if test="kcpernm != null">kcpernm=#{kcpernm}</if>
+
+        <if test="kcspnm != null ">,</if>
+        <if test="kcspnm != null">kcspnm=#{kcspnm}</if>
+
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and plandate = #{plandate} and cltcd = #{cltcd} and actcd = #{actcd} and equpcd = #{equpcd}
+    </update>
+
 
 </mapper>

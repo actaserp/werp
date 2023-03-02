@@ -65,4 +65,10 @@ public interface App10GaonMobMapper {
     /**사업자명 조회*/
     public List<AppMobPlanDto> GetcltnmList(AppMobPlanDto parm);
 
+    public int DeletePlan(AppMobPlanDto perm);
+
+    /**점검계획 수정*/
+    public int UpdatePlan(AppMobPlanDto perm);
+
+
 }
