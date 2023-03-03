@@ -2,6 +2,7 @@ package com.actas.ems.Mapper.nm;
 
 
 import com.actas.ems.DTO.AttachDTO;
+import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,9 +22,19 @@ public interface App10NmyangMobMapper {
     public List<AttachDTO> select06AttachList(AttachDTO parm) ;
     public List<AttachDTO> select08AttachList(AttachDTO parm) ;
 
+
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
+    public List<AppMob004tDto> GetApp0bMobList002(App08_mbmanual parm) ;
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
+
+    public List<CommonDto> code754get06List() ;
+    public List<CommonDto> code754get08List();
+
+    public int InsertMHManual(App06ElvlrtDto perm);
+    public String getMHManualMaxSeq(String perm);
+    public int InsertMBManual(App08_mbmanual perm);
+    public String getMBManualMaxSeq(String perm);
 
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);
