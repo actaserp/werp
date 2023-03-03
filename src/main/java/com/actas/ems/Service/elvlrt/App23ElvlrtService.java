@@ -31,6 +31,7 @@ public class App23ElvlrtService {
 
     public List<App23ElvlrtDto> GetApp23List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
+        System.out.println("현재 dbnm : "+ls_dbnm);
         switch (ls_dbnm){
             case "ELV_LRT":
                 return  app23ElvMapper.GetApp23List001(parm);

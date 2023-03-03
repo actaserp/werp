@@ -26,4 +26,5 @@ public class AppE038ElvlrtDto {
     private String endkm;
     private String km;
     private String cltcd;
+    private String pernm;
 }

@@ -72,6 +72,7 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setRptdate(values.toString());
+                    System.out.println("date : "+ popParmDto.getRptdate());
                     break;
                 default:
                     break;
@@ -98,7 +99,8 @@ public class E038MbController {
 
                 try{
                     appE038DtoList = service.GetE038List(popParmDto);
-                    model.addAttribute("E038DtoList", appE038DtoList);
+                    System.out.println(appE038DtoList);
+                    model.addAttribute("E038List_model", appE038DtoList);
 
                 }catch (DataAccessException e){
                     log.info("App01001Tab01Form DataAccessException ================================================================");
