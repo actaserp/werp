@@ -71,6 +71,12 @@
     <select id="getMHManualMaxSeq"  parameterType="string" resultType="java.lang.String">
         select max(hseq) from tb_mhmanual  where Left(hseq,6) = #{hseq}
     </select>
+    <insert id="InsertMBManual" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" >
+        insert into TB_MBMANUAL (custcd, spjangcd, bseq, binputdate, bgourpcd, bsubject, bmemo, bpernm) values (#{custcd}, #{spjangcd}, #{bseq}, #{binputdate}, #{bgourpcd}, #{bsubject}, #{bmemo}, #{bpernm})
+    </insert>
+    <select id="getMBManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(bseq) from TB_MBMANUAL  where Left(bseq,6) = #{bseq}
+    </select>
     <select id="select06AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
         SELECT idx,
             board_idx as boardIdx

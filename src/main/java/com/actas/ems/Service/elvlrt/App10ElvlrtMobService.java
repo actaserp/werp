@@ -97,6 +97,24 @@ public class App10ElvlrtMobService {
                 }
                 return "";
             }
+                public String getMBManualMaxSeq(String parm){
+                    String ls_dbnm = UIUtils.getElvDataSourceNm();
+                    switch (ls_dbnm){
+                        case "ELV_LRT":
+                            return  app10ElvMobMapper.getMBManualMaxSeq(parm);
+                        case "ELV_KYOUNG":
+                            return  app10ElvMobMapperK.getMBManualMaxSeq(parm);
+                        case "ELV_GAON":
+                            return  app10ElvMobMapperG.getMBManualMaxSeq(parm);
+                        case "nmyang":
+                            return  app10ElvMobMapperN.getMBManualMaxSeq(parm);
+                        case "hanyangs":
+                            return  app10ElvMobMapperH.getMBManualMaxSeq(parm);
+                        default:
+                            break;
+                    }
+                    return "";
+                }
             public boolean InsertMHManual(App06ElvlrtDto parm){
                 int queryResult = 1;
                 String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -136,6 +154,45 @@ public class App10ElvlrtMobService {
                 }
                 return true;
             }
+                public boolean InsertMBManual(App08_mbmanual parm){
+                    int queryResult = 1;
+                    String ls_dbnm = UIUtils.getElvDataSourceNm();
+                    switch (ls_dbnm){
+                        case "ELV_LRT":
+                            queryResult = app10ElvMobMapper.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "ELV_GAON":
+                            queryResult = app10ElvMobMapperK.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "ELV_KYOUNG":
+                            queryResult = app10ElvMobMapperG.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "nmyang":
+                            queryResult = app10ElvMobMapperN.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "hanyangs":
+                            queryResult = app10ElvMobMapperH.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        default:
+                            break;
+                    }
+                    return true;
+                }
 
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

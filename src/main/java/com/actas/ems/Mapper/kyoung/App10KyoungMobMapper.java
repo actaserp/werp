@@ -29,6 +29,8 @@ public interface App10KyoungMobMapper {
     public List<CommonDto> code754get08List() ;
     public int InsertMHManual(App06ElvlrtDto perm);
     public String getMHManualMaxSeq(String perm);
+    public int InsertMBManual(App08_mbmanual perm);
+    public String getMBManualMaxSeq(String perm);
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);
 
