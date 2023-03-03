@@ -212,7 +212,24 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
-    //    {return app10ElvMobMapper.GetApp0bMobList001(parm);}
+    public List<AppMob004tDto> GetApp0bMobList002(App08_mbmanual parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetApp0bMobList002(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetApp0bMobList002(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetApp0bMobList002(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetApp0bMobList002(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetApp0bMobList002(parm);
+            default:
+                List<AppMob004tDto> object = null;
+                return object;
+        }
+    }
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){

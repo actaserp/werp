@@ -23,6 +23,7 @@ public interface App10KyoungMobMapper {
     public List<AttachDTO> select08AttachList(AttachDTO parm) ;
 
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
+    public List<AppMob004tDto> GetApp0bMobList002(App08_mbmanual parm) ;
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
     public List<CommonDto> code754get06List() ;

@@ -134,6 +134,27 @@
         order by binputdate DESC, bseq ASC
     </select>
 
+    <select id="GetApp0bMobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
+        select
+            isnull(bseq, '' ) as bseq,
+            Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
+            Case when bgourpcd = '' then ''
+            when bgourpcd = '01' then '공통'
+            else bgourpcd
+        end as bgourpcd,
+
+                     ( select isnull(Count(*),'') from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt,
+                      isnull(bsubject, '' ) as bsubject,
+                      isnull(bpernm, '' ) as bpernm,
+                      isnull(bmemo, '' ) as bmemo,
+                      Case when bflag = 'Y' then 'MB'
+        end as bflag
+                  from TB_MBMANUAL WITH (NOLOCK)
+				  Where spjangcd = #{spjangcd}
+        and custcd = #{custcd}
+        and (bmemo like concat('%',#{bmemo},'%') or bsubject like concat('%',#{bmemo},'%'))        order by binputdate DESC, bseq ASC
+    </select>
+
 <select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
 select
     sseq,

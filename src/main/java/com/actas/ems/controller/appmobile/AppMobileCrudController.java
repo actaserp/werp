@@ -1020,6 +1020,62 @@ public Object com0List(@RequestParam Map<String, String> param
 
         return appMob004tDtoList;
     }
+    @RequestMapping(value = "/Blist2", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object bserchListForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "bmemo":
+                    app08_mbmanual.setBmemo(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app08_mbmanual.setCustcd(ls_custcd);
+                app08_mbmanual.setSpjangcd(ls_spjangcd);
+
+                try {
+                    appMob004tDtoList = service.GetApp0bMobList002(app08_mbmanual);
+                    model.addAttribute("appMob004tDtoList",appMob004tDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info(" DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+
+        return appMob004tDtoList;
+    }
 
     //FnQ
     @RequestMapping(value = "/SSlist", method = RequestMethod.POST,
