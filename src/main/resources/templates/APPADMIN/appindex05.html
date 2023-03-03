@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+
+<body style="background: #f5f9fa;">
+    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${userFormDto}" ></form>
+    <div class="content flex">
+        
+            <div class="header on">
+                <div class="left">
+                    <div class="ham">
+                        <button type="button"><img th:src="@{/assets/images/ham.png}" alt=""></button>
+                    </div>
+                    <div class="nav_bg"></div>
+                    <!-- ## Left navigator include -->
+                    <th:block th:include="layouts/APPHeader/appcareleftadmin" />
+                </div>
+                <div class="right">
+                </div> 
+            </div>
+            <div class="con">
+                <!-- ## header top include -->
+                <th:block th:include="layouts/APPHeader/appheadTop" />
+
+                <div class="infor_bar type2"> 
+                    <div class="left">
+                    통신사 API 계정정보
+                    </div> 
+    
+                </div> 
+                <div class="section ">                
+                    <div class="sec_con" style="width: 100%;">
+                        <div class="box_wrap">
+                             
+                             
+                                 
+                                <div class="container-fluid"> 
+                                    <div class="modal_box"> 
+                                        <div class="form">
+                                            <form  th:object="${app01data}"   method="post"> 
+                                                <!-- <div class="input_wrap">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ddcallflag" th:field="${callflag}" th:value="${callflag}">                                                 
+                                                        <option value="">통신사선택</option>
+                                                        <option th:value="0" th:if="${callflag eq '0' ? 'selected' : ''}">KT 통화매니저 API</option>
+                                                        <option th:value="1" th:if="${callflag eq '1' ? 'selected' : ''}">LG U+ 고급센트릭스</option>
+                                                      </select>                        
+                                                </div> -->
+                                                <!-- <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">통신사 구분</span> 
+                                                    <input type="text" class="form-control" name="actcallflagz" id="actcallflagz" th:field="*{callflag}" th:value="*{callflag}">                                                    
+                                                </div>  -->
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">ID</span> 
+                                                    <input type="text" class="form-control"  name="actcalluseridz" id="actcalluseridz"  th:value="${calluserid}">                                               
+                                                </div> 
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">비밀번호</span> 
+                                                    <input type="password" class="form-control"  name="actcalluserpwz" id="actcalluserpwz"   th:value="${calluserpw}">                    
+                                                </div>    
+                                                <div class="input_wrap"  >  
+                                                    <div>
+                                                        <div class="btns"> 
+                                                            <button class="type1 color4" style="min-width: 90px;"  type="button"  onclick="saveE401_rtn()">수정</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div> 
+                                    </div>
+                                </div>   
+
+                             
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+ 
+
+    </div>
+
+
+    <script type="text/javascript" th:inline="javascript"> 
+ 
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //통신사 정보 등록
+    function saveE401_rtn(){
+        let formData = new FormData(); 
+        var ls_actcallflagz = "";
+        // var ls_actcallflagz  = document.getElementById('actcallflagz').value; 
+        var ls_actcalluseridz   = document.getElementById('actcalluseridz').value; 
+        var ls_actcalluserpwz  = document.getElementById('actcalluserpwz').value;    
+        if(ls_actcalluseridz == null || ls_actcalluseridz.length == 0 || ls_actcalluseridz == ""){
+           alert("아이디를 등록하세요");
+           return
+        }       
+        if(ls_actcalluserpwz == null || ls_actcalluserpwz.length == 0 || ls_actcalluserpwz == ""){
+           alert("패스워드를 등록하세요");
+           return
+        }        
+ 
+        $.ajax({
+            url: '/appadmod/id05mod',   
+            type:"POST",
+            data: {
+                "actcallflagz"    : ls_actcallflagz ,
+                "actcalluseridz"    : ls_actcalluseridz ,
+                "actcalluserpwz"    : ls_actcalluserpwz ,
+            },
+            async:false,
+            success:function(data){
+                if(data == "success"){
+                    alert("변경되었습니다.")
+                    // console.log("MOD", data); 
+                }else{
+                    alert("변경중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                }
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){
+
+        })
+        return ;
+    }
+
+  
+ 
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+     
+
+    </script>
+
+    <!------footer ------>
+    <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
+
+ 
+    
+</body>
+</html>
