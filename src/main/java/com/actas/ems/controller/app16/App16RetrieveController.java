@@ -52,12 +52,16 @@ public class App16RetrieveController {
 
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+        if(userformDto.getFlag().equals("AA")){
             popParmDto.setActcd(actcd);
-            log.info("이 사용자는 보수업체용이다.");
         }else{
-            popParmDto.setActcd(userformDto.getActcd());
-            log.info("이 사용자는 고객용계정이다.");
+            if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+                popParmDto.setActcd(actcd);
+                log.info("이 사용자는 보수업체용이다.");
+            }else{
+                popParmDto.setActcd(userformDto.getActcd());
+                log.info("이 사용자는 고객용계정이다.");
+            }
         }
 
         try{

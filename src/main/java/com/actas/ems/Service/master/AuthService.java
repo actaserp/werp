@@ -1,14 +1,20 @@
 package com.actas.ems.Service.master;
 
+import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.TBXLoginDTO;
 import com.actas.ems.Mapper.Elvlrt.ElvactcdMapper;
 import com.actas.ems.Mapper.gaon.ElvactcdGaonMapper;
 import com.actas.ems.Mapper.kyoung.ElvactcdKyoungMapper;
 import com.actas.ems.Mapper.Hanyangs.hanyangsMapper;
 import com.actas.ems.Mapper.master.AuthDBMapper;
+import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.actas.ems.DTO.UserFormDto;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service("AuthService")
@@ -34,6 +40,11 @@ public class AuthService {
 
     public void authInsert(UserFormDto parm){authMapper.TBXUSERS_Insert(parm);}
     public UserFormDto GetUserInfo(UserFormDto parm){return authMapper.GetUserInfo(parm);}
+    public UserFormDto GetCustInfo(UserFormDto parm){return authMapper.GetUserInfo(parm);}
+    public UserFormDto GetAdminInfo(UserFormDto parm){return authMapper.GetAdminInfo(parm);}
+    public List<UserFormDto> GetUserListDto(UserFormDto parm){return authMapper.GetUserListDto(parm);}
+    public List<TBXLoginDTO> GetLogListDto(UserFormDto parm){return authMapper.GetLogListDto(parm);}
+
     public UserFormDto GetUserInfoDto(UserFormDto parm){return authMapper.GetUserInfoDto(parm);}
 
     public String GetClientInfo(UserFormDto parm){return authMapper.GetClientInfo(parm);}
@@ -53,6 +64,7 @@ public class AuthService {
     }
 
     public void TB_XLOGIN_INSERT(UserFormDto parm) { authMapper.TB_XLOGIN_INSERT(parm);}
+    public void TB_XLOGOUT_INSERT(UserFormDto parm) { authMapper.TB_XLOGOUT_INSERT(parm);}
 
     public void TB_XUSERS_LOGFAIL(UserFormDto parm) { authMapper.TB_XUSERS_LOGFAIL(parm);}
 
@@ -86,4 +98,17 @@ public class AuthService {
     public String TB_XUSER_DBNM(UserFormDto parm) {return authMapper.TB_XUSER_DBNM(parm);}
 
     public void TB_XUSER_UPDATE(UserFormDto dto) {authMapper.TB_XUSER_UPDATE(dto);}
+
+
+
+    //글수정
+    @Transactional
+    public boolean UpdateUserInfo(UserFormDto parm){
+        int queryResult = 1;
+        queryResult = authMapper.UpdateUserInfo(parm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
 }

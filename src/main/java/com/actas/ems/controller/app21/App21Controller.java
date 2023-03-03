@@ -46,6 +46,8 @@ public class App21Controller {
             }
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             model.addAttribute("userformDto",userformDto);
+            userformDto.setPagetree01("고객지원센터");
+            userformDto.setPagenm("호기별고장현항");
 
             boolean result = true;
             if(userformDto.getFlag().equals("CC")){

@@ -6,6 +6,7 @@ import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMobMapper;
 import com.actas.ems.Mapper.gaon.App10GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMobMapper;
 
+import com.actas.ems.Mapper.nm.App10NmyangMobMapper;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class AppM03UploadServiceImpl {
     @Autowired
     private App10KyoungMobMapper attachMapperK;
     @Autowired
-    private App10ElvlrtMobMapper attachMapperN;
+    private App10NmyangMobMapper attachMapperN;
     @Autowired
     private App10ElvlrtMobMapper attachMapperH;
 

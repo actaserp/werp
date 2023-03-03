@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App23ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App23GaonMapper;
 import com.actas.ems.Mapper.kyoung.App23KyoungMapper;
+import com.actas.ems.Mapper.nm.App23NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ import java.util.List;
 public class App23ElvlrtService {
 
     @Autowired
-    App23GaonMapper app23ElvMapper;
+    App23ElvlrtMapper app23ElvMapper;
     @Autowired
     App23GaonMapper app23ElvMapperG;
     @Autowired
-    App23GaonMapper app23ElvMapperK;
+    App23KyoungMapper app23ElvMapperK;
     @Autowired
-    App23GaonMapper app23ElvMapperN;
+    App23NmyangMapper app23ElvMapperN;
     @Autowired
-    App23GaonMapper app23ElvMapperH;
+    App23ElvlrtMapper app23ElvMapperH;
 
     public List<App23ElvlrtDto> GetApp23List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

@@ -38,6 +38,8 @@ public interface App01KyoungMapper {
 
 
 
+    public int UpdateCallInfo(App01ElvlrtDto parm) ;
+
     public int InsertE401Sms(AppCallElvlrtDto datainfo);
 
     public String getSmsMaxSeq(String parm);

@@ -580,7 +580,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.recedate}</b>',
                 click: (e, ctx) => {
-                    wactnmChk_3(ctx.item.recedate, ctx.item.recenum);
+                    wactnmChk_3(ctx.item.actcd, ctx.item.actnm);
                 }
             });
             wtab01Grid.columns.push(cols);    
@@ -708,6 +708,12 @@
             document.getElementById('actnmz').value = arg2;     
 
             $("#wactnmmodal_btn").trigger("click");
+        }
+        function wactnmChk_3(arg1, arg2){
+            document.getElementById('actcdz').value = arg1; 
+            document.getElementById('actnmz').value = arg2;     
+
+$("#wactnmmodal_btn").trigger("click");
         }
                
         function searchtxt_rtn(){

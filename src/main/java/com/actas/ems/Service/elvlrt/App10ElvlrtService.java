@@ -4,6 +4,7 @@ import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App10GaonMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMapper;
+import com.actas.ems.Mapper.nm.App10NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class App10ElvlrtService {
     @Autowired
     App10KyoungMapper app10ElvMapperK;
     @Autowired
-    App10ElvlrtMapper app10ElvMapperN;
+    App10NmyangMapper app10ElvMapperN;
     @Autowired
     App10ElvlrtMapper app10ElvMapperH;
     int queryResult = 1;

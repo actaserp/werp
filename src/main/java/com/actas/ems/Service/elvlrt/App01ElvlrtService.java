@@ -5,7 +5,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App01ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App01GaonMapper;
 import com.actas.ems.Mapper.kyoung.App01KyoungMapper;
-import com.actas.ems.Mapper.nm.App01NmMapper;
+import com.actas.ems.Mapper.nm.App01NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class App01ElvlrtService {
     @Autowired
     App01KyoungMapper appMapperK;
     @Autowired
-    App01ElvlrtMapper     appMapperN;
+    App01NmyangMapper     appMapperN;
     @Autowired
     App01ElvlrtMapper     appMapperH;
 
@@ -763,6 +763,45 @@ public class App01ElvlrtService {
     }
 //    {return appMapper.DeleteE601CALL01(parm);}
 
+    public int UpdateCallInfo(App01ElvlrtDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = appMapper.UpdateCallInfo(parm) ;
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_GAON":
+                queryResult = appMapperG.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_KYOUNG":
+                queryResult = appMapperK.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "nmyang":
+                queryResult = appMapperN.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "hanyangs":
+                queryResult = appMapperH.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            default:
+                break;
+        }
+        return 1;
+    }
 
 
     public String getCllMaxSeq(String parm){
@@ -783,6 +822,9 @@ public class App01ElvlrtService {
         }
         return "";
     }
+
+
+
     //    {return appMapper.getCllMaxSeq(parm);}
     public String getSmsMaxSeq(String parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

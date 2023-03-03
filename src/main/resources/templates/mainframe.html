@@ -53,12 +53,12 @@ function chk(){
         <div class="right">
         </div>
     </div>
-    <div class="con">
+    <div class="con"> 
         <div class="header_top">
             <ul class="left">
                 <li>
                     <div class="logo">
-                        <a th:href="@{/auth/emmsdashboard}">
+                        <a href="">
                             <img src="/images/logo.png" alt="">
                         </a>
                     </div>
@@ -68,42 +68,21 @@ function chk(){
                     <a><img src="/images/i_home_on.png" alt=""></a>
                 </li>
                 <li>
-                    고객상담센터 대시보드
-                </li>
-                <!-- <li>
-                    고장접수관제현황
-                </li> -->
+                    보수업체 DashBoard
+                </li> 
             </ul>
-            <!-- <ul class="mid">
-                <li>
-                    <i><img src="/images/i_circle1.png" alt=""></i>
-                    <p>계약현장 <span>50</span></p>
-                </li>
-                <li>
-                    <i><img src="/images/i_circle2.png" alt=""></i>
-                    <p>계약관리대수 <span>50</span></p>
-                </li>
-                <li>
-                    <i><img src="/images/i_circle3.png" alt=""></i>
-                    <p>당월고장접수 <span>50</span></p>
-                </li>
-                <li>
-                    <i><img src="/images/i_circle4.png" alt=""></i>
-                    <p>금일고장접수 <span>50</span></p>
-                </li>
-            </ul> -->
             <ul class="right">
 
                 <li>
                     <a href="#">
-                        <img src="/images/in2.png" alt="" onclick="logout()">
+                        <img src="/images/in2.png" onclick="logout()">
                     </a>
                 </li>
-                <li >
-                    <button id="userinfo">
+                <!-- <li>
+                    <button id="userinfo"> 
                         <img src="/images/i_user.png" alt="">
                     </button>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="infor_bar type2">
@@ -143,84 +122,7 @@ function chk(){
                         <div id="tabPager01"></div>
                     </div>
                 </div>
-            </div>
-            <!--<div class="sec_con" style="width: 20%;">
-                <div class="sec_con_tit">
-                    금일 점검 직원
-                </div>
-                <div class="box_wrap with_tit">
-                    <ul class="employee scrollbar" style="overflow-y: scroll; height: 360px;">
-                        <li>
-                            <div class="left">
-                                <div class="user_icon" style="background: url(/images/user1.png) no-repeat center center;">
-                                </div>
-                                <div class="txt">
-                                    <h5>홍길동</h5>
-                                    <p>금천 자이 아파트</p>
-                                </div>
-                            </div>
-                            <div class="state">
-                                점검
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left">
-                                <div class="user_icon" style="background: url(/images/user2.png) no-repeat center center;">
-                                </div>
-                                <div class="txt">
-                                    <h5>홍길동</h5>
-                                    <p>금천 자이 아파트</p>
-                                </div>
-                            </div>
-                            <div class="state">
-                                결근
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left">
-                                <div class="user_icon" style="background: url(/images/user3.png) no-repeat center center;">
-                                </div>
-                                <div class="txt">
-                                    <h5>홍길동</h5>
-                                    <p>금천 자이 아파트</p>
-                                </div>
-                            </div>
-                            <div class="state">
-                                이동
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left">
-                                <div class="user_icon" style="background: url(/images/user4.png) no-repeat center center;">
-                                </div>
-                                <div class="txt">
-                                    <h5>홍길동</h5>
-                                    <p>금천 자이 아파트금천 자이 아파트</p>
-                                </div>
-                            </div>
-                            <div class="state">
-                                접수
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left">
-                                <div class="user_icon" style="background: url(/images/user5.png) no-repeat center center;">
-                                </div>
-                                <div class="txt">
-                                    <h5>홍길동</h5>
-                                    <p>금천 자이 아파트</p>
-                                </div>
-                            </div>
-                            <div class="state">
-                                완료
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
-
-
-
+            </div> 
         </div>
         <div class="section section2">
             <div class="sec_con" style="width: 33.3333%;">
@@ -842,7 +744,6 @@ function chk(){
             return data01
         }
 
-        
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////onload 끝
 
@@ -998,20 +899,10 @@ function chk(){
         }).done(function(fragment){
 
         })
-    }
-    function logout(){   
-            if (!confirm("로그아웃하시겠습니까?") ){
-             return    
-            }
-            location.href = "/" ;
-        }  
+    } 
 
     $(document).ready(function() {
-        getToday()
-        $('datetimepicker').datetimepicker({
-
-        });
-
+        getToday() 
         $("#actninputdatez").change(function(e){
             // console.log("달력클릭");
             // console.log(convert_time(e.timestamp));
@@ -1131,6 +1022,30 @@ function chk(){
                     var win = window.open("/app01/ktcall?" + ls_uri,   "fullscreen=yes"); 
             }
 
+            function logout(){   
+            if (!confirm("로그아웃하시겠습니까?") ){
+             return    
+            }else{
+                insertLogOut()
+                location.href = "/" ;
+            }
+            
+        }   
+
+        function insertLogOut(){ 
+            var ls_loginid   = document.getElementById('actuseridz').value;  
+            $.ajax({
+                url: '/authcrud/logoutlog',
+                type:"POST",
+                data: {
+                    "loginid" : ls_loginid 
+                },
+                async:false,
+                success:function(){
+                     console.log('success');
+                }
+            });
+         }
 
     </script>
 

@@ -7,6 +7,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App05ElvlrtService;
 import com.actas.ems.Service.elvlrt.App15.App15ElvlrtService;
+import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
 
     private final App05ElvlrtService service;
+    private final AuthService authService;
     List<App05ElvlrtDto> App05ListDto;
 
     private final App15ElvlrtService service2;
@@ -67,6 +69,16 @@ public class AuthController {
     }
 
 
+    // 관리자 화면
+    @GetMapping(value="/admin")
+    public String AdminLoginForm(Model model){
+
+        UserFormDto custReturnDto = authService.GetCustInfo(userformDto);
+        model.addAttribute("custReturnDto", custReturnDto);
+        return "loginFormAdmin";
+    }
+
+
     // 보수업체 대시보드
     @GetMapping(value="/emmsdashboard")
     public String memberEmmsBoardForm( Model model
@@ -74,10 +86,9 @@ public class AuthController {
 
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-
         String ls_flag = userformDto.getFlag();
-
-
+        userformDto.setPagetree01("관리자모드");
+        userformDto.setPagenm("Dashboard");
         model.addAttribute("userFormDto", userformDto);
 
         if (ls_flag.equals("AA")){
@@ -120,6 +131,50 @@ public class AuthController {
         } else if (userformDto == null) {
             model.addAttribute("msg", "로그인실패");
             return "/";
+        } else if (ls_flag.equals("ZZ")){
+            //현재날짜기준 월초(1일) 구하기
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            Date date  = new Date(System.currentTimeMillis());
+            String time = formatter.format(date);
+            String time2 = time.substring(0,6) + "01";
+            log.info(time2);
+
+
+            //현재날짜기준 당월말일 구하기
+            String year = time.substring(0,4);
+            String month = time.substring(4,6);
+            String day = time.substring(6,8);
+
+
+            int year1 = Integer.parseInt(year);
+            int month1 = Integer.parseInt(month);
+            int day1 = Integer.parseInt(day);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(year1, month1-1, day1);
+
+
+            String lastday1 = String.valueOf(cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            String lastday = year+month+lastday1;
+            log.info(lastday);
+
+            /*popParmDto.setFrdate(time2);
+            popParmDto.setTodate(lastday);*/
+            popParmDto.setFrdate(time2);
+            popParmDto.setTodate(lastday);
+
+            log.info(time2);
+            log.info(lastday);
+
+            /*popParmDto.setActcd("%");*/
+            popParmDto.setActcd(userformDto.getActcd());
+
+            app15DtoList2 = service2.GetApp15List006(popParmDto);
+            app15DtoList3 = service2.GetApp15List007(popParmDto);
+
+            model.addAttribute("app15DtoList2", app15DtoList2);
+            model.addAttribute("app15DtoList3", app15DtoList3);
+            return "mainframadmin";
         } else{
 
             //현재날짜기준 월초(1일) 구하기

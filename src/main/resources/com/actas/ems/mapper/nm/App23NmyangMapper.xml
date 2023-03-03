@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.nm.App23NmyangMapper">
+
+    <!-- 현장별 고장구분별 월별 현황 -->
+    <select id="GetApp23List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App23ElvlrtDto">
+        <![CDATA[
+                SELECT a.cltcd,
+                         a.actcd,
+                       a.actnm,
+                       a.gregicd,
+                       a.greginm,
+                       a.regicd,
+                       a.reginm,
+                       sum(mon01) as mon01,
+                       sum(mon02) as mon02,
+                       sum(mon03) as mon03,
+                       sum(mon04) as mon04,
+                       sum(mon05) as mon05,
+                       sum(mon06) as mon06,
+                       sum(mon07) as mon07,
+                       sum(mon08) as mon08,
+                       sum(mon09) as mon09,
+                       sum(mon10) as mon10,
+                       sum(mon11) as mon11,
+                       sum(mon12) as mon12,
+                       sum(mon01+mon02+mon03+mon04+mon05+mon06+mon07+mon08+mon09+mon10+mon11+mon12) as qty
+                  FROM (SELECT a.custcd,
+                                    a.spjangcd,
+                                    a.actcd,
+                                    a.cltcd,
+                                    q.actnm,
+                                    a.compdate,
+                                    a.gregicd,
+                                    v.greginm,
+                                    a.regicd,
+                               k.reginm,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '01' THEN count(a.compdate) ELSE 0 END) as mon01,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '02' THEN count(a.compdate) ELSE 0 END) as mon02,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '03' THEN count(a.compdate) ELSE 0 END) as mon03,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '04' THEN count(a.compdate) ELSE 0 END) as mon04,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '05' THEN count(a.compdate) ELSE 0 END) as mon05,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '06' THEN count(a.compdate) ELSE 0 END) as mon06,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '07' THEN count(a.compdate) ELSE 0 END) as mon07,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '08' THEN count(a.compdate) ELSE 0 END) as mon08,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '09' THEN count(a.compdate) ELSE 0 END) as mon09,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '10' THEN count(a.compdate) ELSE 0 END) as mon10,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '11' THEN count(a.compdate) ELSE 0 END) as mon11,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '12' THEN count(a.compdate) ELSE 0 END) as mon12
+                             FROM tb_e411 a WITH(NOLOCK)
+                          LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                             LEFT OUTER JOIN tb_e013 v WITH(NOLOCK) ON (a.custcd = v.custcd AND a.spjangcd = v.spjangcd AND a.gregicd = v.gregicd)
+                             LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.gregicd = k.gregicd AND a.regicd = k.regicd)
+                             WHERE left(a.compdate, 6) between #{frdate} and #{todate}
+                            GROUP BY a.custcd, a.spjangcd, a.actcd, a.cltcd, a.compdate, a.gregicd, a.regicd, q.actnm, v.greginm, k.reginm) a
+                 WHERE (a.actcd = #{actcd} OR #{actcd} = '%')
+                   AND (a.gregicd = #{gregicd} OR #{gregicd} = '%')
+                 GROUP BY a.custcd, a.spjangcd, left(a.compdate, 4), a.cltcd, a.actcd, a.actnm, a.gregicd, a.greginm, a.regicd, a.reginm
+
+
+
+        ]]>
+    </select>
+
+    <select id="GetApp23List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App23ElvlrtDto">
+        <![CDATA[
+                SELECT a.actcd,
+                       a.actnm,
+                       a.gregicd,
+                       a.greginm,
+                       sum(mon01) as mon01,
+                       sum(mon02) as mon02,
+                       sum(mon03) as mon03,
+                       sum(mon04) as mon04,
+                       sum(mon05) as mon05,
+                       sum(mon06) as mon06,
+                       sum(mon07) as mon07,
+                       sum(mon08) as mon08,
+                       sum(mon09) as mon09,
+                       sum(mon10) as mon10,
+                       sum(mon11) as mon11,
+                       sum(mon12) as mon12,
+                       sum(mon01+mon02+mon03+mon04+mon05+mon06+mon07+mon08+mon09+mon10+mon11+mon12) as qty
+                  FROM (SELECT a.custcd,
+                                    a.spjangcd,
+                                    a.actcd,
+                                    q.actnm,
+                                    a.compdate,
+                                    a.gregicd,
+                                    v.greginm,
+                                    a.regicd,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '01' THEN count(a.compdate) ELSE 0 END) as mon01,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '02' THEN count(a.compdate) ELSE 0 END) as mon02,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '03' THEN count(a.compdate) ELSE 0 END) as mon03,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '04' THEN count(a.compdate) ELSE 0 END) as mon04,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '05' THEN count(a.compdate) ELSE 0 END) as mon05,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '06' THEN count(a.compdate) ELSE 0 END) as mon06,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '07' THEN count(a.compdate) ELSE 0 END) as mon07,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '08' THEN count(a.compdate) ELSE 0 END) as mon08,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '09' THEN count(a.compdate) ELSE 0 END) as mon09,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '10' THEN count(a.compdate) ELSE 0 END) as mon10,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '11' THEN count(a.compdate) ELSE 0 END) as mon11,
+                                    (CASE WHEN substring(a.compdate, 5, 2)= '12' THEN count(a.compdate) ELSE 0 END) as mon12
+                             FROM tb_e411 a WITH(NOLOCK)
+                          LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                             LEFT OUTER JOIN tb_e013 v WITH(NOLOCK) ON (a.custcd = v.custcd AND a.spjangcd = v.spjangcd AND a.gregicd = v.gregicd)
+                             LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.gregicd = k.gregicd AND a.regicd = k.regicd)
+							 WHERE left(a.compdate, 6) between #{frdate} and #{todate}
+                            GROUP BY a.custcd, a.spjangcd, a.actcd, a.compdate, a.gregicd, a.regicd, q.actnm, v.greginm) a
+				 WHERE (a.actcd = #{actcd} OR #{actcd} = '%')
+                 GROUP BY a.custcd, a.spjangcd, left(a.compdate, 4), a.actcd, a.actnm, a.gregicd, a.greginm
+
+
+
+        ]]>
+    </select>
+
+
+</mapper>

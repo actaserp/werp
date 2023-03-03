@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Elvlrt.AppMob003tDto;
 import com.actas.ems.Mapper.Elvlrt.App06ElvlrtMobMapper;
 import com.actas.ems.Mapper.gaon.App06GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App06KyoungMobMapper;
+import com.actas.ems.Mapper.nm.App06NmyangMobMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class App06ElvlrtMobService {
     @Autowired
     App06KyoungMobMapper app06ElvMobMapperK;
     @Autowired
-    App06GaonMobMapper app06ElvMobMapperN;
+    App06NmyangMobMapper app06ElvMobMapperN;
     @Autowired
-    App06GaonMobMapper app06ElvMobMapperH;
+    App06ElvlrtMobMapper app06ElvMobMapperH;
     int queryResult = 1;
 
     /** view page **/

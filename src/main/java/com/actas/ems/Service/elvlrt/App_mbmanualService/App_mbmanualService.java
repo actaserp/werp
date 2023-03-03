@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Elvlrt.App08_mbmanual;
 import com.actas.ems.Mapper.Elvlrt.App_mbmanual.App_mbmanualMapper;
 import com.actas.ems.Mapper.gaon.App_mbmanual.App_mbmanualGaonMapper;
 import com.actas.ems.Mapper.kyoung.App_mbmanual.App_mbmanualKyoungMapper;
+import com.actas.ems.Mapper.nm.App_mbmanual.App_mbmanualNmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class App_mbmanualService {
     @Autowired
     App_mbmanualKyoungMapper app_mbmanualMapperK;
     @Autowired
-    App_mbmanualMapper app_mbmanualMapperN;
+    App_mbmanualNmyangMapper app_mbmanualMapperN;
     @Autowired
     App_mbmanualMapper app_mbmanualMapperH;
 

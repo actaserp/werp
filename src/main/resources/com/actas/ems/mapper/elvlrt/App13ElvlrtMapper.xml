@@ -88,12 +88,12 @@
                  WHERE a.custcd = b.custcd
                    AND a.spjangcd = b.spjangcd
                    AND a.actcd = b.actcd
-                   AND (a.resucd = #{resucd} OR #{resucd} = '%')
-                   AND (a.remocd = #{remocd} OR #{remocd} = '%')
-                   AND (a.gregicd = #{gregicd} OR #{gregicd} = '%')
-                   AND (a.resultcd = #{resultcd} OR #{resultcd} = '%')
+                   AND ( a.resucd Like concat('%',#{resucd},'%')   )
+                   AND ( a.remocd Like concat('%',#{remocd},'%')     )
+                   AND ( a.gregicd Like concat('%',#{gregicd},'%')      )
+                   AND (  a.resultcd Like concat('%',#{resultcd},'%')    )
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
-                   AND (a.actcd = #{actcd} OR #{actcd} = '%')
+                   AND (  a.actcd Like concat('%',#{actcd},'%')   )
 
 
         ]]>

@@ -36,27 +36,23 @@
                 <li class="home on">
                     <a><img src="/images/i_home.png" alt=""></a>
                     <a><img src="/images/i_home_on.png" alt=""></a>
-                </li>
+                </li> 
                 <li>
-                    공지사항
+                    고객 사용자 DashBoard
                 </li>
-                <!-- <li>
-                    고객상담센터
-                </li> -->
             </ul>
             <ul class="right">
 
                 <li>
-                    <a th:href="@{/}">
-                        <img src="/images/in2.png" alt="">
+                    <a href="#">
+                        <img src="/images/in2.png" onclick="logout()">
                     </a>
                 </li>
-                <li>
-                    <button id="userinfo">
-                        <!--members/loginForm-->
+                <!-- <li>
+                    <button id="userinfo"> 
                         <img src="/images/i_user.png" alt="">
                     </button>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="section section1">
@@ -257,7 +253,6 @@
     var categories = [];
     var subCategories = [];
     var subvalues = []
-
 
 
     typeMenu = new wijmo.input.Menu('#typeMenu', {
@@ -751,6 +746,33 @@
             document.getElementById('actpasswdz').focus();
         }
     }
+
+
+    function logout(){   
+            if (!confirm("로그아웃하시겠습니까?") ){
+             return    
+            }else{
+                insertLogOut()
+                location.href = "/" ;
+            }
+            
+        }  
+        
+        
+    function insertLogOut(){ 
+        var ls_loginid   = document.getElementById('actuseridz').value;  
+        $.ajax({
+            url: '/authcrud/logoutlog',
+            type:"POST",
+            data: {
+                "loginid" : ls_loginid 
+            },
+            async:false,
+            success:function(){
+                    console.log('success');
+            }
+        });
+        }
 
 </script>
 <script>

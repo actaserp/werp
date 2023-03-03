@@ -37,6 +37,8 @@ public interface App01ElvlrtMapper {
     public int DeleteE601CALL(AppCall601ElvlrtDto parm) ;
     public int DeleteE601CALL01(AppCall601ElvlrtDto parm) ;
 
+    public int UpdateCallInfo(App01ElvlrtDto parm) ;
+
 
 
     public int InsertE401Sms(AppCallElvlrtDto datainfo);

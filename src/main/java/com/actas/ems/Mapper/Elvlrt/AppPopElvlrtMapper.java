@@ -1,7 +1,9 @@
 package com.actas.ems.Mapper.Elvlrt;
 
 
+import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
+import com.actas.ems.DTO.TBXa012VO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +39,8 @@ public interface AppPopElvlrtMapper {
 
     public List<PopupDto> GetWkactList(PopupDto parm);
     public PopupDto GetSmsInfoList(PopupDto parm);
+    public TBXa012VO GetXa012Info(PopupDto parm);
+    public int UpdateXa012(TBXa012VO parm) ;
 
 
 }

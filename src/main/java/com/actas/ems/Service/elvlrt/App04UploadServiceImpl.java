@@ -9,6 +9,8 @@ import com.actas.ems.Mapper.kyoung.App04KyoungMapper;
 import com.actas.ems.Mapper.Elvlrt.MattachElvlrtMapper;
 import com.actas.ems.Mapper.gaon.MattachGaonMapper;
 import com.actas.ems.Mapper.kyoung.MattachKyoungMapper;
+import com.actas.ems.Mapper.nm.App04NmyangMapper;
+import com.actas.ems.Mapper.nm.MattachNmyangMapper;
 import com.actas.ems.util.FilsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ public class App04UploadServiceImpl implements  App04UploadService {
     private App04GaonMapper app04MapperG;
     @Autowired
     private App04KyoungMapper app04MapperK;
+    @Autowired
+    private App04NmyangMapper app04MapperN;
 
     @Autowired
     private MattachElvlrtMapper attachMapper;
@@ -33,6 +37,8 @@ public class App04UploadServiceImpl implements  App04UploadService {
     private MattachGaonMapper attachMapperG;
     @Autowired
     private MattachKyoungMapper attachMapperK;
+    @Autowired
+    private MattachNmyangMapper attachMapperN;
 
     @Autowired
     private FilsUtils fileUtils;

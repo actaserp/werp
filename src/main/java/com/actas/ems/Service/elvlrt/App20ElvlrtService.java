@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App20ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App20GaonMapper;
 import com.actas.ems.Mapper.kyoung.App20KyoungMapper;
+import com.actas.ems.Mapper.nm.App20NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ import java.util.List;
 public class App20ElvlrtService {
 
     @Autowired
-    App20GaonMapper app20ElvMapper;
+    App20ElvlrtMapper app20ElvMapper;
     @Autowired
     App20GaonMapper app20ElvMapperG;
     @Autowired
-    App20GaonMapper app20ElvMapperK;
+    App20KyoungMapper app20ElvMapperK;
     @Autowired
-    App20GaonMapper app20ElvMapperN;
+    App20NmyangMapper app20ElvMapperN;
     @Autowired
-    App20GaonMapper app20ElvMapperH;
+    App20ElvlrtMapper app20ElvMapperH;
 
     public List<App20ElvlrtDto> GetApp20List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

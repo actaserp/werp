@@ -99,4 +99,6 @@ public class UserFormDto {
     /** 화면명 */
     private String pagenm;
 
+    private Integer seq;
+
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.gaon.App21GaonMapper">
+
+    <!--      호기별 고장현황  -->
+    <select id="GetApp21List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App21ElvlrtDto">
+        <![CDATA[
+                SELECT a.actcd,
+                a.actnm,
+                a.equpcd,
+                a.equpnm,
+                a.qty,
+                a.perid,
+                a.pernm,
+                a.contcd,
+                a.contnm,
+                a.contents as contremark,
+                a.remark,
+                a.greginm,
+				a.remonm,
+				a.resultnm,
+				a.resunm,
+				a.reginm,
+				a.remoremark,
+				a.resuremark
+          FROM (SELECT a.actcd,
+                            q.actnm,
+                            a.equpcd,
+                            m.equpnm,
+                            count(a.compdate) as qty,
+                            max(a.perid) as perid,
+                            d.pernm,
+                            max(b.contcd) as contcd,
+                            p.contnm,
+                            max(convert(varchar(100), b.contents)) as contents,
+                            max(a.remark) as remark,
+                            n.greginm,
+							e.remonm,
+							z.resultnm,
+							s.resunm,
+							k.reginm,
+							cast(remoremark as varchar) remoremark,
+							cast(resuremark as varchar) resuremark
+                     FROM tb_e411 a
+                       LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                       LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+                            LEFT OUTER JOIN tb_e401 b ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+                       LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (b.custcd = p.custcd AND b.spjangcd = p.spjangcd AND b.contcd = p.contcd)
+                            LEFT OUTER JOIN tb_e013 n WITH(NOLOCK) ON (a.custcd = n.custcd AND a.spjangcd = n.spjangcd AND a.gregicd = n.gregicd)
+                       LEFT OUTER JOIN tb_e011 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.remocd = e.remocd)
+                            LEFT OUTER JOIN tb_e015 z WITH(NOLOCK) ON (a.custcd = z.custcd AND a.spjangcd = z.spjangcd AND a.resultcd = z.resultcd)
+                       LEFT OUTER JOIN tb_e012 s WITH(NOLOCK) ON (a.custcd = s.custcd AND a.spjangcd = s.spjangcd AND a.resucd = s.resucd)
+                            LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.gregicd = k.gregicd AND a.regicd = k.regicd)
+                       LEFT OUTER JOIN tb_e401 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+                    WHERE a.compdate BETWEEN #{frdate} AND #{todate}
+                      AND (q.actcd = #{actcd} OR #{actcd} = '%')
+                      AND (a.contcd = #{gregicd} OR #{gregicd} = '%')
+                      AND (a.remocd = #{remocd} OR #{remocd} = '%')
+                      AND (a.resucd = #{resucd} OR #{resucd} = '%')
+                      AND (a.resultcd = #{resultcd} OR #{resultcd} = '%')
+                    GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm, n.greginm, e.remonm, z.resultnm, s.resunm, k.reginm, cast(remoremark as varchar), cast(resuremark as varchar)) a
+          WHERE a.qty >= #{qty}
+
+        ]]>
+    </select>
+
+
+</mapper>

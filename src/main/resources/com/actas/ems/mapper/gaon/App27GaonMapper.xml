@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.gaon.App27GaonMapper">
+
+
+    <!--기간별-->
+    <select id="GetApp27List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+
+        SELECT left(a.compdate, 6) as compyear,
+            a.actnm as actnm,
+            a.equpcd as equpcd,
+            isnull(a.equpnm, '') as equpnm,
+            isnull(a.greginm, '') as greginm,
+            a.gregicd as gregicd,
+            isnull(a.reginm, '') as reginm,
+            SUM(CONVERT(int, a.result)) as result,
+            sum(mon01) as mon01,
+            sum(mon02) as mon02,
+            sum(mon03) as mon03,
+            sum(mon04) as mon04,
+            sum(mon05) as mon05,
+            sum(mon06) as mon06,
+            sum(mon07) as mon07,
+            sum(mon08) as mon08,
+            sum(mon09) as mon09,
+            sum(mon10) as mon10,
+            sum(mon11) as mon11,
+            sum(mon12) as mon12
+        FROM (SELECT a.custcd,
+            a.spjangcd,
+            a.actcd,
+            a.cltcd,
+            q.actnm,
+            a.compdate,
+            a.gregicd,
+            v.greginm,
+            a.regicd,
+            k.reginm,
+            a.equpnm,
+            a.equpcd,
+            sum(convert(int, a.result)) as result,
+
+            (CASE WHEN substring(a.compdate, 5, 2)= '01' THEN count(a.compdate) ELSE 0 END) as mon01,
+            (CASE WHEN substring(a.compdate, 5, 2)= '02' THEN count(a.compdate) ELSE 0 END) as mon02,
+            (CASE WHEN substring(a.compdate, 5, 2)= '03' THEN count(a.compdate) ELSE 0 END) as mon03,
+            (CASE WHEN substring(a.compdate, 5, 2)= '04' THEN count(a.compdate) ELSE 0 END) as mon04,
+            (CASE WHEN substring(a.compdate, 5, 2)= '05' THEN count(a.compdate) ELSE 0 END) as mon05,
+            (CASE WHEN substring(a.compdate, 5, 2)= '06' THEN count(a.compdate) ELSE 0 END) as mon06,
+            (CASE WHEN substring(a.compdate, 5, 2)= '07' THEN count(a.compdate) ELSE 0 END) as mon07,
+            (CASE WHEN substring(a.compdate, 5, 2)= '08' THEN count(a.compdate) ELSE 0 END) as mon08,
+            (CASE WHEN substring(a.compdate, 5, 2)= '09' THEN count(a.compdate) ELSE 0 END) as mon09,
+            (CASE WHEN substring(a.compdate, 5, 2)= '10' THEN count(a.compdate) ELSE 0 END) as mon10,
+            (CASE WHEN substring(a.compdate, 5, 2)= '11' THEN count(a.compdate) ELSE 0 END) as mon11,
+            (CASE WHEN substring(a.compdate, 5, 2)= '12' THEN count(a.compdate) ELSE 0 END) as mon12
+            FROM tb_e411 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN tb_e013 v WITH(NOLOCK) ON (a.custcd = v.custcd AND a.spjangcd = v.spjangcd AND a.gregicd = v.gregicd)
+            LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (a.custcd = k.custcd AND a.spjangcd = k.spjangcd AND a.gregicd = k.gregicd AND a.regicd = k.regicd)
+            WHERE left(a.compdate, 6) between #{frdate} and #{todate}
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.cltcd,  a.compdate,  a.gregicd, a.regicd, q.actnm, v.greginm, k.reginm, a.equpcd, a.equpnm) a
+        WHERE (a.gregicd like concat('%',#{gregicd},'%'))
+          AND (a.equpcd like concat('%',#{equpcd},'%'))
+          AND (a.actcd = #{actcd} OR #{actcd} = '%')
+        GROUP BY a.custcd, a.spjangcd,left(a.compdate, 6), a.cltcd, a.actcd, a.actnm, a.greginm, a.reginm, a.equpnm, a.equpcd, a.gregicd
+
+
+    </select>
+
+    <select id="GetApp27List002" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        SELECT left(a.compdate, 6) as compyear,
+            a.actnm as actnm,
+            a.equpnm as equpnm,
+            a.equpcd as equpcd,
+            a.contnm as contnm,
+            a.contcd as contcd,
+            a.contents as contents,
+            SUM(CONVERT(int, a.result)) as result,
+            sum(mon01) as mon01,
+            sum(mon02) as mon02,
+            sum(mon03) as mon03,
+            sum(mon04) as mon04,
+            sum(mon05) as mon05,
+            sum(mon06) as mon06,
+            sum(mon07) as mon07,
+            sum(mon08) as mon08,
+            sum(mon09) as mon09,
+            sum(mon10) as mon10,
+            sum(mon11) as mon11,
+            sum(mon12) as mon12
+        FROM (SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            q.actnm,
+            a.compdate,
+            b.contcd,
+            p.contnm,
+            cast( b.contents as varchar) as contents,
+            a.equpcd,
+            a.equpnm,
+            sum(convert(int, a.result)) as result,
+
+            (CASE WHEN substring(compdate, 5, 2)= '01' THEN count(compdate) ELSE 0 END) as mon01,
+            (CASE WHEN substring(compdate, 5, 2)= '02' THEN count(compdate) ELSE 0 END) as mon02,
+            (CASE WHEN substring(compdate, 5, 2)= '03' THEN count(compdate) ELSE 0 END) as mon03,
+            (CASE WHEN substring(compdate, 5, 2)= '04' THEN count(compdate) ELSE 0 END) as mon04,
+            (CASE WHEN substring(compdate, 5, 2)= '05' THEN count(compdate) ELSE 0 END) as mon05,
+            (CASE WHEN substring(compdate, 5, 2)= '06' THEN count(compdate) ELSE 0 END) as mon06,
+            (CASE WHEN substring(compdate, 5, 2)= '07' THEN count(compdate) ELSE 0 END) as mon07,
+            (CASE WHEN substring(compdate, 5, 2)= '08' THEN count(compdate) ELSE 0 END) as mon08,
+            (CASE WHEN substring(compdate, 5, 2)= '09' THEN count(compdate) ELSE 0 END) as mon09,
+            (CASE WHEN substring(compdate, 5, 2)= '10' THEN count(compdate) ELSE 0 END) as mon10,
+            (CASE WHEN substring(compdate, 5, 2)= '11' THEN count(compdate) ELSE 0 END) as mon11,
+            (CASE WHEN substring(compdate, 5, 2)= '12' THEN count(compdate) ELSE 0 END) as mon12
+            FROM tb_e411 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd),
+            tb_e401 b WITH(NOLOCK)
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (b.custcd = p.custcd AND b.spjangcd = p.spjangcd AND b.contcd = p.contcd)
+            WHERE a.custcd = b.custcd
+            AND a.spjangcd = b.spjangcd
+            AND a.recedate = b.recedate
+            AND a.recenum = b.recenum
+            AND left(a.compdate, 6) between #{frdate} AND #{todate}
+            GROUP BY a.custcd, a.spjangcd, a.cltcd, a.actcd, a.compdate, b.contcd, q.actnm, p.contnm, a.equpcd, a.equpnm, cast( b.contents as varchar)) a
+        WHERE  (a.actcd = #{actcd} OR #{actcd} = '%')
+          AND (a.contcd = #{contcd} OR #{contcd} = '%')
+          AND a.equpcd like concat('%',#{equpcd},'%')
+        GROUP BY a.custcd, a.spjangcd, left(a.compdate, 6), a.cltcd, a.actnm, a.contnm, a.equpnm, a.contents, a.contcd, a.equpcd
+    </select>
+
+    <select id="GetApp27List003" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        SELECT left(a.compdate, 6) as compyear,
+            a.equpcd as equpcd,
+            a.actnm as actnm,
+            a.equpnm as equpnm,
+            a.remonm as remonm,
+            SUM(CONVERT(int, a.result)) as result,
+            sum(mon01) as mon01,
+            sum(mon02) as mon02,
+            sum(mon03) as mon03,
+            sum(mon04) as mon04,
+            sum(mon05) as mon05,
+            sum(mon06) as mon06,
+            sum(mon07) as mon07,
+            sum(mon08) as mon08,
+            sum(mon09) as mon09,
+            sum(mon10) as mon10,
+            sum(mon11) as mon11,
+            sum(mon12) as mon12
+        FROM (SELECT a.custcd,
+            a.spjangcd,
+            a.actcd,
+            a.cltcd,
+            q.actnm,
+            a.compdate,
+            a.remocd,
+            r.remonm,
+            a.equpcd,
+            a.equpnm,
+            sum(convert(int, a.result)) as result,
+            (CASE WHEN substring(a.compdate, 5, 2)= '01' THEN count(a.compdate) ELSE 0 END) as mon01,
+            (CASE WHEN substring(a.compdate, 5, 2)= '02' THEN count(a.compdate) ELSE 0 END) as mon02,
+            (CASE WHEN substring(a.compdate, 5, 2)= '03' THEN count(a.compdate) ELSE 0 END) as mon03,
+            (CASE WHEN substring(a.compdate, 5, 2)= '04' THEN count(a.compdate) ELSE 0 END) as mon04,
+            (CASE WHEN substring(a.compdate, 5, 2)= '05' THEN count(a.compdate) ELSE 0 END) as mon05,
+            (CASE WHEN substring(a.compdate, 5, 2)= '06' THEN count(a.compdate) ELSE 0 END) as mon06,
+            (CASE WHEN substring(a.compdate, 5, 2)= '07' THEN count(a.compdate) ELSE 0 END) as mon07,
+            (CASE WHEN substring(a.compdate, 5, 2)= '08' THEN count(a.compdate) ELSE 0 END) as mon08,
+            (CASE WHEN substring(a.compdate, 5, 2)= '09' THEN count(a.compdate) ELSE 0 END) as mon09,
+            (CASE WHEN substring(a.compdate, 5, 2)= '10' THEN count(a.compdate) ELSE 0 END) as mon10,
+            (CASE WHEN substring(a.compdate, 5, 2)= '11' THEN count(a.compdate) ELSE 0 END) as mon11,
+            (CASE WHEN substring(a.compdate, 5, 2)= '12' THEN count(a.compdate) ELSE 0 END) as mon12
+            FROM tb_e411 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN tb_e011 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.remocd = r.remocd)
+            WHERE left(a.compdate, 6) between #{frdate} AND #{todate}
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.cltcd, a.compdate, a.remocd, q.actnm, r.remonm, a.equpnm, a.equpcd) a
+        WHERE  (a.actcd = #{actcd} OR #{actcd} = '%')
+          AND (a.remocd = #{remocd} OR #{remocd} = '%')
+          AND a.equpcd like concat('%',#{equpcd},'%')
+        GROUP BY a.custcd, a.spjangcd, left(a.compdate, 6), a.cltcd, a.actcd, a.actnm, a.remocd, a.remonm, a.equpnm, a.equpcd
+
+
+    </select>
+
+    <select id="GetApp27List004" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        SELECT
+            left(a.compdate, 6) as compyear,
+            a.actnm,
+            isnull(a.equpnm, '') as equpnm,
+            a.equpcd,
+            a.resunm,
+            sum(a.result) as result,
+            sum(mon01) as mon01,
+            sum(mon02) as mon02,
+            sum(mon03) as mon03,
+            sum(mon04) as mon04,
+            sum(mon05) as mon05,
+            sum(mon06) as mon06,
+            sum(mon07) as mon07,
+            sum(mon08) as mon08,
+            sum(mon09) as mon09,
+            sum(mon10) as mon10,
+            sum(mon11) as mon11,
+            sum(mon12) as mon12
+        FROM (SELECT a.custcd,
+            a.spjangcd,
+            a.actcd,
+            a.cltcd,
+            q.actnm,
+            a.compdate,
+            a.resucd,
+            r.resunm,
+            a.equpcd,
+            a.equpnm,
+            SUM(convert(int, a.result)) as result,
+            (CASE WHEN substring(a.compdate, 5, 2)= '01' THEN count(a.compdate) ELSE 0 END) as mon01,
+            (CASE WHEN substring(a.compdate, 5, 2)= '02' THEN count(a.compdate) ELSE 0 END) as mon02,
+            (CASE WHEN substring(a.compdate, 5, 2)= '03' THEN count(a.compdate) ELSE 0 END) as mon03,
+            (CASE WHEN substring(a.compdate, 5, 2)= '04' THEN count(a.compdate) ELSE 0 END) as mon04,
+            (CASE WHEN substring(a.compdate, 5, 2)= '05' THEN count(a.compdate) ELSE 0 END) as mon05,
+            (CASE WHEN substring(a.compdate, 5, 2)= '06' THEN count(a.compdate) ELSE 0 END) as mon06,
+            (CASE WHEN substring(a.compdate, 5, 2)= '07' THEN count(a.compdate) ELSE 0 END) as mon07,
+            (CASE WHEN substring(a.compdate, 5, 2)= '08' THEN count(a.compdate) ELSE 0 END) as mon08,
+            (CASE WHEN substring(a.compdate, 5, 2)= '09' THEN count(a.compdate) ELSE 0 END) as mon09,
+            (CASE WHEN substring(a.compdate, 5, 2)= '10' THEN count(a.compdate) ELSE 0 END) as mon10,
+            (CASE WHEN substring(a.compdate, 5, 2)= '11' THEN count(a.compdate) ELSE 0 END) as mon11,
+            (CASE WHEN substring(a.compdate, 5, 2)= '12' THEN count(a.compdate) ELSE 0 END) as mon12
+            FROM tb_e411 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN tb_e012 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.resucd = r.resucd)
+            WHERE left(a.compdate, 6) between #{frdate} AND #{todate}
+            GROUP BY a.custcd, a.spjangcd, a.actcd, a.cltcd, a.compdate, a.resucd, q.actnm, r.resunm, a.equpcd, a.equpnm) a
+        WHERE (a.actcd = #{actcd} OR #{actcd} = '%')
+          AND a.equpcd like CONCAT('%',#{equpcd},'%')
+          AND (a.resucd = #{resucd} OR #{resucd} = '%')
+        GROUP BY a.custcd, a.spjangcd, left(a.compdate, 6), a.cltcd, a.actcd, a.actnm, a.resucd, a.resunm, a.equpnm, a.equpcd
+
+    </select>
+    <select id="GetpopupList" parameterType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        SELECT a.recedate as recedate,
+               a.recetime as recetime,
+               isnull(a.equpnm, '') as equpnm,
+               d.pernm AS actpernm,
+               a.divinm as divinm,
+               a.pernm as pernm,
+               a.contnm as contnm,
+               a.contremark as contremark,
+               a.resunm as resunm,
+               a.resuremark as resuremark,
+               a.repernm as repernm,
+               a.remonm as remonm,
+               a.remoremark as remoremark,
+               a.greginm as greginm,
+               a.reginm as reginm,
+               a.compdate as compdate,
+               a.comptime as comptime,
+               a.resutime as resutime,
+               a.resulttime as resulttime,
+               a.resultnm as resultnm
+
+        FROM
+            (
+                SELECT a.custcd,
+                       a.spjangcd,
+                       a.cltcd,
+                       a.actcd,
+                       a.equpcd,
+                       a.recedate,
+                       a.recetime,
+                       q.actnm,
+                       m.equpnm,
+                       d.pernm,
+                       e.divinm,
+                       a.contcd,
+                       p.contnm,
+                       a.contents as contremark,
+                       b.resucd,
+                       s.resunm,
+                       resuremark,
+                       g.pernm as repernm,
+                       b.remocd,
+                       r.remonm,
+                       b.remoremark,
+                       b.gregicd,
+                       v.greginm,
+                       b.regicd,
+                       k.reginm,
+                       b.resultcd,
+                       b.arrivtime,
+                       b.compdate,
+                       b.comptime,
+                       b.resutime,
+                       b.resulttime,
+                       z.resultnm
+                FROM tb_e401 a WITH(NOLOCK)
+		 LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                    LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                    LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+                    LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+                    LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+                    LEFT OUTER JOIN TB_JC002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
+                    LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+                    LEFT OUTER JOIN tb_e012 s WITH(NOLOCK) ON (b.custcd = s.custcd AND b.spjangcd = s.spjangcd AND b.resucd = s.resucd)
+                    LEFT OUTER JOIN tb_e013 v WITH(NOLOCK) ON (b.custcd = v.custcd AND b.spjangcd = v.spjangcd AND b.gregicd = v.gregicd)
+                    LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd AND b.regicd = k.regicd)
+                    LEFT OUTER JOIN tb_e011 r WITH(NOLOCK) ON (b.custcd = r.custcd AND b.spjangcd = r.spjangcd AND b.remocd = r.remocd)
+                    LEFT OUTER JOIN tb_e015 z WITH(NOLOCK) ON (b.custcd = z.custcd AND b.spjangcd = z.spjangcd AND b.resultcd = z.resultcd)
+            ) a, tb_e601 b
+                     LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND b.perid = substring(d.perid, 2, 10)), tb_e611 c
+        WHERE a.custcd = b.custcd
+          AND a.spjangcd = b.spjangcd
+          AND a.actcd = b.actcd
+          AND a.custcd = c.custcd
+          AND a.spjangcd = c.spjangcd
+          AND a.actcd = c.actcd
+          AND a.equpcd = c.equpcd
+          AND LEFT(a.compdate, 6) between #{compyear} and #{compyear}
+          AND a.actcd = #{actcd}
+          AND a.equpcd like concat('%',#{equpcd},'%')
+          AND (a.gregicd = #{gregicd} OR #{gregicd} = '%')
+          AND a.reginm like CONCAT('%',#{reginm},'%')
+          AND isnull(a.contcd,'') like CONCAT('%',#{contcd},'%')
+          AND isnull(a.contremark,'') like concat('%',#{contremark},'%')
+          AND a.remonm like CONCAT('%',#{remonm},'%')
+          AND a.resunm like CONCAT('%',#{resunm},'%')
+    </select>
+</mapper>

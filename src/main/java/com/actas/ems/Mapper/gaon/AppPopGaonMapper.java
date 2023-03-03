@@ -2,6 +2,7 @@ package com.actas.ems.Mapper.gaon;
 
 
 import com.actas.ems.DTO.Popup.PopupDto;
+import com.actas.ems.DTO.TBXa012VO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +39,7 @@ public interface AppPopGaonMapper {
     public List<PopupDto> GetWkactList(PopupDto parm);
     public PopupDto GetSmsInfoList(PopupDto parm);
 
+    public TBXa012VO GetXa012Info(PopupDto parm);
+    public int UpdateXa012(TBXa012VO parm) ;
 
 }

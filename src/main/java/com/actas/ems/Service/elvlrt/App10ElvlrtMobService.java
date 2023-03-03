@@ -11,6 +11,7 @@ import com.actas.ems.DTO.Elvlrt.*;
 import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMobMapper;
 import com.actas.ems.Mapper.gaon.App10GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMobMapper;
+import com.actas.ems.Mapper.nm.App10NmyangMobMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class App10ElvlrtMobService {
     @Autowired
     App10KyoungMobMapper app10ElvMobMapperK;
     @Autowired
-    App10ElvlrtMobMapper app10ElvMobMapperN;
+    App10NmyangMobMapper app10ElvMobMapperN;
     @Autowired
     App10ElvlrtMobMapper app10ElvMobMapperH;
     int queryResult = 1;

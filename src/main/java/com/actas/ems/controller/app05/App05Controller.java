@@ -35,7 +35,7 @@ public class App05Controller {
 
     protected Log log =  LogFactory.getLog(this.getClass());
 
-    // 도면자료실 index
+    // 공지전체자료실 index
     @GetMapping(value="/index01")
     public String App05Form(Model model, HttpServletRequest request) throws  Exception{
 
@@ -45,7 +45,7 @@ public class App05Controller {
         String indate = endDate.format(nowData).toString();
         App05Dto.setYyyymm(indate.substring(0,6));
         App05Dto.setNinputdate(indate);
-
+        App05Dto.setNgourpcd("%");
         try {
 
 //            log.debug("Exception =====>" + App05ListDto );
@@ -84,6 +84,54 @@ public class App05Controller {
     }
 
 
+    // 고객공지 index
+    @GetMapping(value="/index02")
+    public String App06Form(Model model, HttpServletRequest request) throws  Exception{
+
+
+        Date nowData = new Date();
+        SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
+        String indate = endDate.format(nowData).toString();
+        App05Dto.setYyyymm(indate.substring(0,6));
+        App05Dto.setNinputdate(indate);
+        App05Dto.setNgourpcd("02");
+
+        try {
+
+//            log.debug("Exception =====>" + App05ListDto );
+            model.addAttribute("App05Dto",service.GetMNoticeList(App05Dto));
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.debug("Exception =====>" + ex.toString() );
+        }
+        try {
+
+            com750Dto = service.GetComm751List();
+            model.addAttribute("com750Dto",com750Dto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.debug("Exception =====>" + ex.toString() );
+        }
+
+//        log.debug("App05tDto =====>" + App05Dto.toString() );
+        try {
+
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            userformDto.setPagetree01("공지사항");
+            userformDto.setPagenm("공지사항");
+            model.addAttribute("userformDto",userformDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.debug("Exception =====>" + ex.toString() );
+        }
+
+
+
+
+        return "app05/noticelistcust";
+    }
 
 
 }

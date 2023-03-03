@@ -9,6 +9,17 @@
     </select>
 
 
+    <update id="UpdateCallInfo" parameterType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto">
+        update TB_XENV
+        set spjangcd = #{spjangcd}
+        <if test="calluserid != null ">,</if>
+        <if test="calluserid != null">calluserid=#{calluserid}</if>
+        <if test="calluserpw != null ">,</if>
+        <if test="calluserpw != null">calluserpw=#{calluserpw}</if>
+        <if test="callflag != null ">,</if>
+        <if test="callflag != null">callflag=#{callflag}</if>
+        where  spjangcd = 'ZZ'
+    </update>
     <!--      관제현황 / 접수현황LIST  -->
     <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
         <![CDATA[

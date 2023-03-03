@@ -9,6 +9,8 @@ import com.actas.ems.Mapper.kyoung.App_mbmanual.App_mbmanualKyoungMapper;
 import com.actas.ems.Mapper.Elvlrt.App_mbmanual.Attach_02ElvlrtMapper;
 import com.actas.ems.Mapper.kyoung.App_mbmanual.Attach_02KyoungMapper;
 import com.actas.ems.Mapper.gaon.App_mbmanual.Attach_02GaonMapper;
+import com.actas.ems.Mapper.nm.App_mbmanual.App_mbmanualNmyangMapper;
+import com.actas.ems.Mapper.nm.App_mbmanual.Attach_02NmyangMapper;
 import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
     private App_mbmanualGaonMapper APP_MBMANUAL_GaonMAPPER ;
     @Autowired
     private App_mbmanualKyoungMapper app27Elvlrt_KyoungMapperK ;
+    @Autowired
+    private App_mbmanualNmyangMapper app27Elvlrt_NmyangMapperN ;
 
     @Autowired
     private Attach_02ElvlrtMapper attach_02ElvlrtMapper;
@@ -34,6 +38,8 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
     private Attach_02GaonMapper attach_02GaonMapper;
     @Autowired
     private Attach_02KyoungMapper attach_02KyoungMapper;
+    @Autowired
+    private Attach_02NmyangMapper attach_02NmyangMapper;
 
     @Autowired
     private FilsUtils fileUtils;

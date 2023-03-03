@@ -27,7 +27,7 @@
     </select>
 
     <!-- 알수 없음-->
-    <select id="get10ManualMaxSeq" parameterType="string" resultType="java.lang.String">
+    <select id="getFQManualMaxSeq" parameterType="string" resultType="java.lang.String">
         select max(fseq) from tb_mfmanual where Left(fseq,6) = #{fseq}
     </select>
 

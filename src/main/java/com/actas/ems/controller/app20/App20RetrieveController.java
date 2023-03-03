@@ -54,10 +54,14 @@ public class App20RetrieveController {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
 
-        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+        if(userformDto.getFlag().equals("AA")){
             popParmDto.setActcd(actcd);
         }else{
-            popParmDto.setActcd(userformDto.getActcd());
+            if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+                popParmDto.setActcd(actcd);
+            }else{
+                popParmDto.setActcd(userformDto.getActcd());
+            }
         }
 
         popParmDto.setPerid(perid);

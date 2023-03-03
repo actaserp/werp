@@ -52,7 +52,7 @@ public class AuthCrudMController {
                     break;
             }
         });
-
+        userformDto.setFlag("AA");
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
 
         if(userReturnDto.getWrongnum().equals("3")){

@@ -40,8 +40,8 @@ public class App14RetrieveController {
         popParmDto.setDivicd("AA"+divicd);
         popParmDto.setPerid('p'+perid);
         popParmDto.setRtclafi(rtclafi);
-        System.out.println(popParmDto.getDivicd() + popParmDto.getPerid() + popParmDto.getRtclafi());
-        System.out.println("------1");
+//        System.out.println(popParmDto.getDivicd() + popParmDto.getPerid() + popParmDto.getRtclafi());
+//        System.out.println("------1");
 
         try {
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.gaon.App18GaonMapper">
+
+    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <select id="GetApp18List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App18ElvlrtDto">
+        <![CDATA[
+                SELECT b.recedate,
+                q.actnm,
+                m.dong,
+                m.ho,
+                d.pernm,
+                a.remoremark,
+                a.resuremark,
+                convert(int, isnull(a.resutime,0)) as resutime,
+                convert(int, isnull(a.resulttime,0)) as resulttime,
+                (convert(int,resutime)+convert(int,resulttime)) as totaltime
+          FROM tb_e411 a WITH(NOLOCK)
+               LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10)),
+               tb_e401 b WITH(NOLOCK)
+         WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum
+           AND left(b.recedate, 6) BETWEEN #{frdate} AND #{todate}
+            AND (a.actcd = #{actcd} OR #{actcd} = '%')
+
+        ]]>
+    </select>
+
+
+</mapper>

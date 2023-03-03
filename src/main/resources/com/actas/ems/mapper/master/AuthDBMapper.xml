@@ -9,14 +9,51 @@
         VALUES (#{userid},#{rnum}, #{passwd1}, #{passwd2}, #{custnm}, #{pernm}, #{useyn}, #{password}, #{role}, #{custcd}, #{spjangcd},
                 #{username}, #{actcd}, #{actnm}, #{saupnum}, #{flag}, #{phone}, #{dbnm}, #{encodepw}, 0)
     </insert>
+    <select id="GetCustInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
+        select custcd, custnm from tb_xusers where len(custnm) > 0 group by custcd, custnm
+    </select>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum
-         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum, custcd, custnm
+         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and flag = #{flag}
+    </select>
+    <select id="GetAdminInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, dbnm
+        from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and flag = #{flag} AND custcd = #{custcd}
     </select>
     <select id="GetUserInfoDto" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum
-        from TB_XUSERS where userid=#{userid}
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, pernm, useyn, role, dbnm, wrongnum, custcd, custnm
+        from TB_XUSERS where userid=#{userid} and flag = #{flag}
     </select>
+    <select id="GetUserListDto" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
+        <![CDATA[ select  seq, userid, passwd1,  username, actcd, actnm,   phone, pernm, useyn, role, dbnm, wrongnum, custcd, custnm,
+        case useyn when 'Y' THEN '사용' ELSE '미사용' END as flag
+        from TB_XUSERS where custcd=#{custcd} and flag like CONCAT('%',#{flag},'%') and flag in  ('AA', 'CC') AND username like CONCAT('%',#{username},'%')
+        order by flag, username
+        ]]>
+    </select>
+
+
+    <select id="GetLogListDto" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.TBXLoginDTO">
+        <![CDATA[
+        select DISTINCT userid, ipaddr, Left(onoffdt,4) + '-' + substring(onoffdt, 5,2) + '-' + substring(onoffdt, 7,2) AS onoffdt, usernm, ondate, ofdate, onoffdv
+        from (
+                 select userid, ipaddr, onoffdt, usernm, ondate, case onoffdv when 'Y' then 'IN' ELSE 'OFF' END AS  onoffdv, ofdate
+                 from TB_XLOGIN
+                 where userid like CONCAT('%', #{userid}, '%') AND custnm = #{custnm} AND ofdate IS NULL
+                 union
+                 select userid, ipaddr, onoffdt, usernm, ofdate as ondate,  case onoffdv when 'Y' then 'IN' ELSE 'OFF'  END  AS  onoffdv, ofdate
+                  from TB_XLOGIN
+                 where userid like CONCAT('%', #{userid}, '%')  AND custnm = #{custnm} AND ondate IS NULL
+             ) F
+        order by onoffdt desc,  usernm,  ondate
+        ]]>
+    </select>
+
+    <update id="UpdateUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  >
+        UPDATE TB_XUSERS SET  useyn=#{useyn}
+            from TB_XUSERS  where userid=#{userid} and custcd = #{custcd} and flag = #{flag}
+    </update>
+
     <select id="GetClientInfo" parameterType="com.actas.ems.DTO.UserFormDto" resultType="String">
         SELECT dbo.uf_client_info(#{saupnum})
     </select>
@@ -59,7 +96,15 @@
         INSERT INTO TB_XLOGIN
         (userid, ipaddr, onoffdt, custnm, usernm, ondate, onoffdv)
         VALUES
-        (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{cltnm}, #{username}, getDate(), 'Y')
+        (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{custnm}, #{username}, getDate(), 'Y')
+    </insert>
+
+
+    <insert id="TB_XLOGOUT_INSERT" parameterType="com.actas.ems.DTO.UserFormDto">
+        INSERT INTO TB_XLOGIN
+            (userid, ipaddr, onoffdt, custnm, usernm, ofdate, onoffdv)
+        VALUES
+            (#{userid}, #{ipaddr}, convert(varchar(8),getDate(),112), #{custnm}, #{username}, getDate(), 'N')
     </insert>
 
     <update id="TB_XUSERS_LOGFAIL" parameterType="com.actas.ems.DTO.UserFormDto">
@@ -81,6 +126,6 @@
     <update id="TB_XUSER_UPDATE" parameterType="com.actas.ems.DTO.UserFormDto">
         UPDATE TB_XUSERS SET
             username = #{username}, passwd1 = #{passwd1}, passwd2 = #{passwd2}, phone = #{phone}
-        WHERE userid = #{userid}
+        WHERE userid = #{userid} and custcd= #{custcd} and flag = #{flag}
     </update>
 </mapper>

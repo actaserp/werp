@@ -6,6 +6,7 @@ import com.actas.ems.DTO.CommonDto;
 import com.actas.ems.Mapper.Elvlrt.App06ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App06GaonMapper;
 import com.actas.ems.Mapper.kyoung.App06KyoungMapper;
+import com.actas.ems.Mapper.nm.App06NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class App06ElvlrtService {
     @Autowired
     App06KyoungMapper App06ElvMapperK;
     @Autowired
-    App06GaonMapper App06ElvMapperN;
+    App06NmyangMapper App06ElvMapperN;
     @Autowired
-    App06GaonMapper App06ElvMapperH;
+    App06ElvlrtMapper App06ElvMapperH;
     /** 글 목록 */
     public List<App06ElvlrtDto> GetMHManualList(App06ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

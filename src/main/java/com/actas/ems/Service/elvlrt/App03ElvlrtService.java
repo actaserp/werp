@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App03ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App03GaonMapper;
 import com.actas.ems.Mapper.kyoung.App03KyoungMapper;
+import com.actas.ems.Mapper.nm.App03NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class App03ElvlrtService {
     @Autowired
     App03KyoungMapper appMapperK;
     @Autowired
-    App03GaonMapper appMapperN;
+    App03NmyangMapper appMapperN;
 
 
     /** 고장내용별현황 / 기간별 고장내용 */

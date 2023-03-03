@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Elvlrt.App09ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App09ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App09GaonMapper;
 import com.actas.ems.Mapper.kyoung.App09KyoungMapper;
+import com.actas.ems.Mapper.nm.App09NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ import java.util.List;
 public class App09ElvlrtService {
 
     @Autowired
-    App09GaonMapper app09ElvMapper;
+    App09ElvlrtMapper app09ElvMapper;
     @Autowired
     App09GaonMapper app09ElvMapperG;
     @Autowired
-    App09GaonMapper app09ElvMapperK;
+    App09KyoungMapper app09ElvMapperK;
     @Autowired
-    App09GaonMapper app09ElvMapperN;
+    App09NmyangMapper app09ElvMapperN;
     @Autowired
-    App09GaonMapper app09ElvMapperH;
+    App09ElvlrtMapper app09ElvMapperH;
     int queryResult = 1;
     public List<App09ElvlrtDto> GetFQManulList(App09ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

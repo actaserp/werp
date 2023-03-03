@@ -104,12 +104,16 @@ public class AuthCrudController {
 
              Model model,   HttpServletRequest request){
 
+        HttpSession session = request.getSession();
+        UserFormDto userformDtoS = (UserFormDto) session.getAttribute("userformDto");
 
         userformDto.setPasswd1(passwd1);
         userformDto.setPasswd2(passwd2);
         userformDto.setPhone(phone);
         userformDto.setUsername(username);
-        userformDto.setUserid(userformDto.getUserid());
+        userformDto.setUserid(userid);
+        userformDto.setCustcd(userformDtoS.getCustcd());
+        userformDto.setFlag(userformDtoS.getFlag());
 
          authService.TB_XUSER_UPDATE(userformDto);
 
@@ -128,7 +132,7 @@ public class AuthCrudController {
             , HttpServletRequest request) throws Exception{
         userformDto.setUserid(loginid);
         userformDto.setPasswd1(logpass);
-
+        userformDto.setFlag(select);
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
 
         if(userReturnDto.getWrongnum().equals("3")){
@@ -139,16 +143,8 @@ public class AuthCrudController {
 
         String ls_dbnm = userReturnDto.getDbnm();
         model.addAttribute("UserInfo", userReturnDto );
-        switch (ls_dbnm){
-            case "ELV_LRT":      //한국엘레텍
-                break;
-            case "KYOUNG":
-                break;
-            default:
-                break;
-        }
-
         userformDto.setUserid(loginid);
+        userformDto.setFlag(select);
         userformDto =  authService.GetUserInfoDto(userformDto);
 
         HttpSession session = request.getSession();
@@ -175,6 +171,12 @@ public class AuthCrudController {
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
                 break;
+            case "ELV_GAON":
+                ls_custcd = "GAON";
+                break;
+            case "nmyang":
+                ls_custcd = "nmyang";
+                break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
@@ -183,11 +185,46 @@ public class AuthCrudController {
 
         }
         ls_spjangcd = "ZZ";
-        userformDto.setCustcd(ls_custcd);
+        if(userformDto.getCustcd().length() == 0 || userformDto.getCustcd().equals("")){
+            userformDto.setCustcd(ls_custcd);
+        }
         userformDto.setSpjangcd(ls_spjangcd);
 
+//        model.addAttribute("custReturnDto", custReturnDto);
 
         if(select.equals(userformDto.getFlag()) == false){
+            userReturnDto = null;
+            return userReturnDto;
+        }else {
+
+
+            return userReturnDto;
+        }
+    }
+
+    @RequestMapping(value = "/adminchk", method = RequestMethod.POST)
+    public Object memberLoginAdminForm(@RequestParam("loginid") String loginid
+            , @RequestParam("logpass") String logpass
+            , @RequestParam("flag") String select
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        userformDto.setUserid(loginid);
+        userformDto.setPasswd1(logpass);
+        userformDto.setFlag("ZZ");
+        userformDto.setCustcd(select);
+        UserFormDto userReturnDto = authService.GetAdminInfo(userformDto);
+//        UserFormDto custReturnDto = authService.GetCustInfo(userformDto);
+
+        if(userReturnDto.getWrongnum().equals("3")){
+            return userReturnDto;
+        }
+
+        authService.TB_XUSERS_LOGSUCC(userReturnDto);
+        model.addAttribute("UserInfo", userReturnDto );
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto",userReturnDto);
+        if(!userformDto.getFlag().equals("ZZ")){
             userReturnDto = null;
             return userReturnDto;
         }else {
@@ -245,20 +282,42 @@ public class AuthCrudController {
     @RequestMapping(value = "/loginlog", method = RequestMethod.POST)
     public void Login_Log(@RequestParam("loginid") String loginid
             , @RequestParam("logpass") String logpass
-            , @RequestParam("ipaddr") String ipaddr)throws Exception {
+            , @RequestParam("ipaddr") String ipaddr
+            , HttpServletRequest request     )throws Exception {
             System.out.printf("--loginlog 진입");
 
             UserFormDto user = new UserFormDto();
+            HttpSession session = request.getSession();
+            UserFormDto userformDtoS = (UserFormDto) session.getAttribute("userformDto");
 
-            user.setUserid(loginid);
-            user.setPasswd1(logpass);
-            System.out.printf("--User 값 받아오기");
-            System.out.printf(user.getUsername() + user.getUserid());
-
-            user = authService.GetUserInfo(user);
+            user.setUserid(userformDtoS.getUserid());
+            user.setPasswd1(userformDtoS.getPasswd1());
             user.setIpaddr(ipaddr);
+            user.setCustnm(userformDtoS.getCustnm());
+            user.setUsername(userformDtoS.getUsername());
 
             authService.TB_XLOGIN_INSERT(user);
+
+    }
+
+
+    @RequestMapping(value = "/logoutlog", method = RequestMethod.POST)
+    public void Logout_Log(@RequestParam("loginid") String loginid
+            , HttpServletRequest request )throws Exception {
+
+
+        UserFormDto user = new UserFormDto();
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDtoS = (UserFormDto) session.getAttribute("userformDto");
+
+        user.setUserid(userformDtoS.getUserid());
+        user.setPasswd1(userformDtoS.getPasswd1());
+        user.setUsername(userformDtoS.getUsername());
+        user.setCustnm(userformDtoS.getCustnm());
+        user.setIpaddr("");
+
+        authService.TB_XLOGOUT_INSERT(user);
 
     }
 

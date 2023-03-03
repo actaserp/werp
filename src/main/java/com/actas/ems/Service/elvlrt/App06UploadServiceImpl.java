@@ -9,6 +9,8 @@ import com.actas.ems.Mapper.kyoung.App06KyoungMapper;
 import com.actas.ems.Mapper.Elvlrt.Attach06ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.Attach06GaonMapper;
 import com.actas.ems.Mapper.kyoung.Attach06KyoungMapper;
+import com.actas.ems.Mapper.nm.App06NmyangMapper;
+import com.actas.ems.Mapper.nm.Attach06NmyangMapper;
 import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +27,14 @@ public class App06UploadServiceImpl implements  App06UploadService {
     private App06ElvlrtMapper app06Mapper;
     private App06GaonMapper app06MapperG;
     private App06KyoungMapper app06MapperK;
-    private App06ElvlrtMapper app06MapperN;
+    private App06NmyangMapper app06MapperN;
     private App06ElvlrtMapper app06MapperH;
 
     @Autowired
     private Attach06ElvlrtMapper attachMapper;
     private Attach06GaonMapper attachMapperG;
     private Attach06KyoungMapper attachMapperK;
-    private Attach06ElvlrtMapper attachMapperN;
+    private Attach06NmyangMapper attachMapperN;
     private Attach06ElvlrtMapper attachMapperH;
 
     @Autowired

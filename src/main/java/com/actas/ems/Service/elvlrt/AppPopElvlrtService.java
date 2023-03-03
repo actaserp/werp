@@ -1,9 +1,12 @@
 package com.actas.ems.Service.elvlrt;
 
+import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
+import com.actas.ems.DTO.TBXa012VO;
 import com.actas.ems.Mapper.Elvlrt.AppPopElvlrtMapper;
 import com.actas.ems.Mapper.gaon.AppPopGaonMapper;
 import com.actas.ems.Mapper.kyoung.AppPopKyoungMapper;
+import com.actas.ems.Mapper.nm.AppPopNmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ public class AppPopElvlrtService {
     @Autowired
     AppPopKyoungMapper appPopElvMapperK;
     @Autowired
-    AppPopGaonMapper appPopElvMapperN;
+    AppPopNmyangMapper appPopElvMapperN;
     @Autowired
     AppPopGaonMapper appPopElvMapperH;
 
@@ -410,8 +413,69 @@ public class AppPopElvlrtService {
                 return object;
         }
     }
+
 //    {return appPopElvMapper.GetSmsInfoList(parm);}
 
+    //   사업장 정보조회 */
+    public TBXa012VO GetXa012Info(PopupDto parm) {
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  appPopElvMapper.GetXa012Info(parm);
+            case "ELV_KYOUNG":
+                return  appPopElvMapperK.GetXa012Info(parm);
+            case "ELV_GAON":
+                return  appPopElvMapperG.GetXa012Info(parm);
+            case "nmyang":
+                return  appPopElvMapperN.GetXa012Info(parm);
+            case "hanyangs":
+                return  appPopElvMapperH.GetXa012Info(parm);
+            default:
+                TBXa012VO object = null;
+                return object;
+        }
+    }
 
+
+
+    public int UpdateXa012(TBXa012VO parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = appPopElvMapper.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_GAON":
+                queryResult = appPopElvMapperG.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_KYOUNG":
+                queryResult = appPopElvMapperK.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "nmyang":
+                queryResult = appPopElvMapperN.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "hanyangs":
+                queryResult = appPopElvMapperH.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            default:
+                break;
+        }
+        return 1;
+    }
 
 }

@@ -8,7 +8,7 @@
         (select Count(*) from tb_mattach where flag='NN' and board_idx=nseq and delete_yn = 'N') as attcnt
         from tb_mnotice WITH (NOLOCK)
         Where 1 = 1
-        AND nsubject like concat('%',#{nsubject},'%')
+        AND nsubject like concat('%',#{nsubject},'%') and ngourpcd like concat('%',#{ngourpcd},'%')
         order by nseq desc;
         <!--        <if test="nsubject != null">-->
         <!--            and nsubject like '%' + #{nsubject} + '%'-->

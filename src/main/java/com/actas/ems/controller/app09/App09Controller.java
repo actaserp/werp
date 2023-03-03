@@ -77,7 +77,7 @@ public class App09Controller {
             app09DtoList = service.GetFQManulList(app09Dto);
             model.addAttribute("app09Dto", app09DtoList);
 
-            userformDto.setPagetree01("공지사항");
+            userformDto.setPagetree01("고객지원센터");
             userformDto.setPagenm("FaQ");
             model.addAttribute("userformDto", userformDto);
         }catch (Exception ex){

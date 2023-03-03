@@ -36,10 +36,10 @@
                             LEFT OUTER JOIN tb_e401 b ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
                        LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (b.custcd = p.custcd AND b.spjangcd = p.spjangcd AND b.contcd = p.contcd)
                     WHERE a.compdate BETWEEN #{frdate} AND #{todate}
-                      AND (q.actcd = #{actcd} OR #{actcd} = '%')
+                      AND ( q.actcd Like concat('%',#{actcd},'%')  )
                     GROUP BY a.custcd, a.spjangcd, a.actcd, a.equpcd, q.actnm, p.contnm, m.equpnm, d.pernm) a
           WHERE a.qty >= #{qty}
-            AND (a.perid = #{perid} OR #{perid} = '%')
+            AND ( a.perid Like concat('%',#{perid},'%')  )
 
         ]]>
     </select>

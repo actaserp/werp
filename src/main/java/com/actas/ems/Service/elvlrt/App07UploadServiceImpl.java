@@ -17,6 +17,8 @@ import com.actas.ems.Mapper.gaon.Attach02GaonMapper;
 import com.actas.ems.Mapper.kyoung.Attach02KyoungMapper;
 
 import com.actas.ems.Mapper.kyoung.NattachKyoungMapper;
+import com.actas.ems.Mapper.nm.App07NmyangMapper;
+import com.actas.ems.Mapper.nm.Attach02NmyangMapper;
 import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,14 @@ public class App07UploadServiceImpl implements App07UploadService{
     private App07ElvlrtMapper App07Mapper;
     private App07GaonMapper App07MapperG;
     private App07KyoungMapper App07MapperK;
-    private App07GaonMapper App07MapperN;
+    private App07NmyangMapper App07MapperN;
     private App07GaonMapper App07MapperH;
 
     @Autowired
     private Attach02ElvlrtMapper attachMapper;
     private Attach02GaonMapper attachMapperG;
     private Attach02KyoungMapper attachMapperK;
-    private Attach02ElvlrtMapper attachMapperN;
+    private Attach02NmyangMapper  attachMapperN;
     private Attach02ElvlrtMapper attachMapperH;
 
     @Autowired

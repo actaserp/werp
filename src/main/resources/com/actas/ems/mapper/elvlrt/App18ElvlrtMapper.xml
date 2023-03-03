@@ -7,7 +7,7 @@
     <!--      고장내용별현황 / 기간별 고장내용  -->
     <select id="GetApp18List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App18ElvlrtDto">
         <![CDATA[
-                SELECT b.recedate,
+                SELECT Left(b.recedate,4) + '-' + substring(b.recedate, 5,2) + '-' + substring(b.recedate, 7,2) as  recedate,
                 q.actnm,
                 m.dong,
                 m.ho,
@@ -23,9 +23,9 @@
                  LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10)),
                tb_e401 b WITH(NOLOCK)
          WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum
-           AND left(b.recedate, 6) BETWEEN #{frdate} AND #{todate}
-            AND (a.actcd = #{actcd} OR #{actcd} = '%')
-
+           AND b.recedate BETWEEN #{frdate} AND #{todate}
+            AND  a.actcd Like concat('%',#{actcd},'%')
+            order by b.recedate
         ]]>
     </select>
 

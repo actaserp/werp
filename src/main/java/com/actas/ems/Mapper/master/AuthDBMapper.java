@@ -1,5 +1,7 @@
 package com.actas.ems.Mapper.master;
 
+import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.TBXLoginDTO;
 import com.actas.ems.DTO.UserFormDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -11,6 +13,9 @@ import java.util.List;
 public interface AuthDBMapper {
     public void TBXUSERS_Insert(UserFormDto userinfo);
     public UserFormDto GetUserInfo(UserFormDto userinfo);
+    public UserFormDto GetCustInfo(UserFormDto userinfo);
+    public UserFormDto GetAdminInfo(UserFormDto userinfo);
+
     public UserFormDto GetUserInfoDto(UserFormDto userinfo);
 
     public String GetClientInfo(UserFormDto userinfo);
@@ -26,12 +31,21 @@ public interface AuthDBMapper {
     public String TB_XUSER_DBNM(UserFormDto parm);
 
     public void TB_XLOGIN_INSERT(UserFormDto PARM);
+    public void TB_XLOGOUT_INSERT(UserFormDto PARM);
 
     public void TB_XUSERS_LOGFAIL(UserFormDto Parm);
 
     public void TB_XUSERS_LOGSUCC(UserFormDto Parm);
 
     public void TB_XUSER_UPDATE(UserFormDto Parm);
+
+
+    public List<UserFormDto> GetUserListDto(UserFormDto userinfo);
+    public List<TBXLoginDTO> GetLogListDto(UserFormDto userinfo);
+
+    public int UpdateUserInfo(UserFormDto Parm);
+
+
 
 
 

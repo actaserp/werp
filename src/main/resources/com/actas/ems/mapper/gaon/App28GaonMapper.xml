@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.gaon.App28GaonMapper">
+    <select id="GetMSManualList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
+        (select Count(*) from tb_mattach where flag='MS' and board_idx=sseq and delete_yn = 'N') as attcnt
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and subkey = 0 order by sseq desc
+        <!--        <if test="ssubject != null">-->
+        <!--            and ssubject like '%' + #{ssubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="smemo != null">-->
+        <!--            and smemo like '%' + #{smemo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <select id="getMSCommentList"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select sseq, spernm, smemo, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, subkey
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and subkey != 0
+    </select>
+
+    <select id="GetMSCommentCount"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select count(*) as count
+        from tb_msmanual WITH (NOLOCK)
+        Where 1 = 1 and sseq = #{value}
+    </select>
+
+
+    <select id="GetMSManualBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select '' as sseq, '' as sinputdate, '' as sgourpcd, '' as ssubject, '' as sfilename, '' as spernm, '' as smemo, '' as sflag
+        from dual
+        <!--        <if test="ssubject != null">-->
+        <!--            and ssubject like '%' + #{ssubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="smemo != null">-->
+        <!--            and smemo like '%' + #{smemo} + '%'-->
+        <!--        </if>-->
+    </select>
+    <select id="getMSManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(sseq) from tb_msmanual  where Left(sseq,6) = #{sseq}
+    </select>
+
+
+    <select id="GetMSManualView" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        select sseq, sinputdate, sgourpcd, ssubject, sfilename, spernm, smemo, sflag
+        from tb_msmanual where sseq = #{sseq}
+    </select>
+
+    <insert id="InsertMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" >
+        insert into tb_msmanual (custcd, spjangcd, sseq, sinputdate, smemo, spernm, sflag, subkey) values (#{custcd}, #{spjangcd}, #{sseq}, #{sinputdate}, #{smemo}, #{spernm}, #{sflag}, #{subkey})
+    </insert>
+
+    <update id="UpdateMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        update tb_msmanual set
+        ssubject=#{ssubject}
+        <if test="smemo != null ">,</if>
+        <if test="smemo != null">smemo=#{smemo}</if>
+        <if test="spernm != null ">,</if>
+        <if test="spernm != null">spernm=#{spernm}</if>
+        <if test="sflag != null ">,</if>
+        <if test="sflag != null">sflag=#{sflag}</if>
+        where sseq = #{sseq}
+    </update>
+
+
+    <delete id="DeleteMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        delete from tb_msmanual where sseq = #{sseq} and spernm = #{spernm}
+    </delete>
+
+
+    <select id="GetComm751List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+            SELECT  com_code AS code, com_cnam AS cnam
+            FROM     dbo.tb_ca510 WITH (NOLOCK)
+            WHERE  (com_cls = '751') AND (com_code <> '00')
+         ]]>
+    </select>
+    <select id="GetComm751BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+
+</mapper>

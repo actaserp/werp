@@ -5,6 +5,7 @@ import com.actas.ems.DTO.Elvlrt.App07ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App07GaonMapper;
 import com.actas.ems.Mapper.kyoung.App07KyoungMapper;
+import com.actas.ems.Mapper.nm.App07NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class App07ElvlrtService {
     @Autowired
     App07KyoungMapper app07ElvMapperK;
     @Autowired
-    App07GaonMapper app07ElvMapperN;
+    App07NmyangMapper app07ElvMapperN;
     @Autowired
-    App07GaonMapper app07ElvMapperH;
+    App07ElvlrtMapper app07ElvMapperH;
     int queryResult = 1;
     
     public Object GetMManulList(App07ElvlrtDto parm){

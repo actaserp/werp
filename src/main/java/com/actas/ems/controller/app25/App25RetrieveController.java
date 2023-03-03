@@ -57,21 +57,22 @@ public class App25RetrieveController {
 
         popParmDto.setFrdate(frdate);
         popParmDto.setTodate(todate);
-        if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+
+
+        if(userformDto.getFlag().equals("AA")){
             popParmDto.setActcd(actcd);
-            log.info("이 사용자는 보수업체용이다.");
         }else{
-            popParmDto.setActcd(userformDto.getActcd());
-            log.info("이 사용자는 고객용계정이다.");
+            if(userformDto.getActcd().equals("") || userformDto.getActcd() == null){
+                popParmDto.setActcd(actcd);
+            }else{
+                popParmDto.setActcd(userformDto.getActcd());
+            }
         }
 
         try{
-            log.info(popParmDto.getActcd() + "check");
             app15DtoList = service.GetApp15List001(popParmDto);
             model.addAttribute("app15DtoList", app15DtoList);
-            log.info(app15DtoList);
 
-            log.info(userformDto.getActcd() + "3333123215123313123132121dadcdsassd");
         }catch (DataAccessException e){
             log.info("App03001Tab01Form DataAccessException ================================================================");
             log.info(e.toString());

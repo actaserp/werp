@@ -3,9 +3,11 @@ package com.actas.ems.Service.elvlrt;
 
 import com.actas.ems.DTO.Elvlrt.App05ElvlrtDto;
 import com.actas.ems.DTO.CommonDto;
+import com.actas.ems.Mapper.Elvlrt.App04ElvlrtMapper;
 import com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App05GaonMapper;
 import com.actas.ems.Mapper.kyoung.App05KyoungMapper;
+import com.actas.ems.Mapper.nm.App05NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,12 @@ public class App05ElvlrtService {
     @Autowired
     App05KyoungMapper app05ElvMapperK;
     @Autowired
-    App05GaonMapper app05ElvMapperN;
+    App05NmyangMapper app05ElvMapperN;
     @Autowired
-    App05GaonMapper app05ElvMapperH;
+    App05ElvlrtMapper app05ElvMapperH;
     int queryResult = 1;
+
+
     /** 글 목록 */
     public Object GetMNoticeList(App05ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();

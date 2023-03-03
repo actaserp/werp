@@ -6,6 +6,7 @@ import com.actas.ems.DTO.Elvlrt.App28ElvlrtDto;
 import com.actas.ems.Mapper.Elvlrt.App28ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App28GaonMapper;
 import com.actas.ems.Mapper.kyoung.App28KyoungMapper;
+import com.actas.ems.Mapper.nm.App28NmyangMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,15 @@ public class App28ElvlrtService {
 
 
     @Autowired
-    App28GaonMapper app28ElvMapper;
+    App28ElvlrtMapper app28ElvMapper;
     @Autowired
     App28GaonMapper app28ElvMapperG;
     @Autowired
-    App28GaonMapper app28ElvMapperK;
+    App28KyoungMapper app28ElvMapperK;
     @Autowired
-    App28GaonMapper app28ElvMapperN;
+    App28NmyangMapper app28ElvMapperN;
     @Autowired
-    App28GaonMapper app28ElvMapperH;
+    App28ElvlrtMapper app28ElvMapperH;
     int queryResult = 1;
     /** 글 목록 */
     public List<App28ElvlrtDto> GetMSManualList(App28ElvlrtDto parm){

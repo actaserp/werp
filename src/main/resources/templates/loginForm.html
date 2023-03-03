@@ -14,24 +14,36 @@
     </div>
     <div class="box_con" style="background: url(/images/login_bg.png) no-repeat;">
       <div class="logo">
-        <a th:href="@{/}">
+        <a th:href="@{/auth/admin}">
           <img src="/images/logo.png" alt="">
         </a>
       </div>
       <div class="login">
         <div class="tit">Login</div>
         <form action="/login" method="POST">
-          <div class="input_wrap">
-
+          <div class="input_wrap"> 
             <select name="select" id="select" class="select">
               <option value="AA">보수업체사용자</option>
               <option value="CC">고객사용자</option>
-              <option value="CC" th:if="${select eq 'CC'}" selected hidden>고객사용자</option>
-
-
-            </select>
-
+              <option value="CC" th:if="${select eq 'CC'}" selected hidden>고객사용자</option> 
+            </select> 
           </div>
+          <!-- <div class="input_wrap">
+            <select   name="actcustcdz" id="actcustcdz">
+              <option value="ELVLRT"  >한국엘레텍(주)</option>
+              <option value="KYOUNG"  >경기엘리베이터(주)</option>
+              <option value="nmyang"   >성우엘리베이터(주)</option>
+              <option value="GAON"   >가온엘리베이터(주)</option>
+              <option value="ELVLRT" th:if="${actcustcdz eq 'ELVLRT'}" selected hidden>한국엘레텍(주)</option>
+              <option value="KYOUNG" th:if="${actcustcdz eq 'KYOUNG'}" selected hidden>경기엘리베이터(주)</option>
+              <option value="nmyang" th:if="${actcustcdz eq 'nmyang'}" selected hidden>성우엘리베이터(주)</option>
+              <option value="GAON" th:if="${actcustcdz eq 'GAON'}" selected hidden>가온엘리베이터(주)</option>
+            </select>  
+          </div> -->
+          <!-- <select th:field="*{custReturnDto}" name="actcustcdz" id="actcustcdz">
+            <option value="">보수업체선택</option>
+            <option th:each="val : ${custReturnDto}" th:value="${val.custcd}" th:text="${val.custnm}">
+          </select> -->
           <div class="input_wrap icon i_id">
             <input type="text" id="loginid" name="loginid">
             <input type="hidden" id="ipaddr" name="ipaddr">
@@ -44,14 +56,14 @@
               <input type="checkbox" id="card-checkbox" checked="checked">
               <label for="save_id" class="check_style1">ID 저장</label>
             </div>
-            <ul class="find_account">
+            <!-- <ul class="find_account">
               <li>
                 <a href="">아이디 찾기</a>
               </li>
               <li>
                 <a href="">비밀번호 찾기</a>
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="login_btn">
             <div class="btn_wrap">
@@ -90,6 +102,7 @@
           const response = await axios.get('https://api.ipify.org?format=json');
           document.getElementById('ipaddr').value = response.data.ip;
           // console.log(response.data.ip);
+          // console.log("----");
         } catch (error) {
           console.error(error);
         }
@@ -106,6 +119,7 @@
           var ls_logpass   = document.getElementById('logpass').value;
           var ls_ipaddr    = document.getElementById('ipaddr').value;
           var ls_select  = document.getElementById('select').value;
+          var ls_actcustcdz = "ELVLRT" ; //document.getElementById('actcustcdz').value;
           $.ajax({
               url: '/authcrud/login',
               type:"POST",
@@ -113,7 +127,7 @@
                   "loginid"    : ls_loginid ,
                   "logpass"  : ls_logpass,
                   "ipaddr"  : ls_ipaddr,
-                  "flag"    : ls_select,
+                  "flag"    : ls_select 
               },
               async:false,
               success:function(userFormDto){

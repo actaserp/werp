@@ -43,7 +43,7 @@ FROM
 						D.rspnm  ,
 						A.tel		,
 						A.handphone,
-						 A.entdate ,
+                        concat(substring(a.entdate, 3, 2), '-', substring(a.entdate, 5, 2), '-', substring(a.entdate, 7, 2)) as entdate ,
 						DATEDIFF(year, A.ENTDATE, GETDATE()) AS DAYTERM,
 						case len(SUBSTRING(A.RNUM,1,6))  when 6  then DATEDIFF(YEAR,   SUBSTRING(A.RNUM,1,6), GETDATE()) + 1
 						else 	0 end AS AGEGAP,

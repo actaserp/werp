@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.nm.App_mbmanual.App_mbmanualNmyangMapper">
+    <select id="GetMManulList" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        select bseq, binputdate, bgourpcd, bsubject, bfilename, bpernm, bmemo, bflag, (select com_cnam from tb_ca510 where com_cls = '015' and com_code=bgourpcd) as cnam,
+               (select Count(*) from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt
+        from TB_MBMANUAL WITH (NOLOCK)
+        Where 1 = 1
+        order by bseq desc;
+
+
+    </select>
+    <!--뭔지 알수 없음-->
+    <select id="GetMManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        select '' as bseq, '' as binputdate, '' as bgourpcd, '' as bsubject, '' as bfilename, '' as bpernm, '' as bmemo, '' as bflag
+        from dual
+
+    </select>
+
+    <!-- 알수 없음-->
+    <select id="getMManualMaxSeq" parameterType="string" resultType="java.lang.String">
+        select max(bseq) from tb_mbmanual where Left(bseq,6) = #{bseq}
+    </select>
+
+    <!--게시글 상세조회-->
+    <select id="GetMManulView" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        SELECT bseq, binputdate, bgourpcd, bpernm, bsubject, bfilename, bflag, bmemo FROM tb_mbmanual where bseq = #{bseq};
+    </select>
+
+
+    <!--게시글 작성-->
+    <insert id="InsertMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+
+        insert into tb_mbmanual (custcd, spjangcd, bseq, binputdate, bgourpcd, bsubject, bmemo, bpernm, bflag) values (#{custcd}, #{spjangcd}, #{bseq}, #{binputdate}, #{bgourpcd}, #{bsubject}, #{bmemo}, #{bpernm}, #{bflag})
+
+    </insert>
+
+
+    <!--게시글 수정-->
+    <update id="UpdateMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        update tb_mbmanual set
+        bgourpcd = #{bgourpcd}
+        <if test="bsubject != null ">,</if>
+        <if test="bsubject != null">bsubject=#{bsubject}</if>
+        <if test="bfilename != null ">,</if>
+        <if test="bfilename != null">bfilename=#{bfilename}</if>
+        <if test="bmemo != null ">,</if>
+        <if test="bmemo != null">bmemo=#{bmemo}</if>
+        <if test="binputdate != null ">,</if>
+        <if test="binputdate != null">binputdate=#{binputdate}</if>
+        <if test="bpernm != null ">,</if>
+        <if test="bpernm != null">bpernm=#{bpernm}</if>
+        <if test="bflag != null ">,</if>
+        <if test="bflag != null">bflag=#{bflag}</if>
+        where bseq = #{bseq}
+    </update>
+
+    <!--게시글 삭제-->
+    <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        DELETE FROM tb_mbmanual WHERE bseq= #{bseq};
+    </delete>
+
+
+
+    <select id="GetComm750List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '015') AND (com_code <> '00')
+        ]]>
+    </select>
+
+
+    <select id="GetComm750BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+</mapper>
