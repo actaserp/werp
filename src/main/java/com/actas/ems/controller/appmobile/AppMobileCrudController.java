@@ -1669,6 +1669,8 @@ public Object com0List(@RequestParam Map<String, String> param
     )
     public Object thumbListForm(@RequestParam Map<String, String> param,
                             Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
 
         List<AttachDTO> attachDTOList = new ArrayList<>();
 
