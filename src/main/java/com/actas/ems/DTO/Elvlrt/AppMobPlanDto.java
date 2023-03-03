@@ -21,6 +21,9 @@ public class AppMobPlanDto {
     private String kcspnm;
     private String indate;
     private String spjangcd;
+    private String frdate;
+    private String todate;
+
 
     private String cltnm;
     private String saupnum;

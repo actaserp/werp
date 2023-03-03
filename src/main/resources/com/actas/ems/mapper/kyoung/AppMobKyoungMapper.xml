@@ -530,4 +530,70 @@ order by recedate desc;
     </update>
 
 
+    <!--접수 조회-->
+    <!--      관제현황 / 접수현황LIST  -->
+    <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT		a.recedate,
+                      a.hitchdate,
+                      a.recetime,
+                      a.hitchhour,
+                      a.recenum,
+                      a.actcd as actcd,
+                      isnull(substring(a.actnm,0,15), '') as actnm,
+                      a.equpcd as equpcd,
+                      isnull(a.equpnm,'') as equpnm,
+                      isnull(a.pernm,'') AS actpernm,
+                      isnull(a.contcd,'') as contcd,
+                      isnull(a.contnm,'') as contnm,
+                      isnull(a.tel,'') as tel,
+                      a.reperid as reperid,
+                      a.repernm as repernm,
+                      a.perid as perid,
+                      a.pernm as pernm,
+                      a.handphone as handphone,
+                      isnull(a.contremark,'') as contents,
+                      a.remark as remark,
+                      isnull(a.addrtxt,'') as addrtxt
+        FROM
+            (
+                SELECT a.custcd,
+                       a.spjangcd,
+                       a.cltcd,
+                       a.actcd,
+                       a.equpcd,
+                       a.recedate,
+                       a.recenum,
+                       a.recetime,
+                       a.hitchdate,
+                       a.hitchhour,
+                       q.actnm,
+                       m.equpnm,
+                       1 as cnt,
+                       1 as ascnt,
+                       a.contcd,
+                       p.contnm,
+                       a.contents as contremark,
+                       a.reperid ,
+                       g.pernm as repernm,
+                       a.perid,
+                       d.pernm,
+                       d.handphone,
+                       a.remark,
+                       q.tel as tel,
+                       isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
+                FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                    LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                    LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+                    LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+                    LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND  isnull(a.actnm,'') Like concat('%',#{actcd},'%')
+        ORDER BY A.recedate desc, A.recetime desc
+        ]]>
+    </select>
+
+
 </mapper>

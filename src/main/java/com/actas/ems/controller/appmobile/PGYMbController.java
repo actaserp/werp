@@ -34,6 +34,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -58,9 +59,10 @@ public class PGYMbController {
     private final App10ElvlrtMobService app10ElvlrtMobService;
 
     private final App05ElvlrtService app05Service;
+    private final App01ElvlrtService app01ElvlrtServiceservice;
     App05ElvlrtDto app05Dto = new App05ElvlrtDto();
     App07ElvlrtDto app07Dto = new App07ElvlrtDto();
-
+    List<App03ElvlrtDto> app03DtoList01 = new ArrayList<>();
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
     List<AppMobPlanDto> appMobplanDtoList = new ArrayList<>();
 
@@ -70,15 +72,17 @@ public class PGYMbController {
 
     List<App16ElvlrtDto> app16DtoList = new ArrayList<>();
 
-
+    private final App07UploadServiceImpl appServiceImpl;
 
     List<PopupDto> poplistDto = new ArrayList<>();
     protected Log log =  LogFactory.getLog(this.getClass());
     String ls_custcd = "";
     String ls_spjangcd = "";
 
-
-
+    /**랜덤문자열*/
+    private final String getRandomString() { return UUID.randomUUID().toString().replaceAll("-", "");}
+    /**파일경로*/
+    private final String uploadPath = Paths.get("C:", "develop", "upload","mfix", getToDate()).toString();
 
     /**박광열 승강기번호조회 리스트 **/
     @RequestMapping(value = "/getelvinfo_1", method = RequestMethod.POST,
@@ -774,7 +778,7 @@ public class PGYMbController {
         return "success";
     }
 
-
+  /**점검계획 조회*/
 
     @RequestMapping(value = "/planlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
@@ -802,6 +806,23 @@ public class PGYMbController {
         ls_dbnm = userformDto.getDbnm();
 
 
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+        String time2 = time.substring(0,6) + "01";
+
+        appMobPlanDto.setFrdate(time2);
+
+
+        // 현재 날짜 구하기
+        LocalDate today = LocalDate.now();
+
+        // 이번 달의 월말 구하기
+        LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
+        String endday = endOfMonth.toString().replaceAll("","");
+
+        appMobPlanDto.setTodate(endday);
 
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
@@ -861,6 +882,19 @@ public class PGYMbController {
             }
         }
         return ls_compnum;
+    }
+
+
+    public String CountSeq2(String yyyymm){
+        String ls_fseq = appService.getMManualMaxSeq(yyyymm);
+        int ll_fseq = 0;
+        if(ls_fseq == null){
+            ls_fseq = yyyymm + "001";
+        }else{
+            ll_fseq = Integer.parseInt(ls_fseq);
+            ls_fseq = Integer.toString(ll_fseq + 1);
+        }
+        return ls_fseq;
     }
 
     private String getToDate() {
@@ -1306,23 +1340,7 @@ public class PGYMbController {
             case "ELV_LRT" :
             try {
 
-            /*    log.info(appMobPlanDto.getPlandate());
-                log.info(appMobPlanDto.getCltcd());
-                log.info(appMobPlanDto.getActcd());
-                log.info(appMobPlanDto.getActnm());
-                log.info(appMobPlanDto.getEqupcd());
-                log.info(appMobPlanDto.getEqupnm());
-                log.info(appMobPlanDto.getKcpernm());
-                log.info(appMobPlanDto.getKcspnm());
-                log.info(appMobPlanDto.getRemark());
-                log.info(appMobPlanDto.getPerid());
-                log.info(appMobPlanDto.getIndate());
-                log.info(appMobPlanDto.getQty());
-                log.info(appMobPlanDto.getPlandate2());
-                log.info(appMobPlanDto.getCltcd2());
-                log.info(appMobPlanDto.getActcd2());
-                log.info(appMobPlanDto.getEqupcd2());
-*/
+
 
                 appMobPlanDto.setCustcd("ELVLRT");
                 appMobPlanDto.setSpjangcd("ZZ");
@@ -1347,5 +1365,272 @@ public class PGYMbController {
         return "success";
 
     }
+
+
+    /**점검조치사항 저장*/
+    @RequestMapping(value = "/mfixbbssave", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String mfixbbslistSaveForm(@RequestParam Map<String, String> param,
+                                   Model model, HttpServletRequest request, @RequestParam(value = "file", required = false)
+                                      List<MultipartFile> file) throws Exception {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        String ls_dbnm = "";
+
+        String ls_fileName = "";
+        String ls_errmsg = "";
+        String ls_yeare = "";
+        String ls_mm = "";
+        /*업로드 파일 정보를 담을 리스트*/
+        List<AttachDTO> attachList = new ArrayList<>();
+
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "fseq":
+                    app07Dto.setFseq(values.toString());
+
+                case "finputdate":
+                    String via = values.replaceAll("-","");
+                    app07Dto.setFinputdate(via);
+                    break;
+                case "fgroupcd":
+                    app07Dto.setFgourpcd(values.toString());
+                    break;
+                case "fnsubject":
+                    app07Dto.setFnsubject(values.toString());
+                    break;
+                case "fpernm":
+                    app07Dto.setFpernm(values.toString());
+                    break;
+
+                case "fmemo":
+                    app07Dto.setFmemo(values.toString());
+                    break;
+
+
+                case "fflag":
+                    app07Dto.setFflag(values.toString());
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        ls_dbnm = userformDto.getDbnm();
+        String fseq = app07Dto.getFseq();
+
+
+
+        File dir = new File(uploadPath);
+        if(dir.exists() == false){
+            dir.mkdirs();
+        }
+
+        switch (ls_dbnm){
+
+            case "ELV_LRT":
+                try {
+                    app07Dto.setCustcd("ELVLRT");
+                    app07Dto.setSpjangcd("ZZ");
+
+                    String via2 = app07Dto.getFinputdate();
+                    ls_yeare = via2.substring(0,4);
+                    ls_mm = via2.substring(4,6);
+                    fseq = "";
+                    log.info(fseq);
+                    log.info("check!!!!!!!!!!!!!!!!!!!!");
+
+
+                    if(fseq == null || fseq.equals("")){
+                        app07Dto.setFseq(CountSeq2(ls_yeare + ls_mm));
+                    }else{
+                        app07Dto.setFseq(fseq);
+                    }
+                    app07Dto.setYyyymm(ls_yeare + ls_mm);
+
+                    log.info(app07Dto.getFseq());
+                    log.info(app07Dto.getCustcd());
+                    log.info(app07Dto.getSpjangcd());
+                    log.info(app07Dto.getFinputdate());
+                    log.info(app07Dto.getFgourpcd());
+                    log.info(app07Dto.getFnsubject());
+                    log.info(app07Dto.getFpernm());
+                    log.info(app07Dto.getFmemo());
+                    log.info(app07Dto.getFflag());
+
+                    if(fseq == null || fseq.equals("")) {
+                        boolean result = appService.InsertMManu(app07Dto);
+                        if (!result) {
+                            return "error";
+                        }
+                    }else{
+                        boolean result = appService.UpdateMManu(app07Dto);
+                        if(!result){
+                            return "error";
+                        }
+                    }
+
+
+
+                    for (MultipartFile multipartFile : file) {
+//                log.info("================================================================");
+//                log.info("upload file name : " + multipartFile.getOriginalFilename());
+//                log.info("upload file name : " + multipartFile.getSize());
+                        ls_fileName = multipartFile.getOriginalFilename();
+
+
+                        // 파일이 비어있으면 비어있는 리스트 반환
+                        if (multipartFile.getSize() < 1) {
+                            ls_errmsg = "success";
+                            return ls_errmsg;
+                        }
+
+                       // 파일 확장자
+                        final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+
+                        final String saveName = getRandomString() + "." + extension;
+
+                       // 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성
+                        File target = new File(uploadPath, saveName);
+                        multipartFile.transferTo(target);
+                        String fseq1 = app07Dto.getFseq();
+                      //   파일 정보 저장
+                        AttachDTO attach = new AttachDTO();
+                        attach.setBoardIdx(fseq1);
+                        attach.setOriginalName(multipartFile.getOriginalFilename());
+                        attach.setSaveName(saveName);
+                        attach.setSize(multipartFile.getSize());
+                        attach.setFlag("MF");
+                        log.info(attach.getBoardIdx());
+                       //  파일 정보 추가
+                        attachList.add(attach);
+
+                        boolean result = appServiceImpl.registerMManu(app07Dto, attachList);
+                        if(result) {
+                            log.info("true");
+                        }
+                        if (!result) {
+                            return "error";
+                        }
+
+                    }
+
+
+                }catch (DataAccessException e){
+                    log.info("memberUpload DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }  catch (Exception e) {
+                    System.out.println("1231321321231231321321");
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return "success";
+    }
+
+
+
+
+    /**고장접수 조회*/
+
+    @RequestMapping(value = "/recelist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object RecelistForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        String ls_dbnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+                    popParmDto.setActnm(values.toString());
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+        String time2 = time.substring(0,6) + "01";
+
+        popParmDto.setFrdate("20230201");
+
+
+        // 현재 날짜 구하기
+        LocalDate today = LocalDate.now();
+
+        // 이번 달의 월말 구하기
+        LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
+        String endday = endOfMonth.toString().replaceAll("","");
+
+        popParmDto.setTodate("20230303");
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+
+                try {
+
+                    app03DtoList01 = service.GetApp01List001(popParmDto);
+                    model.addAttribute("app03DtoList01",app03DtoList01);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return app03DtoList01;
+    }
+
+
+
 
 }

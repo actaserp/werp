@@ -77,4 +77,7 @@ public interface App10ElvlrtMobMapper {
     /**점검계획 수정*/
     public int UpdatePlan(AppMobPlanDto perm);
 
+    /**접수 조회*/
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
+
 }

@@ -57,4 +57,7 @@ public interface App10KoungMobMapper {
 
     /**박광열 점검계획 등록*/
     public int Insertplan(AppMobPlanDto perm);
+
+    /**접수 조회*/
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
 }

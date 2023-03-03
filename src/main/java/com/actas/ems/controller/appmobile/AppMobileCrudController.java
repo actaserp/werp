@@ -113,8 +113,8 @@ public class AppMobileCrudController {
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
 
-                app10tDto.setFrdate(frdate);
-                app10tDto.setTodate(todate);
+                app10tDto.setFrdate("20230201");
+                app10tDto.setTodate("20230303");
                 app10tDto.setChangeop(changeop);
                 app10tDto.setCustcd(ls_custcd);
                 app10tDto.setSpjangcd(ls_spjangcd);

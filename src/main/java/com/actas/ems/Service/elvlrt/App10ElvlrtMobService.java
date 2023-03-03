@@ -727,4 +727,26 @@ public class App10ElvlrtMobService {
         return true;
     }
 
+
+    /** 관제현황 / 접수현황 리스트 */
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetApp01List001(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperG.GetApp01List001(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperK.GetApp01List001(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetApp01List001(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetApp01List001(parm);
+            default:
+                break;
+        }
+        List<App03ElvlrtDto> Object = null;
+        return Object;
+    }
+
 }
