@@ -34,6 +34,7 @@ public interface App10KyoungMobMapper {
     public int InsertMBManual(App08_mbmanual perm);
     public String getMBManualMaxSeq(String perm);
     public int InsertMSManual(App28ElvlrtDto perm);
+    public int UpdateMSManual(App28ElvlrtDto perm);
     public String getMSManualMaxSeq(String perm);
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);

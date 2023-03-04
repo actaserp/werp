@@ -222,7 +222,15 @@ select
     <select id="getMSManualMaxSeq"  parameterType="string" resultType="java.lang.String">
         select max(sseq) from tb_msmanual  where Left(sseq,6) = #{sseq}
     </select>
-
+    <update id="UpdateMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        update tb_msmanual set
+        ssubject=#{ssubject}
+        <if test="smemo != null ">,</if>
+        <if test="smemo != null">smemo=#{smemo}</if>
+        <if test="spernm != null ">,</if>
+        <if test="spernm != null">spernm=#{spernm}</if>
+        where sseq = #{sseq}
+    </update>
     <select id="code754get06List"  resultType="com.actas.ems.DTO.CommonDto">
         <![CDATA[
         select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '754'

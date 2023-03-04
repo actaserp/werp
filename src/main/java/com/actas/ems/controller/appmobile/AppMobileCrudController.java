@@ -619,6 +619,18 @@ public Object com0List(@RequestParam Map<String, String> param
         return ls_nseq;
     }
 
+    public String CountSeqs (String yyyymm){
+        String ls_nseq = service.getMSManualMaxSeq(yyyymm);
+        int ll_nseq = 0;
+        if(ls_nseq == null ){
+            ls_nseq = yyyymm + "001";
+        }else{
+            ll_nseq = Integer.parseInt(ls_nseq);
+            ls_nseq = Integer.toString(ll_nseq + 01 );
+        }
+        return ls_nseq;
+    }
+
     @RequestMapping(value = "/saveeMh", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -791,17 +803,12 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "sseq":
                     app28Dto.setSseq(values.toString());
                     break;
-                case "sinputdate":
-                    app28Dto.setSinputdate(values.toString());
-                    break;
+
                 case "spernm":
                     app28Dto.setSpernm(values.toString());
                     break;
                 case "smemo":
                     app28Dto.setSmemo(values.toString());
-                    break;
-                case "subkey":
-                    app28Dto.setSubkey(values.toString());
                     break;
                 default:
                     break;
@@ -809,15 +816,17 @@ public Object com0List(@RequestParam Map<String, String> param
         });
         ls_dbnm = userformDto.getDbnm();
         session.setAttribute("userformDto",userformDto);
-        String sinputdate = app28Dto.getSinputdate();
+        String sinputdate =  getToDate();
         String ls_yeare = sinputdate.substring(0,4);
-        String ls_mm = sinputdate.substring(5,7);
-        String ls_dd = sinputdate.substring(8,10);
+        String ls_mm = sinputdate.substring(4,6);
+        String ls_dd = sinputdate.substring(6,8);
         sinputdate =  ls_yeare + ls_mm + ls_dd;
         app28Dto.setSinputdate(sinputdate);
-        String sseq = "";
+        String sseq = app28Dto.getSseq();
+        String subkey = "0";
+        app28Dto.setSubkey(subkey);
         if(sseq == null || sseq.equals("")){
-            app28Dto.setSseq(CountSeqq(ls_yeare + ls_mm));
+            app28Dto.setSseq(CountSeqs(ls_yeare + ls_mm));
         }else{
             app28Dto.setSseq(sseq);
         }
@@ -835,6 +844,10 @@ public Object com0List(@RequestParam Map<String, String> param
                             return  "error";
                         }
                     }
+//                    else{
+//                        boolean result = service.UpdateMSManual(app28Dto);
+//                    }
+
                     break;
                 case "ELV_KYOUNG":
                     ls_custcd = "KYOUNG";
