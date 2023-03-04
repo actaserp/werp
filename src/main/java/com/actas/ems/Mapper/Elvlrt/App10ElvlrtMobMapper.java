@@ -21,6 +21,7 @@ public interface App10ElvlrtMobMapper {
 
     // app03-05까지 mapper
     public List<AppMob003tDto> GetApp06MobList001(App06ElvlrtDto parm) ;
+    public List<AppMob003tDto> GetApp06MobList002(App06ElvlrtDto parm) ;
     public List<AttachDTO> select06AttachList(AttachDTO parm) ;
     public List<AttachDTO> select08AttachList(AttachDTO parm) ;
 
@@ -33,9 +34,11 @@ public interface App10ElvlrtMobMapper {
     public List<CommonDto> code754get08List();
     public int InsertMHManual(App06ElvlrtDto perm);
     public String getMHManualMaxSeq(String perm);
-
     public int InsertMBManual(App08_mbmanual perm);
     public String getMBManualMaxSeq(String perm);
+
+    public int InsertMSManual(App28ElvlrtDto perm);
+    public String getMSManualMaxSeq(String perm);
     //박광열, 모바일 현장별고장부위
     public List<App16ElvlrtDto> GetAppMobList_002(PopupDto parm);
 

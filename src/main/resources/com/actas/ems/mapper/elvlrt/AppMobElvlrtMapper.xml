@@ -65,6 +65,26 @@
                     order by hinputdate  DESC , hseq ASC
 
     </select>
+    <select id="GetApp06MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+        select
+            isnull(hseq, '' ) as hseq,
+            Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
+            Case when  hgroupcd = '' then ''
+            when hgroupcd = '00' then '수리노하우'
+            when hgroupcd = '01' then '부품노하우'
+            else hgroupcd
+            end as hgroupcd,
+                      isnull(hsubject, '' ) as hsubject,
+                      isnull(hpernm, '' ) as hpernm,
+                      isnull(hmemo, '' ) as hmemo,
+                    ( select isnull(Count(*),'') from tb_mattach where flag='MH' and board_idx=hseq and delete_yn = 'N') as attcnt,
+                      Case when hflag = 'Y' then 'MH'
+        end as hflag
+            from tb_mhmanual WITH (NOLOCK)
+        Where
+        (hmemo like concat('%',#{hmemo},'%') or hsubject like concat('%',#{hmemo},'%')) order by hinputdate DESC, hseq ASC
+
+    </select>
     <insert id="InsertMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" >
         insert into tb_mhmanual (custcd, spjangcd, hseq, hinputdate, hgroupcd, hsubject, hmemo, hpernm) values (#{custcd}, #{spjangcd}, #{hseq}, #{hinputdate}, #{hgroupcd}, #{hsubject}, #{hmemo}, #{hpernm})
     </insert>
@@ -154,7 +174,7 @@
         and custcd = #{custcd}
         and (bmemo like concat('%',#{bmemo},'%') or bsubject like concat('%',#{bmemo},'%'))        order by binputdate DESC, bseq ASC
     </select>
-
+    <!--    Qna 게시판 조회-->
 <select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
 select
     sseq,
@@ -171,7 +191,6 @@ select
 </select>
 
 
-
     <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
     select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
            subkey,
@@ -180,6 +199,28 @@ select
     Where
         len(isnull(subkey,'')) > 4
     order by subkey desc
+</select>
+    <!--    Qna 게시판 검색-->
+    <select id="GetApp28MobList003"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">
+        select
+            sseq,
+            Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
+            spernm,
+            smemo,
+            isnull(sflag, '' ) as sflag,
+            isnull(subkey, '' ) as subkey
+        from tb_msmanual
+        Where spjangcd = #{spjangcd}
+          and custcd = #{custcd}
+          and subkey = 0
+        order by sseq desc
+    </select>
+    <insert id="InsertMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" >
+        insert into tb_msmanual (custcd, spjangcd, sseq, sinputdate, smemo, spernm, sflag, subkey) values (#{custcd}, #{spjangcd}, #{sseq}, #{sinputdate}, #{smemo}, #{spernm}, #{sflag}, #{subkey})
+    </insert>
+
+    <select id="getMSManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(sseq) from tb_msmanual  where Left(sseq,6) = #{sseq}
     </select>
 
     <select id="code754get06List"  resultType="com.actas.ems.DTO.CommonDto">

@@ -78,6 +78,24 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
+    public List<AppMob003tDto> GetApp06MobList002(App06ElvlrtDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetApp06MobList002(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetApp06MobList002(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetApp06MobList002(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetApp06MobList002(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetApp06MobList002(parm);
+            default:
+                List<AppMob003tDto> object = null;
+                return object;
+        }
+    }
             /** 글 등록 */
 
             public String getMHManualMaxSeq(String parm){
@@ -116,6 +134,24 @@ public class App10ElvlrtMobService {
                     }
                     return "";
                 }
+                    public String getMSManualMaxSeq(String parm){
+                        String ls_dbnm = UIUtils.getElvDataSourceNm();
+                        switch (ls_dbnm){
+                            case "ELV_LRT":
+                                return  app10ElvMobMapper.getMSManualMaxSeq(parm);
+                            case "ELV_KYOUNG":
+                                return  app10ElvMobMapperK.getMSManualMaxSeq(parm);
+                            case "ELV_GAON":
+                                return  app10ElvMobMapperG.getMSManualMaxSeq(parm);
+                            case "nmyang":
+                                return  app10ElvMobMapperN.getMSManualMaxSeq(parm);
+                            case "hanyangs":
+                                return  app10ElvMobMapperH.getMSManualMaxSeq(parm);
+                            default:
+                                break;
+                        }
+                        return "";
+                    }
             public boolean InsertMHManual(App06ElvlrtDto parm){
                 int queryResult = 1;
                 String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -194,8 +230,46 @@ public class App10ElvlrtMobService {
                     }
                     return true;
                 }
-
-    public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm){
+                    public boolean InsertMSManual(App28ElvlrtDto parm){
+                        int queryResult = 1;
+                        String ls_dbnm = UIUtils.getElvDataSourceNm();
+                        switch (ls_dbnm){
+                            case "ELV_LRT":
+                                queryResult = app10ElvMobMapper.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "ELV_GAON":
+                                queryResult = app10ElvMobMapperK.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "ELV_KYOUNG":
+                                queryResult = app10ElvMobMapperG.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "nmyang":
+                                queryResult = app10ElvMobMapperN.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "hanyangs":
+                                queryResult = app10ElvMobMapperH.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+        public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -667,7 +741,7 @@ public class App10ElvlrtMobService {
                 }
                 return (queryResult > 0);
             case "nmyang":
-                queryResult = app10ElvMobMapperN.DeletePlan(parm);
+//                queryResult = app10ElvMobMapperN.DeletePlan(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -710,7 +784,7 @@ public class App10ElvlrtMobService {
                 }
                 return (queryResult > 0);
             case "nmyang":
-                queryResult = app10ElvMobMapperN.UpdatePlan(parm);
+//                queryResult = app10ElvMobMapperN.UpdatePlan(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -725,28 +799,6 @@ public class App10ElvlrtMobService {
                 break;
         }
         return true;
-    }
-
-
-    /** 관제현황 / 접수현황 리스트 */
-    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){
-        String ls_dbnm = UIUtils.getElvDataSourceNm();
-        switch (ls_dbnm){
-            case "ELV_LRT":
-                return  app10ElvMobMapper.GetApp01List001(parm);
-            case "ELV_KYOUNG":
-                return  app10ElvMobMapperG.GetApp01List001(parm);
-            case "ELV_GAON":
-                return  app10ElvMobMapperK.GetApp01List001(parm);
-            case "nmyang":
-                return  app10ElvMobMapperN.GetApp01List001(parm);
-            case "hanyangs":
-                return  app10ElvMobMapperH.GetApp01List001(parm);
-            default:
-                break;
-        }
-        List<App03ElvlrtDto> Object = null;
-        return Object;
     }
 
 }

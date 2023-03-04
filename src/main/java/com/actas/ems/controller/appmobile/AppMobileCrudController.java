@@ -773,6 +773,83 @@ public Object com0List(@RequestParam Map<String, String> param
 
         return "success";
     }
+
+    @RequestMapping(value = "/saveeSS", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object SlUpload(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "sseq":
+                    app28Dto.setSseq(values.toString());
+                    break;
+                case "sinputdate":
+                    app28Dto.setSinputdate(values.toString());
+                    break;
+                case "spernm":
+                    app28Dto.setSpernm(values.toString());
+                    break;
+                case "smemo":
+                    app28Dto.setSmemo(values.toString());
+                    break;
+                case "subkey":
+                    app28Dto.setSubkey(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+        String sinputdate = app28Dto.getSinputdate();
+        String ls_yeare = sinputdate.substring(0,4);
+        String ls_mm = sinputdate.substring(5,7);
+        String ls_dd = sinputdate.substring(8,10);
+        sinputdate =  ls_yeare + ls_mm + ls_dd;
+        app28Dto.setSinputdate(sinputdate);
+        String sseq = "";
+        if(sseq == null || sseq.equals("")){
+            app28Dto.setSseq(CountSeqq(ls_yeare + ls_mm));
+        }else{
+            app28Dto.setSseq(sseq);
+        }
+        app28Dto.setYyyymm(ls_yeare + ls_mm);
+        ls_spjangcd = "ZZ";
+        try{
+            switch (ls_dbnm){
+                case "ELV_LRT":
+                    ls_custcd = "ELVLRT";
+                    app28Dto.setCustcd(ls_custcd);
+                    app28Dto.setSpjangcd(ls_spjangcd);
+                    if(sseq == null || sseq.equals("")){
+                        boolean result = service.InsertMSManual(app28Dto);
+                        if(!result){
+                            return  "error";
+                        }
+                    }
+                    break;
+                case "ELV_KYOUNG":
+                    ls_custcd = "KYOUNG";
+                    break;
+                case "hanyangs":
+                    ls_custcd = "hanyangs";
+                    break;
+                default:
+                    break;
+            }} catch (Exception e){
+            System.out.println((e));
+        }
+
+        return "success";
+    }
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -825,6 +902,63 @@ public Object com0List(@RequestParam Map<String, String> param
         }
         return appMob003tDtoList;
     }
+
+    @RequestMapping(value = "/mhlist2", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object mhsearchListForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "hmemo":
+                    app06Dto.setHmemo(values.toString());
+//                    app06Dto.setHsubject(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app06Dto.setCustcd(ls_custcd);
+                app06Dto.setSpjangcd(ls_spjangcd);
+                try {
+                    appMob003tDtoList = service.GetApp06MobList002(app06Dto);
+                    model.addAttribute("appMob003tDtoList",appMob003tDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+        return appMob003tDtoList;
+    }
+
 
     //app06 to 03 첨부파일리스트
     @RequestMapping(value = "/attachMH", method = RequestMethod.POST,
