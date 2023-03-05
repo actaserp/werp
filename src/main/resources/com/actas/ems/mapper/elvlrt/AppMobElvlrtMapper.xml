@@ -782,8 +782,8 @@ order by recedate desc;
 
     <!--고장접수 등록-->
     <insert id="InsertE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >
-        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, recetime,  cltcd, actnm, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate, datetime, datetime2) values
-            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime},#{cltcd},#{actnm},  #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate}, #{datetime}, #{datetime2})
+        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, recetime,  cltcd, actnm, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate, datetime, datetime2, resultck) values
+            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime},#{cltcd},#{actnm},  #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate}, #{datetime}, #{datetime2}, '0')
     </insert>
 
         <!--고장접수 삭제-->

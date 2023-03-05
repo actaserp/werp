@@ -1603,6 +1603,7 @@ public class PGYMbController {
         session.setAttribute("userformDto", userformDto);
 
 
+
         String ls_dbnm = "";
         param.forEach((key, values) -> {
             switch (key){
@@ -1624,7 +1625,7 @@ public class PGYMbController {
         String time = formatter.format(date);
         String time2 = time.substring(0,6) + "01";
 
-        popParmDto.setFrdate("20230201");
+        popParmDto.setFrdate(time2);
 
 
         // 현재 날짜 구하기
@@ -1634,7 +1635,7 @@ public class PGYMbController {
         LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
         String endday = endOfMonth.toString().replaceAll("","");
 
-        popParmDto.setTodate("20230303");
+        popParmDto.setTodate(endday);
 
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
@@ -2282,34 +2283,78 @@ public class PGYMbController {
 
 
 
-    /**접수 삭제**/
-// 고장접수현황 > 접수삭제
-    @GetMapping(value="/deletee401")
-    public Object deleteE401Rtn( @RequestParam("actrecedatez") String recedate
-            ,@RequestParam("actrecenumz") String recenum
-            , Model model
-            , HttpServletRequest request) throws  Exception{
+    /**고장접수 삭제*/
+    @RequestMapping(value = "/delete_e401", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String Delete_E401ListForm(@RequestParam Map<String, String> param,
+                                    Model model, HttpServletRequest request) throws Exception{
+
         HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-        try {
+        session.setAttribute("userformDto", userformDto);
 
-            int queryResult = 1;
+        String ls_dbnm = "";
 
-            queryResult = service.DeleteE401(app10tDto);
-            if (queryResult == 1){
-                return "success";
-            }else{
-                return "fail";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "recedate":
+                    String via = values.toString().replaceAll("-","");
+                    app10tDto.setRecedate(via);
+                    break;
+                case "recenum":
+                    app10tDto.setRecenum(values.toString());
+
             }
-        }catch (IllegalStateException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return e.getMessage();
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    try {
+
+                        int queryResult = 1;
+
+                        queryResult = service.DeleteE401(app10tDto);
+                        if (queryResult == 1){
+                            return "success";
+                        }else{
+                            return "fail";
+                        }
+
+                    }catch (IllegalStateException e){
+                        model.addAttribute("errorMessage", e.getMessage());
+                        return e.getMessage();
+                    }
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+
+                break;
+            default:
+
+                break;
         }
+
+        return "success";
     }
-
-
-
-
-
 
 }
