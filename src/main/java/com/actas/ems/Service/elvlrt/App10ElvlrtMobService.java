@@ -840,4 +840,63 @@ public class App10ElvlrtMobService {
         return true;
     }
 
+    /**현장조회 (점검계획용)*/
+    public List<App26ElvlrtDto> GetAppMobListr_004_plan(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetAppMobListr_004_plan(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetAppMobListr_004_plan(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetAppMobListr_004_plan(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetAppMobListr_004_plan(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetAppMobListr_004_plan(parm);
+            default:
+                List<App26ElvlrtDto> object = null;
+                return object;
+        }
+    }
+
+
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetApp01List001(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetApp01List001(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetApp01List001(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetApp01List001(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetApp01List001(parm);
+            default:
+                List<App03ElvlrtDto> object = null;
+                return object;
+        }
+    }
+
+    public String getMaxPlandate(String parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.getMaxPlandate(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.getMaxPlandate(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.getMaxPlandate(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.getMaxPlandate(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.getMaxPlandate(parm);
+            default:
+                break;
+        }
+        return "";
+    }
+
 }
