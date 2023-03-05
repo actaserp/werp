@@ -688,4 +688,35 @@ order by recedate desc;
         ORDER BY A.recedate desc, A.recetime desc
         ]]>
     </select>
+
+
+
+
+    <!--박광열, 보수현장정보(점검계획 전용)-->
+    <select id="GetAppMobListr_004_plan"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+                    a.actcd as actcd,
+                a.actnm as actnm,
+               a.cltcd as cltcd
+        from
+            TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+        on a.actcd=b.actcd
+        where a.actnm  like CONCAT('%',#{actnm},'%')
+        group by a.actcd, a.actnm, a.cltcd, a.cltcd
+
+
+        ]]>
+    </select>
+
+    <!--  호기코드 삽입-->
+
+    <select id="getMaxPlandate" parameterType="string" resultType="java.lang.String">
+        select max(equpcd) from TB_E073 where plandate = #{plandate}
+    </select>
+
+
+    <!--공지사항 (고객공지 제외)-->
+
 </mapper>

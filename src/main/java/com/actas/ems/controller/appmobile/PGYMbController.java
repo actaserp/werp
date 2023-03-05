@@ -57,7 +57,7 @@ public class PGYMbController {
     List<AttachDTO>  attach =new ArrayList<>();
     AppMobPlanDto appMobPlanDto = new AppMobPlanDto();
     private final App10ElvlrtMobService app10ElvlrtMobService;
-
+    List<App26ElvlrtDto> app26DtoList = new ArrayList<>();
     private final App05ElvlrtService app05Service;
     private final App01ElvlrtService app01ElvlrtServiceservice;
     App05ElvlrtDto app05Dto = new App05ElvlrtDto();
@@ -287,6 +287,8 @@ public class PGYMbController {
                     break;
                 case "nsubject":
                     app05Dto.setNsubject(values.toString());
+                case "ngourpcd":
+                    app05Dto.setNgourpcd(values.toString());
                 default:
                     break;
 
@@ -480,6 +482,7 @@ public class PGYMbController {
         Integer ls_comptime2;
         String ls_arrivtime = "";
         Integer ls_arrivtime2;
+        String compnum = "";
 
         String ls_actperid = "";
         String ls_remocd = "";
@@ -548,9 +551,11 @@ public class PGYMbController {
                     break;
                 case "equpnm":
                     app10tDto.setEqupnm(values.toString());
+                    break;
                 case "recetime":
                     String via = values.replaceAll(":","");
                     app10tDto.setRecetime(via);
+                    break;
                 case "cltcd":
                     app10tDto.setCltcd(values.toString());
                     break;
@@ -625,6 +630,7 @@ public class PGYMbController {
 
 
 
+/*
 
         if(ls_comptime.contains("PM")){
             if (ls_comptime.substring(0, 2).equals("12")) {
@@ -645,7 +651,29 @@ public class PGYMbController {
                 ls_comptime = ls_comptime.substring(0, 4);
             }
         }
+*/
 
+        /**GPT가 짠 코드**/
+        final int PM_HOUR_OFFSET2 = 1200;
+        final int MILITARY_TIME_LENGTH2 = 4;
+        final String MIDNIGHT2 = "00";
+
+        if(ls_comptime.contains("PM")){
+            int hour = Integer.parseInt(ls_comptime.substring(0, 2));
+            ls_comptime = ls_comptime.replace(":", "");
+            ls_comptime = ls_comptime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_comptime) + PM_HOUR_OFFSET2;
+                ls_comptime = String.valueOf(militaryTime);
+            }
+        } else if (ls_comptime.contains("AM")) {
+            int hour = Integer.parseInt(ls_comptime.substring(0, 2));
+            ls_comptime = ls_comptime.replace(":", "");
+            ls_comptime = ls_comptime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour == 12) {
+                ls_comptime = MIDNIGHT2 + ls_comptime.substring(2, 4);
+            }
+        }
         /**내가 짠 쓰레기 코드**/
        /* if(ls_arrivtime.contains("PM")){
             if (ls_arrivtime.substring(0, 2).equals("12")) {
@@ -728,41 +756,39 @@ public class PGYMbController {
             app10tDto.setCustcd("ELVLRT");
             app10tDto.setSpjangcd("ZZ");
 
-            String compnum = app10tDto.getCompnum();
+             /*compnum = app10tDto.getCompnum();*/
+            compnum = "";
             String compdate = app10tDto.getCompdate();
 
-            /*if(app10tDto.getComptime().length() == 3){
-                ls_comptime2 = app10tDto.getComptime().substring(0,2) + "0" + app10tDto.getComptime().substring(2,3);
-                app10tDto.setComptime(ls_comptime2);
-            }*/
-//            boolean result = false;
 
-           /* log.info(app10tDto.getDivicd());
-            log.info(app10tDto.getCltcd());
-            log.info(app10tDto.getActperid());
-            log.info(app10tDto.getRemocd());
-            log.info(app10tDto.getRemoremark());
-            log.info(app10tDto.getRecenum());
-            log.info(app10tDto.getRecetime());
-            log.info(app10tDto.getArrivtime());
-
-            log.info(app10tDto.getArrivdate());
-            log.info(app10tDto.getDatetime());
-            log.info(app10tDto.getDatetime2());
-            log.info(app10tDto.getComptime());
-            log.info(app10tDto.getArrivtime());
-            log.info(ls_resulttime);
-
-*/
+            log.info(app10tDto.getDivicd() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            log.info(app10tDto.getCltcd());  //o
+            log.info(app10tDto.getActperid());  //o
+            log.info(app10tDto.getRemocd());    //o
+            log.info(app10tDto.getRemoremark());  //o
+            log.info(app10tDto.getRecenum());     //o
+            log.info(app10tDto.getRecetime());     //
+            log.info(app10tDto.getArrivtime());    //o
+            log.info(app10tDto.getCompdate() + "compdate");
+            log.info(app10tDto.getArrivdate());     //o
+            log.info(app10tDto.getDatetime());     //o
+            log.info(app10tDto.getDatetime2());    //o
+            log.info(app10tDto.getComptime());    //o
+            log.info(app10tDto.getArrivtime());  //o
+            log.info(ls_resulttime+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");  //o
+            log.info(compnum + "compnum");
             if (compnum == null || compnum.equals("")) {
                 app10tDto.setCompnum(CountSeq(compdate));
                 boolean result = app10ElvlrtMobService.Insert10Manu(app10tDto);
+                log.info(app10tDto.getCompnum());
+                log.info("실행1");
                 if (!result) {
                     return "error";
                 }
             } else {
                 app10tDto.setCompnum(compnum);
                 boolean  result = app10ElvlrtMobService.Update10Manu(app10tDto);
+                log.info("실행2");
                 if (!result) {
                     return "error";
                 }
@@ -773,7 +799,8 @@ public class PGYMbController {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            log.info(e);
+            log.info("error");
         }
         return "success";
     }
@@ -864,6 +891,22 @@ public class PGYMbController {
     }
 
 
+    public String Countequp(String plandate){
+        String ls_equpcd = app10ElvlrtMobService.getMaxPlandate(plandate);
+        int ll_equpcd = 0;
+        if(ls_equpcd == null){
+            ls_equpcd = "001";
+        }else{
+            ll_equpcd = Integer.parseInt(ls_equpcd);
+            log.info(ll_equpcd);
+            if(ll_equpcd > 8) {
+                ls_equpcd = "0" + Integer.toString(ll_equpcd + 01);
+            }else{
+                ls_equpcd = "00" + Integer.toString(ll_equpcd + 01);
+            }
+        }
+        return ls_equpcd;
+    }
 
 
 
@@ -942,12 +985,7 @@ public class PGYMbController {
                 case "actnm":
                     appMobPlanDto.setActnm(values.toString());
                     break;
-                case "equpcd":
-                    appMobPlanDto.setEqupcd(values.toString());
-                    break;
-                case "equpnm":
-                    appMobPlanDto.setEqupnm(values.toString());
-                    break;
+
 
                 case "perid":
                     appMobPlanDto.setPerid(values.toString());
@@ -977,6 +1015,9 @@ public class PGYMbController {
         ls_dbnm = userformDto.getDbnm();
         ls_perid = appMobPlanDto.getPerid();
         ls_pernm = appMobPlanDto.getKcpernm();
+
+        String plandate = appMobPlanDto.getPlandate();
+        appMobPlanDto.setEqupcd(Countequp(plandate));
 
 
 
@@ -1029,7 +1070,7 @@ public class PGYMbController {
 
 
                 } catch (Exception e) {
-                    System.out.println("1231321321231231321321");
+                    System.out.println(e);
                 }
                 break;
             case "ELV_KYOUNG":
@@ -1273,12 +1314,12 @@ public class PGYMbController {
                 case "actnm":
                     appMobPlanDto.setActnm(values.toString());
                     break;
-                case "equpcd":
+                /*case "equpcd":
                     appMobPlanDto.setEqupcd(values.toString());
                     break;
                 case "equpnm":
                     appMobPlanDto.setEqupnm(values.toString());
-                    break;
+                    break;*/
                 case "kcpernm":
                     appMobPlanDto.setKcpernm(values.toString());
                     break;
@@ -1628,6 +1669,72 @@ public class PGYMbController {
         }
 
         return app03DtoList01;
+    }
+
+
+
+    /**박광열 현장정보 리스트(점검계획 전용) **/
+    @RequestMapping(value = "/tbe601list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object TBE601ListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+
+                    popParmDto.setActnm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    app26DtoList = service.GetAppMobListr_004_plan(popParmDto);
+                    model.addAttribute("app26DtoList", app26DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app26DtoList;
     }
 
 

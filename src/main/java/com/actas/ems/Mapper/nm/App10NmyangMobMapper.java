@@ -76,4 +76,25 @@ public interface App10NmyangMobMapper {
     /**사업자명 조회*/
     public List<AppMobPlanDto> GetcltnmList(AppMobPlanDto parm);
 
+
+    /**점검계획 삭제*/
+    public int DeletePlan(AppMobPlanDto perm);
+
+    /**점검계획 수정*/
+    public int UpdatePlan(AppMobPlanDto perm);
+
+
+    /**접수 조회*/
+    public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
+
+
+    /**박광열 모바일 보수현장리스트 (점검계획 전용)*/
+    public List<App26ElvlrtDto> GetAppMobListr_004_plan(PopupDto parm);
+
+
+
+    /**박광열 모바일 호기코드 삽입*/
+    public String getMaxPlandate(String perm);
+
+
 }

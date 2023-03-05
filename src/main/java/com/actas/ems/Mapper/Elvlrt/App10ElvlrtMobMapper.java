@@ -84,4 +84,12 @@ public interface App10ElvlrtMobMapper {
     /**접수 조회*/
     public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
 
+
+    /**박광열 모바일 보수현장리스트 (점검계획 전용)*/
+    public List<App26ElvlrtDto> GetAppMobListr_004_plan(PopupDto parm);
+
+
+    /**박광열 모바일 호기코드 삽입*/
+    public String getMaxPlandate(String perm);
+
 }
