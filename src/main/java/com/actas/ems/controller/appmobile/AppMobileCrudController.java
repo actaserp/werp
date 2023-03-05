@@ -651,7 +651,7 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "hpernm":
                     app06Dto.setHpernm(values.toString());
                     break;
-                case "sseq":
+                case "hseq":
                     app06Dto.setHseq(values.toString());
                     break;
                 case "hmemo":
@@ -675,15 +675,16 @@ public Object com0List(@RequestParam Map<String, String> param
         String ls_dd = hinputdate.substring(8,10);
         hinputdate =  ls_yeare + ls_mm + ls_dd;
         app06Dto.setHinputdate(hinputdate);
-        //여기서 자꾸 gethseq가 생성되고 이전 값을 받아온다.
         String hseq = app06Dto.getHseq();
+        //여기서 자꾸 gethseq가 생성되고 이전 값을 받아온다.
+
 //        String hseq = "";
+        app06Dto.setYyyymm(ls_yeare + ls_mm);
         if(hseq == null || hseq.equals("")){
             app06Dto.setHseq(CountSeq(ls_yeare + ls_mm));
         }else{
             app06Dto.setHseq(hseq);
         }
-        app06Dto.setYyyymm(ls_yeare + ls_mm);
         ls_spjangcd = "ZZ";
             try{
         switch (ls_dbnm){
