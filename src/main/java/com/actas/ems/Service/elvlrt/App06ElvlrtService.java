@@ -96,6 +96,51 @@ public class App06ElvlrtService {
     public boolean InsertMHManual(App06ElvlrtDto parm){
         int queryResult = 1;
         String ls_dbnm = UIUtils.getElvDataSourceNm();
+//        if(parm.getHflag().equals("1")){
+//            queryResult = App06ElvMapper.InsertMHManual(parm);
+//            parm.setCustcd("KYOUNG");
+//            queryResult = App06ElvMapperG.InsertMHManual(parm);
+//            parm.setCustcd("GAON");
+//            queryResult = App06ElvMapperK.InsertMHManual(parm);
+//            parm.setCustcd("nmyang");
+//            queryResult = App06ElvMapperN.InsertMHManual(parm);
+//        }else{
+            switch (ls_dbnm){
+                case "ELV_LRT":
+                    queryResult = App06ElvMapper.InsertMHManual(parm);
+                    if(queryResult < 1){
+                        queryResult = 0;
+                    }
+                    return (queryResult > 0);
+                case "ELV_GAON":
+                    queryResult = App06ElvMapperG.InsertMHManual(parm);
+                    if(queryResult < 1){
+                        queryResult = 0;
+                    }
+                    return (queryResult > 0);
+                case "ELV_KYOUNG":
+                    queryResult = App06ElvMapperK.InsertMHManual(parm);
+                    if(queryResult < 1){
+                        queryResult = 0;
+                    }
+                    return (queryResult > 0);
+                case "nmyang":
+                    queryResult = App06ElvMapperN.InsertMHManual(parm);
+                    if(queryResult < 1){
+                        queryResult = 0;
+                    }
+                    return (queryResult > 0);
+                case "hanyangs":
+                    queryResult = App06ElvMapperH.InsertMHManual(parm);
+                    if(queryResult < 1){
+                        queryResult = 0;
+                    }
+                    return (queryResult > 0);
+                default:
+                    break;
+            }
+
+//        }
         switch (ls_dbnm){
             case "ELV_LRT":
                 queryResult = App06ElvMapper.InsertMHManual(parm);

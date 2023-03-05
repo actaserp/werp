@@ -51,7 +51,7 @@
              a.indate,
              CASE a.resultck WHEN '1' THEN '처리'
              WHEN '0' THEN '미처리'
-             end as resultck
+    end as resultck
     FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
@@ -72,7 +72,7 @@
         ]]>
     </select>
 
-<!--      조회  -->
+    <!--      조회  -->
     <select id="GetApp10List001"  parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         <![CDATA[sELECT TOP 100
                      Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
@@ -96,19 +96,19 @@
                      f.divinm,
                      CASE when g.arrivdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
                      else Left(g.arrivdate,4) + '-' + substring(g.arrivdate, 5,2)+ '-' + substring(g.arrivdate, 7,2)
-                     end as arrivdate,
+    end as arrivdate,
                     -- Left(g.arrivdate,4) + '-' + substring(g.arrivdate, 5,2)+ '-' + substring(g.arrivdate, 7,2) as arrivdate,
                      CASE when g.arrivtime is null THEN  Left(a.recetime,2) + ':' + substring(a.recetime, 3,2)
                      else Left(g.arrivtime,2) + ':' + substring( g.arrivtime, 3,2)
-                     end as arrivtime,
+    end as arrivtime,
                      CASE when g.compdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
                      else Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2)
-                     end as compdate,
+    end as compdate,
                     -- Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2) as compdate,
                      g.compnum,
 					 CASE when g.comptime is null THEN  Left(a.recetime,2) + ':' + substring(a.recetime, 3,2)
                      else Left(g.comptime,2) + ':' + substring( g.comptime, 3,2)
-                     end as comptime,
+    end as comptime,
                    --  Left(g.comptime,2) + ':' + substring( g.comptime, 3,2) as comptime,
                      g.resutime,
                      g.resulttime,
@@ -131,7 +131,7 @@
                      a.indate,
                      CASE a.resultck WHEN '1' THEN '처리'
                      WHEN '0' THEN '미처리'
-                     end as resultck
+    end as resultck
                      FROM tb_e401 a WITH(NOLOCK)
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
@@ -148,13 +148,13 @@
                  WHERE
 
                      a.spjangcd = #{spjangcd}
-                   AND a.resultck like CONCAT('%',#{changeop},'%')
-                   AND a.recedate BETWEEN #{frdate} AND #{todate}
+    AND a.resultck like CONCAT('%',#{changeop},'%')
+    AND a.recedate BETWEEN #{frdate} AND #{todate}
         ]]>
     </select>
 
 
-<!--//401 resultck 1처리-->
+    <!--//401 resultck 1처리-->
     <update id="Updateresult11" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e401
         set resultck = '1'
@@ -165,7 +165,7 @@
         set resultck = '0'
         where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
     </update>
-<!--삭제시 e411 result 0 고정 필요없음-->
+    <!--삭제시 e411 result 0 고정 필요없음-->
     <update id="Updateresult100" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         update tb_e411
         set "result" = '0'
@@ -239,7 +239,7 @@
 
 
 
-<!--    일자별-->
+    <!--    일자별-->
 
     <select id="GetApptab10List001" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         <![CDATA[SELECT a.custcd custcd,
@@ -251,33 +251,33 @@
                         a.equpnm,
                         a.perid,
                         c.pernm as actpernm,
-                        Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
-                        Left(a.recetime,2) + ':' + substring(a.recetime, 2,2) as recetime,
-                        a.hitchdate,
-                        a.hitchhour,
-                        1 as cnt,
-                        1 as ascnt,
-                        c.pernm as recepernm,
-                        d.pernm,
-                        e.divinm,
-                        f.contnm,
-                        a.contents as contremark,
-                        g.resunm,
-                        resuremark,
-                        h.pernm as repernm,
-                        i.remonm,
-                        b.faccd,
-                        j.facnm,
-                        b.remoremark,
-                        k.greginm,
-                        l.reginm,
-                        a.resultck ,
+                     Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
+                     Left(a.recetime,2) + ':' + substring(a.recetime, 2,2) as recetime,
+                     a.hitchdate,
+                     a.hitchhour,
+                     1 as cnt,
+                     1 as ascnt,
+                     c.pernm as recepernm,
+                     d.pernm,
+                     e.divinm,
+                     f.contnm,
+                     a.contents as contremark,
+                     g.resunm,
+                     resuremark,
+                     h.pernm as repernm,
+                     i.remonm,
+                     b.faccd,
+                     j.facnm,
+                     b.remoremark,
+                     k.greginm,
+                     l.reginm,
+                     a.resultck ,
                         -- CASE a.resultck WHEN '1' THEN '처리'
                         -- WHEN '0' THEN '미처리'
                         -- end as result,
-                        CASE b.result WHEN '1' THEN '처리'
-                                        WHEN '0' THEN '미처리'
-                            end as result,
+                     CASE b.result WHEN '1' THEN '처리'
+                     WHEN '0' THEN '미처리'
+    end as result,
                         Left( b.arrivdate,4) + '-' + substring( b.arrivdate, 5,2)+ '-' + substring( b.arrivdate, 7,2)  as arrivdate,
                         Left(b.arrivtime,2) + ':' + substring(b.arrivtime, 2,2) as arrivtime,
                         Left( b.compdate,4) + '-' + substring( b.compdate, 5,2)+ '-' + substring(b.compdate, 7,2)  as compdate,
@@ -305,11 +305,11 @@
                    AND a.spjangcd = t.spjangcd
                    and a.actcd = t.actcd
                    AND a.custcd = #{custcd}
-                   AND a.spjangcd = #{spjangcd}
-                   AND a.recedate BETWEEN  #{stdate} AND #{enddate}
-                   AND  Case when b.compdate is null then '1' else '2' end like #{comp}
-                  -- AND a.resultck = '0'
-                   ]]>
+    AND a.spjangcd = #{spjangcd}
+    AND a.recedate BETWEEN  #{stdate} AND #{enddate}
+    AND  Case when b.compdate is null then '1' else '2' end like #{comp}
+    -- AND a.resultck = '0'
+        ]]>
     </select>
 
 </mapper>

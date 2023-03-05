@@ -100,30 +100,16 @@
                 </li>
             </ul>
             <ul class="right">
+
                 <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_call.png}" alt="">
+                    <a href="#">
+                        <img src="/images/in2.png" alt="" onclick="logout()">
                     </a>
                 </li>
                 <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_bell.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_menu.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img th:src="@{/assets/images/i_que.png}" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
+                    <button id="userinfo">
                         <img th:src="@{/assets/images/i_user.png}" alt="">
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -1389,6 +1375,7 @@
                 { binding: 'actnm', header: '현장명', align: "center", width: '1*' }, 
                 { binding: 'telno', header: '전화번호', align: "center", width: '1*' }, 
                 { binding: 'addr', header: '주소', align: "center", width: '*' },  
+                { binding: 'pernm', header: '담당', align: "center", width: '*' },  
             ], 
             itemsSource: view_actnmpage
         });  
@@ -2216,6 +2203,9 @@
     //현장 검색   
     document.getElementById("actactnmz").addEventListener("click",function(){ 
         document.getElementById("actnmbtn").click();
+        document.getElementById("searchwactnm").focus();
+        console.log('actactnmz focus')
+        return 
     }); 
     document.getElementById("wactcdlistBtn").addEventListener("click",function(){ 
         document.getElementById("actnmbtn").click();
@@ -2224,18 +2214,22 @@
     //고장내용 검색   
     document.getElementById("actcontnmz").addEventListener("click",function(){ 
         document.getElementById("contnmbtn").click();
+        document.getElementById("searchwcontnm").focus();
     });
     //사원내용 검색   
     document.getElementById("actrepernmz").addEventListener("click",function(){ 
         document.getElementById("repernmbtn").click();
+        document.getElementById("searchwrepernm").focus();
     });
     //사원2내용 검색   
     document.getElementById("actpernmz").addEventListener("click",function(){ 
         document.getElementById("pernmbtn").click();
+        document.getElementById("searchwpernm").focus();
     });
     //호기내용 검색   
     document.getElementById("actequpnmz").addEventListener("click",function(){ 
         document.getElementById("equpnmbtn").click();
+        document.getElementById("searchwequpnm").focus();
     });
     //SMS 검색   
     document.getElementById("wsmsBtn").addEventListener("click",function(){ 
@@ -2314,7 +2308,9 @@
                         actnm:wactnmDto[i]["actnm"],
                         actcd: wactnmDto[i]["actcd"], 
                         telno: wactnmDto[i]["telno"]  , 
-                        addr: wactnmDto[i]["addr"]                                                  
+                        addr: wactnmDto[i]["addr"]    , 
+                        perid: wactnmDto[i]["perid"]    , 
+                        pernm: wactnmDto[i]["pernm"]                                                  
                     });
                     cnt++;
                 }   
@@ -2330,7 +2326,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.actcd}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, '',  "01");
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, ctx.item.perid, ctx.item.pernm,  "01");
                     }
                 });
                 wactnmGrid.columns.push(cols);    
@@ -2346,18 +2342,24 @@
                 cols.header = '전화번호';
                 cols.align = "center";
                 cols.width = '*';
-                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.telno}</b>',
-                    click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, '',  "01");
-                    }
-                });
                 wactnmGrid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'addr';
                 cols.header = '주소';
                 cols.align = "left";
                 cols.width = '*'; 
+                wactnmGrid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pernm';
+                cols.header = '담당';
+                cols.align = "center";
+                cols.width = '*'; 
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.pernm}</b>',
+                    click: (e, ctx) => {
+                        wactnmChk_2(ctx.item.actcd, ctx.item.actnm, ctx.item.perid, ctx.item.pernm,  "01");
+                    }
+                });
                 wactnmGrid.columns.push(cols);  
             },error:function(e){
                 alert(data.code);
@@ -2407,7 +2409,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.contcd}</b>',
                         click: (e, ctx) => {
-                            wactnmChk_2(ctx.item.contcd, ctx.item.contnm,  '',  '02');
+                            wactnmChk_2(ctx.item.contcd, ctx.item.contnm,  '', '',  '02');
                         }
                     });
                     wcontnmGrid.columns.push(cols);    
@@ -2467,7 +2469,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.reperid}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.reperid, ctx.item.repernm, '' , '03');
+                        wactnmChk_2(ctx.item.reperid, ctx.item.repernm, '' , '',  '03');
                     }
                 });
                 wrepernmGrid.columns.push(cols);    
@@ -2529,7 +2531,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.perid}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, ctx.item.handphone, '04');
+                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, ctx.item.handphone, '',  '04');
                     }
                 });
                 wpernmGrid.columns.push(cols);    
@@ -2596,7 +2598,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.equpcd}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '', '05');
+                        wactnmChk_2(ctx.item.equpcd, ctx.item.equpnm, '', '',  '05');
                     }
                 });
                 wequpnmGrid.columns.push(cols);    
@@ -2772,7 +2774,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.flag}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.seq, '','',  '06');
+                        wactnmChk_2(ctx.item.seq, '','',  '',  '06');
                     }
                 });
                 wcallbkGrid.columns.push(cols);    
@@ -2978,13 +2980,14 @@
         
     
 
-    function wactnmChk_2(arg1, arg2, arg3, flag){
-        // console.log(flag);
+    function wactnmChk_2(arg1, arg2, arg3, arg4, flag){
             switch(flag){
                 case "01": 
                     // 현장검색 데이터 수집
                     document.getElementById('actactcdz').value = arg1; 
                     document.getElementById('actactnmz').value = arg2;   
+                    document.getElementById('actperidz').value = arg3; 
+                    document.getElementById('actpernmz').value = arg4;  
                     $("#wactnmmodal_btn").trigger("click");      
                     break;
                 case "02":                 
@@ -3068,15 +3071,15 @@
         document.getElementById('actactnmz').value = "";
         document.getElementById('actequpcdz').value = "";
         document.getElementById('actequpnmz').value = "";
-        document.getElementById('actreperidz').value = "";
-        document.getElementById('actrepernmz').value = "";
+         //document.getElementById('actreperidz').value = "";
+         //document.getElementById('actrepernmz').value = "";
         document.getElementById('actperidz').value = "";
         document.getElementById('actpernmz').value = ""; 
         document.getElementById('actcontcdz').value = ""; 
         document.getElementById('actcontnmz').value = ""; 
         document.getElementById('actcontentsz').value = ""; 
         document.getElementById('actremarkz').value = ""; 
-         
+          
         wequpnmGrid.columns.clear();  
         return 
     }
@@ -3361,6 +3364,9 @@
         fn_egov_init_date()
         search_rtn()
         searchtel_rtn() 
+        var wuserformDto = [[${userformDto}]];   
+            // console.log('wuserformDto');
+            // console.log(wuserformDto);
         // searchwSMS_rtn()
         // searchwactnm_rtn()
         // searchwcontnm_rtn()

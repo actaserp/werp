@@ -8,16 +8,19 @@
         SELECT a.actcd    actcd  ,
                a.actnm    actnm,
                a.actpernm actpernm,
+               a.perid  as perid,
+               e.pernm as pernm,
                a.tel      telno,
                a.hp       hpno,
                isnull(a.address,'') + ' ' + isnull(a.address2, '')  addr,
                cltnm  as cltnm
         FROM TB_E601 a WITH(NOLOCK)
-           LEFT OUTER JOIN (SELECT distinct a.custcd, a.spjangcd, a.actcd, a.contg, dbo.df_nm_rtn('tb_xclient', a.custcd, a.cltcd, '', '') AS cltnm 
+           LEFT OUTER JOIN (SELECT distinct a.custcd, a.spjangcd, a.actcd, a.contg, dbo.df_nm_rtn('tb_xclient', a.custcd, a.cltcd, '', '') AS cltnm
                                       FROM tb_e101 a WITH(NOLOCK), (select custcd, spjangcd, actcd, max(contdate) as contdate from tb_e101 WITH(NOLOCK)
-                                      group by custcd, spjangcd, actcd) b 
+                                      group by custcd, spjangcd, actcd) b
                                    WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate) b
         ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+            LEFT OUTER JOIN TB_JA001 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.perid = substring(e.perid, 2, 10))
         WHERE 1 = 1
           AND (   isnull(actnm , '') Like concat('%',#{actnm},'%') )
           AND  isnull(b.contg, '01') <> '04'

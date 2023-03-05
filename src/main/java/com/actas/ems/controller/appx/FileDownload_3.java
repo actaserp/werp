@@ -45,11 +45,28 @@ public class FileDownload_3 {
         }
 
         switch (bflag){
+            case "MM":
+                bflag = "mmanul";
+                break;
+            case "DD":
+                bflag = "mdevmanual";
+                break;
+            case "EE":
+                bflag = "metcmanual";
+            case "MH":
+                bflag = "mhmanual";
+                break;
             case "MB":
                 bflag = "mbmanual";
                 break;
+            case "MF":
+                bflag = "mfix";
+                break;
+            case "NN":
+                bflag = "mnotice";
+                break;
             default:
-                bflag = "mbmanual";
+                bflag = "mmanul";
                 break;
         }
         String uploadDate = attachDTO.getInserttime();
