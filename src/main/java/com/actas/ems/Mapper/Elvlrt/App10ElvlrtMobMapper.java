@@ -24,7 +24,8 @@ public interface App10ElvlrtMobMapper {
     public List<AppMob003tDto> GetApp06MobList002(App06ElvlrtDto parm) ;
     public List<AttachDTO> select06AttachList(AttachDTO parm) ;
     public List<AttachDTO> select08AttachList(AttachDTO parm) ;
-
+    public int DeleteMManul(App08_mbmanual perm);
+    public int DeleteMHManual(App06ElvlrtDto perm);
     public List<AppMob004tDto> GetApp0bMobList001(App08_mbmanual parm) ;
     public List<AppMob004tDto> GetApp0bMobList002(App08_mbmanual parm) ;
 
@@ -37,8 +38,12 @@ public interface App10ElvlrtMobMapper {
     public int UpdateMHManual(App06ElvlrtDto perm);
 
 
+
     public String getMHManualMaxSeq(String perm);
     public int InsertMBManual(App08_mbmanual perm);
+    public int UpdateMBManual(App08_mbmanual perm);
+
+
     public String getMBManualMaxSeq(String perm);
 
     public int InsertMSManual(App28ElvlrtDto perm);

@@ -28,7 +28,8 @@ public interface App10KyoungMobMapper {
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList003(App28ElvlrtDto parm) ;
-
+    public int DeleteMManul(App08_mbmanual perm);
+    public int DeleteMHManual(App06ElvlrtDto perm);
     public List<CommonDto> code754get06List() ;
     public List<CommonDto> code754get08List() ;
     public int InsertMHManual(App06ElvlrtDto perm);
@@ -36,6 +37,7 @@ public interface App10KyoungMobMapper {
 
     public String getMHManualMaxSeq(String perm);
     public int InsertMBManual(App08_mbmanual perm);
+    public int UpdateMBManual(App08_mbmanual perm);
     public String getMBManualMaxSeq(String perm);
     public int InsertMSManual(App28ElvlrtDto perm);
     public int UpdateMSManual(App28ElvlrtDto perm);

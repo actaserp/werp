@@ -96,6 +96,86 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
+    /** 자료실 글 식제 */
+
+    public boolean DeleteMManul(App08_mbmanual parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            default:
+                break;
+        }
+        return true;
+    }
+    public boolean DeleteMHManual(App06ElvlrtDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            default:
+                break;
+        }
+        return true;
+    }
             /** 글 등록 */
 
             public String getMHManualMaxSeq(String parm){
@@ -269,6 +349,45 @@ public class App10ElvlrtMobService {
                     }
                     return true;
                 }
+    public boolean UpdateMBManual(App08_mbmanual parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            default:
+                break;
+        }
+        return true;
+    }
                     public boolean InsertMSManual(App28ElvlrtDto parm){
                         int queryResult = 1;
                         String ls_dbnm = UIUtils.getElvDataSourceNm();

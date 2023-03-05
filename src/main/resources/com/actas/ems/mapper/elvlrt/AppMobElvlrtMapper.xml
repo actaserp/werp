@@ -183,6 +183,21 @@
         and custcd = #{custcd}
         and (bmemo like concat('%',#{bmemo},'%') or bsubject like concat('%',#{bmemo},'%'))        order by binputdate DESC, bseq ASC
     </select>
+    <update id="UpdateMBManual" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        update TB_MBMANUAL set
+        binputdate = #{binputdate}
+        <if test="bsubject != null ">,</if>
+        <if test="bsubject != null">bsubject=#{bsubject}</if>
+        <if test="bmemo != null ">,</if>
+        <if test="hmemo != null">bmemo=#{bmemo}</if>
+        where bseq = #{hseq}
+    </update>
+    <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        DELETE FROM tb_mbmanual WHERE bseq= #{bseq};
+    </delete>
+    <delete id="DeleteMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto">
+        delete from tb_mhmanual where hseq = #{hseq}
+    </delete>
 <select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
 select
     sseq,

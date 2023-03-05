@@ -742,6 +742,9 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "bpernm":
                     app08_mbmanual.setBpernm(values.toString());
                     break;
+                case "bseq":
+                    app08_mbmanual.setBseq(values.toString());
+                    break;
                 case "bmemo":
                     app08_mbmanual.setBmemo(values.toString());
                     break;
@@ -763,13 +766,14 @@ public Object com0List(@RequestParam Map<String, String> param
         String ls_dd = hinputdate.substring(8,10);
         hinputdate =  ls_yeare + ls_mm + ls_dd;
         app08_mbmanual.setBinputdate(hinputdate);
-        String bseq = "";
+        String bseq = app06Dto.getHseq();
+
+        app08_mbmanual.setYyyymm(ls_yeare + ls_mm);
         if(bseq == null || bseq.equals("")){
             app08_mbmanual.setBseq(CountSeqq(ls_yeare + ls_mm));
         }else{
             app08_mbmanual.setBseq(bseq);
         }
-        app08_mbmanual.setYyyymm(ls_yeare + ls_mm);
         ls_spjangcd = "ZZ";
         try{
             switch (ls_dbnm){
@@ -779,6 +783,11 @@ public Object com0List(@RequestParam Map<String, String> param
                     app08_mbmanual.setSpjangcd(ls_spjangcd);
                     if(bseq == null || bseq.equals("")){
                         boolean result = service.InsertMBManual(app08_mbmanual);
+                        if(!result){
+                            return  "error";
+                        }
+                    } else {
+                        boolean result = service.UpdateMBManual(app08_mbmanual);
                         if(!result){
                             return  "error";
                         }
@@ -949,6 +958,125 @@ public Object com0List(@RequestParam Map<String, String> param
                     break;
             }} catch (Exception e){
             System.out.println((e));
+        }
+
+        return "success";
+    }
+
+
+    /** 파일 삭제 **/
+    @RequestMapping(value = "/mhdel", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object mhListDel(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "hseq":
+                    app06Dto.setHseq(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app06Dto.setCustcd(ls_custcd);
+                app06Dto.setSpjangcd(ls_spjangcd);
+                try {
+                    boolean result = service.DeleteMHManual(app06Dto);
+                    if(!result){
+                        return "error";
+                    }
+                    model.addAttribute("userformDto",userformDto);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+        return "success";
+    }
+    @RequestMapping(value = "/Bdel", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object bListDel(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "bseq":
+                    app08_mbmanual.setBseq(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app08_mbmanual.setCustcd(ls_custcd);
+                app08_mbmanual.setSpjangcd(ls_spjangcd);
+
+                try {
+                    boolean result = service.DeleteMManul(app08_mbmanual);
+                    if(!result){
+                        return "error";
+                    }
+                    model.addAttribute("userformDto",userformDto);
+
+                }catch (DataAccessException e) {
+                    log.info(" DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
         }
 
         return "success";
