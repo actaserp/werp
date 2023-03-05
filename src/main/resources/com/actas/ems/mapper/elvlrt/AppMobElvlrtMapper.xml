@@ -414,7 +414,7 @@ order by recedate desc;
     </select>
 
     <select id="GetAppMobList_004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-    select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
+    select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd),'분류없음') as cnam,
     (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
     from tb_mmanual WITH (NOLOCK)
     Where 1 = 1
@@ -430,7 +430,7 @@ order by recedate desc;
     </select>
 
     <select id="GetAppMobList_e"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select eseq, Left(einputdate,4) + '-' + substring(einputdate, 5,2) + '-' + substring(einputdate, 7,2) as einputdate , egroupcd, esubject, efilename, epernm, ememo, eflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd) as cnam,
+        select eseq, Left(einputdate,4) + '-' + substring(einputdate, 5,2) + '-' + substring(einputdate, 7,2) as einputdate , egroupcd, esubject, efilename, epernm, ememo, eflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd),'분류없음') as cnam,
         (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
         from tb_metcmanual WITH (NOLOCK)
         Where 1 = 1
@@ -452,7 +452,7 @@ order by recedate desc;
     </select>
 
     <select id="GetAppMobList_d"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
-        select dseq, Left(dinputdate,4) + '-' + substring(dinputdate, 5,2) + '-' + substring(dinputdate, 7,2) as dinputdate , dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd) as cnam,
+        select dseq, Left(dinputdate,4) + '-' + substring(dinputdate, 5,2) + '-' + substring(dinputdate, 7,2) as dinputdate , dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd),'분류없음') as cnam,
         (select Count(*) from tb_mattach where flag='DD' and board_idx=dseq and delete_yn = 'N') as attcnt
         from tb_mdevmanual WITH (NOLOCK)
         Where 1 = 1

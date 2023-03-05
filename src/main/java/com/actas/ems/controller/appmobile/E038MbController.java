@@ -74,6 +74,13 @@ public class E038MbController {
                     popParmDto.setRptdate(values.toString());
                     System.out.println("date : "+ popParmDto.getRptdate());
                     break;
+                case "perid":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setPerid(values.toString());
+                    System.out.println("perid : "+ popParmDto.getPerid());
+                    break;
                 default:
                     break;
             }
@@ -99,6 +106,73 @@ public class E038MbController {
 
                 try{
                     appE038DtoList = service.GetE038List(popParmDto);
+                    model.addAttribute("E038List_model", appE038DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return appE038DtoList;
+    }
+
+    @RequestMapping(value = "/getActInfo", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object getActInfo(@RequestParam Map<String, String> param,
+                           Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setActnm(values.toString());
+                    System.out.println("actnm : "+ popParmDto.getActnm());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+                try{
+                    appE038DtoList = service.GetActList(popParmDto);
                     System.out.println(appE038DtoList);
                     model.addAttribute("E038List_model", appE038DtoList);
 
@@ -124,6 +198,429 @@ public class E038MbController {
         }
         return appE038DtoList;
     }
+
+    @RequestMapping(value = "/getCarInfo", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object getCarInfo(@RequestParam Map<String, String> param,
+                             Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "carnum":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setCarnum(values.toString());
+                    System.out.println("carnum : "+ popParmDto.getCarnum());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+                try{
+                    appE038DtoList = service.GetCarList(popParmDto);
+                    System.out.println(appE038DtoList);
+                    model.addAttribute("E038List_model", appE038DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return appE038DtoList;
+    }
+
+    @RequestMapping(value = "/getEqupInfo", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object getEqupInfo(@RequestParam Map<String, String> param,
+                             Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "actcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setActcd(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getActcd());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+                try{
+                    appE038DtoList = service.GetEqupList(popParmDto);
+                    System.out.println(appE038DtoList);
+                    model.addAttribute("E038List_model", appE038DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return appE038DtoList;
+    }
+
+    @RequestMapping(value = "/insertE038", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String insertE038(@RequestParam Map<String, String> param,
+                              Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "rptdate":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setRptdate(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getRptdate());
+                    break;
+                case "actcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setActcd(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getActcd());
+                    break;
+                case "equpcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setEqupcd(values.toString());
+                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
+                    break;
+                case "carcd":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setCarcd(values.toString());
+                    System.out.println("carcd : "+ popParmDto.getCarcd());
+                    break;
+                case "frtime":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setFrtime(values.toString());
+                    System.out.println("frtime : "+ popParmDto.getFrtime());
+                    break;
+                case "totime":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setTotime(values.toString());
+                    System.out.println("totime : "+ popParmDto.getTotime());
+                    break;
+                case "remark":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setRemark(values.toString());
+                    System.out.println("remark : "+ popParmDto.getRemark());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+                popParmDto.setPerid(userformDto.getPerid());
+
+                try{
+                    boolean result = service.InsertE038(popParmDto);
+
+                    if(!result){
+                        return "error";
+                    }
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return "success";
+    }
+
+    @RequestMapping(value = "/updateE038", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String updateE038(@RequestParam Map<String, String> param,
+                             Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "rptdate":
+                    popParmDto.setRptdate(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getRptdate());
+                    break;
+                case "actcd":
+                    popParmDto.setActcd(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getActcd());
+                    break;
+                case "equpcd":
+                    popParmDto.setEqupcd(values.toString());
+                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
+                    break;
+                case "carcd":
+                    popParmDto.setCarcd(values.toString());
+                    System.out.println("carcd : "+ popParmDto.getCarcd());
+                    break;
+                case "frtime":
+                    popParmDto.setFrtime(values.toString());
+                    System.out.println("frtime : "+ popParmDto.getFrtime());
+                    break;
+                case "totime":
+                    popParmDto.setTotime(values.toString());
+                    System.out.println("totime : "+ popParmDto.getTotime());
+                    break;
+                case "remark":
+                    popParmDto.setRemark(values.toString());
+                    System.out.println("remark : "+ popParmDto.getRemark());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+                popParmDto.setPerid(userformDto.getPerid());
+
+                try{
+                    boolean result = service.UpdateE038(popParmDto);
+
+                    if(!result){
+                        return "error";
+                    }
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return "success";
+    }
+
+    @RequestMapping(value = "/deleteE038", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String deleteE038(@RequestParam Map<String, String> param,
+                             Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    popParmDto.setDbnm(values.toString());
+                    break;
+                case "rptdate":
+                    popParmDto.setRptdate(values.toString());
+                    System.out.println("rptdate : "+ popParmDto.getRptdate());
+                    break;
+                case "actcd":
+                    popParmDto.setActcd(values.toString());
+                    System.out.println("actcd : "+ popParmDto.getActcd());
+                    break;
+                case "equpcd":
+                    popParmDto.setEqupcd(values.toString());
+                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
+                    break;
+                case "carcd":
+                    popParmDto.setCarcd(values.toString());
+                    System.out.println("carcd : "+ popParmDto.getCarcd());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_spjangcd = "ZZ";
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+                popParmDto.setCustcd(ls_custcd); //ELVLRT
+                popParmDto.setPerid(userformDto.getPerid());
+
+                try{
+                    boolean result = service.DeleteE038(popParmDto);
+
+                    if(!result){
+                        return "error";
+                    }
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return "success";
+    }
+
+
 
     private static String AddDate(String strDate, int year, int month, int day) throws Exception {
 

@@ -12,4 +12,16 @@ import java.util.List;
 public interface AppE038ElvlrtMapper {
 
     public List<AppE038ElvlrtDto> GetE038List(PopupDto parm);
+
+    public List<AppE038ElvlrtDto> GetActList(PopupDto parm);
+
+    public List<AppE038ElvlrtDto> GetEqupList(PopupDto parm);
+
+    public List<AppE038ElvlrtDto> GetCarList(PopupDto parm);
+
+    public boolean InsertE038(PopupDto parm);
+
+    public boolean UpdateE038(PopupDto parm);
+
+    public boolean DeleteE038(PopupDto parm);
 }

@@ -9,7 +9,7 @@
         A.spjangcd,
         A.rptdate,
         A.perid,
-        r.pernm,
+        ISNULL(r.pernm, j.pernm) as pernm,
         A.rptnum,
         A.cltcd,
         a.actcd,
@@ -33,11 +33,57 @@
         FROM TB_E038 A WITH(NOLOCK)
         LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
         LEFT OUTER JOIN tb_e047 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.carcd = r.carcd)
+        INNER JOIN TB_JA001 j WITH(NOLOCK) ON (a.custcd = j.custcd AND a.spjangcd = j.spjangcd AND a.perid = substring(j.perid, CHARINDEX('p', j.perid)+1, LEN(j.perid)))
         LEFT OUTER JOIN tb_e021 t WITH(NOLOCK) ON (a.custcd = t.custcd AND a.spjangcd = t.spjangcd AND a.wkcd = t.busicd)
         WHERE A.custcd = #{custcd}
         AND A.spjangcd = #{spjangcd}
         AND A.rptdate like concat('%',#{rptdate},'%')
+        AND A.perid like concat('%',#{perid},'%')
+        order by a.rptdate desc
 
+    </select>
+
+    <insert id="InsertE038" parameterType="com.actas.ems.DTO.Popup.PopupDto">
+        insert into TB_E038 (rptdate, custcd, spjangcd, actcd, equpcd, carcd, frtime, totime, remark, perid)values
+        (#{rptdate}, #{custcd}, #{spjangcd}, #{actcd}, #{equpcd}, #{carcd}, #{frtime}, #{totime}, #{remark}, #{perid})
+
+    </insert>
+
+    <update id="UpdateE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        Update TB_E038 set
+        custcd = #{custcd}
+        <if test="rptdate != null ">,</if>
+        <if test="rptdate != null ">rptdate = #{rptdate}</if>
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null ">actcd = #{actcd}</if>
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null ">equpcd = #{equpcd}</if>
+        <if test="carcd != null ">,</if>
+        <if test="carcd != null ">carcd = #{carcd}</if>
+        <if test="frtime != null ">,</if>
+        <if test="frtime != null ">frtime = #{frtime}</if>
+        <if test="totime != null ">,</if>
+        <if test="totime != null ">totime = #{totime}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null ">remark = #{remark}</if>
+        where
+        rptdate = #{rptdate} and custcd = #{custcd} and spjangcd = #{spjangcd} and
+        actcd = #{actcd} and equpcd = #{equpcd} and carcd = #{carcd}
+    </update>
+    <delete id="DeleteE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        delete from tb_e038 where rptdate = #{rptdate} and perid = #{perid} and actcd = #{actcd} and equpcd = #{equpcd} and carcd = #{carcd}
+    </delete>
+
+    <select id="GetActList"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        select * from tb_e601 where actnm like concat('%',#{actnm},'%')
+    </select>
+
+    <select id="GetEqupList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        select a.cltcd, (select actnm from tb_e601 where actcd = a.actcd) as actnm, a.actcd, a.equpcd, a.equpnm from tb_e611 a where a.actcd = #{actcd}
+    </select>
+
+    <select id="GetCarList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+        select * from tb_e047 where carnum like concat('%',#{carnum},'%')
     </select>
 
 </mapper>

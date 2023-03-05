@@ -68,6 +68,13 @@ public class PopupDto {
     private String groupcd;
 
     private String rptdate;
+    private String carnum;
+
+    private String carcd;
+    private String frtime;
+    private String totime;
+    private String remark;
+    private String regdate;
 
 
 
