@@ -50,7 +50,7 @@ public class PGYMbController {
     AttachDTO attachDTO = new AttachDTO();
     private final App07ElvlrtService appService;
     private final App07UploadServiceImpl appservice2;
-
+    private final App01ElvlrtService App01service;
     private  final App05UploadServiceImpl app05UploadService;
 
     private final App10ElvlrtService app10ElvlrtServiceservice;
@@ -2021,6 +2021,292 @@ public class PGYMbController {
 
 
     }
+
+
+
+
+
+    /**고장접수 저장*/
+    @RequestMapping(value = "/save_e401", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String Save_E401ListForm(@RequestParam Map<String, String> param,
+                                      Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        String ls_hitchtime = "";
+        String ls_recetime = "";
+
+        String ls_contcd = "";
+        String ls_perid  = "";
+        String ls_perid2 = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "recedate":
+                    String via = values.toString().replaceAll("-","");
+                    app10tDto.setRecedate(via);
+                    break;
+                case "hitchdate":
+                    String via2 = values.toString().replaceAll("-","");
+                    app10tDto.setHitchdate(via2);
+                    break;
+                case "hitchhour":
+                    values = values.replaceAll(":","");
+                    app10tDto.setHitchhour(values);
+                    break;
+                case "perid":
+                    app10tDto.setPerid(values.toString());
+                    break;
+                case "cltcd":
+                    app10tDto.setCltcd(values.toString());
+                    break;
+                case "actcd":
+                    app10tDto.setActcd(values.toString());
+                    break;
+                case "actnm":
+                    app10tDto.setActnm(values.toString());
+                    break;
+                case "equpcd":
+                    app10tDto.setEqupcd(values.toString());
+                    break;
+                case "equpnm":
+                    app10tDto.setEqupnm(values.toString());
+                    break;
+                case "contcd":
+                    app10tDto.setContcd(values.toString());
+                    break;
+                case "contents":
+                    app10tDto.setContents(values.toString());
+                    break;
+                case "remark":
+                    app10tDto.setRemark(values.toString());
+                    break;
+                case "recetime":
+                    values = values.replaceAll(":","");
+                    app10tDto.setRecetime(values.toString());
+                    break;
+                case "inperid":
+                    app10tDto.setInperid(values.toString());
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_hitchtime = app10tDto.getHitchhour();
+        ls_recetime = app10tDto.getRecetime();
+        ls_contcd = app10tDto.getContcd();
+        ls_perid = app10tDto.getPerid();
+        ls_perid2 = app10tDto.getInperid();
+
+
+
+
+        int stCnt = ls_contcd.indexOf('[') + 1 ;
+        int etCnt = ls_contcd.indexOf(']');
+        ls_contcd = ls_contcd.substring(stCnt, etCnt);
+
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_perid.indexOf('[') + 1 ;
+        etCnt = ls_perid.indexOf(']');
+        ls_perid = ls_perid.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_perid2.indexOf('[') + 1 ;
+        etCnt = ls_perid2.indexOf(']');
+        ls_perid2 = ls_perid2.substring(stCnt, etCnt);
+
+
+        final int PM_HOUR_OFFSET2 = 1200;
+        final int MILITARY_TIME_LENGTH2 = 4;
+        final String MIDNIGHT2 = "00";
+
+        if(ls_hitchtime.contains("PM")){
+            int hour = Integer.parseInt(ls_hitchtime.substring(0, 2));
+            ls_hitchtime = ls_hitchtime.replace(":", "");
+            ls_hitchtime = ls_hitchtime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_hitchtime) + PM_HOUR_OFFSET2;
+                ls_hitchtime = String.valueOf(militaryTime);
+            }
+        } else if (ls_hitchtime.contains("AM")) {
+            int hour = Integer.parseInt(ls_hitchtime.substring(0, 2));
+            ls_hitchtime = ls_hitchtime.replace(":", "");
+            ls_hitchtime = ls_hitchtime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour == 12) {
+                ls_hitchtime = MIDNIGHT2 + ls_hitchtime.substring(2, 4);
+            }
+        }
+
+
+        /**GPT가 짠 코드**/
+        final int PM_HOUR_OFFSET = 1200;
+        final int MILITARY_TIME_LENGTH = 4;
+        final String MIDNIGHT = "00";
+
+        if(ls_recetime.contains("PM")){
+            int hour = Integer.parseInt(ls_recetime.substring(0, 2));
+            ls_recetime = ls_recetime.replace(":", "");
+            ls_recetime = ls_recetime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_recetime) + PM_HOUR_OFFSET;
+                ls_recetime = String.valueOf(militaryTime);
+            }
+        } else if (ls_recetime.contains("AM")) {
+            int hour = Integer.parseInt(ls_recetime.substring(0, 2));
+            ls_recetime = ls_recetime.replace(":", "");
+            ls_recetime = ls_recetime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour == 12) {
+                ls_recetime = MIDNIGHT + ls_recetime.substring(2, 4);
+            }
+        }
+
+        app10tDto.setHitchhour(ls_hitchtime);
+        app10tDto.setRecetime(ls_recetime);
+        app10tDto.setContcd(ls_contcd);
+        app10tDto.setPerid(ls_perid);
+        app10tDto.setReperid(ls_perid);
+        app10tDto.setInperid(ls_perid2);
+
+        log.info(app10tDto.getRecedate() + "recedate");
+        log.info(app10tDto.getHitchhour() + "hitchhour");
+        log.info(app10tDto.getHitchdate() + "hitchdate");
+
+        log.info(app10tDto.getPerid() + " perid");    //31
+        log.info(app10tDto.getCltcd() + " cltcd");
+        log.info(app10tDto.getActcd() + " actcd");
+        log.info(app10tDto.getActnm() + " actnm");
+        log.info(app10tDto.getEqupcd() + " equpcd");
+        log.info(app10tDto.getEqupnm() + " equpnm");
+        log.info(app10tDto.getContcd() + " contcd");
+        log.info(app10tDto.getContents() + "  content");
+        log.info(app10tDto.getRemark()  + "  remark");
+        log.info(app10tDto.getRecetime() + " recetime");
+        log.info(app10tDto.getRecedate2() + " recedate2");
+        log.info(app10tDto.getInperid() + " inperid");
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    try {
+
+                        int queryResult = 1;
+                        app10tDto.setCustcd("ELVLRT");
+                        app10tDto.setSpjangcd("ZZ");
+                        app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                        app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                        app10tDto.setIndate(getToDate());
+                        log.info(app10tDto.getIndate() + "indate");
+
+
+                            app10tDto.setRecenum(CountSeq01(app10tDto.getRecedate()));
+                            log.info(app10tDto.getRecenum() + "recenum");
+
+                            queryResult = service.InsertE401(app10tDto);
+
+                        /*queryResult = service.UpdateE401(app10tDto);
+*/
+                        if (queryResult == 1){
+                            return "success";
+                        }else{
+                            return "fail";
+                        }
+
+                    }catch (IllegalStateException e){
+                        model.addAttribute("errorMessage", e.getMessage());
+                        return e.getMessage();
+                    }
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+            break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+
+            break;
+            default:
+
+            break;
+        }
+
+    return "success";
+    }
+
+
+
+
+    public String CountSeq01(String yyyymm){
+        String ls_recenum = "";
+        ls_recenum = App01service.get10RecenumMaxSeq(yyyymm);
+        int ll_mseq = 0;
+        if(ls_recenum == null ){
+            ls_recenum = "001";
+        }else{
+            ll_mseq = Integer.parseInt(ls_recenum);
+            ls_recenum = Integer.toString(ll_mseq + 1 );
+            switch (ls_recenum.length()){
+                case 1:
+                    ls_recenum = "00" + ls_recenum;
+                    break;
+                case 2:
+                    ls_recenum = "0" + ls_recenum;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return ls_recenum;
+    }
+
+
+
+
+    /**접수 삭제**/
+// 고장접수현황 > 접수삭제
+    @GetMapping(value="/deletee401")
+    public Object deleteE401Rtn( @RequestParam("actrecedatez") String recedate
+            ,@RequestParam("actrecenumz") String recenum
+            , Model model
+            , HttpServletRequest request) throws  Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        try {
+
+            int queryResult = 1;
+
+            queryResult = service.DeleteE401(app10tDto);
+            if (queryResult == 1){
+                return "success";
+            }else{
+                return "fail";
+            }
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return e.getMessage();
+        }
+    }
+
 
 
 

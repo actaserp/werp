@@ -676,6 +676,15 @@ order by recedate desc;
         <if test="reperid != null">reperid=#{reperid}</if>
         where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate2}
     </update>
+    <!--고장접수 등록-->
+    <insert id="InsertE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >
+        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, cltcd, actnm, recetime, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate, datetime, datetime2) values
+            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime},#{cltcd},#{actnm}, #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate}, #{datetime}, #{datetime2})
+    </insert>
 
+    <!--고장접수 삭제-->
+    <delete id="DeleteE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        delete from tb_e401 where recedate = #{recedate} and recenum=#{recenum}
+    </delete>
 
 </mapper>

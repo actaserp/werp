@@ -1019,4 +1019,87 @@ public class App10ElvlrtMobService {
         return 1;
     }
 
+
+    /**접수 등록**/
+    public int InsertE401(App10ElvlrtDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperK.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperG.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            default:
+                break;
+        }
+        return 1;
+    }
+
+    /**접수 삭제**/
+    public int DeleteE401(App10ElvlrtDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            default:
+                break;
+        }
+        return 1;
+    }
+
 }

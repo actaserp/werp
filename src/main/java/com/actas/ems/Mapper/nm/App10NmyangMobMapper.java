@@ -105,4 +105,12 @@ public interface App10NmyangMobMapper {
 
     public int UpdateE401(App10ElvlrtDto parm) ;
 
+
+    /**접수 삭제*/
+    public int DeleteE401(App10ElvlrtDto parm) ;
+    /**접수 등록**/
+    public int InsertE401(App10ElvlrtDto parm) ;
+
+
+
 }
