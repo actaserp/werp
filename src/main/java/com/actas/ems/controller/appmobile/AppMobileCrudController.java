@@ -863,6 +863,83 @@ public Object com0List(@RequestParam Map<String, String> param
 
         return "success";
     }
+
+    @RequestMapping(value = "/saveeSS2", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object SClUpload(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request){
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "sseq":
+                    app28Dto.setSseq(values.toString());
+                    break;
+                case "subkey":
+                    app28Dto.setSubkey(values.toString());
+                    break;
+
+                case "smemo":
+                    app28Dto.setSmemo(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+        String sinputdate =  getToDate();
+        String ls_yeare = sinputdate.substring(0,4);
+        String ls_mm = sinputdate.substring(4,6);
+        String ls_dd = sinputdate.substring(6,8);
+        sinputdate =  ls_yeare + ls_mm + ls_dd;
+        app28Dto.setSinputdate(sinputdate);
+        app28Dto.setSpernm(userformDto.getUsername());
+        String sseq = app28Dto.getSseq();
+        if(sseq == null || sseq.equals("")){
+            app28Dto.setSseq(CountSeqs(ls_yeare + ls_mm));
+        }else{
+            app28Dto.setSseq(sseq);
+        }
+        app28Dto.setYyyymm(ls_yeare + ls_mm);
+        ls_spjangcd = "ZZ";
+        try{
+            switch (ls_dbnm){
+                case "ELV_LRT":
+                    ls_custcd = "ELVLRT";
+                    app28Dto.setCustcd(ls_custcd);
+                    app28Dto.setSpjangcd(ls_spjangcd);
+                    if(sseq == null || sseq.equals("")){
+                        boolean result = service.InsertMSManual(app28Dto);
+                        if(!result){
+                            return  "error";
+                        }
+                    }
+//                    else{
+//                        boolean result = service.UpdateMSManual(app28Dto);
+//                    }
+
+                    break;
+                case "ELV_KYOUNG":
+                    ls_custcd = "KYOUNG";
+                    break;
+                case "hanyangs":
+                    ls_custcd = "hanyangs";
+                    break;
+                default:
+                    break;
+            }} catch (Exception e){
+            System.out.println((e));
+        }
+
+        return "success";
+    }
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -1255,6 +1332,66 @@ public Object com0List(@RequestParam Map<String, String> param
 
                 try {
                     appMob005tDtoList = service.GetApp28MobList001(app28Dto);
+                    model.addAttribute("appMob005tDtoList",appMob005tDtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+
+        return appMob005tDtoList;
+    }
+
+    @RequestMapping(value = "/SSslist", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object ssListForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        String ls_dbnm = "";
+        HttpSession session = request.getSession();
+        userformDto.setDbnm(ls_dbnm);
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "smemo":
+                    app28Dto.setSmemo(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+        session.setAttribute("userformDto",userformDto);
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                app28Dto.setCustcd(ls_custcd);
+                app28Dto.setSpjangcd(ls_spjangcd);
+
+                try {
+                    appMob005tDtoList = service.GetApp28MobList003(app28Dto);
                     model.addAttribute("appMob005tDtoList",appMob005tDtoList);
 
                 }catch (DataAccessException e) {

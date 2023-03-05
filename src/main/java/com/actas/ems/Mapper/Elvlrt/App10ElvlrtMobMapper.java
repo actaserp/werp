@@ -30,6 +30,7 @@ public interface App10ElvlrtMobMapper {
 
     public List<AppMob005tDto> GetApp28MobList001(App28ElvlrtDto parm) ;
     public List<AppMob005tDto> GetApp28MobList002(App28ElvlrtDto parm) ;
+    public List<AppMob005tDto> GetApp28MobList003(App28ElvlrtDto parm) ;
     public List<CommonDto> code754get06List() ;
     public List<CommonDto> code754get08List();
     public int InsertMHManual(App06ElvlrtDto perm);

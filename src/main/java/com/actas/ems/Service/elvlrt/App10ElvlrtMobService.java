@@ -381,6 +381,24 @@ public class App10ElvlrtMobService {
                 return object;
         }
     }
+    public List<AppMob005tDto> GetApp28MobList003(App28ElvlrtDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetApp28MobList003(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetApp28MobList003(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetApp28MobList003(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetApp28MobList003(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetApp28MobList003(parm);
+            default:
+                List<AppMob005tDto> object = null;
+                return object;
+        }
+    }
 
     /** app03-04 codenum **/
     public List<CommonDto> code754get06List(){
