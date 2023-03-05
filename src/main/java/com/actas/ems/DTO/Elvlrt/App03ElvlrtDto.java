@@ -74,5 +74,7 @@ public class App03ElvlrtDto {
     private String sms_tel;
     private String sms_caller;
     private String sms_text;
+    private String cltcd;
+
 
 }

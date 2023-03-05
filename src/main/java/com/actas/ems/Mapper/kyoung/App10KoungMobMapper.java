@@ -60,4 +60,9 @@ public interface App10KoungMobMapper {
 
     /**접수 조회*/
     public List<App03ElvlrtDto> GetApp01List001(PopupDto parm) ;
+
+    /**박광열 모바일 보수현장리스트 (고장접수 전용)*/
+    public List<App26ElvlrtDto> GetAppMobListr_004_e601(PopupDto parm);
+
+    public int UpdateE401(App10ElvlrtDto parm) ;
 }

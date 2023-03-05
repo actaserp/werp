@@ -100,6 +100,8 @@ public class App10ElvlrtDto {
     private String comp;
     private String datetime;
     private String datetime2;
+    private String recedate2;
+
 
 
 }

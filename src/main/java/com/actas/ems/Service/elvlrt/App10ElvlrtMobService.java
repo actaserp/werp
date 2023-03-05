@@ -899,4 +899,67 @@ public class App10ElvlrtMobService {
         return "";
     }
 
+
+    /**현장조회 (고장접수용)*/
+    public List<App26ElvlrtDto> GetAppMobListr_004_e601(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetAppMobListr_004_e601(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetAppMobListr_004_e601(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetAppMobListr_004_e601(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetAppMobListr_004_e601(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetAppMobListr_004_e601(parm);
+            default:
+                List<App26ElvlrtDto> object = null;
+                return object;
+        }
+    }
+
+
+    /**고장접수 수정*/
+    public int UpdateE401(App10ElvlrtDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperK.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperG.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            default:
+                break;
+        }
+        return 1;
+    }
+
 }

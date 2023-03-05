@@ -623,5 +623,52 @@ order by recedate desc;
         select max(equpcd) from TB_E073 where plandate = #{plandate}
     </select>
 
+    <select id="GetAppMobListr_004_e601"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+                    a.actcd as actcd,
+                a.cltcd as cltcd,
+               b.equpcd as equpcd,
+               b.equpnm as equpnm,
+               a.actnm as actnm,
+               a.cltcd as cltcd
+        from
+            TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+        on a.actcd=b.actcd
+        where a.actnm  like CONCAT('%',#{actnm},'%')
+        ]]>
+    </select>
+
+
+
+    <!-- 고장접수 수정 -->
+    <update id="UpdateE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set indate = #{indate}
+        <if test="recedate != null ">,</if>
+        <if test="recedate != null">recedate=#{recedate}</if>
+        <if test="recetime != null ">,</if>
+        <if test="recetime != null">recetime=#{recetime}</if>
+        <if test="hitchdate != null ">,</if>
+        <if test="hitchdate != null">hitchdate=#{hitchdate}</if>
+        <if test="hitchhour != null ">,</if>
+        <if test="hitchhour != null">hitchhour=#{hitchhour}</if>
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+        <if test="contcd != null ">,</if>
+        <if test="contcd != null">contcd=#{contcd}</if>
+        <if test="contents != null ">,</if>
+        <if test="contents != null">contents=#{contents}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="reperid != null ">,</if>
+        <if test="reperid != null">reperid=#{reperid}</if>
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate2}
+    </update>
 
 </mapper>

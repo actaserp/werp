@@ -1738,6 +1738,292 @@ public class PGYMbController {
     }
 
 
+    /**박광열 현장정보 리스트(고장접수 전용) **/
+    @RequestMapping(value = "/tbe601list_2", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public Object TBE601_2ListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        String ls_dbnm = "";
+
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+
+                    popParmDto.setActnm(values.toString());
+                    break;
+                default:
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    app26DtoList = service.GetAppMobListr_004_e601(popParmDto);
+                    model.addAttribute("app26DtoList", app26DtoList);
+
+                }catch (DataAccessException e){
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+        }
+        return app26DtoList;
+    }
+
+
+
+/*
+
+    */
+/**박광열 고장접수 수정 */
+
+    @RequestMapping(value = "/update_e401", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String Update_E401ListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+        String ls_hitchtime = "";
+        String ls_recetime = "";
+
+        String ls_contcd = "";
+        String ls_perid  = "";
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "recedate":
+                    String via = values.toString().replaceAll("-","");
+                    app10tDto.setRecedate(via);
+                    break;
+                case "hitchdate":
+                    String via2 = values.toString().replaceAll("-","");
+                    app10tDto.setHitchdate(via2);
+                    break;
+                case "hitchhour":
+                    values = values.replaceAll(":","");
+                    app10tDto.setHitchhour(values);
+                    break;
+                case "perid":
+                    app10tDto.setPerid(values.toString());
+                    break;
+                case "cltcd":
+                    app10tDto.setCltcd(values.toString());
+                    break;
+                case "actcd":
+                    app10tDto.setActcd(values.toString());
+                    break;
+                case "actnm":
+                    app10tDto.setActnm(values.toString());
+                    break;
+                case "equpcd":
+                    app10tDto.setEqupcd(values.toString());
+                    break;
+                case "equpnm":
+                    app10tDto.setEqupnm(values.toString());
+                    break;
+                case "contcd":
+                    app10tDto.setContcd(values.toString());
+                    break;
+                case "contents":
+                    app10tDto.setContents(values.toString());
+                    break;
+                case "remark":
+                    app10tDto.setRemark(values.toString());
+                    break;
+                case "recetime":
+                    values = values.replaceAll(":","");
+                    app10tDto.setRecetime(values.toString());
+                    break;
+                case "recenum":
+                    app10tDto.setRecenum(values.toString());
+                default:
+                case "recedate2":
+                    app10tDto.setRecedate2(values.toString());
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        ls_hitchtime = app10tDto.getHitchhour();
+        ls_recetime = app10tDto.getRecetime();
+        ls_contcd = app10tDto.getContcd();
+        ls_perid = app10tDto.getPerid();
+
+
+
+
+
+        int stCnt = ls_contcd.indexOf('[') + 1 ;
+        int etCnt = ls_contcd.indexOf(']');
+        ls_contcd = ls_contcd.substring(stCnt, etCnt);
+
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_perid.indexOf('[') + 1 ;
+        etCnt = ls_perid.indexOf(']');
+        ls_perid = ls_perid.substring(stCnt, etCnt);
+
+
+        final int PM_HOUR_OFFSET2 = 1200;
+        final int MILITARY_TIME_LENGTH2 = 4;
+        final String MIDNIGHT2 = "00";
+
+        if(ls_hitchtime.contains("PM")){
+            int hour = Integer.parseInt(ls_hitchtime.substring(0, 2));
+            ls_hitchtime = ls_hitchtime.replace(":", "");
+            ls_hitchtime = ls_hitchtime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_hitchtime) + PM_HOUR_OFFSET2;
+                ls_hitchtime = String.valueOf(militaryTime);
+            }
+        } else if (ls_hitchtime.contains("AM")) {
+            int hour = Integer.parseInt(ls_hitchtime.substring(0, 2));
+            ls_hitchtime = ls_hitchtime.replace(":", "");
+            ls_hitchtime = ls_hitchtime.substring(0, MILITARY_TIME_LENGTH2);
+            if (hour == 12) {
+                ls_hitchtime = MIDNIGHT2 + ls_hitchtime.substring(2, 4);
+            }
+        }
+
+
+        /**GPT가 짠 코드**/
+        final int PM_HOUR_OFFSET = 1200;
+        final int MILITARY_TIME_LENGTH = 4;
+        final String MIDNIGHT = "00";
+
+        if(ls_recetime.contains("PM")){
+            int hour = Integer.parseInt(ls_recetime.substring(0, 2));
+            ls_recetime = ls_recetime.replace(":", "");
+            ls_recetime = ls_recetime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour != 12) {
+                int militaryTime = Integer.parseInt(ls_recetime) + PM_HOUR_OFFSET;
+                ls_recetime = String.valueOf(militaryTime);
+            }
+        } else if (ls_recetime.contains("AM")) {
+            int hour = Integer.parseInt(ls_recetime.substring(0, 2));
+            ls_recetime = ls_recetime.replace(":", "");
+            ls_recetime = ls_recetime.substring(0, MILITARY_TIME_LENGTH);
+            if (hour == 12) {
+                ls_recetime = MIDNIGHT + ls_recetime.substring(2, 4);
+            }
+        }
+
+        app10tDto.setHitchhour(ls_hitchtime);
+        app10tDto.setRecetime(ls_recetime);
+        app10tDto.setContcd(ls_contcd);
+        app10tDto.setPerid(ls_perid);
+        app10tDto.setReperid(ls_perid);
+
+        log.info(app10tDto.getRecedate());
+        log.info(app10tDto.getHitchhour());
+        log.info(app10tDto.getPerid() + " perid");    //31
+        log.info(app10tDto.getCltcd() + " cltcd");
+        log.info(app10tDto.getActcd() + " actcd");
+        log.info(app10tDto.getActnm() + " actnm");
+        log.info(app10tDto.getEqupcd() + " equpcd");
+        log.info(app10tDto.getEqupnm() + " equpnm");
+        log.info(app10tDto.getContcd() + "contcd");
+        log.info(app10tDto.getContents() + "  content");
+        log.info(app10tDto.getRemark());
+        log.info(app10tDto.getRecetime());
+        log.info(app10tDto.getRecenum() + " recenum");
+        log.info(app10tDto.getRecedate2() + " recedate2");
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                try{
+                    try {
+
+                        int queryResult = 1;
+                        app10tDto.setCustcd("ELVLRT");
+                        app10tDto.setSpjangcd("ZZ");
+                        app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                        app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                        app10tDto.setIndate(getToDate());
+
+
+                            queryResult = service.UpdateE401(app10tDto);
+
+                        if (queryResult == 1){
+                            return "success";
+                        }else{
+                            return "fail";
+                        }
+
+                    }catch (IllegalStateException e){
+                        model.addAttribute("errorMessage", e.getMessage());
+                        return e.getMessage();
+                    }
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+                    return "fail";
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                return "success";
+
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                return "success";
+
+            default:
+                return "success";
+
+        }
+
+
+    }
+
+
+
 
 
 }
