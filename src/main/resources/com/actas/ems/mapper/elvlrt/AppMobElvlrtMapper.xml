@@ -85,6 +85,15 @@
         (hmemo like concat('%',#{hmemo},'%') or hsubject like concat('%',#{hmemo},'%')) order by hinputdate DESC, hseq ASC
 
     </select>
+    <update id="UpdateMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto">
+        update tb_mhmanual set
+        hinputdate = #{hinputdate}
+        <if test="hsubject != null ">,</if>
+        <if test="hsubject != null">hsubject=#{hsubject}</if>
+        <if test="hmemo != null ">,</if>
+        <if test="hmemo != null">hmemo=#{hmemo}</if>
+        where hseq = #{hseq}
+    </update>
     <insert id="InsertMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" >
         insert into tb_mhmanual (custcd, spjangcd, hseq, hinputdate, hgroupcd, hsubject, hmemo, hpernm) values (#{custcd}, #{spjangcd}, #{hseq}, #{hinputdate}, #{hgroupcd}, #{hsubject}, #{hmemo}, #{hpernm})
     </insert>

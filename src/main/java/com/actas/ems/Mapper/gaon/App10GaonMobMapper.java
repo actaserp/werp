@@ -34,6 +34,8 @@ public interface App10GaonMobMapper {
     public List<CommonDto> code754get06List() ;
     public List<CommonDto> code754get08List();
     public int InsertMHManual(App06ElvlrtDto perm);
+    public int UpdateMHManual(App06ElvlrtDto perm);
+
     public String getMHManualMaxSeq(String perm);
     public int InsertMBManual(App08_mbmanual perm);
     public String getMBManualMaxSeq(String perm);

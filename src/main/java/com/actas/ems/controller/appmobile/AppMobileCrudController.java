@@ -651,6 +651,9 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "hpernm":
                     app06Dto.setHpernm(values.toString());
                     break;
+                case "sseq":
+                    app06Dto.setHseq(values.toString());
+                    break;
                 case "hmemo":
                     app06Dto.setHmemo(values.toString());
                     break;
@@ -673,8 +676,8 @@ public Object com0List(@RequestParam Map<String, String> param
         hinputdate =  ls_yeare + ls_mm + ls_dd;
         app06Dto.setHinputdate(hinputdate);
         //여기서 자꾸 gethseq가 생성되고 이전 값을 받아온다.
-//        String hseq = app06Dto.getHseq();
-        String hseq = "";
+        String hseq = app06Dto.getHseq();
+//        String hseq = "";
         if(hseq == null || hseq.equals("")){
             app06Dto.setHseq(CountSeq(ls_yeare + ls_mm));
         }else{
@@ -694,6 +697,13 @@ public Object com0List(@RequestParam Map<String, String> param
                             return  "error";
                         }
                 }
+                        else {
+                            boolean result = service.UpdateMHManual(app06Dto);
+                            if(!result){
+                                return  "error";
+                            }
+                        }
+
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
