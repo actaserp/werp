@@ -48,10 +48,12 @@
         select
                       isnull(hseq, '' ) as hseq,
                       Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
-                      Case when  hgroupcd = '' then ''
-                           when hgroupcd = '00' then '수리노하우'
-                           when hgroupcd = '01' then '부품노하우'
-                           else hgroupcd
+                                Case when  hgroupcd = '' then ''
+                                when hgroupcd = '00' then ''
+                                when hgroupcd = '01' then 'DI-2 교재(Ver 2.08)'
+                                when hgroupcd = '02' then 'DI-2 교재(Ver 2.10)'
+                                when hgroupcd = '03' then 'DS4'
+                                else hgroupcd
                           end as hgroupcd,
                       isnull(hsubject, '' ) as hsubject,
                       isnull(hpernm, '' ) as hpernm,
@@ -70,8 +72,10 @@
             isnull(hseq, '' ) as hseq,
             Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
             Case when  hgroupcd = '' then ''
-            when hgroupcd = '00' then '수리노하우'
-            when hgroupcd = '01' then '부품노하우'
+            when hgroupcd = '00' then ''
+            when hgroupcd = '01' then 'DI-2 교재(Ver 2.08)'
+            when hgroupcd = '02' then 'DI-2 교재(Ver 2.10)'
+            when hgroupcd = '03' then 'DS4'
             else hgroupcd
             end as hgroupcd,
                       isnull(hsubject, '' ) as hsubject,
@@ -189,8 +193,8 @@
         <if test="bsubject != null ">,</if>
         <if test="bsubject != null">bsubject=#{bsubject}</if>
         <if test="bmemo != null ">,</if>
-        <if test="hmemo != null">bmemo=#{bmemo}</if>
-        where bseq = #{hseq}
+        <if test="bmemo != null">bmemo=#{bmemo}</if>
+        where bseq = #{bseq}
     </update>
     <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
         DELETE FROM tb_mbmanual WHERE bseq= #{bseq};
@@ -257,8 +261,7 @@ select
     </update>
     <select id="code754get06List"  resultType="com.actas.ems.DTO.CommonDto">
         <![CDATA[
-        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '754'
-                                                                               order by com_cls
+        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '754' AND (com_code <> '00')  order by com_cls
 
         ]]>
     </select>

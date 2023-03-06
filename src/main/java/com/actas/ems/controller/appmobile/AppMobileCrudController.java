@@ -769,7 +769,7 @@ public Object com0List(@RequestParam Map<String, String> param
         String ls_dd = hinputdate.substring(8,10);
         hinputdate =  ls_yeare + ls_mm + ls_dd;
         app08_mbmanual.setBinputdate(hinputdate);
-        String bseq = app06Dto.getHseq();
+        String bseq = app08_mbmanual.getBseq();
 
         app08_mbmanual.setYyyymm(ls_yeare + ls_mm);
         if(bseq == null || bseq.equals("")){
