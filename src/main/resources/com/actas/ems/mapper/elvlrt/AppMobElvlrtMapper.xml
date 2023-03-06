@@ -18,7 +18,6 @@
                      isnull(a.contents, '' ) as contents,
                      Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
                      isnull(e.pernm, '' ) as pernm,
-                     isnull(e.pernm, '' ) as pernm,
                      isnull(a.perid, '') as perid ,
                      isnull(a.cltcd, '') as cltcd,
                      isnull(a.divicd, '') as divicd
@@ -26,7 +25,7 @@
                      LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
                      LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
                      LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
-                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + a.perid = e.perid)
                      LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
                      LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
                      LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
@@ -40,6 +39,7 @@
                    AND a.resultck like CONCAT('%',#{changeop},'%')
                    AND b.actnm like CONCAT('%',#{actnm},'%')
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
+                   AND a.perid like CONCAT('%',#{perid},'%')
                  ORDER BY a.recedate desc
         ]]>
     </select>
@@ -580,6 +580,7 @@ order by recedate desc;
         WHERE a.custcd like CONCAT('%',#{custcd},'%')
           AND a.spjangcd like CONCAT('%',#{spjangcd},'%')
           AND a.actnm like CONCAT('%',#{actnm},'%')
+          AND a.perid like CONCAT('%',#{perid}, '%')
           AND a.plandate between #{frdate} AND #{todate}
         order by plandate desc
     </select>
@@ -711,6 +712,7 @@ order by recedate desc;
             ) a
         WHERE  a.recedate  between #{frdate} and #{todate}
           AND  isnull(a.actnm,'') Like concat('%',#{actnm},'%')
+          AND  a.perid like CONCAT('%',#{perid},'%')
         ORDER BY A.recedate desc, A.recetime desc
         ]]>
     </select>

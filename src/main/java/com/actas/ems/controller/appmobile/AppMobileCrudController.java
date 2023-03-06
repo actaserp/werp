@@ -94,6 +94,9 @@ public class AppMobileCrudController {
                     break;
                 case "actnm":
                     app10tDto.setActnm(values.toString());
+                case "perid":
+                    app10tDto.setPerid(values.toString());
+                    break;
                 default:
                     break;
             }

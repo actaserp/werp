@@ -13,7 +13,7 @@
         select custcd, custnm from tb_xusers where len(custnm) > 0 group by custcd, custnm
     </select>
     <select id="GetUserInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, perid
          from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and flag = #{flag}
     </select>
     <select id="GetAdminInfo" parameterType="com.actas.ems.DTO.UserFormDto"  resultType="com.actas.ems.DTO.UserFormDto">

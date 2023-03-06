@@ -826,6 +826,10 @@ public class PGYMbController {
                     break;
                 case "actnm":
                     appMobPlanDto.setActnm(values.toString());
+                    break;
+                case "perid":
+                    appMobPlanDto.setPerid(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -850,6 +854,7 @@ public class PGYMbController {
         String endday = endOfMonth.toString().replaceAll("","");
 
         appMobPlanDto.setTodate(endday);
+        log.info(appMobPlanDto.getPerid() + "perid");
 
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
@@ -1612,6 +1617,9 @@ public class PGYMbController {
                     break;
                 case "actnm":
                     popParmDto.setActnm(values.toString());
+                case "perid":
+                    popParmDto.setPerid(values.toString());
+                    break;
                 default:
                     break;
             }
