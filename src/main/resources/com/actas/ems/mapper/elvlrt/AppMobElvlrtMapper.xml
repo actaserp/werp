@@ -700,6 +700,7 @@ order by recedate desc;
                        a.perid,
                        d.pernm,
                        d.handphone,
+                       a.resultck,
                        a.remark,
                        q.tel as tel,
                        isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
@@ -713,6 +714,7 @@ order by recedate desc;
         WHERE  a.recedate  between #{frdate} and #{todate}
           AND  isnull(a.actnm,'') Like concat('%',#{actnm},'%')
           AND  a.perid like CONCAT('%',#{perid},'%')
+          AND a.resultck like concat('%','0','%')
         ORDER BY A.recedate desc, A.recetime desc
         ]]>
     </select>

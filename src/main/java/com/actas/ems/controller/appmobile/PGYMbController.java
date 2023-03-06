@@ -586,7 +586,7 @@ public class PGYMbController {
             }
         });
 
-
+        ls_dbnm = userformDto.getDbnm();
         ls_gregicd = app10tDto.getGregicd();
         ls_regicd = app10tDto.getRegicd();
         ls_resucd = app10tDto.getResucd();
@@ -748,60 +748,79 @@ public class PGYMbController {
 
 
 
-        try {
 
-            String ls_custcd = userformDto.getCustcd();
-            String ls_spjangcd = userformDto.getSpjangcd();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
 
-            app10tDto.setCustcd("ELVLRT");
-            app10tDto.setSpjangcd("ZZ");
+                try {
 
-             /*compnum = app10tDto.getCompnum();*/
-            compnum = "";
-            String compdate = app10tDto.getCompdate();
+                    String ls_custcd = userformDto.getCustcd();
+                    String ls_spjangcd = userformDto.getSpjangcd();
+
+                    app10tDto.setCustcd("ELVLRT");
+                    app10tDto.setSpjangcd("ZZ");
+
+                    /*compnum = app10tDto.getCompnum();*/
+                    compnum = "";
+                    String compdate = app10tDto.getCompdate();
 
 
-            log.info(app10tDto.getDivicd() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            log.info(app10tDto.getCltcd());  //o
-            log.info(app10tDto.getActperid());  //o
-            log.info(app10tDto.getRemocd());    //o
-            log.info(app10tDto.getRemoremark());  //o
-            log.info(app10tDto.getRecenum());     //o
-            log.info(app10tDto.getRecetime());     //
-            log.info(app10tDto.getArrivtime());    //o
-            log.info(app10tDto.getCompdate() + "compdate");
-            log.info(app10tDto.getArrivdate());     //o
-            log.info(app10tDto.getDatetime());     //o
-            log.info(app10tDto.getDatetime2());    //o
-            log.info(app10tDto.getComptime());    //o
-            log.info(app10tDto.getArrivtime());  //o
-            log.info(ls_resulttime+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");  //o
-            log.info(compnum + "compnum");
-            if (compnum == null || compnum.equals("")) {
-                app10tDto.setCompnum(CountSeq(compdate));
-                boolean result = app10ElvlrtMobService.Insert10Manu(app10tDto);
-                log.info(app10tDto.getCompnum());
-                log.info("실행1");
-                if (!result) {
-                    return "error";
+                    log.info(app10tDto.getDivicd() + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                    log.info(app10tDto.getCltcd());  //o
+                    log.info(app10tDto.getActperid());  //o
+                    log.info(app10tDto.getRemocd());    //o
+                    log.info(app10tDto.getRemoremark());  //o
+                    log.info(app10tDto.getRecenum());     //o
+                    log.info(app10tDto.getRecetime());     //
+                    log.info(app10tDto.getArrivtime());    //o
+                    log.info(app10tDto.getCompdate() + "compdate");
+                    log.info(app10tDto.getArrivdate());     //o
+                    log.info(app10tDto.getDatetime());     //o
+                    log.info(app10tDto.getDatetime2());    //o
+                    log.info(app10tDto.getComptime());    //o
+                    log.info(app10tDto.getArrivtime());  //o
+                    log.info(ls_resulttime+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");  //o
+                    log.info(compnum + "compnum");
+                    if (compnum == null || compnum.equals("")) {
+                        app10tDto.setCompnum(CountSeq(compdate));
+                        boolean result = app10ElvlrtMobService.Insert10Manu(app10tDto);
+                        log.info(app10tDto.getCompnum());
+                        log.info("실행1");
+                        if (!result) {
+                            return "error";
+                        }
+                    } else {
+                        app10tDto.setCompnum(compnum);
+                        boolean  result = app10ElvlrtMobService.Update10Manu(app10tDto);
+                        log.info("실행2");
+                        if (!result) {
+                            return "error";
+                        }
+                    }
+                    boolean result = app10ElvlrtServiceservice.Updateresult1(app10tDto);
+                    if (!result) {
+                        return "error";
+                    }
+
+                } catch (Exception e) {
+                    log.info(e);
+                    log.info("error");
                 }
-            } else {
-                app10tDto.setCompnum(compnum);
-                boolean  result = app10ElvlrtMobService.Update10Manu(app10tDto);
-                log.info("실행2");
-                if (!result) {
-                    return "error";
-                }
-            }
-            boolean result = app10ElvlrtServiceservice.Updateresult1(app10tDto);
-            if (!result) {
-                return "error";
-            }
 
-        } catch (Exception e) {
-            log.info(e);
-            log.info("error");
+
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
         }
+
         return "success";
     }
 
@@ -916,19 +935,46 @@ public class PGYMbController {
 
 
     public String CountSeq(String compdate){
-        String ls_compnum = app10ElvlrtServiceservice.get10ManualMaxSeq(compdate);
+
+        String ls_compnum = "";
+        ls_compnum = app10ElvlrtServiceservice.get10ManualMaxSeq(compdate);
+        int ll_mseq = 0;
+        if(ls_compnum == null ){
+            ls_compnum = "001";
+        }else{
+            ll_mseq = Integer.parseInt(ls_compnum);
+            ls_compnum = Integer.toString(ll_mseq + 1 );
+            switch (ls_compnum.length()){
+                case 1:
+                    ls_compnum = "00" + ls_compnum;
+                    break;
+                case 2:
+                    ls_compnum = "0" + ls_compnum;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+       /* String ls_compnum = app10ElvlrtServiceservice.get10ManualMaxSeq(compdate);
         int ll_compnum = 0;
         if(ls_compnum == null){
             ls_compnum = "001";
         }else{
-            ll_compnum = Integer.parseInt(ls_compnum);
-            log.info(ll_compnum);
-            if(ll_compnum > 8) {
-                ls_compnum = "0" + Integer.toString(ll_compnum + 01);
-            }else{
-                ls_compnum = "00" + Integer.toString(ll_compnum + 01);
+            *//*ll_compnum = Integer.parseInt(ls_compnum);*//*
+            log.info(ls_compnum.length() + "lenaht");
+            if(ls_compnum.length() == 2) {
+                int ls_compnum2 = Integer.parseInt(ls_compnum) + 1;
+                ls_compnum = "0" + Integer.toString(ls_compnum2);
+            }else if(ls_compnum.length() == 1){
+                int ls_compnum2 = Integer.parseInt(ls_compnum) + 1;
+                ls_compnum = "00" + Integer.toString(ls_compnum2);
+            } else if (ls_compnum.length() == 3) {
+                int ls_compum2 = Integer.parseInt(ls_compnum) + 1;
+                ls_compnum = Integer.toString(ls_compum2);
             }
         }
+        return ls_compnum;*/
         return ls_compnum;
     }
 
