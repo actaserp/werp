@@ -54,6 +54,7 @@ public class E038MbController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date  = new Date(System.currentTimeMillis());
         String time = formatter.format(date);
+        System.out.println("time : "+time);
 
 
         String minusYear = AddDate(time, -2, 0, 0);
@@ -72,14 +73,12 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setRptdate(values.toString());
-                    System.out.println("date : "+ popParmDto.getRptdate());
                     break;
                 case "perid":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setPerid(values.toString());
-                    System.out.println("perid : "+ popParmDto.getPerid());
                     break;
                 default:
                     break;
@@ -154,7 +153,6 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setActnm(values.toString());
-                    System.out.println("actnm : "+ popParmDto.getActnm());
                     break;
                 default:
                     break;
@@ -173,7 +171,6 @@ public class E038MbController {
 
                 try{
                     appE038DtoList = service.GetActList(popParmDto);
-                    System.out.println(appE038DtoList);
                     model.addAttribute("E038List_model", appE038DtoList);
 
                 }catch (DataAccessException e){
@@ -222,7 +219,6 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setCarnum(values.toString());
-                    System.out.println("carnum : "+ popParmDto.getCarnum());
                     break;
                 default:
                     break;
@@ -241,7 +237,6 @@ public class E038MbController {
 
                 try{
                     appE038DtoList = service.GetCarList(popParmDto);
-                    System.out.println(appE038DtoList);
                     model.addAttribute("E038List_model", appE038DtoList);
 
                 }catch (DataAccessException e){
@@ -290,7 +285,6 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setActcd(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getActcd());
                     break;
                 default:
                     break;
@@ -309,7 +303,6 @@ public class E038MbController {
 
                 try{
                     appE038DtoList = service.GetEqupList(popParmDto);
-                    System.out.println(appE038DtoList);
                     model.addAttribute("E038List_model", appE038DtoList);
 
                 }catch (DataAccessException e){
@@ -358,49 +351,42 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setRptdate(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getRptdate());
                     break;
                 case "actcd":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setActcd(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getActcd());
                     break;
                 case "equpcd":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setEqupcd(values.toString());
-                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
                     break;
                 case "carcd":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setCarcd(values.toString());
-                    System.out.println("carcd : "+ popParmDto.getCarcd());
                     break;
                 case "frtime":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setFrtime(values.toString());
-                    System.out.println("frtime : "+ popParmDto.getFrtime());
                     break;
                 case "totime":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setTotime(values.toString());
-                    System.out.println("totime : "+ popParmDto.getTotime());
                     break;
                 case "remark":
                     if(values == ""){
                         values = "%";
                     }
                     popParmDto.setRemark(values.toString());
-                    System.out.println("remark : "+ popParmDto.getRemark());
                     break;
                 default:
                     break;
@@ -468,31 +454,24 @@ public class E038MbController {
                     break;
                 case "rptdate":
                     popParmDto.setRptdate(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getRptdate());
                     break;
                 case "actcd":
                     popParmDto.setActcd(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getActcd());
                     break;
                 case "equpcd":
                     popParmDto.setEqupcd(values.toString());
-                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
                     break;
                 case "carcd":
                     popParmDto.setCarcd(values.toString());
-                    System.out.println("carcd : "+ popParmDto.getCarcd());
                     break;
                 case "frtime":
                     popParmDto.setFrtime(values.toString());
-                    System.out.println("frtime : "+ popParmDto.getFrtime());
                     break;
                 case "totime":
                     popParmDto.setTotime(values.toString());
-                    System.out.println("totime : "+ popParmDto.getTotime());
                     break;
                 case "remark":
                     popParmDto.setRemark(values.toString());
-                    System.out.println("remark : "+ popParmDto.getRemark());
                     break;
                 default:
                     break;
@@ -560,19 +539,15 @@ public class E038MbController {
                     break;
                 case "rptdate":
                     popParmDto.setRptdate(values.toString());
-                    System.out.println("rptdate : "+ popParmDto.getRptdate());
                     break;
                 case "actcd":
                     popParmDto.setActcd(values.toString());
-                    System.out.println("actcd : "+ popParmDto.getActcd());
                     break;
                 case "equpcd":
                     popParmDto.setEqupcd(values.toString());
-                    System.out.println("equpcd : "+ popParmDto.getEqupcd());
                     break;
                 case "carcd":
                     popParmDto.setCarcd(values.toString());
-                    System.out.println("carcd : "+ popParmDto.getCarcd());
                     break;
                 default:
                     break;
