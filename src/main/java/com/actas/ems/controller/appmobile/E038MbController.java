@@ -346,9 +346,6 @@ public class E038MbController {
                     userformDto.setDbnm(values.toString());
                     popParmDto.setDbnm(values.toString());
                     break;
-                case "perid":
-                    popParmDto.setPerid(values.toString());
-                    break;
                 case "rptdate":
                     popParmDto.setRptdate(values.toString());
                     break;
@@ -381,6 +378,9 @@ public class E038MbController {
                         values = "%";
                     }
                     popParmDto.setRemark(values.toString());
+                    break;
+                case "perid":
+                    popParmDto.setPerid(values.toString());
                     break;
                 default:
                     break;
