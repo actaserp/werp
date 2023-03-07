@@ -461,6 +461,9 @@ public class E038MbController {
                     userformDto.setDbnm(values.toString());
                     popParmDto.setDbnm(values.toString());
                     break;
+                case "rptnum":
+                    popParmDto.setRptnum(values.toString());
+                    break;
                 case "rptdate":
                     popParmDto.setRptdate(values.toString());
                     break;
@@ -546,17 +549,8 @@ public class E038MbController {
                     userformDto.setDbnm(values.toString());
                     popParmDto.setDbnm(values.toString());
                     break;
-                case "rptdate":
-                    popParmDto.setRptdate(values.toString());
-                    break;
-                case "actcd":
-                    popParmDto.setActcd(values.toString());
-                    break;
-                case "equpcd":
-                    popParmDto.setEqupcd(values.toString());
-                    break;
-                case "carcd":
-                    popParmDto.setCarcd(values.toString());
+                case "rptnum":
+                    popParmDto.setRptnum(values.toString());
                     break;
                 default:
                     break;

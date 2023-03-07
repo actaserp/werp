@@ -67,11 +67,10 @@
         <if test="remark != null ">,</if>
         <if test="remark != null ">remark = #{remark}</if>
         where
-        rptdate = #{rptdate} and custcd = #{custcd} and spjangcd = #{spjangcd} and
-        actcd = #{actcd} and equpcd = #{equpcd} and carcd = #{carcd}
+        rptnum = #{rptnum}
     </update>
     <delete id="DeleteE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
-        delete from tb_e038 where rptdate = #{rptdate} and perid = #{perid} and actcd = #{actcd} and equpcd = #{equpcd} and carcd = #{carcd}
+        delete from tb_e038 where rptnum = #{rptnum}
     </delete>
 
     <select id="GetActList"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
