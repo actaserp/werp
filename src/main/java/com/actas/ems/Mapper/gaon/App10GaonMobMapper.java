@@ -116,4 +116,7 @@ public interface App10GaonMobMapper {
 
     public int DeleteList002(PopupDto parm);
 
+    /**고장처리 수정**/
+    public int Update10Manull(App10ElvlrtDto parm);
+
 }

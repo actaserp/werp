@@ -25,6 +25,9 @@ public class App10ElvlrtDto {
     private String custcd;
     private String divicd;
 
+    private String update_time;
+
+
 
 
     private String frdate;

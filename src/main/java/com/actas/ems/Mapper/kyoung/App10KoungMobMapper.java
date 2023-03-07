@@ -73,4 +73,8 @@ public interface App10KoungMobMapper {
     public int InsertE401(App10ElvlrtDto parm) ;
 
 
+    /**고장처리 수정**/
+    public int Update10Manull(App10ElvlrtDto parm);
+
+
 }

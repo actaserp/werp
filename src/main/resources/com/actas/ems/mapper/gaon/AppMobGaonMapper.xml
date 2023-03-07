@@ -736,4 +736,34 @@ order by recedate desc;
         where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
     </update>
 
+
+
+    <!--고장처리 수정-->
+    <update id="Update10Manull" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e411
+        set indate = #{indate}
+        <if test="resultcd != null ">,</if>
+        <if test="resultcd != null">resultcd=#{resultcd}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="regicd != null ">,</if>
+        <if test="regicd != null">regicd=#{regicd}</if>
+        <if test="remocd != null ">,</if>
+        <if test="remocd != null">remocd=#{remocd}</if>
+        <if test="resucd != null ">,</if>
+        <if test="resucd != null">resucd=#{resucd}</if>
+        <if test="remoremark != null ">,</if>
+        <if test="remoremark != null">remoremark=#{remoremark}</if>
+        <if test="resuremark != null ">,</if>
+        <if test="resuremark != null">resuremark=#{resuremark}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="update_time != null ">,</if>
+        <if test="update_time != null">update_time=#{update_time}</if>
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum}
+    </update>
+
 </mapper>

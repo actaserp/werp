@@ -35,6 +35,7 @@ import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -1684,15 +1685,19 @@ public class PGYMbController {
 
         popParmDto.setFrdate(time2);
 
+        log.info(popParmDto.getFrdate());
+
 
         // 현재 날짜 구하기
         LocalDate today = LocalDate.now();
 
         // 이번 달의 월말 구하기
         LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
-        String endday = endOfMonth.toString().replaceAll("","");
+        String endday = endOfMonth.toString().replaceAll("-","");
 
         popParmDto.setTodate(endday);
+
+        log.info(popParmDto.getTodate());
 
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
@@ -2536,10 +2541,10 @@ public class PGYMbController {
                     popParmDto.setCompnum(values.toString());
                     break;
                 case "recedate":
-                    app10tDto.setRecedate(values.toString());
+                    popParmDto.setRecedate(values.toString());
                     break;
                 case "recenum":
-                    app10tDto.setRecenum(values.toString());
+                    popParmDto.setRecenum(values.toString());
                     break;
 
             }
@@ -2562,7 +2567,7 @@ public class PGYMbController {
 
                     }
 
-                    boolean result2 = app10ElvlrtServiceservice.Updateresult0(app10tDto);
+                    boolean result2 = app10ElvlrtMobService.UpdateList002_rollback(popParmDto);
                     if (!result2) {
                         log.info("error, 수정불가능");
                         return "error";
@@ -2591,5 +2596,195 @@ public class PGYMbController {
 
         return "success";
     }
+
+
+
+
+
+
+    /**박광열 고장처리 수정 **/
+    @RequestMapping(value = "/e411_update", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String E411UpdateListForm(@RequestParam Map<String, String> param,
+                                 Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+        String ls_gregicd = "";
+        String ls_regicd = "";
+        String ls_resucd = "";
+        String ls_resultcd = "";
+        String ls_perid = "";
+        String ls_remocd = "";
+
+
+
+        /*업로드 파일 정보를 담을 리스트*/
+        List<AttachDTO> attachList = new ArrayList<>();
+
+        String ls_custcd;
+        String ls_spjangcd;
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "resultcd":
+                    app10tDto.setResultcd(values.toString());
+                    break;
+                case "gregicd":
+                    app10tDto.setGregicd(values.toString());
+                    break;
+                case "regicd":
+                    app10tDto.setRegicd(values.toString());
+                    break;
+                case "resucd":
+                    app10tDto.setResucd(values.toString());
+                    break;
+                case "resuremark":
+                    app10tDto.setResuremark(values.toString());
+                    break;
+                case "remocd":
+                    app10tDto.setRemocd(values.toString());
+                    break;
+                case "perid":
+                    app10tDto.setPerid(values.toString());
+                    break;
+                case "remoremark":
+                    app10tDto.setRemoremark(values.toString());
+                    break;
+                case "compnum":
+                    app10tDto.setCompnum(values.toString());
+                    break;
+                case "compdate":
+                    app10tDto.setCompdate(values.toString());
+                    break;
+                case "recenum":
+                    app10tDto.setRecenum(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        ls_dbnm = userformDto.getDbnm();
+        ls_gregicd = app10tDto.getGregicd();
+        ls_regicd = app10tDto.getRegicd();
+        ls_resucd = app10tDto.getResucd();
+        ls_resultcd = app10tDto.getResultcd();
+        ls_perid = app10tDto.getPerid();
+        ls_remocd = app10tDto.getRemocd();
+
+        int stCnt = ls_gregicd.indexOf('[') + 1 ;
+        int etCnt = ls_gregicd.indexOf(']');
+        ls_gregicd = ls_gregicd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_regicd.indexOf('[') + 1 ;
+        etCnt = ls_regicd.indexOf(']');
+        ls_regicd = ls_regicd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resucd.indexOf('[') + 1 ;
+        etCnt = ls_resucd.indexOf(']');
+        ls_resucd = ls_resucd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_resultcd.indexOf('[') + 1 ;
+        etCnt = ls_resultcd.indexOf(']');
+        ls_resultcd = ls_resultcd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_remocd.indexOf('[') + 1;
+        etCnt = ls_remocd.indexOf(']');
+        ls_remocd = ls_remocd.substring(stCnt, etCnt);
+
+        stCnt = 0; etCnt = 0;
+        stCnt = ls_perid.indexOf('[') + 1;
+        etCnt = ls_perid.indexOf(']');
+        ls_perid = ls_perid.substring(stCnt, etCnt);
+
+
+
+
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                ls_spjangcd = "ZZ";
+
+                app10tDto.setCustcd(ls_custcd);
+                app10tDto.setSpjangcd(ls_spjangcd);
+
+                app10tDto.setGregicd(ls_gregicd);
+                app10tDto.setRegicd(ls_regicd);
+                app10tDto.setResucd(ls_resucd);
+                app10tDto.setResultcd(ls_resultcd);
+                app10tDto.setPerid(ls_perid);
+                app10tDto.setRemocd(ls_remocd);
+
+                try{
+
+
+                    log.info(app10tDto.getResultcd() + " resultcd");
+                    log.info(app10tDto.getGregicd() + "gregicd") ;
+                    log.info(app10tDto.getRegicd() + "regicd");
+                    log.info(app10tDto.getRemocd() + "remocd");
+                    log.info(app10tDto.getResucd() + "resucd");
+                    log.info(app10tDto.getRemoremark() + "remoremark");
+                    log.info(app10tDto.getResuremark() + "resuremark");
+                    log.info(app10tDto.getRemark() + "remark");
+                    log.info(app10tDto.getPerid() + "perid");
+                    log.info(app10tDto.getUpdate_time() + "updatetime");
+
+
+
+
+
+
+
+
+
+                    app10tDto.setUpdate_time(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+
+                    boolean result = app10ElvlrtMobService.Update10Manull(app10tDto);
+                    if(!result){
+                        log.info("error, 수정불가가가");
+                        return "error";
+
+                    }
+
+
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+
+                break;
+            default:
+
+                break;
+        }
+
+
+
+        return "success";
+    }
+
+
 
 }
