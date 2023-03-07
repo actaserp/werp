@@ -156,7 +156,7 @@
 
 <!--//401 resultck 1처리-->
     <update id="Updateresult11" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
-        update tb_e401
+        update tb_e401 with(nolock)
         set resultck = '1'
         where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
     </update>

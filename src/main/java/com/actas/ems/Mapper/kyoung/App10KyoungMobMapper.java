@@ -108,7 +108,14 @@ public interface App10KyoungMobMapper {
     public int InsertE401(App10ElvlrtDto parm) ;
 
 
+    /**처리 조회*/
+    public List<App10ElvlrtDto> GetAppMobList002(PopupDto parm) ;
 
+
+    /**처리 삭제 및 롤백**/
+    public int UpdateList002_rollback(PopupDto parm);
+
+    public int DeleteList002(PopupDto parm);
 
 
 }

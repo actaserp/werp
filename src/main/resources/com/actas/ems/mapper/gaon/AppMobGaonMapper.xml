@@ -679,4 +679,61 @@ order by recedate desc;
     <delete id="DeleteE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
         delete from tb_e401 where recedate = #{recedate} and recenum=#{recenum}
     </delete>
+
+
+    <!--고장처리 조회-->
+    <select id="GetAppMobList002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        select a.compdate,
+               a.compnum,
+               isnull(a.recedate, '') as recedate,
+               isnull(a.recenum, '') as recenum,
+               isnull(a.perid, '') as perid,
+               isnull(b.pernm, '') as pernm,
+               isnull(a.actcd, '') as actcd,
+               isnull(a.actnm, '') as actnm,
+               isnull(a.equpcd, '') as equpcd,
+               isnull(a.equpnm, '') as equpnm,
+               isnull(a.remoremark, '') as remoremark,
+               isnull(a.resucd, '') as resucd,
+               isnull(c.resunm, '') as resunm,
+               isnull(a.resuremark, '') as resuremark,
+               isnull(a.gregicd, '') as gregicd,
+               isnull(d.greginm, '') as greginm,
+               isnull(a.regicd, '') as regicd,
+               isnull(l.reginm, '') as reginm,
+               isnull(a.remocd, '') as remocd,
+               isnull(e.remonm, '') as remonm,
+               isnull(a.resultcd, '') as resultcd,
+               isnull(f.resultnm, '') as resultnm,
+               isnull(a.resuremark, '') as resuremark,
+               isnull(a.remoremark, '') as remoremark
+        from TB_E411 a  WITH(NOLOCK)
+		LEFT OUTER JOIN TB_JA001 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.perid = substring(b.perid, 2, 10))
+            LEFT OUTER JOIN TB_E012 c WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd and a.resucd = c.resucd)
+            LEFT OUTER JOIN tb_e013 d WITH(NOLOCK) ON (a.custcd = a.custcd AND b.spjangcd = d.spjangcd AND a.gregicd = d.gregicd)
+            LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (a.custcd = l.custcd AND a.spjangcd = l.spjangcd AND d.gregicd = l.gregicd AND a.regicd = l.regicd  )
+            LEFT OUTER JOIN tb_e011 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.remocd = e.remocd)
+            LEFT OUTER JOIN tb_e015 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.remocd = f.resultnm)
+        where a.custcd = #{custcd}
+          and a.spjangcd = #{spjangcd}
+          and a.perid = #{perid}
+          and a.actnm like CONCAT('%',#{actnm},'%')
+          and a.compdate between #{frdate} and #{todate}
+        order by compdate desc
+    </select>
+
+
+
+    <!--고장처리 삭제-->
+    <delete id="DeleteList002" parameterType="com.actas.ems.DTO.Popup.PopupDto">
+        delete from TB_E411 where compdate = #{compdate} and compnum = #{compnum}  and custcd = #{custcd}   and spjangcd = #{spjangcd}
+    </delete>
+
+    <!--고장처리 삭제시 고장접수 미처리로 다시 롤백-->
+    <update id="UpdateList002_rollback" parameterType="com.actas.ems.DTO.Popup.PopupDto">
+        update tb_e401
+        set resultck = '0'
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
+    </update>
+
 </mapper>

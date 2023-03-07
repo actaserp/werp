@@ -1221,4 +1221,77 @@ public class App10ElvlrtMobService {
         return 1;
     }
 
+
+    /** view page **/
+    public List<App10ElvlrtDto> GetAppMobList002(PopupDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                return  app10ElvMobMapper.GetAppMobList002(parm);
+            case "ELV_KYOUNG":
+                return  app10ElvMobMapperK.GetAppMobList002(parm);
+            case "ELV_GAON":
+                return  app10ElvMobMapperG.GetAppMobList002(parm);
+            case "nmyang":
+                return  app10ElvMobMapperN.GetAppMobList002(parm);
+            case "hanyangs":
+                return  app10ElvMobMapperH.GetAppMobList002(parm);
+            default:
+                List<App10ElvlrtDto> object = null;
+                return object;
+        }
+    }
+
+
+
+
+    /** 처리접수 식제 */
+
+    public boolean DeleteList002(PopupDto parm){
+        int queryResult = 1;
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                queryResult = app10ElvMobMapper.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_GAON":
+                queryResult = app10ElvMobMapperG.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "ELV_KYOUNG":
+                queryResult = app10ElvMobMapperK.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "nmyang":
+                queryResult = app10ElvMobMapperN.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "hanyangs":
+                queryResult = app10ElvMobMapperH.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            default:
+                break;
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+
 }

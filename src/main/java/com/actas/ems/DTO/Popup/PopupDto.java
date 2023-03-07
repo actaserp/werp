@@ -75,6 +75,15 @@ public class PopupDto {
     private String totime;
     private String remark;
     private String regdate;
+    private String perid2;
+    private String recedate;
+    private String recenum;
+
+    private String compdate;
+    private String compnum;
+
+
+
 
 
 

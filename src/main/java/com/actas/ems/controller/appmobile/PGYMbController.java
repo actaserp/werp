@@ -66,6 +66,9 @@ public class PGYMbController {
     App10ElvlrtDto app10tDto = new App10ElvlrtDto();
     List<AppMobPlanDto> appMobplanDtoList = new ArrayList<>();
 
+    List<App10ElvlrtDto> app10DtoList = new ArrayList<>();
+
+
     App08_mbmanual app08_mbmanual = new App08_mbmanual();
     PopupDto popParmDto = new PopupDto();
     List<AppMob001tDto> appMobDtoList = new ArrayList<>();
@@ -2388,6 +2391,184 @@ public class PGYMbController {
                         model.addAttribute("errorMessage", e.getMessage());
                         return e.getMessage();
                     }
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+
+                break;
+            default:
+
+                break;
+        }
+
+        return "success";
+    }
+
+
+
+
+    /**처리 조회**/
+
+    @RequestMapping(value = "/e411_list", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object E411listForm(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+        String ls_dbnm = "";
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "actnm":
+                    popParmDto.setActnm(values.toString());
+                    break;
+                case "perid":
+                    popParmDto.setPerid2(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+
+        //현재날짜기준 월초(1일) 구하기
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date  = new Date(System.currentTimeMillis());
+        String time = formatter.format(date);
+        String time2 = time.substring(0,6) + "01";
+
+
+
+        // 현재 날짜 구하기
+        LocalDate today = LocalDate.now();
+
+        // 이번 달의 월말 구하기
+        LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth());
+        String endday = endOfMonth.toString().replaceAll("","");
+
+
+        ls_spjangcd = "ZZ";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+
+
+                popParmDto.setCustcd(ls_custcd);
+                popParmDto.setSpjangcd(ls_spjangcd);
+                popParmDto.setFrdate(time2);
+                popParmDto.setTodate(endday);
+
+
+                try {
+                    app10DtoList = app10ElvlrtMobService.GetAppMobList002(popParmDto);
+                    model.addAttribute("app10DtoList",app10DtoList);
+
+                }catch (DataAccessException e) {
+                    log.info("App01001Tab01Form DataAccessException ================================================================");
+                    log.info(e.toString());
+                    throw new AttachFileException(" DataAccessException to save");
+                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+                }catch (Exception ex) {
+//                dispatchException = ex;
+                    log.info("App01001Tab01Form Exception ================================================================");
+                    log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+                }
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            default:
+                break;
+
+        }
+
+        return app10DtoList;
+    }
+
+
+
+
+    /**고장처리 삭제*/
+    @RequestMapping(value = "/delete_e411", method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public String Delete_E411ListForm(@RequestParam Map<String, String> param,
+                                      Model model, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+        String ls_dbnm = "";
+
+
+        param.forEach((key, values) -> {
+            switch (key){
+                case "dbnm":
+                    userformDto.setDbnm(values.toString());
+                    break;
+                case "compdate":
+                    popParmDto.setCompdate(values.toString());
+                    break;
+                case "compnum":
+                    popParmDto.setCompnum(values.toString());
+                    break;
+                case "recedate":
+                    app10tDto.setRecedate(values.toString());
+                    break;
+                case "recenum":
+                    app10tDto.setRecenum(values.toString());
+                    break;
+
+            }
+        });
+        ls_dbnm = userformDto.getDbnm();
+
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                ls_spjangcd = "ZZ";
+
+                popParmDto.setCustcd(ls_custcd);
+                popParmDto.setSpjangcd(ls_spjangcd);
+
+                try{
+                    boolean result = app10ElvlrtMobService.DeleteList002(popParmDto);
+                    if(!result){
+                        log.info("error, 삭제불가능");
+                        return "error";
+
+                    }
+
+                    boolean result2 = app10ElvlrtServiceservice.Updateresult0(app10tDto);
+                    if (!result2) {
+                        log.info("error, 수정불가능");
+                        return "error";
+                    }
+
+
                 }catch (Exception ex) {
 //                dispatchException = ex;
                     log.info("App01001Tab01Form Exception ================================================================");
