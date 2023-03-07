@@ -81,11 +81,5 @@ public class PopupDto {
 
     private String compdate;
     private String compnum;
-
-
-
-
-
-
-
+    private String rptnum;
 }
