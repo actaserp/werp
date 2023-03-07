@@ -44,8 +44,8 @@
     </select>
 
     <insert id="InsertE038" parameterType="com.actas.ems.DTO.Popup.PopupDto">
-        insert into TB_E038 (rptdate, custcd, spjangcd, actcd, equpcd, carcd, frtime, totime, remark, perid)values
-        (#{rptdate}, #{custcd}, #{spjangcd}, #{actcd}, #{equpcd}, #{carcd}, #{frtime}, #{totime}, #{remark}, #{perid})
+        insert into TB_E038 (rptdate, custcd, spjangcd, rptnum, actcd, equpcd, carcd, frtime, totime, remark, perid)values
+        (#{rptdate}, #{custcd}, #{spjangcd}, #{rptnum}, #{actcd}, #{equpcd}, #{carcd}, #{frtime}, #{totime}, #{remark}, #{perid})
 
     </insert>
 
@@ -84,6 +84,10 @@
 
     <select id="GetCarList" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
         select * from tb_e047 where carnum like concat('%',#{carnum},'%')
+    </select>
+
+    <select id="getE038MaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(rptnum) from TB_E038  where Left(rptnum,6) = #{rptnum}
     </select>
 
 </mapper>

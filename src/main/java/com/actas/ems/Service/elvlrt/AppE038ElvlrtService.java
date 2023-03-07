@@ -42,4 +42,8 @@ public class AppE038ElvlrtService {
     public boolean DeleteE038(PopupDto parm) {
         return appMapper.DeleteE038(parm);
     }
+
+    public String getE038MaxSeq(String yyyymm) {
+        return appMapper.getE038MaxSeq(yyyymm);
+    }
 }

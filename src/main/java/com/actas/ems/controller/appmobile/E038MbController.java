@@ -346,22 +346,16 @@ public class E038MbController {
                     userformDto.setDbnm(values.toString());
                     popParmDto.setDbnm(values.toString());
                     break;
+                case "perid":
+                    popParmDto.setPerid(values.toString());
+                    break;
                 case "rptdate":
-                    if(values == ""){
-                        values = "%";
-                    }
                     popParmDto.setRptdate(values.toString());
                     break;
                 case "actcd":
-                    if(values == ""){
-                        values = "%";
-                    }
                     popParmDto.setActcd(values.toString());
                     break;
                 case "equpcd":
-                    if(values == ""){
-                        values = "%";
-                    }
                     popParmDto.setEqupcd(values.toString());
                     break;
                 case "carcd":
@@ -393,6 +387,21 @@ public class E038MbController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+        String rptdate = popParmDto.getRptdate();
+        String ls_yeare = rptdate.substring(0,4);
+        String ls_mm = rptdate.substring(5,6);
+        String ls_dd = rptdate.substring(7,8);
+        popParmDto.setRptdate(rptdate);
+        String rptnum = popParmDto.getRptnum();
+        //여기서 자꾸 gethseq가 생성되고 이전 값을 받아온다.
+
+//        String hseq = "";
+        popParmDto.setYyyymm(ls_yeare + ls_mm);
+        if(rptnum == null || rptnum.equals("")){
+            popParmDto.setRptnum(CountSeq(ls_yeare + ls_mm));
+        }else{
+            popParmDto.setRptnum(rptnum);
+        }
 
         ls_spjangcd = "ZZ";
 
@@ -612,5 +621,17 @@ public class E038MbController {
         cal.add(Calendar.DATE,  day);
 
         return dtFormat.format(cal.getTime());
+    }
+
+    public String CountSeq(String yyyymm){
+        String ls_nseq = service.getE038MaxSeq(yyyymm);
+        int ll_nseq = 0;
+        if(ls_nseq == null ){
+            ls_nseq = yyyymm + "001";
+        }else{
+            ll_nseq = Integer.parseInt(ls_nseq);
+            ls_nseq = Integer.toString(ll_nseq + 01 );
+        }
+        return ls_nseq;
     }
 }

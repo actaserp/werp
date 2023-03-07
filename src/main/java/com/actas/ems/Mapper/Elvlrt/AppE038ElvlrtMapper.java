@@ -24,4 +24,6 @@ public interface AppE038ElvlrtMapper {
     public boolean UpdateE038(PopupDto parm);
 
     public boolean DeleteE038(PopupDto parm);
+
+    public String getE038MaxSeq(String yyyymm);
 }
