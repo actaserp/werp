@@ -1,12 +1,9 @@
 package com.actas.ems.controller.appadmin;
 
 
-import com.actas.ems.DTO.AttachDTO;
+import com.actas.ems.DTO.*;
 import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
 import com.actas.ems.DTO.Elvlrt.App04ElvlrtDto;
-import com.actas.ems.DTO.TBXLoginDTO;
-import com.actas.ems.DTO.TBXa012VO;
-import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.*;
 import com.actas.ems.Service.master.AuthService;
@@ -39,6 +36,7 @@ public class AppIndexCrudController {
     List<TBXLoginDTO> appUserLoginListDto ;
     UserFormDto appUserFormDto  = new UserFormDto();
     TBXa012VO appXa012Dto  = new TBXa012VO();
+    TBXuserMenuDTO xusermenuDto = new TBXuserMenuDTO();
     private final App01ElvlrtService app01ElvlrtService;
     App01ElvlrtDto app01ElvlrtDto = new App01ElvlrtDto();
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -60,6 +58,31 @@ public class AppIndexCrudController {
             appUserFormDto.setUseyn(useyn);
 
             boolean result = service.UpdateUserInfo(appUserFormDto);
+            if (!result) {
+                return "error";
+            }else{
+                return "success";
+            }
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+    }
+
+
+    @RequestMapping(value="/id01menumod")   //사용자 메뉴 상태 수정
+    public String UserMenuUpdate(@RequestParam("actuseridz") String userid
+            ,@RequestParam("actmenuidz") String menuid
+            ,@RequestParam("actviewz") String view
+            , Model model, HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            xusermenuDto.setUserid(userid);
+            xusermenuDto.setMenuid(menuid);
+            xusermenuDto.setVisible(view);
+
+            boolean result = service.UpdateUserMenuInfo(xusermenuDto);
             if (!result) {
                 return "error";
             }else{

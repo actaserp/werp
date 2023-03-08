@@ -2,6 +2,7 @@ package com.actas.ems.Mapper.master;
 
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.TBXLoginDTO;
+import com.actas.ems.DTO.TBXuserMenuDTO;
 import com.actas.ems.DTO.UserFormDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -42,8 +43,11 @@ public interface AuthDBMapper {
 
     public List<UserFormDto> GetUserListDto(UserFormDto userinfo);
     public List<TBXLoginDTO> GetLogListDto(UserFormDto userinfo);
+    public List<TBXuserMenuDTO> GetXusersMenuList(TBXuserMenuDTO Parm);
+    public List<TBXuserMenuDTO> GetXMenuList(TBXuserMenuDTO Parm);
 
     public int UpdateUserInfo(UserFormDto Parm);
+    public int UpdateUserMenuInfo(TBXuserMenuDTO Parm);
 
 
 

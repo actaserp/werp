@@ -421,7 +421,7 @@ public class App01RetrieveController {
             param.forEach((key, values) -> {
                 switch (key) {
                     case "smscaller":
-                        appCalltDto.setSmscaller(FillString(10, values.toString(), "R"));
+                        appCalltDto.setSmscaller(FillString(15, values.toString(), "R"));
                         break;
                     case "smstel":
                         appCalltDto.setSmshandphone(values.toString());
@@ -471,7 +471,7 @@ public class App01RetrieveController {
             appCalltDto.setPernm(userformDto.getUsername());
             appCalltDto.setMsgtype("01");
             appCalltDto.setMsglen("0144");
-            appCalltDto.setSmsid(FillString(10, popParmDto.getSms_id(), "R"));
+            appCalltDto.setSmsid(FillString(10, userformDto.getCustcd(), "R"));
             appCalltDto.setSmsps(FillString(10, popParmDto.getSms_ps(), "R"));
             appCalltDto.setSmsip(popParmDto.getSms_ip());
             appCalltDto.setSmssetcolumn("sms_text");

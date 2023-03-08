@@ -1,6 +1,7 @@
 package com.actas.ems.controller;
 
 import com.actas.ems.DTO.Elvlrt.App01ElvlrtDto;
+import com.actas.ems.DTO.TBXuserMenuDTO;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.master.AuthService;
@@ -14,6 +15,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class AuthCrudController {
     private final AuthService authService;
     private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
+    TBXuserMenuDTO xusermenuDto = new TBXuserMenuDTO();
+    List<TBXuserMenuDTO> xusermenuListDto = new ArrayList<>();
+
     App01ElvlrtDto app01ElvlrtDto = new App01ElvlrtDto();
 
     EncryptionController enc = new EncryptionController();
@@ -348,6 +354,25 @@ public class AuthCrudController {
             return user;
 
     }
+
+
+    @RequestMapping(value = "/menulist", method = RequestMethod.POST)
+    public Object Login_fail(@RequestParam("searchtext") String userid
+            , Model model
+            , HttpServletRequest request )throws Exception {
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDtoS = (UserFormDto) session.getAttribute("userformDto");
+
+        xusermenuDto.setCustcd(userformDtoS.getCustcd());
+        xusermenuDto.setUserid(userid);
+        xusermenuListDto = authService.GetXusersMenuList(xusermenuDto);
+
+
+        return xusermenuListDto;
+
+    }
+
 
     @RequestMapping(value = "/searchnum_actcd", method = RequestMethod.POST)
     public Object TB_XCLIENT_ACTCD_SELECT(@RequestParam("actcd") String actcd, @RequestParam("dbnm") String dbnm,

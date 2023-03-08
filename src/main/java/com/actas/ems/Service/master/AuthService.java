@@ -2,6 +2,7 @@ package com.actas.ems.Service.master;
 
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
 import com.actas.ems.DTO.TBXLoginDTO;
+import com.actas.ems.DTO.TBXuserMenuDTO;
 import com.actas.ems.Mapper.Elvlrt.ElvactcdMapper;
 import com.actas.ems.Mapper.gaon.ElvactcdGaonMapper;
 import com.actas.ems.Mapper.kyoung.ElvactcdKyoungMapper;
@@ -44,6 +45,9 @@ public class AuthService {
     public UserFormDto GetAdminInfo(UserFormDto parm){return authMapper.GetAdminInfo(parm);}
     public List<UserFormDto> GetUserListDto(UserFormDto parm){return authMapper.GetUserListDto(parm);}
     public List<TBXLoginDTO> GetLogListDto(UserFormDto parm){return authMapper.GetLogListDto(parm);}
+    public List<TBXuserMenuDTO> GetXusersMenuList(TBXuserMenuDTO parm){return authMapper.GetXusersMenuList(parm);}
+    public List<TBXuserMenuDTO> GetXMenuList(TBXuserMenuDTO parm){return authMapper.GetXMenuList(parm);}
+
 
     public UserFormDto GetUserInfoDto(UserFormDto parm){return authMapper.GetUserInfoDto(parm);}
 
@@ -101,7 +105,7 @@ public class AuthService {
 
 
 
-    //글수정
+    //사용자사용여부
     @Transactional
     public boolean UpdateUserInfo(UserFormDto parm){
         int queryResult = 1;
@@ -111,4 +115,18 @@ public class AuthService {
         }
         return (queryResult > 0);
     }
+
+    //사용자 메뉴사용여부
+    @Transactional
+    public boolean UpdateUserMenuInfo(TBXuserMenuDTO parm){
+        int queryResult = 1;
+        queryResult = authMapper.UpdateUserMenuInfo(parm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
+
+
+
 }

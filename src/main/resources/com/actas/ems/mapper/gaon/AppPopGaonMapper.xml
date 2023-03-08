@@ -273,4 +273,9 @@
         <if test="emailadres != null">emailadres=#{emailadres}</if>
         where spjangcd = 'ZZ'
     </update>
+
+    <update id="UpdateXa011" parameterType="com.actas.ems.DTO.TBXa012VO">
+        update tb_xa011
+        set agnertel1 = #{tel1}
+    </update>
 </mapper>

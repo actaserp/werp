@@ -447,9 +447,17 @@ public class AppPopElvlrtService {
                 if(queryResult < 1){
                     queryResult = 0;
                 }
+                queryResult = appPopElvMapper.UpdateXa011(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
                 return queryResult;
             case "ELV_GAON":
                 queryResult = appPopElvMapperG.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                queryResult = appPopElvMapperG.UpdateXa011(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -459,9 +467,17 @@ public class AppPopElvlrtService {
                 if(queryResult < 1){
                     queryResult = 0;
                 }
+                queryResult = appPopElvMapperK.UpdateXa011(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
                 return queryResult;
             case "nmyang":
                 queryResult = appPopElvMapperN.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                queryResult = appPopElvMapperN.UpdateXa011(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -471,11 +487,19 @@ public class AppPopElvlrtService {
                 if(queryResult < 1){
                     queryResult = 0;
                 }
+                queryResult = appPopElvMapperH.UpdateXa011(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
                 return queryResult;
             default:
                 break;
         }
         return 1;
     }
+
+
+
+
 
 }

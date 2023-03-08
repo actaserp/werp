@@ -41,7 +41,7 @@
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
                    AND a.perid like CONCAT('%',#{perid},'%')
                    AND pernm like CONCAT('%',#{pernm},'%')
-                 ORDER BY a.recedate desc
+                 ORDER BY a.recedate desc, a.recetime desc
         ]]>
     </select>
 

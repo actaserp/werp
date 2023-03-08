@@ -41,5 +41,6 @@ public interface AppPopGaonMapper {
 
     public TBXa012VO GetXa012Info(PopupDto parm);
     public int UpdateXa012(TBXa012VO parm) ;
+    public int UpdateXa011(TBXa012VO parm) ;
 
 }
