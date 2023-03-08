@@ -40,6 +40,7 @@
                    AND b.actnm like CONCAT('%',#{actnm},'%')
                    AND a.recedate BETWEEN #{frdate} AND #{todate}
                    AND a.perid like CONCAT('%',#{perid},'%')
+                   AND pernm like CONCAT('%',#{pernm},'%')
                  ORDER BY a.recedate desc
         ]]>
     </select>
@@ -585,6 +586,7 @@ order by recedate desc;
           AND a.actnm like CONCAT('%',#{actnm},'%')
           AND a.perid like CONCAT('%',#{perid}, '%')
           AND a.plandate between #{frdate} AND #{todate}
+          and pernm like CONCAT('%',#{pernm},'%')
         order by plandate desc
     </select>
 
@@ -717,7 +719,8 @@ order by recedate desc;
         WHERE  a.recedate  between #{frdate} and #{todate}
           AND  isnull(a.actnm,'') Like concat('%',#{actnm},'%')
           AND  a.perid like CONCAT('%',#{perid},'%')
-          AND a.resultck like concat('%','0','%')
+          AND a.pernm like CONCAT('%',#{pernm},'%')
+          AND a.resultck like concat('%','','%')
         ORDER BY A.recedate desc, A.recetime desc
         ]]>
     </select>
@@ -838,7 +841,9 @@ order by recedate desc;
                isnull(a.resultcd, '') as resultcd,
                isnull(f.resultnm, '') as resultnm,
                isnull(a.resuremark, '') as resuremark,
-               isnull(a.remoremark, '') as remoremark
+               isnull(a.remoremark, '') as remoremark,
+               ISNULL(a.comptime, '') as comptime,
+               ISNULL(a.arrivtime, '') as arrivtime
         from TB_E411 a  WITH(NOLOCK)
 		LEFT OUTER JOIN TB_JA001 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.perid = substring(b.perid, 2, 10))
             LEFT OUTER JOIN TB_E012 c WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd and a.resucd = c.resucd)
@@ -848,7 +853,8 @@ order by recedate desc;
             LEFT OUTER JOIN tb_e015 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.resultcd = f.resultcd)
         where a.custcd = #{custcd}
           and a.spjangcd = #{spjangcd}
-          and a.perid = #{perid2}
+          and a.perid like CONCAT('%',#{perid2},'%')
+
           and a.actnm like CONCAT('%',#{actnm},'%')
           and a.compdate between #{frdate} and #{todate}
         order by compdate desc

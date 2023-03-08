@@ -97,6 +97,9 @@ public class AppMobileCrudController {
                 case "perid":
                     app10tDto.setPerid(values.toString());
                     break;
+                case "pernm":
+                    app10tDto.setPernm(values.toString());
+                    break;
                 default:
                     break;
             }

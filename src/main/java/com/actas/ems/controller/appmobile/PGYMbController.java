@@ -660,7 +660,7 @@ public class PGYMbController {
         /**GPT가 짠 코드**/
         final int PM_HOUR_OFFSET2 = 1200;
         final int MILITARY_TIME_LENGTH2 = 4;
-        final String MIDNIGHT2 = "00";
+        final String MIDNIGHT2 = "24";
 
         if(ls_comptime.contains("PM")){
             int hour = Integer.parseInt(ls_comptime.substring(0, 2));
@@ -702,7 +702,7 @@ public class PGYMbController {
         /**GPT가 짠 코드**/
         final int PM_HOUR_OFFSET = 1200;
         final int MILITARY_TIME_LENGTH = 4;
-        final String MIDNIGHT = "00";
+        final String MIDNIGHT = "24";
 
         if(ls_arrivtime.contains("PM")){
             int hour = Integer.parseInt(ls_arrivtime.substring(0, 2));
@@ -732,6 +732,9 @@ public class PGYMbController {
 
         long diffMin = (date.getTime() - date2.getTime()) / 60000; //분 차이
 
+        if (diffMin < 0) {
+            diffMin += 24 * 60; // 도착 시간이 출발 시간보다 앞에 있으면 24시간을 더함
+        }
 
         ls_resulttime = Long.toString(diffMin);
 
@@ -751,7 +754,9 @@ public class PGYMbController {
         app10tDto.setResulttime(ls_resulttime);
 
 
-
+        log.info(app10tDto.getComptime() + " comptime");
+        log.info(app10tDto.getArrivtime() + " arrivtime");
+        log.info(app10tDto.getResulttime() + " resulttime");
 
         switch (ls_dbnm){
             case "ELV_LRT":
@@ -765,7 +770,7 @@ public class PGYMbController {
                     app10tDto.setCustcd("ELVLRT");
                     app10tDto.setSpjangcd("ZZ");
 
-                    /*compnum = app10tDto.getCompnum();*/
+                    compnum = app10tDto.getCompnum();
                     compnum = "";
                     String compdate = app10tDto.getCompdate();
 
@@ -852,6 +857,9 @@ public class PGYMbController {
                     break;
                 case "perid":
                     appMobPlanDto.setPerid(values.toString());
+                    break;
+                case "pernm":
+                    appMobPlanDto.setPernm(values.toString());
                     break;
                 default:
                     break;
@@ -1670,13 +1678,16 @@ public class PGYMbController {
                 case "perid":
                     popParmDto.setPerid(values.toString());
                     break;
+                case "pernm":
+                    popParmDto.setPernm(values.toString());
+                    break;
                 default:
                     break;
             }
         });
         ls_dbnm = userformDto.getDbnm();
 
-
+        log.info(popParmDto.getPernm() + " pernm");
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date  = new Date(System.currentTimeMillis());
@@ -2446,6 +2457,9 @@ public class PGYMbController {
                     break;
                 case "perid":
                     popParmDto.setPerid2(values.toString());
+                    break;
+                case "pernm":
+                    popParmDto.setPernm(values.toString());
                     break;
                 default:
                     break;
