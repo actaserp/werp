@@ -9,7 +9,7 @@
         A.spjangcd,
         A.rptdate,
         A.perid,
-        ISNULL(r.pernm, j.pernm) as pernm,
+        ISNULL(j.pernm, r.pernm) as pernm,
         A.rptnum,
         A.cltcd,
         a.actcd,
@@ -20,7 +20,6 @@
         r.carnum,
         r.model,
         A.wkcd,
-        t.businm AS wktext,
         A.frtime,
         A.totime,
         isnull(A.km,0) as km ,
@@ -38,34 +37,30 @@
         WHERE A.custcd = #{custcd}
         AND A.spjangcd = #{spjangcd}
         AND A.rptdate like concat('%',#{rptdate},'%')
-        AND A.perid like concat('%',#{perid},'%')
+        AND A.perid = #{perid}
         order by a.rptdate desc
 
     </select>
 
     <insert id="InsertE038" parameterType="com.actas.ems.DTO.Popup.PopupDto">
-        insert into TB_E038 (rptdate, custcd, spjangcd, rptnum, actcd, equpcd, carcd, frtime, totime, remark, perid)values
-        (#{rptdate}, #{custcd}, #{spjangcd}, #{rptnum}, #{actcd}, #{equpcd}, #{carcd}, #{frtime}, #{totime}, #{remark}, #{perid})
+        insert into TB_E038 (rptdate, custcd, spjangcd, rptnum, actcd, equpcd, carcd, frtime, totime, remark, perid, actnm)values
+        (#{rptdate}, #{custcd}, #{spjangcd}, #{rptnum}, #{actcd}, #{equpcd}, #{carcd}, #{frtime}, #{totime}, #{remark}, #{perid}, #{actnm})
 
     </insert>
 
     <update id="UpdateE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
         Update TB_E038 set
         custcd = #{custcd}
-        <if test="rptdate != null ">,</if>
-        <if test="rptdate != null ">rptdate = #{rptdate}</if>
         <if test="actcd != null ">,</if>
         <if test="actcd != null ">actcd = #{actcd}</if>
         <if test="equpcd != null ">,</if>
         <if test="equpcd != null ">equpcd = #{equpcd}</if>
         <if test="carcd != null ">,</if>
         <if test="carcd != null ">carcd = #{carcd}</if>
-        <if test="frtime != null ">,</if>
-        <if test="frtime != null ">frtime = #{frtime}</if>
-        <if test="totime != null ">,</if>
-        <if test="totime != null ">totime = #{totime}</if>
         <if test="remark != null ">,</if>
         <if test="remark != null ">remark = #{remark}</if>
+        <if test="actnm != null ">,</if>
+        <if test="actnm != null ">actnm = #{actnm}</if>
         where
         rptnum = #{rptnum}
     </update>

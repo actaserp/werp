@@ -382,6 +382,9 @@ public class E038MbController {
                 case "perid":
                     popParmDto.setPerid(values.toString());
                     break;
+                case "actnm":
+                    popParmDto.setActnm(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -389,7 +392,9 @@ public class E038MbController {
         ls_dbnm = userformDto.getDbnm();
         String rptdate = popParmDto.getRptdate();
         String ls_yeare = rptdate.substring(0,4);
-        String ls_mm = rptdate.substring(5,6);
+        System.out.println(ls_yeare);
+        String ls_mm = rptdate.substring(4,6);
+        System.out.println(ls_mm);
         String ls_dd = rptdate.substring(7,8);
         popParmDto.setRptdate(rptdate);
         String rptnum = popParmDto.getRptnum();
@@ -411,7 +416,6 @@ public class E038MbController {
 
                 popParmDto.setSpjangcd(ls_spjangcd); // ZZ
                 popParmDto.setCustcd(ls_custcd); //ELVLRT
-                popParmDto.setPerid(userformDto.getPerid());
 
                 try{
                     boolean result = service.InsertE038(popParmDto);
@@ -464,23 +468,17 @@ public class E038MbController {
                 case "rptnum":
                     popParmDto.setRptnum(values.toString());
                     break;
-                case "rptdate":
-                    popParmDto.setRptdate(values.toString());
-                    break;
                 case "actcd":
                     popParmDto.setActcd(values.toString());
+                    break;
+                case "actnm":
+                    popParmDto.setActnm(values.toString());
                     break;
                 case "equpcd":
                     popParmDto.setEqupcd(values.toString());
                     break;
                 case "carcd":
                     popParmDto.setCarcd(values.toString());
-                    break;
-                case "frtime":
-                    popParmDto.setFrtime(values.toString());
-                    break;
-                case "totime":
-                    popParmDto.setTotime(values.toString());
                     break;
                 case "remark":
                     popParmDto.setRemark(values.toString());
@@ -499,7 +497,6 @@ public class E038MbController {
 
                 popParmDto.setSpjangcd(ls_spjangcd); // ZZ
                 popParmDto.setCustcd(ls_custcd); //ELVLRT
-                popParmDto.setPerid(userformDto.getPerid());
 
                 try{
                     boolean result = service.UpdateE038(popParmDto);
@@ -566,7 +563,6 @@ public class E038MbController {
 
                 popParmDto.setSpjangcd(ls_spjangcd); // ZZ
                 popParmDto.setCustcd(ls_custcd); //ELVLRT
-                popParmDto.setPerid(userformDto.getPerid());
 
                 try{
                     boolean result = service.DeleteE038(popParmDto);
