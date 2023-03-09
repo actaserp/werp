@@ -48,7 +48,7 @@
 
     </insert>
 
-    <update id="UpdateE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+    <update id="UpdateE038" parameterType="com.actas.ems.DTO.Popup.PopupDto">
         Update TB_E038 set
         custcd = #{custcd}
         <if test="actcd != null ">,</if>
@@ -64,7 +64,8 @@
         where
         rptnum = #{rptnum}
     </update>
-    <delete id="DeleteE038" parameterType="com.actas.ems.DTO.Elvlrt.AppE038ElvlrtDto">
+
+    <delete id="DeleteE038" parameterType="com.actas.ems.DTO.Popup.PopupDto">
         delete from tb_e038 where rptnum = #{rptnum}
     </delete>
 
