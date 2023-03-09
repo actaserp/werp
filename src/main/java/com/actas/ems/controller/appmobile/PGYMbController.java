@@ -867,6 +867,9 @@ public class PGYMbController {
         });
         ls_dbnm = userformDto.getDbnm();
 
+        log.info(appMobPlanDto.getPerid() + " perid");
+        log.info(appMobPlanDto.getPernm() + " pernm");
+
 
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -1688,6 +1691,9 @@ public class PGYMbController {
         ls_dbnm = userformDto.getDbnm();
 
         log.info(popParmDto.getPernm() + " pernm");
+        log.info(popParmDto.getPerid() + " perid");
+
+        log.info(popParmDto.getPernm() + " pernm");
         //현재날짜기준 월초(1일) 구하기
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date  = new Date(System.currentTimeMillis());
@@ -2467,6 +2473,9 @@ public class PGYMbController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
+
+        log.info(popParmDto.getPerid() + " perid");
+        log.info(popParmDto.getPernm() + " pernm");
 
 
         //현재날짜기준 월초(1일) 구하기

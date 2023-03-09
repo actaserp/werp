@@ -104,6 +104,11 @@ public class AppMobileCrudController {
                     break;
             }
         });
+
+        log.info(app10tDto.getPerid() + " perid");
+        log.info(app10tDto.getPernm() + " pernm");
+
+
         ls_dbnm = userformDto.getDbnm();
         String frdate = getToDate();
         String todate = getToDate();
