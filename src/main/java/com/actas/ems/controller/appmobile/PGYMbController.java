@@ -1951,6 +1951,7 @@ public class PGYMbController {
                     break;
                 case "recenum":
                     app10tDto.setRecenum(values.toString());
+                    break;
                 default:
                 case "recedate2":
                     app10tDto.setRecedate2(values.toString());

@@ -854,7 +854,7 @@ order by recedate desc;
         where a.custcd = #{custcd}
           and a.spjangcd = #{spjangcd}
           and a.perid like CONCAT('%',#{perid2},'%')
-
+          and pernm like CONCAT('%',#{pernm},'%')
           and a.actnm like CONCAT('%',#{actnm},'%')
           and a.compdate between #{frdate} and #{todate}
         order by compdate desc
