@@ -398,14 +398,12 @@ public class E038MbController {
         String ls_dd = rptdate.substring(6,8);
         popParmDto.setRptdate(rptdate);
         String rptnum = popParmDto.getRptnum();
+        System.out.println("ls_year:"+ls_yeare+",   ls_mm:"+ls_mm+",    ls_dd:"+ls_dd);
 
 //        String hseq = "";
         popParmDto.setYyyymm(ls_yeare + ls_mm + ls_dd);
-        if(rptnum == null || rptnum.equals("")){
-            popParmDto.setRptnum(CountSeq(ls_yeare + ls_mm + ls_dd));
-        }else{
-            popParmDto.setRptnum(rptnum);
-        }
+        popParmDto.setRptnum(CountSeq(ls_yeare + ls_mm + ls_dd));
+
 
         ls_spjangcd = "ZZ";
 
@@ -418,6 +416,7 @@ public class E038MbController {
 
                 try{
                     boolean result = service.InsertE038(popParmDto);
+                    popParmDto.setRptnum(null);
 
                     if(!result){
                         return "error";
@@ -612,15 +611,17 @@ public class E038MbController {
         return dtFormat.format(cal.getTime());
     }
 
-    public String CountSeq(String yyyymm){
+    public synchronized String CountSeq(String yyyymm) {
         String ls_rptnum = service.getE038MaxSeq(yyyymm);
         int ll_nseq = 0;
-        if(ls_rptnum == null ){
+        if (ls_rptnum == null) {
             ls_rptnum = "001";
-        }else{
-
+        } else {
+            System.out.println("ls_rptnum1:" + ls_rptnum);
             ll_nseq = Integer.parseInt(ls_rptnum);
+            System.out.println("ll_nseq:" + ll_nseq);
             ls_rptnum = String.format("%03d", ll_nseq + 1);
+            System.out.println("ls_rptnum2:" + ls_rptnum);
         }
         return ls_rptnum;
     }
