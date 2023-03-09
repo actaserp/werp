@@ -917,7 +917,9 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "subkey":
                     app28Dto.setSubkey(values.toString());
                     break;
-
+                case "spernm":
+                    app28Dto.setSpernm(values.toString());
+                    break;
                 case "smemo":
                     app28Dto.setSmemo(values.toString());
                     break;
@@ -933,7 +935,6 @@ public Object com0List(@RequestParam Map<String, String> param
         String ls_dd = sinputdate.substring(6,8);
         sinputdate =  ls_yeare + ls_mm + ls_dd;
         app28Dto.setSinputdate(sinputdate);
-        app28Dto.setSpernm(userformDto.getUsername());
         String sseq = app28Dto.getSseq();
         if(sseq == null || sseq.equals("")){
             app28Dto.setSseq(CountSeqs(ls_yeare + ls_mm));
