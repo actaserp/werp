@@ -395,15 +395,14 @@ public class E038MbController {
         System.out.println(ls_yeare);
         String ls_mm = rptdate.substring(4,6);
         System.out.println(ls_mm);
-        String ls_dd = rptdate.substring(7,8);
+        String ls_dd = rptdate.substring(6,8);
         popParmDto.setRptdate(rptdate);
         String rptnum = popParmDto.getRptnum();
-        //여기서 자꾸 gethseq가 생성되고 이전 값을 받아온다.
 
 //        String hseq = "";
-        popParmDto.setYyyymm(ls_yeare + ls_mm);
+        popParmDto.setYyyymm(ls_yeare + ls_mm + ls_dd);
         if(rptnum == null || rptnum.equals("")){
-            popParmDto.setRptnum(CountSeq(ls_yeare + ls_mm));
+            popParmDto.setRptnum(CountSeq(ls_yeare + ls_mm + ls_dd));
         }else{
             popParmDto.setRptnum(rptnum);
         }
@@ -614,14 +613,15 @@ public class E038MbController {
     }
 
     public String CountSeq(String yyyymm){
-        String ls_nseq = service.getE038MaxSeq(yyyymm);
+        String ls_rptnum = service.getE038MaxSeq(yyyymm);
         int ll_nseq = 0;
-        if(ls_nseq == null ){
-            ls_nseq = yyyymm + "001";
+        if(ls_rptnum == null ){
+            ls_rptnum = "001";
         }else{
-            ll_nseq = Integer.parseInt(ls_nseq);
-            ls_nseq = Integer.toString(ll_nseq + 01 );
+
+            ll_nseq = Integer.parseInt(ls_rptnum);
+            ls_rptnum = String.format("%03d", ll_nseq + 1);
         }
-        return ls_nseq;
+        return ls_rptnum;
     }
 }

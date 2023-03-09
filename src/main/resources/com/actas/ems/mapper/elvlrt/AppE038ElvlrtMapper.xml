@@ -82,7 +82,7 @@
     </select>
 
     <select id="getE038MaxSeq"  parameterType="string" resultType="java.lang.String">
-        select max(rptnum) from TB_E038  where Left(rptnum,6) = #{rptnum}
+        select max(rptnum) from TB_E038  where rptdate = #{rptnum}
     </select>
 
 </mapper>
