@@ -29,7 +29,7 @@ public class UIUtils {
     public static String getElvDataSourceNm(){
         ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = servletRequestAttribute.getRequest().getSession(true);
-//        UserFormDto userformDto = (UserFormDto) httpSession.getAttribute("userformDto");
+        UserFormDto userformDto = (UserFormDto) httpSession.getAttribute("userformDto");
         return ((UserFormDto) httpSession.getAttribute("userformDto")).getDbnm();
     }
 

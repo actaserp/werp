@@ -1146,6 +1146,7 @@ public Object com0List(@RequestParam Map<String, String> param
         return appMob003tDtoList;
     }
 
+    ///searchList
     @RequestMapping(value = "/mhlist2", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
