@@ -80,6 +80,12 @@ public class E038MbController {
                     }
                     popParmDto.setPerid(values.toString());
                     break;
+                case "actnm":
+                    if(values == ""){
+                        values = "%";
+                    }
+                    popParmDto.setActnm(values.toString());
+                    break;
                 default:
                     break;
             }

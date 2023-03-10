@@ -37,6 +37,7 @@
         WHERE A.custcd = #{custcd}
         AND A.spjangcd = #{spjangcd}
         AND A.rptdate like concat('%',#{rptdate},'%')
+        AND A.actnm like concat('%',#{actnm},'%')
         AND A.perid = #{perid}
         order by a.rptdate desc
 
