@@ -23,11 +23,7 @@ public class AuthCrudMController {
     private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     App01ElvlrtDto app01ElvlrtDto = new App01ElvlrtDto();
-
     EncryptionController enc = new EncryptionController();
-
-
-
     protected Log log =  LogFactory.getLog(this.getClass());
 
 
@@ -47,6 +43,9 @@ public class AuthCrudMController {
                 case "userpw":
                     userformDto.setPasswd1(values.toString());
                     String _userpw = values.toString();
+                    break;
+                case "pushid":
+                    userformDto.setPushid(values.toString());
                     break;
                 default:
                     break;
@@ -70,12 +69,11 @@ public class AuthCrudMController {
                 break;
         }
 
-
+        String _pushid = userformDto.getPushid();
         userformDto =  authService.GetUserInfoDto(userformDto);
-//        App01ElvlrtDto app01data =  app01ElvlrtService.GetCallXenv(app01ElvlrtDto);
-//        userformDto.setCallflag(app01data.getCallflag());
-//        userformDto.setCalluserid(app01data.getCalluserid());
-//        userformDto.setCalluserpw(app01data.getCalluserpw());
+        userformDto.setPushid(_pushid);
+//       String seq = String.valueOf(userformDto.getSeq());
+//       userformDto.getSeq().toString();
 
         String dbnm = userformDto.getDbnm();
         String ls_custcd = "";
@@ -98,6 +96,7 @@ public class AuthCrudMController {
         ls_spjangcd = "ZZ";
         userformDto.setCustcd(ls_custcd);
         userformDto.setSpjangcd(ls_spjangcd);
+        boolean result = authService.Updatepushid(userformDto);
         HttpSession session = request.getSession();
         session.setAttribute("userformDto",userformDto);
 

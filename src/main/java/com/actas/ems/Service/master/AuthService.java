@@ -127,6 +127,17 @@ public class AuthService {
         return (queryResult > 0);
     }
 
+//    pushid
+    @Transactional
+    public boolean Updatepushid(UserFormDto parm){
+        int queryResult = 1;
+        queryResult = authMapper.Updatepushid(parm);
+        if(queryResult < 1){
+            queryResult = 0;
+        }
+        return (queryResult > 0);
+    }
+
 
 
 }

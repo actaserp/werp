@@ -98,6 +98,8 @@ public class UserFormDto {
     private String pagetree03;
     /** 화면명 */
     private String pagenm;
+    /** 화면명 */
+    private String pushid;
 
     private Integer seq;
 

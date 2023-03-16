@@ -44,7 +44,7 @@
                  ORDER BY a.recedate desc, a.recetime desc
         ]]>
     </select>
-
+<!--    juseon mapper.xml -->
     <select id="GetApp06MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
         select
                       isnull(hseq, '' ) as hseq,
@@ -197,6 +197,7 @@
         <if test="bmemo != null">bmemo=#{bmemo}</if>
         where bseq = #{bseq}
     </update>
+
     <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
         DELETE FROM tb_mbmanual WHERE bseq= #{bseq};
     </delete>
