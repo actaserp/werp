@@ -130,7 +130,7 @@ public class App05Controller {
 
 
 
-        return "app05/noticelistcust";
+        return "app05/noticelist";
     }
 
 

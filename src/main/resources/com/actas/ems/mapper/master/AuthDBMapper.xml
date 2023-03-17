@@ -34,6 +34,7 @@
         case useyn when 'Y' THEN '사용' ELSE '미사용' END as flag
         from TB_XUSERS where flag like CONCAT('%',#{flag},'%') and flag in  ('AA', 'CC')
                          AND (username like CONCAT('%',#{username},'%') or userid like CONCAT('%',#{username},'%') )
+                         and len(username) > 0 and custcd=#{custcd}
         order by flag, username
         ]]>
     </select>

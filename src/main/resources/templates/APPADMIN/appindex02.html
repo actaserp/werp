@@ -72,9 +72,66 @@
             </div>
 
 
- 
+            <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />  
 
     </div>
+
+
+
+    <!--------------------------------------------------------------------------------------->   
+        <!--  사용자 메뉴관리 MODAL FROM  -->  
+        <div class="modal fade" id="actnmmodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"  style="max-width: 570px">
+                <div class="modal-content border-0"> 
+                    <div class="modal_content modal_sm scrollbar" style="width:600px; height:800px">
+                        <div class="layoutCont">
+                            <div class="modalContWrap">
+                                <!-- <div class="modal_close2 cancerButton">
+                                    <img th:src="@{/assets/images/modal_close.png}" alt="닫기" data-bs-dismiss="modal"> 
+                                </div>   -->
+                                <div class="modal_head">
+                                    사용자 메뉴관리
+                                </div>
+                                <div class="modal_con scrollbar auto_height" style="overflow-y: scroll;">
+                                    <div class="modal-body p-0" > 
+                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                            <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                            <div class="search">
+                                                <div class="input_wrap">
+                                                    <input class="form-control form-control-sm" id="searchtext" type="text"   onkeyup="if(window.event.keyCode==13){listUp02()}"
+                                                    placeholder="사용자명 "     />                                      
+                                                </div>
+                                                <button id="wactlistBtn" onclick="listUp02()">
+                                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                                </button>
+                                            </div>  
+                                        </div>   
+                                        <div class="container-fluid"> 
+                                            <div id="wapp01Grid_div" ></div>
+                                            <div id="thePager02"></div>
+                                        </div>   
+                                    </div>  
+                
+                                    <div class="modal-footer">
+                                        <div class="row g-1">
+                                            <div class="col-auto">
+                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button"  id="wactnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>  
+<!--------------------------------------------------------------------------------------->  
+
 
 
     <script type="text/javascript" th:inline="javascript"> 
@@ -83,10 +140,18 @@
     //현장 검색   
     var wapp04Grid ;
     var view_Mmanualpage;
+    var wapp01Grid ;
+    var view_menuviewpage;
     document.getElementById("retrieveBtn").addEventListener("click",function(){ 
         listUp();
 
-    })   
+    })    
+    function menumodal_click(arg1, arg2, arg3){
+        document.getElementById("actnmbtn").click();
+        document.getElementById('searchtext').value = arg1;  
+        listUp02();
+        // ctx.item.userid, ctx.item.useyn, ctx.item.username
+    }
     function tabA_grid(data){
         // console.log(data)
             var wtab01Dto  = data;    
@@ -128,6 +193,12 @@
             cols.header = '아이디';
             cols.align = "center";
             cols.width = '*'; 
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.userid}</b>',
+                click: (e, ctx) => {
+                    menumodal_click(ctx.item.userid, ctx.item.useyn, ctx.item.username);
+                }
+            }); 
             wapp04Grid.columns.push(cols);  
             cols = new wijmo.grid.Column(); 
             cols.binding = 'username';
@@ -220,6 +291,138 @@
             })  
     }
 
+
+
+
+        
+    function tabB_grid(data){ 
+            var wtab01Dto  = data;    
+            var wtab01_data = [];
+            var cnt = 1;
+            for (var i = 0; i < wtab01Dto.length; i++) {
+                wtab01_data.push({
+                    id: i, 
+                    index: cnt, 
+                    menudv:     wtab01Dto[i]["menudv"],
+                    menuid:     wtab01Dto[i]["menuid"],
+                    mname: wtab01Dto[i]["mname"], 
+                    username:   wtab01Dto[i]["username"],
+                    visible : wtab01Dto[i]["visible"] ,   
+                    userid : wtab01Dto[i]["userid"] ,                                 
+                });
+                cnt++;
+            }     
+            wapp01Grid.columns.clear();  
+            wapp01Grid.autoGenerateColumns = false; 
+            view_menuviewpage.sourceCollection  = wtab01_data;
+            var cols = new wijmo.grid.Column();  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'visible';
+            cols.header = '사용여부';
+            cols.align = "center";
+            cols.width = '*'; 
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.visible}</b>',
+                click: (e, ctx) => {
+                    wactnmChk_3(ctx.item.userid, ctx.item.menuid, ctx.item.visible, ctx.item.mname);
+                }
+            });
+            wapp01Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'menuid';
+            cols.header = '메뉴아이디';
+            cols.align = "center";
+            cols.width = '*'; 
+            wapp01Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'mname';
+            cols.header = '메뉴명';
+            cols.align = "center";
+            cols.width = '*'; 
+            wapp01Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'username';
+            cols.header = '사용자';
+            cols.align = "center";
+            cols.width = '*'; 
+            wapp01Grid.columns.push(cols);    
+ 
+        }
+    
+        
+    function listUp02(){
+        var ls_searchtext = document.getElementById('searchtext').value;  
+            if(ls_searchtext == null || ls_searchtext.length == 0 || ls_searchtext == ""){
+                alert("사용아이디를 입력하세요");
+                return 
+            }   
+            $.ajax({
+                url: '/authcrud/menulist',  
+                type:"POST",
+                data: { 
+                    "searchtext"      : ls_searchtext,  
+                }, 
+                async:false,
+                success:function(data){   
+                    // console.log(data);
+                    tabB_grid(data);
+                },error:function(e){
+                    console.log("error");
+                    // alert(data.code);
+                    // alert(data.message);
+                }
+            }).done(function(fragment){           
+
+            })  
+    }
+
+    
+
+    function wactnmChk_3(arg1, arg2, arg3, arg4){  
+        
+            if (arg3 == "사용"){
+                if (!confirm(arg4 + " : 미사용으로 변경하시겠습니까?")) {
+                    return ;
+                } 
+                arg3 = "N"
+            }else{
+                if (!confirm(arg4 + " : 사용으로 변경하시겠습니까?")) {
+                    return ;
+                } 
+                arg3 = "Y"
+            }
+            $.ajax({
+                url: '/appadmod/id01menumod',   
+                type:"POST",
+                data: {
+                    "actuseridz"    : arg1 ,
+                    "actmenuidz"    : arg2,
+                    "actviewz"      : arg3
+                },
+                async:false,
+                success:function(data){
+                    if(data == "success"){
+                        alert("변경되었습니다.")
+                        // console.log("MOD", data); 
+                        listUp();
+                    }else{
+                        alert("변경중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    }
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){
+
+            })
+
+          listUp02();
+ 
+        }      
+
+    
+
+
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     window.onload = function() { 
         view_Mmanualpage = new wijmo.collections.CollectionView(getData_wlist(), {
@@ -245,7 +448,13 @@
                             }
                         })
                     },   
-                { binding: 'userid', header: '아이디', width: '*',   align:"center",  isReadOnly: true } ,
+                { binding: 'userid', header: '아이디', width: '*',   align:"center",  isReadOnly: true ,
+                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                            text: '<b>${item.userid}</b>',
+                            click: (e, ctx) => {
+                                menumodal_click(ctx.item.userid, ctx.item.useyn, ctx.item.username );
+                            }
+                        })} ,
                 { binding: 'username', header: '사용자', width: '*', format: '*' , align:"left", isReadOnly: true}, 
                 { binding: 'actcd', header: '현장코드', width: '*', format: '*', align:"center", isReadOnly: true },  
                 { binding: 'actnm', header: '현장명', width: '*', format: '*', align:"left", isReadOnly: true },  
@@ -288,6 +497,66 @@
         }         
     }
    
+
+
+        
+
+    view_menuviewpage = new wijmo.collections.CollectionView(getData_wlist02(), {
+            pageSize: 15
+        });  
+        // 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager02', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_menuviewpage
+        });     
+        wapp01Grid = new wijmo.grid.FlexGrid('#wapp01Grid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+            
+                { binding: 'flag',width: '*', header: '사용여부', width: '*', align:"center", format: '*' ,
+                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                            text: '<b>${item.visible}</b>',
+                            click: (e, ctx) => {
+                                wactnmChk_3(ctx.item.userid, ctx.item.menuid, ctx.item.visible, ctx.item.mname  );
+                            }
+                        })
+                    },   
+                { binding: 'menuid', header: '메뉴아이디', width: '*',   align:"center",  isReadOnly: true  },
+                { binding: 'mname', header: '메뉴명', width: '*', format: '*' , align:"center", isReadOnly: true}, 
+                { binding: 'username', header: '사용자명', width: '*', format: '*', align:"center", isReadOnly: true },  
+            ], 
+            itemsSource: view_menuviewpage
+        });    
+
+        
+        //   데이터 수집
+        function getData_wlist02(){
+            var data01 = [];
+            var cnt = 1;
+
+            for (var i = 0; i < 20; i++) {
+                data01.push({
+                    id: i, 
+                    index: cnt,
+                    userid:     '',
+                    menuid:     '',
+                    mname: '', 
+                    username:   '',
+                    visible : ''     
+                });
+                cnt++;
+            }  
+            // console.log(data01);            
+            return data01                                          
+        }         
+
+
+    
+
+
 
     </script>
 
