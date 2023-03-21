@@ -199,11 +199,24 @@ public class AppPopup01Controller {
 
     @RequestMapping(value="/wpernm")
     public Object ApppernmList(@RequestParam("actpernmz") String pernm
-            , Model model){
+            , Model model , HttpServletRequest request){
         if(pernm.length() == 0){
             pernm = "%";
         }
         try {
+//            String ls_pushid = "";
+//            String ls_dbnm = "";
+//            HttpSession session = request.getSession();
+//            userformDto.setDbnm(ls_dbnm);
+//            ls_dbnm = userformDto.getDbnm();
+//            session.setAttribute("userformDto",userformDto);
+//            userformDto.setPushid(ls_pushid);
+//            ls_pushid = userformDto.getPushid();
+//            // 이거 null
+//            userformDto.setFlag("AA");
+//            userformDto.setPernm(pernm);
+//            userformDto =  authService.GetUserInfoDto2(userformDto);
+//            popParmDto.getPushid();
             popParmDto.setPernm(pernm);
             poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
             model.addAttribute("poplistDto", poplistDto);

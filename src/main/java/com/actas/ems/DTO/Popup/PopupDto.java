@@ -64,6 +64,7 @@ public class PopupDto {
     private String dbnm;
     private String flag;
     private String seq;
+    private String pushid;
     private String memo;
     private String groupcd;
 

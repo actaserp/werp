@@ -50,6 +50,7 @@ public class AuthService {
 
 
     public UserFormDto GetUserInfoDto(UserFormDto parm){return authMapper.GetUserInfoDto(parm);}
+    public UserFormDto GetUserInfoDto2(UserFormDto parm){return authMapper.GetUserInfoDto2(parm);}
 
     public String GetClientInfo(UserFormDto parm){return authMapper.GetClientInfo(parm);}
     public String GetClientInfoName(UserFormDto parm){return authMapper.GetClientInfoName(parm);}

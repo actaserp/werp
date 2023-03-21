@@ -7,6 +7,7 @@ import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Exception.AttachFileException;
 import com.actas.ems.Service.elvlrt.App01ElvlrtService;
 import com.actas.ems.Service.elvlrt.AppPopElvlrtService;
+import com.actas.ems.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +32,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class App01Controller {
+
+    private final AuthService authService;
+
     private final App01ElvlrtService app01ElvlrtService;
     UserFormDto userformDto = new UserFormDto();
     PopupDto popParmDto = new PopupDto();

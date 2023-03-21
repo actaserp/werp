@@ -96,7 +96,9 @@ public class AuthCrudMController {
         ls_spjangcd = "ZZ";
         userformDto.setCustcd(ls_custcd);
         userformDto.setSpjangcd(ls_spjangcd);
-        boolean result = authService.Updatepushid(userformDto);
+        if (userformDto.getPushid().length() > 0 && userformDto.getPushid() != null){
+            boolean result = authService.Updatepushid(userformDto);
+        }
         HttpSession session = request.getSession();
         session.setAttribute("userformDto",userformDto);
 

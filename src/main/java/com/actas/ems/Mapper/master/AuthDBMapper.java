@@ -14,6 +14,8 @@ import java.util.List;
 public interface AuthDBMapper {
     public void TBXUSERS_Insert(UserFormDto userinfo);
     public UserFormDto GetUserInfo(UserFormDto userinfo);
+    public UserFormDto GetUserInfoDto2(UserFormDto userinfo);
+
     public UserFormDto GetCustInfo(UserFormDto userinfo);
     public UserFormDto GetAdminInfo(UserFormDto userinfo);
 

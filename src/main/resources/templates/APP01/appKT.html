@@ -323,6 +323,7 @@
                                                             <td>
                                                                 <div class="input_wrap table_search">
                                                                     <input type="text" id="actpernmz" name="actpernmz">
+                                                                    <input type="text" id="actpushidz" name="actpushidz">
                                                                     <input type="hidden" id="actperidz" name="actperidz">
                                                                     <button class="btn1" type="button"  id="wpernmBtn"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
                                                                 </div>
@@ -1975,9 +1976,21 @@
            alert("고장내용을 등록하세요");
            return
         }            
+         if (!confirm("통보자에게 알림을 보내시겠습니까?")) {
+            alert("알림을 취소했습니다.");
+        } else {
+            alert("알림을 보냅니다.");
+        }
 
 
-        // 본문 data    
+        var app_id = "2f677e4f-4e90-439b-84af-29c8f75ba1e8";
+        var restapi_key = "NzI4NWNlMjAtMTA5Zi00OTExLThmYjYtYjNmZjUzZDgyOTlm"; //고정값 '\n'
+        var push_title = document.getElementById('actrecedatez').value + ' '+document.getElementById('actrecetimez').value ;  
+        var push_content =  document.getElementById('actactnmz').value + '의 (' + document.getElementById('actequpnmz').value + ') ' + ' 접수가 들어왔습니다.';  
+        //document.getElementById('actpushidz').value로 바꿔야함
+        var player_id_array = '9a189f13-4c3a-4ea8-a19a-c82d46e91be0';
+        var player_id_array_as_array = [player_id_array];
+        console.log(player_id_array_as_array);
         var inputdata = {   
                 "actrecedatez"    : ls_actrecedatez ,
                 "actrecenumz"    : ls_actrecenumz ,
@@ -1994,7 +2007,6 @@
                 
             }  
         formData.delete("key");    
-        // 본문 data formdata 에 추가
         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"})); 
 
         $.ajax({
@@ -2006,23 +2018,50 @@
             data: formData,
             async:false,
             success:function(data){
-                // console.log("등록OK", data);
                 if(data == "success"){
-                    alert("저장되었습니다.") 
                     search_rtn();
-                }else{
-                    console.log(data);
-                    alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                    //첫번째 호출이 성공하면 두번째 호출 실행
+                    $.ajax({
+                                url: "https://onesignal.com/api/v1/notifications",
+                                type: "POST",
+                                headers: {
+                                        Authorization: restapi_key,
+                                        'content-type': 'application/json'
+                                },
+                                dataType: "json",
+                                data: JSON.stringify({
+                                name: ' push event ',
+                                app_id: app_id,
+                                include_player_ids: player_id_array_as_array,
+                                headings: { en: push_title },
+                                contents: { en: push_content },
+                                large_icon: "https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png", // 표시 icon 아이콘
+                                }),
+                                beforeSend: function (xhr) {
+                                xhr.setRequestHeader("Authorization", "Basic " + restapi_key);
+                            },
+                            success: function(data) {
+                            console.log("두 번째 AJAX 호출 성공", data);
+                            },
+                            error: function(e) {
+                            console.log("두 번째 AJAX 호출 실패", e);
+                            }
+                        });
+                        alert("첫 번째 AJAX 호출 성공");
+                        } else {
+                        console.log(data);
+                        alert("첫 번째 AJAX 호출 실패!!!");
+                        }
+                    },
+                    error: function(e) {
+                        console.log('error', e);
+                   
                 }
-
-            },error:function(e){
-                console.log('error',e);
-            }
         }).done(function(fragment){
-
         })  
         return ;
     }
+
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //고장접수삭제
@@ -2490,7 +2529,7 @@
 
     }
 
-
+//통보자 search_rtn
     function searchwpernm_rtn(){
         let searchText = '';  
         searchText = document.getElementById('searchwpernm').value;   
@@ -2515,7 +2554,9 @@
                         index: cnt,
                         perid:wcontnmDto[i]["perid"],
                         pernm: wcontnmDto[i]["pernm"],
-                        handphone: wcontnmDto[i]["handphone"]                                         
+                        handphone: wcontnmDto[i]["handphone"],
+                        //오류남
+                        pushid: wcontnmDto[i]["pushid"],
                     });
                     cnt++;
                 }   
@@ -2531,7 +2572,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.perid}</b>',
                     click: (e, ctx) => {
-                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, ctx.item.handphone, '',  '04');
+                        wactnmChk_2(ctx.item.perid, ctx.item.pernm, ctx.item.handphone, '',  '04', ctx.item.pushid);
                     }
                 });
                 wpernmGrid.columns.push(cols);    
@@ -2980,7 +3021,7 @@
         
     
 
-    function wactnmChk_2(arg1, arg2, arg3, arg4, flag){
+    function wactnmChk_2(arg1, arg2, arg3, arg4, flag, arg5){
             switch(flag){
                 case "01": 
                     // 현장검색 데이터 수집
@@ -3011,6 +3052,7 @@
                     document.getElementById('actpernmz').value = arg2;  
                     document.getElementById('smstel').value = arg3;    
                     document.getElementById('smspernm').value = arg2;   
+                    document.getElementById('actpushidz').value = arg5; 
                     $("#wpernmmodal_btn").trigger("click"); 
                     break;                    
                 case "05":
@@ -3168,7 +3210,7 @@
 
 
     }
- 
+ //고장접수현황
     function search_rtn(){
         var ls_actnmz = document.getElementById('searchactnmz').value; 
         let ls_frdate = document.getElementById('frdate').value; 
@@ -3217,7 +3259,6 @@
             //alert("일자를 입력하세요")
            // return 
         }   
-        //  console.log("kkkkkkkkkkkk");
         $.ajax({
                 url: '/app01/emtellist',  
                 type:"POST",
