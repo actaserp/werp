@@ -204,19 +204,6 @@ public class AppPopup01Controller {
             pernm = "%";
         }
         try {
-//            String ls_pushid = "";
-//            String ls_dbnm = "";
-//            HttpSession session = request.getSession();
-//            userformDto.setDbnm(ls_dbnm);
-//            ls_dbnm = userformDto.getDbnm();
-//            session.setAttribute("userformDto",userformDto);
-//            userformDto.setPushid(ls_pushid);
-//            ls_pushid = userformDto.getPushid();
-//            // 이거 null
-//            userformDto.setFlag("AA");
-//            userformDto.setPernm(pernm);
-//            userformDto =  authService.GetUserInfoDto2(userformDto);
-//            popParmDto.getPushid();
             popParmDto.setPernm(pernm);
             poplistDto = appPopElvlrtService.GetPernmList(popParmDto);
             model.addAttribute("poplistDto", poplistDto);
@@ -380,6 +367,26 @@ public class AppPopup01Controller {
             return "error";
         }
         return app03DtoList05;
+    }
+
+    @RequestMapping(value="/wpushid")
+    public String AppPushidText( @RequestParam("wpernm") String pernm
+            , Model model
+            , HttpServletRequest request){
+        String ls_pushid = "";
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto", userformDto);
+        try {
+            popParmDto.setPernm(pernm);
+            popParmDto.setDbnm(userformDto.getDbnm());
+          ls_pushid = authService.TB_GET_PUSHID(popParmDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return ls_pushid;
     }
 
 

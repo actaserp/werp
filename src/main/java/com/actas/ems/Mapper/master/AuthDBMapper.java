@@ -1,6 +1,7 @@
 package com.actas.ems.Mapper.master;
 
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.TBXLoginDTO;
 import com.actas.ems.DTO.TBXuserMenuDTO;
 import com.actas.ems.DTO.UserFormDto;
@@ -52,6 +53,7 @@ public interface AuthDBMapper {
     public int UpdateUserMenuInfo(TBXuserMenuDTO Parm);
 
     public int Updatepushid(UserFormDto Parm);
+    public String TB_GET_PUSHID(PopupDto Parm);
 
 
 

@@ -1,6 +1,7 @@
 package com.actas.ems.Service.master;
 
 import com.actas.ems.DTO.Elvlrt.App10ElvlrtDto;
+import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.DTO.TBXLoginDTO;
 import com.actas.ems.DTO.TBXuserMenuDTO;
 import com.actas.ems.Mapper.Elvlrt.ElvactcdMapper;
@@ -140,5 +141,8 @@ public class AuthService {
     }
 
 
+    public String TB_GET_PUSHID(PopupDto parm){
+        return authMapper.TB_GET_PUSHID(parm);
+    }
 
 }

@@ -148,6 +148,10 @@
         select top(1) dbnm from tb_xusers where saupnum=#{saupnum}
     </select>
 
+    <select id="TB_GET_PUSHID" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="String">
+        select top(1) pushid from tb_xusers where pernm=#{pernm} and dbnm =#{dbnm}
+    </select>
+
     <update id="TB_XUSER_UPDATE" parameterType="com.actas.ems.DTO.UserFormDto">
         UPDATE TB_XUSERS SET
             username = #{username}, passwd1 = #{passwd1}, passwd2 = #{passwd2}, phone = #{phone}

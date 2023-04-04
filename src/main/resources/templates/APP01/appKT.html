@@ -79,8 +79,16 @@
                 <!-- <li>
                     고장접수관제현황
                 </li> -->
+
+                <li><a th:href="@{/app01/emcontrol}"><i>고장접수관제현황</li>
+                <li><a th:href="@{/app10/index01}"><i>고장처리등록</li>                 
+                <!-- <li><a th:href="@{/app26/index01}"><i>보수현장정보</li> -->
+                <!-- <li><a th:href="@{/app14/index01}"><i>보수기사정보</li> -->
+                 
+
+
             </ul>
-            <ul class="mid">
+            <!-- <ul class="mid">
                 <li>
                     <i><img th:src="@{/assets/images/i_circle1.png}" alt=""></i>
 
@@ -98,7 +106,7 @@
                     <i><img th:src="@{/assets/images/i_circle4.png}" alt=""></i>
                     <p>금일고장접수 <span>50</span></p>
                 </li>
-            </ul>
+            </ul> -->
             <ul class="right">
 
                 <li>
@@ -295,7 +303,7 @@
                                                             <th>현장명</th>
                                                             <td>
                                                                 <div class="input_wrap table_search">
-                                                                    <input type="text" id="actactnmz" name="actactnmz">
+                                                                    <input type="text" id="actactnmz" name="actactnmz" >
                                                                     <input type="hidden" id="actactcdz" name="actactcdz">
                                                                     <button class="btn1" type="button" id="wactnmBtn"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
 
@@ -323,9 +331,10 @@
                                                             <td>
                                                                 <div class="input_wrap table_search">
                                                                     <input type="text" id="actpernmz" name="actpernmz">
-                                                                    <input type="text" id="actpushidz" name="actpushidz">
+                                                                    <input type="hidden" id="actpushidz" name="actpushidz">
                                                                     <input type="hidden" id="actperidz" name="actperidz">
                                                                     <button class="btn1" type="button"  id="wpernmBtn"><img th:src="@{/assets/images/i_search2.png}" alt=""></button>
+                                                                    <button class="btn1" type="button"  id="notifyBtn"><img th:src="@{/assets/images/i_bell.png}" alt=""></button>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -374,97 +383,7 @@
 
                                             </form>
                                         </div>
-                                    </div>
-                                    <!-- <div class="part1_bottom">
-                                        <div class="modal_box">
-                                            <div class="title toggle" style="cursor: pointer;">
-                                                <h5>KT CTI</h5>
-                                                <button><img th:src="@{/assets/images/toggle.png}" alt=""></button>
-                                            </div>
-                                            <div class="con_wrap toggle_box" style="display: none;">
-                                                <div class="left">
-                                                    <ul class="font_title">
-                                                        <li class="color1" style="height: 31px;">통화내역리스트</li>
-                                                        <li style="height: 64px;">문자전송</li>
-                                                        <li style="height: 31px;">착신전환</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="mid" style="width: 43%">
-                                                    <div class="input_wrap">
-                                                        <h5>통화내역종류</h5>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                        <h5 style="width: 80px;">통화건수</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">부재중리스트</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>발신번호</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>문자메세지</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>변경할회선</h5>
-                                                        <input type="text">
-                                                        <select name="" id="" style="margin-left: 10px">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="right" style="width: 43%">
-                                                    <div class="input_wrap">
-                                                        <h5>통화내역종류</h5>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                전체
-                                                            </option>
-                                                        </select>
-                                                        <h5 style="width: 80px;">통화건수</h5>
-                                                        <input type="text">
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>예약시간</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">예약전송</button>
-                                                            <button class="type1 color2" style="height: 31px;">예약취소</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>회신번호</h5>
-                                                        <input type="text">
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">문자전송</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input_wrap">
-                                                        <h5>착신번호</h5>
-                                                        <input type="text">
-                                                        <select name="" id="" style="margin-left: 10px">
-                                                            <option value="">
-                                                                정상통화
-                                                            </option>
-                                                        </select>
-                                                        <div class="btns">
-                                                            <button class="type1 color3" style="height: 31px;">착신전환</button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                    </div> 
                                     <div class="part_hide_grid">
                                         <div class="modal_box">
                                             <div class="title">
@@ -1293,6 +1212,57 @@
                 </div> 
             </div> 
         </div>  
+
+
+
+
+        <input class="form-control form-control-sm"  type="hidden" id="userinfobtn" data-bs-toggle="modal" data-bs-target="#userinfomodal"  />
+
+        <!--------------------------------------------------------------------------------------->
+        <!-- 처리자 MODAL FROM  -->
+        <form    th:object="${userformDto}" method="post" ></form>
+            <div class="modal fade" id="userinfomodal" data-bs-keyboard="false"
+                data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                    style="max-width: 500px">
+                    <div class="modal-content border-0">
+                        <div class="modal-body p-0" >
+                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                <!-- <h4 class="mb-1" id="modalExampleDemoLabel">현장검색</h4>  -->
+                                <label>비밀번호</label>
+                                <input class="form-control form-control-sm" type="text"  th:value="${userformDto.passwd1}" id="actpasswdz" onchange="check_pw()">
+                                <label>이름</label>
+                                <input class="form-control form-control-sm" type="text"  th:value="${userformDto.username}" id="actnamez">
+                                <label>핸드폰번호</label>
+                                <input class="form-control form-control-sm" type="text"  th:value="${userformDto.phone}" id="actphonez">
+                                <!--<input class="form-control form-control-sm" type="text"  th:value="${userFormDto.userid}">-->
+    
+    
+                            </div>
+    
+                        </div>
+    
+                        <div class="modal-footer">
+                            <div class="row g-1">
+                                <div class="col-auto">
+                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                            type="button"  id="wpernmmodal_btn2" data-bs-dismiss="modal" onclick="save_btn3()">수정</button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                            type="button"  id="wpernmmodal_btn3" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            <input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userformDto.userid}" >
+        </form>   
+        <!--------------------------------------------------------------------------------------->
+
 <!--------------------------------------------------------------------------------------->  
 
 <script type="text/javascript" th:inline="javascript">
@@ -1975,22 +1945,25 @@
         if(ls_actcontcdz == null || ls_actcontcdz.length == 0 || ls_actcontcdz == ""){
            alert("고장내용을 등록하세요");
            return
-        }            
-         if (!confirm("통보자에게 알림을 보내시겠습니까?")) {
-            alert("알림을 취소했습니다.");
-        } else {
-            alert("알림을 보냅니다.");
-        }
-
+        }    
 
         var app_id = "2f677e4f-4e90-439b-84af-29c8f75ba1e8";
         var restapi_key = "NzI4NWNlMjAtMTA5Zi00OTExLThmYjYtYjNmZjUzZDgyOTlm"; //고정값 '\n'
-        var push_title = document.getElementById('actrecedatez').value + ' '+document.getElementById('actrecetimez').value ;  
-        var push_content =  document.getElementById('actactnmz').value + '의 (' + document.getElementById('actequpnmz').value + ') ' + ' 접수가 들어왔습니다.';  
+        var push_title = ls_actrecedatez + ' '+document.getElementById('acthitchhourz').value ;  
+        var push_content =  document.getElementById('actactnmz').value + ' (' + document.getElementById('actequpnmz').value + ') ' + ls_actcontcdz + ' 접수';  
         //document.getElementById('actpushidz').value로 바꿔야함
-        var player_id_array = '9a189f13-4c3a-4ea8-a19a-c82d46e91be0';
+        var player_id_array = document.getElementById('actpushidz').value; //'9a189f13-4c3a-4ea8-a19a-c82d46e91be0';
         var player_id_array_as_array = [player_id_array];
-        console.log(player_id_array_as_array);
+        // console.log(player_id_array_as_array);
+
+   
+        var ls_alarm = "0"     ;
+        if(player_id_array != null && player_id_array.length > 0 && player_id_array != ""){
+            if (confirm("통보자에게 알림을 보내시겠습니까?")) {
+                ls_alarm = "1"  
+            }  
+        }
+
         var inputdata = {   
                 "actrecedatez"    : ls_actrecedatez ,
                 "actrecenumz"    : ls_actrecenumz ,
@@ -2018,51 +1991,96 @@
             data: formData,
             async:false,
             success:function(data){
-                if(data == "success"){
-                    search_rtn();
-                    //첫번째 호출이 성공하면 두번째 호출 실행
-                    $.ajax({
-                                url: "https://onesignal.com/api/v1/notifications",
-                                type: "POST",
-                                headers: {
-                                        Authorization: restapi_key,
-                                        'content-type': 'application/json'
+                    if(data == "success"){
+                        search_rtn();
+                        //첫번째 호출이 성공하면 두번째 호출 실행
+                        if(ls_alarm == "1"){ 
+                            $.ajax({
+                                    url: "https://onesignal.com/api/v1/notifications",
+                                    type: "POST",
+                                    headers: {
+                                            Authorization: restapi_key,
+                                            'content-type': 'application/json'
+                                    },
+                                    dataType: "json",
+                                    data: JSON.stringify({
+                                    name: ' push event ',
+                                    app_id: app_id,
+                                    include_player_ids: player_id_array_as_array,
+                                    headings: { en: push_title },
+                                    contents: { en: push_content },
+                                    large_icon: "https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png", // 표시 icon 아이콘
+                                    }),
+                                    beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("Authorization", "Basic " + restapi_key);
                                 },
-                                dataType: "json",
-                                data: JSON.stringify({
-                                name: ' push event ',
-                                app_id: app_id,
-                                include_player_ids: player_id_array_as_array,
-                                headings: { en: push_title },
-                                contents: { en: push_content },
-                                large_icon: "https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png", // 표시 icon 아이콘
-                                }),
-                                beforeSend: function (xhr) {
-                                xhr.setRequestHeader("Authorization", "Basic " + restapi_key);
-                            },
-                            success: function(data) {
-                            console.log("두 번째 AJAX 호출 성공", data);
-                            },
-                            error: function(e) {
-                            console.log("두 번째 AJAX 호출 실패", e);
-                            }
-                        });
-                        alert("첫 번째 AJAX 호출 성공");
-                        } else {
-                        console.log(data);
-                        alert("첫 번째 AJAX 호출 실패!!!");
+                                success: function(data) {
+                                // console.log("두 번째 AJAX 호출 성공", data);
+                                },
+                                error: function(e) {
+                                // console.log("두 번째 AJAX 호출 실패", e);
+                                }
+                            });
                         }
-                    },
-                    error: function(e) {
-                        console.log('error', e);
+                    // alert("첫 번째 AJAX 호출 성공");
+                    } else {
+                    // console.log(data);
+                    // alert("첫 번째 AJAX 호출 실패!!!");
+                    }
+            },
+            error: function(e) {
+               console.log('error', e);
                    
-                }
+            }
         }).done(function(fragment){
         })  
         return ;
     }
-
-
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //알림 서비스 
+    function notifications_rtn(){ 
+        var app_id = "2f677e4f-4e90-439b-84af-29c8f75ba1e8";
+        var restapi_key = "NzI4NWNlMjAtMTA5Zi00OTExLThmYjYtYjNmZjUzZDgyOTlm"; //고정값 '\n'
+        var push_title = document.getElementById('acthitchdatez').value + ' '+document.getElementById('acthitchhourz').value ;  
+        var push_content =  document.getElementById('actactnmz').value + ' (' + document.getElementById('actequpnmz').value + ') ' + document.getElementById('actcontentsz').value + ' 접수';  
+        //document.getElementById('actpushidz').value로 바꿔야함
+        var player_id_array = document.getElementById('actpushidz').value; //'9a189f13-4c3a-4ea8-a19a-c82d46e91be0';
+        var player_id_array_as_array = [player_id_array];
+        
+        if(player_id_array == null || player_id_array.length == 0 || player_id_array == ""){
+            alert("ACTAS 모바일 어플이 실행되지 않았습니다. 담당자 어플을 확인하세요.") 
+            return 
+        }
+        if (!confirm(push_content + " : 알림을 보내시겠습니까?")) {
+            return 
+        }  
+        $.ajax({
+                url: "https://onesignal.com/api/v1/notifications",
+                type: "POST",
+                headers: {
+                        Authorization: restapi_key,
+                        'content-type': 'application/json'
+                },
+                dataType: "json",
+                data: JSON.stringify({
+                name: ' push event ',
+                app_id: app_id,
+                include_player_ids: player_id_array_as_array,
+                headings: { en: push_title },
+                contents: { en: push_content },
+                large_icon: "https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png", // 표시 icon 아이콘
+                }),
+                beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + restapi_key);
+            },
+            success: function(data) {
+            // console.log("두 번째 AJAX 호출 성공", data);
+            },
+            error: function(e) {
+            // console.log("두 번째 AJAX 호출 실패", e);
+            }
+        });
+    }
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //고장접수삭제
     function delE401_rtn(){
@@ -2239,32 +2257,73 @@
     }
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    //현장 검색   
-    document.getElementById("actactnmz").addEventListener("click",function(){ 
+    //현장 검색    onkeyup="if(window.event.keyCode==13){searchwactnm_rtn()}" 
+    // document.getElementById("actactnmz").addEventListener("click",function(){ 
+    //     document.getElementById("actnmbtn").click();
+    //     document.getElementById("searchwactnm").focus();
+    //     console.log('actactnmz focus')
+    //     return 
+    // }); 
+    document.getElementById("actactnmz").addEventListener("keyup", (e)=>{ 
+        if(e.keyCode === 13){
+            document.getElementById("actnmbtn").click();
+            var searchText = document.getElementById('actactnmz').value;
+            document.getElementById('searchwactnm').value = searchText;   
+            searchwactnm_rtn();
+        }
+    });  
+    document.getElementById("wactnmBtn").addEventListener("click",function(){ 
         document.getElementById("actnmbtn").click();
-        document.getElementById("searchwactnm").focus();
-        console.log('actactnmz focus')
-        return 
-    }); 
+    });    
     document.getElementById("wactcdlistBtn").addEventListener("click",function(){ 
         document.getElementById("actnmbtn").click();
     });
     
-    //고장내용 검색   
-    document.getElementById("actcontnmz").addEventListener("click",function(){ 
-        document.getElementById("contnmbtn").click();
-        document.getElementById("searchwcontnm").focus();
+    //고장내용 검색  
+    document.getElementById("actcontnmz").addEventListener("keyup", (e)=>{ 
+        if(e.keyCode === 13){
+            document.getElementById("contnmbtn").click();
+            var searchText = document.getElementById('actcontnmz').value;
+            document.getElementById('searchwcontnm').value = searchText;   
+            searchwcontnm_rtn();
+        }
+    });     
+    document.getElementById("wcontnmBtn").addEventListener("click",function(){ 
+        document.getElementById("contnmbtn").click(); 
     });
-    //사원내용 검색   
-    document.getElementById("actrepernmz").addEventListener("click",function(){ 
-        document.getElementById("repernmbtn").click();
-        document.getElementById("searchwrepernm").focus();
+
+    //사원내용 검색  
+    document.getElementById("actrepernmz").addEventListener("keyup", (e)=>{ 
+        if(e.keyCode === 13){
+            document.getElementById("repernmbtn").click();
+            var searchText = document.getElementById('actrepernmz').value;
+            document.getElementById('searchwrepernm').value = searchText;   
+            searchwrepernm_rtn();
+        }
+    });    
+    document.getElementById("wrepernmBtn").addEventListener("click",function(){ 
+        document.getElementById("repernmbtn").click(); 
     });
-    //사원2내용 검색   
-    document.getElementById("actpernmz").addEventListener("click",function(){ 
-        document.getElementById("pernmbtn").click();
-        document.getElementById("searchwpernm").focus();
+    //사원2내용 검색  
+    document.getElementById("actpernmz").addEventListener("keyup", (e)=>{ 
+        if(e.keyCode === 13){
+            document.getElementById("pernmbtn").click();
+            var searchText = document.getElementById('actpernmz').value;
+            document.getElementById('searchwpernm').value = searchText;   
+            console.log('searchText');
+            console.log(searchText);
+            searchwpernm_rtn();
+        }
+    });     
+    document.getElementById("wpernmBtn").addEventListener("click",function(){ 
+        document.getElementById("pernmbtn").click(); 
     });
+
+    //알림보내기  
+    document.getElementById("notifyBtn").addEventListener("click",function(){ 
+        notifications_rtn(); 
+    });
+    
     //호기내용 검색   
     document.getElementById("actequpnmz").addEventListener("click",function(){ 
         document.getElementById("equpnmbtn").click();
@@ -2536,7 +2595,7 @@
         if(searchText == null || searchText.length == 0 || searchText == ""){
             searchText = "%";
         }
-        // console.log('ls_cltcd-->' + ls_cltcd);
+        console.log('searchText-->' + searchText);
         $.ajax({
             url: '/pop01/wpernm',  
             type:"POST",
@@ -3029,6 +3088,7 @@
                     document.getElementById('actactnmz').value = arg2;   
                     document.getElementById('actperidz').value = arg3; 
                     document.getElementById('actpernmz').value = arg4;  
+                    var ls_pushid = searchPushId_rtn(arg4);  
                     $("#wactnmmodal_btn").trigger("click");      
                     break;
                 case "02":                 
@@ -3049,10 +3109,12 @@
                     console.log('arg3');
                     console.log(arg3);
                     document.getElementById('actperidz').value = arg1; 
-                    document.getElementById('actpernmz').value = arg2;  
-                    document.getElementById('smstel').value = arg3;    
-                    document.getElementById('smspernm').value = arg2;   
-                    document.getElementById('actpushidz').value = arg5; 
+                    document.getElementById('actpernmz').value = arg2;                     
+                    if(arg3 != null && arg3.length > 0 && arg3 != ""){ 
+                        document.getElementById('smstel').value = arg3;    
+                    }
+                    document.getElementById('smspernm').value = arg2; 
+                    var ls_pushid = searchPushId_rtn(arg2);  
                     $("#wpernmmodal_btn").trigger("click"); 
                     break;                    
                 case "05":
@@ -3096,6 +3158,28 @@
             }
 
     }
+ 
+    function searchPushId_rtn(arg1){
+            let searchText = '';   
+            $.ajax({
+                url: '/pop01/wpushid',  
+                type:"POST",
+                data: { 
+                    "wpernm"      : arg1, 
+                }, 
+                async:false,
+                success:function(data){ 
+                    document.getElementById('actpushidz').value = data; 
+                    return data;
+                },error:function(e){ 
+                    document.getElementById('actpushidz').value = ""; 
+                    alert(data.message);
+                }
+            }).done(function(fragment){           
+
+            })  
+
+    }    
     function wactnmChk_3(arg1, arg2, arg3, arg4, arg5){
         document.getElementById('actactcdz').value = arg1; 
         document.getElementById('actseqz').value = arg2; 
@@ -3167,9 +3251,13 @@
         document.getElementById('smsmsg').value =   arg3 + " " + arg15 + '/' + arg16;  
         document.getElementById('smsrepernm').value = arg11;  
         document.getElementById('smspernm').value = arg13;    
-        document.getElementById('smstel').value = arg18;     
+                           
+        if(arg18 != null && arg18.length > 0 && arg18 != ""){ 
+            document.getElementById('smstel').value = arg18;    
+        } 
         document.getElementById('smssubject').value = arg7 + '(' + arg9 + ')';  
-        
+ 
+        var ls_pushid = searchPushId_rtn(arg13);          
         
     }
     
@@ -3570,6 +3658,78 @@
 
 </script>
 
+
+
+<script type="text/javascript" th:inline="javascript">
+    //마이페이지 모달 호출
+    document.getElementById("userinfo").addEventListener("click",function() {
+        document.getElementById("userinfobtn").click();
+
+    });
+
+
+    function save_btn3(){
+        var ls_passwd = document.getElementById('actpasswdz').value;
+        var ls_name = document.getElementById('actnamez').value;
+        var ls_phone = document.getElementById('actphonez').value;
+        var ls_userid = document.getElementById('actuseridz').value;
+
+        if(!ls_passwd){
+            alert("공백은 불가합니다.")
+            return
+        }
+        if(!ls_name){
+            alert("공백은 불가합니다.")
+            return
+        }
+        if(!ls_phone){
+            alert("공백은 불가합니다.")
+            return
+        }
+
+        $.ajax({
+            url: '/authcrud/update',
+            type: "POST",
+            data: {
+                "passwd1" : ls_passwd,
+                "passwd2" : ls_passwd,
+                "phone" : ls_phone,
+                "username" : ls_name,
+                "userid" : ls_userid
+            },
+            async: false,
+            success:function (data) {
+                alert("성공")
+            },error:function (e) {
+                alert("오류발생");
+                console.log('error', e)
+            }
+        }).done(function(fragment){
+
+        })
+
+
+    }
+
+    function check_pw(){
+        var pw = document.getElementById('actpasswdz').value;
+
+        const pattern_pwd = /(?=.*\d{1,20})(?=.*[~`!@#$%\^&*()-+=]{1,20})(?=.*[a-zA-Z]{1,20}).{8,20}$/;
+
+        if(!(pattern_pwd.test(pw))){
+            window.alert('영문+숫자+특수문자 조합으로 8자리 이상 비밀번호를 입력해주세요.');
+            document.getElementById('actpasswdz').value="";
+            document.getElementById('actpasswdz').focus();
+        }
+    }
+
+function logout(){   
+        if (!confirm("로그아웃하시겠습니까?") ){
+         return    
+        }
+        location.href = "/" ;
+    }  
+</script>
 </body>
 <!------footer ------>
 <footer th:replace="layouts/APPHeader/appfooter :: footerFragment"></footer> 
