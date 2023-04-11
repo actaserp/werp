@@ -29,7 +29,8 @@ import java.util.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/app07mod", method = RequestMethod.POST)
-public class App07CrudController {
+public class
+App07CrudController {
 
     private final App07ElvlrtService appService;
 
@@ -194,6 +195,8 @@ public class App07CrudController {
 //                log.info("upload file name : " + multipartFile.getSize());
                 ls_fileName = multipartFile.getOriginalFilename();
 
+                log.info(multipartFile.getSize() + " 사이즈, 길이");
+
 
                 /* 파일이 비어있으면 비어있는 리스트 반환 */
                 if (multipartFile.getSize() < 1) {
@@ -218,6 +221,8 @@ public class App07CrudController {
                 attach.setSize(multipartFile.getSize());
                 attach.setFlag("MF");
                 log.info(attach.getBoardIdx());
+
+
                 /* 파일 정보 추가 */
                 attachList.add(attach);
 

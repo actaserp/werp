@@ -11,14 +11,20 @@ import com.actas.ems.Service.elvlrt.App27.App27ElvlrtService;
 
 import com.actas.ems.controller.EncryptionController;
 import com.actas.ems.util.UIUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,6 +65,7 @@ public class PGYMbController {
 
     private final App10ElvlrtService app10ElvlrtServiceservice;
     List<AttachDTO>  attach =new ArrayList<>();
+    List<AttachDTO> Dateset = new ArrayList<>();
     AppMobPlanDto appMobPlanDto = new AppMobPlanDto();
     private final App10ElvlrtMobService app10ElvlrtMobService;
     List<App26ElvlrtDto> app26DtoList = new ArrayList<>();
@@ -212,6 +222,8 @@ public class PGYMbController {
         String ls_fflag = "";
 
         HttpSession session = request.getSession();
+
+        log.info("aaaaaaaaaaaaaaaaaaaaa");
 
 
         userformDto.setDbnm(ls_dbnm);
@@ -1537,81 +1549,80 @@ public class PGYMbController {
         String fseq = app07Dto.getFseq();
 
 
-
-        File dir = new File(uploadPath);
-        if(dir.exists() == false){
-            dir.mkdirs();
-        }
-
         switch (ls_dbnm){
-
             case "ELV_LRT":
+
+
+                app07Dto.setCustcd("ELVLRT");
+                app07Dto.setSpjangcd("ZZ");
+
+                String via2 = app07Dto.getFinputdate();
+                ls_yeare = via2.substring(0,4);
+                ls_mm = via2.substring(4,6);
+                fseq = "";
+                log.info(fseq);
+                log.info("check!!!!!!!!!!!!!!!!!!!!");
+
+
+                if(fseq == null || fseq.equals("")){
+                    app07Dto.setFseq(CountSeq2(ls_yeare + ls_mm));
+                }else{
+                    app07Dto.setFseq(fseq);
+                }
+                app07Dto.setYyyymm(ls_yeare + ls_mm);
+
+                log.info(app07Dto.getFseq());
+                log.info(app07Dto.getCustcd());
+                log.info(app07Dto.getSpjangcd());
+                log.info(app07Dto.getFinputdate());
+                log.info(app07Dto.getFgourpcd());
+                log.info(app07Dto.getFnsubject());
+                log.info(app07Dto.getFpernm());
+                log.info(app07Dto.getFmemo());
+                log.info(app07Dto.getFflag());
+
+                if(fseq == null || fseq.equals("")) {
+                    boolean result = appService.InsertMManu(app07Dto);
+                    if (!result) {
+                        return "error";
+                    }
+                }else{
+                    boolean result = appService.UpdateMManu(app07Dto);
+                    if(!result){
+                        return "error";
+                    }
+                }
+
+                File dir = new File(uploadPath);
+                if(dir.exists() == false){
+                    dir.mkdirs();
+                }
+
+
                 try {
-                    app07Dto.setCustcd("ELVLRT");
-                    app07Dto.setSpjangcd("ZZ");
-
-                    String via2 = app07Dto.getFinputdate();
-                    ls_yeare = via2.substring(0,4);
-                    ls_mm = via2.substring(4,6);
-                    fseq = "";
-                    log.info(fseq);
-                    log.info("check!!!!!!!!!!!!!!!!!!!!");
-
-
-                    if(fseq == null || fseq.equals("")){
-                        app07Dto.setFseq(CountSeq2(ls_yeare + ls_mm));
-                    }else{
-                        app07Dto.setFseq(fseq);
-                    }
-                    app07Dto.setYyyymm(ls_yeare + ls_mm);
-
-                    log.info(app07Dto.getFseq());
-                    log.info(app07Dto.getCustcd());
-                    log.info(app07Dto.getSpjangcd());
-                    log.info(app07Dto.getFinputdate());
-                    log.info(app07Dto.getFgourpcd());
-                    log.info(app07Dto.getFnsubject());
-                    log.info(app07Dto.getFpernm());
-                    log.info(app07Dto.getFmemo());
-                    log.info(app07Dto.getFflag());
-
-                    if(fseq == null || fseq.equals("")) {
-                        boolean result = appService.InsertMManu(app07Dto);
-                        if (!result) {
-                            return "error";
-                        }
-                    }else{
-                        boolean result = appService.UpdateMManu(app07Dto);
-                        if(!result){
-                            return "error";
-                        }
-                    }
-
-
-
                     for (MultipartFile multipartFile : file) {
-//                log.info("================================================================");
-//                log.info("upload file name : " + multipartFile.getOriginalFilename());
-//                log.info("upload file name : " + multipartFile.getSize());
+
                         ls_fileName = multipartFile.getOriginalFilename();
 
+                        log.info(multipartFile.getSize() + " 사이즈, 길이");
 
-                        // 파일이 비어있으면 비어있는 리스트 반환
+
+                        /* 파일이 비어있으면 비어있는 리스트 반환 */
                         if (multipartFile.getSize() < 1) {
                             ls_errmsg = "success";
                             return ls_errmsg;
                         }
 
-                       // 파일 확장자
+                        /*파일 확장자*/
                         final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
                         final String saveName = getRandomString() + "." + extension;
 
-                       // 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성
+                        /*업로드 경로에 saveName과 동일한 이름을 가진 파일 생성*/
                         File target = new File(uploadPath, saveName);
                         multipartFile.transferTo(target);
                         String fseq1 = app07Dto.getFseq();
-                      //   파일 정보 저장
+                        /* 파일 정보 저장 */
                         AttachDTO attach = new AttachDTO();
                         attach.setBoardIdx(fseq1);
                         attach.setOriginalName(multipartFile.getOriginalFilename());
@@ -1619,28 +1630,39 @@ public class PGYMbController {
                         attach.setSize(multipartFile.getSize());
                         attach.setFlag("MF");
                         log.info(attach.getBoardIdx());
-                       //  파일 정보 추가
+
+
+                        /* 파일 정보 추가 */
                         attachList.add(attach);
 
-                        boolean result = appServiceImpl.registerMManu(app07Dto, attachList);
-                        if(result) {
-                            log.info("true");
-                        }
-                        if (!result) {
-                            return "error";
-                        }
+
 
                     }
+                    log.info("true");
 
-
+                    boolean result = appServiceImpl.registerMManu(app07Dto, attachList);
+                    if(result) {
+                        log.info("true");
+                    }
+                    if (!result) {
+                        return "error";
+                    }
                 }catch (DataAccessException e){
                     log.info("memberUpload DataAccessException ================================================================");
                     log.info(e.toString());
                     throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
                     //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }  catch (Exception e) {
-                    System.out.println("1231321321231231321321");
+                } catch (Exception  e){
+                    // log.info("memberUpload Exception ================================================================");
+                    // log.info(attachDTO);
+                    // log.info(e.toString());
+                    // ls_errmsg = "[" + ls_fileName + "] failed to save";
+                    // throw new AttachFileException("[" + ls_fileName + "] failed to save");
+                    //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
                 }
+
+
+
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1650,7 +1672,15 @@ public class PGYMbController {
                 break;
             default:
                 break;
+
         }
+
+
+
+
+
+
+
         return "success";
     }
 
@@ -2190,6 +2220,12 @@ public class PGYMbController {
         ls_perid = app10tDto.getPerid();
         ls_perid2 = app10tDto.getInperid();
 
+        log.info(app10tDto.getRecetime() + "recetime");
+        log.info(app10tDto.getHitchhour() + "hitchhoure");
+        log.info(app10tDto.getRecedate() );
+        log.info(app10tDto.getHitchdate() + "hitchdate");
+
+
 
 
 
@@ -2293,14 +2329,12 @@ public class PGYMbController {
                         app10tDto.setIndate(getToDate());
                         log.info(app10tDto.getIndate() + "indate");
 
-
                             app10tDto.setRecenum(CountSeq01(app10tDto.getRecedate()));
                             log.info(app10tDto.getRecenum() + "recenum");
 
                             queryResult = service.InsertE401(app10tDto);
 
-                        /*queryResult = service.UpdateE401(app10tDto);
-*/
+                        queryResult = service.UpdateE401(app10tDto);
                         if (queryResult == 1){
                             return "success";
                         }else{
@@ -2808,6 +2842,107 @@ public class PGYMbController {
 
 
         return "success";
+    }
+
+
+
+
+    /**이미지 미리보기 조회*/
+
+    @RequestMapping(value = "/listup", produces = MediaType.APPLICATION_JSON_VALUE
+            /*headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE*/)
+    @ResponseBody
+    public ResponseEntity<String> getImageData(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userformDto", userformDto);
+
+
+
+        //flutter에서 json으로 보내서 json데이타 읽어야 됨
+        String jsonString = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
+
+        // json 데이터를 Map 으로 파싱함
+        Map<String, Object> jsonMap = new ObjectMapper().readValue(jsonString, new TypeReference<Map<String, Object>>() {
+        });
+
+        String fflag = (String) jsonMap.get("fflag");
+        String fseq = (String) jsonMap.get("fseq");
+
+        app07Dto.setFflag(fflag);
+        app07Dto.setFseq(fseq);
+
+
+        attach = appservice2.MManuFilelist(app07Dto);
+
+
+        log.info(fflag + " null");
+        log.info(fseq + " null");
+
+        Set<String> uniqueDates = new HashSet<>();
+
+        for(AttachDTO dto : attach){
+            log.info(dto.getSaveName());
+            String insertTime = dto.getInserttime().substring(0, 10).replaceAll("-", "");
+            if (uniqueDates.add(insertTime)) {
+                log.info(insertTime);
+            }
+        }
+
+        List<String> directoryPaths = new ArrayList<>();
+        for(String date : uniqueDates){
+            String directoryPath  = Paths.get("C:", "develop", "upload","mfix", date).toString();
+            directoryPaths.add(directoryPath);
+        }
+
+        String directoryPath = String.join(File.separator, directoryPaths);
+
+
+        File directory = new File(directoryPath);
+        log.info(attach.get(0).getSaveName());
+        File [] imageFiles = directory.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if (name.endsWith(".jpg") || name.endsWith(".png")) {
+                    for(AttachDTO file : attach){
+                        if(name.equals(file.getSaveName())){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        Iterator iter = attach.iterator();
+        while(iter.hasNext())
+        {
+            log.info(iter.next() + " Park");
+        }
+
+        log.info(attach.get(0) + "attach");
+
+        List<String> base64EncodedImages = new ArrayList<>();
+        for(File imageFile : imageFiles){
+            byte[] imageData = Files.readAllBytes(imageFile.toPath());
+            String base64EncodedImage = Base64.getEncoder().encodeToString(imageData);
+            base64EncodedImages.add(base64EncodedImage);
+
+        }
+
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("images", base64EncodedImages);
+
+        String responseBody = new ObjectMapper().writeValueAsString(responseMap);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
+
+
     }
 
 

@@ -20,5 +20,7 @@ public interface Attach02NmyangMapper {
     public List<AttachDTO> selectAttachList(App07ElvlrtDto perm);
 
     public int selectAttachTotalCount(String boardIdx);
+
+    public List<AttachDTO> selectinsertdate(App07ElvlrtDto perm);
 }
 

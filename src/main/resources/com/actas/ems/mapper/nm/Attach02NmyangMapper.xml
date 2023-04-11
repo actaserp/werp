@@ -101,4 +101,14 @@
             board_idx = #{board_idx}
 
     </select>
+
+    <select id="selectinsertdate" parameterType="com.actas.ems.DTO.Elvlrt.App07ElvlrtDto" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT distinct
+            CONVERT(VARCHAR(6), insert_time, 12) as insert_time
+        from TB_MATTACH_MF  WITH (nolock)
+        where board_idx = #{fseq}
+          and flag = #{fflag}
+          and delete_yn = 'N'
+
+    </select>
 </mapper>

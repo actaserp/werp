@@ -222,4 +222,28 @@ public class App07UploadServiceImpl implements App07UploadService{
     @Override
     public boolean registerMManu(App07ElvlrtDto params, MultipartFile[] files){return false;}
 
+    public List<AttachDTO> selectinsertdate(App07ElvlrtDto parm){
+        String ls_dbnm = UIUtils.getElvDataSourceNm();
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                List<AttachDTO> attachDto = attachMapper.selectinsertdate(parm);
+                return attachDto;
+            case "ELV_KYOUNG":
+                List<AttachDTO> attachDtoK = attachMapperK.selectinsertdate(parm);
+                return attachDtoK;
+            case "ELV_GAON":
+                List<AttachDTO> attachDtoG = attachMapperG.selectinsertdate(parm);
+                return attachDtoG;
+            case "nmyang":
+                List<AttachDTO> attachDtoN = attachMapperN.selectinsertdate(parm);
+                return attachDtoN;
+            case "hanyangs":
+                List<AttachDTO> attachDtoH = attachMapperH.selectinsertdate(parm);
+                return attachDtoH;
+            default:
+                List<AttachDTO> object = null;
+                return object;
+        }
+    }
+
 }
