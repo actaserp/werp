@@ -1256,7 +1256,10 @@ public class PGYMbController {
                     break;
                 case "fseq":
                     app07Dto.setFseq(values.toString());
-
+                    break;
+                case "fflag":
+                    app07Dto.setFflag(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -1271,6 +1274,7 @@ public class PGYMbController {
         try {
 
             boolean result = appService.DeleteMManu(app07Dto);
+            result = appservice2.registerMManuDel(app07Dto);
 
 
         } catch (Exception e) {
@@ -2944,6 +2948,8 @@ public class PGYMbController {
 
 
     }
+
+
 
 
 
