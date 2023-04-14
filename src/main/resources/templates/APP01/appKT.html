@@ -1993,8 +1993,7 @@
             success:function(data){
                     if(data == "success"){
                         search_rtn();
-                        //첫번째 호출이 성공하면 두번째 호출 실행
-                        if(ls_alarm == "1"){ 
+                        if(ls_alarm == "1"){
                             $.ajax({
                                     url: "https://onesignal.com/api/v1/notifications",
                                     type: "POST",
@@ -2010,6 +2009,9 @@
                                     headings: { en: push_title },
                                     contents: { en: push_content },
                                     large_icon: "https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png", // 표시 icon 아이콘
+                                    // ios_attachments:"https://img.onesignal.com/tmp/0bf1a951-5f5a-4425-8ad4-375cd77411c5.png",   //iOS push image
+                                    ios_badgeType: "Increase",   //ios badge counter
+                                    ios_badgeCount: 1,          //ios badge counter by
                                     }),
                                     beforeSend: function (xhr) {
                                     xhr.setRequestHeader("Authorization", "Basic " + restapi_key);
