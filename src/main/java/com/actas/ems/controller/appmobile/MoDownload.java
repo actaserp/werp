@@ -3,7 +3,6 @@ package com.actas.ems.controller.appmobile;
 import com.actas.ems.DTO.AttachDTO;
 import com.actas.ems.DTO.UserFormDto;
 import com.actas.ems.Service.elvlrt.App06UploadServiceImpl;
-import com.actas.ems.Service.elvlrt.App_mbmanualService.App_mbUploadServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/mobile", method = RequestMethod.GET)
@@ -41,7 +38,7 @@ public class MoDownload {
                           @RequestParam("flag") String flag,
                           @RequestParam("boardIdx") String boardIdx,
                           @RequestParam("idx") String idx,
-            @RequestParam("inputdate") String inputdate,
+                          @RequestParam("inputdate") String inputdate,
                           @RequestParam("svn") String svn,
                           @RequestParam("ori") String ori
             , Model model, HttpServletResponse response , HttpServletRequest request) {
@@ -122,7 +119,11 @@ public class MoDownload {
         } catch (Exception e) {
             throw new RuntimeException("시스템에 문제가 발생하였습니다.");
         }
+
+//     mbdownMob의 void 반환 값을 DTO로 바꾸고 리턴값 주면 됨, 모바일에서는 다운로드에 대한 정보를 받아야 다운 가능
+//        return new AttachDTO();
     }
+
 }
 
 
