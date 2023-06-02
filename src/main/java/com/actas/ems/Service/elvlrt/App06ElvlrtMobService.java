@@ -6,6 +6,8 @@ import com.actas.ems.Mapper.Elvlrt.App06ElvlrtMobMapper;
 import com.actas.ems.Mapper.gaon.App06GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App06KyoungMobMapper;
 import com.actas.ems.Mapper.nm.App06NmyangMobMapper;
+import com.actas.ems.Mapper.samjung.App06SamMobMapper;
+import com.actas.ems.Mapper.sjilsan.App06SjilsanMobMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,10 @@ public class App06ElvlrtMobService {
     App06NmyangMobMapper app06ElvMobMapperN;
     @Autowired
     App06ElvlrtMobMapper app06ElvMobMapperH;
+    @Autowired
+    App06SamMobMapper app06ElvMobMapperS;
+    @Autowired
+    App06SjilsanMobMapper app06ElvMobMapperSj;
     int queryResult = 1;
 
     /** view page **/
@@ -44,6 +50,10 @@ public class App06ElvlrtMobService {
                 return  app06ElvMobMapperN.GetApp06MobList001(parm);
             case "hanyangs":
                 return  app06ElvMobMapperH.GetApp06MobList001(parm);
+            case "samjung":
+                return  app06ElvMobMapperS.GetApp06MobList001(parm);
+            case "samjungilsan":
+                return  app06ElvMobMapperSj.GetApp06MobList001(parm);
             default:
                 break;
         }

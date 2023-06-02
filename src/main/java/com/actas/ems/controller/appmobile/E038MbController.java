@@ -99,30 +99,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    appE038DtoList = service.GetE038List(popParmDto);
-                    model.addAttribute("E038List_model", appE038DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -130,8 +106,32 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+        try{
+            appE038DtoList = service.GetE038List(popParmDto);
+            model.addAttribute("E038List_model", appE038DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return appE038DtoList;
     }
@@ -196,6 +196,12 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
         }
@@ -237,24 +243,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-                try{
-                    appE038DtoList = service.GetCarList(popParmDto);
-                    model.addAttribute("E038List_model", appE038DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -262,8 +250,31 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            appE038DtoList = service.GetCarList(popParmDto);
+            model.addAttribute("E038List_model", appE038DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return appE038DtoList;
     }
@@ -303,24 +314,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-                try{
-                    appE038DtoList = service.GetEqupList(popParmDto);
-                    model.addAttribute("E038List_model", appE038DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -328,8 +321,31 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            appE038DtoList = service.GetEqupList(popParmDto);
+            model.addAttribute("E038List_model", appE038DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return appE038DtoList;
     }
@@ -416,28 +432,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-                try{
-                    boolean result = service.InsertE038(popParmDto);
-                    popParmDto.setRptnum(null);
-
-                    if(!result){
-                        return "error";
-                    }
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -445,8 +439,35 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            boolean result = service.InsertE038(popParmDto);
+            popParmDto.setRptnum(null);
+
+            if(!result){
+                return "error";
+            }
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return "success";
     }
@@ -498,27 +519,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-                try{
-                    boolean result = service.UpdateE038(popParmDto);
-
-                    if(!result){
-                        return "error";
-                    }
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -526,8 +526,34 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            boolean result = service.UpdateE038(popParmDto);
+
+            if(!result){
+                return "error";
+            }
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return "success";
     }
@@ -564,27 +590,6 @@ public class E038MbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-                try{
-                    boolean result = service.DeleteE038(popParmDto);
-
-                    if(!result){
-                        return "error";
-                    }
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -592,8 +597,34 @@ public class E038MbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            boolean result = service.DeleteE038(popParmDto);
+
+            if(!result){
+                return "error";
+            }
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return "success";
     }

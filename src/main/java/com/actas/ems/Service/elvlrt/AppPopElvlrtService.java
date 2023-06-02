@@ -7,6 +7,8 @@ import com.actas.ems.Mapper.Elvlrt.AppPopElvlrtMapper;
 import com.actas.ems.Mapper.gaon.AppPopGaonMapper;
 import com.actas.ems.Mapper.kyoung.AppPopKyoungMapper;
 import com.actas.ems.Mapper.nm.AppPopNmyangMapper;
+import com.actas.ems.Mapper.samjung.AppPopSamMapper;
+import com.actas.ems.Mapper.sjilsan.AppPopSjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class AppPopElvlrtService {
     AppPopNmyangMapper appPopElvMapperN;
     @Autowired
     AppPopGaonMapper appPopElvMapperH;
+    @Autowired
+    AppPopSamMapper appPopElvMapperS;
+    @Autowired
+    AppPopSjilsanMapper appPopElvMapperSj;
 
     /** 현장명 조회 */
     public List<PopupDto> GetActnmList(PopupDto parm){
@@ -44,6 +50,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetActnmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetActnmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetActnmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetActnmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -64,6 +74,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetContnmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetContnmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetContnmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetContnmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -84,6 +98,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetRemonmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetRemonmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetRemonmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetRemonmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -104,6 +122,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetResunmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetResunmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetResunmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetResunmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -124,6 +146,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetGreginmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetGreginmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetGreginmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetGreginmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -144,6 +170,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetResultnmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetResultnmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetResultnmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetResultnmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -164,6 +194,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetDivinmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetDivinmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetDivinmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetDivinmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -184,6 +218,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetPernmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetPernmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetPernmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetPernmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -204,6 +242,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetPernmList2(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetPernmList2(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetPernmList2(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetPernmList2(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -225,6 +267,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetFacnmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetFacnmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetFacnmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetFacnmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -245,6 +291,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetEqupList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetEqupList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetEqupList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetEqupList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -266,6 +316,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetGreGicdList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetGreGicdList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetGreGicdList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetGreGicdList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -287,6 +341,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetremoList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetremoList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetremoList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetremoList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -308,6 +366,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetresunmList2(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetresunmList2(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetresunmList2(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetresunmList2(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -328,6 +390,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetReginmList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetReginmList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetReginmList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetReginmList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -348,6 +414,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetPernm3List(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetPernm3List(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetPernm3List(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetPernm3List(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -368,6 +438,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetPernm2List(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetPernm2List(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetPernm2List(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetPernm2List(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -388,6 +462,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetWkactList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetWkactList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetWkactList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetWkactList(parm);
             default:
                 List<PopupDto> object = null;
                 return object;
@@ -408,6 +486,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetSmsInfoList(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetSmsInfoList(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetSmsInfoList(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetSmsInfoList(parm);
             default:
                 PopupDto object = null;
                 return object;
@@ -430,6 +512,10 @@ public class AppPopElvlrtService {
                 return  appPopElvMapperN.GetXa012Info(parm);
             case "hanyangs":
                 return  appPopElvMapperH.GetXa012Info(parm);
+            case "samjung":
+                return  appPopElvMapperS.GetXa012Info(parm);
+            case "samjungilsan":
+                return  appPopElvMapperSj.GetXa012Info(parm);
             default:
                 TBXa012VO object = null;
                 return object;
@@ -488,6 +574,26 @@ public class AppPopElvlrtService {
                     queryResult = 0;
                 }
                 queryResult = appPopElvMapperH.UpdateXa011(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appPopElvMapperS.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                queryResult = appPopElvMapperS.UpdateXa011(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appPopElvMapperSj.UpdateXa012(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                queryResult = appPopElvMapperSj.UpdateXa011(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }

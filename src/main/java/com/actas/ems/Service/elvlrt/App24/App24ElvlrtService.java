@@ -7,6 +7,10 @@ import com.actas.ems.Mapper.kyoung.App24KyoungMapper;
 import com.actas.ems.Mapper.gaon.App24GaonMapper;
 import com.actas.ems.Mapper.Elvlrt.App24ElvlrtMapper;
 import com.actas.ems.Mapper.nm.App24NmyangMapper;
+import com.actas.ems.Mapper.samjung.App15SamMapper;
+import com.actas.ems.Mapper.samjung.App24SamMapper;
+import com.actas.ems.Mapper.sjilsan.App15SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App24SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,10 @@ public class App24ElvlrtService {
     App24NmyangMapper app24ElvlrtMapperN;
     @Autowired
     App24GaonMapper app24ElvlrtMapperH;
+    @Autowired
+    App24SamMapper app24ElvlrtMapperS;
+    @Autowired
+    App24SjilsanMapper app24ElvlrtMapperSj;
 
     public List<App16ElvlrtDto> GetApp24List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -43,6 +51,10 @@ public class App24ElvlrtService {
                 return  app24ElvlrtMapperN.GetApp24List001(parm);
             case "hanyangs":
                 return  app24ElvlrtMapperH.GetApp24List001(parm);
+            case "samjung":
+                return  app24ElvlrtMapperS.GetApp24List001(parm);
+            case "samjungilsan":
+                return  app24ElvlrtMapperSj.GetApp24List001(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -63,6 +75,10 @@ public class App24ElvlrtService {
                 return  app24ElvlrtMapperN.GetApp24List002(parm);
             case "hanyangs":
                 return  app24ElvlrtMapperH.GetApp24List002(parm);
+            case "samjung":
+                return  app24ElvlrtMapperS.GetApp24List002(parm);
+            case "samjungilsan":
+                return  app24ElvlrtMapperSj.GetApp24List002(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;

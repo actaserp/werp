@@ -97,6 +97,7 @@
 
 
 
+
     <select id="GetMManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
         select mseq, minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag
         from tb_mmanual where mseq = #{mseq}

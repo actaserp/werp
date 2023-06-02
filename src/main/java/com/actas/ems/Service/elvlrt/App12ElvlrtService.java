@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App12ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App12GaonMapper;
 import com.actas.ems.Mapper.kyoung.App12KyoungMapper;
 import com.actas.ems.Mapper.nm.App12NmyangMapper;
+import com.actas.ems.Mapper.samjung.App12SamMapper;
+import com.actas.ems.Mapper.samjung.App15SamMapper;
+import com.actas.ems.Mapper.sjilsan.App12SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App15SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,10 @@ public class App12ElvlrtService {
     App12NmyangMapper app12ElvMapperN;
     @Autowired
     App12ElvlrtMapper app12ElvMapperH;
+    @Autowired
+    App12SamMapper app12ElvMapperS;
+    @Autowired
+    App12SjilsanMapper app12ElvMapperSj;
 
     /** 고장내용별현황 / 기간별 고장내용 */
     public List<App12ElvlrtDto> GetApp12List001(PopupDto parm){
@@ -43,6 +51,10 @@ public class App12ElvlrtService {
                 return  app12ElvMapperN.GetApp12List001(parm);
             case "hanyangs":
                 return  app12ElvMapperH.GetApp12List001(parm);
+            case "samjung":
+                return  app12ElvMapperS.GetApp12List001(parm);
+            case "samjungilsan":
+                return  app12ElvMapperSj.GetApp12List001(parm);
             default:
                 List<App12ElvlrtDto> object = null;
                 return object;
@@ -63,6 +75,10 @@ public class App12ElvlrtService {
                 return  app12ElvMapperN.GetApp12List002(parm);
             case "hanyangs":
                 return  app12ElvMapperH.GetApp12List002(parm);
+            case "samjung":
+                return  app12ElvMapperS.GetApp12List002(parm);
+            case "samjungilsan":
+                return  app12ElvMapperSj.GetApp12List002(parm);
             default:
                 List<App12ElvlrtDto> object = null;
                 return object;
@@ -83,6 +99,10 @@ public class App12ElvlrtService {
                 return  app12ElvMapperN.GetApp12List003(parm);
             case "hanyangs":
                 return  app12ElvMapperH.GetApp12List003(parm);
+            case "samjung":
+                return  app12ElvMapperS.GetApp12List003(parm);
+            case "samjungilsan":
+                return  app12ElvMapperSj.GetApp12List003(parm);
             default:
                 List<App12ElvlrtDto> object = null;
                 return object;

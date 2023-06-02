@@ -7,6 +7,8 @@ import com.actas.ems.Mapper.gaon.App10GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMobMapper;
 
 import com.actas.ems.Mapper.nm.App10NmyangMobMapper;
+import com.actas.ems.Mapper.samjung.App10SamMobMapper;
+import com.actas.ems.Mapper.sjilsan.App10SjilsanMobMapper;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,10 @@ public class AppM03UploadServiceImpl {
     private App10NmyangMobMapper attachMapperN;
     @Autowired
     private App10ElvlrtMobMapper attachMapperH;
+    @Autowired
+    private App10SamMobMapper attachMapperS;
+    @Autowired
+    private App10SjilsanMobMapper attachMapperSj;
 
     public List<AttachDTO> select06to03AttachList(AttachDTO parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -47,6 +53,12 @@ public class AppM03UploadServiceImpl {
             case "hanyangs":
                 List<AttachDTO> attachDtoH = attachMapperH.select06AttachList(parm);
                 return attachDtoH;
+            case "samjung":
+                List<AttachDTO> attachDtoS = attachMapperS.select06AttachList(parm);
+                return attachDtoS;
+            case "samjungilsan":
+                List<AttachDTO> attachDtoSj = attachMapperSj.select06AttachList(parm);
+                return attachDtoSj;
             default:
                 List<AttachDTO> object = null;
                 return object;
@@ -71,6 +83,12 @@ public class AppM03UploadServiceImpl {
             case "hanyangs":
                 List<AttachDTO> attachDtoH = attachMapperH.select08AttachList(parm);
                 return attachDtoH;
+            case "samjung":
+                List<AttachDTO> attachDtoS = attachMapperS.select08AttachList(parm);
+                return attachDtoS;
+            case "samjungilsan":
+                List<AttachDTO> attachDtoSj = attachMapperSj.select08AttachList(parm);
+                return attachDtoSj;
             default:
                 List<AttachDTO> object = null;
                 return object;

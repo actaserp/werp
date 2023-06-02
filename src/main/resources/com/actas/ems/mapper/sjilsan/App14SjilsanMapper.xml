@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App14SjilsanMapper">
+
+    <!--  보수기사목록  -->
+    <select id="GetApp14List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App14ElvlrtDto">
+        <![CDATA[
+        SELECT  Z.perid 		 ,
+		    Z.pernm pernm,
+			Z.divicd divicd,
+		    Z.divinm divinm,
+			Z.rspnm rspnm,
+			Z.tel tel,
+			Z.handphone handphone,
+		    Z.entdate entdate,
+			Z.DAYTERM dayterm,
+			Z.AGEGAP agegap,
+			Z.blood blood,
+			Z.mrgyn mrgyn,
+			Z.fami60 fami60,
+			Z.schnm schnm,
+			Z.igrad	igrad,
+			Z.carm carm,
+			Z.grad grad,
+			Z.army army,
+			Z.disperyn disperyn,
+			Z.email email,
+			isnull( Z.zipadres, '') as zipadres	,
+			isnull( Z.adres, '' ) as adres		,
+			Z.rtclafi rtclafi,
+			Z.perclasifi perclasifi,
+			Z.rnum rnum,
+			Z.majo majo,
+			Z.rspcd rspcd,
+			cast(0 as Decimal(7,1) ) as jopyear
+FROM
+(
+						SELECT  A.perid,
+						 A.pernm 	 ,
+						 C.divinm	 ,
+						D.rspnm  ,
+						A.tel		,
+						A.handphone,
+                        concat(substring(a.entdate, 3, 2), '-', substring(a.entdate, 5, 2), '-', substring(a.entdate, 7, 2)) as entdate ,
+						DATEDIFF(year, A.ENTDATE, GETDATE()) AS DAYTERM,
+						case len(SUBSTRING(A.RNUM,1,6))  when 6  then DATEDIFF(YEAR,   SUBSTRING(A.RNUM,1,6), GETDATE()) + 1
+						else 	0 end AS AGEGAP,
+						(select blood from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as blood,
+						A.mrgyn	,
+						A.fami60,
+						(select top 1  schnm from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc ) as schnm,
+						(select top 1  igrad   from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc )   as igrad,
+						(select top 1  majo   from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc )   as majo,
+						(select carm from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as carm,
+						(select grad from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as grad,
+						(select army from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as army,
+						A.disperyn,
+						A.email,
+						A.zipadres,
+						A.adres,
+						C.divicd,
+						A.mpclafi,
+						A.rtclafi,
+						A.perclasifi,
+						A.rspcd,
+						left(A.rnum,6) + '*******' as rnum
+			  FROM TB_JA001 A,
+					 TB_XA012 B,
+					 TB_JC002 C,
+					 TB_PZ001 D
+			 WHERE (A.custcd   = B.custcd   )
+				AND (A.spjangcd = B.spjangcd )
+				AND (A.custcd   = C.custcd   )
+				AND (A.spjangcd   = C.spjangcd   )
+				AND (A.divicd   = C.divicd   )
+				AND (A.custcd   = D.custcd   )
+				AND (A.spjangcd = D.spjangcd )
+				AND (A.rspcd    = D.rspcd    )
+				AND (C.divicd like '%'+ #{divicd} +'%')
+				AND (A.perid like '%'+ #{perid} +'%')
+				AND (A.rtclafi = #{rtclafi} OR #{rtclafi} = '%')
+
+) Z
+
+        ]]>
+    </select>
+
+</mapper>

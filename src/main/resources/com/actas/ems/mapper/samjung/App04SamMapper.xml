@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.samjung.App04SamMapper">
+    <select id="GetMManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd) as cnam,
+        (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
+        from tb_mmanual WITH (NOLOCK)
+        Where 1 = 1
+        order by  mseq desc
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <select id="GetDManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select dseq, Left(dinputdate,4) + '-' + substring(dinputdate, 5,2) + '-' + substring(dinputdate, 7,2) as dinputdate , dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd) as cnam,
+        (select Count(*) from tb_mattach where flag='DD' and board_idx=dseq and delete_yn = 'N') as attcnt
+        from tb_mdevmanual WITH (NOLOCK)
+        Where 1 = 1
+        order by  dseq desc
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+    <select id="GetEManulList"  parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select eseq, Left(einputdate,4) + '-' + substring(einputdate, 5,2) + '-' + substring(einputdate, 7,2) as einputdate , egroupcd, esubject, efilename, epernm, ememo, eflag, (select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd) as cnam,
+        (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
+        from tb_metcmanual WITH (NOLOCK)
+        Where 1 = 1
+        order by  eseq desc
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+
+
+    <select id="GetMManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select '' as mseq, '' as minputdate, '' as mgourpcd, '' as msubject, '' as mfilename, '' as mpernm, '' as memo, '' as mflag
+        from dual
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <select id="GetDManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select '' as dseq, '' as dinputdate, '' as dgourpcd, '' as dsubject, '' as dfilename, '' as dpernm, '' as dmemo, '' as dflag
+        from dual
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+    <select id="GetEManulBlankList"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select '' as eseq, '' as einputdate, '' as egroupcd, '' as esubject, '' as efilename, '' as epernm, '' as ememo, '' as eflag
+        from dual
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+    </select>
+
+
+
+    <select id="getMManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(mseq) from tb_mmanual  where Left(mseq,6) = #{mseq}
+    </select>
+
+    <select id="getDManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(dseq) from tb_mdevmanual  where Left(dseq,6) = #{mseq}
+    </select>
+
+    <select id="getEManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(eseq) from tb_metcmanual  where Left(eseq,6) = #{mseq}
+    </select>
+
+
+
+
+
+
+    <select id="GetMManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select mseq, minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag
+        from tb_mmanual where mseq = #{mseq}
+    </select>
+
+    <select id="GetDManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select dseq, dinputdate, dgourpcd, dsubject, dmemo, dpernm, dflag
+        from tb_mdevmanual where dmseq = #{mseq}
+    </select>
+
+    <select id="GetEManulView" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select eseq, einputdate, egroupcd, esubject, ememo, epernm, eflag
+        from tb_metcmanual where emseq = #{mseq}
+    </select>
+
+
+
+
+    <insert id="InsertMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
+        insert into tb_mmanual (custcd, spjangcd, mseq, minputdate, mgourpcd, msubject, memo, mpernm, mflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
+    </insert>
+
+    <insert id="InsertDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
+        insert into tb_mdevmanual (custcd, spjangcd, dseq, dinputdate, dgourpcd, dsubject, dmemo, dpernm, dflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
+    </insert>
+
+    <insert id="InsertEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto" >
+        insert into tb_metcmanual (custcd, spjangcd, eseq, einputdate, egroupcd, esubject, ememo, epernm, eflag) values (#{custcd}, #{spjangcd}, #{mseq}, #{minputdate}, #{mgourpcd}, #{msubject}, #{memo}, #{mpernm}, #{mflag})
+    </insert>
+
+
+
+
+
+    <update id="UpdateMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        update tb_mmanual set
+        mgourpcd = #{mgourpcd}
+        <if test="msubject != null ">,</if>
+        <if test="msubject != null">msubject=#{msubject}</if>
+        <if test="mfilename != null ">,</if>
+        <if test="mfilename != null">mfilename=#{mfilename}</if>
+        <if test="memo != null ">,</if>
+        <if test="memo != null">memo=#{memo}</if>
+        <if test="minputdate != null ">,</if>
+        <if test="minputdate != null">minputdate=#{minputdate}</if>
+        <if test="mpernm != null ">,</if>
+        <if test="mpernm != null">mpernm=#{mpernm}</if>
+        <if test="mflag != null ">,</if>
+        <if test="mflag != null">mflag=#{mflag}</if>
+        where mseq = #{mseq}
+    </update>
+
+    <update id="UpdateDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        update tb_mdevmanual set
+        dgourpcd = #{mgourpcd}
+        <if test="msubject != null ">,</if>
+        <if test="msubject != null">dsubject=#{msubject}</if>
+        <if test="mfilename != null ">,</if>
+        <if test="mfilename != null">dfilename=#{mfilename}</if>
+        <if test="memo != null ">,</if>
+        <if test="memo != null">dmemo=#{memo}</if>
+        <if test="minputdate != null ">,</if>
+        <if test="minputdate != null">dinputdate=#{minputdate}</if>
+        <if test="mpernm != null ">,</if>
+        <if test="mpernm != null">dpernm=#{mpernm}</if>
+        <if test="mflag != null ">,</if>
+        <if test="mflag != null">dflag=#{mflag}</if>
+        where dseq = #{mseq}
+    </update>
+
+    <update id="UpdateEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        update tb_metcmanual set
+        egroupcd = #{mgourpcd}
+        <if test="msubject != null ">,</if>
+        <if test="msubject != null">esubject=#{msubject}</if>
+        <if test="mfilename != null ">,</if>
+        <if test="mfilename != null">efilename=#{mfilename}</if>
+        <if test="memo != null ">,</if>
+        <if test="memo != null">ememo=#{memo}</if>
+        <if test="minputdate != null ">,</if>
+        <if test="minputdate != null">einputdate=#{minputdate}</if>
+        <if test="mpernm != null ">,</if>
+        <if test="mpernm != null">epernm=#{mpernm}</if>
+        <if test="mflag != null ">,</if>
+        <if test="mflag != null">eflag=#{mflag}</if>
+        where eseq = #{mseq}
+    </update>
+
+
+    <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        delete from tb_mmanual where mseq = #{mseq}
+    </delete>
+
+    <delete id="DeleteDManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        delete from tb_mdevmanual where dseq = #{mseq}
+    </delete>
+
+    <delete id="DeleteEManul" parameterType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        delete from tb_metcmanual where eseq = #{mseq}
+    </delete>
+
+
+    <select id="GetComm750List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '750') AND (com_code <> '00')
+        ]]>
+    </select>
+    <select id="GetComm750BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+
+<!--    부품 메뉴얼 공통코드 -->
+    <select id="GetComm752List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '752') AND (com_code <> '00')
+        ]]>
+    </select>
+    <select id="GetComm752BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+
+    <!--    기타자료실 공통코드 -->
+    <select id="GetComm753List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  com_code AS code, com_cnam AS cnam
+        FROM     dbo.tb_ca510 WITH (NOLOCK)
+        WHERE  (com_cls = '753') AND (com_code <> '00')
+        ]]>
+    </select>
+    <select id="GetComm753BlankList"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        SELECT  '' AS code, '' AS cnam
+        FROM     dual
+        ]]>
+    </select>
+
+</mapper>

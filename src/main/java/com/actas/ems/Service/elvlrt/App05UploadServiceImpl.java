@@ -11,6 +11,8 @@ import com.actas.ems.Mapper.gaon.NattachGaonMapper;
 import com.actas.ems.Mapper.kyoung.NattachKyoungMapper;
 import com.actas.ems.Mapper.nm.App05NmyangMapper;
 import com.actas.ems.Mapper.nm.NattachNmyangMapper;
+import com.actas.ems.Mapper.samjung.NattachSamMapper;
+import com.actas.ems.Mapper.sjilsan.NattachSjilsanMapper;
 import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class App05UploadServiceImpl implements  App05UploadService {
     private NattachGaonMapper attachMapperK;
     private NattachNmyangMapper attachMapperN;
     private NattachElvlrtMapper attachMapperH;
+    private NattachSamMapper attachMapperS;
+    private NattachSjilsanMapper attachMapperSj;
 
     @Autowired
     private FilsUtils fileUtils;
@@ -78,6 +82,18 @@ public class App05UploadServiceImpl implements  App05UploadService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = attachMapperS.InsertAttach(attachDto);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = attachMapperSj.InsertAttach(attachDto);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -114,6 +130,18 @@ public class App05UploadServiceImpl implements  App05UploadService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = attachMapperH.deleteAttach(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = attachMapperS.deleteAttach(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = attachMapperSj.deleteAttach(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -159,6 +187,18 @@ public class App05UploadServiceImpl implements  App05UploadService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = attachMapperS.deleteAttachDetail(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = attachMapperSj.deleteAttachDetail(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -183,6 +223,12 @@ public class App05UploadServiceImpl implements  App05UploadService {
             case "hanyangs":
                 List<AttachDTO> attachDtoH = attachMapperH.selectAttachList(perm);
                 return attachDtoH;
+            case "samjung":
+                List<AttachDTO> attachDtoS = attachMapperS.selectAttachList(perm);
+                return attachDtoS;
+            case "samjungilsan":
+                List<AttachDTO> attachDtoSj = attachMapperSj.selectAttachList(perm);
+                return attachDtoSj;
             default:
                 List<AttachDTO> object = null;
                 return object;
@@ -207,6 +253,12 @@ public class App05UploadServiceImpl implements  App05UploadService {
             case "hanyangs":
                 AttachDTO attachDtoH = attachMapperH.selectAttachDeteil(parm);
                 return attachDtoH;
+            case "samjung":
+                AttachDTO attachDtoS = attachMapperS.selectAttachDeteil(parm);
+                return attachDtoS;
+            case "samjungilsan":
+                AttachDTO attachDtoSj = attachMapperSj.selectAttachDeteil(parm);
+                return attachDtoSj;
             default:
                 AttachDTO object = null;
                 return object;

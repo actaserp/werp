@@ -7,6 +7,10 @@ import com.actas.ems.Mapper.kyoung.App27KyoungMapper;
 import com.actas.ems.Mapper.gaon.App27GaonMapper;
 import com.actas.ems.Mapper.Elvlrt.App27ElvlrtMapper;
 import com.actas.ems.Mapper.nm.App27NmyangMapper;
+import com.actas.ems.Mapper.samjung.App15SamMapper;
+import com.actas.ems.Mapper.samjung.App27SamMapper;
+import com.actas.ems.Mapper.sjilsan.App15SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App27SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,10 @@ public class App27ElvlrtService {
     App27NmyangMapper app27ElvlrtMapperN;
     @Autowired
     App27GaonMapper app27ElvlrtMapperH;
+    @Autowired
+    App27SamMapper app27ElvlrtMapperS;
+    @Autowired
+    App27SjilsanMapper app27ElvlrtMapperSj;
 
     public List<App16ElvlrtDto> GetApp27List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -43,6 +51,10 @@ public class App27ElvlrtService {
                 return  app27ElvlrtMapperN.GetApp27List001(parm);
             case "hanyangs":
                 return  app27ElvlrtMapperH.GetApp27List001(parm);
+            case "samjung":
+                return  app27ElvlrtMapperS.GetApp27List001(parm);
+            case "samjungilsan":
+                return  app27ElvlrtMapperSj.GetApp27List001(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -62,6 +74,10 @@ public class App27ElvlrtService {
                 return  app27ElvlrtMapperN.GetApp27List002(parm);
             case "hanyangs":
                 return  app27ElvlrtMapperH.GetApp27List002(parm);
+            case "samjung":
+                return  app27ElvlrtMapperS.GetApp27List002(parm);
+            case "samjungilsan":
+                return  app27ElvlrtMapperSj.GetApp27List002(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -82,6 +98,10 @@ public class App27ElvlrtService {
                 return  app27ElvlrtMapperN.GetApp27List003(parm);
             case "hanyangs":
                 return  app27ElvlrtMapperH.GetApp27List003(parm);
+            case "samjung":
+                return  app27ElvlrtMapperS.GetApp27List003(parm);
+            case "samjungilsan":
+                return  app27ElvlrtMapperSj.GetApp27List003(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -102,6 +122,10 @@ public class App27ElvlrtService {
                 return  app27ElvlrtMapperN.GetApp27List004(parm);
             case "hanyangs":
                 return  app27ElvlrtMapperH.GetApp27List004(parm);
+            case "samjung":
+                return  app27ElvlrtMapperS.GetApp27List004(parm);
+            case "samjungilsan":
+                return  app27ElvlrtMapperSj.GetApp27List004(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -122,6 +146,10 @@ public class App27ElvlrtService {
                 return  app27ElvlrtMapperN.GetpopupList(parm);
             case "hanyangs":
                 return  app27ElvlrtMapperH.GetpopupList(parm);
+            case "samjung":
+                return  app27ElvlrtMapperS.GetpopupList(parm);
+            case "samjungilsan":
+                return  app27ElvlrtMapperSj.GetpopupList(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;

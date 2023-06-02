@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App03ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App03GaonMapper;
 import com.actas.ems.Mapper.kyoung.App03KyoungMapper;
 import com.actas.ems.Mapper.nm.App03NmyangMapper;
+import com.actas.ems.Mapper.samjung.App01SamMapper;
+import com.actas.ems.Mapper.samjung.App03SamMapper;
+import com.actas.ems.Mapper.sjilsan.App01SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App03SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,10 @@ public class App03ElvlrtService {
     App03KyoungMapper appMapperK;
     @Autowired
     App03NmyangMapper appMapperN;
+    @Autowired
+    App03SamMapper appMapperS;
+    @Autowired
+    App03SjilsanMapper appMapperSj;
 
 
     /** 고장내용별현황 / 기간별 고장내용 */
@@ -42,6 +50,10 @@ public class App03ElvlrtService {
                 return  appMapperN.GetApp03List001(parm);
             case "hanyangs":
                 return  appMapper.GetApp03List001(parm);
+            case "samjung":
+                return  appMapperS.GetApp03List001(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp03List001(parm);
             default:
                 break;
         }
@@ -65,6 +77,10 @@ public class App03ElvlrtService {
                 return  appMapperN.GetApp03List002(parm);
             case "hanyangs":
                 return  appMapper.GetApp03List002(parm);
+            case "samjung":
+                return  appMapperS.GetApp03List002(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp03List002(parm);
             default:
                 break;
         }
@@ -87,6 +103,10 @@ public class App03ElvlrtService {
                 return  appMapperN.GetApp03List003(parm);
             case "hanyangs":
                 return  appMapper.GetApp03List003(parm);
+            case "samjung":
+                return  appMapperS.GetApp03List003(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp03List003(parm);
             default:
                 break;
         }

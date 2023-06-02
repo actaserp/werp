@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App_mbmanual.App_mbmanualMapper;
 import com.actas.ems.Mapper.gaon.App_mbmanual.App_mbmanualGaonMapper;
 import com.actas.ems.Mapper.kyoung.App_mbmanual.App_mbmanualKyoungMapper;
 import com.actas.ems.Mapper.nm.App_mbmanual.App_mbmanualNmyangMapper;
+import com.actas.ems.Mapper.samjung.App15SamMapper;
+import com.actas.ems.Mapper.samjung.App_mbmanual.App_mbmanualSamMapper;
+import com.actas.ems.Mapper.sjilsan.App15SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App_mbmanual.App_mbmanualSjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,10 @@ public class App_mbmanualService {
     App_mbmanualNmyangMapper app_mbmanualMapperN;
     @Autowired
     App_mbmanualMapper app_mbmanualMapperH;
+    @Autowired
+    App_mbmanualSamMapper app_mbmanualMapperS;
+    @Autowired
+    App_mbmanualSjilsanMapper app_mbmanualMapperSj;
 
     int queryResult = 1;
 
@@ -45,6 +53,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.GetMManulList(perm);
             case "hanyangs":
                 return  app_mbmanualMapperH.GetMManulList(perm);
+            case "samjung":
+                return  app_mbmanualMapperS.GetMManulList(perm);
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.GetMManulList(perm);
             default:
                 return null;
         }
@@ -64,6 +76,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.GetMManulList(perm);
             case "hanyangs":
                 return  app_mbmanualMapperH.GetMManulList(perm);
+            case "samjung":
+                return  app_mbmanualMapperS.GetMManulList(perm);
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.GetMManulList(perm);
             default:
                 List<App08_mbmanual> object = null;
                 return object;
@@ -86,6 +102,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.GetMManulView(bSeq);
             case "hanyangs":
                 return  app_mbmanualMapperH.GetMManulView(bSeq);
+            case "samjung":
+                return  app_mbmanualMapperS.GetMManulView(bSeq);
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.GetMManulView(bSeq);
             default:
                 return null;
         }
@@ -105,6 +125,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.getMManualMaxSeq(parm);
             case "hanyangs":
                 return  app_mbmanualMapperH.getMManualMaxSeq(parm);
+            case "samjung":
+                return  app_mbmanualMapperS.getMManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.getMManualMaxSeq(parm);
             default:
                 return null;
         }
@@ -124,6 +148,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.GetComm750List();
             case "hanyangs":
                 return  app_mbmanualMapperH.GetComm750List();
+            case "samjung":
+                return  app_mbmanualMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.GetComm750List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -144,6 +172,10 @@ public class App_mbmanualService {
                 return  app_mbmanualMapperN.GetComm750List();
             case "hanyangs":
                 return  app_mbmanualMapperH.GetComm750List();
+            case "samjung":
+                return  app_mbmanualMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app_mbmanualMapperSj.GetComm750List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -185,12 +217,23 @@ public class App_mbmanualService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app_mbmanualMapperS.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app_mbmanualMapperSj.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
         return true;
     }
-
     //글수정
     @Transactional
     public boolean UpdateMManu(App08_mbmanual parm){
@@ -223,6 +266,18 @@ public class App_mbmanualService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app_mbmanualMapperH.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app_mbmanualMapperS.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app_mbmanualMapperSj.UpdateMManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -264,6 +319,18 @@ public class App_mbmanualService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app_mbmanualMapperH.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app_mbmanualMapperS.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app_mbmanualMapperSj.DeleteMManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }

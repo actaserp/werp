@@ -43,7 +43,8 @@ public class MoDownload {
                           @RequestParam("ori") String ori
             , Model model, HttpServletResponse response , HttpServletRequest request) {
         String ls_dbnm = "";
-        ls_dbnm = "ELV_LRT";
+
+        ls_dbnm = userformDto.getDbnm();
         attachDTO.setIdx(Long.parseLong(idx));
         attachDTO.setBoardIdx(boardIdx);
         attachDTO.setFlag(flag);
@@ -58,10 +59,6 @@ public class MoDownload {
         switch (ls_dbnm) {
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                attachDTO = appServiceImpl.selectAttachDeteil(attachDTO);
-                if (attachDTO == null) {
-                    throw new RuntimeException("파일 정보를 찾을 수 없습니다.");
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -69,10 +66,21 @@ public class MoDownload {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
 
         }
+        attachDTO = appServiceImpl.selectAttachDeteil(attachDTO);
+        if (attachDTO == null) {
+            throw new RuntimeException("파일 정보를 찾을 수 없습니다.");
+        }
+
         switch (flag) {
             case "MM":
                 flag = "mmanul";

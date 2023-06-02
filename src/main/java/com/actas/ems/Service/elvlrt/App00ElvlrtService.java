@@ -6,6 +6,8 @@ import com.actas.ems.Mapper.Elvlrt.App00ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App00GaonMapper;
 import com.actas.ems.Mapper.kyoung.App00KyoungMapper;
 import com.actas.ems.Mapper.nm.App00NmyangMapper;
+import com.actas.ems.Mapper.samjung.App00SamMapper;
+import com.actas.ems.Mapper.sjilsan.App00SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,10 @@ public class App00ElvlrtService {
     App00NmyangMapper app00ElvMapperN;
     @Autowired
     App00ElvlrtMapper app00ElvMapperH;
+    @Autowired
+    App00SamMapper app00ElvMapperS;
+    @Autowired
+    App00SjilsanMapper app00ElvMapperSj;
 
     /** 현장별월별통계, 기간별*/
     public List<App00ElvlrtDto> GetApp00List001(PopupDto parm){
@@ -43,6 +49,10 @@ public class App00ElvlrtService {
                 return  app00ElvMapperN.GetApp00List001(parm);
             case "hanyangs":
                 return  app00ElvMapperH.GetApp00List001(parm);
+            case "samjung":
+                return  app00ElvMapperS.GetApp00List001(parm);
+            case "samjungilsan":
+                return  app00ElvMapperSj.GetApp00List001(parm);
             default:
                 List<App00ElvlrtDto> Object = null;
                 return Object;

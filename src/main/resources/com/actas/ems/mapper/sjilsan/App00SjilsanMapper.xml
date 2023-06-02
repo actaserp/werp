@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App00SjilsanMapper">
+
+    <!--      고장내용별현황 / 기간별 고장내용  -->
+    <select id="GetApp00List001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App00ElvlrtDto">
+        SELECT actnm,
+               sum(rece1) as rece1,
+               sum(comp1) as comp1,
+               sum(rece2) as rece2,
+               sum(comp2) as comp2,
+               sum(rece3) as rece3,
+               sum(comp3) as comp3,
+               sum(rece4) as rece4,
+               sum(comp4) as comp4,
+               sum(rece5) as rece5,
+               sum(comp5) as comp5,
+               sum(rece6) as rece6,
+               sum(comp6) as comp6,
+               sum(rece7) as rece7,
+               sum(comp7) as comp7,
+               sum(rece8) as rece8,
+               sum(comp8) as comp8,
+               sum(rece9) as rece9,
+               sum(comp9) as comp9,
+               sum(rece10) as rece10,
+               sum(comp10) as comp10,
+               sum(rece11) as rece11,
+               sum(comp11) as comp11,
+               sum(rece12) as rece12,
+               sum(comp12) as comp12
+        FROM ( SELECT a.custcd,
+                      a.spjangcd,
+                   left(a.recedate, 6) as recemon,
+                   q.actnm,
+                   (Case when right(left(a.recedate, 6),2) = '01' THEN count(a.recedate) ELSE 0 END) as rece1,
+                   (Case when right(left(a.recedate, 6),2) = '01' THEN count(b.compdate) ELSE 0 END) as comp1,
+                   (Case when right(left(a.recedate, 6),2) = '02' THEN count(a.recedate) ELSE 0 END) as rece2,
+                   (Case when right(left(a.recedate, 6),2) = '02' THEN count(b.compdate) ELSE 0 END) as comp2,
+                   (Case when right(left(a.recedate, 6),2) = '03' THEN count(a.recedate) ELSE 0 END) as rece3,
+                   (Case when right(left(a.recedate, 6),2) = '03' THEN count(b.compdate) ELSE 0 END) as comp3,
+                   (Case when right(left(a.recedate, 6),2) = '04' THEN count(a.recedate) ELSE 0 END) as rece4,
+                   (Case when right(left(a.recedate, 6),2) = '04' THEN count(b.compdate) ELSE 0 END) as comp4,
+                   (Case when right(left(a.recedate, 6),2) = '05' THEN count(a.recedate) ELSE 0 END) as rece5,
+                   (Case when right(left(a.recedate, 6),2) = '05' THEN count(b.compdate) ELSE 0 END) as comp5,
+                   (Case when right(left(a.recedate, 6),2) = '06' THEN count(a.recedate) ELSE 0 END) as rece6,
+                   (Case when right(left(a.recedate, 6),2) = '06' THEN count(b.compdate) ELSE 0 END) as comp6,
+                   (Case when right(left(a.recedate, 6),2) = '07' THEN count(a.recedate) ELSE 0 END) as rece7,
+                   (Case when right(left(a.recedate, 6),2) = '07' THEN count(b.compdate) ELSE 0 END) as comp7,
+                   (Case when right(left(a.recedate, 6),2) = '08' THEN count(a.recedate) ELSE 0 END) as rece8,
+                   (Case when right(left(a.recedate, 6),2) = '08' THEN count(b.compdate) ELSE 0 END) as comp8,
+                   (Case when right(left(a.recedate, 6),2) = '09' THEN count(a.recedate) ELSE 0 END) as rece9,
+                   (Case when right(left(a.recedate, 6),2) = '09' THEN count(b.compdate) ELSE 0 END) as comp9,
+                   (Case when right(left(a.recedate, 6),2) = '10' THEN count(a.recedate) ELSE 0 END) as rece10,
+                   (Case when right(left(a.recedate, 6),2) = '10' THEN count(b.compdate) ELSE 0 END) as comp10,
+                   (Case when right(left(a.recedate, 6),2) = '11' THEN count(a.recedate) ELSE 0 END) as rece11,
+                   (Case when right(left(a.recedate, 6),2) = '11' THEN count(b.compdate) ELSE 0 END) as comp11,
+                   (Case when right(left(a.recedate, 6),2) = '12' THEN count(a.recedate) ELSE 0 END) as rece12,
+                   (Case when right(left(a.recedate, 6),2) = '12' THEN count(b.compdate) ELSE 0 END) as comp12
+               FROM tb_e401 a  WITH(NOLOCK)
+                   LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                   LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) on (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+               WHERE  a.recedate between #{frdate} and #{todate}
+               GROUP BY a.custcd, a.spjangcd, a.actcd, left(a.recedate, 6), q.actnm) a
+        WHERE a.custcd = 'ELVLRT'
+          AND a.spjangcd = 'ZZ'
+          AND a.actnm like CONCAT('%',#{actnm},'%')
+        GROUP BY actnm
+    </select>
+</mapper>

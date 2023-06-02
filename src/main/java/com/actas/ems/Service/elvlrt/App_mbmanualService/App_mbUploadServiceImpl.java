@@ -11,6 +11,8 @@ import com.actas.ems.Mapper.kyoung.App_mbmanual.Attach_02KyoungMapper;
 import com.actas.ems.Mapper.gaon.App_mbmanual.Attach_02GaonMapper;
 import com.actas.ems.Mapper.nm.App_mbmanual.App_mbmanualNmyangMapper;
 import com.actas.ems.Mapper.nm.App_mbmanual.Attach_02NmyangMapper;
+import com.actas.ems.Mapper.samjung.App_mbmanual.Attach_02SamMapper;
+import com.actas.ems.Mapper.sjilsan.App_mbmanual.Attach_02SjilsanMapper;
 import com.actas.ems.util.FilsUtils;
 import com.actas.ems.util.UIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,10 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
     private Attach_02KyoungMapper attach_02KyoungMapper;
     @Autowired
     private Attach_02NmyangMapper attach_02NmyangMapper;
+    @Autowired
+    private Attach_02SamMapper attach_02SamMapper;
+    @Autowired
+    private Attach_02SjilsanMapper attach_02SjilsanMapper;
 
     @Autowired
     private FilsUtils fileUtils;
@@ -92,6 +98,18 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = attach_02SamMapper.deleteAttach(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjunglisan":
+                queryResult = attach_02SjilsanMapper.deleteAttach(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -132,6 +150,18 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = attach_02SamMapper.deleteAttachDetail(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = attach_02SjilsanMapper.deleteAttachDetail(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -156,6 +186,12 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
             case "hanyangs":
                 List<AttachDTO> attachDtoH = attach_02ElvlrtMapper.selectAttachList(perm);
                 return attachDtoH;
+            case "samjung":
+                List<AttachDTO> attachDtoS = attach_02SamMapper.selectAttachList(perm);
+                return attachDtoS;
+            case "samjungilsan":
+                List<AttachDTO> attachDtoSj = attach_02SjilsanMapper.selectAttachList(perm);
+                return attachDtoSj;
             default:
                 List<AttachDTO> object = null;
                 return object;
@@ -180,6 +216,12 @@ public class App_mbUploadServiceImpl implements App_mbUploadService{
             case "hanyangs":
                 AttachDTO attachDtoH = attach_02ElvlrtMapper.selectAttachDeteil(perm);
                 return attachDtoH;
+            case "samjung":
+                AttachDTO attachDtoS = attach_02SamMapper.selectAttachDeteil(perm);
+                return attachDtoS;
+            case "samjungilsan":
+                AttachDTO attachDtoSj = attach_02SjilsanMapper.selectAttachDeteil(perm);
+                return attachDtoSj;
             default:
                 AttachDTO object = null;
                 return object;

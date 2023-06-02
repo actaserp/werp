@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App13ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App13GaonMapper;
 import com.actas.ems.Mapper.kyoung.App13KyoungMapper;
 import com.actas.ems.Mapper.nm.App13NmyangMapper;
+import com.actas.ems.Mapper.samjung.App12SamMapper;
+import com.actas.ems.Mapper.samjung.App13SamMapper;
+import com.actas.ems.Mapper.sjilsan.App12SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App13SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,10 @@ public class App13ElvlrtService {
     App13NmyangMapper app13ElvlrtMapperN;
     @Autowired
     App13ElvlrtMapper app13ElvlrtMapperH;
+    @Autowired
+    App13SamMapper app13ElvlrtMapperS;
+    @Autowired
+    App13SjilsanMapper app13ElvlrtMapperSj;
 
     /** 고장내용별현황/ 기간별 고장내용 */
     public List<App13ElvlrtDto> GetApp13List001(PopupDto parm){
@@ -42,6 +50,10 @@ public class App13ElvlrtService {
                 return  app13ElvlrtMapperN.GetApp13List001(parm);
             case "hanyangs":
                 return  app13ElvlrtMapperH.GetApp13List001(parm);
+            case "samjung":
+                return  app13ElvlrtMapperS.GetApp13List001(parm);
+            case "samjungilsan":
+                return  app13ElvlrtMapperSj.GetApp13List001(parm);
             default:
                 List<App13ElvlrtDto> object = null;
                 return object;
@@ -64,6 +76,10 @@ public class App13ElvlrtService {
                 return  app13ElvlrtMapperN.GetApp13List002(parm);
             case "hanyangs":
                 return  app13ElvlrtMapperH.GetApp13List002(parm);
+            case "samjung":
+                return  app13ElvlrtMapperS.GetApp13List002(parm);
+            case "samjungilsan":
+                return  app13ElvlrtMapperSj.GetApp13List002(parm);
             default:
                 List<App13ElvlrtDto> object = null;
                 return object;
@@ -84,6 +100,10 @@ public class App13ElvlrtService {
                 return  app13ElvlrtMapperN.GetApp13List003(parm);
             case "hanyangs":
                 return  app13ElvlrtMapperH.GetApp13List003(parm);
+            case "samjung":
+                return  app13ElvlrtMapperS.GetApp13List003(parm);
+            case "samjungilsan":
+                return  app13ElvlrtMapperSj.GetApp13List003(parm);
             default:
                 List<App13ElvlrtDto> object = null;
                 return object;

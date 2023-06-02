@@ -6,6 +6,8 @@ import com.actas.ems.Mapper.Elvlrt.App07ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App07GaonMapper;
 import com.actas.ems.Mapper.kyoung.App07KyoungMapper;
 import com.actas.ems.Mapper.nm.App07NmyangMapper;
+import com.actas.ems.Mapper.samjung.App07SamMapper;
+import com.actas.ems.Mapper.sjilsan.App07SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class App07ElvlrtService {
     App07NmyangMapper app07ElvMapperN;
     @Autowired
     App07ElvlrtMapper app07ElvMapperH;
+    @Autowired
+    App07SamMapper app07ElvMapperS;
+    @Autowired
+    App07SjilsanMapper app07ElvMapperSj;
     int queryResult = 1;
     
     public Object GetMManulList(App07ElvlrtDto parm){
@@ -44,6 +50,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.GetMManulList(parm);
             case "hanyangs":
                 return  app07ElvMapperH.GetMManulList(parm);
+            case "samjung":
+                return  app07ElvMapperS.GetMManulList(parm);
+            case "samjungilsan":
+                return  app07ElvMapperSj.GetMManulList(parm);
             default:
                 return null;
         }
@@ -63,6 +73,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.GetMManulList(parm);
             case "hanyangs":
                 return  app07ElvMapperH.GetMManulList(parm);
+            case "samjung":
+                return  app07ElvMapperS.GetMManulList(parm);
+            case "samjungilsan":
+                return  app07ElvMapperSj.GetMManulList(parm);
             default:
                 return null;
         }
@@ -84,6 +98,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.GetMManulView(fSeq);
             case "hanyangs":
                 return  app07ElvMapperH.GetMManulView(fSeq);
+            case "samjung":
+                return  app07ElvMapperS.GetMManulView(fSeq);
+            case "samjungilsan":
+                return  app07ElvMapperSj.GetMManulView(fSeq);
             default:
                 return null;
         }
@@ -121,6 +139,18 @@ public class App07ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app07ElvMapperH.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app07ElvMapperS.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app07ElvMapperSj.InsertMManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -167,6 +197,18 @@ public class App07ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app07ElvMapperS.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app07ElvMapperSj.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -208,6 +250,18 @@ public class App07ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app07ElvMapperS.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app07ElvMapperSj.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -230,6 +284,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.getMManualMaxSeq(parm);
             case "hanyangs":
                 return  app07ElvMapperH.getMManualMaxSeq(parm);
+            case "samjung":
+                return  app07ElvMapperS.getMManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app07ElvMapperSj.getMManualMaxSeq(parm);
             default:
                 return null;
         }
@@ -249,6 +307,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.GetComm750List();
             case "hanyangs":
                 return  app07ElvMapperH.GetComm750List();
+            case "samjung":
+                return  app07ElvMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app07ElvMapperSj.GetComm750List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -269,6 +331,10 @@ public class App07ElvlrtService {
                 return  app07ElvMapperN.GetComm750List();
             case "hanyangs":
                 return  app07ElvMapperH.GetComm750List();
+            case "samjung":
+                return  app07ElvMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app07ElvMapperSj.GetComm750List();
             default:
                 List<CommonDto> object = null;
                 return object;

@@ -8,6 +8,10 @@ import com.actas.ems.Mapper.Elvlrt.App05ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App05GaonMapper;
 import com.actas.ems.Mapper.kyoung.App05KyoungMapper;
 import com.actas.ems.Mapper.nm.App05NmyangMapper;
+import com.actas.ems.Mapper.samjung.App05SamMapper;
+import com.actas.ems.Mapper.samjung.MattachSamMapper;
+import com.actas.ems.Mapper.sjilsan.App05SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.MattachSjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,11 @@ public class App05ElvlrtService {
     App05NmyangMapper app05ElvMapperN;
     @Autowired
     App05ElvlrtMapper app05ElvMapperH;
+    @Autowired
+    App05SamMapper app05ElvMapperS;
+    @Autowired
+    App05SjilsanMapper app05ElvMapperSj;
+
     int queryResult = 1;
 
 
@@ -48,6 +57,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.GetMNoticeList(parm);
             case "hanyangs":
                 return  app05ElvMapperH.GetMNoticeList(parm);
+            case "samjung":
+                return  app05ElvMapperS.GetMNoticeList(parm);
+            case "samjungilsan":
+                return  app05ElvMapperSj.GetMNoticeList(parm);
             default:
                 break;
         }
@@ -68,6 +81,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.GetMNoticeList(parm);
             case "hanyangs":
                 return  app05ElvMapperH.GetMNoticeList(parm);
+            case "samjung":
+                return  app05ElvMapperS.GetMNoticeList(parm);
+            case "samjungilsan":
+                return  app05ElvMapperSj.GetMNoticeList(parm);
             default:
                 break;
         }
@@ -90,6 +107,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.GetMNoticeView(mSeq);
             case "hanyangs":
                 return  app05ElvMapperH.GetMNoticeView(mSeq);
+            case "samjung":
+                return  app05ElvMapperS.GetMNoticeView(mSeq);
+            case "samjungilsan":
+                return  app05ElvMapperSj.GetMNoticeView(mSeq);
             default:
                 break;
         }
@@ -128,6 +149,18 @@ public class App05ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app05ElvMapperH.InsertMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app05ElvMapperS.InsertMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app05ElvMapperSj.InsertMNotice(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -172,6 +205,18 @@ public class App05ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app05ElvMapperS.UpdateMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app05ElvMapperSj.UpdateMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -212,6 +257,18 @@ public class App05ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app05ElvMapperS.DeleteMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app05ElvMapperSj.DeleteMNotice(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -231,6 +288,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.getMNoticeMaxSeq(parm);
             case "hanyangs":
                 return  app05ElvMapperH.getMNoticeMaxSeq(parm);
+            case "samjung":
+                return  app05ElvMapperS.getMNoticeMaxSeq(parm);
+            case "samjungilsan":
+                return  app05ElvMapperSj.getMNoticeMaxSeq(parm);
             default:
                 break;
         }
@@ -250,6 +311,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.GetComm751List();
             case "hanyangs":
                 return  app05ElvMapperH.GetComm751List();
+            case "samjung":
+                return  app05ElvMapperS.GetComm751List();
+            case "samjungilsan":
+                return  app05ElvMapperSj.GetComm751List();
             default:
                 break;
         }
@@ -270,6 +335,10 @@ public class App05ElvlrtService {
                 return  app05ElvMapperN.GetComm751List();
             case "hanyangs":
                 return  app05ElvMapperH.GetComm751List();
+            case "samjung":
+                return  app05ElvMapperS.GetComm751List();
+            case "samjungilsan":
+                return  app05ElvMapperSj.GetComm751List();
             default:
                 break;
         }

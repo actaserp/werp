@@ -7,6 +7,10 @@ import com.actas.ems.Mapper.Elvlrt.App04ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App04GaonMapper;
 import com.actas.ems.Mapper.kyoung.App04KyoungMapper;
 import com.actas.ems.Mapper.nm.App04NmyangMapper;
+import com.actas.ems.Mapper.samjung.App03SamMapper;
+import com.actas.ems.Mapper.samjung.App04SamMapper;
+import com.actas.ems.Mapper.sjilsan.App03SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App04SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,10 @@ public class  App04ElvlrtService {
     App04NmyangMapper app04ElvMapperN;
     @Autowired
     App04ElvlrtMapper app04ElvMapperH;
+    @Autowired
+    App04SamMapper app04ElvMapperS;
+    @Autowired
+    App04SjilsanMapper app04ElvMapperSj;
 
     /** 글 목록 */
     public Object GetMManulList(App04ElvlrtDto parm){
@@ -45,6 +53,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetMManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetMManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetMManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetMManulList(parm);
             default:
                 break;
         }
@@ -65,6 +77,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetMManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetMManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetMManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetMManulList(parm);
             default:
                 break;
         }
@@ -87,6 +103,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetMManulView(mSeq);
             case "hanyangs":
                 return  app04ElvMapperH.GetMManulView(mSeq);
+            case "samjung":
+                return  app04ElvMapperS.GetMManulView(mSeq);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetMManulView(mSeq);
             default:
                 break;
         }
@@ -125,6 +145,18 @@ public class  App04ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app04ElvMapperH.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.InsertMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.InsertMManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -169,6 +201,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.UpdateMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -209,6 +253,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -228,6 +284,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.getMManualMaxSeq(parm);
             case "hanyangs":
                 return  app04ElvMapperH.getMManualMaxSeq(parm);
+            case "samjung":
+                return  app04ElvMapperS.getMManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.getMManualMaxSeq(parm);
             default:
                 break;
         } 
@@ -247,6 +307,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetDManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetDManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetDManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetDManulList(parm);
             default:
                 break;
         }
@@ -266,6 +330,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetDManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetDManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetDManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetDManulList(parm);
             default:
                 break;
         }
@@ -288,6 +356,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetDManulView(dSeq);
             case "hanyangs":
                 return  app04ElvMapperH.GetDManulView(dSeq);
+            case "samjung":
+                return  app04ElvMapperS.GetDManulView(dSeq);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetDManulView(dSeq);
             default:
                 break;
         }
@@ -326,6 +398,18 @@ public class  App04ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app04ElvMapperH.InsertDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.InsertDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.InsertDManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -370,6 +454,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.UpdateDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.UpdateDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -410,6 +506,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.DeleteDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.DeleteDManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -429,6 +537,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.getDManualMaxSeq(parm);
             case "hanyangs":
                 return  app04ElvMapperH.getDManualMaxSeq(parm);
+            case "samjung":
+                return  app04ElvMapperS.getDManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.getDManualMaxSeq(parm);
             default:
                 break;
         } 
@@ -448,6 +560,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetEManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetEManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetEManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetEManulList(parm);
             default:
                 break;
         }
@@ -468,6 +584,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetEManulList(parm);
             case "hanyangs":
                 return  app04ElvMapperH.GetEManulList(parm);
+            case "samjung":
+                return  app04ElvMapperS.GetEManulList(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetEManulList(parm);
             default:
                 break;
         }
@@ -489,6 +609,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetEManulView(eSeq);
             case "hanyangs":
                 return  app04ElvMapperH.GetEManulView(eSeq);
+            case "samjung":
+                return  app04ElvMapperS.GetEManulView(eSeq);
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetEManulView(eSeq);
             default:
                 break;
         }
@@ -527,6 +651,18 @@ public class  App04ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app04ElvMapperH.InsertEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.InsertEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.InsertEManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -571,6 +707,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.UpdateEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.UpdateEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -611,6 +759,18 @@ public class  App04ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app04ElvMapperS.DeleteEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app04ElvMapperSj.DeleteEManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -630,6 +790,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.getEManualMaxSeq(parm);
             case "hanyangs":
                 return  app04ElvMapperH.getEManualMaxSeq(parm);
+            case "samjung":
+                return  app04ElvMapperS.getEManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app04ElvMapperSj.getEManualMaxSeq(parm);
             default:
                 break;
         }
@@ -649,6 +813,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm750List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm750List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm750List();
             default:
                 break;
         }
@@ -669,6 +837,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm750List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm750List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm750List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm750List();
             default:
                 break;
         }
@@ -689,6 +861,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm752List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm752List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm752List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm752List();
             default:
                 break;
         }
@@ -709,6 +885,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm752List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm752List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm752List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm752List();
             default:
                 break;
         }
@@ -729,6 +909,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm753List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm753List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm753List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm753List();
             default:
                 break;
         }
@@ -750,6 +934,10 @@ public class  App04ElvlrtService {
                 return  app04ElvMapperN.GetComm753List();
             case "hanyangs":
                 return  app04ElvMapperH.GetComm753List();
+            case "samjung":
+                return  app04ElvMapperS.GetComm753List();
+            case "samjungilsan":
+                return  app04ElvMapperSj.GetComm753List();
             default:
                 break;
         }

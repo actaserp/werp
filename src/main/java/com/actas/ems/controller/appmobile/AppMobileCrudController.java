@@ -123,30 +123,6 @@ public class AppMobileCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-                app10tDto.setFrdate(frdate);
-                app10tDto.setTodate(todate);
-                app10tDto.setChangeop(changeop);
-                app10tDto.setCustcd(ls_custcd);
-                app10tDto.setSpjangcd(ls_spjangcd);
-                log.info(app10tDto.getFrdate());
-                log.info(app10tDto.getTodate());
-
-                try {
-                    appMobDtoList = service.GetAppMobList001(app10tDto);
-                    model.addAttribute("appMobDtoList",appMobDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -154,9 +130,37 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        app10tDto.setFrdate(frdate);
+        app10tDto.setTodate(todate);
+        app10tDto.setChangeop(changeop);
+        app10tDto.setCustcd(ls_custcd);
+        app10tDto.setSpjangcd(ls_spjangcd);
+        log.info(app10tDto.getFrdate());
+        log.info(app10tDto.getTodate());
 
+        try {
+            appMobDtoList = service.GetAppMobList001(app10tDto);
+            model.addAttribute("appMobDtoList",appMobDtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
 
         return appMobDtoList;
@@ -218,40 +222,11 @@ public class AppMobileCrudController {
         ls_dbnm = userformDto.getDbnm();
         String frdate = minusYear;
         String todate = time;
-
-
-
-
-
         ls_spjangcd = "ZZ";
 
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    app16DtoList = service.GetAppMobList_002(popParmDto);
-                    model.addAttribute("app16DtoList", app16DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -259,8 +234,33 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            app16DtoList = service.GetAppMobList_002(popParmDto);
+            model.addAttribute("app16DtoList", app16DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app16DtoList;
     }
@@ -303,22 +303,6 @@ public class AppMobileCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    app14DtoList = service.GetAppMobList_003(popParmDto);
-                    model.addAttribute("app14DtoList", app14DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -326,8 +310,28 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            app14DtoList = service.GetAppMobList_003(popParmDto);
+            model.addAttribute("app14DtoList", app14DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app14DtoList;
     }
@@ -367,22 +371,6 @@ public class AppMobileCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    app26DtoList = service.GetAppMobListr_004(popParmDto);
-                    model.addAttribute("app26DtoList", app26DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -390,8 +378,28 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            app26DtoList = service.GetAppMobListr_004(popParmDto);
+            model.addAttribute("app26DtoList", app26DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app26DtoList;
     }
@@ -433,22 +441,6 @@ public class AppMobileCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    app16DtoList = service.GetAppMobListr_005(popParmDto);
-                    model.addAttribute("app16DtoList", app16DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -456,8 +448,28 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            app16DtoList = service.GetAppMobListr_005(popParmDto);
+            model.addAttribute("app16DtoList", app16DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app16DtoList;
     }
@@ -493,22 +505,6 @@ public class AppMobileCrudController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    model.addAttribute("app07Dto", service2.GetMManulList(app07Dto));
-                    model.addAttribute("app16DtoList", app16DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -516,8 +512,28 @@ public class AppMobileCrudController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            model.addAttribute("app07Dto", service2.GetMManulList(app07Dto));
+            model.addAttribute("app16DtoList", app16DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app07;
     }
@@ -703,21 +719,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app06Dto.setCustcd(ls_custcd);
-                app06Dto.setSpjangcd(ls_spjangcd);
-                if(hseq == null || hseq.equals("")){
-                        boolean result = service.InsertMHManual(app06Dto);
-                        if(!result){
-                            return  "error";
-                        }
-                }
-                        else {
-                            boolean result = service.UpdateMHManual(app06Dto);
-                            if(!result){
-                                return  "error";
-                            }
-                        }
-
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -725,10 +726,30 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
         }} catch (Exception e){
             System.out.println((e));
+        }
+        app06Dto.setCustcd(ls_custcd);
+        app06Dto.setSpjangcd(ls_spjangcd);
+        if(hseq == null || hseq.equals("")){
+            boolean result = service.InsertMHManual(app06Dto);
+            if(!result){
+                return  "error";
+            }
+        }
+        else {
+            boolean result = service.UpdateMHManual(app06Dto);
+            if(!result){
+                return  "error";
+            }
         }
 
         return "success";
@@ -790,19 +811,6 @@ public Object com0List(@RequestParam Map<String, String> param
             switch (ls_dbnm){
                 case "ELV_LRT":
                     ls_custcd = "ELVLRT";
-                    app08_mbmanual.setCustcd(ls_custcd);
-                    app08_mbmanual.setSpjangcd(ls_spjangcd);
-                    if(bseq == null || bseq.equals("")){
-                        boolean result = service.InsertMBManual(app08_mbmanual);
-                        if(!result){
-                            return  "error";
-                        }
-                    } else {
-                        boolean result = service.UpdateMBManual(app08_mbmanual);
-                        if(!result){
-                            return  "error";
-                        }
-                    }
                     break;
                 case "ELV_KYOUNG":
                     ls_custcd = "KYOUNG";
@@ -810,12 +818,30 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "hanyangs":
                     ls_custcd = "hanyangs";
                     break;
+                case "samjung":
+                    ls_custcd = "samjung";
+                    break;
+                case "samjungilsan":
+                    ls_custcd = "samjung";
+                    break;
                 default:
                     break;
             }} catch (Exception e){
             System.out.println((e));
         }
-
+        app08_mbmanual.setCustcd(ls_custcd);
+        app08_mbmanual.setSpjangcd(ls_spjangcd);
+        if(bseq == null || bseq.equals("")){
+            boolean result = service.InsertMBManual(app08_mbmanual);
+            if(!result){
+                return  "error";
+            }
+        } else {
+            boolean result = service.UpdateMBManual(app08_mbmanual);
+            if(!result){
+                return  "error";
+            }
+        }
         return "success";
     }
 
@@ -869,18 +895,6 @@ public Object com0List(@RequestParam Map<String, String> param
             switch (ls_dbnm){
                 case "ELV_LRT":
                     ls_custcd = "ELVLRT";
-                    app28Dto.setCustcd(ls_custcd);
-                    app28Dto.setSpjangcd(ls_spjangcd);
-                    if(sseq == null || sseq.equals("")){
-                        boolean result = service.InsertMSManual(app28Dto);
-                        if(!result){
-                            return  "error";
-                        }
-                    }
-//                    else{
-//                        boolean result = service.UpdateMSManual(app28Dto);
-//                    }
-
                     break;
                 case "ELV_KYOUNG":
                     ls_custcd = "KYOUNG";
@@ -888,11 +902,28 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "hanyangs":
                     ls_custcd = "hanyangs";
                     break;
+                case "samjung":
+                    ls_custcd = "samjung";
+                    break;
+                case "samjungilsan":
+                    ls_custcd = "samjung";
+                    break;
                 default:
                     break;
             }} catch (Exception e){
             System.out.println((e));
         }
+        app28Dto.setCustcd(ls_custcd);
+        app28Dto.setSpjangcd(ls_spjangcd);
+        if(sseq == null || sseq.equals("")){
+            boolean result = service.InsertMSManual(app28Dto);
+            if(!result){
+                return  "error";
+            }
+        }
+//                    else{
+//                        boolean result = service.UpdateMSManual(app28Dto);
+//                    }
 
         return "success";
     }
@@ -947,18 +978,6 @@ public Object com0List(@RequestParam Map<String, String> param
             switch (ls_dbnm){
                 case "ELV_LRT":
                     ls_custcd = "ELVLRT";
-                    app28Dto.setCustcd(ls_custcd);
-                    app28Dto.setSpjangcd(ls_spjangcd);
-                    if(sseq == null || sseq.equals("")){
-                        boolean result = service.InsertMSManual(app28Dto);
-                        if(!result){
-                            return  "error";
-                        }
-                    }
-//                    else{
-//                        boolean result = service.UpdateMSManual(app28Dto);
-//                    }
-
                     break;
                 case "ELV_KYOUNG":
                     ls_custcd = "KYOUNG";
@@ -966,11 +985,28 @@ public Object com0List(@RequestParam Map<String, String> param
                 case "hanyangs":
                     ls_custcd = "hanyangs";
                     break;
+                case "samjung":
+                    ls_custcd = "samjung";
+                    break;
+                case "samjungilsan":
+                    ls_custcd = "samjung";
+                    break;
                 default:
                     break;
             }} catch (Exception e){
             System.out.println((e));
         }
+        app28Dto.setCustcd(ls_custcd);
+        app28Dto.setSpjangcd(ls_spjangcd);
+        if(sseq == null || sseq.equals("")){
+            boolean result = service.InsertMSManual(app28Dto);
+            if(!result){
+                return  "error";
+            }
+        }
+//                    else{
+//                        boolean result = service.UpdateMSManual(app28Dto);
+//                    }
 
         return "success";
     }
@@ -1004,23 +1040,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app06Dto.setCustcd(ls_custcd);
-                app06Dto.setSpjangcd(ls_spjangcd);
-                try {
-                    boolean result = service.DeleteMHManual(app06Dto);
-                    if(!result){
-                        return "error";
-                    }
-                    model.addAttribute("userformDto",userformDto);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1028,9 +1047,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
 
+        }
+        app06Dto.setCustcd(ls_custcd);
+        app06Dto.setSpjangcd(ls_spjangcd);
+        try {
+            boolean result = service.DeleteMHManual(app06Dto);
+            if(!result){
+                return "error";
+            }
+            model.addAttribute("userformDto",userformDto);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
         }
         return "success";
     }
@@ -1062,24 +1104,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app08_mbmanual.setCustcd(ls_custcd);
-                app08_mbmanual.setSpjangcd(ls_spjangcd);
-
-                try {
-                    boolean result = service.DeleteMManul(app08_mbmanual);
-                    if(!result){
-                        return "error";
-                    }
-                    model.addAttribute("userformDto",userformDto);
-
-                }catch (DataAccessException e) {
-                    log.info(" DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1087,10 +1111,33 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
         }
+        app08_mbmanual.setCustcd(ls_custcd);
+        app08_mbmanual.setSpjangcd(ls_spjangcd);
 
+        try {
+            boolean result = service.DeleteMManul(app08_mbmanual);
+            if(!result){
+                return "error";
+            }
+            model.addAttribute("userformDto",userformDto);
+
+        }catch (DataAccessException e) {
+            log.info(" DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+        }
         return "success";
     }
     @RequestMapping(value = "/mhlist", method = RequestMethod.POST,
@@ -1118,20 +1165,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app06Dto.setCustcd(ls_custcd);
-                app06Dto.setSpjangcd(ls_spjangcd);
-                try {
-                    appMob003tDtoList = service.GetApp06MobList001(app06Dto);
-                    model.addAttribute("appMob003tDtoList",appMob003tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1139,9 +1172,29 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
 
+        }
+        app06Dto.setCustcd(ls_custcd);
+        app06Dto.setSpjangcd(ls_spjangcd);
+        try {
+            appMob003tDtoList = service.GetApp06MobList001(app06Dto);
+            model.addAttribute("appMob003tDtoList",appMob003tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
         }
         return appMob003tDtoList;
     }
@@ -1175,20 +1228,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app06Dto.setCustcd(ls_custcd);
-                app06Dto.setSpjangcd(ls_spjangcd);
-                try {
-                    appMob003tDtoList = service.GetApp06MobList002(app06Dto);
-                    model.addAttribute("appMob003tDtoList",appMob003tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1196,9 +1235,28 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
 
+        }
+        app06Dto.setCustcd(ls_custcd);
+        app06Dto.setSpjangcd(ls_spjangcd);
+        try {
+            appMob003tDtoList = service.GetApp06MobList002(app06Dto);
+            model.addAttribute("appMob003tDtoList",appMob003tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
         }
         return appMob003tDtoList;
     }
@@ -1241,23 +1299,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                try {
-                    attachDTO.setBoardIdx(ls_hseq);
-                    attachDTO.setFlag(ls_hflag);
-                    attach = appServiceImpl03.select06to03AttachList(attachDTO);
-                    model.addAttribute("attachDto",attach);
-
-                }catch (DataAccessException e) {
-                    log.info("App06MobForm DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1265,11 +1306,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
 
         }
+        try {
+            attachDTO.setBoardIdx(ls_hseq);
+            attachDTO.setFlag(ls_hflag);
+            attach = appServiceImpl03.select06to03AttachList(attachDTO);
+            model.addAttribute("attachDto",attach);
 
+        }catch (DataAccessException e) {
+            log.info("App06MobForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return attach;
     }
 
@@ -1310,23 +1372,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                try {
-                    attachDTO.setBoardIdx(ls_hseq);
-                    attachDTO.setFlag(ls_hflag);
-                    attach = appServiceImpl03.select08tombAttachList(attachDTO);
-                    model.addAttribute("attachDto",attach);
-
-                }catch (DataAccessException e) {
-                    log.info("App06MobForm DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1334,11 +1379,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
 
         }
+        try {
+            attachDTO.setBoardIdx(ls_hseq);
+            attachDTO.setFlag(ls_hflag);
+            attach = appServiceImpl03.select08tombAttachList(attachDTO);
+            model.addAttribute("attachDto",attach);
 
+        }catch (DataAccessException e) {
+            log.info("App06MobForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return attach;
     }
 
@@ -1367,24 +1433,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app08_mbmanual.setCustcd(ls_custcd);
-                app08_mbmanual.setSpjangcd(ls_spjangcd);
-
-                try {
-                    appMob004tDtoList = service.GetApp0bMobList001(app08_mbmanual);
-                    model.addAttribute("appMob004tDtoList",appMob004tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info(" DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1392,10 +1440,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
         }
+        app08_mbmanual.setCustcd(ls_custcd);
+        app08_mbmanual.setSpjangcd(ls_spjangcd);
 
+        try {
+            appMob004tDtoList = service.GetApp0bMobList001(app08_mbmanual);
+            model.addAttribute("appMob004tDtoList",appMob004tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info(" DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return appMob004tDtoList;
     }
     @RequestMapping(value = "/Blist2", method = RequestMethod.POST,
@@ -1426,21 +1496,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app08_mbmanual.setCustcd(ls_custcd);
-                app08_mbmanual.setSpjangcd(ls_spjangcd);
-
-                try {
-                    appMob004tDtoList = service.GetApp0bMobList002(app08_mbmanual);
-                    model.addAttribute("appMob004tDtoList",appMob004tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info(" DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1448,10 +1503,29 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
         }
+        app08_mbmanual.setCustcd(ls_custcd);
+        app08_mbmanual.setSpjangcd(ls_spjangcd);
 
+        try {
+            appMob004tDtoList = service.GetApp0bMobList002(app08_mbmanual);
+            model.addAttribute("appMob004tDtoList",appMob004tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info(" DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+        }
         return appMob004tDtoList;
     }
 
@@ -1481,24 +1555,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app28Dto.setCustcd(ls_custcd);
-                app28Dto.setSpjangcd(ls_spjangcd);
-
-                try {
-                    appMob005tDtoList = service.GetApp28MobList001(app28Dto);
-                    model.addAttribute("appMob005tDtoList",appMob005tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1506,10 +1562,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
             default:
                 break;
         }
+        app28Dto.setCustcd(ls_custcd);
+        app28Dto.setSpjangcd(ls_spjangcd);
 
+        try {
+            appMob005tDtoList = service.GetApp28MobList001(app28Dto);
+            model.addAttribute("appMob005tDtoList",appMob005tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return appMob005tDtoList;
     }
 
@@ -1541,24 +1619,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                app28Dto.setCustcd(ls_custcd);
-                app28Dto.setSpjangcd(ls_spjangcd);
-
-                try {
-                    appMob005tDtoList = service.GetApp28MobList003(app28Dto);
-                    model.addAttribute("appMob005tDtoList",appMob005tDtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1566,10 +1626,33 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
         }
+        app28Dto.setCustcd(ls_custcd);
+        app28Dto.setSpjangcd(ls_spjangcd);
 
+        try {
+            appMob005tDtoList = service.GetApp28MobList003(app28Dto);
+            model.addAttribute("appMob005tDtoList",appMob005tDtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return appMob005tDtoList;
     }
 
@@ -1594,9 +1677,26 @@ public Object com0List(@RequestParam Map<String, String> param
         });
         ls_dbnm = userformDto.getDbnm();
         session.setAttribute("userformDto",userformDto);
-
         ls_spjangcd = "ZZ";
-        ls_custcd = "ELVLRT";
+        switch (ls_dbnm){
+            case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
+            default:
+                break;
+        }
 
         try {
             app28Dto.setCustcd(ls_custcd);
@@ -2004,30 +2104,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    app04DtoList = service.GetAppMobList_004(popParmDto);
-                    model.addAttribute("app04DtoList", app04DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -2035,8 +2111,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+        try{
+            app04DtoList = service.GetAppMobList_004(popParmDto);
+            model.addAttribute("app04DtoList", app04DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app04DtoList;
     }
@@ -2102,30 +2202,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    app04DtoList = service.GetAppMobList_e(popParmDto);
-                    model.addAttribute("app04DtoList", app04DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -2133,8 +2209,32 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+        try{
+            app04DtoList = service.GetAppMobList_e(popParmDto);
+            model.addAttribute("app04DtoList", app04DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app04DtoList;
     }
@@ -2201,30 +2301,6 @@ public Object com0List(@RequestParam Map<String, String> param
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    app04DtoList = service.GetAppMobList_d(popParmDto);
-                    model.addAttribute("app04DtoList", app04DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -2232,8 +2308,33 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            app04DtoList = service.GetAppMobList_d(popParmDto);
+            model.addAttribute("app04DtoList", app04DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app04DtoList;
     }
@@ -2286,40 +2387,11 @@ public Object com0List(@RequestParam Map<String, String> param
         ls_dbnm = userformDto.getDbnm();
         String frdate = minusYear;
         String todate = time;
-
-
-
-
-
         ls_spjangcd = "ZZ";
 
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setFrdate(frdate);    //2년전날짜
-                popParmDto.setTodate(todate);    //현재날짜
-                popParmDto.setSpjangcd(ls_spjangcd); // ZZ
-                popParmDto.setCustcd(ls_custcd); //ELVLRT
-
-
-
-
-                try{
-                    attachDTOList = service.GetMobThumbList_001(popParmDto);
-                    model.addAttribute("attachDTOList", attachDTOList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -2327,8 +2399,33 @@ public Object com0List(@RequestParam Map<String, String> param
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        popParmDto.setFrdate(frdate);    //2년전날짜
+        popParmDto.setTodate(todate);    //현재날짜
+        popParmDto.setSpjangcd(ls_spjangcd); // ZZ
+        popParmDto.setCustcd(ls_custcd); //ELVLRT
+
+        try{
+            attachDTOList = service.GetMobThumbList_001(popParmDto);
+            model.addAttribute("attachDTOList", attachDTOList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return attachDTOList;
     }

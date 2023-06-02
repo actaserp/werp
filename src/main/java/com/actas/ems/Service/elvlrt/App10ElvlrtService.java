@@ -5,6 +5,10 @@ import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App10GaonMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMapper;
 import com.actas.ems.Mapper.nm.App10NmyangMapper;
+import com.actas.ems.Mapper.samjung.App09SamMapper;
+import com.actas.ems.Mapper.samjung.App10SamMapper;
+import com.actas.ems.Mapper.sjilsan.App09SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App10SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,10 @@ public class App10ElvlrtService {
     App10NmyangMapper app10ElvMapperN;
     @Autowired
     App10ElvlrtMapper app10ElvMapperH;
+    @Autowired
+    App10SamMapper app10ElvMapperS;
+    @Autowired
+    App10SjilsanMapper app10ElvMapperSj;
     int queryResult = 1;
 
     /** pin page **/
@@ -45,6 +53,10 @@ public class App10ElvlrtService {
                 return app10ElvMapperG.GetApp10List002(parm);
             case "hanyangs":
                 return app10ElvMapperH.GetApp10List002(parm);
+            case "samjung":
+                return  app10ElvMapperS.GetApp10List002(parm);
+            case "samjungilsan":
+                return  app10ElvMapperSj.GetApp10List002(parm);
             default:
                 List<App10ElvlrtDto> Object = null;
                 return Object;
@@ -66,6 +78,10 @@ public class App10ElvlrtService {
                 return app10ElvMapperG.GetApp10List001(parm);
             case "hanyangs":
                 return app10ElvMapperH.GetApp10List001(parm);
+            case "samjung":
+                return  app10ElvMapperS.GetApp10List001(parm);
+            case "samjungilsan":
+                return  app10ElvMapperSj.GetApp10List001(parm);
             default:
                 List<App10ElvlrtDto> Object = null;
                 return Object;
@@ -111,6 +127,18 @@ public class App10ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Insert10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Insert10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -131,6 +159,10 @@ public class App10ElvlrtService {
                 return  app10ElvMapperN.get10ManualMaxSeq(parm);
             case "hanyangs":
                 return  app10ElvMapperH.get10ManualMaxSeq(parm);
+            case "samjung":
+                return  app10ElvMapperS.get10ManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app10ElvMapperSj.get10ManualMaxSeq(parm);
             default:
                 return "";
         }
@@ -170,6 +202,18 @@ public class App10ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMapperH.Update10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Update10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Update10Manul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -217,6 +261,17 @@ public class App10ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Updateresult11(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Updateresult11(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
             default:
                 break;
         }
@@ -257,6 +312,17 @@ public class App10ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Updateresult10(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Updateresult10(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
             default:
                 break;
         }
@@ -297,6 +363,17 @@ public class App10ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Updateresult100(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Updateresult100(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
             default:
                 break;
         }
@@ -338,6 +415,17 @@ public class App10ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMapperS.Delete10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMapperSj.Delete10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
             default:
                 break;
         }

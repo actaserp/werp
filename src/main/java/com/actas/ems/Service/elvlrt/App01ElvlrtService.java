@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App01ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App01GaonMapper;
 import com.actas.ems.Mapper.kyoung.App01KyoungMapper;
 import com.actas.ems.Mapper.nm.App01NmyangMapper;
+import com.actas.ems.Mapper.samjung.App00SamMapper;
+import com.actas.ems.Mapper.samjung.App01SamMapper;
+import com.actas.ems.Mapper.sjilsan.App00SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App01SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,10 @@ public class App01ElvlrtService {
     App01NmyangMapper     appMapperN;
     @Autowired
     App01ElvlrtMapper     appMapperH;
+    @Autowired
+    App01SamMapper appMapperS;
+    @Autowired
+    App01SjilsanMapper appMapperSj;
 
     public App01ElvlrtDto GetCallXenv(App01ElvlrtDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -40,6 +48,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetCallXenv(parm);
             case "hanyangs":
                 return  appMapperH.GetCallXenv(parm);
+            case "samjung":
+                return  appMapperS.GetCallXenv(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetCallXenv(parm);
             default:
                 App01ElvlrtDto Object = null;
                 return Object;
@@ -61,6 +73,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List001(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List001(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List001(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List001(parm);
             default:
                 break;
         }
@@ -82,6 +98,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List002(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List002(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List002(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List002(parm);
             default:
                 break;
         }
@@ -103,6 +123,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List003(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List003(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List003(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List003(parm);
             default:
                 break;
         }
@@ -125,6 +149,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List004(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List004(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List004(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List004(parm);
             default:
                 break;
         }
@@ -147,6 +175,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List005(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List005(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List005(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List005(parm);
             default:
                 break;
         }
@@ -169,6 +201,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetApp01List006(parm);
             case "hanyangs":
                 return  appMapperH.GetApp01List006(parm);
+            case "samjung":
+                return  appMapperS.GetApp01List006(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetApp01List006(parm);
             default:
                 break;
         }
@@ -191,6 +227,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetCallBackList(parm);
             case "hanyangs":
                 return  appMapperH.GetCallBackList(parm);
+            case "samjung":
+                return  appMapperS.GetCallBackList(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetCallBackList(parm);
             default:
                 break;
         }
@@ -212,6 +252,10 @@ public class App01ElvlrtService {
                 return  appMapperN.GetPhonebookList(parm);
             case "hanyangs":
                 return  appMapperH.GetPhonebookList(parm);
+            case "samjung":
+                return  appMapperS.GetPhonebookList(parm);
+            case "samjungilsan":
+                return  appMapperSj.GetPhonebookList(parm);
             default:
                 break;
         }
@@ -232,6 +276,10 @@ public class App01ElvlrtService {
                 return  appMapperN.get10RecenumMaxSeq(parm);
             case "hanyangs":
                 return  appMapperH.get10RecenumMaxSeq(parm);
+            case "samjung":
+                return  appMapperS.get10RecenumMaxSeq(parm);
+            case "samjungilsan":
+                return  appMapperSj.get10RecenumMaxSeq(parm);
             default:
                 break;
         }
@@ -268,6 +316,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.InsertE401(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -312,6 +372,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -348,6 +420,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.DeleteE401(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -392,6 +476,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.InsertCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.InsertCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -432,6 +528,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.UpdateCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.UpdateCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -468,6 +576,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.DeleteCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.DeleteCall(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.DeleteCall(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -514,6 +634,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.InsertE401Sms(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.InsertE401Sms(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -554,6 +686,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.InsertE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.InsertE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -590,6 +734,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.InsertE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.InsertE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.InsertE601CALL01(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -636,6 +792,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.UpdateE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.UpdateE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -672,6 +840,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.UpdateE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.UpdateE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.UpdateE601CALL01(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -716,6 +896,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.DeleteE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.DeleteE601CALL(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -752,6 +944,18 @@ public class App01ElvlrtService {
                 return queryResult;
             case "hanyangs":
                 queryResult = appMapperH.DeleteE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = appMapperS.DeleteE601CALL01(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.DeleteE601CALL01(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -797,6 +1001,18 @@ public class App01ElvlrtService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = appMapperS.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = appMapperSj.UpdateCallInfo(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -817,6 +1033,10 @@ public class App01ElvlrtService {
                 return  appMapperN.getCllMaxSeq(parm);
             case "hanyangs":
                 return  appMapper.getCllMaxSeq(parm);
+            case "samjung":
+                return  appMapperS.getCllMaxSeq(parm);
+            case "samjungilsan":
+                return  appMapperSj.getCllMaxSeq(parm);
             default:
                 break;
         }
@@ -839,6 +1059,10 @@ public class App01ElvlrtService {
                 return  appMapperN.getSmsMaxSeq(parm);
             case "hanyangs":
                 return  appMapper.getSmsMaxSeq(parm);
+            case "samjung":
+                return  appMapperS.getSmsMaxSeq(parm);
+            case "samjungilsan":
+                return  appMapperSj.getSmsMaxSeq(parm);
             default:
                 break;
         }
@@ -858,6 +1082,10 @@ public class App01ElvlrtService {
                 return  appMapperN.getE601CallNM(parm);
             case "hanyangs":
                 return  appMapper.getE601CallNM(parm);
+            case "samjung":
+                return  appMapperS.getE601CallNM(parm);
+            case "samjungilsan":
+                return  appMapperSj.getE601CallNM(parm);
             default:
                 break;
         }
@@ -878,6 +1106,10 @@ public class App01ElvlrtService {
                 return  appMapperN.gete601CallMaxSeq(parm);
             case "hanyangs":
                 return  appMapper.gete601CallMaxSeq(parm);
+            case "samjung":
+                return  appMapperS.gete601CallMaxSeq(parm);
+            case "samjungilsan":
+                return  appMapperSj.gete601CallMaxSeq(parm);
             default:
                 break;
         }

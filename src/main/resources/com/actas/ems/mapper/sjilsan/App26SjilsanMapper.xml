@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App26SjilsanMapper">
+
+    <!-- 현장현황  -->
+    <select id="GetApp26List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+                SELECT a.cltcd,
+		 x.cltnm,
+       a.actcd,
+       a.actnm,
+		 q.wkactnm,
+		 a.cltnum,
+       a.qty,
+	    a.bildyd,
+       a.bildlv,
+	    a.bildju,
+	    a.bilddate,
+	    a.actpernm,
+	    a.actrespon,
+	    a.actmail,
+	    a.tel,
+       a.hp,
+	  a.perid,
+       c.pernm,
+	  (select divinm from tb_jc002 where custcd=a.custcd and spjangcd=a.spjangcd and divicd=c.divicd) as divinm,
+       d.pernm AS ppernm,
+		 r.areanm,
+       a.zipcode,
+	    isnull(a.address,'') + ' ' +  isnull(a.address2, '') AS address,
+	    isnull(a.anaddress,'') + ' ' +  isnull(a.anaddress2, '') AS baladdress,
+		 x.cltnm AS pubcltnm,
+		 a.ancltnm,
+		 b.contg,
+		 b.boryu,
+		 b.mgubun,
+		 FORMAT(b.amt, N'#,0') as amt,
+		 b.deljugi,
+		 FORMAT(b.monamt, N'#,0') as monamt,
+		 concat(substring(b.stdate, 0, 5), '-', substring(b.stdate, 5, 2), '-', substring(b.stdate, 7, 2)) as stdate,
+		 concat(substring(b.enddate, 0, 5), '-', substring(b.enddate, 5, 2), '-', substring(b.enddate, 7, 2)) as enddate,
+		 b.evjugi,
+		 b.addyn,
+		 b.taxgubun,
+		 b.taxflag,
+		 b.dedate,
+		 b.jirogubun,
+		 b.cmsflag,
+		 b.jirogihan ,
+		 b.contgubun,
+		(select elignm from tb_e002 where eligcd = (select top 1 gubun from tb_e611 where custcd=a.custcd and spjangcd=a.spjangcd and actcd=a.actcd) ) as elignm
+  FROM tb_e601 a WITH(NOLOCK)
+		 LEFT OUTER JOIN tb_e018_1 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.wkactcd = q.wkactcd)
+		 LEFT OUTER JOIN tb_e028 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.areacd = r.areacd)
+       LEFT OUTER JOIN TB_xclient x WITH(NOLOCK) ON (a.custcd = x.custcd AND a.cltcd = x.cltcd)
+       LEFT OUTER JOIN TB_JA001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.perid = substring(c.perid, 2, 10))
+		LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.pperid = substring(d.perid, 2, 10)   )
+  LEFT OUTER JOIN (SELECT distinct a.custcd,
+								  a.spjangcd,
+								  a.actcd,
+								  a.contg,
+								 a.boryu,
+								 a.mgubun,
+								 a.amt,
+								 a.deljugi,
+								 case
+									when a.deljugi = '01' then a.amt
+									when a.deljugi = '02' then a.amt / 3
+									when a.deljugi = '03' then a.amt / 6
+									when a.deljugi = '04' then a.amt / 12
+								 end monamt,
+								 a.stdate,
+								 a.enddate,
+								 a.evmon + '월 ' + evju + '회' as evjugi,
+								 a.addyn,
+								 a.taxgubun,
+								 a.taxflag,
+								 a.dedate,
+								 a.jirogubun,
+								a.cmsflag,
+								a.contgubun,
+								(case  a.ungijun when '2' then '익월' else '당월' end)    + ' '+ a.jirodate + '일' as jirogihan
+					  		FROM tb_e101 a WITH(NOLOCK), (SELECT custcd,
+																			 spjangcd,
+																			 actcd,
+																			 max(contdate) as contdate
+																	  FROM tb_e101 WITH(NOLOCK)
+																	  where isnull(contgubun, '') Like #{contgubun} + '%'
+											  						 GROUP BY custcd, spjangcd, actcd) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate and a.contdate <= #{frdate}  ) b
+    ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+ WHERE (a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%')
+   AND ( isnull(a.wkactcd,'') = #{wkactcd} OR #{wkactcd} = '%')
+	AND (Case when b.contg in ('04') THEN '2' when b.contg not in ('04') THEN '1'  else '' end = #{gubun} OR #{gubun} = '%')
+    AND (a.divicd = #{divicd} OR #{divicd} = '%')
+
+        ]]>
+    </select>
+
+    <!-- 현장별호기 -->
+    <select id="GetApp26List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        SELECT a.cltcd,
+		 x.cltnm,
+       a.actcd,
+       a.actnm,
+		 q.wkactnm,
+		 a.cltnum,
+      count( f.gubun ) as qty,
+	 max( a.bildyd ) as bildyd,
+      max( a.bildlv )  as billv,
+	  max( a.bildju ) as bildju,
+	  max( a.bilddate )  as bilddate,
+	  max( a.actpernm ) as actpernm,
+	  max( a.actrespon ) as actrespon,
+	  max( a.actmail ) as actmail ,
+	  max( a.tel ) as tel ,
+      max( a.hp )  as hp ,
+      max( c.pernm) as pernm,
+	  (select divinm from tb_jc002 where custcd=a.custcd and spjangcd=a.spjangcd and divicd=max(c.divicd)) as divinm,
+       max( d.pernm ) AS ppernm,
+		max( r.areanm ) as areanm,
+      max( a.zipcode )  as zipcode,
+	    isnull(max(a.address),'') + ' ' +  isnull(max(a.address2), '') AS address,
+		 x.cltnm AS pubcltnm,
+		max( a.ancltnm ) as ancltnm,
+		f.gubun,
+		(select elignm from tb_e002 where eligcd = f.gubun ) as elignm
+  FROM tb_e601 a WITH(NOLOCK)
+		 LEFT OUTER JOIN tb_e018_1 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.wkactcd = q.wkactcd)
+		 LEFT OUTER JOIN tb_e028 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.areacd = r.areacd)
+       LEFT OUTER JOIN TB_xclient x WITH(NOLOCK) ON (a.custcd = x.custcd AND a.cltcd = x.cltcd)
+       LEFT OUTER JOIN TB_JA001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.perid = substring(c.perid, 2, 10))
+		 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.pperid = substring(d.perid, 2, 10))
+		 LEFT OUTER JOIN tb_e611 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND  a.actcd=f.actcd AND f.contyn = '1')
+  LEFT OUTER JOIN (SELECT distinct a.custcd,
+								  a.spjangcd,
+								  a.actcd,
+								  a.contg,
+								 a.boryu,
+								 a.mgubun,
+								 a.amt,
+								 a.deljugi,
+								 case
+									when a.deljugi = '01' then a.amt
+									when a.deljugi = '02' then a.amt / 3
+									when a.deljugi = '03' then a.amt / 6
+									when a.deljugi = '04' then a.amt / 12
+								 end monamt,
+								 a.stdate,
+								 a.enddate,
+								 a.evmon + '월 ' + evju + '회' as evjugi,
+								 a.addyn,
+								 a.taxgubun,
+								 a.taxflag,
+								 a.dedate,
+								 a.jirogubun,
+								 a.ungijun + ' '+ a.jirodate + '일' as jirogihan
+					  		FROM tb_e101 a WITH(NOLOCK), (SELECT custcd,
+																			 spjangcd,
+																			 actcd,
+																			 max(contdate) as contdate
+																	  FROM tb_e101 WITH(NOLOCK)
+											  						 GROUP BY custcd, spjangcd, actcd) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.contdate <= CONVERT (nvarchar(8), getdate(), 112)) b
+    ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%')
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+   AND (Case when b.contg in ('01', '02', '03')THEN '1' else '2' end = #{gubun} OR #{gubun} = '%'))
+GROUP BY  a.custcd, a.spjangcd,
+		a.cltcd,
+		 x.cltnm,
+       a.actcd,
+       a.actnm,
+		 q.wkactnm,
+		 a.cltnum,
+		 f.gubun
+        ]]>
+    </select>
+
+    <!-- 계약일별대수 -->
+    <select id="GetApp26List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+            SELECT a.cltcd,
+		 x.cltnm,
+       a.actcd,
+       a.actnm,
+		 q.wkactnm,
+		 a.cltnum,
+       a.qty,
+	    a.bildyd,
+       a.bildlv,
+	    a.bildju,
+	    a.bilddate,
+	    a.actpernm,
+	    a.actrespon,
+	    a.actmail,
+	    a.tel,
+       a.hp,
+       c.pernm,
+	  (select divinm from tb_jc002 where custcd=a.custcd and spjangcd=a.spjangcd and divicd=c.divicd) as divinm,
+       d.pernm AS ppernm,
+		 r.areanm,
+       a.zipcode,
+	    isnull(a.address,'') + ' ' +  isnull(a.address2, '') AS address,
+		 x.cltnm AS pubcltnm,
+		 a.ancltnm,
+		 b.contg,
+		 b.boryu,
+		 b.mgubun,
+		 FORMAT(b.amt, N'#,0') as amt,
+		 b.deljugi,
+		 FORMAT(b.monamt, N'#,0') as monamt,
+		 concat(substring(b.stdate, 0, 5), '-', substring(b.stdate, 5, 2), '-', substring(b.stdate, 7, 2)) as stdate,
+		 concat(substring(b.enddate, 0, 5), '-', substring(b.enddate, 5, 2), '-', substring(b.enddate, 7, 2)) as enddate,
+		 b.evjugi,
+		 b.addyn,
+		 b.taxgubun,
+		 b.taxflag,
+		 b.dedate,
+		 b.jirogubun,
+		 b.cmsflag,
+		 b.jirogihan ,
+		 concat(substring(b.contdate, 0, 5), '-', substring(b.contdate, 5, 2), '-', substring(b.contdate, 7, 2)) as contdate,
+		 concat(substring(b.clsdate, 0, 5), '-', substring(b.clsdate, 5, 2), '-', substring(b.clsdate, 7, 2)) as clsdate,
+		(select elignm from tb_e002 where eligcd = (select top 1 gubun from tb_e611 where custcd=a.custcd and spjangcd=a.spjangcd and actcd=a.actcd) ) as elignm
+  FROM tb_e601 a WITH(NOLOCK)
+		 LEFT OUTER JOIN tb_e018_1 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.wkactcd = q.wkactcd)
+		 LEFT OUTER JOIN tb_e028 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.areacd = r.areacd)
+       LEFT OUTER JOIN TB_xclient x WITH(NOLOCK) ON (a.custcd = x.custcd AND a.cltcd = x.cltcd)
+       LEFT OUTER JOIN TB_JA001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.perid = substring(c.perid, 2, 10) )
+		 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.pperid = substring(d.perid, 2, 10))
+  LEFT OUTER JOIN (SELECT distinct a.custcd,
+								  a.spjangcd,
+								  a.actcd,
+								  a.contg,
+								 a.boryu,
+								 a.mgubun,
+								 a.amt,
+								 a.deljugi,
+								 case
+									when a.deljugi = '01' then a.amt
+									when a.deljugi = '02' then a.amt / 3
+									when a.deljugi = '03' then a.amt / 6
+									when a.deljugi = '04' then a.amt / 12
+								 end monamt,
+								 a.stdate,
+								 a.enddate,
+								 a.evmon + '월 ' + evju + '회' as evjugi,
+								 a.addyn,
+								 a.taxgubun,
+								 a.taxflag,
+								 a.dedate,
+								 a.jirogubun,
+								a.cmsflag,
+								a.contdate,
+								a.clsdate,
+								(case  a.ungijun when '2' then '익월' else '당월' end)    + ' '+ a.jirodate + '일' as jirogihan
+					  		FROM tb_e101 a WITH(NOLOCK), (SELECT custcd,
+																			 spjangcd,
+																			 actcd,
+																			 max(contdate) as contdate , amt, stdate, enddate
+																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= #{frdate} and enddate >= #{frdate}   and len(contdate) > 0  and amt > 0
+											  						 GROUP BY custcd, spjangcd, actcd, amt, stdate, enddate) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= #{frdate}   ) b
+    ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%'))
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+	AND (isnull(C.divicd , '')  Like #{divicd} + '%' )
+	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= #{frdate} and enddate >= #{frdate} and amt > 0   )
+
+
+        ]]>
+    </select>
+
+    <!-- 구분별계약대수 -->
+    <select id="GetApp26List004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+            SELECT a.cltcd,
+		 max(x.cltnm) as cltnm,
+       a.actcd,
+       a.actnm,
+		 max(q.wkactnm) as wkactnm,
+		 a.cltnum,
+       a.qty,
+	    a.bildyd,
+       a.bildlv,
+	    a.bildju,
+	    a.bilddate,
+	    a.actpernm,
+	    a.actrespon,
+	    a.actmail,
+	    a.tel,
+       a.hp,
+       max( c.pernm ) as pernm,
+	  (select divinm from tb_jc002 where custcd=a.custcd and spjangcd=a.spjangcd and divicd=max(c.divicd) ) as divinm,
+       max( d.pernm ) AS ppernm,
+		 max( r.areanm) as areanm ,
+       a.zipcode,
+	    isnull(max(a.address),'') + ' ' +  isnull(max(a.address2), '') AS address,
+		 max(x.cltnm) AS pubcltnm,
+		 a.ancltnm,
+		 b.contg,
+		 b.boryu,
+		 b.mgubun,
+		 FORMAT(b.amt, N'#,0') as amt,
+		 b.deljugi,
+		 FORMAT(b.monamt, N'#,0') as monamt,
+		 concat(substring(b.stdate, 0, 5), '-', substring(b.stdate, 5, 2), '-', substring(b.stdate, 7, 2)) as stdate,
+         concat(substring(b.enddate, 0, 5), '-', substring(b.enddate, 5, 2), '-', substring(b.enddate, 7, 2)) as enddate,
+		 b.evjugi,
+		 b.addyn,
+		 b.taxgubun,
+		 b.taxflag,
+		 b.dedate,
+		 b.jirogubun,
+		 b.cmsflag,
+		 b.jirogihan ,
+		 concat(substring(b.contdate, 0, 5), '-', substring(b.contdate, 5, 2), '-', substring(b.contdate, 7, 2)) as contdate,
+		 concat(substring(b.clsdate, 0, 5), '-', substring(b.clsdate, 5, 2), '-', substring(b.clsdate, 7, 2)) as clsdate,
+		 Count(h.equpcd) as count,
+		(select elignm from tb_e002 where eligcd = h.gubun ) as elignm
+  FROM tb_e601 a WITH(NOLOCK)
+		 LEFT OUTER JOIN tb_e018_1 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.wkactcd = q.wkactcd)
+		 LEFT OUTER JOIN tb_e028 r WITH(NOLOCK) ON (a.custcd = r.custcd AND a.spjangcd = r.spjangcd AND a.areacd = r.areacd)
+       LEFT OUTER JOIN TB_xclient x WITH(NOLOCK) ON (a.custcd = x.custcd AND a.cltcd = x.cltcd)
+       LEFT OUTER JOIN TB_JA001 c WITH(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.perid = substring(c.perid, 2, 10))
+		 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.pperid = substring(d.perid, 2, 10))
+		 LEFT OUTER JOIN tb_e611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd)
+  LEFT OUTER JOIN (SELECT distinct a.custcd,
+								  a.spjangcd,
+								  a.actcd,
+								  a.contg,
+								 a.boryu,
+								 a.mgubun,
+								 a.amt,
+								 a.deljugi,
+								 case
+									when a.deljugi = '01' then a.amt
+									when a.deljugi = '02' then a.amt / 3
+									when a.deljugi = '03' then a.amt / 6
+									when a.deljugi = '04' then a.amt / 12
+								 end monamt,
+								 a.stdate,
+								 a.enddate,
+								 a.evmon + '월 ' + evju + '회' as evjugi,
+								 a.addyn,
+								 a.taxgubun,
+								 a.taxflag,
+								 a.dedate,
+								 a.jirogubun,
+								a.cmsflag,
+								a.contdate,
+								a.clsdate,
+								(case  a.ungijun when '2' then '익월' else '당월' end)    + ' '+ a.jirodate + '일' as jirogihan
+					  		FROM tb_e101 a WITH(NOLOCK), (SELECT custcd,
+																			 spjangcd,
+																			 actcd,
+																			 max(contdate) as contdate , amt, stdate, enddate
+																	  FROM tb_e101 WITH(NOLOCK) WHERE stdate <= #{frdate} and enddate >= #{frdate}   and len(contdate) > 0  and amt > 0
+											  						 GROUP BY custcd, spjangcd, actcd, amt, stdate, enddate) b
+						  WHERE a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd AND a.contdate = b.contdate  and a.stdate <= #{frdate}   ) b
+    ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+ WHERE ((a.actcd like '%' + #{actcd} + '%' OR #{actcd} = '%'))
+   AND (a.wkactcd = #{wkactcd} OR #{wkactcd} = '%')
+	AND a.actcd + b.contdate in ( select actcd + contdate from tb_E101 where stdate <= #{frdate} and enddate >= #{frdate} and amt > 0   )
+Group by h.gubun ,
+		 a.custcd,
+		  a.spjangcd,
+		 a.cltcd,
+       a.actcd,
+       a.actnm,
+		 a.cltnum,
+       a.qty,
+	    a.bildyd,
+       a.bildlv,
+	    a.bildju,
+	    a.bilddate,
+	    a.actpernm,
+	    a.actrespon,
+	    a.actmail,
+	    a.tel,
+       a.hp,
+       a.zipcode,
+		 a.ancltnm,
+		 b.contg,
+		 b.boryu,
+		 b.mgubun,
+		 b.amt,
+		 b.deljugi,
+		 b.monamt,
+		 b.stdate,
+		 b.enddate,
+		 b.evjugi,
+		 b.addyn,
+		 b.taxgubun,
+		 b.taxflag,
+		 b.dedate,
+		 b.jirogubun,
+		 b.cmsflag,
+		 b.jirogihan ,
+		 b.contdate,
+		 b.clsdate
+        ]]>
+    </select>
+
+
+</mapper>

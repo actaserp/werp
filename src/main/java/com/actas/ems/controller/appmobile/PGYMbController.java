@@ -223,8 +223,6 @@ public class PGYMbController {
 
         HttpSession session = request.getSession();
 
-        log.info("aaaaaaaaaaaaaaaaaaaaa");
-
 
         userformDto.setDbnm(ls_dbnm);
 
@@ -250,22 +248,6 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                try {
-
-                    attach = appservice2.MManuFilelist(app07Dto);
-                    model.addAttribute("attachDto",attach);
-
-                }catch (DataAccessException e) {
-                    log.info("App06MobForm DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -278,6 +260,22 @@ public class PGYMbController {
 
         }
 
+        try {
+
+            attach = appservice2.MManuFilelist(app07Dto);
+            model.addAttribute("attachDto",attach);
+
+        }catch (DataAccessException e) {
+            log.info("App06MobForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return attach;
     }
 
@@ -320,23 +318,6 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-
-                    log.info(userformDto.getUserid() + "chkeck!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    model.addAttribute("app05Dto", app05Service.GetMNoticeList(app05Dto));
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -346,6 +327,23 @@ public class PGYMbController {
                 break;
             default:
                 break;
+        }
+
+
+        try{
+
+            log.info(userformDto.getUserid() + "chkeck!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            model.addAttribute("app05Dto", app05Service.GetMNoticeList(app05Dto));
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app05;
     }
@@ -391,22 +389,6 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                try {
-
-                    attach = app05UploadService.MNoticeFilelist(app05Dto);
-                    model.addAttribute("attachDto",attach);
-
-                }catch (DataAccessException e) {
-                    log.info("App06MobForm DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -419,6 +401,22 @@ public class PGYMbController {
 
         }
 
+        try {
+
+            attach = app05UploadService.MNoticeFilelist(app05Dto);
+            model.addAttribute("attachDto",attach);
+
+        }catch (DataAccessException e) {
+            log.info("App06MobForm DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return attach;
     }
 
@@ -774,6 +772,24 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
+            default:
+                break;
+
+        }
+
 
                 try {
 
@@ -830,18 +846,6 @@ public class PGYMbController {
                     log.info("error");
                 }
 
-
-                break;
-            case "ELV_KYOUNG":
-                ls_custcd = "KYOUNG";
-                break;
-            case "hanyangs":
-                ls_custcd = "hanyangs";
-                break;
-            default:
-                break;
-
-        }
 
         return "success";
     }
@@ -907,7 +911,23 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
+            default:
+                break;
 
+        }
 
                 appMobPlanDto.setCustcd(ls_custcd);
                 appMobPlanDto.setSpjangcd(ls_spjangcd);
@@ -926,17 +946,6 @@ public class PGYMbController {
                     log.info("App01001Tab01Form Exception ================================================================");
                     log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
-                }
-                break;
-            case "ELV_KYOUNG":
-                ls_custcd = "KYOUNG";
-                break;
-            case "hanyangs":
-                ls_custcd = "hanyangs";
-                break;
-            default:
-                break;
-
         }
 
         return appMobplanDtoList;
@@ -1122,35 +1131,8 @@ public class PGYMbController {
 
 
         switch (ls_dbnm){
-
             case "ELV_LRT":
-                try {
-
-                    appMobPlanDto.setCustcd("ELVLRT");
-                    appMobPlanDto.setSpjangcd("ZZ");
-                    appMobPlanDto.setIndate(getToDate());
-
-                    log.info(userformDto.getDbnm());
-                    log.info(appMobPlanDto.getPlandate());
-                    log.info(appMobPlanDto.getActcd());
-                    log.info(appMobPlanDto.getActnm());
-                    log.info(appMobPlanDto.getEqupcd());
-                    log.info(appMobPlanDto.getEqupnm());
-                    log.info(appMobPlanDto.getPerid());
-                    log.info(appMobPlanDto.getKcpernm());
-                    log.info(appMobPlanDto.getRemark());
-                    log.info(appMobPlanDto.getQty());
-                    log.info(appMobPlanDto.getCltcd());
-
-                    boolean result = app10ElvlrtMobService.Insertplan(appMobPlanDto);
-                    if (!result) {
-                        return "error";
-                    }
-
-
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+                ls_custcd = "ELVLRT";
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1158,8 +1140,43 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+
+        }
+
+        try {
+
+            appMobPlanDto.setCustcd(ls_custcd);
+            appMobPlanDto.setSpjangcd("ZZ");
+            appMobPlanDto.setIndate(getToDate());
+
+//            log.info(userformDto.getDbnm());
+//            log.info(appMobPlanDto.getPlandate());
+//            log.info(appMobPlanDto.getActcd());
+//            log.info(appMobPlanDto.getActnm());
+//            log.info(appMobPlanDto.getEqupcd());
+//            log.info(appMobPlanDto.getEqupnm());
+//            log.info(appMobPlanDto.getPerid());
+//            log.info(appMobPlanDto.getKcpernm());
+//            log.info(appMobPlanDto.getRemark());
+//            log.info(appMobPlanDto.getQty());
+//            log.info(appMobPlanDto.getCltcd());
+
+            boolean result = app10ElvlrtMobService.Insertplan(appMobPlanDto);
+            if (!result) {
+                return "error";
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return "success";
     }
@@ -1203,6 +1220,22 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
+                break;
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
+            default:
+                break;
+        }
 
                 try{
                     appMobplanDtoList = app10ElvlrtMobService.GetcltnmList(appMobPlanDto);
@@ -1217,16 +1250,6 @@ public class PGYMbController {
                     log.info("App01001Tab01Form Exception ================================================================");
                     log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
-                }
-                break;
-            case "ELV_KYOUNG":
-                ls_custcd = "KYOUNG";
-                break;
-            case "hanyangs":
-                ls_custcd = "hanyangs";
-                break;
-            default:
-                break;
         }
         return appMobplanDtoList;
     }
@@ -1269,8 +1292,24 @@ public class PGYMbController {
 
         switch (ls_dbnm){
             case "ELV_LRT":
+                ls_custcd = "ELVLRT";
+                break; 
+            case "ELV_KYOUNG":
+                ls_custcd = "KYOUNG";
+                break;
+            case "hanyangs":
+                ls_custcd = "hanyangs";
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
+            default:
+                break;
 
-
+        }
         try {
 
             boolean result = appService.DeleteMManu(app07Dto);
@@ -1279,17 +1318,6 @@ public class PGYMbController {
 
         } catch (Exception e) {
             System.out.println(e);
-        }
-        break;
-            case "ELV_KYOUNG":
-                ls_custcd = "KYOUNG";
-                break;
-            case "hanyangs":
-                ls_custcd = "hanyangs";
-                break;
-            default:
-                break;
-
         }
         return "success";
     }
@@ -1335,16 +1363,7 @@ public class PGYMbController {
 
         switch (ls_dbnm){
             case "ELV_LRT":
-
-
-                try {
-
-                    boolean result = app10ElvlrtMobService.DeletePlan(appMobPlanDto);
-
-
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+                ls_custcd = "ELVLRT";
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1352,9 +1371,22 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
 
+        }
+        try {
+
+            boolean result = app10ElvlrtMobService.DeletePlan(appMobPlanDto);
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return "success";
     }
@@ -1462,30 +1494,34 @@ public class PGYMbController {
 
         switch (ls_dbnm) {
             case "ELV_LRT" :
-            try {
-
-
-
-                appMobPlanDto.setCustcd("ELVLRT");
-                appMobPlanDto.setSpjangcd("ZZ");
-
-                boolean result = app10ElvlrtMobService.UpdatePlan(appMobPlanDto);
-
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
+                ls_custcd = "ELVLRT";
+                break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
                 break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
         }
 
+        try {
+            appMobPlanDto.setCustcd(ls_custcd);
+            appMobPlanDto.setSpjangcd("ZZ");
+
+            boolean result = app10ElvlrtMobService.UpdatePlan(appMobPlanDto);
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return "success";
 
     }
@@ -1554,119 +1590,8 @@ public class PGYMbController {
 
 
         switch (ls_dbnm){
+
             case "ELV_LRT":
-
-
-                app07Dto.setCustcd("ELVLRT");
-                app07Dto.setSpjangcd("ZZ");
-
-                String via2 = app07Dto.getFinputdate();
-                ls_yeare = via2.substring(0,4);
-                ls_mm = via2.substring(4,6);
-                fseq = "";
-                log.info(fseq);
-                log.info("check!!!!!!!!!!!!!!!!!!!!");
-
-
-                if(fseq == null || fseq.equals("")){
-                    app07Dto.setFseq(CountSeq2(ls_yeare + ls_mm));
-                }else{
-                    app07Dto.setFseq(fseq);
-                }
-                app07Dto.setYyyymm(ls_yeare + ls_mm);
-
-                log.info(app07Dto.getFseq());
-                log.info(app07Dto.getCustcd());
-                log.info(app07Dto.getSpjangcd());
-                log.info(app07Dto.getFinputdate());
-                log.info(app07Dto.getFgourpcd());
-                log.info(app07Dto.getFnsubject());
-                log.info(app07Dto.getFpernm());
-                log.info(app07Dto.getFmemo());
-                log.info(app07Dto.getFflag());
-
-                if(fseq == null || fseq.equals("")) {
-                    boolean result = appService.InsertMManu(app07Dto);
-                    if (!result) {
-                        return "error";
-                    }
-                }else{
-                    boolean result = appService.UpdateMManu(app07Dto);
-                    if(!result){
-                        return "error";
-                    }
-                }
-
-                File dir = new File(uploadPath);
-                if(dir.exists() == false){
-                    dir.mkdirs();
-                }
-
-
-                try {
-                    for (MultipartFile multipartFile : file) {
-
-                        ls_fileName = multipartFile.getOriginalFilename();
-
-                        log.info(multipartFile.getSize() + " 사이즈, 길이");
-
-
-                        /* 파일이 비어있으면 비어있는 리스트 반환 */
-                        if (multipartFile.getSize() < 1) {
-                            ls_errmsg = "success";
-                            return ls_errmsg;
-                        }
-
-                        /*파일 확장자*/
-                        final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-
-                        final String saveName = getRandomString() + "." + extension;
-
-                        /*업로드 경로에 saveName과 동일한 이름을 가진 파일 생성*/
-                        File target = new File(uploadPath, saveName);
-                        multipartFile.transferTo(target);
-                        String fseq1 = app07Dto.getFseq();
-                        /* 파일 정보 저장 */
-                        AttachDTO attach = new AttachDTO();
-                        attach.setBoardIdx(fseq1);
-                        attach.setOriginalName(multipartFile.getOriginalFilename());
-                        attach.setSaveName(saveName);
-                        attach.setSize(multipartFile.getSize());
-                        attach.setFlag("MF");
-                        log.info(attach.getBoardIdx());
-
-
-                        /* 파일 정보 추가 */
-                        attachList.add(attach);
-
-
-
-                    }
-                    log.info("true");
-
-                    boolean result = appServiceImpl.registerMManu(app07Dto, attachList);
-                    if(result) {
-                        log.info("true");
-                    }
-                    if (!result) {
-                        return "error";
-                    }
-                }catch (DataAccessException e){
-                    log.info("memberUpload DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                } catch (Exception  e){
-                    // log.info("memberUpload Exception ================================================================");
-                    // log.info(attachDTO);
-                    // log.info(e.toString());
-                    // ls_errmsg = "[" + ls_fileName + "] failed to save";
-                    // throw new AttachFileException("[" + ls_fileName + "] failed to save");
-                    //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }
-
-
-
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1674,17 +1599,122 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
 
+        app07Dto.setCustcd(ls_custcd);
+        app07Dto.setSpjangcd("ZZ");
+        String via2 = app07Dto.getFinputdate();
+        ls_yeare = via2.substring(0,4);
+        ls_mm = via2.substring(4,6);
+        fseq = "";
+        log.info(fseq);
+        log.info("check!!!!!!!!!!!!!!!!!!!!");
+
+
+        if(fseq == null || fseq.equals("")){
+            app07Dto.setFseq(CountSeq2(ls_yeare + ls_mm));
+        }else{
+            app07Dto.setFseq(fseq);
+        }
+        app07Dto.setYyyymm(ls_yeare + ls_mm);
+
+        log.info(app07Dto.getFseq());
+        log.info(app07Dto.getCustcd());
+        log.info(app07Dto.getSpjangcd());
+        log.info(app07Dto.getFinputdate());
+        log.info(app07Dto.getFgourpcd());
+        log.info(app07Dto.getFnsubject());
+        log.info(app07Dto.getFpernm());
+        log.info(app07Dto.getFmemo());
+        log.info(app07Dto.getFflag());
+
+        if(fseq == null || fseq.equals("")) {
+            boolean result = appService.InsertMManu(app07Dto);
+            if (!result) {
+                return "error";
+            }
+        }else{
+            boolean result = appService.UpdateMManu(app07Dto);
+            if(!result){
+                return "error";
+            }
+        }
+
+        File dir = new File(uploadPath);
+        if(dir.exists() == false){
+            dir.mkdirs();
         }
 
 
+        try {
+            for (MultipartFile multipartFile : file) {
+
+                ls_fileName = multipartFile.getOriginalFilename();
+
+                log.info(multipartFile.getSize() + " 사이즈, 길이");
+
+
+                /* 파일이 비어있으면 비어있는 리스트 반환 */
+                if (multipartFile.getSize() < 1) {
+                    ls_errmsg = "success";
+                    return ls_errmsg;
+                }
+
+                /*파일 확장자*/
+                final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+
+                final String saveName = getRandomString() + "." + extension;
+
+                /*업로드 경로에 saveName과 동일한 이름을 가진 파일 생성*/
+                File target = new File(uploadPath, saveName);
+                multipartFile.transferTo(target);
+                String fseq1 = app07Dto.getFseq();
+                /* 파일 정보 저장 */
+                AttachDTO attach = new AttachDTO();
+                attach.setBoardIdx(fseq1);
+                attach.setOriginalName(multipartFile.getOriginalFilename());
+                attach.setSaveName(saveName);
+                attach.setSize(multipartFile.getSize());
+                attach.setFlag("MF");
+                log.info(attach.getBoardIdx());
+
+
+                /* 파일 정보 추가 */
+                attachList.add(attach);
 
 
 
+            }
+            log.info("true");
 
-
+            boolean result = appServiceImpl.registerMManu(app07Dto, attachList);
+            if(result) {
+                log.info("true");
+            }
+            if (!result) {
+                return "error";
+            }
+        }catch (DataAccessException e){
+            log.info("memberUpload DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        } catch (Exception  e){
+            // log.info("memberUpload Exception ================================================================");
+            // log.info(attachDTO);
+            // log.info(e.toString());
+            // ls_errmsg = "[" + ls_fileName + "] failed to save";
+            // throw new AttachFileException("[" + ls_fileName + "] failed to save");
+            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }
         return "success";
     }
 
@@ -1754,23 +1784,7 @@ public class PGYMbController {
         ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
-
-                try {
-
-                    app03DtoList01 = service.GetApp01List001(popParmDto);
-                    model.addAttribute("app03DtoList01",app03DtoList01);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
+                ls_custcd = "ELVLRT";
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1778,11 +1792,34 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
 
         }
 
+
+        try {
+
+            app03DtoList01 = service.GetApp01List001(popParmDto);
+            model.addAttribute("app03DtoList01",app03DtoList01);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return app03DtoList01;
     }
 
@@ -1823,22 +1860,6 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    app26DtoList = service.GetAppMobListr_004_plan(popParmDto);
-                    model.addAttribute("app26DtoList", app26DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1846,8 +1867,28 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            app26DtoList = service.GetAppMobListr_004_plan(popParmDto);
+            model.addAttribute("app26DtoList", app26DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app26DtoList;
     }
@@ -1888,22 +1929,6 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    app26DtoList = service.GetAppMobListr_004_e601(popParmDto);
-                    model.addAttribute("app26DtoList", app26DtoList);
-
-                }catch (DataAccessException e){
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -1911,8 +1936,28 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
+        }
+        try{
+            app26DtoList = service.GetAppMobListr_004_e601(popParmDto);
+            model.addAttribute("app26DtoList", app26DtoList);
+
+        }catch (DataAccessException e){
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
         }
         return app26DtoList;
     }
@@ -2085,54 +2130,53 @@ public class PGYMbController {
         log.info(app10tDto.getRecetime());
         log.info(app10tDto.getRecenum() + " recenum");
         log.info(app10tDto.getRecedate2() + " recedate2");
-
+        int queryResult = 1;
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    try {
-
-                        int queryResult = 1;
-                        app10tDto.setCustcd("ELVLRT");
-                        app10tDto.setSpjangcd("ZZ");
-                        app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
-                        app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
-                        app10tDto.setIndate(getToDate());
-
-
-                            queryResult = service.UpdateE401(app10tDto);
-
-                        if (queryResult == 1){
-                            return "success";
-                        }else{
-                            return "fail";
-                        }
-
-                    }catch (IllegalStateException e){
-                        model.addAttribute("errorMessage", e.getMessage());
-                        return e.getMessage();
-                    }
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-                    return "fail";
-//            log.debug("Exception =====>" + ex.toString() );
-                }
-
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
-                return "success";
-
+                break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
-                return "success";
-
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
-                return "success";
+                break;
+        }
 
+        try{
+            try {
+                app10tDto.setCustcd(ls_custcd);
+                app10tDto.setSpjangcd("ZZ");
+                app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                app10tDto.setIndate(getToDate());
+
+
+                queryResult = service.UpdateE401(app10tDto);
+
+                if (queryResult == 1){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+
+            }catch (IllegalStateException e){
+                model.addAttribute("errorMessage", e.getMessage());
+                return e.getMessage();
+            }
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+            return "fail";
+//            log.debug("Exception =====>" + ex.toString() );
         }
 
 
@@ -2320,56 +2364,59 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    try {
-
-                        int queryResult = 1;
-                        app10tDto.setCustcd("ELVLRT");
-                        app10tDto.setSpjangcd("ZZ");
-                        app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
-                        app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
-                        app10tDto.setIndate(getToDate());
-                        log.info(app10tDto.getIndate() + "indate");
-
-                            app10tDto.setRecenum(CountSeq01(app10tDto.getRecedate()));
-                            log.info(app10tDto.getRecenum() + "recenum");
-
-                            queryResult = service.InsertE401(app10tDto);
-
-                        queryResult = service.UpdateE401(app10tDto);
-                        if (queryResult == 1){
-                            return "success";
-                        }else{
-                            return "fail";
-                        }
-
-                    }catch (IllegalStateException e){
-                        model.addAttribute("errorMessage", e.getMessage());
-                        return e.getMessage();
-                    }
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
-            break;
+                break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
-
-            break;
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
-
-            break;
+                 break;
         }
 
-    return "success";
+        try{
+            try {
+
+                int queryResult = 1;
+                app10tDto.setCustcd("ELVLRT");
+                app10tDto.setSpjangcd("ZZ");
+                app10tDto.setDatetime(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                app10tDto.setDatetime2(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+                app10tDto.setIndate(getToDate());
+                log.info(app10tDto.getIndate() + "indate");
+
+                app10tDto.setRecenum(CountSeq01(app10tDto.getRecedate()));
+                log.info(app10tDto.getRecenum() + "recenum");
+
+                queryResult = service.InsertE401(app10tDto);
+
+                queryResult = service.UpdateE401(app10tDto);
+                if (queryResult == 1){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+
+            }catch (IllegalStateException e){
+                model.addAttribute("errorMessage", e.getMessage());
+                return e.getMessage();
+            }
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "success";
     }
 
 
@@ -2432,47 +2479,48 @@ public class PGYMbController {
         });
         ls_dbnm = userformDto.getDbnm();
 
-        switch (ls_dbnm){
+        switch (ls_dbnm) {
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                try{
-                    try {
-
-                        int queryResult = 1;
-
-                        queryResult = service.DeleteE401(app10tDto);
-                        if (queryResult == 1){
-                            return "success";
-                        }else{
-                            return "fail";
-                        }
-
-                    }catch (IllegalStateException e){
-                        model.addAttribute("errorMessage", e.getMessage());
-                        return e.getMessage();
-                    }
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
                 break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
-
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
                 break;
             default:
 
-                break;
         }
+        try{
+            try {
 
+                int queryResult = 1;
+
+                queryResult = service.DeleteE401(app10tDto);
+                if (queryResult == 1){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+
+            }catch (IllegalStateException e){
+                model.addAttribute("errorMessage", e.getMessage());
+                return e.getMessage();
+            }
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return "success";
     }
 
@@ -2534,32 +2582,9 @@ public class PGYMbController {
 
 
         ls_spjangcd = "ZZ";
-        switch (ls_dbnm){
+        switch (ls_dbnm) {
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-
-
-                popParmDto.setCustcd(ls_custcd);
-                popParmDto.setSpjangcd(ls_spjangcd);
-                popParmDto.setFrdate(time2);
-                popParmDto.setTodate(endday);
-
-
-                try {
-                    app10DtoList = app10ElvlrtMobService.GetAppMobList002(popParmDto);
-                    model.addAttribute("app10DtoList",app10DtoList);
-
-                }catch (DataAccessException e) {
-                    log.info("App01001Tab01Form DataAccessException ================================================================");
-                    log.info(e.toString());
-                    throw new AttachFileException(" DataAccessException to save");
-                    //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
@@ -2567,11 +2592,36 @@ public class PGYMbController {
             case "hanyangs":
                 ls_custcd = "hanyangs";
                 break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
+                break;
             default:
                 break;
-
         }
+        popParmDto.setCustcd(ls_custcd);
+        popParmDto.setSpjangcd(ls_spjangcd);
+        popParmDto.setFrdate(time2);
+        popParmDto.setTodate(endday);
 
+
+        try {
+            app10DtoList = app10ElvlrtMobService.GetAppMobList002(popParmDto);
+            model.addAttribute("app10DtoList",app10DtoList);
+
+        }catch (DataAccessException e) {
+            log.info("App01001Tab01Form DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException(" DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/app04/app04list/", Method.GET, model);
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return app10DtoList;
     }
 
@@ -2613,50 +2663,51 @@ public class PGYMbController {
             }
         });
         ls_dbnm = userformDto.getDbnm();
-
+        ls_spjangcd = "ZZ";
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                ls_spjangcd = "ZZ";
-
-                popParmDto.setCustcd(ls_custcd);
-                popParmDto.setSpjangcd(ls_spjangcd);
-
-                try{
-                    boolean result = app10ElvlrtMobService.DeleteList002(popParmDto);
-                    if(!result){
-                        log.info("error, 삭제불가능");
-                        return "error";
-
-                    }
-
-                    boolean result2 = app10ElvlrtMobService.UpdateList002_rollback(popParmDto);
-                    if (!result2) {
-                        log.info("error, 수정불가능");
-                        return "error";
-                    }
-
-
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
                 break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
-
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
                 break;
             default:
 
-                break;
         }
+        popParmDto.setCustcd(ls_custcd);
+        popParmDto.setSpjangcd(ls_spjangcd);
 
+        try{
+            boolean result = app10ElvlrtMobService.DeleteList002(popParmDto);
+            if(!result){
+                log.info("error, 삭제불가능");
+                return "error";
+
+            }
+
+            boolean result2 = app10ElvlrtMobService.UpdateList002_rollback(popParmDto);
+            if (!result2) {
+                log.info("error, 수정불가능");
+                return "error";
+            }
+
+
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+        }
         return "success";
     }
 
@@ -2689,7 +2740,7 @@ public class PGYMbController {
         /*업로드 파일 정보를 담을 리스트*/
         List<AttachDTO> attachList = new ArrayList<>();
 
-        String ls_custcd;
+        String ls_custcd = "";
         String ls_spjangcd;
 
         param.forEach((key, values) -> {
@@ -2772,6 +2823,7 @@ public class PGYMbController {
         etCnt = ls_perid.indexOf(']');
         ls_perid = ls_perid.substring(stCnt, etCnt);
 
+        ls_spjangcd = "ZZ";
 
 
 
@@ -2779,71 +2831,62 @@ public class PGYMbController {
         switch (ls_dbnm){
             case "ELV_LRT":
                 ls_custcd = "ELVLRT";
-                ls_spjangcd = "ZZ";
-
-                app10tDto.setCustcd(ls_custcd);
-                app10tDto.setSpjangcd(ls_spjangcd);
-
-                app10tDto.setGregicd(ls_gregicd);
-                app10tDto.setRegicd(ls_regicd);
-                app10tDto.setResucd(ls_resucd);
-                app10tDto.setResultcd(ls_resultcd);
-                app10tDto.setPerid(ls_perid);
-                app10tDto.setRemocd(ls_remocd);
-
-                try{
-
-
-                    log.info(app10tDto.getResultcd() + " resultcd");
-                    log.info(app10tDto.getGregicd() + "gregicd") ;
-                    log.info(app10tDto.getRegicd() + "regicd");
-                    log.info(app10tDto.getRemocd() + "remocd");
-                    log.info(app10tDto.getResucd() + "resucd");
-                    log.info(app10tDto.getRemoremark() + "remoremark");
-                    log.info(app10tDto.getResuremark() + "resuremark");
-                    log.info(app10tDto.getRemark() + "remark");
-                    log.info(app10tDto.getPerid() + "perid");
-                    log.info(app10tDto.getUpdate_time() + "updatetime");
-
-
-
-
-
-
-
-
-
-                    app10tDto.setUpdate_time(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
-
-                    boolean result = app10ElvlrtMobService.Update10Manull(app10tDto);
-                    if(!result){
-                        log.info("error, 수정불가가가");
-                        return "error";
-
-                    }
-
-
-                }catch (Exception ex) {
-//                dispatchException = ex;
-                    log.info("App01001Tab01Form Exception ================================================================");
-                    log.info("Exception =====>" + ex.toString());
-
-//            log.debug("Exception =====>" + ex.toString() );
-                }
                 break;
             case "ELV_KYOUNG":
                 ls_custcd = "KYOUNG";
                 break;
             case "hanyangs":
                 ls_custcd = "hanyangs";
-
+                break;
+            case "samjung":
+                ls_custcd = "samjung";
+                break;
+            case "samjungilsan":
+                ls_custcd = "samjung";
                 break;
             default:
-
                 break;
         }
 
+        app10tDto.setCustcd(ls_custcd);
+        app10tDto.setSpjangcd(ls_spjangcd);
 
+        app10tDto.setGregicd(ls_gregicd);
+        app10tDto.setRegicd(ls_regicd);
+        app10tDto.setResucd(ls_resucd);
+        app10tDto.setResultcd(ls_resultcd);
+        app10tDto.setPerid(ls_perid);
+        app10tDto.setRemocd(ls_remocd);
+
+        try{
+            log.info(app10tDto.getResultcd() + " resultcd");
+            log.info(app10tDto.getGregicd() + "gregicd") ;
+            log.info(app10tDto.getRegicd() + "regicd");
+            log.info(app10tDto.getRemocd() + "remocd");
+            log.info(app10tDto.getResucd() + "resucd");
+            log.info(app10tDto.getRemoremark() + "remoremark");
+            log.info(app10tDto.getResuremark() + "resuremark");
+            log.info(app10tDto.getRemark() + "remark");
+            log.info(app10tDto.getPerid() + "perid");
+            log.info(app10tDto.getUpdate_time() + "updatetime");
+
+            app10tDto.setUpdate_time(getToDate().substring(0,4) + "-" + getToDate().substring(4,6) + "-" + getToDate().substring(6,8) + " 00:00:00.000");
+
+            boolean result = app10ElvlrtMobService.Update10Manull(app10tDto);
+            if(!result){
+                log.info("error, 수정불가가가");
+                return "error";
+
+            }
+
+
+        }catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+
+//            log.debug("Exception =====>" + ex.toString() );
+        }
 
         return "success";
     }

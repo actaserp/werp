@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App01SjilsanMapper">
+    <select id="GetCallXenv" parameterType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto"  resultType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto">
+        select isnull(callflag, '') as callflag, isnull(calluserid,'') as calluserid, isnull(calluserpw, '') as calluserpw
+        from TB_XENV where spjangcd = 'ZZ'
+    </select>
+
+    <update id="UpdateCallInfo" parameterType="com.actas.ems.DTO.Elvlrt.App01ElvlrtDto">
+        update TB_XENV
+        set spjangcd = 'ZZ'
+        <if test="calluserid != null ">,</if>
+        <if test="calluserid != null">calluserid=#{calluserid}</if>
+        <if test="calluserpw != null ">,</if>
+        <if test="calluserpw != null">calluserpw=#{calluserpw}</if>
+        <if test="callflag != null ">,</if>
+        <if test="callflag != null">callflag=#{callflag}</if>
+        where  spjangcd = 'ZZ'
+    </update>
+
+    <!--      관제현황 / 접수현황LIST  -->
+    <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT   substring(a.recedate, 5,2) + '/' + substring(a.recedate, 7,2) as recedate,
+            Left(a.recedate,4) + '-' +  substring(a.recedate, 5,2) + '-' + substring(a.recedate, 7,2) as recedateyear,
+            Left(a.hitchdate,4) + '-' +  substring(a.hitchdate, 5,2) + '-' + substring(a.hitchdate, 7,2) as hitchdate,
+            Left(a.recetime,2)+ ':' + substring(a.recetime, 3,2) as recetime,
+            Left(a.hitchhour,2)+ ':' + substring(a.hitchhour, 3,2) as hitchhour,
+            a.recenum,
+            a.actcd as actcd,
+            substring(a.actnm,0,15) as actnm,
+            a.equpcd as equpcd,
+            a.equpnm as equpnm,
+            a.cnt as cnt,
+            a.ascnt as ascnt,
+            isnull(a.pernm,'') AS actpernm,
+            a.contcd as contcd,
+            a.contnm as contnm,
+            isnull(a.tel,'') as tel,
+            a.reperid as reperid,
+            a.repernm as repernm,
+            a.perid as perid,
+            a.pernm as pernm,
+            a.handphone as handphone,
+            a.contremark as contents,
+            a.remark as remark,
+            isnull(a.addrtxt,'') as addrtxt
+        FROM
+            (
+            SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            a.equpcd,
+            a.recedate,
+            a.recenum,
+            a.recetime,
+            a.hitchdate,
+            a.hitchhour,
+            q.actnm,
+            m.equpnm,
+            1 as cnt,
+            1 as ascnt,
+            a.contcd,
+            p.contnm,
+            a.contents as contremark,
+            a.reperid ,
+            g.pernm as repernm,
+            a.perid,
+            d.pernm,
+            d.handphone,
+            a.remark,
+            q.tel as tel,
+            isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
+            FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND  isnull(a.actnm,'') Like concat('%',#{actcd},'%')
+          ORDER BY A.recedate desc, A.recetime desc
+        ]]>
+    </select>
+
+
+
+
+    <!--      관제현황 / 기사현황LIST  -->
+    <select id="GetApp01List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select distinct  Z.pernm  ,
+                        Z.divinm,
+                        (Z.actnm) as actnm,
+                        max(Z.teltime) as teltime,
+                        max(Z.telxcoordi) as telxcoordi,
+                        max(Z.telycodrdi) as telycodrdi,
+                        Z.handphone,
+                        Left(Z.recetime,2)+ ':' + substring(Z.recetime, 3,2) as recetime,
+                        isnull(Z.addrtxt, '') as addrtxt
+        FROM (
+                 select A.pernm  , b.divinm,  '' as actnm, '' as teltime, '' as telxcoordi, '' as telycodrdi, a.handphone as handphone, '' as recetime, '' as addrtxt
+                 from tb_ja001 a with (nolock) ,
+		              tb_jc002 b with (nolock)
+                 where a.divicd = b.divicd
+                   and a.rtclafi ='001'
+                 union
+                 select  A.pernm  , c.divinm as divinm,  substring(d.actnm,0,20) AS actnm, '' as teltime, '' as telxcoordi, '' as telycodrdi, a.handphone as handphone, max(b.recetime) as recetime,
+                     isnull(d.anaddress, '') + ' ' + isnull(d.anaddress2, '') as addrtxt
+                 from tb_ja001 a with (nolock) ,
+                     tb_e401 b with (nolock)  ,
+                     tb_jc002 c with (nolock)  ,
+                     tb_e601 d with (nolock)
+                 where  a.perid = 'p' + b.perid
+                   and b.recedate =  #{frdate}
+                   and a.divicd = c.divicd
+                   and b.actcd = d.actcd
+                   and a.rtclafi ='001'
+                 group by A.pernm  , c.divinm, d.actnm, a.handphone, d.anaddress, d.anaddress2
+                 union
+                 select   A.pernm  , b.divinm, '' as actnm,  c.teltime,  c.telxcoordi, c.telycodrdi, a.handphone as handphone, '' as recetime, '' as addrtxt
+                 from tb_ja001 a with (nolock),
+                     tb_mcoordinate c with (nolock)   ,
+                     tb_jc002 b with (nolock)
+                 where a.divicd = b.divicd
+                   and a.rtclafi ='001'
+                   and c.inputdate = #{frdate}
+                   and a.handphone=c.telnumber
+                   and c.teltime in (select top 1 max(teltime) from tb_mcoordinate where inputdate = #{frdate} group by inputdate )
+             ) Z
+
+        group by Z.pernm  , Z.divinm , Z.handphone  , Z.actnm, Z.recetime, Z.addrtxt
+        order by  Z.pernm
+        ]]>
+    </select>
+
+    <!--      관제현황/ 상단통계   -->
+    <select id="GetApp01List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT SUM(Z.callcount) AS callcount,
+               SUM(Z.recenum) as rececnt,
+               SUM(Z.callback) as callback,
+               SUM(Z.compnum) as compcnt
+        FROM
+            (
+                SELECT '0' as flag,
+                       COUNT(*) AS callcount,
+                       0 as recenum,
+                       0 as callback,
+                       0 as compnum
+                FROM TB_CALLMAIN WITH (NOLOCK)
+                WHERE CALLDATE = #{frdate}
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    COUNT(*) as recenum,
+                    0 as callback,
+                    0 as compnum
+                FROM TB_E401 WITH (NOLOCK)
+                WHERE RECEDATE = #{frdate}
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    0 as recenum,
+                    COUNT(*) as callback,
+                    0 as compnum
+                FROM TB_CALLMAIN WITH (NOLOCK)
+                WHERE CALLDATE = #{frdate} AND RCVFLAG = 'Y'
+                UNION
+                SELECT  '0' as flag,
+                    0 AS callcount,
+                    0 as recenum,
+                    0 as callback,
+                    COUNT(*) as compnum
+                FROM TB_E411 WITH (NOLOCK)
+                WHERE compdate = #{frdate}
+            ) Z
+        GROUP BY Z.flag
+
+        ]]>
+    </select>
+
+    <!--      관제현황 / 기사 이동라인  -->
+    <select id="GetApp01List004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+            select   A.pernm  , b.divinm,  c.teltime,  c.telxcoordi, c.telycodrdi, a.handphone as handphone
+            from tb_ja001 a with (nolock),
+            tb_mcoordinate c with (nolock)   ,
+            tb_jc002 b with (nolock)
+            where a.divicd = b.divicd
+            and a.rtclafi ='001'
+            and c.inputdate = #{frdate}
+            and a.handphone=c.telnumber
+            and c.telnumber= #{handphone}
+            order by  c.teltime
+        ]]>
+    </select>
+
+
+    <!--      고객상담센타 / 고객통화메모  -->
+    <select id="GetApp01List005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select  seq  , Left(calldate,4) + '-' +  substring(calldate, 5,2) + '-' + substring(calldate, 7,2) as calldate,
+            Left(calltime,2)+ ':' + substring(calltime, 3,2)  as calltime,  callnum, callnm, pernm, regdate, recedate, recenum ,
+                substring(calldate, 5,2) + '/' + substring(calldate, 7,2) as subcalldate,
+                Left(calltime,2)+ ':' + substring(calltime, 3,2) as subcalltime, flag, callmemo, rcvflag, callendmemo,
+                callbackflag, callbacktime, callbackmemo
+        from tb_callmain  with (nolock)
+        where calldate = #{frdate}
+        and isnull(callnm,'') Like concat('%',#{actcd},'%')
+        order by  calltime desc
+        ]]>
+    </select>
+
+
+    <select id="get10RecenumMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(recenum) from tb_e401 where recedate = #{recedate}
+    </select>
+
+    <insert id="InsertE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >
+        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, recetime, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate) values
+            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime}, #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate})
+    </insert>
+
+
+    <update id="UpdateE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set indate = #{indate}
+        <if test="recedate != null ">,</if>
+        <if test="recedate != null">recedate=#{recedate}</if>
+        <if test="recetime != null ">,</if>
+        <if test="recetime != null">recetime=#{recetime}</if>
+        <if test="hitchdate != null ">,</if>
+        <if test="hitchdate != null">hitchdate=#{hitchdate}</if>
+        <if test="hitchhour != null ">,</if>
+        <if test="hitchhour != null">hitchhour=#{hitchhour}</if>
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+        <if test="contcd != null ">,</if>
+        <if test="contcd != null">contcd=#{contcd}</if>
+        <if test="contents != null ">,</if>
+        <if test="contents != null">contents=#{contents}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="reperid != null ">,</if>
+        <if test="reperid != null">reperid=#{reperid}</if>
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
+    </update>
+
+    <delete id="DeleteE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        delete from tb_e401 where recedate = #{recedate} and recenum=#{recenum}
+    </delete>
+
+
+
+    <select id="getCllMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(seq) from tb_callmain where left(seq,6) = #{seq}
+    </select>
+
+    <insert id="InsertCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into tb_callmain (  calldate, calltime, seq, callnm, callnum, regdate,  callmemo,  callbackflag, callbacktime, callbackmemo, pernm, callendmemo ) values
+            (#{calldate}, #{calltime},  #{seq}, #{callnm}, #{callnum}, #{regdate}, #{callmemo}, #{callbackflag}, #{callbacktime}, #{callbackmemo}, #{pernm}, #{callendmemo})
+    </insert>
+
+    <update id="UpdateCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        update tb_callmain
+        set regdate = #{regdate}
+        <if test="calldate != null ">,</if>
+        <if test="calldate != null">calldate=#{calldate}</if>
+        <if test="calltime != null ">,</if>
+        <if test="calltime != null">calltime=#{calltime}</if>
+        <if test="callnm != null ">,</if>
+        <if test="callnm != null">callnm=#{callnm}</if>
+        <if test="callnum != null ">,</if>
+        <if test="callnum != null">callnum=#{callnum}</if>
+        <if test="callmemo != null ">,</if>
+        <if test="callmemo != null">callmemo=#{callmemo}</if>
+        <if test="callbackflag != null ">,</if>
+        <if test="callbackflag != null">callbackflag=#{callbackflag}</if>
+        <if test="callbacktime != null ">,</if>
+        <if test="callbacktime != null">callbacktime=#{callbacktime}</if>
+        <if test="callbackmemo != null ">,</if>
+        <if test="callbackmemo != null">callbackmemo=#{callbackmemo}</if>
+        <if test="callendmemo != null ">,</if>
+        <if test="callendmemo != null">callendmemo=#{callendmemo}</if>
+        where seq = #{seq}
+    </update>
+
+    <delete id="DeleteCall" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from tb_callmain where seq = #{seq}
+    </delete>
+
+
+    <select id="getSmsMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(msgid) from tb_e401_sms WITH (NOLOCK) where Left(msgid,6) = #{recedate}
+    </select>
+
+
+    <insert id="InsertE401Sms" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" >
+        insert into tb_e401_sms (  custcd, 					spjangcd, 					receipdate, 					recedate, 					recenum,
+                                   cltcd,						actcd, 					 	equpcd, 							perid,						sms_ip,
+                                   sms_port, 					sms_id, 						sms_ps, 							sms_tel, 					sms_num,
+                                   sms_caller, 			   sms_text, 					result,							pernm,						reperid,
+                                   repernm,				   flag, 						msgid ) values
+            (#{custcd}, #{spjangcd},  getdate(), #{smsrecedate}, #{smsrecenum},
+             null, #{smsactcd},  #{smsequpcd}, null, #{smsip},
+             #{smsport}, #{smsid} , #{smsps} , #{smstel} , #{smshandphone},
+             #{smscaller}, #{smstext} , #{smsresult}, #{smspernm} , null,
+             #{smsrepernm} , '1', #{smsmsgid}   )
+    </insert>
+
+
+    <!--      고객상담센타 / 문자발송내역  -->
+    <select id="GetApp01List006"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        select TOP 50     substring(convert(varchar(8), receipdate, 112), 5,2) + '/' + substring(convert(varchar(8), receipdate, 112), 7,2)  as recedate,
+                convert(varchar(8), receipdate, 114) as recetime,
+                pernm,
+                sms_tel,
+                repernm,
+                sms_caller,
+                sms_text,
+                result,
+                flag
+        from tb_e401_sms  with (nolock)
+        where Left( convert(varchar(8), receipdate, 112) , 4) =   #{yyyymm}
+          and isnull(pernm,'') Like concat('%',#{pernm},'%')
+        order by  receipdate desc
+        ]]>
+    </select>
+
+
+    <select id="getE601CallNM" parameterType="string"  resultType="java.lang.String">
+        select actmail from TB_E601CALL A  WITH (NOLOCK) , TB_E601CALL_01 B WITH (NOLOCK)
+        where a.actcd    = b.actcd AND b.tel in (#{callnum})
+    </select>
+
+
+    <insert id="InsertE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        insert into TB_E601CALL (  custcd, 					spjangcd, 					actcd, 					seq, 					tel,
+                                   actmail,						regdate, 					 	regflag) values
+            (#{custcd}, #{spjangcd}, #{actcd}, #{seq}, #{tel},
+             #{actmail}, #{regdate}, '3'    )
+    </insert>
+
+    <insert id="InsertE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        insert into TB_E601CALL_01 (  custcd, 					spjangcd, 					actcd, 					seq, 					tel,
+                                  	indate ) values
+            (#{custcd}, #{spjangcd}, #{actcd}, #{seq}, #{tel},
+               #{regdate}  )
+    </insert>
+
+
+    <update id="UpdateE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        update TB_E601CALL
+        set regdate = #{regdate}
+        <if test="tel != null ">,</if>
+        <if test="tel != null">tel=#{tel}</if>
+        <if test="actmail != null ">,</if>
+        <if test="actmail != null">actmail=#{actmail}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where actcd = #{actcd} and seq = #{seq}
+
+    </update>
+
+    <update id="UpdateE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" >
+        update TB_E601CALL_01
+        set  indate = #{regdate}
+        <if test="tel != null ">,</if>
+        <if test="tel != null">tel=#{tel}</if>
+        where actcd = #{actcd} and seq = #{seq}
+
+    </update>
+
+    <delete id="DeleteE601CALL" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from TB_E601CALL where actcd not in (select actcd from TB_E601CALL_01 )
+    </delete>
+
+    <delete id="DeleteE601CALL01" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        delete from TB_E601CALL_01 where actcd = #{actcd} and seq = #{seq}
+    </delete>
+
+
+    <select id="gete601CallMaxSeq" parameterType="string"  resultType="java.lang.String">
+        select max(actcd) from TB_E601CALL WITH (NOLOCK)
+    </select>
+
+
+
+
+    <!-- CALLBAKC LIST -->
+    <select id="GetCallBackList" parameterType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppCallElvlrtDto">
+        <![CDATA[
+        SELECT seq, callbackflag, substring (callbacktime,0,3) + ':' + substring(callbacktime,3,3) as callbacktime ,
+             substring(calldate, 5,2) + '/' + substring(calldate, 7,2)  as calldate,
+               callbackmemo, callnm, callnum,  substring (calltime,0,3) + ':' + substring(calltime,3,3) as calltime, callmemo
+        FROM tb_callmain   WITH(NOLOCK)
+        WHERE ISNULL(callbackflag,'') Like concat('%',#{callbackflag},'%') AND LEN(callbackflag) > 0 and len(isnull(callbacktime,'')) > 0
+        order by seq desc
+        ]]>
+    </select>
+
+    <!-- 전화번호보 LIST -->
+    <select id="GetPhonebookList" parameterType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppCall601ElvlrtDto">
+        <![CDATA[
+        SELECT A.actcd, B.seq, A.actmail, B.tel, A.remark
+        FROM TB_E601CALL A  WITH(NOLOCK), TB_E601CALL_01 B WITH (NOLOCK)
+        WHERE A.actcd = B.actcd
+        and ( ISNULL(A.actmail,'') Like concat('%',#{actmail},'%')   or ISNULL(B.tel,'') Like concat('%',#{actmail},'%') )
+        order by A.actmail
+    ]]>
+    </select>
+
+</mapper>
+

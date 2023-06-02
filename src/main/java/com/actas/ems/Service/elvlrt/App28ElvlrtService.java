@@ -7,6 +7,10 @@ import com.actas.ems.Mapper.Elvlrt.App28ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App28GaonMapper;
 import com.actas.ems.Mapper.kyoung.App28KyoungMapper;
 import com.actas.ems.Mapper.nm.App28NmyangMapper;
+import com.actas.ems.Mapper.samjung.App26SamMapper;
+import com.actas.ems.Mapper.samjung.App28SamMapper;
+import com.actas.ems.Mapper.sjilsan.App26SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App28SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,10 @@ public class App28ElvlrtService {
     App28NmyangMapper app28ElvMapperN;
     @Autowired
     App28ElvlrtMapper app28ElvMapperH;
+    @Autowired
+    App28SamMapper app28ElvMapperS;
+    @Autowired
+    App28SjilsanMapper app28ElvMapperSj;
     int queryResult = 1;
     /** 글 목록 */
     public List<App28ElvlrtDto> GetMSManualList(App28ElvlrtDto parm){
@@ -45,6 +53,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetMSManualList(parm);
             case "hanyangs":
                 return  app28ElvMapperH.GetMSManualList(parm);
+            case "samjung":
+                return  app28ElvMapperS.GetMSManualList(parm);
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetMSManualList(parm);
             default:
                 List<App28ElvlrtDto> object = null;
                 return object;
@@ -64,6 +76,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetMSManualList(parm);
             case "hanyangs":
                 return  app28ElvMapperH.GetMSManualList(parm);
+            case "samjung":
+                return  app28ElvMapperS.GetMSManualList(parm);
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetMSManualList(parm);
             default:
                 List<App28ElvlrtDto> object = null;
                 return object;
@@ -85,6 +101,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetMSManualView(mSeq);
             case "hanyangs":
                 return  app28ElvMapperH.GetMSManualView(mSeq);
+            case "samjung":
+                return  app28ElvMapperS.GetMSManualView(mSeq);
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetMSManualView(mSeq);
             default:
                 App28ElvlrtDto object = null;
                 return object;
@@ -107,6 +127,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.getMSManualMaxSeq(parm);
             case "hanyangs":
                 return  app28ElvMapperH.getMSManualMaxSeq(parm);
+            case "samjung":
+                return  app28ElvMapperS.getMSManualMaxSeq(parm);
+            case "samjungilsan":
+                return  app28ElvMapperSj.getMSManualMaxSeq(parm);
             default:
                 return "";
         }
@@ -128,6 +152,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetComm751List();
             case "hanyangs":
                 return  app28ElvMapperH.GetComm751List();
+            case "samjung":
+                return  app28ElvMapperS.GetComm751List();
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetComm751List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -147,6 +175,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetComm751List();
             case "hanyangs":
                 return  app28ElvMapperH.GetComm751List();
+            case "samjung":
+                return  app28ElvMapperS.GetComm751List();
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetComm751List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -167,6 +199,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.getMSCommentList(parm);
             case "hanyangs":
                 return  app28ElvMapperH.getMSCommentList(parm);
+            case "samjung":
+                return  app28ElvMapperS.getMSCommentList(parm);
+            case "samjungilsan":
+                return  app28ElvMapperSj.getMSCommentList(parm);
             default:
                 List<App28ElvlrtDto> object = null;
                 return object;
@@ -187,6 +223,10 @@ public class App28ElvlrtService {
                 return  app28ElvMapperN.GetMSCommentCount(sseq);
             case "hanyangs":
                 return  app28ElvMapperH.GetMSCommentCount(sseq);
+            case "samjung":
+                return  app28ElvMapperS.GetMSCommentCount(sseq);
+            case "samjungilsan":
+                return  app28ElvMapperSj.GetMSCommentCount(sseq);
             default:
                 return "";
         }
@@ -225,6 +265,18 @@ public class App28ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app28ElvMapperH.InsertMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app28ElvMapperS.InsertMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app28ElvMapperSj.InsertMSManual(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -269,6 +321,18 @@ public class App28ElvlrtService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app28ElvMapperS.UpdateMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app28ElvMapperSj.UpdateMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -305,6 +369,18 @@ public class App28ElvlrtService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app28ElvMapperH.DeleteMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app28ElvMapperS.DeleteMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app28ElvMapperSj.DeleteMSManual(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }

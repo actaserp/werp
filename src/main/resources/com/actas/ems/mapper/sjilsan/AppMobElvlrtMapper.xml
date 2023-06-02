@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App10SjilsanMobMapper">
+<!--      조회  -->
+    <select id="GetAppMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob001tDto">
+        <![CDATA[sELECT
+                     Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)  as recedate,
+                     isnull(a.recenum, '' ) as recenum,
+                     isnull(a.actcd, '' ) as actcd,
+                     isnull(b.actnm, '' ) as actnm,
+                     isnull(e.pernm, '' ) as actpernm,
+                     isnull(a.equpcd, '' ) as equpcd,
+                     isnull(c.equpnm, '' ) as equpnm,
+                     isnull(a.contcd, '' ) as contcd,
+                     isnull(d.contnm, '' ) as contnm,
+                     isnull(a.contents, '' ) as contents,
+                     Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
+                     isnull(e.pernm, '' ) as pernm,
+                     isnull(a.perid, '') as perid ,
+                     isnull(a.cltcd, '') as cltcd,
+                     isnull(a.divicd, '') as divicd
+                 FROM tb_e401 a WITH(NOLOCK)
+                     LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+                     LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
+                     LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + a.perid = e.perid)
+                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
+                     LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+                     LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+                     LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+                     LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND g.faccd = j.faccd)
+                     LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+                     LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+                     LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND g.resultcd = m.resultcd)
+                 WHERE
+                     a.spjangcd = #{spjangcd}
+                   AND a.resultck like CONCAT('%',#{changeop},'%')
+                   AND b.actnm like CONCAT('%',#{actnm},'%')
+                   AND a.recedate BETWEEN #{frdate} AND #{todate}
+                   AND a.perid like CONCAT('%',#{perid},'%')
+                   AND pernm like CONCAT('%',#{pernm},'%')
+                 ORDER BY a.recedate desc, a.recetime desc
+        ]]>
+    </select>
+<!--    juseon mapper.xml -->
+    <select id="GetApp06MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+        select
+                      isnull(hseq, '' ) as hseq,
+                      Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
+                                Case when  hgroupcd = '' then ''
+                                when hgroupcd = '00' then ''
+                                when hgroupcd = '01' then 'DI-2 교재(Ver 2.08)'
+                                when hgroupcd = '02' then 'DI-2 교재(Ver 2.10)'
+                                when hgroupcd = '03' then 'DS4'
+                                else hgroupcd
+                          end as hgroupcd,
+                      isnull(hsubject, '' ) as hsubject,
+                      isnull(hpernm, '' ) as hpernm,
+                      isnull(hmemo, '' ) as hmemo,
+                    ( select isnull(Count(*),'') from tb_mattach where flag='MH' and board_idx=hseq and delete_yn = 'N') as attcnt,
+                      Case when hflag = 'Y' then 'MH'
+                       end as hflag
+            from tb_mhmanual WITH (NOLOCK)
+                  Where spjangcd = #{spjangcd}
+                        and custcd = #{custcd}
+                    order by hinputdate  DESC , hseq ASC
+
+    </select>
+    <select id="GetApp06MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob003tDto">
+        select
+            isnull(hseq, '' ) as hseq,
+            Left(hinputdate,4) + '-' + substring(hinputdate, 5,2)+ '-' + substring(hinputdate, 7,2)  as hinputdate,
+            Case when  hgroupcd = '' then ''
+            when hgroupcd = '00' then ''
+            when hgroupcd = '01' then 'DI-2 교재(Ver 2.08)'
+            when hgroupcd = '02' then 'DI-2 교재(Ver 2.10)'
+            when hgroupcd = '03' then 'DS4'
+            else hgroupcd
+            end as hgroupcd,
+                      isnull(hsubject, '' ) as hsubject,
+                      isnull(hpernm, '' ) as hpernm,
+                      isnull(hmemo, '' ) as hmemo,
+                    ( select isnull(Count(*),'') from tb_mattach where flag='MH' and board_idx=hseq and delete_yn = 'N') as attcnt,
+                      Case when hflag = 'Y' then 'MH'
+        end as hflag
+            from tb_mhmanual WITH (NOLOCK)
+        Where
+        (hmemo like concat('%',#{hmemo},'%') or hsubject like concat('%',#{hmemo},'%')) order by hinputdate DESC, hseq ASC
+
+    </select>
+    <update id="UpdateMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto">
+        update tb_mhmanual set
+        hinputdate = #{hinputdate}
+        <if test="hsubject != null ">,</if>
+        <if test="hsubject != null">hsubject=#{hsubject}</if>
+        <if test="hmemo != null ">,</if>
+        <if test="hmemo != null">hmemo=#{hmemo}</if>
+        where hseq = #{hseq}
+    </update>
+    <insert id="InsertMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto" >
+        insert into tb_mhmanual (custcd, spjangcd, hseq, hinputdate, hgroupcd, hsubject, hmemo, hpernm) values (#{custcd}, #{spjangcd}, #{hseq}, #{hinputdate}, #{hgroupcd}, #{hsubject}, #{hmemo}, #{hpernm})
+    </insert>
+    <select id="getMHManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(hseq) from tb_mhmanual  where Left(hseq,6) = #{hseq}
+    </select>
+    <insert id="InsertMBManual" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" >
+        insert into TB_MBMANUAL (custcd, spjangcd, bseq, binputdate, bgourpcd, bsubject, bmemo, bpernm) values (#{custcd}, #{spjangcd}, #{bseq}, #{binputdate}, #{bgourpcd}, #{bsubject}, #{bmemo}, #{bpernm})
+    </insert>
+    <select id="getMBManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(bseq) from TB_MBMANUAL  where Left(bseq,6) = #{bseq}
+    </select>
+    <select id="select06AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+            board_idx as boardIdx
+             , original_name as originalName
+             , save_name as saveName
+             , size
+             , flag
+             , delete_yn as deleteyn
+             , insert_time as inserttime
+             , delete_time as deletetime
+        FROM
+            tb_mattach with (nolock)
+        WHERE
+            delete_yn = 'N'
+          AND board_idx = #{boardIdx}
+          and flag  = #{flag}
+    </select>
+
+    <select id="select08AttachList" parameterType="com.actas.ems.DTO.AttachDTO" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+            board_idx as boardIdx
+             , original_name as originalName
+             , save_name as saveName
+             , size
+             , flag
+             , delete_yn as deleteyn
+             , insert_time as inserttime
+             , delete_time as deletetime
+        FROM
+            TB_MATTACH_MF with (nolock)
+        WHERE
+            delete_yn = 'N'
+          AND board_idx = #{boardIdx}
+          and flag  = #{flag}
+    </select>
+
+    <select id="GetApp0bMobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
+        select
+            isnull(bseq, '' ) as bseq,
+            Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
+            Case when bgourpcd = '' then ''
+            when bgourpcd = '01' then '공통'
+            else bgourpcd
+        end as bgourpcd,
+
+                     ( select isnull(Count(*),'') from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt,
+                      isnull(bsubject, '' ) as bsubject,
+                      isnull(bpernm, '' ) as bpernm,
+                      isnull(bmemo, '' ) as bmemo,
+                      Case when bflag = 'Y' then 'MB'
+                        end as bflag
+                  from TB_MBMANUAL WITH (NOLOCK)
+				  Where spjangcd = #{spjangcd}
+        and custcd = #{custcd}
+        order by binputdate DESC, bseq ASC
+    </select>
+
+    <select id="GetApp0bMobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual" resultType="com.actas.ems.DTO.Elvlrt.AppMob004tDto">
+        select
+            isnull(bseq, '' ) as bseq,
+            Left(binputdate,4) + '-' + substring(binputdate, 5,2)+ '-' + substring(binputdate, 7,2)  as binputdate,
+            Case when bgourpcd = '' then ''
+            when bgourpcd = '01' then '공통'
+            else bgourpcd
+        end as bgourpcd,
+
+                     ( select isnull(Count(*),'') from TB_MATTACH_MF where flag='MB' and board_idx=bseq and delete_yn = 'N') as attcnt,
+                      isnull(bsubject, '' ) as bsubject,
+                      isnull(bpernm, '' ) as bpernm,
+                      isnull(bmemo, '' ) as bmemo,
+                      Case when bflag = 'Y' then 'MB'
+        end as bflag
+                  from TB_MBMANUAL WITH (NOLOCK)
+				  Where spjangcd = #{spjangcd}
+        and custcd = #{custcd}
+        and (bmemo like concat('%',#{bmemo},'%') or bsubject like concat('%',#{bmemo},'%'))        order by binputdate DESC, bseq ASC
+    </select>
+    <update id="UpdateMBManual" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        update TB_MBMANUAL set
+        binputdate = #{binputdate}
+        <if test="bsubject != null ">,</if>
+        <if test="bsubject != null">bsubject=#{bsubject}</if>
+        <if test="bmemo != null ">,</if>
+        <if test="bmemo != null">bmemo=#{bmemo}</if>
+        where bseq = #{bseq}
+    </update>
+
+    <delete id="DeleteMManul" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
+        DELETE FROM tb_mbmanual WHERE bseq= #{bseq};
+    </delete>
+    <delete id="DeleteMHManual" parameterType="com.actas.ems.DTO.Elvlrt.App06ElvlrtDto">
+        delete from tb_mhmanual where hseq = #{hseq}
+    </delete>
+<select id="GetApp28MobList001"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
+select
+    sseq,
+    Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
+    spernm,
+    smemo,
+    isnull(sflag, '' ) as sflag,
+    isnull(subkey, '' ) as subkey
+    from tb_msmanual
+    Where spjangcd = #{spjangcd}
+      and custcd = #{custcd}
+      and subkey = 0
+     order by sseq desc
+</select>
+
+
+    <select id="GetApp28MobList002"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">-->
+    select sseq, concat(substring(sinputdate, 0, 5), '-', substring(sinputdate, 5, 2), '-', substring(sinputdate, 7, 2)) as sinputdate, sgroupcd, ssubject, sfilename, spernm, smemo, sflag,
+           subkey,
+           (select Count(*) from tb_mattach where flag='MS' and board_idx=sseq and delete_yn = 'N') as attcnt
+    from tb_msmanual WITH (NOLOCK)
+    Where
+        len(isnull(subkey,'')) > 4
+    order by subkey desc
+</select>
+    <!--    Qna 게시판 검색-->
+    <select id="GetApp28MobList003"  parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" resultType="com.actas.ems.DTO.Elvlrt.AppMob005tDto">
+        select
+            sseq,
+            Left(sinputdate,4) + '-' + substring(sinputdate, 5,2)+ '-' + substring(sinputdate, 7,2)  as sinputdate,
+            spernm,
+            smemo,
+            isnull(sflag, '' ) as sflag,
+            isnull(subkey, '' ) as subkey
+        from tb_msmanual
+        Where spjangcd = #{spjangcd}
+          and custcd = #{custcd}
+          and subkey = 0
+          AND smemo like CONCAT('%',#{smemo},'%')
+        order by sseq desc
+    </select>
+    <insert id="InsertMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto" >
+        insert into tb_msmanual (custcd, spjangcd, sseq, sinputdate, smemo, spernm, sflag, subkey) values (#{custcd}, #{spjangcd}, #{sseq}, #{sinputdate}, #{smemo}, #{spernm}, #{sflag}, #{subkey})
+    </insert>
+
+    <select id="getMSManualMaxSeq"  parameterType="string" resultType="java.lang.String">
+        select max(sseq) from tb_msmanual  where Left(sseq,6) = #{sseq}
+    </select>
+    <update id="UpdateMSManual" parameterType="com.actas.ems.DTO.Elvlrt.App28ElvlrtDto">
+        update tb_msmanual set
+        ssubject=#{ssubject}
+        <if test="smemo != null ">,</if>
+        <if test="smemo != null">smemo=#{smemo}</if>
+        <if test="spernm != null ">,</if>
+        <if test="spernm != null">spernm=#{spernm}</if>
+        where sseq = #{sseq}
+    </update>
+    <select id="code754get06List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '754' AND (com_code <> '00')  order by com_cls
+
+        ]]>
+    </select>
+    <select id="code754get08List"  resultType="com.actas.ems.DTO.CommonDto">
+        <![CDATA[
+        select com_code AS code, com_cnam AS cnam from tb_ca510 WITH (NOLOCK) WHERE com_cls = '755'
+                                                                              AND (com_code <> '00') order by com_cls
+        ]]>
+    </select>
+
+    <select id="GetAppMobList_002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        <![CDATA[ sELECT top(50)
+                    b.actnm as actnm,
+                    d.contnm as contnm,
+                    a.recedate as recedate,
+                    a.contents as contents,
+                    h.resunm as resunm,
+                    k.greginm as greginm,
+                    l.reginm as reginm,
+                    i.remonm as remonm,
+                    g.remoremark as remoremark,
+                    g.resuremark as resuremark,
+                    e.pernm as pernm,
+                    CASE when g.compdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
+                    else Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2)
+                    end as compdate
+                    FROM tb_e401 a WITH(NOLOCK)
+                     LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+                     LEFT OUTER JOIN TB_E611 c WITh(NOLOCK) ON (a.custcd = c.custcd AND a.spjangcd = c.spjangcd AND a.actcd = c.actcd AND  a.equpcd = c.equpcd)
+                     LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+                     LEFT OUTER JOIN TB_JA001 e WITh(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND 'p' + b.perid = e.perid)
+                     LEFT OUTER JOIN TB_JC002 f WITh(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.divicd = f.divicd)
+                     LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+                     LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+                     LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+                     LEFT OUTER JOIN tb_e019 j WITH(NOLOCK) ON (b.custcd = j.custcd AND b.spjangcd = j.spjangcd AND g.faccd = j.faccd)
+                     LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+                     LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+                     LEFT OUTER JOIN tb_e015 m WITH(NOLOCK) ON (b.custcd = m.custcd AND b.spjangcd = m.spjangcd AND g.resultcd = m.resultcd)
+                 WHERE
+
+                     a.spjangcd = #{spjangcd}
+    AND a.resultck like CONCAT('%','1','%')
+    AND a.actnm like CONCAT('%',#{actnm},'%')
+    AND d.contnm like CONCAT('%',#{contnm},'%')
+    AND k.greginm like CONCAT('%',#{greginm},'%')
+    AND i.remonm like CONCAT('%',#{remonm},'%')
+    AND a.recedate BETWEEN #{frdate} AND #{todate}
+        ]]>
+    </select>
+
+    <select id="GetAppMobList_003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App14ElvlrtDto">
+        <![CDATA[ SELECT
+                      Z.pernm as pernm,
+                      Z.divinm as divinm,
+                      Z.rspnm as rspnm,
+                      Z.handphone as handphone
+
+                  FROM
+                      (
+                          SELECT  A.perid,
+                                  A.pernm 	 ,
+                                  C.divinm	 ,
+                                  D.rspnm  ,
+                                  A.tel		,
+                                  A.handphone,
+                                  A.entdate ,
+                                  DATEDIFF(year, A.ENTDATE, GETDATE()) AS DAYTERM,
+                                  case len(SUBSTRING(A.RNUM,1,6))  when 6  then DATEDIFF(YEAR,   SUBSTRING(A.RNUM,1,6), GETDATE()) + 1
+                                                                   else 	0 end AS AGEGAP,
+                                  (select blood from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as blood,
+                                  A.mrgyn	,
+                                  A.fami60,
+                                  (select top 1  schnm from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc ) as schnm,
+                                  (select top 1  igrad   from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc )   as igrad,
+                                  (select top 1  majo   from tb_pa101 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid order by schcd desc )   as majo,
+                                  (select carm from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as carm,
+                                  (select grad from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as grad,
+                                  (select army from tb_pa102 where custcd=A.custcd and spjangcd=A.spjangcd and perid=A.perid ) as army,
+                                  A.disperyn,
+                                  A.email,
+                                  A.zipadres,
+                                  A.adres,
+                                  C.divicd,
+                                  A.mpclafi,
+                                  A.rtclafi,
+                                  A.perclasifi,
+                                  A.rspcd
+
+                          FROM TB_JA001 A,
+                               TB_XA012 B,
+                               TB_JC002 C,
+                               TB_PZ001 D
+                          WHERE (A.custcd   = B.custcd   )
+                            AND (A.spjangcd = B.spjangcd )
+                            AND (A.custcd   = C.custcd   )
+                            AND (A.spjangcd   = C.spjangcd   )
+                            AND (A.divicd   = C.divicd   )
+                            AND (A.custcd   = D.custcd   )
+                            AND (A.spjangcd = D.spjangcd )
+                            AND (A.rspcd    = D.rspcd    )
+                            AND C.divinm like CONCAT('%',#{divinm},'%')
+                            AND a.pernm like CONCAT('%',#{pernm},'%')
+                            AND a.rtclafi like CONCAT('%','001','%')
+
+                      ) Z
+        ]]>
+    </select>
+
+    <!--박광열, 보수현장정보-->
+    <select id="GetAppMobListr_004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+            CASE WHEN ISNULL(b.elno,'') = ''
+		THEN '미기입'
+		ELSE b.elno
+        END elno,
+                    b.equpcd as equpcd,
+					b.equpnm as equpnm,
+                    a.actcd as actcd,
+					a.actnm as actnm,
+                     a.cltcd as cltcd,
+					isnull(a.address, '') + isnull(a.address2, '') as actaddr ,
+					isnull(a.tel, '') as tel,
+					isnull(a.hp, '') as hp,
+                    isnull((select pernm from tb_ja001 where spjangcd=a.spjangcd and perid='p'+a.perid), '') as pernm ,
+                    isnull((select top 1 isnull(emtelnum, '') from tb_e611 where spjangcd=a.spjangcd and actcd=a.actcd order by emtelnum desc), '') as emtelnum
+                    from
+                    TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+					on a.actcd=b.actcd
+					where a.actnm  like CONCAT('%',#{actnm},'%')
+
+        ]]>
+    </select>
+
+    <!--박광열, 고장이력-->
+    <select id="GetAppMobListr_005"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App16ElvlrtDto">
+        <![CDATA[
+        select top(100)
+            CONVERT(int, a.recedate) as recedate,
+                CASE when g.compdate is null THEN Left(a.recedate,4) + '-' + substring(a.recedate, 5,2)+ '-' + substring(a.recedate, 7,2)
+            else Left(g.compdate,4) + '-' + substring(g.compdate, 5,2)+ '-' + substring(g.compdate, 7,2)
+        end as compdate,
+	   a.actnm as actnm,
+	  CASE WHEN ISNULL(a.equpnm,'') = ''
+		THEN '미기입'
+		ELSE a.equpnm
+        END equpnm,
+	   a.hitchdate as hitchdate,
+	   a.indate as indate,
+	   CASE WHEN ISNULL(d.contnm,'') = ''
+		THEN '미기입'
+		ELSE d.contnm
+        END contnm,
+	   isnull(a.contents,'미기입') as contents,
+	   isnull(k.greginm,'미기입') as greginm,
+	   isnull(l.reginm, '미기입') as reginm,
+	   isnull(i.remonm, '미기입')as remonm,
+	   isnull(g.remoremark, '미기입') as remoremark,
+	   isnull(h.resunm, '미기입') as resunm
+
+from
+TB_E401 a
+LEFT OUTER JOIN TB_E010 d WITh(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.contcd = d.contcd)
+LEFT OUTER JOIN TB_E601 b WITh(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.actcd = b.actcd)
+LEFT OUTER JOIN tb_e411 g WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = g.recedate AND a.recenum = g.recenum)
+LEFT OUTER JOIN tb_e013 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND g.gregicd = k.gregicd)
+LEFT OUTER JOIN tb_e011 i WITH(NOLOCK) ON (b.custcd = i.custcd AND b.spjangcd = i.spjangcd AND g.remocd = i.remocd)
+LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (b.custcd = l.custcd AND b.spjangcd = l.spjangcd AND g.gregicd = l.gregicd AND g.regicd = l.regicd  )
+LEFT OUTER JOIN tb_e012 h WITH(NOLOCK) ON (b.custcd = g.custcd AND b.spjangcd = h.spjangcd AND g.resucd = h.resucd)
+where a.actnm like CONCAT('%',#{actnm},'%')
+and a.equpnm like CONCAT('%',#{equpnm},'%')
+and compdate <　GETDATE()
+order by recedate desc;
+        ]]>
+    </select>
+
+    <select id="GetAppMobList_004"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+    select mseq, Left(minputdate,4) + '-' + substring(minputdate, 5,2) + '-' + substring(minputdate, 7,2) as minputdate, mgourpcd, msubject, mfilename, mpernm, memo, mflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=mgourpcd),'분류없음') as cnam,
+    (select Count(*) from tb_mattach where flag='MM' and board_idx=mseq and delete_yn = 'N') as attcnt
+    from tb_mmanual WITH (NOLOCK)
+    Where 1 = 1
+    <if test="subject != null">
+    and msubject like '%' + #{subject} + '%'
+    </if>
+    <if test="memo != null">
+        and memo like '%' + #{memo} + '%'
+    </if>
+    <if test="groupcd != null">
+        and mgourpcd like '%' + #{groupcd} + '%'
+    </if>
+    </select>
+
+    <select id="GetAppMobList_e"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select eseq, Left(einputdate,4) + '-' + substring(einputdate, 5,2) + '-' + substring(einputdate, 7,2) as einputdate , egroupcd, esubject, efilename, epernm, ememo, eflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=egroupcd),'분류없음') as cnam,
+        (select Count(*) from tb_mattach where flag='EE' and board_idx=eseq and delete_yn = 'N') as attcnt
+        from tb_metcmanual WITH (NOLOCK)
+        Where 1 = 1
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+        <if test="subject != null">
+            and esubject like '%' + #{subject} + '%'
+        </if>
+        <if test="memo != null">
+            and ememo like '%' + #{memo} + '%'
+        </if>
+        <if test="groupcd != null">
+            and egroupcd like '%' + #{groupcd} + '%'
+        </if>
+    </select>
+
+    <select id="GetAppMobList_d"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App04ElvlrtDto">
+        select dseq, Left(dinputdate,4) + '-' + substring(dinputdate, 5,2) + '-' + substring(dinputdate, 7,2) as dinputdate , dgourpcd, dsubject, dfilename, dpernm, dmemo, dflag, isnull((select com_cnam from tb_ca510 where com_cls = '750' and com_code=dgourpcd),'분류없음') as cnam,
+        (select Count(*) from tb_mattach where flag='DD' and board_idx=dseq and delete_yn = 'N') as attcnt
+        from tb_mdevmanual WITH (NOLOCK)
+        Where 1 = 1
+        <!--        <if test="msubject != null">-->
+        <!--            and msubject like '%' + #{msubject} + '%'-->
+        <!--        </if>-->
+        <!--        <if test="memo != null">-->
+        <!--            and memo like '%' + #{memo} + '%'-->
+        <!--        </if>-->
+        <if test="subject != null">
+            and dsubject like '%' + #{subject} + '%'
+        </if>
+        <if test="memo != null">
+            and dmemo like '%' + #{memo} + '%'
+        </if>
+        <if test="groupcd != null">
+            and dgourpcd like '%' + #{groupcd} + '%'
+        </if>
+    </select>
+
+    <select id="GetMobThumbList_001" parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.AttachDTO">
+        SELECT idx,
+        board_idx as boardIdx
+        , original_name as originalName
+        , save_name as saveName
+        , size
+        , flag
+        , delete_yn as deleteyn
+        , insert_time as inserttime
+        , delete_time as deletetime
+        FROM
+        tb_mattach with (nolock)
+        WHERE
+        delete_yn = 'N'
+        AND board_idx = #{seq}
+        and flag  = #{flag}
+    </select>
+
+    <!--박광열-->
+
+    <insert id="Insert10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        insert into tb_e411 (custcd, spjangcd, compnum, compdate,  recenum, recedate, recetime,    actnm,  resultcd, gregicd, regicd, resucd, resuremark, perid, contcd, actcd, equpcd, equpnm,  "result", remocd, actperid, remoremark, arrivdate, datetime, datetime2, comptime, indate, arrivtime, resulttime) values
+            (#{custcd}, #{spjangcd}, #{compnum}, #{compdate},  #{recenum}, #{recedate}, #{recetime},  #{actnm},  #{resultcd}, #{gregicd}, #{regicd},  #{resucd}, #{resuremark}, #{perid}, #{contcd}, #{actcd}, #{equpcd}, #{equpnm}, '1', #{remocd}, #{actperid}, #{remoremark}, #{arrivdate}, #{datetime}, #{datetime2}, #{comptime}, #{indate}, #{arrivtime}, #{resulttime})
+    </insert>
+
+
+    <update id="Update10Manul" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e411
+        set indate = #{indate}
+        <if test="compdate != null ">,</if>
+        <if test="compdate != null">compdate=#{compdate}</if>
+
+
+        <if test="resultcd != null ">,</if>
+        <if test="resultcd != null">resultcd=#{resultcd}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="regicd != null ">,</if>
+        <if test="regicd != null">regicd=#{regicd}</if>
+        <if test="resucd != null ">,</if>
+        <if test="resucd != null">resucd=#{resucd}</if>
+        <if test="resuremark != null ">,</if>
+        <if test="resuremark != null">resuremark=#{resuremark}</if>
+        <if test="remonm != null ">,</if>
+        <if test="remonm != null">remonm=#{remonm}</if>
+        <if test="facnm != null ">,</if>
+        <if test="facnm != null">facnm=#{facnm}</if>
+        <if test="resultnm != null ">,</if>
+        <if test="resultnm != null">resultnm=#{resultnm}</if>
+        <if test="resunm != null ">,</if>
+        <if test="resunm != null">resunm=#{resunm}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum}
+    </update>
+
+
+    <!--박광열 끝-->
+
+
+    <!--점검계획 조회-->
+    <select id="GetplanList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        SELECT isnull(a.custcd, '') as custcd,
+               isnull(a.spjangcd, '') as spjangcd,
+               isnull(a.plandate, '') as plandate,
+               isnull(a.cltcd, '') as cltcd,
+               isnull(a.actcd, '') as actcd,
+               isnull(a.actnm, '') as actnm,
+               isnull(a.equpcd, '') as equpcd,
+               isnull(h.equpnm, '') as equpnm,
+               isnull(a.perid, '') as perid,
+               isnull(d.pernm, '') as pernm,
+               isnull(a.remark, '') as remark,
+               isnull(a.kcpernm, '') as kcpernm,
+               isnull(a.kcspnm, '') as kcspnm,
+               isnull(a.indate, '') as indate,
+               isnull(CONVERT(varchar, a.qty), '') as qty
+        FROM tb_e073 a WITH(NOLOCK)
+						 LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            LEFT OUTER JOIN TB_E611 h WITH(NOLOCK) ON (a.custcd = h.custcd AND a.spjangcd = h.spjangcd AND a.actcd = h.actcd AND a.equpcd = h.equpcd)
+        WHERE a.custcd like CONCAT('%',#{custcd},'%')
+          AND a.spjangcd like CONCAT('%',#{spjangcd},'%')
+          AND a.actnm like CONCAT('%',#{actnm},'%')
+          AND a.perid like CONCAT('%',#{perid}, '%')
+          AND a.plandate between #{frdate} AND #{todate}
+          and pernm like CONCAT('%',#{pernm},'%')
+        order by plandate desc
+    </select>
+
+    <!--점검계획 등록-->
+    <insert id="Insertplan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        insert into TB_E073 (custcd, spjangcd, cltcd, plandate, actcd, actnm, equpcd, equpnm, perid, kcpernm, remark, qty, indate, kcspnm) values (#{custcd}, #{spjangcd}, #{cltcd}, #{plandate}, #{actcd}, #{actnm}, #{equpcd}, #{equpnm}, #{perid}, #{kcpernm}, #{remark}, #{qty}, #{indate}, #{kcspnm})
+    </insert>
+
+
+    <!--사업자 코드 조회-->
+    <select id="GetcltnmList" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto" resultType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        select isnull(cltcd, '') as cltcd,
+               isnull(cltnm, '') as cltnm,
+               isnull(saupnum, '') as saupnum,
+               isnull(prenm, '') as prenm
+        from TB_XCLIENT
+        where cltnm like CONCAT('%',#{cltnm},'%')
+
+    </select>
+
+    <!--점검계획 삭제-->
+    <delete id="DeletePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        delete from TB_E073 where plandate = #{plandate} and actcd like CONCAT('%',#{actcd},'%') and equpcd like CONCAT('%',#{equpcd},'%')
+    </delete>
+
+
+    <!--점검계획 수정-->
+    <update id="UpdatePlan" parameterType="com.actas.ems.DTO.Elvlrt.AppMobPlanDto">
+        update TB_E073
+        set plandate = #{plandate}
+
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+
+
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+
+        <if test="actnm != null ">,</if>
+        <if test="actnm != null">actnm=#{actnm}</if>
+
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+
+        <if test="equpnm != null ">,</if>
+        <if test="equpnm != null">equpnm=#{equpnm}</if>
+
+        <if test="kcpernm != null ">,</if>
+        <if test="kcpernm != null">kcpernm=#{kcpernm}</if>
+
+        <if test="kcspnm != null ">,</if>
+        <if test="kcspnm != null">kcspnm=#{kcspnm}</if>
+
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and plandate = #{plandate2} and cltcd = #{cltcd2} and actcd = #{actcd2} and equpcd = #{equpcd2}
+    </update>
+
+
+    <!--접수 조회-->
+    <!--      관제현황 / 접수현황LIST  -->
+    <select id="GetApp01List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App03ElvlrtDto">
+        <![CDATA[
+        SELECT		a.recedate,
+                      a.hitchdate,
+                      a.recetime,
+                      a.hitchhour,
+                      a.recenum,
+                      isnull(a.equpcd, '') as equpcd,
+                      isnull(a.cltcd,'') as cltcd,
+                      a.actcd as actcd,
+                      isnull(a.actnm, '') as actnm,
+                      a.equpcd as equpcd,
+                      isnull(a.equpnm,'') as equpnm,
+                      isnull(a.pernm,'') AS actpernm,
+                      isnull(a.contcd,'') as contcd,
+                      isnull(a.contnm,'') as contnm,
+                      isnull(a.tel,'') as tel,
+                      a.reperid as reperid,
+                      a.repernm as repernm,
+                      a.perid as perid,
+                      a.pernm as pernm,
+                      a.handphone as handphone,
+                      isnull(a.contremark,'') as contents,
+                      a.remark as remark,
+                      isnull(a.addrtxt,'') as addrtxt
+        FROM
+            (
+                SELECT a.custcd,
+                       a.spjangcd,
+                       a.cltcd,
+                       a.actcd,
+                       a.equpcd,
+                       a.recedate,
+                       a.recenum,
+                       a.recetime,
+                       a.hitchdate,
+                       a.hitchhour,
+                       q.actnm,
+                       m.equpnm,
+                       1 as cnt,
+                       1 as ascnt,
+                       a.contcd,
+                       p.contnm,
+                       a.contents as contremark,
+                       a.reperid ,
+                       g.pernm as repernm,
+                       a.perid,
+                       d.pernm,
+                       d.handphone,
+                       a.resultck,
+                       a.remark,
+                       q.tel as tel,
+                       isnull(q.anaddress, '') + ' ' + isnull(q.anaddress2, '') as addrtxt
+                FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+                    LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+                    LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+                    LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+                    LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND  isnull(a.actnm,'') Like concat('%',#{actnm},'%')
+          AND  a.perid like CONCAT('%',#{perid},'%')
+          AND a.pernm like CONCAT('%',#{pernm},'%')
+          AND a.resultck like concat('%','','%')
+        ORDER BY A.recedate desc, A.recetime desc
+        ]]>
+    </select>
+
+
+
+
+    <!--박광열, 보수현장정보(점검계획 전용)-->
+    <select id="GetAppMobListr_004_plan"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+                    a.actcd as actcd,
+                a.actnm as actnm,
+               a.cltcd as cltcd
+        from
+            TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+        on a.actcd=b.actcd
+        where a.actnm  like CONCAT('%',#{actnm},'%')
+        group by a.actcd, a.actnm, a.cltcd, a.cltcd
+
+
+        ]]>
+    </select>
+
+    <!--  호기코드 삽입-->
+
+    <select id="getMaxPlandate" parameterType="string" resultType="java.lang.String">
+        select max(equpcd) from TB_E073 where plandate = #{plandate}
+    </select>
+
+    <select id="GetAppMobListr_004_e601"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App26ElvlrtDto">
+        <![CDATA[
+        select top 100
+                    a.actcd as actcd,
+                a.cltcd as cltcd,
+               b.equpcd as equpcd,
+               b.equpnm as equpnm,
+               a.actnm as actnm,
+               a.cltcd as cltcd
+        from
+            TB_E601 a with (NOLOCK)
+                    left outer join TB_E611 b with (nolock)
+        on a.actcd=b.actcd
+        where a.actnm  like CONCAT('%',#{actnm},'%')
+        ]]>
+    </select>
+
+
+    <!-- 고장접수 수정 -->
+    <update id="UpdateE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e401
+        set indate = #{indate}
+        <if test="recedate != null ">,</if>
+        <if test="recedate != null">recedate=#{recedate}</if>
+        <if test="recetime != null ">,</if>
+        <if test="recetime != null">recetime=#{recetime}</if>
+        <if test="hitchdate != null ">,</if>
+        <if test="hitchdate != null">hitchdate=#{hitchdate}</if>
+        <if test="hitchhour != null ">,</if>
+        <if test="hitchhour != null">hitchhour=#{hitchhour}</if>
+        <if test="actcd != null ">,</if>
+        <if test="actcd != null">actcd=#{actcd}</if>
+        <if test="equpcd != null ">,</if>
+        <if test="equpcd != null">equpcd=#{equpcd}</if>
+        <if test="contcd != null ">,</if>
+        <if test="contcd != null">contcd=#{contcd}</if>
+        <if test="contents != null ">,</if>
+        <if test="contents != null">contents=#{contents}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="reperid != null ">,</if>
+        <if test="reperid != null">reperid=#{reperid}</if>
+         <if test="equpnm != null ">,</if>
+        <if test="equpnm != null">equpnm=#{equpnm}</if>
+        <if test="actnm != null ">,</if>
+        <if test="actnm != null">actnm=#{actnm}</if>
+
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate2}
+    </update>
+
+    <!--고장접수 등록-->
+    <insert id="InsertE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto" >
+        insert into tb_e401 (custcd, spjangcd,  recenum, recedate, recetime,  cltcd, actnm, hitchdate, hitchhour, actcd,  equpcd,  contcd, contents, remark, perid, reperid, inperid, indate, datetime, datetime2, resultck) values
+            (#{custcd}, #{spjangcd},  #{recenum}, #{recedate}, #{recetime},#{cltcd},#{actnm},  #{hitchdate}, #{hitchhour}, #{actcd}, #{equpcd}, #{contcd}, #{contents}, #{remark}, #{perid}, #{reperid}, #{inperid}, #{indate}, #{datetime}, #{datetime2}, '0')
+    </insert>
+
+        <!--고장접수 삭제-->
+    <delete id="DeleteE401" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        delete from tb_e401 where recedate = #{recedate} and recenum=#{recenum}
+    </delete>
+
+
+    <!--고장처리 조회-->
+    <select id="GetAppMobList002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        select a.compdate,
+               a.compnum,
+               isnull(a.recedate, '') as recedate,
+               isnull(a.recenum, '') as recenum,
+               isnull(a.perid, '') as perid,
+               isnull(b.pernm, '') as pernm,
+               isnull(a.actcd, '') as actcd,
+               isnull(a.actnm, '') as actnm,
+               isnull(a.equpcd, '') as equpcd,
+               isnull(a.equpnm, '') as equpnm,
+               isnull(a.resucd, '') as resucd,
+               isnull(c.resunm, '') as resunm,
+               isnull(a.resuremark, '') as resuremark,
+               isnull(a.gregicd, '') as gregicd,
+               isnull(d.greginm, '') as greginm,
+               isnull(a.regicd, '') as regicd,
+               isnull(l.reginm, '') as reginm,
+               isnull(a.remocd, '') as remocd,
+               isnull(e.remonm, '') as remonm,
+               isnull(a.resultcd, '') as resultcd,
+               isnull(f.resultnm, '') as resultnm,
+               isnull(a.resuremark, '') as resuremark,
+               isnull(a.remoremark, '') as remoremark,
+               ISNULL(a.comptime, '') as comptime,
+               ISNULL(a.arrivtime, '') as arrivtime
+        from TB_E411 a  WITH(NOLOCK)
+		LEFT OUTER JOIN TB_JA001 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.perid = substring(b.perid, 2, 10))
+            LEFT OUTER JOIN TB_E012 c WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd and a.resucd = c.resucd)
+            LEFT OUTER JOIN tb_e013 d WITH(NOLOCK) ON (a.custcd = a.custcd AND b.spjangcd = d.spjangcd AND a.gregicd = d.gregicd)
+            LEFT OUTER JOIN tb_e014 l WITH(NOLOCK) ON (a.custcd = l.custcd AND a.spjangcd = l.spjangcd AND d.gregicd = l.gregicd AND a.regicd = l.regicd  )
+            LEFT OUTER JOIN tb_e011 e WITH(NOLOCK) ON (a.custcd = e.custcd AND a.spjangcd = e.spjangcd AND a.remocd = e.remocd)
+            LEFT OUTER JOIN tb_e015 f WITH(NOLOCK) ON (a.custcd = f.custcd AND a.spjangcd = f.spjangcd AND a.resultcd = f.resultcd)
+        where a.custcd = #{custcd}
+          and a.spjangcd = #{spjangcd}
+          and a.perid like CONCAT('%',#{perid2},'%')
+          and pernm like CONCAT('%',#{pernm},'%')
+          and a.actnm like CONCAT('%',#{actnm},'%')
+          and a.compdate between #{frdate} and #{todate}
+        order by compdate desc
+    </select>
+
+
+
+    <!--고장처리 삭제-->
+    <delete id="DeleteList002" parameterType="com.actas.ems.DTO.Popup.PopupDto">
+        delete from TB_E411 where compdate = #{compdate} and compnum = #{compnum}  and custcd = #{custcd}   and spjangcd = #{spjangcd}
+    </delete>
+
+    <!--고장처리 삭제시 고장접수 미처리로 다시 롤백-->
+    <update id="UpdateList002_rollback" parameterType="com.actas.ems.DTO.Popup.PopupDto">
+        update tb_e401
+        set resultck = '0'
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and recenum = #{recenum} and recedate = #{recedate}
+    </update>
+
+
+
+
+    <!--고장처리 수정-->
+    <update id="Update10Manull" parameterType="com.actas.ems.DTO.Elvlrt.App10ElvlrtDto">
+        update tb_e411
+        set indate = #{indate}
+        <if test="resultcd != null ">,</if>
+        <if test="resultcd != null">resultcd=#{resultcd}</if>
+        <if test="gregicd != null ">,</if>
+        <if test="gregicd != null">gregicd=#{gregicd}</if>
+        <if test="regicd != null ">,</if>
+        <if test="regicd != null">regicd=#{regicd}</if>
+        <if test="remocd != null ">,</if>
+        <if test="remocd != null">remocd=#{remocd}</if>
+        <if test="resucd != null ">,</if>
+        <if test="resucd != null">resucd=#{resucd}</if>
+        <if test="remoremark != null ">,</if>
+        <if test="remoremark != null">remoremark=#{remoremark}</if>
+        <if test="resuremark != null ">,</if>
+        <if test="resuremark != null">resuremark=#{resuremark}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="update_time != null ">,</if>
+        <if test="update_time != null">update_time=#{update_time}</if>
+
+        where custcd = #{custcd} and spjangcd = #{spjangcd} and compnum = #{compnum} and compdate = #{compdate} and recenum = #{recenum}
+    </update>
+
+
+
+</mapper>

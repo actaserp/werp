@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.actas.ems.Mapper.sjilsan.App12SjilsanMapper">
+
+    <!--  기간별 고장내용  -->
+    <select id="GetApp12List001"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App12ElvlrtDto">
+        <![CDATA[
+        SELECT concat(substring(a.recedate, 3, 2), '-', substring(a.recedate, 5, 2), '-', substring(a.recedate, 7, 2)) as recedate,
+            Left(a.recetime,2) + ':' + substring(a.recetime, 3,2) as recetime,
+       a.actnm actnm,
+       a.equpnm equpnm,
+		a.cnt cnt,
+       a.ascnt ascnt,
+       d.pernm AS actpernm,
+       a.divinm divinm,
+       a.pernm pernm,
+       a.contnm contnm,
+       a.contremark contremark,
+       a.resunm resunm,
+		 a.resuremark resuremark,
+	   c.jejak jejak,
+       c.model model,
+	   c.yyyymm yyyymm,
+	   a.repernm repernm,
+       a.remonm remonm,
+		a.remoremark remoremark,
+	   a.greginm greginm,
+	   a.reginm reginm,
+       a.result as result,
+	   concat(substring(a.compdate, 3, 2), '-', substring(a.compdate, 5, 2), '-', substring(a.compdate, 7, 2)) as compdate,
+            Left(a.arrivtime,2) + ':' + substring(a.arrivtime, 3,2) as arrivtime,
+            Left(a.comptime,2) + ':' + substring(a.comptime, 3,2) as comptime,
+            a.resutime,
+            a.resulttime,
+       a.resultnm resultnm
+
+FROM
+(
+SELECT a.custcd,
+       a.spjangcd,
+       a.cltcd,
+       a.actcd,
+       a.equpcd,
+       a.recedate,
+       a.recetime,
+	    q.actnm,
+	    m.equpnm,
+	    1 as cnt,
+       1 as ascnt,
+	    d.pernm,
+		 e.divinm,
+       a.contcd,
+	    p.contnm,
+	    a.contents as contremark,
+       b.resucd,
+	    s.resunm,
+       resuremark,
+	    g.pernm as repernm,
+       b.remocd,
+	    r.remonm,
+	    b.remoremark,
+       b.gregicd,
+	    v.greginm,
+       b.regicd,
+	    k.reginm,
+		 (case when isnull(b.result, '0') = '0' then '미처리' else '처리' end) as result,
+       b.resultcd,
+       b.arrivtime,
+	    b.compdate,
+       b.comptime,
+		 b.resutime,
+	  	 b.resulttime,
+		 z.resultnm
+  FROM tb_e401 a WITH(NOLOCK)
+		 LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+		 LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+		 LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+		 LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+       LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+		 LEFT OUTER JOIN TB_JC002 e WITH(NOLOCK) ON (d.custcd = e.custcd AND d.spjangcd = e.spjangcd AND d.divicd = e.divicd)
+		 LEFT OUTER JOIN tb_e411 b WITH(NOLOCK) ON (a.custcd = b.custcd AND a.spjangcd = b.spjangcd AND a.recedate = b.recedate AND a.recenum = b.recenum)
+		 LEFT OUTER JOIN tb_e012 s WITH(NOLOCK) ON (b.custcd = s.custcd AND b.spjangcd = s.spjangcd AND b.resucd = s.resucd)
+		 LEFT OUTER JOIN tb_e013 v WITH(NOLOCK) ON (b.custcd = v.custcd AND b.spjangcd = v.spjangcd AND b.gregicd = v.gregicd)
+		 LEFT OUTER JOIN tb_e014 k WITH(NOLOCK) ON (b.custcd = k.custcd AND b.spjangcd = k.spjangcd AND b.gregicd = k.gregicd AND b.regicd = k.regicd)
+		 LEFT OUTER JOIN tb_e011 r WITH(NOLOCK) ON (b.custcd = r.custcd AND b.spjangcd = r.spjangcd AND b.remocd = r.remocd)
+		 LEFT OUTER JOIN tb_e015 z WITH(NOLOCK) ON (b.custcd = z.custcd AND b.spjangcd = z.spjangcd AND b.resultcd = z.resultcd)
+) a, tb_e601 b
+     LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (b.custcd = d.custcd AND b.spjangcd = d.spjangcd AND b.perid = substring(d.perid, 2, 10)), tb_e611 c
+  WHERE a.custcd = b.custcd
+    AND a.spjangcd = b.spjangcd
+    AND a.actcd = b.actcd
+    AND a.custcd = c.custcd
+    AND a.spjangcd = c.spjangcd
+    AND a.actcd = c.actcd
+    AND a.equpcd = c.equpcd
+    AND a.recedate  between #{frdate} and #{todate}
+    AND (a.actcd = #{actcd} OR #{actcd} = '%')
+    AND (a.gregicd = #{gregicd} OR #{gregicd} = '%')
+    AND (a.contcd = #{contcd} OR #{contcd} = '%')
+    AND (a.remocd = #{remocd} OR #{remocd} = '%')
+    AND (a.resucd = #{resucd} OR #{resucd} = '%')
+    AND (a.resultcd = #{resultcd} OR #{resultcd} = '%')
+
+
+        ]]>
+    </select>
+
+
+    <!--      고장내용별현황 / 현장별 고장내용  -->
+    <select id="GetApp12List002"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App12ElvlrtDto">
+        <![CDATA[
+        SELECT   sum(a.cnt) as cnt,
+                 a.contnm as contnm,
+                 left(a.recedate,6) as recedate
+        FROM
+            (
+            SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            a.equpcd,
+            a.recedate,
+            a.recetime,
+            q.actnm,
+            m.equpnm,
+            1 as cnt,
+            1 as ascnt,
+            a.contcd,
+            p.contnm,
+            a.contents as contremark,
+            g.pernm as repernm,
+            d.pernm
+            FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND a.actcd = #{actcd}
+          AND a.contcd Like concat('%',#{contcd},'%')
+        group by  a.contnm,  left(a.recedate,6)
+        order by   left(a.recedate,6), a.contnm
+
+        ]]>
+    </select>
+
+    <!--      고장내용별현황 / 호기별 고장내용  -->
+    <select id="GetApp12List003"  parameterType="com.actas.ems.DTO.Popup.PopupDto" resultType="com.actas.ems.DTO.Elvlrt.App12ElvlrtDto">
+        <![CDATA[
+        SELECT   sum(a.cnt) as cnt,
+                 a.contnm as contnm,
+                a.equpnm as equpnm
+        FROM
+            (
+            SELECT a.custcd,
+            a.spjangcd,
+            a.cltcd,
+            a.actcd,
+            a.equpcd,
+            a.recedate,
+            a.recetime,
+            q.actnm,
+            m.equpnm,
+            1 as cnt,
+            1 as ascnt,
+            a.contcd,
+            p.contnm,
+            a.contents as contremark,
+            g.pernm as repernm,
+            d.pernm
+            FROM tb_e401 a WITH(NOLOCK)
+            LEFT OUTER JOIN TB_E601 q WITH(NOLOCK) ON (a.custcd = q.custcd AND a.spjangcd = q.spjangcd AND a.actcd = q.actcd)
+            LEFT OUTER JOIN TB_E611 m WITH(NOLOCK) ON (a.custcd = m.custcd AND a.spjangcd = m.spjangcd AND a.actcd = m.actcd AND a.equpcd = m.equpcd)
+            LEFT OUTER JOIN tb_e010 p WITH(NOLOCK) ON (a.custcd = p.custcd AND a.spjangcd = p.spjangcd AND a.contcd = p.contcd)
+            LEFT OUTER JOIN TB_JA001 g WITH(NOLOCK) ON (a.custcd = g.custcd AND a.spjangcd = g.spjangcd AND a.reperid = substring(g.perid, 2, 10))
+            LEFT OUTER JOIN TB_JA001 d WITH(NOLOCK) ON (a.custcd = d.custcd AND a.spjangcd = d.spjangcd AND a.perid = substring(d.perid, 2, 10))
+            ) a
+        WHERE  a.recedate  between #{frdate} and #{todate}
+          AND a.actcd = #{actcd}
+          AND a.contcd Like concat('%',#{contcd},'%')
+        group by  a.equpnm, a.contnm
+        order by   a.equpnm, a.contnm
+
+        ]]>
+    </select>
+
+</mapper>

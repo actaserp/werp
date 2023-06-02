@@ -4,6 +4,8 @@ package com.actas.ems.Service.elvlrt.App15;
 import com.actas.ems.DTO.Elvlrt.App15ElvlrtDto;
 import com.actas.ems.DTO.Popup.PopupDto;
 import com.actas.ems.Mapper.Elvlrt.App15ElvlrtMapper;
+import com.actas.ems.Mapper.samjung.App15SamMapper;
+import com.actas.ems.Mapper.sjilsan.App15SjilsanMapper;
 import com.actas.ems.Mapper.kyoung.App15KyoungMapper;
 import com.actas.ems.Mapper.gaon.App15GaonMapper;
 import com.actas.ems.Mapper.nm.App15NmyangMapper;
@@ -29,6 +31,10 @@ public class App15ElvlrtService {
     App15NmyangMapper app15ElvlrtMapperN;
     @Autowired
     App15ElvlrtMapper app15ElvlrtMapperH;
+    @Autowired
+    App15SamMapper app15ElvlrtMapperS;
+    @Autowired
+    App15SjilsanMapper app15ElvlrtMapperSj;
 
     //호기별고장통계
     public List<App15ElvlrtDto> GetApp15List001(PopupDto parm){
@@ -44,6 +50,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List001(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List001(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List001(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List001(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -65,6 +75,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List002(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List002(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List002(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List002(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -86,6 +100,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List003(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List003(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List003(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List003(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -107,6 +125,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List004(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List004(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List004(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List004(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -128,6 +150,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List005(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List005(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List005(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List005(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -149,6 +175,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List006(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List006(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List006(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List006(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -171,6 +201,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List007(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List007(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List007(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List007(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;
@@ -194,6 +228,10 @@ public class App15ElvlrtService {
                 return  app15ElvlrtMapperN.GetApp00List014(parm);
             case "hanyangs":
                 return  app15ElvlrtMapperH.GetApp00List014(parm);
+            case "samjung":
+                return  app15ElvlrtMapperS.GetApp00List014(parm);
+            case "samjungilsan":
+                return  app15ElvlrtMapperSj.GetApp00List014(parm);
             default:
                 List<App15ElvlrtDto> object = null;
                 return object;

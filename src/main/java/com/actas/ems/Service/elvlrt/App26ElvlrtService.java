@@ -6,6 +6,10 @@ import com.actas.ems.Mapper.Elvlrt.App26ElvlrtMapper;
 import com.actas.ems.Mapper.gaon.App26GaonMapper;
 import com.actas.ems.Mapper.kyoung.App26KyoungMapper;
 import com.actas.ems.Mapper.nm.App26NmyangMapper;
+import com.actas.ems.Mapper.samjung.App21SamMapper;
+import com.actas.ems.Mapper.samjung.App26SamMapper;
+import com.actas.ems.Mapper.sjilsan.App21SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App26SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,10 @@ public class App26ElvlrtService {
     App26NmyangMapper app26ElvMapperN;
     @Autowired
     App26ElvlrtMapper app26ElvMapperH;
+    @Autowired
+    App26SamMapper app26ElvMapperS;
+    @Autowired
+    App26SjilsanMapper app26ElvMapperSj;
 
     public List<App26ElvlrtDto> GetApp26List001(PopupDto parm){
         String ls_dbnm = UIUtils.getElvDataSourceNm();
@@ -42,6 +50,10 @@ public class App26ElvlrtService {
                 return  app26ElvMapperN.GetApp26List001(parm);
             case "hanyangs":
                 return  app26ElvMapperH.GetApp26List001(parm);
+            case "samjung":
+                return  app26ElvMapperS.GetApp26List001(parm);
+            case "samjungilsan":
+                return  app26ElvMapperSj.GetApp26List001(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -62,6 +74,10 @@ public class App26ElvlrtService {
                 return  app26ElvMapperN.GetApp26List002(parm);
             case "hanyangs":
                 return  app26ElvMapperH.GetApp26List002(parm);
+            case "samjung":
+                return  app26ElvMapperS.GetApp26List002(parm);
+            case "samjungilsan":
+                return  app26ElvMapperSj.GetApp26List002(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -82,6 +98,10 @@ public class App26ElvlrtService {
                 return  app26ElvMapperN.GetApp26List003(parm);
             case "hanyangs":
                 return  app26ElvMapperH.GetApp26List003(parm);
+            case "samjung":
+                return  app26ElvMapperS.GetApp26List003(parm);
+            case "samjungilsan":
+                return  app26ElvMapperSj.GetApp26List003(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -101,6 +121,10 @@ public class App26ElvlrtService {
                 return  app26ElvMapperN.GetApp26List004(parm);
             case "hanyangs":
                 return  app26ElvMapperH.GetApp26List004(parm);
+            case "samjung":
+                return  app26ElvMapperS.GetApp26List004(parm);
+            case "samjungilsan":
+                return  app26ElvMapperSj.GetApp26List004(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;

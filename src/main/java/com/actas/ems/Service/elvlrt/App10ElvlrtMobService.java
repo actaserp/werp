@@ -12,6 +12,12 @@ import com.actas.ems.Mapper.Elvlrt.App10ElvlrtMobMapper;
 import com.actas.ems.Mapper.gaon.App10GaonMobMapper;
 import com.actas.ems.Mapper.kyoung.App10KyoungMobMapper;
 import com.actas.ems.Mapper.nm.App10NmyangMobMapper;
+import com.actas.ems.Mapper.samjung.App09SamMapper;
+import com.actas.ems.Mapper.samjung.App10SamMapper;
+import com.actas.ems.Mapper.samjung.App10SamMobMapper;
+import com.actas.ems.Mapper.sjilsan.App09SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App10SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App10SjilsanMobMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +41,10 @@ public class App10ElvlrtMobService {
     App10NmyangMobMapper app10ElvMobMapperN;
     @Autowired
     App10ElvlrtMobMapper app10ElvMobMapperH;
+    @Autowired
+    App10SamMobMapper app10ElvMobMapperS;
+    @Autowired
+    App10SjilsanMobMapper app10ElvMobMapperSj;
     int queryResult = 1;
 
 
@@ -52,6 +62,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList001(parm);
             default:
                 List<AppMob001tDto> object = null;
                 return object;
@@ -73,6 +87,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp06MobList001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp06MobList001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp06MobList001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp06MobList001(parm);
             default:
                 List<AppMob003tDto> object = null;
                 return object;
@@ -91,6 +109,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp06MobList002(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp06MobList002(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp06MobList002(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp06MobList002(parm);
             default:
                 List<AppMob003tDto> object = null;
                 return object;
@@ -128,6 +150,18 @@ public class App10ElvlrtMobService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.DeleteMManul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.DeleteMManul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -171,6 +205,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.DeleteMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -191,6 +237,10 @@ public class App10ElvlrtMobService {
                         return  app10ElvMobMapperN.getMHManualMaxSeq(parm);
                     case "hanyangs":
                         return  app10ElvMobMapperH.getMHManualMaxSeq(parm);
+                    case "samjung":
+                        return  app10ElvMobMapperS.getMHManualMaxSeq(parm);
+                    case "samjungilsan":
+                        return  app10ElvMobMapperSj.getMHManualMaxSeq(parm);
                     default:
                         break;
                 }
@@ -209,6 +259,10 @@ public class App10ElvlrtMobService {
                             return  app10ElvMobMapperN.getMBManualMaxSeq(parm);
                         case "hanyangs":
                             return  app10ElvMobMapperH.getMBManualMaxSeq(parm);
+                        case "samjung":
+                            return  app10ElvMobMapperS.getMBManualMaxSeq(parm);
+                        case "samjungilsan":
+                            return  app10ElvMobMapperSj.getMBManualMaxSeq(parm);
                         default:
                             break;
                     }
@@ -227,6 +281,10 @@ public class App10ElvlrtMobService {
                                 return  app10ElvMobMapperN.getMSManualMaxSeq(parm);
                             case "hanyangs":
                                 return  app10ElvMobMapperH.getMSManualMaxSeq(parm);
+                            case "samjung":
+                                return  app10ElvMobMapperS.getMSManualMaxSeq(parm);
+                            case "samjungilsan":
+                                return  app10ElvMobMapperSj.getMSManualMaxSeq(parm);
                             default:
                                 break;
                         }
@@ -262,6 +320,18 @@ public class App10ElvlrtMobService {
                         return (queryResult > 0);
                     case "hanyangs":
                         queryResult = app10ElvMobMapperH.InsertMHManual(parm);
+                        if(queryResult < 1){
+                            queryResult = 0;
+                        }
+                        return (queryResult > 0);
+                    case "samjung":
+                        queryResult = app10ElvMobMapperS.InsertMHManual(parm);
+                        if(queryResult < 1){
+                            queryResult = 0;
+                        }
+                        return (queryResult > 0);
+                    case "samjungilsan":
+                        queryResult = app10ElvMobMapperSj.InsertMHManual(parm);
                         if(queryResult < 1){
                             queryResult = 0;
                         }
@@ -305,6 +375,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdateMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdateMHManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -340,6 +422,18 @@ public class App10ElvlrtMobService {
                             return (queryResult > 0);
                         case "hanyangs":
                             queryResult = app10ElvMobMapperH.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "samjung":
+                            queryResult = app10ElvMobMapperS.InsertMBManual(parm);
+                            if(queryResult < 1){
+                                queryResult = 0;
+                            }
+                            return (queryResult > 0);
+                        case "samjungilsan":
+                            queryResult = app10ElvMobMapperSj.InsertMBManual(parm);
                             if(queryResult < 1){
                                 queryResult = 0;
                             }
@@ -383,6 +477,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdateMBManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -418,6 +524,18 @@ public class App10ElvlrtMobService {
                                 return (queryResult > 0);
                             case "hanyangs":
                                 queryResult = app10ElvMobMapperH.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "samjung":
+                                queryResult = app10ElvMobMapperS.InsertMSManual(parm);
+                                if(queryResult < 1){
+                                    queryResult = 0;
+                                }
+                                return (queryResult > 0);
+                            case "samjungilsan":
+                                queryResult = app10ElvMobMapperSj.InsertMSManual(parm);
                                 if(queryResult < 1){
                                     queryResult = 0;
                                 }
@@ -461,6 +579,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdateMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdateMSManual(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -479,6 +609,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp0bMobList001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp0bMobList001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp0bMobList001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp0bMobList001(parm);
             default:
                 List<AppMob004tDto> object = null;
                 return object;
@@ -497,6 +631,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp0bMobList002(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp0bMobList002(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp0bMobList002(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp0bMobList002(parm);
             default:
                 List<AppMob004tDto> object = null;
                 return object;
@@ -515,6 +653,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp28MobList001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp28MobList001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp28MobList001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp28MobList001(parm);
             default:
                 List<AppMob005tDto> object = null;
                 return object;
@@ -534,6 +676,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp28MobList002(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp28MobList002(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp28MobList002(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp28MobList002(parm);
             default:
                 List<AppMob005tDto> object = null;
                 return object;
@@ -552,6 +698,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp28MobList003(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp28MobList003(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp28MobList003(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp28MobList003(parm);
             default:
                 List<AppMob005tDto> object = null;
                 return object;
@@ -572,6 +722,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.code754get06List();
             case "hanyangs":
                 return  app10ElvMobMapperH.code754get06List();
+            case "samjung":
+                return  app10ElvMobMapperS.code754get06List();
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.code754get06List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -591,6 +745,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.code754get08List();
             case "hanyangs":
                 return  app10ElvMobMapperH.code754get08List();
+            case "samjung":
+                return  app10ElvMobMapperS.code754get08List();
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.code754get08List();
             default:
                 List<CommonDto> object = null;
                 return object;
@@ -611,6 +769,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList_002(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList_002(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList_002(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList_002(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -632,6 +794,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList_003(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList_003(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList_003(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList_003(parm);
             default:
                 List<App14ElvlrtDto> object = null;
                 return object;
@@ -653,6 +819,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobListr_004(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobListr_004(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobListr_004(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobListr_004(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -675,6 +845,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobListr_005(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobListr_005(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobListr_005(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobListr_005(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -695,6 +869,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList_004(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList_004(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList_004(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList_004(parm);
             default:
                 List<App04ElvlrtDto> object = null;
                 return object;
@@ -715,6 +893,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList_e(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList_e(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList_e(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList_e(parm);
             default:
                 List<App04ElvlrtDto> object = null;
                 return object;
@@ -735,6 +917,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList_d(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList_d(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList_d(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList_d(parm);
             default:
                 List<App04ElvlrtDto> object = null;
                 return object;
@@ -755,6 +941,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetMobThumbList_001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetMobThumbList_001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetMobThumbList_001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetMobThumbList_001(parm);
             default:
                 List<AttachDTO> object = null;
                 return object;
@@ -795,6 +985,18 @@ public class App10ElvlrtMobService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.Insert10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.Insert10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.Insert10Manul(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -841,6 +1043,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.Update10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.Update10Manul(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -862,6 +1076,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetplanList(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetplanList(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetplanList(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetplanList(parm);
             default:
                 List<AppMobPlanDto> object = null;
                 return object;
@@ -903,6 +1121,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.Insertplan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -925,6 +1155,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetcltnmList(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetcltnmList(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetcltnmList(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetcltnmList(parm);
             default:
                 List<AppMobPlanDto> object = null;
                 return object;
@@ -963,6 +1197,18 @@ public class App10ElvlrtMobService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.DeletePlan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.DeletePlan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.DeletePlan(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -1010,6 +1256,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdatePlan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdatePlan(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -1030,6 +1288,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobListr_004_plan(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobListr_004_plan(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobListr_004_plan(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobListr_004_plan(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -1050,6 +1312,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetApp01List001(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetApp01List001(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetApp01List001(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetApp01List001(parm);
             default:
                 List<App03ElvlrtDto> object = null;
                 return object;
@@ -1069,6 +1335,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.getMaxPlandate(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.getMaxPlandate(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.getMaxPlandate(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.getMaxPlandate(parm);
             default:
                 break;
         }
@@ -1090,6 +1360,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobListr_004_e601(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobListr_004_e601(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobListr_004_e601(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobListr_004_e601(parm);
             default:
                 List<App26ElvlrtDto> object = null;
                 return object;
@@ -1128,6 +1402,18 @@ public class App10ElvlrtMobService {
                 return queryResult;
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdateE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdateE401(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -1174,6 +1460,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = app10ElvMobMapperS.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.InsertE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -1215,6 +1513,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return queryResult;
+            case "samjung":
+                queryResult = app10ElvMobMapperS.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.DeleteE401(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return queryResult;
             default:
                 break;
         }
@@ -1236,6 +1546,10 @@ public class App10ElvlrtMobService {
                 return  app10ElvMobMapperN.GetAppMobList002(parm);
             case "hanyangs":
                 return  app10ElvMobMapperH.GetAppMobList002(parm);
+            case "samjung":
+                return  app10ElvMobMapperS.GetAppMobList002(parm);
+            case "samjungilsan":
+                return  app10ElvMobMapperSj.GetAppMobList002(parm);
             default:
                 List<App10ElvlrtDto> object = null;
                 return object;
@@ -1277,6 +1591,18 @@ public class App10ElvlrtMobService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.DeleteList002(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.DeleteList002(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }
@@ -1325,6 +1651,18 @@ public class App10ElvlrtMobService {
                     queryResult = 0;
                 }
                 return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.UpdateList002_rollback(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.UpdateList002_rollback(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
             default:
                 break;
         }
@@ -1364,6 +1702,18 @@ public class App10ElvlrtMobService {
                 return (queryResult > 0);
             case "hanyangs":
                 queryResult = app10ElvMobMapperH.Update10Manull(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjung":
+                queryResult = app10ElvMobMapperS.Update10Manull(parm);
+                if(queryResult < 1){
+                    queryResult = 0;
+                }
+                return (queryResult > 0);
+            case "samjungilsan":
+                queryResult = app10ElvMobMapperSj.Update10Manull(parm);
                 if(queryResult < 1){
                     queryResult = 0;
                 }

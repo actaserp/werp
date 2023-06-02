@@ -7,6 +7,10 @@ import com.actas.ems.Mapper.kyoung.App19KyoungMapper;
 import com.actas.ems.Mapper.gaon.App19GaonMapper;
 import com.actas.ems.Mapper.Elvlrt.App19ElvlrtMapper;
 import com.actas.ems.Mapper.nm.App19NmyangMapper;
+import com.actas.ems.Mapper.samjung.App16SamMapper;
+import com.actas.ems.Mapper.samjung.App19SamMapper;
+import com.actas.ems.Mapper.sjilsan.App16SjilsanMapper;
+import com.actas.ems.Mapper.sjilsan.App19SjilsanMapper;
 import com.actas.ems.util.UIUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,10 @@ public class App19ElvlrtService {
     App19NmyangMapper app19ElvlrtMapperN;
     @Autowired
     App19GaonMapper app19ElvlrtMapperH;
+    @Autowired
+    App19SamMapper app19ElvlrtMapperS;
+    @Autowired
+    App19SjilsanMapper app19ElvlrtMapperSj;
 
     /**기간별*/
     public List<App16ElvlrtDto> GetApp19List001(PopupDto parm){
@@ -42,6 +50,10 @@ public class App19ElvlrtService {
                 return  app19ElvlrtMapperN.GetApp19List001(parm);
             case "hanyangs":
                 return  app19ElvlrtMapperH.GetApp19List001(parm);
+            case "samjung":
+                return  app19ElvlrtMapperS.GetApp19List001(parm);
+            case "samjungilsan":
+                return  app19ElvlrtMapperSj.GetApp19List001(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
@@ -63,6 +75,10 @@ public class App19ElvlrtService {
                 return  app19ElvlrtMapperN.GetApp19List002(parm);
             case "hanyangs":
                 return  app19ElvlrtMapperH.GetApp19List002(parm);
+            case "samjung":
+                return  app19ElvlrtMapperS.GetApp19List002(parm);
+            case "samjungilsan":
+                return  app19ElvlrtMapperSj.GetApp19List002(parm);
             default:
                 List<App16ElvlrtDto> object = null;
                 return object;
