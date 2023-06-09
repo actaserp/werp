@@ -824,7 +824,7 @@ public Object com0List(@RequestParam Map<String, String> param
 
         return "success";
     }
-
+    /**코멘트 등록**/
     @RequestMapping(value = "/saveeSS", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -904,6 +904,7 @@ public Object com0List(@RequestParam Map<String, String> param
         return "success";
     }
 
+    /**박광열_코멘트등록*/
     @RequestMapping(value = "/saveeSS2", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -1464,6 +1465,8 @@ public Object com0List(@RequestParam Map<String, String> param
         return appMob004tDtoList;
     }
 
+
+    /**박광열_코멘트 등록**/
     //FnQ
     @RequestMapping(value = "/SSlist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
@@ -1524,6 +1527,8 @@ public Object com0List(@RequestParam Map<String, String> param
         return appMob005tDtoList;
     }
 
+
+    /**코멘트 등록**/
     @RequestMapping(value = "/SSslist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -1587,6 +1592,7 @@ public Object com0List(@RequestParam Map<String, String> param
     }
 
     //  댓글내용조회
+    /**박광열_코멘트등록**/
     @RequestMapping(value = "/comslist", method = RequestMethod.POST,
             headers = ("content-type=multipart/*"),
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
