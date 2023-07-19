@@ -15,7 +15,7 @@
     </sql>
     <insert id="InsertAttach" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idx">
 
-        INSERT INTO tb_mattach_mf (
+        INSERT INTO tb_mattach (
         <include refid="attachColumns" />
         ) VALUES
         <foreach collection="list" item="item" separator=",">
@@ -34,7 +34,7 @@
     </insert>
 
     <update id="deleteAttach" parameterType="com.actas.ems.DTO.Elvlrt.App08_mbmanual">
-        UPDATE TB_MATTACH_MF
+        UPDATE TB_MATTACH
         SET
             delete_yn = 'Y'
           ,delete_time = GETDATE()
@@ -45,7 +45,7 @@
     </update>
 
     <update id="deleteAttachDetail" parameterType="com.actas.ems.DTO.AttachDTO">
-        UPDATE TB_MATTACH_MF
+        UPDATE TB_MATTACH
         SET
             delete_yn = 'Y'
           ,delete_time = GETDATE()
@@ -64,7 +64,7 @@
              , insert_time as inserttime
              , delete_time as deletetime
         FROM
-            TB_MATTACH_MF WITH (nolock)
+            TB_MATTACH WITH (nolock)
         WHERE
             delete_yn = 'N'
           AND board_idx = #{bseq}
@@ -82,7 +82,7 @@
              , insert_time as inserttime
              , delete_time as deletetime
         FROM
-            TB_MATTACH_MF with (nolock)
+            TB_MATTACH with (nolock)
         WHERE
             delete_yn = 'N'
           AND idx = #{idx}
@@ -94,7 +94,7 @@
         SELECT
             COUNT(*)
         FROM
-            TB_MATTACH_MF with (nolock)
+            TB_MATTACH with (nolock)
         WHERE
             delete_yn = 'N'
           AND

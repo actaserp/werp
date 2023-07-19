@@ -44,7 +44,8 @@ public class MoDownload {
             , Model model, HttpServletResponse response , HttpServletRequest request) {
         String ls_dbnm = "";
 
-        ls_dbnm = userformDto.getDbnm();
+//        ls_dbnm = userformDto.getDbnm();
+        ls_dbnm = dbnm;
         attachDTO.setIdx(Long.parseLong(idx));
         attachDTO.setBoardIdx(boardIdx);
         attachDTO.setFlag(flag);
